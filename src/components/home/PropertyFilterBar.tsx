@@ -48,9 +48,9 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
     };
 
     return (
-        <div className="relative z-30 -mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
-            <div className="bg-dark-gray p-8 shadow-2xl border-t-4 border-luxury-gold">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+        <div className="relative z-30 -mt-10 md:-mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
+            <div className="bg-dark-gray p-5 md:p-8 shadow-2xl border-t-4 border-luxury-gold">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 items-end">
                     {/* Location Filter */}
                     <div>
                         <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
