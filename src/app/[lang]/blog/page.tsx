@@ -16,6 +16,8 @@ interface BlogListingPageProps {
     }>;
 }
 
+export const revalidate = 60;
+
 export default async function BlogListingPage({ params }: BlogListingPageProps) {
     const { lang } = await params;
     const dict = await getDictionary(lang);

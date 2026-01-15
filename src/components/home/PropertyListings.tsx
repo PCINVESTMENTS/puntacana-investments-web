@@ -325,7 +325,7 @@ function PropertyListingsContent({
 
                                         <div className="p-8 relative">
                                             <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
-                                                {formatPrice(prop.price)}
+                                                {lang === 'en' ? 'From ' : 'Desde '} {formatPrice(prop.price)}
                                             </div>
                                             <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
                                                 {prop.title}
@@ -360,7 +360,7 @@ function PropertyListingsContent({
                     {featured && (
                         <div className="mt-12 text-center">
                             <Link
-                                href={`/${lang}/properties${featuredCategory === 'rent' ? '?status=rent' : ''}`}
+                                href={`/${lang}/properties?status=${featuredCategory}`}
                                 className="inline-block bg-luxury-gold text-black font-bold py-4 px-10 rounded-sm hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-lg hover:shadow-xl"
                             >
                                 {dict.exploreMore}

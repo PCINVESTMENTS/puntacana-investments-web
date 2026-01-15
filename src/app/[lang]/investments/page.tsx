@@ -20,6 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     };
 }
 
+export const revalidate = 60;
+
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en");

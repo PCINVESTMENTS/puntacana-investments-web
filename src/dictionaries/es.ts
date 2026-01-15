@@ -100,7 +100,9 @@ export default {
                 { title: "Las Terrenas", slug: "lasterrenas", img: "/images/locations/las_terrenas.jpg" },
                 { title: "Samaná", slug: "samana", img: "/images/locations/samana.jpg" },
                 { title: "Puerto Plata", slug: "puertoplata", img: "https://upcrealestate.com/wp-content/uploads/2023/02/1.jpg" },
-                { title: "Bayahibe", slug: "bayahibe", img: "https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?q=80&w=2070&auto=format&fit=crop" }
+                { title: "Bayahibe", slug: "bayahibe", img: "https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?q=80&w=2070&auto=format&fit=crop" },
+                { title: "Vista Cana", slug: "vistacana", img: "/images/locations/bavaro.jpg" },
+                { title: "White Sands Bávaro", slug: "whitesands", img: "/images/locations/bavaro.jpg" }
             ]
         },
         investments: {

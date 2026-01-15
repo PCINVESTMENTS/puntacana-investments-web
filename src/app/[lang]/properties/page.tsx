@@ -5,7 +5,9 @@ import PropertyListings from "@/components/home/PropertyListings";
 import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty } from "@/sanity/lib/mappers";
-import { Property } from "@/data/properties";
+import { Property, properties as localProperties } from "@/data/properties";
+
+export const revalidate = 60;
 
 export default async function PropertiesPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
@@ -13,7 +15,13 @@ export default async function PropertiesPage({ params }: { params: Promise<{ lan
 
     // Fetch properties
     const rawProperties = await client.fetch(PROPERTIES_QUERY);
-    const properties: Property[] = rawProperties.map(mapSanityProperty);
+    const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+
+    // Merge with local overrides
+    const properties = fetchedProperties.map(p => {
+        const local = localProperties.find(lp => lp.id === p.id);
+        return local || p;
+    });
 
     return (
         <main className="min-h-screen bg-primary-black">

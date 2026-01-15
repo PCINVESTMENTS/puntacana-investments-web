@@ -2,6 +2,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
 import { FaBed, FaBath, FaRulerCombined, FaCheck, FaArrowLeft, FaWhatsapp } from "react-icons/fa";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/home/PageSections";
@@ -20,7 +21,7 @@ import ShareButtons from "@/components/property/ShareButtons";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { PROPERTY_BY_ID_QUERY } from "@/sanity/lib/queries";
-import { Property } from "@/data/properties";
+import { Property, properties } from "@/data/properties";
 
 // Helper to map Sanity data to our app's Property interface
 function mapSanityProperty(data: any): Property {
@@ -54,15 +55,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     // Check if ID is a number (legacy) or we should just try valid query
     // Our query filters by `id == $id`. Sanity stores ID as number based on migration.
-    const propertyData = await client.fetch(PROPERTY_BY_ID_QUERY, { id: parseInt(id) });
+    // Check local data first for SEO consistency
+    const localProperty = properties.find(p => p.id === parseInt(id));
+    let property: Property;
 
-    if (!propertyData) {
-        return {
-            title: 'Propiedad no encontrada',
-        };
+    if (localProperty) {
+        property = localProperty;
+    } else {
+        const propertyData = await client.fetch(PROPERTY_BY_ID_QUERY, { id: parseInt(id) });
+
+        if (!propertyData) {
+            return {
+                title: 'Propiedad no encontrada',
+            };
+        }
+        property = mapSanityProperty(propertyData);
     }
-
-    const property = mapSanityProperty(propertyData);
 
     return {
         title: `${property.title} | Punta Cana Investments`,
@@ -73,17 +81,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     };
 }
 
+export const revalidate = 60;
+
 export default async function PropertyPage({ params }: { params: Promise<{ lang: string, id: string }> }) {
     const { lang, id } = await params;
     const dict = await getDictionary(lang as "es" | "en");
 
-    const propertyData = await client.fetch(PROPERTY_BY_ID_QUERY, { id: parseInt(id) });
+    // Prioritize local data if it exists (for overrides/updates not yet in CMS)
+    // This ensures edits made in properties.ts (like Cruise On Land) are visible immediately.
+    const localProperty = properties.find(p => p.id === parseInt(id));
+    let property: Property;
 
-    if (!propertyData) {
-        notFound();
+    if (localProperty) {
+        property = localProperty;
+    } else {
+        const propertyData = await client.fetch(PROPERTY_BY_ID_QUERY, { id: parseInt(id) });
+
+        if (!propertyData) {
+            notFound();
+        }
+
+        property = mapSanityProperty(propertyData);
     }
-
-    const property = mapSanityProperty(propertyData);
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -130,7 +149,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    {formatPrice(property.price)}
+                                    <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : 'Desde'}</span> {formatPrice(property.price)}
                                 </p>
                             </div>
                         </div>
@@ -168,9 +187,21 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
                                 Descripción
                             </h2>
-                            <p className="text-gray-300 leading-relaxed text-lg whitespace-pre-line">
-                                {property.description[lang as 'en' | 'es']}
-                            </p>
+                            <div className="text-gray-300 leading-relaxed text-lg">
+                                <ReactMarkdown
+                                    components={{
+                                        h1: ({ node, ...props }) => <h2 className="text-3xl font-serif font-bold text-luxury-gold mt-8 mb-6 uppercase tracking-wider" {...props} />, // Map h1 to h2 style
+                                        h2: ({ node, ...props }) => <h2 className="text-2xl font-serif font-bold text-luxury-gold mt-8 mb-4 uppercase tracking-wider" {...props} />,
+                                        h3: ({ node, ...props }) => <h3 className="text-xl font-bold text-white mt-6 mb-3" {...props} />,
+                                        p: ({ node, ...props }) => <p className="mb-4 whitespace-pre-line" {...props} />,
+                                        ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-6 space-y-2" {...props} />,
+                                        li: ({ node, ...props }) => <li className="text-gray-300" {...props} />,
+                                        strong: ({ node, ...props }) => <strong className="text-white font-bold" {...props} />,
+                                    }}
+                                >
+                                    {property.description[lang as 'en' | 'es']}
+                                </ReactMarkdown>
+                            </div>
                         </div>
 
                         {/* Gallery Section */}

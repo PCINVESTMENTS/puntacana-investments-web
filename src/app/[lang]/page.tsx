@@ -14,8 +14,10 @@ import PropertyFilterBar from "@/components/home/PropertyFilterBar";
 import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
-import { Property } from "@/data/properties";
+import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost } from "@/data/blog";
+
+export const revalidate = 60;
 
 export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
   const { lang } = await params;
@@ -23,7 +25,22 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
   // Fetch data from Sanity (no-store for fresh data during verification)
   const rawProperties = await client.fetch(PROPERTIES_QUERY);
-  const properties: Property[] = rawProperties.map(mapSanityProperty);
+  const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+
+  // Merge with local overrides and include local-only properties
+  const mergedProperties = fetchedProperties.map(p => {
+    const local = localProperties.find(lp => lp.id === p.id);
+    return local || p;
+  });
+
+  // Add properties that exist locally but not in Sanity
+  const sanityIds = new Set(fetchedProperties.map(p => p.id));
+  const localOnlyProperties = localProperties.filter(p => !sanityIds.has(p.id));
+
+  const properties = [...mergedProperties, ...localOnlyProperties].sort((a, b) => {
+    // Optional: Sort by ID descending to show newest first, or keep default
+    return b.id - a.id;
+  });
 
   const rawPosts = await client.fetch(POSTS_QUERY);
   const posts: BlogPost[] = rawPosts.map(mapSanityPost);

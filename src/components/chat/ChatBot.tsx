@@ -1,6 +1,6 @@
 "use client";
 
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
 import { useState, useRef, useEffect } from "react";
 import { FaRobot, FaTimes, FaPaperPlane, FaCommentDots } from "react-icons/fa";
 import ReactMarkdown from 'react-markdown';
@@ -103,14 +103,14 @@ export default function ChatBot({ lang }: ChatBotProps) {
                 <form onSubmit={handleSubmit} className="p-4 border-t border-white/10 bg-black/40 rounded-b-2xl">
                     <div className="relative flex items-center">
                         <input
-                            value={input}
-                            onChange={handleInputChange}
+                            value={input || ''}
+                            onChange={(e) => handleInputChange && handleInputChange(e)}
                             placeholder={lang === 'es' ? "Escribe tu pregunta..." : "Ask about properties..."}
                             className="w-full bg-dark-gray text-white text-sm rounded-full py-3 pl-4 pr-12 border border-white/10 focus:border-luxury-gold focus:outline-none transition-colors shadow-inner"
                         />
                         <button
                             type="submit"
-                            disabled={isLoading || !input.trim()}
+                            disabled={isLoading || !(input || '').trim()}
                             className="absolute right-2 w-8 h-8 bg-luxury-gold rounded-full flex items-center justify-center text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             aria-label="Send message"
                         >
