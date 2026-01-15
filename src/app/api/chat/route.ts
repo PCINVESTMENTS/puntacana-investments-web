@@ -68,7 +68,7 @@ export async function POST(req: Request) {
           contact: z.string().describe('The phone number or email of the user'),
           summary: z.string().describe('A brief summary of what the user is interested in (e.g. "Looking for 2BR condo in Cap Cana")'),
         }),
-        execute: async ({ name, contact, summary }) => {
+        execute: async ({ name, contact, summary }: { name: string; contact: string; summary: string }) => {
           try {
             await resend.emails.send({
               from: 'Punta Cana Investments AI <onboarding@resend.dev>',
