@@ -169,7 +169,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 </div>
             </section>
 
-            <Footer dict={dict} />
+            <Footer dict={dict} lang={lang as 'es' | 'en'} />
         </main>
     );
 }
