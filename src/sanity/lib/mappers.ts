@@ -1,4 +1,5 @@
 import { BlogPost } from "@/data/blog";
+import { Property } from "@/data/properties";
 
 export function mapSanityPost(data: any): BlogPost {
     if (!data) return null as any;
