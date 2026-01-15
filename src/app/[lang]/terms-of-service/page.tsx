@@ -14,7 +14,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: 'e
                 lang={lang}
                 dict={dict.nav}
                 servicesList={investmentModels.map(m => ({ title: m.title[lang], slug: m.slug }))}
-                propertyTypes={Object.values(dict.properties.types)}
+                propertyTypes={dict.properties.types}
             />
 
             <div className="pt-32 pb-24 max-w-4xl mx-auto px-6 text-gray-300">
