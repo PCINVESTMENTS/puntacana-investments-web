@@ -48,18 +48,18 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
     };
 
     return (
-        <div className="relative z-30 -mt-10 md:-mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
-            <div className="bg-dark-gray p-5 md:p-8 shadow-2xl border-t-4 border-luxury-gold">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 items-end">
+        <div className="relative z-30 -mt-6 md:-mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
+            <div className="bg-dark-gray p-4 md:p-8 shadow-2xl border-t-4 border-luxury-gold">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 items-end">
                     {/* Location Filter */}
-                    <div>
-                        <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
+                    <div className="col-span-1">
+                        <label className="block text-luxury-gold text-[10px] md:text-xs uppercase tracking-wider mb-1 md:mb-2 font-bold truncate">
                             {dict.filters.allLocations}
                         </label>
                         <select
                             value={selectedLocation}
                             onChange={(e) => setSelectedLocation(e.target.value)}
-                            className="w-full bg-black border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors"
+                            className="w-full bg-black border border-white/10 text-white text-sm md:text-base px-3 py-2 md:px-4 md:py-3 focus:outline-none focus:border-luxury-gold transition-colors"
                         >
                             <option value="all">{dict.filters.allLocations}</option>
                             {locations.map((loc) => (
@@ -71,14 +71,14 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                     </div>
 
                     {/* Type Filter */}
-                    <div>
-                        <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
+                    <div className="col-span-1">
+                        <label className="block text-luxury-gold text-[10px] md:text-xs uppercase tracking-wider mb-1 md:mb-2 font-bold truncate">
                             {dict.filters.allTypes}
                         </label>
                         <select
                             value={selectedType}
                             onChange={(e) => setSelectedType(e.target.value)}
-                            className="w-full bg-black border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors"
+                            className="w-full bg-black border border-white/10 text-white text-sm md:text-base px-3 py-2 md:px-4 md:py-3 focus:outline-none focus:border-luxury-gold transition-colors"
                         >
                             <option value="all">{dict.types.all}</option>
                             <option value="condo">{dict.types.condo}</option>
@@ -90,14 +90,14 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                     </div>
 
                     {/* Price Filter */}
-                    <div>
-                        <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
+                    <div className="col-span-1">
+                        <label className="block text-luxury-gold text-[10px] md:text-xs uppercase tracking-wider mb-1 md:mb-2 font-bold truncate">
                             {dict.filters.maxPrice}
                         </label>
                         <select
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
-                            className="w-full bg-black border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors"
+                            className="w-full bg-black border border-white/10 text-white text-sm md:text-base px-3 py-2 md:px-4 md:py-3 focus:outline-none focus:border-luxury-gold transition-colors"
                         >
                             <option value="any">{dict.priceRanges.any}</option>
                             <option value="200000">{dict.priceRanges["200k"]}</option>
@@ -108,10 +108,10 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                     </div>
 
                     {/* Search Button */}
-                    <div>
+                    <div className="col-span-1">
                         <button
                             onClick={handleSearch}
-                            className="w-full bg-luxury-gold text-black font-bold py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2"
+                            className="w-full bg-luxury-gold text-black font-bold text-sm md:text-base py-2 md:py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2 h-[38px] md:h-[50px]"
                         >
                             <FaSearch /> {dict.filters.search}
                         </button>
