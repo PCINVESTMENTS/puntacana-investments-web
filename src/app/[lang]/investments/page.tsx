@@ -6,6 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaChartLine, FaHandHoldingUsd, FaFileContract, FaArrowRight, FaCity, FaUmbrellaBeach, FaPlane, FaCheck } from "react-icons/fa";
 import PropertyListings from "@/components/home/PropertyListings";
+import { client } from "@/sanity/lib/client";
+import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
+import { mapSanityProperty } from "@/sanity/lib/mappers";
+import { Property } from "@/data/properties";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
@@ -19,6 +23,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en");
+
+    // Fetch properties for listings
+    const rawProperties = await client.fetch(PROPERTIES_QUERY);
+    const properties: Property[] = rawProperties.map(mapSanityProperty);
 
     const benefits = [
         {
@@ -297,10 +305,11 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                     featuredLimit={3}
                     sectionId="investment-opportunities"
                     sectionTitle={lang === 'en' ? 'Curated Investment Opportunities' : 'Oportunidades de Inversión Curadas'}
+                    initialData={properties}
                 />
             </div>
 
-            <Footer dict={dict} />
+            <Footer dict={dict} lang={lang as 'es' | 'en'} />
         </main>
     );
 }
