@@ -21,7 +21,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
                 <ServicesSection dict={dict.sections.services} lang={lang} />
             </div>
 
-            <Footer dict={dict} />
+            <Footer dict={dict} lang={lang} />
         </main>
     );
 }

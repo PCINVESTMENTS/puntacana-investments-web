@@ -195,7 +195,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                 </div>
             </div>
 
-            <Footer dict={dict} />
+            <Footer dict={dict} lang={lang} />
         </main>
     );
 }

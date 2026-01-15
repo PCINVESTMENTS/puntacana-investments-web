@@ -2,10 +2,18 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/home/PageSections";
 import PropertyListings from "@/components/home/PropertyListings";
+import { client } from "@/sanity/lib/client";
+import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
+import { mapSanityProperty } from "@/sanity/lib/mappers";
+import { Property } from "@/data/properties";
 
 export default async function PropertiesPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
+
+    // Fetch properties
+    const rawProperties = await client.fetch(PROPERTIES_QUERY);
+    const properties: Property[] = rawProperties.map(mapSanityProperty);
 
     return (
         <main className="min-h-screen bg-primary-black">
@@ -22,10 +30,11 @@ export default async function PropertiesPage({ params }: { params: Promise<{ lan
                     lang={lang}
                     locations={dict.sections.locations.items}
                     initialFilters={{}} // Show all by default (or let params handle it)
+                    initialData={properties}
                 />
             </div>
 
-            <Footer dict={dict} />
+            <Footer dict={dict} lang={lang} />
         </main>
     );
 }

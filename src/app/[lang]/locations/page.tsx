@@ -20,7 +20,7 @@ export default async function LocationsPage({ params }: { params: Promise<{ lang
                 <LocationsSection dict={dict.sections.locations} lang={lang} />
             </div>
 
-            <Footer dict={dict} />
+            <Footer dict={dict} lang={lang} />
         </main>
     );
 }
