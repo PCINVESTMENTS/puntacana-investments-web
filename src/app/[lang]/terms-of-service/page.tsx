@@ -1,11 +1,10 @@
 import { getDictionary } from '@/dictionaries/get-dictionary';
-import { Locale } from '@/i18n-config';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/home/PageSections';
 import { properties } from '@/data/properties';
 import { investmentModels } from '@/data/investment-models';
 
-export default async function TermsPage({ params }: { params: Promise<{ lang: Locale }> }) {
+export default async function TermsPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
 
