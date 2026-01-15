@@ -79,8 +79,8 @@ export default function ChatBot({ lang }: ChatBotProps) {
                         >
                             <div
                                 className={`max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed ${m.role === 'user'
-                                        ? 'bg-luxury-gold text-black rounded-tr-none'
-                                        : 'bg-dark-gray text-gray-200 border border-white/10 rounded-tl-none'
+                                    ? 'bg-luxury-gold text-black rounded-tr-none'
+                                    : 'bg-dark-gray text-gray-200 border border-white/10 rounded-tl-none'
                                     }`}
                             >
                                 <ReactMarkdown components={components}>{m.content}</ReactMarkdown>
@@ -112,6 +112,7 @@ export default function ChatBot({ lang }: ChatBotProps) {
                             type="submit"
                             disabled={isLoading || !input.trim()}
                             className="absolute right-2 w-8 h-8 bg-luxury-gold rounded-full flex items-center justify-center text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            aria-label="Send message"
                         >
                             <FaPaperPlane className="text-xs ml-0.5" />
                         </button>
