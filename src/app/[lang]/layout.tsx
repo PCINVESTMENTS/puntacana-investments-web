@@ -35,6 +35,8 @@ import AIAssistant from "@/components/ui/AIAssistant";
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 
+import ChatBot from "@/components/chat/ChatBot";
+
 export default async function RootLayout({
   children,
   params
