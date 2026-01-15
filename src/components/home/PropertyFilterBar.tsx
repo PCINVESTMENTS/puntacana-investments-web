@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaBuilding } from "react-icons/fa";
 
 interface PropertyFilterBarProps {
     dict: {
@@ -50,6 +51,16 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
     return (
         <div className="relative z-30 -mt-6 md:-mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
             <div className="bg-dark-gray p-4 md:p-8 shadow-2xl border-t-4 border-luxury-gold">
+                {/* Mobile 'View All' Button */}
+                <div className="md:hidden mb-4">
+                    <Link
+                        href={`/${lang}/properties?status=sale`}
+                        className="w-full bg-luxury-gold text-black font-bold py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2"
+                    >
+                        <FaBuilding /> {lang === 'es' ? 'VER TODAS LAS PROPIEDADES' : 'VIEW ALL PROPERTIES'}
+                    </Link>
+                </div>
+
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 items-end">
                     {/* Location Filter */}
                     <div className="col-span-1">
