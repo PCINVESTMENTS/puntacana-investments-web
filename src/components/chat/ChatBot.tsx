@@ -11,7 +11,7 @@ interface ChatBotProps {
 
 export default function ChatBot({ lang }: ChatBotProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    const { messages, input, handleInputChange, handleSubmit, isLoading, append } = useChat({
         api: '/api/chat',
         initialMessages: [
             {
@@ -32,6 +32,23 @@ export default function ChatBot({ lang }: ChatBotProps) {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    // Quick Reply Chips
+    const suggestions = lang === 'es' ? [
+        "💰 Quiero Invertir",
+        "🏖️ Casa Vacacional",
+        "📍 Cap Cana",
+        "📞 Hablar con Asesor"
+    ] : [
+        "💰 Investment",
+        "🏖️ Vacation Home",
+        "📍 Cap Cana",
+        "📞 Talk to Agent"
+    ];
+
+    const handleSuggestionClick = (suggestion: string) => {
+        append({ role: 'user', content: suggestion });
+    };
 
     // Customize renderer to style links
     const components = {
@@ -98,6 +115,21 @@ export default function ChatBot({ lang }: ChatBotProps) {
                     )}
                     <div ref={messagesEndRef} />
                 </div>
+
+                {/* Quick Reply Chips (Only show if less than 3 messages to avoid clutter) */}
+                {messages.length < 3 && !isLoading && (
+                    <div className="px-4 pb-2 flex flex-wrap gap-2">
+                        {suggestions.map((suggestion, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleSuggestionClick(suggestion)}
+                                className="bg-dark-gray border border-luxury-gold/30 text-xs text-luxury-gold px-3 py-1.5 rounded-full hover:bg-luxury-gold hover:text-black transition-colors"
+                            >
+                                {suggestion}
+                            </button>
+                        ))}
+                    </div>
+                )}
 
                 {/* Input Area */}
                 <form onSubmit={handleSubmit} className="p-4 border-t border-white/10 bg-black/40 rounded-b-2xl">
