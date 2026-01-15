@@ -170,7 +170,7 @@ export const properties: Property[] = [
     },
     {
         id: 4,
-        title: "Cruise On Land",
+        title: "Cruises on Land Punta Cana",
         location: "puntacana",
         locationLabel: "Punta Cana",
         type: "condohotel",
@@ -207,8 +207,80 @@ export const properties: Property[] = [
             ]
         },
         description: {
-            en: "Discover the ultimate investment in the Caribbean's first theme park resort. Cruise On Land offers a revolutionary lifestyle concept with over 100 attractions. Benefit from CONFOTUR tax exemptions (no property tax for 15 years), 0% transfer tax, and a professional rental management pool designed for maximum passive income. Located strategicially just 15 minutes from the airport and 10 minutes from Downtown Punta Cana.",
-            es: "Descubra la mejor inversión en el primer resort con parque temático del Caribe. Cruise On Land ofrece un concepto de estilo de vida revolucionario con más de 100 atracciones. Benefíciese de las exenciones fiscales de CONFOTUR (15 años sin IPI), 0% de impuesto de transferencia y un programa de gestión de alquileres diseñado para maximizar sus ingresos pasivos. Ubicado estratégicamente a solo 15 minutos del aeropuerto y 10 minutos de Downtown Punta Cana."
+            en: `Cruise On Land Project – Thematic Investment Resort in Punta Cana
+
+Welcome aboard, Captain!
+Prepare to discover one of the most innovative and disruptive real estate investment opportunities in the Caribbean.
+
+Cruise On Land Project is the first resort with an integrated theme park in the Caribbean, a revolutionary real estate concept that combines entertainment, tourism, and real estate into a single ecosystem designed to maximize guest experience and investor profitability.
+
+The project offers modern 1, 2, and 3-bedroom units, carefully designed to suit different traveler profiles—couples, families, and groups—and investors seeking high occupancy, income diversification, and long-term stability. This versatility guarantees constant rental demand throughout the year.
+
+With over 100 attractions, Cruise On Land creates a unique experience in the region, encouraging longer stays, higher guest turnover, and above-average market occupancy, translating into sustained income and attractive returns on investment.
+
+An investment designed to maximize your profitability
+
+This exclusive development has been structured to optimize the investor's financial performance, offering significant tax and operational benefits, including:
+
+- Up to 15 years of Property Tax (IPI) exemption
+- 0% transfer tax at the time of purchase
+- Professional rental management program, focused on maximizing passive income, eliminating the operational burden for the owner
+
+Thanks to this structure, the investor can enjoy an efficient, secure, and result-oriented real estate investment without needing to manage the day-to-day operations of the property.
+
+Strategic location in Punta Cana
+
+Cruise On Land is strategically located in one of the most solid and high-demand tourist areas in the Caribbean:
+
+- Just 15 minutes from Punta Cana International Airport
+- 10 minutes from Downtown Punta Cana
+- Close to beaches, shopping centers, restaurants, entertainment zones, and key services
+
+This privileged location guarantees high capital appreciation, excellent connectivity, and constant national and international tourist demand, key factors for a successful real estate investment.
+
+Ideal for investors seeking:
+- Passive income in US dollars
+- High occupancy in vacation rentals
+- Tourism properties with excellent appreciation projection
+- Highly demanded 1, 2, and 3-bedroom units
+- A smart balance between investment, security, and personal enjoyment`,
+            es: `Proyecto Cruise On Land – Resort Temático de Inversión en Punta Cana
+
+¡Bienvenido a bordo, Capitán!
+Prepárese para descubrir una de las oportunidades de inversión inmobiliaria más innovadoras y disruptivas del Caribe.
+
+Proyecto Cruise On Land es el primer resort con parque temático integrado del Caribe, un concepto inmobiliario revolucionario que combina entretenimiento, turismo y bienes raíces en un solo ecosistema diseñado para maximizar la experiencia del huésped y la rentabilidad del inversionista.
+
+El proyecto ofrece unidades modernas de 1, 2 y 3 habitaciones, cuidadosamente diseñadas para adaptarse a distintos perfiles de viajeros —parejas, familias y grupos— y a inversionistas que buscan alta ocupación, diversificación de ingresos y estabilidad a largo plazo. Esta versatilidad garantiza una demanda de alquiler constante durante todo el año.
+
+Con más de 100 atracciones, Cruise On Land crea una experiencia única en la región, incentivando estancias más largas, mayor rotación de huéspedes y una ocupación superior al promedio del mercado, lo que se traduce en ingresos sostenidos y atractivos retornos de inversión.
+
+Una inversión diseñada para maximizar su rentabilidad
+
+Este exclusivo desarrollo ha sido estructurado para optimizar el rendimiento financiero del inversionista, ofreciendo importantes beneficios fiscales y operativos, entre ellos:
+
+- Hasta 15 años de exención del Impuesto a la Propiedad Inmobiliaria (IPI)
+- 0 % de impuesto de transferencia al momento de la compra
+- Programa profesional de gestión de alquileres, enfocado en maximizar los ingresos pasivos, eliminando la carga operativa para el propietario
+
+Gracias a esta estructura, el inversionista puede disfrutar de una inversión inmobiliaria eficiente, segura y orientada a resultados, sin necesidad de gestionar el día a día de la propiedad.
+
+Ubicación estratégica en Punta Cana
+
+Cruise On Land se encuentra estratégicamente ubicado en una de las zonas turísticas más sólidas y demandadas del Caribe:
+
+- A solo 15 minutos del Aeropuerto Internacional de Punta Cana
+- A 10 minutos de Downtown Punta Cana
+- Cercano a playas, centros comerciales, restaurantes, zonas de entretenimiento y servicios clave
+
+Esta ubicación privilegiada garantiza alta plusvalía, excelente conectividad y una demanda turística nacional e internacional constante, factores clave para una inversión inmobiliaria exitosa.
+
+Ideal para inversionistas que buscan:
+- Ingresos pasivos en dólares
+- Alta ocupación en rentas vacacionales
+- Propiedades turísticas con excelente proyección de valorización
+- Unidades de 1, 2 y 3 habitaciones altamente demandadas
+- Un equilibrio inteligente entre inversión, seguridad y disfrute personal`
         },
         gallery: [
             "https://upcrealestate.com/wp-content/uploads/2024/01/1.jpg",
@@ -216,6 +288,7 @@ export const properties: Property[] = [
             "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop",
             "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop"
         ],
+        virtualTourUrl: "https://kuula.co/share/collection/7JrND?logo=1&info=0&logosize=137&fs=1&vr=1&sd=1&initload=0&autorotate=0.24&autop=10&thumbs=1",
         coordinates: { lat: 18.5700, lng: -68.3600 }
     },
     {
