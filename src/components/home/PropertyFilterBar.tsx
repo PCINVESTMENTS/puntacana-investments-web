@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaSearch, FaBuilding } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 
 interface PropertyFilterBarProps {
     dict: {
@@ -55,9 +55,9 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                 <div className="md:hidden mb-4">
                     <Link
                         href={`/${lang}/properties?status=sale`}
-                        className="w-full bg-luxury-gold text-black font-bold py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2"
+                        className="w-full bg-black/40 backdrop-blur-sm border border-luxury-gold/50 text-luxury-gold font-bold py-3 uppercase tracking-widest hover:bg-luxury-gold hover:text-black transition-all duration-300 flex justify-center items-center"
                     >
-                        <FaBuilding /> {lang === 'es' ? 'VER TODAS LAS PROPIEDADES' : 'VIEW ALL PROPERTIES'}
+                        {lang === 'es' ? 'VER PROPIEDADES' : 'VIEW PROPERTIES'}
                     </Link>
                 </div>
 
