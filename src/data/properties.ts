@@ -1691,7 +1691,7 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
         locationLabel: "Marina de Cap Cana",
         type: "villa",
         status: "sale",
-        price: 850000,
+        price: 1300000,
         image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
         beds: 3,
         baths: 6,
