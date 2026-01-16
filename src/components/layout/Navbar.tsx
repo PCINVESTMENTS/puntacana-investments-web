@@ -108,8 +108,9 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
                     */}
 
                     {/* Logo - Centered on Mobile, Left on Desktop */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:static lg:transform-none lg:inset-auto lg:flex-shrink-0 lg:flex lg:items-center">
-                        <Link href={`/${lang}`} className="block relative h-20 w-[80vw] lg:h-20 lg:w-[28rem] transition-all duration-300">
+                    {/* Mobile Logo - Centered and Big */}
+                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:hidden">
+                        <Link href={`/${lang}`} className="block relative h-20 w-[80vw] transition-all duration-300">
                             <Image
                                 src="/images/pci-logo-gold.png"
                                 alt="Punta Cana Investments"
@@ -119,6 +120,17 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
                             />
                         </Link>
                     </div>
+
+                    {/* Desktop Logo - Original Layout (Left aligned, standard size) */}
+                    <Link href={`/${lang}`} className="hidden lg:flex flex-shrink-0 items-center justify-start group relative h-24 w-80">
+                        <Image
+                            src="/images/pci-logo-gold.png"
+                            alt="Punta Cana Investments"
+                            fill
+                            className="object-contain object-left"
+                            priority
+                        />
+                    </Link>
 
                     {/* Desktop Menu - Pushed to right by flex spacer or justify-between */}
                     {/* We need to ensure the layout still works. Default was justify-between. */}
