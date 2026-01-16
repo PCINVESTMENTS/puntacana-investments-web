@@ -154,19 +154,19 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         <div className="sticky top-24 space-y-8">
 
                             {/* CTA Box */}
-                            <div className="bg-gradient-to-br from-luxury-gold to-yellow-600 p-8 rounded-xl text-black shadow-2xl relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:bg-white/30 transition-all"></div>
-                                <h3 className="text-2xl font-bold mb-4 font-serif relative z-10">
+                            <div className="bg-dark-gray p-8 rounded-xl text-white shadow-2xl relative overflow-hidden group border border-luxury-gold/20">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:bg-luxury-gold/20 transition-all"></div>
+                                <h3 className="text-2xl font-bold mb-4 font-serif relative z-10 text-luxury-gold">
                                     {lang === 'en' ? 'Interested in this service?' : '¿Le interesa este servicio?'}
                                 </h3>
-                                <p className="mb-8 font-medium relative z-10 opacity-90">
+                                <p className="mb-8 font-medium relative z-10 opacity-90 text-gray-300">
                                     {lang === 'en'
                                         ? 'Contact our specialists for a personalized quote.'
                                         : 'Contacte a nuestros especialistas para una cotización personalizada.'}
                                 </p>
                                 <Link
                                     href={`/${lang}#contact`}
-                                    className="bg-black text-white px-6 py-3 rounded uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-black transition-all inline-flex items-center gap-2 shadow-lg"
+                                    className="bg-luxury-gold text-black px-6 py-3 rounded uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-black transition-all inline-flex items-center gap-2 shadow-lg transform group-hover:scale-105"
                                 >
                                     {dict.sections.services.modalCta} <FaArrowRight />
                                 </Link>

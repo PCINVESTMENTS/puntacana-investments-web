@@ -151,7 +151,7 @@ export default {
                     slug: "legal-advice",
                     title: "Legal Advice",
                     description: "Complete contract management, due diligence, and tax advice to guarantee safe investments.",
-                    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop",
+                    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop",
                     longDescription: "Our legal team specialized in real estate law provides total coverage to ensure that your investment in the Dominican Republic is solid and risk-free. We handle every legal detail, from title verification to tax optimization.",
                     contentSections: [
                         {
