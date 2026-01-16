@@ -1684,69 +1684,236 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
     },
     {
         id: 11,
-        title: "Lote Residencial Cap Cana",
+    {
+        id: 11,
+        title: "Villa de Lujo en la Marina de Cap Cana",
         location: "capcana",
-        locationLabel: "Cap Cana",
-        type: "land",
+        locationLabel: "Marina de Cap Cana",
+        type: "villa",
         status: "sale",
-        price: 450000,
-        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2232&auto=format&fit=crop",
-        beds: 0,
-        baths: 0,
-        area: 2500,
+        price: 850000,
+        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+        beds: 3,
+        baths: 6,
+        area: 255,
         features: {
-            en: ["Residential Use", "Near Golf", "Private Security", "Underground Services", "Punta Espada Golf Views", "Los Establos Equestrian City", "Scape Park Adventure"],
-            es: ["Uso Residencial", "Cerca del Golf", "Seguridad Privada", "Servicios Soterrados", "Vistas Golf Punta Espada", "Los Establos Ciudad Ecuestre", "Aventura Scape Park"]
+            en: ["Marina Cap Cana", "Ocean 21", "Rooftop Terrace", "Private Pool", "24/7 Security", "Airbnb Friendly", "Jacuzzi", "BBQ Area"],
+            es: ["Marina Cap Cana", "Ocean 21", "Terraza Rooftop", "Piscina Privada", "Seguridad 24/7", "Airbnb Amigable", "Jacuzzi", "Área de BBQ"]
         },
         description: {
-            en: "Large lot ready to build the villa of your dreams in one of the most exclusive communities in the Caribbean.",
-            es: "Amplio terreno listo para construir la villa de tus sueños en una de las comunidades más exclusivas del Caribe."
+            en: `Luxury Villa in Ocean 21 Project – Cap Cana Marina
+
+Exclusive luxury villa located within the Ocean 21 project, in the Cap Cana Marina, inside Cap Cana, one of the most prestigious and best-planned residential and tourist destinations in the Caribbean.
+
+This property combines contemporary architecture, spacious areas, and access to world-class amenities, positioning itself as a high-level residence and a premium real estate investment with excellent profitability.
+
+## General Property Data
+
+- Land: approx. 690 m²
+- Construction: approx. 255 m²
+- Bedrooms: 3
+- Service Room: 1
+- Bathrooms: 6
+- Open Concept Living Room
+- Modern Kitchen
+- Private Pool
+- Garden
+- Parking: 2 vehicles
+
+## Luxury Rooftop Terrace
+
+The property features an exterior rooftop terrace, designed as a space of high aesthetic and functional value, highly demanded in the premium vacation rental market.
+
+**Rooftop equipped with:**
+- Jacuzzi
+- BBQ Area
+- Independent Bathroom
+- Social area ideal for private events and relaxation
+
+The rooftop allows for higher occupancy, better reviews, and superior rates on rental platforms.
+
+## Profitability and Airbnb Performance
+
+**Average nightly rate: USD $950**
+
+This performance confirms:
+- High destination demand
+- Premium guest profile
+- Passive income in dollars
+- Excellent annual profitability projection
+
+## Exclusive Cap Cana Amenities & Benefits
+
+**Gastronomy & Entertainment ↔ Cap Cana Marina**
+- Gourmet restaurants and international cuisine
+- Bars, lounges, and social spaces
+- Exclusive events for residents
+- World-class Marina
+- Capacity for large yachts
+- Nautical, international atmosphere
+
+**Services & Facilities ↔ Security & Urban Order**
+- International School
+- Nearby medical centers
+- Commercial areas
+- Concierge services
+- 24/7 Private Security
+- Controlled access
+- Modern underground infrastructure
+
+**World-Class Golf ↔ Sports & Wellness**
+- Punta Espada Golf Club (Jack Nicklaus)
+- Top Caribbean golf course
+- High-level equestrian center
+- Tennis and paddle courts
+- Gym and wellness centers
+
+## Key Benefits of Investing in Cap Cana
+
+- Sustained high appreciation
+- Consolidated international destination
+- Active premium vacation rental market
+- High purchasing power buyer/tenant profile
+- Planned, exclusive, and safe environment
+- Long-term real estate value protection
+
+## Ideal For
+
+- Investors seeking high returns
+- Luxury villa buyers in Cap Cana
+- Clients interested in premium vacation rentals
+- Those valuing rooftop, marina, and world-class amenities
+- Solid and exclusive real estate heritage`,
+            es: `Villa de Lujo en el Proyecto Ocean 21 – Marina de Cap Cana
+
+Exclusiva villa de lujo ubicada dentro del proyecto Ocean 21, en la Marina de Cap Cana, dentro de Cap Cana, uno de los destinos residenciales y turísticos más prestigiosos y mejor planificados del Caribe.
+
+Esta propiedad combina arquitectura contemporánea, amplios espacios y acceso a amenidades de clase mundial, posicionándose como una residencia de alto nivel y una inversión inmobiliaria premium con excelente rentabilidad.
+
+## Datos Generales de la Propiedad
+
+- Terreno: aprox. 690 m²
+- Construcción: aprox. 255 m²
+- Habitaciones: 3
+- Habitación de servicio: 1
+- Baños: 6
+- Sala de concepto abierto
+- Cocina moderna
+- Piscina privada
+- Jardín
+- Parqueo: 2 vehículos
+
+## Terraza Exterior Tipo Rooftop – Terraza de Lujo
+
+La propiedad cuenta con una terraza exterior tipo rooftop, diseñada como un espacio de alto valor estético y funcional, altamente demandado en el mercado de renta vacacional premium.
+
+**Rooftop equipado con:**
+- Jacuzzi
+- Área de BBQ
+- Baño independiente
+- Área social ideal para eventos privados y relajación
+
+El rooftop permite mayor ocupación, mejores reseñas y tarifas superiores en plataformas de alquiler.
+
+## Rentabilidad y Desempeño en Airbnb
+
+**Tarifa promedio por noche: USD $950**
+
+Este desempeño confirma:
+- Alta demanda del destino
+- Perfil de huésped premium
+- Ingresos pasivos en dólares
+- Excelente proyección de rentabilidad anual
+
+## Amenidades y Beneficios Exclusivos de Cap Cana
+
+**Gastronomy & Entertainment ↔ Marina de Cap Cana**
+- Restaurantes gourmet y cocina internacional
+- Bares, lounges y espacios sociales
+- Eventos exclusivos para residentes
+- Marina de categoría internacional
+- Capacidad para yates de gran eslora
+- Ambiente náutico internacional
+
+**Servicios y Facilidades ↔ Seguridad y Orden Urbano**
+- Colegio internacional
+- Centros médicos cercanos
+- Áreas comerciales
+- Servicios de concierge
+- Seguridad privada 24/7
+- Accesos controlados
+- Infraestructura moderna y soterrada
+
+**Golf de Nivel Mundial ↔ Deportes & Bienestar**
+- Punta Espada Golf Club (Jack Nicklaus)
+- Uno de los mejores campos del Caribe
+- Centro ecuestre de alto nivel
+- Canchas de tenis y pádel
+- Gimnasio y centros de wellness
+
+## Beneficios Clave de Invertir en Cap Cana
+
+- Alta plusvalía sostenida
+- Destino internacional consolidado
+- Mercado activo de renta vacacional premium
+- Perfil de comprador e inquilino de alto poder adquisitivo
+- Entorno planificado, exclusivo y seguro
+- Protección del valor inmobiliario a largo plazo
+
+## Ideal Para
+
+- Inversionistas que buscan alto retorno
+- Compradores de villas de lujo en Cap Cana
+- Clientes interesados en renta vacacional premium
+- Quienes valoran rooftop, marina y amenidades de clase mundial
+- Patrimonio inmobiliario sólido y exclusivo`
         }
     },
-    {
-        id: 12,
+    },
+{
+    id: 12,
         title: "Plaza Comercial Downtown",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "commercial",
-        status: "sale",
-        price: 185000,
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
-        beds: 0,
-        baths: 1,
-        area: 65,
-        features: {
-            en: ["High Traffic", "Private Parking", "Security", "Power Plant"],
+            location: "bavaro",
+                locationLabel: "Bávaro",
+                    type: "commercial",
+                        status: "sale",
+                            price: 185000,
+                                image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
+                                    beds: 0,
+                                        baths: 1,
+                                            area: 65,
+                                                features: {
+        en: ["High Traffic", "Private Parking", "Security", "Power Plant"],
             es: ["Alto Tráfico", "Parqueo Privado", "Seguridad", "Planta Eléctrica"]
-        },
-        description: {
-            en: "Strategic commercial premises in the center of Bavaro. Ideal for corporate office or luxury retail.",
-            es: "Local comercial estratégico en el centro de Bávaro. Ideal para oficina corporativa o retail de lujo."
-        }
     },
-    {
-        id: 13,
+    description: {
+        en: "Strategic commercial premises in the center of Bavaro. Ideal for corporate office or luxury retail.",
+            es: "Local comercial estratégico en el centro de Bávaro. Ideal para oficina corporativa o retail de lujo."
+    }
+},
+{
+    id: 13,
         title: "Terreno Hotelero Miches",
-        location: "miches",
-        locationLabel: "Miches",
-        type: "resorts",
-        status: "sale",
-        price: 154000000,
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-        featured: true,
-        beds: 0,
-        baths: 0,
-        area: 1185000,
-        gallery: [
-            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-            "/images/terreno-hotelero-miches-beachfront-aerial.png"
-        ],
-        features: {
-            en: ["800m Linear Beachfront", "Hotel Zoning", "High Density Approved", "Pier/Marina Feasibility", "Access Roads", "Electricity/Water Access", "Tax Exemptions (CONFOTUR)", "Eco-Tourism Potential"],
+            location: "miches",
+                locationLabel: "Miches",
+                    type: "resorts",
+                        status: "sale",
+                            price: 154000000,
+                                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+                                    featured: true,
+                                        beds: 0,
+                                            baths: 0,
+                                                area: 1185000,
+                                                    gallery: [
+                                                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+                                                        "/images/terreno-hotelero-miches-beachfront-aerial.png"
+                                                    ],
+                                                        features: {
+        en: ["800m Linear Beachfront", "Hotel Zoning", "High Density Approved", "Pier/Marina Feasibility", "Access Roads", "Electricity/Water Access", "Tax Exemptions (CONFOTUR)", "Eco-Tourism Potential"],
             es: ["800m Lineales de Playa", "Zonificación Hotelera", "Alta Densidad Aprobada", "Factibilidad Muelle/Marina", "Vías de Acceso", "Acceso Luz/Agua", "Exenciones Fiscales (CONFOTUR)", "Potencial Eco-Turístico"]
-        },
-        description: {
-            en: `Beachfront Land in Miches – Strategic Opportunity for Large-Scale Tourist Development
+    },
+    description: {
+        en: `Beachfront Land in Miches – Strategic Opportunity for Large-Scale Tourist Development
 
 We present an exceptional investment opportunity in Miches, one of the Caribbean's most projected tourist destinations, currently transforming into a world-class hotel hub.
 
@@ -1852,49 +2019,49 @@ Invertir hoy en Miches es invertir en el futuro del turismo del Caribe.
 - Desarrolladores turísticos
 - Proyectos hoteleros de gran escala
 - Inversiones estratégicas a largo plazo`
-        }
-    },
-    {
-        id: 14,
+    }
+},
+{
+    id: 14,
         title: "Beachfront Condo Rental",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "condo",
-        status: "rent",
-        price: 3500,
-        image: "/images/rental-condo-generated.png",
-        beds: 2,
-        baths: 2,
-        area: 110,
-        features: {
-            en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
+            location: "bavaro",
+                locationLabel: "Bávaro",
+                    type: "condo",
+                        status: "rent",
+                            price: 3500,
+                                image: "/images/rental-condo-generated.png",
+                                    beds: 2,
+                                        baths: 2,
+                                            area: 110,
+                                                features: {
+        en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
             es: ["Acceso Playa", "Amueblado", "Wifi Alta Vel", "Seguridad"]
-        },
-        description: {
-            en: "Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays.",
+    },
+    description: {
+        en: "Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays.",
             es: "Apartamento vacacional totalmente equipado a pasos de la playa. Ideal para estancias cortas o medianas."
-        }
-    },
-    {
-        id: 15,
+    }
+},
+{
+    id: 15,
         title: "Luxury Villa Cap Cana",
-        location: "capcana",
-        locationLabel: "Cap Cana",
-        type: "villa",
-        status: "rent",
-        price: 8000,
-        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
-        beds: 4,
-        baths: 4.5,
-        area: 500,
-        features: {
-            en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
+            location: "capcana",
+                locationLabel: "Cap Cana",
+                    type: "villa",
+                        status: "rent",
+                            price: 8000,
+                                image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+                                    beds: 4,
+                                        baths: 4.5,
+                                            area: 500,
+                                                features: {
+        en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
             es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
-        },
-        description: {
-            en: "Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included.",
-            es: "Experiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido."
-        }
     },
+    description: {
+        en: "Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included.",
+            es: "Experiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido."
+    }
+},
 
 ];
