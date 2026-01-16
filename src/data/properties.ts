@@ -13,47 +13,58 @@ export interface Property {
     features: {
         en: string[];
         es: string[];
-    };
-    description: {
-        en: string;
-        es: string;
-    };
-    gallery?: string[];
-    videoUrl?: string;
-    virtualTourUrl?: string;
-    featured?: boolean;
-    coordinates?: {
-        lat: number;
-        lng: number;
-    };
-    constructionStages?: {
-        date: string;
-        title: { es: string; en: string };
-        description: { es: string; en: string };
-        status: "completed" | "in-progress" | "pending";
-    }[];
-    completionPercent?: number;
-}
-
-export const properties: Property[] = [
-    {
-        id: 1,
-        title: "The Beach – Punta Cana",
-        location: "puntacana",
-        locationLabel: "Punta Cana City Place",
-        type: "condo",
-        status: "sale",
-        price: 170000,
-        image: "/images/the-beach-punta-cana-crystal-lagoon.jpg",
-        beds: 1,
-        baths: 1,
-        area: 65,
         features: {
-            en: ["Crystal Lagoon (Private Beach)", "CONFOTUR Tax Exemption (15 Years)", "5 Resort Pools", "Airbnb Friendly", "Sports Zone (Tennis, Padel, Soccer)", "Gym & Spa", "24/7 Security", "Shuttle to Beach/Malls"],
-            es: ["Crystal Lagoon (Playa Privada)", "Exención Fiscal CONFOTUR (15 años)", "5 Piscinas Resort", "Airbnb Amigable", "Zona Deportiva (Tenis, Pádel, Fútbol)", "Gimnasio y Spa", "Seguridad 24/7", "Transporte a Playa/Malls"]
-        },
+            en: string[];
+            es: string[];
+        };
+        specs?: {
+            en: string[];
+            es: string[];
+        };
+        detailedSections?: {
+            title: { en: string; es: string };
+            content: { en: string; es: string };
+        }[];
         description: {
-            en: `The Beach – Vida Resort with Crystal Lagoon in Punta Cana City Place
+            en: string;
+            es: string;
+        };
+        gallery?: string[];
+        videoUrl?: string;
+        virtualTourUrl?: string;
+        featured?: boolean;
+        coordinates?: {
+            lat: number;
+            lng: number;
+        };
+        constructionStages?: {
+            date: string;
+            title: { es: string; en: string };
+            description: { es: string; en: string };
+            status: "completed" | "in-progress" | "pending";
+        }[];
+        completionPercent?: number;
+    }
+
+    export const properties: Property[] = [
+    {
+    id: 1,
+    title: "The Beach – Punta Cana",
+    location: "puntacana",
+    locationLabel: "Punta Cana City Place",
+    type : "condo",
+    status: "sale",
+    price: 170000,
+    image: "/images/the-beach-punta-cana-crystal-lagoon.jpg",
+    beds: 1,
+    baths: 1,
+    area: 65,
+    features: {
+    en: ["Crystal Lagoon (Private Beach)", "CONFOTUR Tax Exemption (15 Years)", "5 Resort Pools", "Airbnb Friendly", "Sports Zone (Tennis, Padel, Soccer)", "Gym & Spa", "24/7 Security", "Shuttle to Beach/Malls"],
+    es: ["Crystal Lagoon (Playa Privada)", "Exención Fiscal CONFOTUR (15 años)", "5 Piscinas Resort", "Airbnb Amigable", "Zona Deportiva (Tenis, Pádel, Fútbol)", "Gimnasio y Spa", "Seguridad 24/7", "Transporte a Playa/Malls"]
+    },
+    description: {
+    en: `The Beach – Vida Resort with Crystal Lagoon in Punta Cana City Place
 ## Welcome to The Beach
 A unique residential project located in Punta Cana City Place, where comfort, sustainability, and a resort-style lifestyle come together to create one of the best real estate investment opportunities in Punta Cana.
 
@@ -134,7 +145,7 @@ The Beach is ideal for:
 
 ## Conclusion
 Choosing The Beach in Punta Cana City Place is choosing a resort-style lifestyle, a safe investment, and a property in one of the Caribbean's most innovative projects.`,
-            es: `The Beach – Vida Resort con Crystal Lagoon en Punta Cana City Place
+    es: `The Beach – Vida Resort con Crystal Lagoon en Punta Cana City Place
 ## Bienvenido a The Beach
 Un proyecto residencial único ubicado en Punta Cana City Place, donde el confort, la sostenibilidad y el estilo de vida tipo resort se unen para crear una de las mejores oportunidades de inversión inmobiliaria en Punta Cana.
 
@@ -215,81 +226,81 @@ The Beach es ideal para:
 
 ## Conclusión
 Elegir The Beach en Punta Cana City Place es elegir un estilo de vida tipo resort, una inversión segura y una propiedad en uno de los proyectos más innovadores del Caribe.`
-        },
-        gallery: [
-            "/images/the-beach-punta-cana-crystal-lagoon.jpg",
-            "/images/the-beach-resort-pool-view-punta-cana.jpg",
-            "/images/the-beach-artificial-beach-lagoon-punta-cana.jpg",
-            "/images/the-beach-long-pool-amenities-punta-cana.jpg",
-            "/images/the-beach-wellness-yoga-deck-punta-cana.jpg",
-            "/images/the-beach-master-plan-layout-punta-cana.jpg",
-            "/images/the-beach-rooftop-jacuzzi-terrace-punta-cana.jpg",
-            "/images/the-beach-penthouse-terrace-dining-punta-cana.jpg",
-            "/images/the-beach-building-exterior-gardens-punta-cana.jpg",
-            "/images/the-beach-aerial-view-complex-punta-cana.jpg",
-            "/images/the-beach-aerial-view-pools-amenities-punta-cana.jpg",
-            "/images/the-beach-evening-pool-view-punta-cana.jpg",
-            "/images/the-beach-building-facade-large-pool-punta-cana.jpg",
-            "/images/the-beach-lagoon-beach-lounge-area-punta-cana.jpg",
-            "/images/the-beach-outdoor-lounge-pergola-punta-cana.jpg",
-            "/images/the-beach-balcony-view-pool-punta-cana.jpg",
-            "/images/the-beach-interior-living-room-design-punta-cana.jpg",
-            "/images/the-beach-bedroom-suite-terrace-view-punta-cana.jpg",
-            "/images/the-beach-ground-floor-terrace-jacuzzi-punta-cana.jpg",
-            "/images/the-beach-dining-area-kitchen-punta-cana.jpg",
-            "/images/the-beach-kitchen-island-view-punta-cana.jpg",
-            "/images/the-beach-modern-living-room-interior-punta-cana.jpg"
-        ],
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
-        virtualTourUrl: "https://my.matterport.com/show/?m=aRGoTozjtCa",
-        featured: true,
-        coordinates: { lat: 18.6658, lng: -68.4112 },
-        completionPercent: 45,
-        constructionStages: [
-            {
-                date: "Jan 2024",
-                title: { es: "Lanzamiento y Diseño", en: "Launch & Design" },
-                description: { es: "Diseño arquitectónico urbano y master plan finalizado.", en: "Urban architectural design and master plan finalized." },
-                status: "completed"
-            },
-            {
-                date: "Apr 2024",
-                title: { es: "Movimiento de Tierra", en: "Earth Movement" },
-                description: { es: "Limpieza del terreno y preparación para cimentación.", en: "Site clearing and foundation preparation." },
-                status: "completed"
-            },
-            {
-                date: "Oct 2024",
-                title: { es: "Estructura de Edificios", en: "Building Structure" },
-                description: { es: "Inicio de construcción del esqueleto de los primeros 5 bloques.", en: "Start of skeleton construction for the first 5 blocks." },
-                status: "in-progress"
-            },
-            {
-                date: "Jun 2025",
-                title: { es: "Fase de Acabados", en: "Finishes Phase" },
-                description: { es: "Instalación de interiores y áreas sociales en rooftop.", en: "Interior installation and rooftop social areas." },
-                status: "pending"
-            }
-        ]
+    },
+    gallery: [
+    "/images/the-beach-punta-cana-crystal-lagoon.jpg",
+    "/images/the-beach-resort-pool-view-punta-cana.jpg",
+    "/images/the-beach-artificial-beach-lagoon-punta-cana.jpg",
+    "/images/the-beach-long-pool-amenities-punta-cana.jpg",
+    "/images/the-beach-wellness-yoga-deck-punta-cana.jpg",
+    "/images/the-beach-master-plan-layout-punta-cana.jpg",
+    "/images/the-beach-rooftop-jacuzzi-terrace-punta-cana.jpg",
+    "/images/the-beach-penthouse-terrace-dining-punta-cana.jpg",
+    "/images/the-beach-building-exterior-gardens-punta-cana.jpg",
+    "/images/the-beach-aerial-view-complex-punta-cana.jpg",
+    "/images/the-beach-aerial-view-pools-amenities-punta-cana.jpg",
+    "/images/the-beach-evening-pool-view-punta-cana.jpg",
+    "/images/the-beach-building-facade-large-pool-punta-cana.jpg",
+    "/images/the-beach-lagoon-beach-lounge-area-punta-cana.jpg",
+    "/images/the-beach-outdoor-lounge-pergola-punta-cana.jpg",
+    "/images/the-beach-balcony-view-pool-punta-cana.jpg",
+    "/images/the-beach-interior-living-room-design-punta-cana.jpg",
+    "/images/the-beach-bedroom-suite-terrace-view-punta-cana.jpg",
+    "/images/the-beach-ground-floor-terrace-jacuzzi-punta-cana.jpg",
+    "/images/the-beach-dining-area-kitchen-punta-cana.jpg",
+    "/images/the-beach-kitchen-island-view-punta-cana.jpg",
+    "/images/the-beach-modern-living-room-interior-punta-cana.jpg"
+    ],
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
+    virtualTourUrl: "https://my.matterport.com/show/?m=aRGoTozjtCa",
+    featured: true,
+    coordinates: { lat: 18.6658, lng: -68.4112 },
+    completionPercent: 45,
+    constructionStages: [
+    {
+    date: "Jan 2024",
+    title: { es: "Lanzamiento y Diseño", en: "Launch & Design" },
+    description: { es: "Diseño arquitectónico urbano y master plan finalizado.", en: "Urban architectural design and master plan finalized." },
+    status: "completed"
     },
     {
-        id: 2,
-        title: "City Place – Downtown Punta Cana",
-        location: "puntacana",
-        locationLabel: "Downtown Punta Cana",
-        type: "condo",
-        status: "sale",
-        price: 115500,
-        image: "/images/city-place-downtown-punta-cana.jpg",
-        beds: 1,
-        baths: 1,
-        area: 50,
-        features: {
-            en: ["Rooftop Pool", "Social Area", "Lobby", "Covered Parking", "Underground Parking", "Elevator", "24/7 Security", "CONFOTUR Tax Exemption", "Airbnb Friendly"],
-            es: ["Piscina en Rooftop", "Área Social", "Lobby", "Estacionamiento Techado", "Estacionamiento Soterrado", "Ascensor", "Seguridad 24/7", "Exención Fiscal CONFOTUR", "Airbnb Amigable"]
-        },
-        description: {
-            en: `City Place – Apartments for Sale in the Heart of Punta Cana
+    date: "Apr 2024",
+    title: { es: "Movimiento de Tierra", en: "Earth Movement" },
+    description: { es: "Limpieza del terreno y preparación para cimentación.", en: "Site clearing and foundation preparation." },
+    status: "completed"
+    },
+    {
+    date: "Oct 2024",
+    title: { es: "Estructura de Edificios", en: "Building Structure" },
+    description: { es: "Inicio de construcción del esqueleto de los primeros 5 bloques.", en: "Start of skeleton construction for the first 5 blocks." },
+    status: "in-progress"
+    },
+    {
+    date: "Jun 2025",
+    title: { es: "Fase de Acabados", en: "Finishes Phase" },
+    description: { es: "Instalación de interiores y áreas sociales en rooftop.", en: "Interior installation and rooftop social areas." },
+    status: "pending"
+    }
+    ]
+    },
+    {
+    id: 2,
+    title: "City Place – Downtown Punta Cana",
+    location: "puntacana",
+    locationLabel: "Downtown Punta Cana",
+    type : "condo",
+    status: "sale",
+    price: 115500,
+    image: "/images/city-place-downtown-punta-cana.jpg",
+    beds: 1,
+    baths: 1,
+    area: 50,
+    features: {
+    en: ["Rooftop Pool", "Social Area", "Lobby", "Covered Parking", "Underground Parking", "Elevator", "24/7 Security", "CONFOTUR Tax Exemption", "Airbnb Friendly"],
+    es: ["Piscina en Rooftop", "Área Social", "Lobby", "Estacionamiento Techado", "Estacionamiento Soterrado", "Ascensor", "Seguridad 24/7", "Exención Fiscal CONFOTUR", "Airbnb Amigable"]
+    },
+    description: {
+    en: `City Place – Apartments for Sale in the Heart of Punta Cana
 ## Welcome to City Place
 A modern residential development located in Punta Cana City Place, designed to offer a perfect combination of tropical exclusivity and urban sophistication, in one of the areas with the highest real estate growth and demand in Punta Cana.
 
@@ -356,7 +367,7 @@ City Place offers a structured and accessible payment plan:
 - Inicial: 20 %
 - Durante la construcción: 40 %
 - Contra entrega: 40 %`,
-            es: `City Place – Apartamentos en Venta en el Corazón de Punta Cana
+    es: `City Place – Apartamentos en Venta en el Corazón de Punta Cana
 ## Bienvenido a City Place
 Un desarrollo residencial moderno ubicado en Punta Cana City Place, concebido para ofrecer una combinación perfecta entre exclusividad tropical y sofisticación urbana, en una de las zonas con mayor crecimiento y demanda inmobiliaria de Punta Cana.
 
@@ -423,31 +434,31 @@ City Place ofrece un plan de pago estructurado y accesible:
 - Banco: 20 %
 - Durante la construcción: 40 %
 - Contra entrega: 40 %`
-        },
-        gallery: [
-            "/images/city-place-downtown-punta-cana.jpg"
-        ],
-        coordinates: { lat: 18.6650, lng: -68.4100 }, // Approx Downtown
-        featured: true
+    },
+    gallery: [
+    "/images/city-place-downtown-punta-cana.jpg"
+    ],
+    coordinates: { lat: 18.6650, lng: -68.4100 }, // Approx Downtown
+    featured: true
     },
     {
-        id: 3,
-        title: "Diana Tropical Village",
-        location: "bavaro",
-        locationLabel: "Brisas de Punta Cana",
-        type: "villa",
-        status: "sale",
-        price: 246000,
-        image: "/images/diana-tropical-village-villas-brisas-punta-cana.jpg",
-        beds: 3,
-        baths: 3,
-        area: 224,
-        features: {
-            en: ["Private Pool Included", "Gated Community", "Customizable Plan", "Individual Title", "Low HOA", "Airbnb Friendly", "24/7 Security", "Picuzzi"],
-            es: ["Piscina Privada Incluida", "Residencial Cerrado", "Plan Personalizable", "Título Individual", "Bajo Mantenimiento", "Airbnb Amigable", "Seguridad 24/7", "Picuzzi"]
-        },
-        description: {
-            en: `Diana Tropical Village – Luxury Villas in Punta Cana
+    id: 3,
+    title: "Diana Tropical Village",
+    location: "bavaro",
+    locationLabel: "Brisas de Punta Cana",
+    type : "villa",
+    status: "sale",
+    price: 246000,
+    image: "/images/diana-tropical-village-villas-brisas-punta-cana.jpg",
+    beds: 3,
+    baths: 3,
+    area: 224,
+    features: {
+    en: ["Private Pool Included", "Gated Community", "Customizable Plan", "Individual Title", "Low HOA", "Airbnb Friendly", "24/7 Security", "Picuzzi"],
+    es: ["Piscina Privada Incluida", "Residencial Cerrado", "Plan Personalizable", "Título Individual", "Bajo Mantenimiento", "Airbnb Amigable", "Seguridad 24/7", "Picuzzi"]
+    },
+    description: {
+    en: `Diana Tropical Village – Luxury Villas in Punta Cana
 
 Welcome to Diana Tropical Village, an exclusive villa project that redefines comfort, privacy, and real estate investment in one of the areas with the highest growth and projection in Punta Cana.
 
@@ -494,7 +505,7 @@ During the pre-construction stage, the owner has the possibility to customize or
 
 - Phase I: 12 months after construction start
 - Phase IV: 30 months after construction start`,
-            es: `Diana Tropical Village – Villas de Lujo en Punta Cana
+    es: `Diana Tropical Village – Villas de Lujo en Punta Cana
 
 Bienvenido a Diana Tropical Village, un exclusivo proyecto de villas que redefine el confort, la privacidad y la inversión inmobiliaria en una de las zonas de mayor crecimiento y proyección de Punta Cana.
 
@@ -541,72 +552,72 @@ Durante la etapa de preconstrucción, el propietario tiene la posibilidad de per
 
 - Fase I: 12 meses después del inicio de obra
 - Fase IV: 30 meses después del inicio de obra`
-        },
-        gallery: [
-            "/images/diana-tropical-village-villas-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-living-room-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-dining-room-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-exterior-view-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-facade-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-interior-living-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-pool-bbq-area-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-terrace-view-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-modern-kitchen-brisas-punta-cana.png",
-            "/images/diana-tropical-village-dining-space-brisas-punta-cana.png",
-            "/images/diana-tropical-village-kitchen-design-brisas-punta-cana.png",
-            "/images/diana-tropical-village-kitchen-island-brisas-punta-cana.png",
-            "/images/diana-tropical-village-open-concept-living-brisas-punta-cana.png",
-            "/images/diana-tropical-village-kitchen-bar-view-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-bedroom-tv-wall-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-master-bedroom-design-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-modern-bathroom-vanity-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-bedroom-wardrobe-art-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-bedroom-balcony-view-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-bedroom-wood-paneling-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-minimalist-bedroom-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-pool-lounge-detail-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-walk-in-closet-brisas-punta-cana.jpg",
-            "/images/diana-tropical-village-outdoor-bbq-kitchen-brisas-punta-cana.jpg"
-        ],
-        featured: true,
-        coordinates: { lat: 18.6825, lng: -68.4110 }
+    },
+    gallery: [
+    "/images/diana-tropical-village-villas-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-living-room-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-dining-room-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-exterior-view-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-facade-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-interior-living-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-pool-bbq-area-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-terrace-view-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-modern-kitchen-brisas-punta-cana.png",
+    "/images/diana-tropical-village-dining-space-brisas-punta-cana.png",
+    "/images/diana-tropical-village-kitchen-design-brisas-punta-cana.png",
+    "/images/diana-tropical-village-kitchen-island-brisas-punta-cana.png",
+    "/images/diana-tropical-village-open-concept-living-brisas-punta-cana.png",
+    "/images/diana-tropical-village-kitchen-bar-view-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-bedroom-tv-wall-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-master-bedroom-design-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-modern-bathroom-vanity-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-bedroom-wardrobe-art-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-bedroom-balcony-view-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-bedroom-wood-paneling-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-minimalist-bedroom-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-pool-lounge-detail-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-walk-in-closet-brisas-punta-cana.jpg",
+    "/images/diana-tropical-village-outdoor-bbq-kitchen-brisas-punta-cana.jpg"
+    ],
+    featured: true,
+    coordinates: { lat: 18.6825, lng: -68.4110 }
     },
     {
-        id: 4,
-        title: "Cruises on Land Punta Cana",
-        location: "puntacana",
-        locationLabel: "Punta Cana",
-        type: "condohotel",
-        status: "sale",
-        price: 71717,
-        image: "/images/cruises-on-land-main-exterior-punta-cana.jpg",
-        beds: 1,
-        baths: 1,
-        area: 45,
-        features: {
-            en: [
-                "High ROI & Managed Rental Program",
-                "15,000m² Artificial Beach & Wave Pool",
-                "100+ Resort Amenities & Theme Park",
-                "15 mins from Punta Cana Airport",
-                "Tennis, Paddle, Basketball & Soccer Courts",
-                "Museum, Planetarium & Film Studio",
-                "20+ Gourmet Theme Restaurants",
-                "24/7 Gated Security & Heliport"
-            ],
-            es: [
-                "Alta Rentabilidad y Programa de Gestión de Alquileres",
-                "15,000m² Playa Artificial y Piscina de Olas",
-                "Más de 100 Amenidades y Parque Temático",
-                "A 15 minutos del Aeropuerto de Punta Cana",
-                "Canchas de Tenis, Pádel, Básquet y Fútbol",
-                "Museo, Planetario y Estudios de Cine",
-                "Más de 20 Restaurantes Temáticos",
-                "Seguridad 24/7 y Helipuerto"
-            ]
-        },
-        description: {
-            en: `Cruise On Land Project – Thematic Investment Resort in Punta Cana
+    id: 4,
+    title: "Cruises on Land Punta Cana",
+    location: "puntacana",
+    locationLabel: "Punta Cana",
+    type : "condohotel",
+    status: "sale",
+    price: 71717,
+    image: "/images/cruises-on-land-main-exterior-punta-cana.jpg",
+    beds: 1,
+    baths: 1,
+    area: 45,
+    features: {
+    en: [
+    "High ROI & Managed Rental Program",
+    "15,000m² Artificial Beach & Wave Pool",
+    "100+ Resort Amenities & Theme Park",
+    "15 mins from Punta Cana Airport",
+    "Tennis, Paddle, Basketball & Soccer Courts",
+    "Museum, Planetarium & Film Studio",
+    "20+ Gourmet Theme Restaurants",
+    "24/7 Gated Security & Heliport"
+    ],
+    es: [
+    "Alta Rentabilidad y Programa de Gestión de Alquileres",
+    "15,000m² Playa Artificial y Piscina de Olas",
+    "Más de 100 Amenidades y Parque Temático",
+    "A 15 minutos del Aeropuerto de Punta Cana",
+    "Canchas de Tenis, Pádel, Básquet y Fútbol",
+    "Museo, Planetario y Estudios de Cine",
+    "Más de 20 Restaurantes Temáticos",
+    "Seguridad 24/7 y Helipuerto"
+    ]
+    },
+    description: {
+    en: `Cruise On Land Project – Thematic Investment Resort in Punta Cana
 
 Welcome aboard, Captain!
 Prepare to discover one of the most innovative and disruptive real estate investment opportunities in the Caribbean.
@@ -641,7 +652,7 @@ This privileged location guarantees high capital appreciation, excellent connect
 - Tourism properties with excellent appreciation projection
 - Highly demanded 1, 2, and 3-bedroom units
 - A smart balance between investment, security, and personal enjoyment`,
-            es: `Proyecto Cruise On Land – Resort Temático de Inversión en Punta Cana
+    es: `Proyecto Cruise On Land – Resort Temático de Inversión en Punta Cana
 
 ¡Bienvenido a bordo, Capitán!
 Prepárese para descubrir una de las oportunidades de inversión inmobiliaria más innovadoras y disruptivas del Caribe.
@@ -676,60 +687,60 @@ Esta ubicación privilegiada garantiza alta plusvalía, excelente conectividad y
 - Propiedades turísticas con excelente proyección de valorización
 - Unidades de 1, 2 y 3 habitaciones altamente demandadas
 - Un equilibrio inteligente entre inversión, seguridad y disfrute personal`
-        },
-        gallery: [
-            "/images/cruises-on-land-main-exterior-punta-cana.jpg",
-            "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
-            "/images/cruises-on-land-water-park-attractions-punta-cana.jpg",
-            "/images/cruises-on-land-cruise-ship-building-punta-cana.jpg",
-            "/images/cruises-on-land-master-plan-map-punta-cana.png",
-            "/images/cruises-on-land-wave-pool-event-stage-punta-cana.jpg",
-            "/images/cruises-on-land-adventure-water-park-slides-punta-cana.jpg",
-            "/images/cruises-on-land-crystal-lagoon-beach-view-punta-cana.jpg",
-            "/images/cruises-on-land-resort-amenities-lounge-punta-cana.jpg",
-            "/images/cruises-on-land-ship-building-side-view-punta-cana.jpg",
-            "/images/cruises-on-land-water-park-slides-detail-punta-cana.jpg",
-            "/images/cruises-on-land-kids-water-park-zone-punta-cana.jpg",
-            "/images/cruises-on-land-residences-aerial-view-punta-cana.jpg",
-            "/images/cruises-on-land-dining-plaza-lake-view-punta-cana.jpg",
-            "/images/cruises-on-land-lighthouse-lake-attraction-punta-cana.jpg",
-            "/images/cruises-on-land-villa-floor-plan-with-pool-punta-cana.jpg",
-            "/images/cruises-on-land-supermarket-grocery-store-punta-cana.jpg",
-            "/images/cruises-on-land-two-bedroom-suite-floor-plan-punta-cana.jpg",
-            "/images/cruises-on-land-luxury-living-room-interior-punta-cana.jpg",
-            "/images/cruises-on-land-master-bedroom-suite-interior-punta-cana.jpg",
-            "/images/cruises-on-land-twin-bedroom-interior-punta-cana.jpg",
-            "/images/cruises-on-land-garden-villa-floor-plan-punta-cana.jpg",
-            "/images/cruises-on-land-bedroom-headboard-detail-punta-cana.jpg",
-            "/images/cruises-on-land-master-suite-balcony-view-punta-cana.jpg",
-            "/images/cruises-on-land-modern-living-dining-room-punta-cana.jpg",
-            "/images/cruises-on-land-living-room-dining-area-punta-cana.jpg",
-            "/images/cruises-on-land-patio-picuzzi-jacuzzi-punta-cana.jpg",
-            "/images/cruises-on-land-living-area-sofa-detail-punta-cana.jpg",
-            "/images/cruises-on-land-spanish-plaza-restaurants-punta-cana.jpg",
-            "/images/cruises-on-land-lake-aerial-overview-punta-cana.jpg"
-        ],
-        virtualTourUrl: "https://kuula.co/share/collection/7JrND?logo=1&info=0&logosize=137&fs=1&vr=1&sd=1&initload=0&autorotate=0.24&autop=10&thumbs=1",
-        coordinates: { lat: 18.5700, lng: -68.3600 }
+    },
+    gallery: [
+    "/images/cruises-on-land-main-exterior-punta-cana.jpg",
+    "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
+    "/images/cruises-on-land-water-park-attractions-punta-cana.jpg",
+    "/images/cruises-on-land-cruise-ship-building-punta-cana.jpg",
+    "/images/cruises-on-land-master-plan-map-punta-cana.png",
+    "/images/cruises-on-land-wave-pool-event-stage-punta-cana.jpg",
+    "/images/cruises-on-land-adventure-water-park-slides-punta-cana.jpg",
+    "/images/cruises-on-land-crystal-lagoon-beach-view-punta-cana.jpg",
+    "/images/cruises-on-land-resort-amenities-lounge-punta-cana.jpg",
+    "/images/cruises-on-land-ship-building-side-view-punta-cana.jpg",
+    "/images/cruises-on-land-water-park-slides-detail-punta-cana.jpg",
+    "/images/cruises-on-land-kids-water-park-zone-punta-cana.jpg",
+    "/images/cruises-on-land-residences-aerial-view-punta-cana.jpg",
+    "/images/cruises-on-land-dining-plaza-lake-view-punta-cana.jpg",
+    "/images/cruises-on-land-lighthouse-lake-attraction-punta-cana.jpg",
+    "/images/cruises-on-land-villa-floor-plan-with-pool-punta-cana.jpg",
+    "/images/cruises-on-land-supermarket-grocery-store-punta-cana.jpg",
+    "/images/cruises-on-land-two-bedroom-suite-floor-plan-punta-cana.jpg",
+    "/images/cruises-on-land-luxury-living-room-interior-punta-cana.jpg",
+    "/images/cruises-on-land-master-bedroom-suite-interior-punta-cana.jpg",
+    "/images/cruises-on-land-twin-bedroom-interior-punta-cana.jpg",
+    "/images/cruises-on-land-garden-villa-floor-plan-punta-cana.jpg",
+    "/images/cruises-on-land-bedroom-headboard-detail-punta-cana.jpg",
+    "/images/cruises-on-land-master-suite-balcony-view-punta-cana.jpg",
+    "/images/cruises-on-land-modern-living-dining-room-punta-cana.jpg",
+    "/images/cruises-on-land-living-room-dining-area-punta-cana.jpg",
+    "/images/cruises-on-land-patio-picuzzi-jacuzzi-punta-cana.jpg",
+    "/images/cruises-on-land-living-area-sofa-detail-punta-cana.jpg",
+    "/images/cruises-on-land-spanish-plaza-restaurants-punta-cana.jpg",
+    "/images/cruises-on-land-lake-aerial-overview-punta-cana.jpg"
+    ],
+    virtualTourUrl: "https://kuula.co/share/collection/7JrND?logo=1&info=0&logosize=137&fs=1&vr=1&sd=1&initload=0&autorotate=0.24&autop=10&thumbs=1",
+    coordinates: { lat: 18.5700, lng: -68.3600 }
     },
     {
-        id: 5,
-        title: "Balcones de Brisas de Punta Cana",
-        location: "bavaro",
-        locationLabel: "Brisas de Punta Cana",
-        type: "condo",
-        status: "sale",
-        price: 132000,
-        image: "/images/balcones-de-brisas-punta-cana-building-facade-angle.jpg",
-        beds: 2,
-        baths: 2,
-        area: 80,
-        features: {
-            en: ["Pool", "Gym", "Gazebo", "Lobby", "Access Control", "Parking", "Rooftop (some units)", "BBQ Pre-installation", "Jacuzzi Pre-installation", "Airbnb Friendly"],
-            es: ["Piscina", "Gimnasio", "Gazebo", "Lobby", "Acceso Controlado", "Estacionamientos", "Rooftop (algunas unidades)", "Preinstalación BBQ", "Preinstalación Jacuzzi", "Airbnb Amigable"]
-        },
-        description: {
-            en: `Balcones de Brisas de Punta Cana – Exclusive Apartments in Brisas de Punta Cana
+    id: 5,
+    title: "Balcones de Brisas de Punta Cana",
+    location: "bavaro",
+    locationLabel: "Brisas de Punta Cana",
+    type : "condo",
+    status: "sale",
+    price: 132000,
+    image: "/images/balcones-de-brisas-punta-cana-building-facade-angle.jpg",
+    beds: 2,
+    baths: 2,
+    area: 80,
+    features: {
+    en: ["Pool", "Gym", "Gazebo", "Lobby", "Access Control", "Parking", "Rooftop (some units)", "BBQ Pre-installation", "Jacuzzi Pre-installation", "Airbnb Friendly"],
+    es: ["Piscina", "Gimnasio", "Gazebo", "Lobby", "Acceso Controlado", "Estacionamientos", "Rooftop (algunas unidades)", "Preinstalación BBQ", "Preinstalación Jacuzzi", "Airbnb Amigable"]
+    },
+    description: {
+    en: `Balcones de Brisas de Punta Cana – Exclusive Apartments in Brisas de Punta Cana
 ## Welcome to Balcones de Brisas de Punta Cana
 An exclusive residential project designed for those seeking tranquility, comfort, and a secure investment in a private and well-connected environment in Punta Cana.
 
@@ -797,7 +808,7 @@ The project offers an accessible and flexible payment plan:
 - 24/7 security and private residential environment
 - Strategic location in Punta Cana
 - Solid and profitable real estate investment`,
-            es: `Balcones de Brisas de Punta Cana – Apartamentos Exclusivos en Brisas de Punta Cana
+    es: `Balcones de Brisas de Punta Cana – Apartamentos Exclusivos en Brisas de Punta Cana
 ## Bienvenido a Balcones de Brisas de Punta Cana
 Un proyecto residencial exclusivo diseñado para quienes buscan tranquilidad, confort y una inversión segura en un entorno privado y bien conectado en Punta Cana.
 
@@ -865,68 +876,68 @@ El proyecto ofrece un plan de pago accesible y flexible:
 - Seguridad 24/7 y entorno residencial privado
 - Ubicación estratégica en Punta Cana
 - Inversión inmobiliaria sólida y rentable`
-        },
-        gallery: [
-            "/images/balcones-de-brisas-punta-cana-building-facade-angle.jpg",
-            "/images/balcones-de-brisas-punta-cana-rooftop-terrace-jacuzzi.jpg",
-            "/images/balcones-de-brisas-punta-cana-pool-area-daytime.jpg",
-            "/images/balcones-de-brisas-punta-cana-pool-lounge-area.jpg",
-            "/images/balcones-de-brisas-punta-cana-street-view-building.jpg",
-            "/images/balcones-de-brisas-punta-cana-gated-entrance-security.jpg",
-            "/images/balcones-de-brisas-punta-cana-exclusive-rooftop-amenities.jpg",
-            "/images/balcones-de-brisas-punta-cana-modern-apartment-facade.jpg",
-            "/images/balcones-de-brisas-punta-cana-living-room-interior-design.jpg",
-            "/images/balcones-de-brisas-punta-cana-building-entrance-elevator.jpg",
-            "/images/balcones-de-brisas-punta-cana-dining-living-area.jpg",
-            "/images/balcones-de-brisas-punta-cana-kitchen-side-view.jpg",
-            "/images/balcones-de-brisas-punta-cana-living-room-tv-wall.jpg",
-            "/images/balcones-de-brisas-punta-cana-kitchen-island-detail.jpg",
-            "/images/balcones-de-brisas-punta-cana-master-bedroom-interior.jpg",
-            "/images/balcones-de-brisas-punta-cana-open-concept-living-dining-view.jpg"
-        ],
-        featured: true
+    },
+    gallery: [
+    "/images/balcones-de-brisas-punta-cana-building-facade-angle.jpg",
+    "/images/balcones-de-brisas-punta-cana-rooftop-terrace-jacuzzi.jpg",
+    "/images/balcones-de-brisas-punta-cana-pool-area-daytime.jpg",
+    "/images/balcones-de-brisas-punta-cana-pool-lounge-area.jpg",
+    "/images/balcones-de-brisas-punta-cana-street-view-building.jpg",
+    "/images/balcones-de-brisas-punta-cana-gated-entrance-security.jpg",
+    "/images/balcones-de-brisas-punta-cana-exclusive-rooftop-amenities.jpg",
+    "/images/balcones-de-brisas-punta-cana-modern-apartment-facade.jpg",
+    "/images/balcones-de-brisas-punta-cana-living-room-interior-design.jpg",
+    "/images/balcones-de-brisas-punta-cana-building-entrance-elevator.jpg",
+    "/images/balcones-de-brisas-punta-cana-dining-living-area.jpg",
+    "/images/balcones-de-brisas-punta-cana-kitchen-side-view.jpg",
+    "/images/balcones-de-brisas-punta-cana-living-room-tv-wall.jpg",
+    "/images/balcones-de-brisas-punta-cana-kitchen-island-detail.jpg",
+    "/images/balcones-de-brisas-punta-cana-master-bedroom-interior.jpg",
+    "/images/balcones-de-brisas-punta-cana-open-concept-living-dining-view.jpg"
+    ],
+    featured: true
     },
     {
-        id: 6,
-        title: "Tropical Breeze",
-        location: "bavaro",
-        locationLabel: "Brisas de Punta Cana",
-        type: "condo",
-        status: "sale",
-        price: 128500,
-        image: "/images/tropical-breezes-main-facade-punta-cana.jpg",
-        beds: 2,
-        baths: 2,
-        area: 90,
-        gallery: [
-            "/images/tropical-breezes-main-facade-punta-cana.jpg",
-            "/images/tropical-breezes-pool-bbq-area-punta-cana.jpg",
-            "/images/tropical-breezes-internal-courtyard-pool-punta-cana.jpg",
-            "/images/tropical-breezes-modern-apartments-exterior-punta-cana.jpg",
-            "/images/tropical-breezes-gated-entrance-street-punta-cana.jpg",
-            "/images/tropical-breezes-gym-interior-punta-cana.png",
-            "/images/tropical-breezes-gym-pool-view-punta-cana.jpg",
-            "/images/tropical-breezes-top-down-courtyard-view-punta-cana.jpg",
-            "/images/tropical-breezes-floor-plan-level-1-2-punta-cana.jpg",
-            "/images/tropical-breezes-floor-plan-patio-garden-punta-cana.jpg",
-            "/images/tropical-breezes-floor-plan-2-punta-cana.jpg",
-            "/images/tropical-breezes-ground-floor-plan-garden-punta-cana.jpg",
-            "/images/tropical-breezes-living-room-interior-design-punta-cana.jpg",
-            "/images/tropical-breezes-dining-living-area-punta-cana.jpg",
-            "/images/tropical-breezes-modern-kitchen-interior-punta-cana.jpg",
-            "/images/tropical-breezes-interior-dining-living-punta-cana.jpg",
-            "/images/tropical-breezes-bedroom-wardrobe-tv-punta-cana.jpg",
-            "/images/tropical-breezes-living-room-modern-lighting-punta-cana.jpg",
-            "/images/tropical-breezes-master-bedroom-suite-punta-cana.jpg",
-            "/images/tropical-breezes-twin-bedroom-suite-punta-cana.jpg",
-            "/images/tropical-breezes-outdoor-dining-pergola-terrace-punta-cana.jpg"
-        ],
-        features: {
-            en: ["Gated Community", "Pool", "Jacuzzi", "BBQ Area", "Gym", "Airbnb Friendly", "24/7 Security", "Private Parking"],
-            es: ["Proyecto Cerrado", "Piscina", "Jacuzzi", "Área de BBQ", "Gimnasio", "Airbnb Amigable", "Seguridad 24/7", "Parqueo Privado"]
-        },
-        description: {
-            en: `Tropical Breeze – Modern Apartments in Brisas de Punta Cana
+    id: 6,
+    title: "Tropical Breeze",
+    location: "bavaro",
+    locationLabel: "Brisas de Punta Cana",
+    type : "condo",
+    status: "sale",
+    price: 128500,
+    image: "/images/tropical-breezes-main-facade-punta-cana.jpg",
+    beds: 2,
+    baths: 2,
+    area: 90,
+    gallery: [
+    "/images/tropical-breezes-main-facade-punta-cana.jpg",
+    "/images/tropical-breezes-pool-bbq-area-punta-cana.jpg",
+    "/images/tropical-breezes-internal-courtyard-pool-punta-cana.jpg",
+    "/images/tropical-breezes-modern-apartments-exterior-punta-cana.jpg",
+    "/images/tropical-breezes-gated-entrance-street-punta-cana.jpg",
+    "/images/tropical-breezes-gym-interior-punta-cana.png",
+    "/images/tropical-breezes-gym-pool-view-punta-cana.jpg",
+    "/images/tropical-breezes-top-down-courtyard-view-punta-cana.jpg",
+    "/images/tropical-breezes-floor-plan-level-1-2-punta-cana.jpg",
+    "/images/tropical-breezes-floor-plan-patio-garden-punta-cana.jpg",
+    "/images/tropical-breezes-floor-plan-2-punta-cana.jpg",
+    "/images/tropical-breezes-ground-floor-plan-garden-punta-cana.jpg",
+    "/images/tropical-breezes-living-room-interior-design-punta-cana.jpg",
+    "/images/tropical-breezes-dining-living-area-punta-cana.jpg",
+    "/images/tropical-breezes-modern-kitchen-interior-punta-cana.jpg",
+    "/images/tropical-breezes-interior-dining-living-punta-cana.jpg",
+    "/images/tropical-breezes-bedroom-wardrobe-tv-punta-cana.jpg",
+    "/images/tropical-breezes-living-room-modern-lighting-punta-cana.jpg",
+    "/images/tropical-breezes-master-bedroom-suite-punta-cana.jpg",
+    "/images/tropical-breezes-twin-bedroom-suite-punta-cana.jpg",
+    "/images/tropical-breezes-outdoor-dining-pergola-terrace-punta-cana.jpg"
+    ],
+    features: {
+    en: ["Gated Community", "Pool", "Jacuzzi", "BBQ Area", "Gym", "Airbnb Friendly", "24/7 Security", "Private Parking"],
+    es: ["Proyecto Cerrado", "Piscina", "Jacuzzi", "Área de BBQ", "Gimnasio", "Airbnb Amigable", "Seguridad 24/7", "Parqueo Privado"]
+    },
+    description: {
+    en: `Tropical Breeze – Modern Apartments in Brisas de Punta Cana
 
 Welcome to Tropical Breeze, a real estate project designed for those seeking tranquility, comfort, and a smart investment in one of the fastest-growing residential areas of Punta Cana.
 
@@ -986,7 +997,7 @@ A key location to guarantee high tourist demand and ease of mobility.
 - Upon Delivery: 50%
 
 A scheme designed to facilitate investment and optimize payment flow.`,
-            es: `Tropical Breeze – Apartamentos Modernos en Brisas de Punta Cana
+    es: `Tropical Breeze – Apartamentos Modernos en Brisas de Punta Cana
 
 Bienvenido a Tropical Breeze, un proyecto inmobiliario diseñado para quienes buscan tranquilidad, confort y una inversión inteligente en una de las zonas residenciales con mayor crecimiento y proyección de Punta Cana.
 
@@ -1047,27 +1058,27 @@ Una ubicación clave para garantizar alta demanda turística y facilidad de movi
 - Contra entrega: 50 %
 
 Un esquema pensado para facilitar la inversión y optimizar el flujo de pagos.`
-        },
-        featured: true
+    },
+    featured: true
     },
     {
-        id: 7,
-        title: "KERRI PLUS",
-        location: "vistacana",
-        locationLabel: "Vista Cana",
-        type: "villa",
-        status: "sale",
-        price: 385000,
-        image: "/images/kerry-plus-modern-villa-facade-punta-cana.jpg",
-        beds: 3,
-        baths: 3.5,
-        area: 321.24,
-        features: {
-            en: ["Private Pool", "Artificial Beach", "Golf Course", "Clubhouse", "Eco Trails", "Double Parking", "Terrace", "Gated Security", "Airbnb Friendly"],
-            es: ["Piscina Privada", "Playa Artificial", "Campo de Golf", "Casa Club", "Senderos Ecológicos", "Parqueo Doble", "Terraza", "Seguridad Cerrada", "Airbnb Amigable"]
-        },
-        description: {
-            en: `KERRI PLUS – Luxury Villas in Vista Cana, Punta Cana
+    id: 7,
+    title: "KERRI PLUS",
+    location: "vistacana",
+    locationLabel: "Vista Cana",
+    type : "villa",
+    status: "sale",
+    price: 385000,
+    image: "/images/kerry-plus-modern-villa-facade-punta-cana.jpg",
+    beds: 3,
+    baths: 3.5,
+    area: 321.24,
+    features: {
+    en: ["Private Pool", "Artificial Beach", "Golf Course", "Clubhouse", "Eco Trails", "Double Parking", "Terrace", "Gated Security", "Airbnb Friendly"],
+    es: ["Piscina Privada", "Playa Artificial", "Campo de Golf", "Casa Club", "Senderos Ecológicos", "Parqueo Doble", "Terraza", "Seguridad Cerrada", "Airbnb Amigable"]
+    },
+    description: {
+    en: `KERRI PLUS – Luxury Villas in Vista Cana, Punta Cana
 
 Welcome to KERRI PLUS, an exclusive luxury villa project located within Vista Cana, one of the most modern, complete, and high-growth urban communities in Punta Cana.
 
@@ -1127,7 +1138,7 @@ Being part of Vista Cana, KERRI PLUS owners enjoy world-class amenities:
 - During Construction: 30%
 - Upon Delivery: 50%
 - Delivery Term: between 12 and 18 months`,
-            es: `KERRI PLUS – Villas de Lujo en Vista Cana, Punta Cana
+    es: `KERRI PLUS – Villas de Lujo en Vista Cana, Punta Cana
 
 Bienvenido a KERRI PLUS, un exclusivo proyecto de villas de lujo ubicado dentro de Vista Cana, una de las comunidades urbanísticas más modernas, completas y de mayor proyección de Punta Cana.
 
@@ -1189,76 +1200,76 @@ Al formar parte de Vista Cana, los propietarios de KERRI PLUS disfrutan de un co
 - Durante la construcción: 30 %
 - Contra entrega: 50 %
 - Plazo de entrega: entre 12 y 18 meses`
-        },
-        gallery: [
-            "/images/kerry-plus-modern-villa-facade-punta-cana.jpg",
-            "/images/kerry-plus-villa-backyard-pool-punta-cana.jpg",
-            "/images/kerry-plus-villa-pool-terrace-night-punta-cana.jpg",
-            "/images/kerry-plus-modern-kitchen-island-punta-cana.jpg",
-            "/images/kerry-plus-kitchen-dining-concept-punta-cana.jpg",
-            "/images/kerry-plus-kitchen-bar-stools-detail-punta-cana.jpg",
-            "/images/kerry-plus-kitchen-breakfast-bar-punta-cana.jpg",
-            "/images/kerry-plus-open-concept-living-dining-punta-cana.jpg",
-            "/images/kerry-plus-master-bedroom-lighting-design-punta-cana.jpg",
-            "/images/kerry-plus-kitchen-island-pendant-lights-punta-cana.jpg"
-        ],
-        featured: true
+    },
+    gallery: [
+    "/images/kerry-plus-modern-villa-facade-punta-cana.jpg",
+    "/images/kerry-plus-villa-backyard-pool-punta-cana.jpg",
+    "/images/kerry-plus-villa-pool-terrace-night-punta-cana.jpg",
+    "/images/kerry-plus-modern-kitchen-island-punta-cana.jpg",
+    "/images/kerry-plus-kitchen-dining-concept-punta-cana.jpg",
+    "/images/kerry-plus-kitchen-bar-stools-detail-punta-cana.jpg",
+    "/images/kerry-plus-kitchen-breakfast-bar-punta-cana.jpg",
+    "/images/kerry-plus-open-concept-living-dining-punta-cana.jpg",
+    "/images/kerry-plus-master-bedroom-lighting-design-punta-cana.jpg",
+    "/images/kerry-plus-kitchen-island-pendant-lights-punta-cana.jpg"
+    ],
+    featured: true
     },
     {
-        id: 8,
-        title: "Proyecto Perla del Mar",
-        location: "whitesands",
-        locationLabel: "White Sands",
-        type: "villa",
-        status: "sale",
-        price: 265000,
-        image: "/images/perla-del-mar-modern-facade-dusk.jpg",
-        beds: 3,
-        baths: 3.5,
-        area: 155,
-        gallery: [
-            "/images/perla-del-mar-modern-facade-dusk.jpg",
-            "/images/perla-del-mar-aerial-view-house-pool.jpg",
-            "/images/perla-del-mar-backyard-pool-patio.jpg",
-            "/images/perla-del-mar-living-room-stairs-interior.jpg",
-            "/images/perla-del-mar-street-view-exterior.jpg",
-            "/images/perla-del-mar-living-room-stairs-wide-punta-cana.jpg",
-            "/images/perla-del-mar-dining-kitchen-chandelier-punta-cana.jpg",
-            "/images/perla-del-mar-modern-kitchen-island-punta-cana.jpg",
-            "/images/perla-del-mar-open-concept-kitchen-living-punta-cana.jpg",
-            "/images/perla-del-mar-dining-table-kitchen-view-punta-cana.jpg",
-            "/images/perla-del-mar-rooftop-model-night-street-view.jpg",
-            "/images/perla-del-mar-rooftop-model-modern-facade.jpg",
-            "/images/perla-del-mar-rooftop-model-front-exterior.jpg",
-            "/images/perla-del-mar-rooftop-model-aerial-day-view.jpg",
-            "/images/perla-del-mar-rooftop-model-aerial-night-view.jpg",
-            "/images/perla-del-mar-rooftop-model-pool-waterfall.jpg",
-            "/images/perla-del-mar-rooftop-model-terrace-lounge.jpg",
-            "/images/perla-del-mar-rooftop-model-living-tv-room.jpg",
-            "/images/perla-del-mar-rooftop-model-pool-deck-top-view.jpg",
-            "/images/perla-del-mar-rooftop-model-rooftop-terrace-jacuzzi-aerial.jpg",
-            "/images/perla-del-mar-rooftop-model-modern-kitchen-black-stove.jpg",
-            "/images/perla-del-mar-rooftop-model-living-room-top-view.jpg",
-            "/images/perla-del-mar-rooftop-model-dining-area-stairs.jpg",
-            "/images/perla-del-mar-rooftop-model-kitchen-island-dining.jpg",
-            "/images/perla-del-mar-rooftop-model-rooftop-jacuzzi-closeup.jpg",
-            "/images/perla-del-mar-rooftop-model-master-bedroom-design.jpg",
-            "/images/perla-del-mar-rooftop-model-bedroom-tv-wall.jpg",
-            "/images/perla-del-mar-rooftop-model-dining-stairs-staircase.jpg",
-            "/images/perla-del-mar-rooftop-model-bedroom-side-view.jpg",
-            "/images/perla-del-mar-rooftop-model-terrace-patio-lounge.jpg",
-            "/images/perla-del-mar-floor-plan-ground-floor.jpg",
-            "/images/perla-del-mar-floor-plan-rooftop-level.jpg",
-            "/images/perla-del-mar-floor-plan-terrace-distribution.jpg",
-            "/images/perla-del-mar-community-aerial-street-view.jpg",
-            "/images/perla-del-mar-rooftop-aerial-sunset.jpg"
-        ],
-        features: {
-            en: ["Private Beach Access", "Golf Course", "Rooftop with Jacuzzi", "Private Pool", "Gated Security", "Airbnb Friendly", "Pet Friendly", "Clubhouse", "Bar", "Restaurant", "Mini Market"],
-            es: ["Acceso Privado a Playa", "Campo de Golf", "Rooftop con Jacuzzi", "Piscina Privada", "Seguridad Cerrada", "Airbnb Amigable", "Pet Friendly", "Casa Club", "Bar", "Restaurante", "Mini Market"]
-        },
-        description: {
-            en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
+    id: 8,
+    title: "Proyecto Perla del Mar",
+    location: "whitesands",
+    locationLabel: "White Sands",
+    type : "villa",
+    status: "sale",
+    price: 265000,
+    image: "/images/perla-del-mar-modern-facade-dusk.jpg",
+    beds: 3,
+    baths: 3.5,
+    area: 155,
+    gallery: [
+    "/images/perla-del-mar-modern-facade-dusk.jpg",
+    "/images/perla-del-mar-aerial-view-house-pool.jpg",
+    "/images/perla-del-mar-backyard-pool-patio.jpg",
+    "/images/perla-del-mar-living-room-stairs-interior.jpg",
+    "/images/perla-del-mar-street-view-exterior.jpg",
+    "/images/perla-del-mar-living-room-stairs-wide-punta-cana.jpg",
+    "/images/perla-del-mar-dining-kitchen-chandelier-punta-cana.jpg",
+    "/images/perla-del-mar-modern-kitchen-island-punta-cana.jpg",
+    "/images/perla-del-mar-open-concept-kitchen-living-punta-cana.jpg",
+    "/images/perla-del-mar-dining-table-kitchen-view-punta-cana.jpg",
+    "/images/perla-del-mar-rooftop-model-night-street-view.jpg",
+    "/images/perla-del-mar-rooftop-model-modern-facade.jpg",
+    "/images/perla-del-mar-rooftop-model-front-exterior.jpg",
+    "/images/perla-del-mar-rooftop-model-aerial-day-view.jpg",
+    "/images/perla-del-mar-rooftop-model-aerial-night-view.jpg",
+    "/images/perla-del-mar-rooftop-model-pool-waterfall.jpg",
+    "/images/perla-del-mar-rooftop-model-terrace-lounge.jpg",
+    "/images/perla-del-mar-rooftop-model-living-tv-room.jpg",
+    "/images/perla-del-mar-rooftop-model-pool-deck-top-view.jpg",
+    "/images/perla-del-mar-rooftop-model-rooftop-terrace-jacuzzi-aerial.jpg",
+    "/images/perla-del-mar-rooftop-model-modern-kitchen-black-stove.jpg",
+    "/images/perla-del-mar-rooftop-model-living-room-top-view.jpg",
+    "/images/perla-del-mar-rooftop-model-dining-area-stairs.jpg",
+    "/images/perla-del-mar-rooftop-model-kitchen-island-dining.jpg",
+    "/images/perla-del-mar-rooftop-model-rooftop-jacuzzi-closeup.jpg",
+    "/images/perla-del-mar-rooftop-model-master-bedroom-design.jpg",
+    "/images/perla-del-mar-rooftop-model-bedroom-tv-wall.jpg",
+    "/images/perla-del-mar-rooftop-model-dining-stairs-staircase.jpg",
+    "/images/perla-del-mar-rooftop-model-bedroom-side-view.jpg",
+    "/images/perla-del-mar-rooftop-model-terrace-patio-lounge.jpg",
+    "/images/perla-del-mar-floor-plan-ground-floor.jpg",
+    "/images/perla-del-mar-floor-plan-rooftop-level.jpg",
+    "/images/perla-del-mar-floor-plan-terrace-distribution.jpg",
+    "/images/perla-del-mar-community-aerial-street-view.jpg",
+    "/images/perla-del-mar-rooftop-aerial-sunset.jpg"
+    ],
+    features: {
+    en: ["Private Beach Access", "Golf Course", "Rooftop with Jacuzzi", "Private Pool", "Gated Security", "Airbnb Friendly", "Pet Friendly", "Clubhouse", "Bar", "Restaurant", "Mini Market"],
+    es: ["Acceso Privado a Playa", "Campo de Golf", "Rooftop con Jacuzzi", "Piscina Privada", "Seguridad Cerrada", "Airbnb Amigable", "Pet Friendly", "Casa Club", "Bar", "Restaurante", "Mini Market"]
+    },
+    description: {
+    en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
 
 Welcome to Perla del Mar, a boutique residential project located within the prestigious White Sands in Punta Cana.
 
@@ -1346,7 +1357,7 @@ Perla del Mar is surrounded by high-profile hotels and services:
 - Pet-friendly and family environment
 - Low density and high privacy
 - Solid real estate investment in Punta Cana`,
-            es: `Perla del Mar – Villas Exclusivas en Residencial White Sands, Punta Cana
+    es: `Perla del Mar – Villas Exclusivas en Residencial White Sands, Punta Cana
 
 Bienvenido a Perla del Mar, un proyecto residencial boutique ubicado dentro del prestigioso White Sands, en Punta Cana.
 
@@ -1434,26 +1445,26 @@ Perla del Mar se encuentra rodeado de hoteles y servicios de alto perfil:
 - Entorno pet-friendly y familiar
 - Baja densidad y alta privacidad
 - Inversión inmobiliaria sólida en Punta Cana`
-        }
+    }
     },
     {
-        id: 9,
-        title: "Ocean Village Punta Cana",
-        location: "whitesands",
-        locationLabel: "White Sands",
-        type: "villa",
-        status: "sale",
-        price: 360000,
-        image: "/images/ocean-village-punta-cana-modern-facade.jpg",
-        beds: 3,
-        baths: 2.5,
-        area: 163,
-        features: {
-            en: ["Private Beach Access", "Private Rooftop (80m²)", "Picuzzi or Pool", "Golf Course", "Clubhouse", "Sports Courts", "Double Parking", "Airbnb Friendly", "Pet Friendly", "Bar", "Restaurant", "Mini Market"],
-            es: ["Acceso Privado a Playa", "Rooftop Privado (80m²)", "Picuzzi o Piscina", "Campo de Golf", "Casa Club", "Canchas Deportivas", "Parqueo Doble", "Airbnb Amigable", "Pet Friendly", "Bar", "Restaurante", "Mini Market"]
-        },
-        description: {
-            en: `Ocean Village Punta Cana – Exclusive Villas in White Sands Residential
+    id: 9,
+    title: "Ocean Village Punta Cana",
+    location: "whitesands",
+    locationLabel: "White Sands",
+    type : "villa",
+    status: "sale",
+    price: 360000,
+    image: "/images/ocean-village-punta-cana-modern-facade.jpg",
+    beds: 3,
+    baths: 2.5,
+    area: 163,
+    features: {
+    en: ["Private Beach Access", "Private Rooftop (80m²)", "Picuzzi or Pool", "Golf Course", "Clubhouse", "Sports Courts", "Double Parking", "Airbnb Friendly", "Pet Friendly", "Bar", "Restaurant", "Mini Market"],
+    es: ["Acceso Privado a Playa", "Rooftop Privado (80m²)", "Picuzzi o Piscina", "Campo de Golf", "Casa Club", "Canchas Deportivas", "Parqueo Doble", "Airbnb Amigable", "Pet Friendly", "Bar", "Restaurante", "Mini Market"]
+    },
+    description: {
+    en: `Ocean Village Punta Cana – Exclusive Villas in White Sands Residential
 ## Welcome to Ocean Village Punta Cana
 An exclusive residential project located within the prestigious White Sands in Bávaro, Punta Cana. Ocean Village Punta Cana presents a modern concept of exclusive villas, designed for those seeking comfort, privacy, and a highly profitable real estate investment, ideal for both personal use and Airbnb-style vacation rentals.
 
@@ -1539,7 +1550,7 @@ May 30, 2026
 - Resort-style environment with private beach
 - Complete sports and recreational amenities
 - Solid real estate investment in Punta Cana`,
-            es: `Ocean Village Punta Cana – Villas Exclusivas en Residencial White Sands
+    es: `Ocean Village Punta Cana – Villas Exclusivas en Residencial White Sands
 ## Bienvenido a Ocean Village Punta Cana
 Un exclusivo proyecto residencial ubicado dentro del prestigioso White Sands, en Bávaro, Punta Cana. Ocean Village Punta Cana presenta un concepto moderno de villas exclusivas, diseñado para quienes buscan confort, privacidad y una inversión inmobiliaria altamente rentable, ideal tanto para uso personal como para renta vacacional tipo Airbnb.
 
@@ -1625,97 +1636,97 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
 - Entorno tipo resort con playa privada
 - Amenidades deportivas y recreativas completas
 - Inversión inmobiliaria sólida en Punta Cana`
-        },
-        gallery: [
-            "/images/ocean-village-punta-cana-modern-facade.jpg",
-            "/images/ocean-village-punta-cana-modern-townhomes.jpg",
-            "/images/ocean-village-punta-cana-rooftop-jacuzzi-terrace.jpg",
-            "/images/ocean-village-punta-cana-duplex-facade.jpg",
-            "/images/ocean-village-punta-cana-corner-view.jpg",
-            "/images/ocean-village-punta-cana-aerial-rooftops.jpg",
-            "/images/ocean-village-punta-cana-interior-living-room-tv-wall.jpg",
-            "/images/ocean-village-punta-cana-modern-kitchen-island-dining.jpg",
-            "/images/ocean-village-punta-cana-open-concept-living-dining.jpg",
-            "/images/ocean-village-punta-cana-living-room-stairs-garden-view.jpg",
-            "/images/ocean-village-punta-cana-interior-layout-overhead.jpg",
-            "/images/ocean-village-punta-cana-kitchen-pool-waterfall-view.jpg",
-            "/images/ocean-village-punta-cana-rooftop-jacuzzi-top-view.jpg",
-            "/images/ocean-village-punta-cana-modern-living-room-entertainment.jpg",
-            "/images/ocean-village-punta-cana-living-room-stairs-wood-detail.jpg",
-            "/images/ocean-village-punta-cana-kitchen-stainless-steel-appliances.jpg",
-            "/images/ocean-village-punta-cana-pool-waterfall-detail.jpg",
-            "/images/ocean-village-punta-cana-rooftop-aerial-terrace-view.jpg",
-            "/images/ocean-village-punta-cana-rooftop-jacuzzi-lounge-overhead.jpg",
-            "/images/ocean-village-punta-cana-rooftop-jacuzzi-water-level.jpg",
-            "/images/ocean-village-punta-cana-street-view-facade.jpg",
-            "/images/ocean-village-punta-cana-modern-bathroom-shower.jpg",
-            "/images/ocean-village-punta-cana-pool-stone-waterfall-feature.jpg",
-            "/images/ocean-village-punta-cana-exterior-spiral-staircase-aerial.jpg",
-            "/images/ocean-village-punta-cana-master-bedroom-modern-design.jpg",
-            "/images/ocean-village-punta-cana-upstairs-hallway-glass-railing.jpg",
-            "/images/ocean-village-punta-cana-master-bedroom-balcony-view.jpg",
-            "/images/ocean-village-punta-cana-bedroom-tv-wall-design.jpg",
-            "/images/ocean-village-punta-cana-modern-bathroom-gray-stone.jpg",
-            "/images/ocean-village-punta-cana-bedroom-closet-mirror.jpg",
-            "/images/ocean-village-punta-cana-bedroom-large-rug-design.jpg"
-        ],
-        featured: true
+    },
+    gallery: [
+    "/images/ocean-village-punta-cana-modern-facade.jpg",
+    "/images/ocean-village-punta-cana-modern-townhomes.jpg",
+    "/images/ocean-village-punta-cana-rooftop-jacuzzi-terrace.jpg",
+    "/images/ocean-village-punta-cana-duplex-facade.jpg",
+    "/images/ocean-village-punta-cana-corner-view.jpg",
+    "/images/ocean-village-punta-cana-aerial-rooftops.jpg",
+    "/images/ocean-village-punta-cana-interior-living-room-tv-wall.jpg",
+    "/images/ocean-village-punta-cana-modern-kitchen-island-dining.jpg",
+    "/images/ocean-village-punta-cana-open-concept-living-dining.jpg",
+    "/images/ocean-village-punta-cana-living-room-stairs-garden-view.jpg",
+    "/images/ocean-village-punta-cana-interior-layout-overhead.jpg",
+    "/images/ocean-village-punta-cana-kitchen-pool-waterfall-view.jpg",
+    "/images/ocean-village-punta-cana-rooftop-jacuzzi-top-view.jpg",
+    "/images/ocean-village-punta-cana-modern-living-room-entertainment.jpg",
+    "/images/ocean-village-punta-cana-living-room-stairs-wood-detail.jpg",
+    "/images/ocean-village-punta-cana-kitchen-stainless-steel-appliances.jpg",
+    "/images/ocean-village-punta-cana-pool-waterfall-detail.jpg",
+    "/images/ocean-village-punta-cana-rooftop-aerial-terrace-view.jpg",
+    "/images/ocean-village-punta-cana-rooftop-jacuzzi-lounge-overhead.jpg",
+    "/images/ocean-village-punta-cana-rooftop-jacuzzi-water-level.jpg",
+    "/images/ocean-village-punta-cana-street-view-facade.jpg",
+    "/images/ocean-village-punta-cana-modern-bathroom-shower.jpg",
+    "/images/ocean-village-punta-cana-pool-stone-waterfall-feature.jpg",
+    "/images/ocean-village-punta-cana-exterior-spiral-staircase-aerial.jpg",
+    "/images/ocean-village-punta-cana-master-bedroom-modern-design.jpg",
+    "/images/ocean-village-punta-cana-upstairs-hallway-glass-railing.jpg",
+    "/images/ocean-village-punta-cana-master-bedroom-balcony-view.jpg",
+    "/images/ocean-village-punta-cana-bedroom-tv-wall-design.jpg",
+    "/images/ocean-village-punta-cana-modern-bathroom-gray-stone.jpg",
+    "/images/ocean-village-punta-cana-bedroom-closet-mirror.jpg",
+    "/images/ocean-village-punta-cana-bedroom-large-rug-design.jpg"
+    ],
+    featured: true
     },
     {
-        id: 10,
-        title: "Rental Villa Paradise",
-        location: "puntacana",
-        locationLabel: "Punta Cana",
-        type: "villa",
-        status: "rent",
-        price: 5000,
-        image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070&auto=format&fit=crop",
-        beds: 5,
-        baths: 5,
-        area: 400,
-        features: {
-            en: ["Vacation Rental", "Chef Included", "Beachfront", "Concierge"],
-            es: ["Alquiler Vacacional", "Chef Incluido", "Frente al Mar", "Concierge"]
-        },
-        description: {
-            en: "Perfect for family vacations. Luxury villa available for rent by the night or season.",
-            es: "Perfecta para vacaciones familiares. Villa de lujo disponible para renta por noche o temporada."
-        }
+    id: 10,
+    title: "Rental Villa Paradise",
+    location: "puntacana",
+    locationLabel: "Punta Cana",
+    type : "villa",
+    status: "rent",
+    price: 5000,
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070&auto=format&fit=crop",
+    beds: 5,
+    baths: 5,
+    area: 400,
+    features: {
+    en: ["Vacation Rental", "Chef Included", "Beachfront", "Concierge"],
+    es: ["Alquiler Vacacional", "Chef Incluido", "Frente al Mar", "Concierge"]
+    },
+    description: {
+    en: "Perfect for family vacations. Luxury villa available for rent by the night or season.",
+    es: "Perfecta para vacaciones familiares. Villa de lujo disponible para renta por noche o temporada."
+    }
     },
     {
-        id: 11,
-        title: "Villa de Lujo en la Marina de Cap Cana",
-        location: "capcana",
-        locationLabel: "Marina de Cap Cana",
-        type: "villa",
-        status: "sale",
-        price: 1300000,
-        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
-        beds: 3,
-        baths: 6,
-        area: 255,
-        features: {
-            en: [
-                "Land: approx. 690 m²", "Open Concept Living Room",
-                "Construction: approx. 255 m²", "Modern Kitchen",
-                "Bedrooms: 3", "Private Pool",
-                "Service Room: 1", "Garden",
-                "Bathrooms: 6", "Parking: 2 vehicles",
-                "Rooftop Terrace", "Jacuzzi",
-                "BBQ Area", "24/7 Security"
-            ],
-            es: [
-                "Terreno: aprox. 690 m²", "Sala de concepto abierto",
-                "Construcción: aprox. 255 m²", "Cocina moderna",
-                "Habitaciones: 3", "Piscina privada",
-                "Habitación de servicio: 1", "Jardín",
-                "Baños: 6", "Parqueo: 2 vehículos",
-                "Terraza Rooftop", "Jacuzzi",
-                "Área de BBQ", "Seguridad 24/7"
-            ]
-        },
-        description: {
-            en: `Luxury Villa in Ocean 21 Project – Cap Cana Marina
+    id: 11,
+    title: "Villa de Lujo en la Marina de Cap Cana",
+    location: "capcana",
+    locationLabel: "Marina de Cap Cana",
+    type : "villa",
+    status: "sale",
+    price: 1300000,
+    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+    beds: 3,
+    baths: 6,
+    area: 255,
+    features: {
+    en: [
+    "Land: approx. 690 m²", "Open Concept Living Room",
+    "Construction: approx. 255 m²", "Modern Kitchen",
+    "Bedrooms: 3", "Private Pool",
+    "Service Room: 1", "Garden",
+    "Bathrooms: 6", "Parking: 2 vehicles",
+    "Rooftop Terrace", "Jacuzzi",
+    "BBQ Area", "24/7 Security"
+    ],
+    es: [
+    "Terreno: aprox. 690 m²", "Sala de concepto abierto",
+    "Construcción: aprox. 255 m²", "Cocina moderna",
+    "Habitaciones: 3", "Piscina privada",
+    "Habitación de servicio: 1", "Jardín",
+    "Baños: 6", "Parqueo: 2 vehículos",
+    "Terraza Rooftop", "Jacuzzi",
+    "Área de BBQ", "Seguridad 24/7"
+    ]
+    },
+    description: {
+    en: `Luxury Villa in Ocean 21 Project – Cap Cana Marina
 
 Exclusive luxury villa located within the Ocean 21 project, in the Cap Cana Marina, inside Cap Cana, one of the most prestigious and best-planned residential and tourist destinations in the Caribbean.
 
@@ -1785,7 +1796,7 @@ This performance confirms:
 - Clients interested in premium vacation rentals
 - Those valuing rooftop, marina, and world-class amenities
 - Solid and exclusive real estate heritage`,
-            es: `Villa de Lujo en el Proyecto Ocean 21 – Marina de Cap Cana
+    es: `Villa de Lujo en el Proyecto Ocean 21 – Marina de Cap Cana
 
 Exclusiva villa de lujo ubicada dentro del proyecto Ocean 21, en la Marina de Cap Cana, dentro de Cap Cana, uno de los destinos residenciales y turísticos más prestigiosos y mejor planificados del Caribe.
 
@@ -1855,52 +1866,52 @@ Este desempeño confirma:
 - Clientes interesados en renta vacacional premium
 - Quienes valoran rooftop, marina y amenidades de clase mundial
 - Patrimonio inmobiliario sólido y exclusivo`
-        }
+    }
     },
     {
-        id: 12,
-        title: "Plaza Comercial Downtown",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "commercial",
-        status: "sale",
-        price: 185000,
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
-        beds: 0,
-        baths: 1,
-        area: 65,
-        features: {
-            en: ["High Traffic", "Private Parking", "Security", "Power Plant"],
-            es: ["Alto Tráfico", "Parqueo Privado", "Seguridad", "Planta Eléctrica"]
-        },
-        description: {
-            en: "Strategic commercial premises in the center of Bavaro. Ideal for corporate office or luxury retail.",
-            es: "Local comercial estratégico en el centro de Bávaro. Ideal para oficina corporativa o retail de lujo."
-        }
+    id: 12,
+    title: "Plaza Comercial Downtown",
+    location: "bavaro",
+    locationLabel: "Bávaro",
+    type : "commercial",
+    status: "sale",
+    price: 185000,
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
+    beds: 0,
+    baths: 1,
+    area: 65,
+    features: {
+    en: ["High Traffic", "Private Parking", "Security", "Power Plant"],
+    es: ["Alto Tráfico", "Parqueo Privado", "Seguridad", "Planta Eléctrica"]
+    },
+    description: {
+    en: "Strategic commercial premises in the center of Bavaro. Ideal for corporate office or luxury retail.",
+    es: "Local comercial estratégico en el centro de Bávaro. Ideal para oficina corporativa o retail de lujo."
+    }
     },
     {
-        id: 13,
-        title: "Terreno Hotelero Miches",
-        location: "miches",
-        locationLabel: "Miches",
-        type: "resorts",
-        status: "sale",
-        price: 154000000,
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-        featured: true,
-        beds: 0,
-        baths: 0,
-        area: 1185000,
-        gallery: [
-            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-            "/images/terreno-hotelero-miches-beachfront-aerial.png"
-        ],
-        features: {
-            en: ["800m Linear Beachfront", "Hotel Zoning", "High Density Approved", "Pier/Marina Feasibility", "Access Roads", "Electricity/Water Access", "Tax Exemptions (CONFOTUR)", "Eco-Tourism Potential"],
-            es: ["800m Lineales de Playa", "Zonificación Hotelera", "Alta Densidad Aprobada", "Factibilidad Muelle/Marina", "Vías de Acceso", "Acceso Luz/Agua", "Exenciones Fiscales (CONFOTUR)", "Potencial Eco-Turístico"]
-        },
-        description: {
-            en: `Beachfront Land in Miches – Strategic Opportunity for Large-Scale Tourist Development
+    id: 13,
+    title: "Terreno Hotelero Miches",
+    location: "miches",
+    locationLabel: "Miches",
+    type : "resorts",
+    status: "sale",
+    price: 154000000,
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+    featured: true,
+    beds: 0,
+    baths: 0,
+    area: 1185000,
+    gallery: [
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+    "/images/terreno-hotelero-miches-beachfront-aerial.png"
+    ],
+    features: {
+    en: ["800m Linear Beachfront", "Hotel Zoning", "High Density Approved", "Pier/Marina Feasibility", "Access Roads", "Electricity/Water Access", "Tax Exemptions (CONFOTUR)", "Eco-Tourism Potential"],
+    es: ["800m Lineales de Playa", "Zonificación Hotelera", "Alta Densidad Aprobada", "Factibilidad Muelle/Marina", "Vías de Acceso", "Acceso Luz/Agua", "Exenciones Fiscales (CONFOTUR)", "Potencial Eco-Turístico"]
+    },
+    description: {
+    en: `Beachfront Land in Miches – Strategic Opportunity for Large-Scale Tourist Development
 
 We present an exceptional investment opportunity in Miches, one of the Caribbean's most projected tourist destinations, currently transforming into a world-class hotel hub.
 
@@ -1953,7 +1964,7 @@ Investing in Miches today is investing in the future of Caribbean tourism.
 - Tourism Developers
 - Large-Scale Hotel Projects
 - Long-Term Strategic Investments`,
-            es: `Terreno Frente al Mar en Miches – Oportunidad Estratégica para Desarrollo Turístico de Gran Escala
+    es: `Terreno Frente al Mar en Miches – Oportunidad Estratégica para Desarrollo Turístico de Gran Escala
 
 Presentamos una oportunidad excepcional de inversión en Miches, uno de los destinos con mayor proyección turística y de desarrollo del Caribe, actualmente en plena transformación hacia un nuevo polo hotelero de clase mundial.
 
@@ -2006,49 +2017,49 @@ Invertir hoy en Miches es invertir en el futuro del turismo del Caribe.
 - Desarrolladores turísticos
 - Proyectos hoteleros de gran escala
 - Inversiones estratégicas a largo plazo`
-        }
+    }
     },
     {
-        id: 14,
-        title: "Beachfront Condo Rental",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "condo",
-        status: "rent",
-        price: 3500,
-        image: "/images/rental-condo-generated.png",
-        beds: 2,
-        baths: 2,
-        area: 110,
-        features: {
-            en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
-            es: ["Acceso Playa", "Amueblado", "Wifi Alta Vel", "Seguridad"]
-        },
-        description: {
-            en: "Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays.",
-            es: "Apartamento vacacional totalmente equipado a pasos de la playa. Ideal para estancias cortas o medianas."
-        }
+    id: 14,
+    title: "Beachfront Condo Rental",
+    location: "bavaro",
+    locationLabel: "Bávaro",
+    type : "condo",
+    status: "rent",
+    price: 3500,
+    image: "/images/rental-condo-generated.png",
+    beds: 2,
+    baths: 2,
+    area: 110,
+    features: {
+    en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
+    es: ["Acceso Playa", "Amueblado", "Wifi Alta Vel", "Seguridad"]
+    },
+    description: {
+    en: "Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays.",
+    es: "Apartamento vacacional totalmente equipado a pasos de la playa. Ideal para estancias cortas o medianas."
+    }
     },
     {
-        id: 15,
-        title: "Luxury Villa Cap Cana",
-        location: "capcana",
-        locationLabel: "Cap Cana",
-        type: "villa",
-        status: "rent",
-        price: 8000,
-        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
-        beds: 4,
-        baths: 4.5,
-        area: 500,
-        features: {
-            en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
-            es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
-        },
-        description: {
-            en: "Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included.",
-            es: "Experiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido."
-        }
+    id: 15,
+    title: "Luxury Villa Cap Cana",
+    location: "capcana",
+    locationLabel: "Cap Cana",
+    type : "villa",
+    status: "rent",
+    price: 8000,
+    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+    beds: 4,
+    baths: 4.5,
+    area: 500,
+    features: {
+    en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
+    es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
+    },
+    description: {
+    en: "Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included.",
+    es: "Experiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido."
+    }
     },
 
-];
+    ];
