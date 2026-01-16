@@ -57,7 +57,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
 
-    if (rawPost) {
+    // FIX: Force local override for specific posts with issues or manual updates that are not in Sanity yet
+    const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical'];
+    const shouldForceLocal = FORCE_LOCAL_SLUGS.includes(slug);
+
+    if (rawPost && !shouldForceLocal) {
         post = mapSanityPost(rawPost);
     } else {
         // Fallback to local data
