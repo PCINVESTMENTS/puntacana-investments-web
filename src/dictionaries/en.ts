@@ -157,7 +157,7 @@ export default {
                         {
                             title: "Due Diligence and Legal Security",
                             text: "We conduct an exhaustive investigation of the legal status of each property. We verify titles, encumbrances, liens, and any legal impediments to guarantee a clean and transparent property transfer.",
-                            image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop"
+                            image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop"
                         },
                         {
                             title: "Contract Management and Closing",

@@ -182,7 +182,7 @@ export const blogPosts: BlogPost[] = [
                     es: "El diseño de interiores en el Caribe está evolucionando hacia un concepto de 'Lujo Descalzo', donde la elegancia se encuentra con la comodidad y la naturaleza. Ya no se trata de opulencia recargada, sino de espacios que respiran, que conectan con el entorno y que invitan a la relajación absoluta.",
                     en: "Interior design in the Caribbean is evolving towards a 'Barefoot Luxury' concept, where elegance meets comfort and nature. It is no longer about ornate opulence, but about spaces that breathe, connect with the environment, and invite absolute relaxation."
                 },
-                image: "https://images.unsplash.com/photo-1600596542815-60c37c6525fa?q=80&w=2674&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1513694203232-7e9a18d91cfd?q=80&w=2674&auto=format&fit=crop",
                 imageCaption: {
                     es: "Espacios abiertos que fusionan interior y exterior.",
                     en: "Open spaces that fuse interior and exterior."
