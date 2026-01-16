@@ -1879,7 +1879,12 @@ Este desempeño confirma:
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-marina-yacht-view.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-social-area.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-bbq-kitchen.jpg",
-            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-aerial-complex-overview.jpg"
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-aerial-complex-overview.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-dining-room.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-living-kitchen-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-living-room-tv.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-living-room-sofa.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-open-concept-living.jpg"
         ],
         seo: {
             title: {
