@@ -2092,7 +2092,14 @@ La combinación de Cap Cana + Soto Grande + vista al mar garantiza estabilidad, 
 - Propiedades exclusivas en Soto Grande
 - Patrimonio inmobiliario sólido y de alta gama`
         },
-        gallery: [],
+        gallery: [
+            "/images/properties/soto-grande-loft/soto-grande-loft-ocean-view-main.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-master-bedroom-yellow-art.png",
+            "/images/properties/soto-grande-loft/soto-grande-loft-bedroom-high-ceiling-shutters.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-mezzanine-bedroom-view.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-dining-room-mirror.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-kitchen-stairs-glass-railing.jpg"
+        ],
         seo: {
             title: {
                 en: "Loft Apartment Ocean View Soto Grande Cap Cana | For Sale",
