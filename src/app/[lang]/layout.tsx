@@ -22,6 +22,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     title: dict.meta.title,
     description: dict.meta.description,
     metadataBase: new URL('https://puntacanainvestments.com'),
+    openGraph: {
+      images: ['/images/home-share.png'],
+      title: dict.meta.title,
+      description: dict.meta.description,
+      type: 'website',
+      locale: lang,
+    },
   };
 }
 
