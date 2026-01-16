@@ -157,7 +157,7 @@ export default {
                         {
                             title: "Debida Diligencia y Seguridad Jurídica",
                             text: "Realizamos una investigación exhaustiva del estatus jurídico de cada propiedad. Verificamos títulos, cargas, gravámenes y cualquier impedimento legal para garantizar una transferencia de propiedad limpia y transparente.",
-                            image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop"
+                            image: "https://images.unsplash.com/photo-1556761175-4b46a891af96?q=80&w=2000&auto=format&fit=crop"
                         },
                         {
                             title: "Gestión de Contratos y Cierre",
