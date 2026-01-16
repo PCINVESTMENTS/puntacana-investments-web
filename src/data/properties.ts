@@ -1695,8 +1695,24 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
         baths: 6,
         area: 255,
         features: {
-            en: ["Marina Cap Cana", "Ocean 21", "Rooftop Terrace", "Private Pool", "24/7 Security", "Airbnb Friendly", "Jacuzzi", "BBQ Area"],
-            es: ["Marina Cap Cana", "Ocean 21", "Terraza Rooftop", "Piscina Privada", "Seguridad 24/7", "Airbnb Amigable", "Jacuzzi", "Área de BBQ"]
+            en: [
+                "Land: approx. 690 m²", "Open Concept Living Room",
+                "Construction: approx. 255 m²", "Modern Kitchen",
+                "Bedrooms: 3", "Private Pool",
+                "Service Room: 1", "Garden",
+                "Bathrooms: 6", "Parking: 2 vehicles",
+                "Rooftop Terrace", "Jacuzzi",
+                "BBQ Area", "24/7 Security"
+            ],
+            es: [
+                "Terreno: aprox. 690 m²", "Sala de concepto abierto",
+                "Construcción: aprox. 255 m²", "Cocina moderna",
+                "Habitaciones: 3", "Piscina privada",
+                "Habitación de servicio: 1", "Jardín",
+                "Baños: 6", "Parqueo: 2 vehículos",
+                "Terraza Rooftop", "Jacuzzi",
+                "Área de BBQ", "Seguridad 24/7"
+            ]
         },
         description: {
             en: `Luxury Villa in Ocean 21 Project – Cap Cana Marina
@@ -1704,19 +1720,6 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
 Exclusive luxury villa located within the Ocean 21 project, in the Cap Cana Marina, inside Cap Cana, one of the most prestigious and best-planned residential and tourist destinations in the Caribbean.
 
 This property combines contemporary architecture, spacious areas, and access to world-class amenities, positioning itself as a high-level residence and a premium real estate investment with excellent profitability.
-
-## General Property Data
-
-- Land: approx. 690 m²
-- Construction: approx. 255 m²
-- Bedrooms: 3
-- Service Room: 1
-- Bathrooms: 6
-- Open Concept Living Room
-- Modern Kitchen
-- Private Pool
-- Garden
-- Parking: 2 vehicles
 
 ## Luxury Rooftop Terrace
 
@@ -1787,19 +1790,6 @@ This performance confirms:
 Exclusiva villa de lujo ubicada dentro del proyecto Ocean 21, en la Marina de Cap Cana, dentro de Cap Cana, uno de los destinos residenciales y turísticos más prestigiosos y mejor planificados del Caribe.
 
 Esta propiedad combina arquitectura contemporánea, amplios espacios y acceso a amenidades de clase mundial, posicionándose como una residencia de alto nivel y una inversión inmobiliaria premium con excelente rentabilidad.
-
-## Datos Generales de la Propiedad
-
-- Terreno: aprox. 690 m²
-- Construcción: aprox. 255 m²
-- Habitaciones: 3
-- Habitación de servicio: 1
-- Baños: 6
-- Sala de concepto abierto
-- Cocina moderna
-- Piscina privada
-- Jardín
-- Parqueo: 2 vehículos
 
 ## Terraza Exterior Tipo Rooftop – Terraza de Lujo
 
