@@ -72,8 +72,8 @@ export default function ServicesSection({ dict, lang, limit }: ServicesSectionPr
                                 ) : (
                                     <div className="w-full h-full bg-gray-800" />
                                 )}
-                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300"></div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
                             </div>
 
                             <div className="relative z-10 p-8 flex flex-col h-full">
