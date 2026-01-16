@@ -31,7 +31,7 @@ export async function generateStaticParams() {
 
 import { CompareProvider } from "@/components/property/CompareContext";
 import PropertyComparator from "@/components/property/PropertyComparator";
-import ChatBot from "@/components/chat/ChatBot";
+import PropertyComparator from "@/components/property/PropertyComparator";
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 
@@ -53,7 +53,7 @@ export default async function RootLayout({
         <CompareProvider>
           {children}
           <PropertyComparator lang={lang} />
-          <ChatBot lang={lang} />
+          {/* ChatBot temporarily removed */}
         </CompareProvider>
         <Analytics />
         {gaId && <GoogleAnalytics gaId={gaId} />}
