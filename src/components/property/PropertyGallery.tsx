@@ -90,7 +90,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
 
                     <button
                         onClick={prevImage}
-                        className="absolute left-4 text-white hover:text-luxury-gold text-4xl z-20 hidden md:block"
+                        className="absolute left-2 md:left-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/20 p-2 rounded-full md:bg-transparent"
                         aria-label="Previous image"
                     >
                         <FaChevronLeft />
@@ -108,7 +108,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
 
                     <button
                         onClick={nextImage}
-                        className="absolute right-4 text-white hover:text-luxury-gold text-4xl z-20 hidden md:block"
+                        className="absolute right-2 md:right-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/20 p-2 rounded-full md:bg-transparent"
                         aria-label="Next image"
                     >
                         <FaChevronRight />

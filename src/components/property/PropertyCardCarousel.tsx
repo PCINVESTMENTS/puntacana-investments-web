@@ -78,19 +78,19 @@ export default function PropertyCardCarousel({ images, title }: PropertyCardCaro
                 <>
                     <button
                         onClick={prevStep}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-luxury-gold hover:text-black"
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/60 text-white p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity hover:bg-luxury-gold hover:text-black shadow-md border border-white/20"
                         aria-label="Previous image"
                         title="Anterior"
                     >
-                        <FaChevronLeft size={12} />
+                        <FaChevronLeft size={20} />
                     </button>
                     <button
                         onClick={nextStep}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-luxury-gold hover:text-black"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/60 text-white p-3 rounded-full opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity hover:bg-luxury-gold hover:text-black shadow-md border border-white/20"
                         aria-label="Next image"
                         title="Siguiente"
                     >
-                        <FaChevronRight size={12} />
+                        <FaChevronRight size={20} />
                     </button>
                 </>
             )}
