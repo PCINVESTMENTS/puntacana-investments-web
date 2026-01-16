@@ -1894,7 +1894,12 @@ Este desempeño confirma:
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-dining-open-space.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-dining-living-connection.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-room-seating-detail.jpg",
-            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-guest-bedroom-blue.jpg"
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-guest-bedroom-blue.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-walk-in-closet-shelves.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-walk-in-closet-drawers.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bedroom-coral-bedding-wardrobe.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bedroom-coral-bedding-window.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bathroom-double-vanity-shower.jpg"
         ],
         seo: {
             title: {
