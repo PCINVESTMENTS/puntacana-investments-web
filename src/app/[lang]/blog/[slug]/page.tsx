@@ -1,7 +1,7 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/home/PageSections";
-import { BlogPost } from "@/data/blog";
+import { BlogPost, blogPosts } from "@/data/blog";
 import { properties } from "@/data/properties";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -53,8 +53,64 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { lang, slug } = await params;
     const dict = await getDictionary(lang);
 
+    let post: any = null; // Use any to allow mixed structure map
+
     const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
-    const post = mapSanityPost(rawPost);
+
+    if (rawPost) {
+        post = mapSanityPost(rawPost);
+    } else {
+        // Fallback to local data
+        const localPost = blogPosts.find(p => p.slug === slug);
+        if (localPost) {
+            // Transform local content to simulate PortableText structure
+            const transformContent = (lang: 'es' | 'en') => {
+                if (Array.isArray(localPost.content)) {
+                    return localPost.content.flatMap((section: any) => {
+                        const blocks = [];
+
+                        // Add text block
+                        if (section.text?.[lang] || section.text) {
+                            blocks.push({
+                                _type: 'block',
+                                style: 'normal',
+                                children: [{ _type: 'span', text: section.text[lang] || section.text }]
+                            });
+                        }
+
+                        // Add subtitle as h2 if exists
+                        if (section.subtitle?.[lang]) {
+                            blocks.unshift({
+                                _type: 'block',
+                                style: 'h2',
+                                children: [{ _type: 'span', text: section.subtitle[lang] }]
+                            });
+                        }
+
+                        // Add image block (legacyImage type defined in ptComponents)
+                        if (section.image) {
+                            blocks.push({
+                                _type: 'legacyImage',
+                                url: section.image,
+                                caption: section.imageCaption?.[lang]
+                            });
+                        }
+
+                        return blocks;
+                    });
+                }
+                return (localPost.content as any)[lang];
+            };
+
+            post = {
+                ...localPost,
+                content: {
+                    es: transformContent('es'),
+                    en: transformContent('en')
+                }
+            };
+        }
+    }
 
     if (!post) {
         notFound();
