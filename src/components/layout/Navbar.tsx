@@ -109,7 +109,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
 
                     {/* Logo - Centered on Mobile, Left on Desktop */}
                     <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:static lg:transform-none lg:flex-shrink-0 lg:flex lg:items-center">
-                        <Link href={`/${lang}`} className="block relative h-20 w-[85vw] lg:h-36 lg:w-80 transition-all duration-300">
+                        <Link href={`/${lang}`} className="block relative h-32 w-[90vw] lg:h-40 lg:w-96 transition-all duration-300">
                             <Image
                                 src="/images/pci-logo-gold.png"
                                 alt="Punta Cana Investments"
