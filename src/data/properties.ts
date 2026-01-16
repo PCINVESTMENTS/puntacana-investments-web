@@ -1874,7 +1874,12 @@ Este desempeño confirma:
             "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-pool-lounge.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-exterior-facade.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-pool-terrace.jpg",
-            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-garden-view.jpg"
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-garden-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-jacuzzi-aerial.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-marina-yacht-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-social-area.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-bbq-kitchen.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-aerial-complex-overview.jpg"
         ],
         seo: {
             title: {
