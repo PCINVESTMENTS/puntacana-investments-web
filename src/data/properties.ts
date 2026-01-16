@@ -1930,167 +1930,64 @@ Este desempeño confirma:
         baths: 1,
         area: 106,
         features: {
-            en: ["Ocean View", "Open Concept", "Modern Kitchen", "Loft Bedroom", "Natural Light", "Private Beach Access", "Marina Proximity", "24/7 Security"],
-            es: ["Vista al Mar", "Espacio Abierto", "Cocina Moderna", "Habitación Loft", "Iluminación Natural", "Acceso Playa Privada", "Cercanía Marina", "Seguridad 24/7"]
+            en: ["Soto Grande Private Beach", "Cap Cana Marina", "Gourmet Restaurants & Beach Clubs", "Punta Espada Golf Club", "Tennis & Paddle Courts", "Equestrian Center", "Gym & Wellness", "Hiking & Biking Trails", "International School", "Commercial Areas", "24/7 Private Security", "Controlled Access"],
+            es: ["Playa Privada Soto Grande", "Marina de Cap Cana", "Restaurantes Gourmet y Beach Clubs", "Punta Espada Golf Club", "Canchas de Tenis y Pádel", "Centro Ecuestre", "Gimnasio y Wellness", "Senderos para Caminatas y Ciclismo", "Colegio Internacional", "Áreas Comerciales", "Seguridad Privada 24/7", "Accesos Controlados"]
         },
         description: {
-            en: `Loft Apartment with Ocean View in Soto Grande – Cap Cana
+            en: `Ocean View Loft Apartment – Soto Grande, Cap Cana
 
-We present an exclusive loft-style apartment with ocean views, located in Soto Grande, within Cap Cana, one of the most prestigious and best-planned residential communities in the Caribbean.
+Exclusive ocean-view loft apartment located in Soto Grande, Cap Cana, one of the most prestigious residential communities in the Caribbean.
 
-This loft combines contemporary design, spaciousness, and a privileged sea view, positioning itself as an excellent option for both residential use and premium vacation rental investment.
+This loft combines contemporary design, spaciousness, and a premium location, making it ideal for both residential use and vacation rental investment, with excellent Airbnb performance.
 
-## General Apartment Data
+## General Data
 - **Type:** Loft
 - **Construction Area:** 106 m²
 - **View:** Direct Ocean View
-- **Design:** Open, modern, and functional space
-- Integrated Living – Dining Room
-- Contemporary Kitchen
-- Loft-style Sleeping Area
-- Modern Bathroom(s)
-- Excellent Natural Lighting
+- **Layout:** Open concept with living-dining area, modern kitchen, and loft-style sleeping area
+- **Features:** Natural lighting and functional design
 
-The open design maximizes the feeling of spaciousness and takes full advantage of the ocean view, a highly valued attribute in the real estate and vacation rental market.
+## Location & Value: Soto Grande
+Soto Grande is one of the most valued areas in Cap Cana due to its exclusive residential environment, private beach for residents, proximity to the Marina, and high demand for vacation rentals.
 
-## Concept and Lifestyle
-This loft has been designed for those seeking a sophisticated lifestyle, with modern, functional spaces and a privileged seafront location.
-
-The combination of ocean view + loft format + Cap Cana location makes this property a highly demanded and exclusive product.
-
-## Premium Location – Soto Grande, Cap Cana
-Soto Grande is one of the most exclusive areas of Cap Cana, recognized for its high-level residential environment, proximity to the Marina, and access to a private beach.
-
-**Living or investing in Soto Grande offers:**
-- Exclusive private beach for residents
-- Immediate proximity to Cap Cana Marina
-- Premium restaurants and services
-- Quiet and orderly residential environment
-- Controlled access and private security
-- High appreciation and constant demand
-
-Soto Grande is especially valued by investors due to its excellent performance on platforms like Airbnb, thanks to its location, privacy, and exclusive environment.
-
-## Profitability and Airbnb Performance
-The loft apartment in Soto Grande presents very good performance in the vacation rental market:
-- High demand throughout the year
-- Preference for units with ocean views
-- Excellent occupancy on Airbnb
-- Passive income in dollars with a premium guest profile
-
-The combination of Cap Cana + Soto Grande + Ocean View guarantees stability, profitability, and value preservation.
-
-## Exclusive Cap Cana Amenities & Benefits
-**Gastronomy & Entertainment ↔ Cap Cana Marina**
-- Gourmet restaurants and international cuisine
-- Bars, lounges, and social spaces
-- Exclusive events for residents
-- World-class Marina
-- Capacity for large yachts
-- Nautical, international atmosphere
-
-**Services & Facilities ↔ Security & Urban Order**
-- International School
-- Nearby medical centers
-- Commercial areas
-- Concierge services
-- 24/7 Private Security
-- Controlled access
-- Modern underground infrastructure
-
-**World-Class Golf ↔ Sports & Wellness**
-- Punta Espada Golf Club (Jack Nicklaus)
-- Top Caribbean golf course
-- High-level equestrian center
-- Tennis and paddle courts
-- Gym and wellness centers
+**Properties in this area stand out for:**
+- Excellent Airbnb occupancy
+- Premium guest profile
+- High value preservation and appreciation
 
 ## Ideal For
-- Investors seeking profitability on Airbnb
-- Buyers interested in ocean views
+- Airbnb Investment
+- Buyers seeking ocean views
 - Second home in Cap Cana
-- Executives, couples, and international travelers
-- Exclusive properties in Soto Grande
-- Solid and high-end real estate heritage`,
-            es: `Apartamento Tipo Loft con Vista al Mar en Soto Grande – Cap Cana
+- Exclusive property in a secure environment
+- High-end real estate heritage`,
+            es: `Apartamento Tipo Loft con Vista al Mar – Soto Grande, Cap Cana
 
-Presentamos un exclusivo apartamento tipo loft con vista al mar, ubicado en Soto Grande, dentro de Cap Cana, una de las comunidades residenciales más prestigiosas y mejor planificadas del Caribe.
+Exclusivo apartamento tipo loft con vista al mar, ubicado en Soto Grande, dentro de Cap Cana, una de las comunidades residenciales más prestigiosas del Caribe.
 
-Este loft combina diseño contemporáneo, amplitud y una vista privilegiada al mar, posicionándose como una excelente opción tanto para uso residencial como para inversión en renta vacacional premium.
+Este loft combina diseño contemporáneo, amplitud y ubicación premium, siendo ideal tanto para uso residencial como para inversión en renta vacacional, con muy buen desempeño en Airbnb.
 
-## Datos Generales del Apartamento
+## Datos Generales
 - **Tipo:** Loft
 - **Área de construcción:** 106 m²
 - **Vista:** Vista directa al mar
-- **Diseño:** Espacio abierto, moderno y funcional
-- Sala – comedor integrados
-- Cocina contemporánea
-- Área de descanso tipo loft
-- Baño(s) con acabados modernos
-- Excelente iluminación natural
+- **Distribución:** Espacio abierto con sala–comedor, cocina moderna y área de descanso tipo loft
+- **Características:** Iluminación natural y diseño funcional
 
-El diseño abierto maximiza la sensación de amplitud y aprovecha al máximo la vista al mar, un atributo altamente valorado en el mercado inmobiliario y de alquiler vacacional.
+## Ubicación y Valor de Soto Grande
+Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente residencial exclusivo, su playa privada para residentes, cercanía a la Marina y su alta demanda en alquiler vacacional.
 
-## Concepto y Estilo de Vida
-Este loft ha sido diseñado para quienes buscan un estilo de vida sofisticado, con espacios modernos, funcionales y una ubicación privilegiada frente al mar.
-
-La combinación de vista al mar + formato loft + ubicación en Cap Cana convierte esta propiedad en un producto altamente demandado y exclusivo.
-
-## Ubicación Premium – Soto Grande, Cap Cana
-Soto Grande es una de las zonas más exclusivas de Cap Cana, reconocida por su ambiente residencial de alto nivel, su cercanía a la Marina y su acceso a playa privada.
-
-**Vivir o invertir en Soto Grande ofrece:**
-- Playa privada exclusiva para residentes
-- Cercanía inmediata a la Marina de Cap Cana
-- Restaurantes y servicios premium
-- Entorno residencial tranquilo y ordenado
-- Accesos controlados y seguridad privada
-- Alta plusvalía y demanda constante
-
-Soto Grande es especialmente valorado por inversionistas debido a su excelente desempeño en plataformas como Airbnb, gracias a su ubicación, privacidad y entorno exclusivo.
-
-## Rentabilidad y desempeño en Airbnb
-El apartamento tipo loft en Soto Grande presenta un muy buen comportamiento en el mercado de renta vacacional:
-- Alta demanda durante todo el año
-- Preferencia por unidades con vista al mar
+**Las propiedades en esta zona destacan por:**
 - Excelente ocupación en Airbnb
-- Ingresos pasivos en dólares con perfil de huésped premium
-
-La combinación de Cap Cana + Soto Grande + vista al mar garantiza estabilidad, rentabilidad y preservación del valor.
-
-## Amenidades y Beneficios Exclusivos de Cap Cana
-**Gastronomy & Entertainment ↔ Marina de Cap Cana**
-- Restaurantes gourmet y cocina internacional
-- Bares, lounges y espacios sociales
-- Eventos exclusivos para residentes
-- Marina de categoría internacional
-- Capacidad para yates de gran eslora
-- Ambiente náutico internacional
-
-**Servicios y Facilidades ↔ Seguridad y Orden Urbano**
-- Colegio internacional
-- Centros médicos cercanos
-- Áreas comerciales
-- Servicios de concierge
-- Seguridad privada 24/7
-- Accesos controlados
-- Infraestructura moderna y soterrada
-
-**Golf de Nivel Mundial ↔ Deportes & Bienestar**
-- Punta Espada Golf Club (Jack Nicklaus)
-- Uno de los mejores campos de golf del Caribe
-- Centro ecuestre de alto nivel
-- Canchas de tenis y pádel
-- Gimnasio y centros de wellness
-- Senderos para caminatas y ciclismo
+- Perfil de huésped premium
+- Alta preservación de valor y plusvalía
 
 ## Ideal Para
-- Inversionistas que buscan rentabilidad en Airbnb
-- Compradores interesados en vista al mar
+- Inversión en Airbnb
+- Compradores que buscan vista al mar
 - Segunda vivienda en Cap Cana
-- Ejecutivos, parejas y viajeros internacionales
-- Propiedades exclusivas en Soto Grande
-- Patrimonio inmobiliario sólido y de alta gama`
+- Propiedad exclusiva en entorno seguro
+- Patrimonio inmobiliario de alta gama`
         },
         gallery: [
             "/images/properties/soto-grande-loft/soto-grande-loft-ocean-view-main.jpg",
