@@ -105,7 +105,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
                     {/* Logo */}
                     <Link href={`/${lang}`} className="flex-shrink-0 flex items-center gap-2 group relative h-24 w-40">
                         <Image
-                            src="/images/logo-header.png"
+                            src="/images/pci-logo-gold.png"
                             alt="Punta Cana Investments"
                             fill
                             className="object-contain"

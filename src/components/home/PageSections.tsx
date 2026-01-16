@@ -356,7 +356,7 @@ export function Footer({ dict, lang }: FooterProps) {
                     {/* Brand & Address */}
                     <div className="space-y-6">
                         <Image
-                            src="/images/logo-footer-v2.png"
+                            src="/images/pci-logo-gold.png"
                             alt="Punta Cana Investments"
                             width={180}
                             height={180}
