@@ -182,21 +182,15 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                         </div>
 
-                        {/* Description */}
+                        {/* Description Intro */}
                         <div>
                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                Descripción
+                                {lang === 'en' ? 'Description' : 'Descripción'}
                             </h2>
                             <div className="text-gray-300 leading-relaxed text-lg">
                                 <ReactMarkdown
                                     components={{
-                                        h1: ({ node, ...props }) => <h2 className="text-3xl font-serif font-bold text-luxury-gold mt-8 mb-6 uppercase tracking-wider" {...props} />, // Map h1 to h2 style
-                                        h2: ({ node, ...props }) => <h2 className="text-2xl font-serif font-bold text-luxury-gold mt-8 mb-4 uppercase tracking-wider" {...props} />,
-                                        h3: ({ node, ...props }) => <h3 className="text-xl font-bold text-white mt-6 mb-3" {...props} />,
                                         p: ({ node, ...props }) => <p className="mb-4 whitespace-pre-line" {...props} />,
-                                        ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-6 space-y-2" {...props} />,
-                                        li: ({ node, ...props }) => <li className="text-gray-300" {...props} />,
-                                        strong: ({ node, ...props }) => <strong className="text-white font-bold" {...props} />,
                                     }}
                                 >
                                     {property.description[lang as 'en' | 'es']}
