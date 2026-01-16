@@ -1889,7 +1889,12 @@ Este desempeño confirma:
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-kitchen-island-stools.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-kitchen-appliances-view.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-room-sofas.jpg",
-            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-modern-kitchen-full.jpg"
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-modern-kitchen-full.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-laundry-service-room.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-dining-open-space.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-dining-living-connection.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-room-seating-detail.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-guest-bedroom-blue.jpg"
         ],
         seo: {
             title: {
