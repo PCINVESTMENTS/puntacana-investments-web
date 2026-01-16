@@ -55,12 +55,12 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
                 <ScrollReveal delay={0.2} width="100%">
-                    <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto">
-                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-2 text-luxury-gold leading-tight font-serif uppercase tracking-wider drop-shadow-md">
+                    <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-sm p-4 md:p-8 shadow-2xl max-w-2xl mx-auto">
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-luxury-gold leading-tight font-serif uppercase tracking-wider drop-shadow-md">
                             {dict.title}
                         </h1>
-                        <div className="h-1 w-24 bg-luxury-gold mx-auto my-4"></div>
-                        <p className="text-lg md:text-2xl text-gray-100 font-serif italic leading-relaxed drop-shadow-sm tracking-wide">
+                        <div className="h-1 w-16 bg-luxury-gold mx-auto my-3"></div>
+                        <p className="text-base md:text-xl text-gray-100 font-serif italic leading-relaxed drop-shadow-sm tracking-wide">
                             {dict.subtitle}
                         </p>
                     </div>
