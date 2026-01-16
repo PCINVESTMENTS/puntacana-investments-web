@@ -102,16 +102,29 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-20 items-center">
-                    {/* Logo */}
-                    <Link href={`/${lang}`} className="flex-shrink-0 flex items-center gap-2 group relative h-24 w-40">
-                        <Image
-                            src="/images/pci-logo-gold.png"
-                            alt="Punta Cana Investments"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
-                    </Link>
+                    {/* Mobile Menu Button - Left aligned on mobile for balance or keep right? 
+                        User wants logo centered. Standard is often burger left or right. 
+                        Let's put burger right (standard) and logo center.
+                    */}
+
+                    {/* Logo - Centered on Mobile, Left on Desktop */}
+                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:static lg:transform-none lg:flex-shrink-0 lg:flex lg:items-center">
+                        <Link href={`/${lang}`} className="block relative h-28 w-60 lg:h-36 lg:w-72 transition-all duration-300">
+                            <Image
+                                src="/images/pci-logo-gold.png"
+                                alt="Punta Cana Investments"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </Link>
+                    </div>
+
+                    {/* Desktop Menu - Pushed to right by flex spacer or justify-between */}
+                    {/* We need to ensure the layout still works. Default was justify-between. */}
+                    {/* The logo is now absolute on mobile, static on desktop. 
+                        On desktop, it takes space. On mobile, it floats.
+                    */}
 
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center space-x-6">

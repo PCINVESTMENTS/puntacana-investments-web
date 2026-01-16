@@ -358,8 +358,8 @@ export function Footer({ dict, lang }: FooterProps) {
                         <Image
                             src="/images/pci-logo-gold.png"
                             alt="Punta Cana Investments"
-                            width={180}
-                            height={180}
+                            width={280}
+                            height={280}
                             className="object-contain"
                         />
                     </div>
