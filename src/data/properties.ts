@@ -2103,7 +2103,12 @@ La combinación de Cap Cana + Soto Grande + vista al mar garantiza estabilidad, 
             "/images/properties/soto-grande-loft/soto-grande-loft-kitchen-island-stools.jpg",
             "/images/properties/soto-grande-loft/soto-grande-loft-open-concept-kitchen-dining.jpg",
             "/images/properties/soto-grande-loft/soto-grande-loft-dining-area-wall-mirror.jpg",
-            "/images/properties/soto-grande-loft/soto-grande-loft-bathroom-entrance-decor.jpg"
+            "/images/properties/soto-grande-loft/soto-grande-loft-bathroom-entrance-decor.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-bathroom-shower-closet.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-bathroom-bathtub-gold-tiles.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-bedroom-blue-bedding-art.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-bathroom-vanity-striped-wall.jpg",
+            "/images/properties/soto-grande-loft/soto-grande-loft-bathroom-bathtub-chandelier.jpg"
         ],
         seo: {
             title: {
