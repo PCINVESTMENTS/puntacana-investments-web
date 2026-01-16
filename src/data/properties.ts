@@ -41,6 +41,11 @@ export interface Property {
         status: "completed" | "in-progress" | "pending";
     }[];
     completionPercent?: number;
+    seo?: {
+        title: { en: string; es: string };
+        description: { en: string; es: string };
+        keywords: { en: string[]; es: string[] };
+    };
 }
 
 export const properties: Property[] = [
@@ -1698,7 +1703,7 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
         type: "villa",
         status: "sale",
         price: 1300000,
-        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-main-pool.jpg",
         beds: 3,
         baths: 6,
         area: 255,
@@ -1863,6 +1868,27 @@ Este desempeño confirma:
 - Clientes interesados en renta vacacional premium
 - Quienes valoran rooftop, marina y amenidades de clase mundial
 - Patrimonio inmobiliario sólido y exclusivo`
+        },
+        gallery: [
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-main-pool.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-pool-lounge.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-exterior-facade.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-pool-terrace.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-garden-view.jpg"
+        ],
+        seo: {
+            title: {
+                en: "Luxury Villa Ocean 21 Cap Cana Marina | Best Investment 2024",
+                es: "Villa de Lujo Ocean 21 Marina Cap Cana | Mejor Inversión 2024"
+            },
+            description: {
+                en: "Exclusive 3BR villa in Ocean 21, Cap Cana. Features private rooftop, pool, and marina access. High ROI vacation rental. Invest in Punta Cana luxury real estate.",
+                es: "Exclusiva villa de 3 hab en Ocean 21, Cap Cana. Con rooftop privado, piscina y acceso a marina. Alta rentabilidad en alquiler vacacional. Invierta en lujo Punta Cana."
+            },
+            keywords: {
+                en: ["Cap Cana Real Estate", "Ocean 21 Villa", "Luxury Villa Punta Cana", "Marina Cap Cana Investment", "Dominican Republic Property", "Vacation Rental Investment"],
+                es: ["Bienes Raíces Cap Cana", "Villa Ocean 21", "Villa Lujo Punta Cana", "Inversión Marina Cap Cana", "Propiedades República Dominicana", "Inversión Alquiler Vacacional"]
+            }
         }
     },
     {

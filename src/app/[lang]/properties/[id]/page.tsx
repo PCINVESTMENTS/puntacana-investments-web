@@ -72,12 +72,25 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         property = mapSanityProperty(propertyData);
     }
 
+    const seo = property.seo;
+    const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${property.title} | Punta Cana Investments`;
+    const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
+    const keywords = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
+
     return {
-        title: `${property.title} | Punta Cana Investments`,
-        description: property.description[lang as 'en' | 'es'],
+        title: title,
+        description: description,
+        keywords: keywords,
         openGraph: {
+            title: title,
+            description: description,
             images: [property.image],
+            locale: lang === 'es' ? 'es_ES' : 'en_US',
+            type: 'website',
         },
+        alternates: {
+            canonical: `https://puntacanainvesment.com/${lang}/properties/${id}`,
+        }
     };
 }
 
