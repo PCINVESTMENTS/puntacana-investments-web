@@ -1925,7 +1925,7 @@ Este desempeño confirma:
         type: "condo",
         status: "sale",
         price: 0, // Price upon request
-        image: "/images/properties/soto-grande-loft/main-placeholder.jpg",
+        image: "/images/properties/soto-grande-loft/soto-grande-loft-ocean-view-main.jpg",
         beds: 1,
         baths: 1,
         area: 106,
