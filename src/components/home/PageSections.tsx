@@ -306,8 +306,8 @@ export function ContactSection({ dict }: ContactSectionProps) {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-1">{dict.info.email}</h4>
-                                        <p className="text-luxury-gold hover:text-white transition-colors">info@puntacanainvestments.com</p>
-                                        <p className="text-luxury-gold hover:text-white transition-colors">ventas@puntacanainvestments.com</p>
+                                        <p className="text-luxury-gold hover:text-white transition-colors">info@puntacanainvesment.com</p>
+                                        <p className="text-luxury-gold hover:text-white transition-colors">ventas@puntacanainvesment.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4 group">

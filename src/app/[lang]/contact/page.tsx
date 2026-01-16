@@ -71,8 +71,8 @@ export default async function ContactPage({
                                 </div>
                                 <div>
                                     <h3 className="text-gray-400 text-sm uppercase tracking-wide mb-1">{dict.contact.info.email}</h3>
-                                    <a href="mailto:ventas@puntacanainvestments.com" className="text-2xl text-white font-playfair hover:text-luxury-gold transition-colors">
-                                        ventas@puntacanainvestments.com
+                                    <a href="mailto:ventas@puntacanainvesment.com" className="text-2xl text-white font-playfair hover:text-luxury-gold transition-colors">
+                                        ventas@puntacanainvesment.com
                                     </a>
                                 </div>
                             </div>
