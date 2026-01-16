@@ -1899,7 +1899,8 @@ Este desempeño confirma:
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-walk-in-closet-drawers.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bedroom-coral-bedding-wardrobe.jpg",
             "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bedroom-coral-bedding-window.jpg",
-            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bathroom-double-vanity-shower.jpg"
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bathroom-double-vanity-shower.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-twin-bedroom-guest.jpg"
         ],
         seo: {
             title: {
