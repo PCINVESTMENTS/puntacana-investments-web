@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 import { defineQuery } from 'next-sanity';
 
-const BASE_URL = 'https://puntacanainvestments.com';
+const BASE_URL = 'https://puntacanainvesment.com';
 
 const SITEMAP_QUERY = defineQuery(`
   {

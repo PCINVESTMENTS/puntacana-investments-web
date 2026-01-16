@@ -254,7 +254,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             </h3>
                             <ShareButtons
                                 title={post.title[lang]}
-                                url={`https://puntacanainvestments.com/${lang}/blog/${post.slug}`}
+                                url={`https://puntacanainvesment.com/${lang}/blog/${post.slug}`}
                             />
                         </div>
 

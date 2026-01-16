@@ -136,7 +136,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
                     <ShareButtons
                         title={data.title[l]}
-                        url={`https://puntacanainvestments.com/${lang}/investments/${model}`}
+                        url={`https://puntacanainvesment.com/${lang}/investments/${model}`}
                     />
                 </div>
             </div>

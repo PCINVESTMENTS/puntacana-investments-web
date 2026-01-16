@@ -313,7 +313,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             {/* Social Share Buttons */}
                             <ShareButtons
                                 title={`Mira esta propiedad: ${property.title}`}
-                                url={`https://puntacanainvestments.com/${lang}/properties/${property.id}`}
+                                url={`https://puntacanainvesment.com/${lang}/properties/${property.id}`}
                             />
 
                             <PriceDropNotify lang={lang} propertyTitle={property.title} />
