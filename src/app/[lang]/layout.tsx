@@ -31,7 +31,7 @@ export async function generateStaticParams() {
 
 import { CompareProvider } from "@/components/property/CompareContext";
 import PropertyComparator from "@/components/property/PropertyComparator";
-import PropertyComparator from "@/components/property/PropertyComparator";
+
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 
