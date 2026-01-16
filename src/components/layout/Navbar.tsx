@@ -96,8 +96,8 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
     return (
         <nav
             className={`fixed w-full z-50 transition-all duration-300 ${scrolled || isOpen
-                ? "bg-primary-black/95 backdrop-blur-md border-b border-white/10 shadow-xl"
-                : "bg-transparent border-transparent"
+                ? "bg-primary-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl"
+                : "bg-gradient-to-b from-black/60 to-transparent border-transparent"
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
