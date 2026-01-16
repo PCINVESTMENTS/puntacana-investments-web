@@ -1684,8 +1684,6 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
     },
     {
         id: 11,
-    {
-        id: 11,
         title: "Villa de Lujo en la Marina de Cap Cana",
         location: "capcana",
         locationLabel: "Marina de Cap Cana",
@@ -1869,51 +1867,50 @@ Este desempeño confirma:
 - Patrimonio inmobiliario sólido y exclusivo`
         }
     },
-    },
-{
-    id: 12,
+    {
+        id: 12,
         title: "Plaza Comercial Downtown",
-            location: "bavaro",
-                locationLabel: "Bávaro",
-                    type: "commercial",
-                        status: "sale",
-                            price: 185000,
-                                image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
-                                    beds: 0,
-                                        baths: 1,
-                                            area: 65,
-                                                features: {
-        en: ["High Traffic", "Private Parking", "Security", "Power Plant"],
+        location: "bavaro",
+        locationLabel: "Bávaro",
+        type: "commercial",
+        status: "sale",
+        price: 185000,
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop",
+        beds: 0,
+        baths: 1,
+        area: 65,
+        features: {
+            en: ["High Traffic", "Private Parking", "Security", "Power Plant"],
             es: ["Alto Tráfico", "Parqueo Privado", "Seguridad", "Planta Eléctrica"]
-    },
-    description: {
-        en: "Strategic commercial premises in the center of Bavaro. Ideal for corporate office or luxury retail.",
+        },
+        description: {
+            en: "Strategic commercial premises in the center of Bavaro. Ideal for corporate office or luxury retail.",
             es: "Local comercial estratégico en el centro de Bávaro. Ideal para oficina corporativa o retail de lujo."
-    }
-},
-{
-    id: 13,
-        title: "Terreno Hotelero Miches",
-            location: "miches",
-                locationLabel: "Miches",
-                    type: "resorts",
-                        status: "sale",
-                            price: 154000000,
-                                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-                                    featured: true,
-                                        beds: 0,
-                                            baths: 0,
-                                                area: 1185000,
-                                                    gallery: [
-                                                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-                                                        "/images/terreno-hotelero-miches-beachfront-aerial.png"
-                                                    ],
-                                                        features: {
-        en: ["800m Linear Beachfront", "Hotel Zoning", "High Density Approved", "Pier/Marina Feasibility", "Access Roads", "Electricity/Water Access", "Tax Exemptions (CONFOTUR)", "Eco-Tourism Potential"],
-            es: ["800m Lineales de Playa", "Zonificación Hotelera", "Alta Densidad Aprobada", "Factibilidad Muelle/Marina", "Vías de Acceso", "Acceso Luz/Agua", "Exenciones Fiscales (CONFOTUR)", "Potencial Eco-Turístico"]
+        }
     },
-    description: {
-        en: `Beachfront Land in Miches – Strategic Opportunity for Large-Scale Tourist Development
+    {
+        id: 13,
+        title: "Terreno Hotelero Miches",
+        location: "miches",
+        locationLabel: "Miches",
+        type: "resorts",
+        status: "sale",
+        price: 154000000,
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+        featured: true,
+        beds: 0,
+        baths: 0,
+        area: 1185000,
+        gallery: [
+            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+            "/images/terreno-hotelero-miches-beachfront-aerial.png"
+        ],
+        features: {
+            en: ["800m Linear Beachfront", "Hotel Zoning", "High Density Approved", "Pier/Marina Feasibility", "Access Roads", "Electricity/Water Access", "Tax Exemptions (CONFOTUR)", "Eco-Tourism Potential"],
+            es: ["800m Lineales de Playa", "Zonificación Hotelera", "Alta Densidad Aprobada", "Factibilidad Muelle/Marina", "Vías de Acceso", "Acceso Luz/Agua", "Exenciones Fiscales (CONFOTUR)", "Potencial Eco-Turístico"]
+        },
+        description: {
+            en: `Beachfront Land in Miches – Strategic Opportunity for Large-Scale Tourist Development
 
 We present an exceptional investment opportunity in Miches, one of the Caribbean's most projected tourist destinations, currently transforming into a world-class hotel hub.
 
@@ -2019,49 +2016,49 @@ Invertir hoy en Miches es invertir en el futuro del turismo del Caribe.
 - Desarrolladores turísticos
 - Proyectos hoteleros de gran escala
 - Inversiones estratégicas a largo plazo`
-    }
-},
-{
-    id: 14,
+        }
+    },
+    {
+        id: 14,
         title: "Beachfront Condo Rental",
-            location: "bavaro",
-                locationLabel: "Bávaro",
-                    type: "condo",
-                        status: "rent",
-                            price: 3500,
-                                image: "/images/rental-condo-generated.png",
-                                    beds: 2,
-                                        baths: 2,
-                                            area: 110,
-                                                features: {
-        en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
+        location: "bavaro",
+        locationLabel: "Bávaro",
+        type: "condo",
+        status: "rent",
+        price: 3500,
+        image: "/images/rental-condo-generated.png",
+        beds: 2,
+        baths: 2,
+        area: 110,
+        features: {
+            en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
             es: ["Acceso Playa", "Amueblado", "Wifi Alta Vel", "Seguridad"]
-    },
-    description: {
-        en: "Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays.",
+        },
+        description: {
+            en: "Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays.",
             es: "Apartamento vacacional totalmente equipado a pasos de la playa. Ideal para estancias cortas o medianas."
-    }
-},
-{
-    id: 15,
-        title: "Luxury Villa Cap Cana",
-            location: "capcana",
-                locationLabel: "Cap Cana",
-                    type: "villa",
-                        status: "rent",
-                            price: 8000,
-                                image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
-                                    beds: 4,
-                                        baths: 4.5,
-                                            area: 500,
-                                                features: {
-        en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
-            es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
+        }
     },
-    description: {
-        en: "Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included.",
+    {
+        id: 15,
+        title: "Luxury Villa Cap Cana",
+        location: "capcana",
+        locationLabel: "Cap Cana",
+        type: "villa",
+        status: "rent",
+        price: 8000,
+        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+        beds: 4,
+        baths: 4.5,
+        area: 500,
+        features: {
+            en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
+            es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
+        },
+        description: {
+            en: "Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included.",
             es: "Experiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido."
-    }
-},
+        }
+    },
 
 ];
