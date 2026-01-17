@@ -1527,7 +1527,7 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
     },
     {
         id: 17,
-        slug: "villa-lujo-frente-marina-cap-cana",
+        slug: "luxury-villa-marina-cap-cana",
         title: "Luxury Villa Marina Cap Cana",
         location: "capcana",
         locationLabel: "Marina Cap Cana",
@@ -1543,57 +1543,106 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
             es: ["Frente a la Marina", "Piscina Privada", "Sistema Filtración Agua", "Habitación Servicio", "Alta Privacidad", "Retorno Premium", "Solar 637 m²", "Seguridad 24/7"]
         },
         description: {
-            en: `Luxury Villa Fronting Cap Cana Marina – Private Corner Lot
-        
-Exclusive villa located directly in front of the Cap Cana Marina, one of the most prestigious and sought-after areas in the Caribbean. This property combines a strategic location, superior privacy, and excellent profitability potential, making it an ideal option for both luxury residence and high-level real estate investment.
+            en: `Luxury Villa Marina Cap Cana. Exclusive waterfront property located directly on the prestigious Marina Cap Cana. This unique residence combines sophisticated design with the ultimate nautical lifestyle, offering privacy and direct access to world-class amenities.
 
-The villa is situated on a unique corner lot, with one side bordering only a green area, guaranteeing greater privacy, open views, and a sense of spaciousness rare within the marina.
+Designed for those seeking a premium investment or a dream vacation home, the villa features expansive open spaces, natural light, and a seamless indoor-outdoor flow perfect for the Caribbean climate.
 
 ## Property Features
-- **Location:** Premium connection to the nautical lifestyle.
-- **Lot:** 637 m² | **Construction:** 600 m²
-- **Distribution:** 4 Main Bedrooms, Service Room with Bath.
-- **Levels:** 2 Levels with functional design and natural light.
-- **Water System:** Full property filtration + drinking water filter in kitchen.
+- **Location:** Prime Marina Front, Cap Cana.
+- **Lot & Build:** 637 m² Lot | 600 m² Construction.
+- **Layout:** 4 Bedrooms, 4.5 Baths, Service Quarters.
+- **Exterior:** Private Pool, Terrace, BBQ Area.
+- **Systems:** Water filtration, high-efficiency AC.
 
-## Investment Profile & Lifestyle
-- **Estimated Monthly Rent:** From US$15,000
-- **Nightly Rate:** US$1,300 - US$1,700 (depending on season)
-- **Demand:** High year-round demand in the area.
-- **Versatility:** Ideal for long-term or short-term luxury rental.
+## Investment Profile
+- **High ROI:** Proven dual-income potential (short/long term).
+- **Airbnb Rates:** US$1,300 - US$1,700/night potential.
+- **Monthly:** US$15,000+ estimated long-term.
+- **Demand:** Top-tier location ensures year-round occupancy.
 
-## Distribution
-**First Level:** 2 Full Bedrooms, Guest Bath, Living Room with Terrace Access, Kitchen, Laundry, Service Room, Private Pool.
-**Second Level:** 2 Additional Full Bedrooms.
+## Exclusive Cap Cana Amenities
+- **Beaches:** Juanillo Beach, Api Beach, Caletón Beach Club (Eden Roc).
+- **Golf:** Punta Espada Golf Course (Nicklaus Signature).
+- **Marina:** State-of-the-art marina, restaurants, and shops.
+- **Activities:** Scape Park (Eco-adventure), Los Establos (Equestrian City).
+- **Lifestyle:** Fine dining, bars, spas, and exclusive beach clubs.
+- **Security:** Double gated access, 24/7 private security patrols.
 
-*Located directly in front of the Marina, with privileged views of the gastronomic and social environment.*`,
-            es: `Villa de Lujo Frente a la Marina de Cap Cana
-        
-Exclusiva villa ubicada frente a la Marina de Cap Cana, una de las zonas más prestigiosas y demandadas del Caribe. Esta propiedad combina ubicación estratégica, privacidad superior y excelente potencial de rentabilidad, convirtiéndose en una opción ideal tanto para residencia de lujo como para inversión inmobiliaria de alto nivel.
+## Ideal For
+Investors seeking high-yield assets, luxury vacationers, and boating enthusiasts looking for a private Caribbean retreat.`,
+            es: `Luxury Villa Marina Cap Cana. Exclusiva propiedad frente al agua ubicada directamente en la prestigiosa Marina de Cap Cana. Esta residencia única combina un diseño sofisticado con el máximo estilo de vida náutico, ofreciendo privacidad y acceso directo a amenidades de clase mundial.
 
-La villa se encuentra en una esquina única, con uno de sus laterales colindando únicamente con un área verde, sin construcciones vecinas, lo que garantiza mayor privacidad, vistas abiertas y una sensación de amplitud poco común dentro de la marina.
+Diseñada para quienes buscan una inversión premium o una casa vacacional de ensueño, la villa cuenta con amplios espacios abiertos, luz natural y una fluidez interior-exterior perfecta para el clima caribeño.
 
-## Características Destacadas
-- **Ubicación:** Conexión directa con el estilo de vida náutico.
-- **Dimensiones:** Solar 637 m² | Construcción 600 m²
-- **Distribución:** 4 Habitaciones principales, Habitación de servicio.
-- **Niveles:** 2 Niveles con diseño funcional e iluminación natural.
-- **Sistema de Agua:** Filtración en toda la propiedad + filtro potable en cocina.
+## Características de la Propiedad
+- **Ubicación:** Frente a la Marina, Cap Cana.
+- **Terreno y Construcción:** Solar 637 m² | Const. 600 m².
+- **Distribución:** 4 Habitaciones, 4.5 Baños, Habitación de Servicio.
+- **Exterior:** Piscina Privada, Terraza, Área de BBQ.
+- **Sistemas:** Filtración de agua, Aire Acondicionado de alta eficiencia.
 
-## Potencial de Inversión
-- **Renta mensual estimada:** Desde US$15,000
-- **Renta por noche:** US$1,300 – US$1,700 (según temporada)
-- **Demanda:** Alta demanda comprobada todo el año.
-- **Versatilidad:** Ideal para renta de largo o corto plazo (vacacional premium).
+## Rentabilidad y Perfil de Inversión
+- **Alto Retorno:** Potencial dual de ingresos (corto/largo plazo).
+- **Tarifas Airbnb:** Potencial de US$1,300 - US$1,700/noche.
+- **Mensual:** Estimado US$15,000+ a largo plazo.
+- **Demanda:** Ubicación de primer nivel asegura ocupación todo el año.
 
-## Distribución Detallada
-**Primer Nivel:** 2 Habitaciones completas, Baño de visitas, Sala con acceso a terraza, Cocina, Área de lavado, Habitación de servicio, Piscina privada.
-**Segundo Nivel:** 2 Habitaciones completas adicionales.
+## Amenidades Exclusivas Cap Cana
+- **Playas:** Playa Juanillo, Api Beach, Caletón Beach Club (Eden Roc).
+- **Golf:** Punta Espada Golf Course (Firma de Jack Nicklaus).
+- **Marina:** Marina de clase mundial, restaurantes y tiendas de lujo.
+- **Actividades:** Scape Park (Eco-aventura), Los Establos (Ciudad Ecuestre).
+- **Estilo de Vida:** Gastronomía gourmet, bares, spas y clubes de playa.
+- **Seguridad:** Doble acceso controlado, patrullaje privado 24/7.
 
-*Ubicada directamente frente a la Marina de Cap Cana, con una vista privilegiada hacia el entorno gastronómico y social.*`
+## Ideal Para
+Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y entusiastas de la navegación que buscan un retiro privado en el Caribe.`
         },
         gallery: [
-            "/images/properties/cap-cana-marina-villa/main-marina-view.jpg"
-        ]
+            "/images/properties/cap-cana-marina-villa/main-marina-view.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-cap-cana-terrace-lounge.jpg",
+            "/images/properties/cap-cana-marina-villa/cap-cana-villa-pool-deck-marina-view.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-living-room-panoramic-view-cap-cana.jpg",
+            "/images/properties/cap-cana-marina-villa/modern-kitchen-orange-accents-villa-cap-cana.jpg",
+            "/images/properties/cap-cana-marina-villa/villa-exterior-pool-modern-design-cap-cana.jpg",
+            "/images/properties/cap-cana-marina-villa/cap-cana-villa-terrace-pergola-pool.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-dining-room-interior.jpg",
+            "/images/properties/cap-cana-marina-villa/villa-marina-view-from-living.jpg",
+            "/images/properties/cap-cana-marina-villa/cap-cana-villa-outdoor-bbq-kitchen.jpg",
+            "/images/properties/cap-cana-marina-villa/modern-kitchen-breakfast-bar-detail.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-dining-pool-view.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-twin-bedroom-suite.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-modern-bathroom-shower.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-dual-sink-vanity.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-walk-in-closet-wood.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-laundry-service-area.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-bedroom-balcony-access.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-dining-art-gallery-style.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-bathroom-double-vanity-shower.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-wooden-hallway-art-detail.jpg",
+            "/images/properties/cap-cana-marina-villa/modern-chef-kitchen-orange-design.jpg",
+            "/images/properties/cap-cana-marina-villa/wooden-staircase-landing-detail.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-bunk-bed-guest-room.jpg",
+            "/images/properties/cap-cana-marina-villa/spacious-guest-bathroom-walk-in-shower.jpg",
+            "/images/properties/cap-cana-marina-villa/modern-stone-bathroom-design.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-master-bedroom-marina-view.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-master-suite-terrace.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-bathroom-vanity-detail.jpg",
+            "/images/properties/cap-cana-marina-villa/luxury-villa-bedroom-high-ceilings.jpg"
+        ],
+        seo: {
+            title: {
+                en: "Luxury Villa Marina Cap Cana | Punta Cana Investment",
+                es: "Luxury Villa Marina Cap Cana | Inversión Punta Cana"
+            },
+            description: {
+                en: "Real estate investment in Punta Cana. Luxury villa fronting Marina Cap Cana. 4 beds, private pool. High Airbnb ROI potential. Exclusive location.",
+                es: "Inversión inmobiliaria en Punta Cana. Villa de lujo frente a la Marina Cap Cana. 4 habs, piscina privada. Alta rentabilidad Airbnb. Ubicación exclusiva."
+            },
+            keywords: {
+                en: ["Luxury Villa Marina Cap Cana", "Cap Cana Investment", "Punta Cana Real Estate", "Waterfront Villa", "Airbnb Cap Cana"],
+                es: ["Luxury Villa Marina Cap Cana", "Inversión Cap Cana", "Inmobiliaria Punta Cana", "Villa Frente Marina", "Airbnb Punta Cana"]
+            }
+        }
     },
 ];
