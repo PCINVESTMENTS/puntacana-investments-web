@@ -3,15 +3,8 @@ import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 
-// Revalidate sitemap every hour
-export const revalidate = 3600;
-
-export async function generateStaticParams() {
-  return [
-    { id: 'properties-es.xml' },
-    { id: 'properties-en.xml' }
-  ];
-}
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export async function GET(
   request: Request,
