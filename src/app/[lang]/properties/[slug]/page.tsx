@@ -132,7 +132,8 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     };
 }
 
-export const revalidate = 60;
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export default async function PropertyPage({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;

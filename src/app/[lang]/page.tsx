@@ -19,7 +19,8 @@ import { BlogPost } from "@/data/blog";
 
 import type { Metadata } from "next";
 
-export const revalidate = 60;
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
   const { lang } = await params;
