@@ -1360,7 +1360,7 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
     },
     {
         id: 16,
-        slug: "villa-moderna-white-sands-punta-cana",
+        slug: "villa-en-venta-en-white-sands-punta-cana",
         title: "Villas | Villa en Venta en White Sands Punta Cana",
         location: "bavaro",
         locationLabel: "White Sands, Bávaro",
@@ -1394,12 +1394,12 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
         ],
         seo: {
             title: {
-                en: "Modern Villa for Sale in White Sands Punta Cana | Private Pool",
-                es: "Villa Moderna en Venta en White Sands Punta Cana | Piscina Privada"
+                en: "Villa for Sale in White Sands Punta Cana | Private Pool",
+                es: "Villa en Venta en White Sands Punta Cana | Piscina Privada"
             },
             description: {
-                en: "Exclusive 3-bedroom villa for sale in White Sands, Punta Cana. Features private pool, beach access, golf course access, and 24/7 security. Ideal for Airbnb investment.",
-                es: "Exclusiva villa de 3 habitaciones en venta en White Sands, Punta Cana. Con piscina privada, acceso a playa, campo de golf y seguridad 24/7. Ideal para inversión Airbnb."
+                en: "Villa for sale in White Sands Punta Cana. 3 bedrooms, private pool, and access to beach/golf. Secure investment in a gated community.",
+                es: "Villa en Venta en White Sands Punta Cana. 3 habitaciones, piscina privada, acceso a playa y golf. Inversión segura en residencial cerrado."
             },
             keywords: {
                 en: ["White Sands Punta Cana", "Villa for Sale Punta Cana", "Punta Cana Real Estate", "Airbnb Investment Punta Cana", "Private Pool Villa"],
