@@ -1225,20 +1225,14 @@ Conceived for those seeking privacy, comfort, and a solid real estate investment
 - **Size:** From 155 m² up to 250 m² (including terraces and rooftop)
 - **Value:** *These units represent the most exclusive and profitable segment of the project.*
 
-## Profitability & Investment Profile
-- Excellent performance on Airbnb
-- High demand due to location within White Sands
-- Villas with rooftop allow for superior rates
-- Resort-style environment favors high occupancy
-- Ideal for passive income in dollars
+## Investment Profile & Appreciation
+Designed to maximize returns in the short and medium term, Perla del Mar stands out for its **high performance on Airbnb** and potential for dollar-based passive income.
+- **Strategic Location:** Inside White Sands, ensuring high demand and occupancy.
+- **Premium Rates:** Villas with rooftop command superior nightly rates.
+- **Resort Lifestyle:** Access to private beach and golf course drives value.
+- **Target Audience:** Ideal for vacation rental investors and buyers seeking a consolidated real estate heritage.
 
-## Ideal For
-- Vacation Rental Investors
-- Buyers seeking villas with rooftop
-- Properties within a resort-style residential
-- High profitability and appreciation projection
-- Real estate heritage in a consolidated zone
-- *White Sands Amenities accessible via the community card (Beach, Golf, Sports).*`,
+*Residents enjoy full access to White Sands amenities including the private beach, golf course, and clubhouse.*`,
             es: `Perla del Mar – Villas Exclusivas en White Sands, Punta Cana
 
 Perla del Mar es un proyecto residencial exclusivo de villas ubicado dentro del reconocido White Sands, en Punta Cana.
@@ -1258,20 +1252,14 @@ Concebido para quienes buscan privacidad, confort y una inversión inmobiliaria 
 - **Metraje:** Desde 155 m² hasta 250 m² (incluyendo terrazas y rooftop)
 - **Valor:** *Estas unidades representan el segmento más exclusivo y rentable del proyecto.*
 
-## Rentabilidad y Perfil de Inversión
-- Excelente desempeño en Airbnb
-- Alta demanda por ubicación dentro de White Sands
-- Villas con rooftop permiten tarifas superiores
-- Entorno tipo resort que favorece alta ocupación
-- Ideal para ingresos pasivos en dólares
+## Perfil de Inversión y Plusvalía
+Diseñado para maximizar el retorno a corto y mediano plazo, Perla del Mar destaca por su **alto desempeño en Airbnb** y potencial de ingresos pasivos en dólares.
+- **Ubicación Estratégica:** Dentro de White Sands, garantizando alta demanda y ocupación.
+- **Tarifas Premium:** Las villas con rooftop permiten establecer precios por noche superiores.
+- **Estilo de Vida Resort:** El acceso a playa privada y campo de golf impulsa la plusvalía.
+- **Público Objetivo:** Ideal para inversionistas de renta vacacional y quienes buscan un patrimonio inmobiliario consolidado.
 
-## Ideal Para
-- Inversionistas en renta vacacional
-- Compradores que buscan villas con rooftop
-- Propiedades dentro de un residencial tipo resort
-- Alta proyección de rentabilidad y plusvalía
-- Patrimonio inmobiliario en zona consolidada
-- *Todas las amenidades de White Sands (Playa, Golf, Casa Club) están incluidas en la tarjeta de propietario.*`
+*Los propietarios disfrutan de acceso total a las amenidades de White Sands, incluyendo playa privada, campo de golf y casa club.*`
         },
     },
     {
@@ -1293,47 +1281,32 @@ Concebido para quienes buscan privacidad, confort y una inversión inmobiliaria 
         description: {
             en: `Ocean Village – Exclusive Villas in White Sands, Punta Cana
 
-Ocean Village is an exclusive, low-density residential project located within the prestigious White Sands in Punta Cana.
-Conceived for those seeking contemporary design, privacy, and a solid investment, the project is ideal for both residential use and Airbnb-style vacation rentals.
+Ocean Village es un proyecto residencial exclusivo y de baja densidad ubicado dentro del prestigioso White Sands en Punta Cana.
+Concebido para quienes buscan diseño contemporáneo, privacidad, y una inversión sólida, el proyecto es ideal tanto para uso residencial como para renta vacacional tipo Airbnb.
 
 ## Project Features
 - **Total Units:** 8 Villas (Single-family & Duplex)
-- **Concept:** Low-density project
+- **Concept:** Low-density project for maximum privacy
 - **Design:** Modern and Functional Architectural Design
 - **Construction:** 163 m²
 - **Rooftop:** Private rooftop averaging 80 m² (in duplex villas)
 - **Layout:** 3 bedrooms, 2 full bathrooms
 - **Social Areas:** Open concept living room, dining room, and kitchen
 - **Exterior:** Private Pool, Double Parking
-- **Value:** Distribution designed for comfort, privacy, and profitability
 
-The duplex villas with rooftop represent the most attractive product of the project for the vacation rental market.
+## Duplex Villas with Private Rooftop
+The duplex villas with rooftop represent the project's most attractive product for the rental market.
+- **Luxury Terrace:** 80 m² rooftop conceived as a social area.
+- **Amenities:** Includes Jacuzzi, pergola area, and BBQ space.
+- **Value:** A key differentiator that drives higher occupancy and premium rates on platforms like Airbnb.
 
-## Profitability & Investment Profile
-- Excellent performance on Airbnb
-- High demand due to location within White Sands
-- Rooftop villas allow for premium rates
-- Ideal for passive income in dollars
+## Investment Profile & Appreciation
+Ocean Village is positioned as a **highly Airbnb-friendly project**, designed to generate passive income in dollars.
+- **High Demand:** Its location within White Sands attracts quality tourism.
+- **Premium Segment:** The combination of luxury rooftops and private pools allows for competitive nightly rates.
+- **Target Audience:** Perfect for investors seeking a differentiated product and families looking for a vacation home with resort amenities.
 
-## White Sands Amenities
-- Private Beach Access
-- Golf Course
-- Semi-Olympic Pool
-- Sports Courts (Tennis, Paddle, Basketball)
-- Clubhouse
-- Restaurant
-- Internal Transport to Beach
-- Pet Park
-- Social Area, Terrace & BBQ
-- 24/7 Private Security
-- **Nearby:** Casinos, nightclubs, bars, and entertainment zones
-
-## Ideal For
-- Vacation Rental Investors
-- Buyers seeking villas with rooftop
-- Properties within a resort-style residential
-- Exclusive low-density project
-- Real estate heritage in White Sands`,
+*Residents have full access to White Sands amenities, including private beach access, golf course, and clubhouse.*`,
             es: `Ocean Village – Villas Exclusivas en White Sands, Punta Cana
 
 Ocean Village es un proyecto residencial exclusivo y de baja densidad ubicado dentro del prestigioso White Sands, en Punta Cana.
@@ -1341,42 +1314,27 @@ Concebido para quienes buscan diseño contemporáneo, privacidad y una inversió
 
 ## Características del Proyecto
 - **Total Unidades:** 8 Villas (Unifamiliares y Dúplex)
-- **Concepto:** Proyecto de baja densidad
+- **Concepto:** Proyecto de baja densidad para máxima privacidad
 - **Diseño:** Arquitectónico moderno y funcional
 - **Construcción:** 163 m²
 - **Rooftop:** Rooftop privado con un promedio de 80 m² (en villas dúplex)
 - **Distribución:** 3 habitaciones, 2 baños completos
 - **Áreas Sociales:** Sala, comedor y cocina de concepto abierto
 - **Exterior:** Piscina privada, Parqueo doble
-- **Valor:** Distribución pensada para confort, privacidad y rentabilidad
 
-Las villas dúplex con rooftop representan el producto más atractivo del proyecto para el mercado de renta vacacional.
+## Villas Dúplex con Rooftop Privado
+Las villas dúplex con rooftop representan el producto más atractivo del proyecto para el mercado de renta.
+- **Terraza de Lujo:** Rooftop de 80 m² concebido como área social.
+- **Amenidades:** Incluye Jacuzzi, área pergolada y espacio para BBQ.
+- **Valor:** Un diferenciador clave que impulsa mayor ocupación y tarifas premium en plataformas como Airbnb.
 
-## Rentabilidad y Perfil de Inversión
-- Excelente desempeño en Airbnb
-- Alta demanda por ubicación dentro de White Sands
-- Villas con rooftop permiten tarifas premium
-- Ideal para ingresos pasivos en dólares
+## Perfil de Inversión y Plusvalía
+Ocean Village se posiciona como un proyecto **altamente Airbnb-friendly**, diseñado para generar ingresos pasivos en dólares.
+- **Alta Demanda:** Su ubicación dentro de White Sands atrae turismo de calidad.
+- **Segmento Premium:** La combinación de rooftops de lujo y piscina privada permite tarifas por noche competitivas.
+- **Público Objetivo:** Perfecto para inversionistas que buscan un producto diferenciado y familias que desean una casa vacacional con amenidades de resort.
 
-## Amenidades del Residencial White Sands
-- Acceso privado a la playa
-- Campo de golf
-- Piscina semi-olímpica
-- Canchas deportivas (tenis, pádel y baloncesto)
-- Casa club
-- Restaurante
-- Transporte interno a la playa
-- Parque para mascotas
-- Área social, terraza y BBQ
-- Seguridad privada 24/7
-- **Entorno:** Casinos, discotecas, bares y zonas de entretenimiento cercanas
-
-## Ideal Para
-- Inversionistas en renta vacacional
-- Compradores que buscan villas con rooftop
-- Propiedades dentro de un residencial tipo resort
-- Proyecto exclusivo de baja densidad
-- Patrimonio inmobiliario en White Sands`
+*Los residentes tienen acceso total a las amenidades de White Sands, incluyendo acceso privado a la playa, campo de golf y casa club.*`
         },
         gallery: [
             "/images/ocean-village-punta-cana-modern-facade.jpg",
