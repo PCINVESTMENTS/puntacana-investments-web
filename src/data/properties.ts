@@ -1527,38 +1527,73 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
     },
     {
         id: 17,
-        slug: "propiedad-exclusiva-proximamente-2",
-        title: "Condos | Nueva Propiedad Exclusiva 2",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "condo",
+        slug: "villa-lujo-frente-marina-cap-cana",
+        title: "Luxury Villa Marina Cap Cana",
+        location: "capcana",
+        locationLabel: "Marina Cap Cana",
+        type: "villa",
         status: "sale",
-        price: 0,
-        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
-        beds: 2,
-        baths: 2,
-        area: 120,
+        price: 1975000,
+        image: "/images/properties/cap-cana-marina-villa/main-marina-view.jpg",
+        beds: 4,
+        baths: 4.5,
+        area: 600,
         features: {
-            en: ["Coming Soon", "Modern Design", "Great Investment"],
-            es: ["Próximamente", "Diseño Moderno", "Gran Inversión"]
+            en: ["Prime Corner Location", "Marina Front", "Private Pool", "Water Filtration System", "Service Room", "High Privacy", "Premium ROI Potential", "637 m² Lot", "24/7 Security"],
+            es: ["Frente a la Marina", "Piscina Privada", "Sistema Filtración Agua", "Habitación Servicio", "Alta Privacidad", "Retorno Premium", "Solar 637 m²", "Seguridad 24/7"]
         },
         description: {
-            en: `New Exclusive Condo - Coming Soon
+            en: `Luxury Villa Fronting Cap Cana Marina – Private Corner Lot
         
-An exciting new investment opportunity is coming to Bávaro. Perfect for vacation rentals or a Caribbean home.
+Exclusive villa located directly in front of the Cap Cana Marina, one of the most prestigious and sought-after areas in the Caribbean. This property combines a strategic location, superior privacy, and excellent profitability potential, making it an ideal option for both luxury residence and high-level real estate investment.
+
+The villa is situated on a unique corner lot, with one side bordering only a green area, guaranteeing greater privacy, open views, and a sense of spaciousness rare within the marina.
 
 ## Property Features
-- **Status:** Coming Soon
-- **Type:** Modern Condo
-- **Location:** Bávaro`,
-            es: `Nuevo Condominio Exclusivo - Próximamente
+- **Location:** Premium connection to the nautical lifestyle.
+- **Lot:** 637 m² | **Construction:** 600 m²
+- **Distribution:** 4 Main Bedrooms, Service Room with Bath.
+- **Levels:** 2 Levels with functional design and natural light.
+- **Water System:** Full property filtration + drinking water filter in kitchen.
 
-Una emocionante oportunidad de inversión llega a Bávaro. Perfecto para renta vacacional o residencia en el Caribe.
+## Investment Profile & Lifestyle
+- **Estimated Monthly Rent:** From US$15,000
+- **Nightly Rate:** US$1,300 - US$1,700 (depending on season)
+- **Demand:** High year-round demand in the area.
+- **Versatility:** Ideal for long-term or short-term luxury rental.
 
-## Características de la Propiedad
-- **Estado:** Próximamente
-- **Tipo:** Condominio Moderno
-- **Ubicación:** Bávaro`
+## Distribution
+**First Level:** 2 Full Bedrooms, Guest Bath, Living Room with Terrace Access, Kitchen, Laundry, Service Room, Private Pool.
+**Second Level:** 2 Additional Full Bedrooms.
+
+*Located directly in front of the Marina, with privileged views of the gastronomic and social environment.*`,
+            es: `Villa de Lujo Frente a la Marina de Cap Cana
+        
+Exclusiva villa ubicada frente a la Marina de Cap Cana, una de las zonas más prestigiosas y demandadas del Caribe. Esta propiedad combina ubicación estratégica, privacidad superior y excelente potencial de rentabilidad, convirtiéndose en una opción ideal tanto para residencia de lujo como para inversión inmobiliaria de alto nivel.
+
+La villa se encuentra en una esquina única, con uno de sus laterales colindando únicamente con un área verde, sin construcciones vecinas, lo que garantiza mayor privacidad, vistas abiertas y una sensación de amplitud poco común dentro de la marina.
+
+## Características Destacadas
+- **Ubicación:** Conexión directa con el estilo de vida náutico.
+- **Dimensiones:** Solar 637 m² | Construcción 600 m²
+- **Distribución:** 4 Habitaciones principales, Habitación de servicio.
+- **Niveles:** 2 Niveles con diseño funcional e iluminación natural.
+- **Sistema de Agua:** Filtración en toda la propiedad + filtro potable en cocina.
+
+## Potencial de Inversión
+- **Renta mensual estimada:** Desde US$15,000
+- **Renta por noche:** US$1,300 – US$1,700 (según temporada)
+- **Demanda:** Alta demanda comprobada todo el año.
+- **Versatilidad:** Ideal para renta de largo o corto plazo (vacacional premium).
+
+## Distribución Detallada
+**Primer Nivel:** 2 Habitaciones completas, Baño de visitas, Sala con acceso a terraza, Cocina, Área de lavado, Habitación de servicio, Piscina privada.
+**Segundo Nivel:** 2 Habitaciones completas adicionales.
+
+*Ubicada directamente frente a la Marina de Cap Cana, con una vista privilegiada hacia el entorno gastronómico y social.*`
         },
+        gallery: [
+            "/images/properties/cap-cana-marina-villa/main-marina-view.jpg"
+        ]
     },
 ];
