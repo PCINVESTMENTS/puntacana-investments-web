@@ -1269,7 +1269,7 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
         id: 14,
         slug: "villa-en-renta-white-sands-punta-cana-amueblada",
         title: "Villa en Renta Amueblada en White Sands Punta Cana",
-        location: "bavaro",
+        location: "whitesands",
         locationLabel: "White Sands, Bávaro",
         type: "villa",
         status: "rent",
