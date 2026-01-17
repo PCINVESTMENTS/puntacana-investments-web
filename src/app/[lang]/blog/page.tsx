@@ -16,7 +16,8 @@ interface BlogListingPageProps {
     }>;
 }
 
-export const revalidate = 60;
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export default async function BlogListingPage({ params }: BlogListingPageProps) {
     const { lang } = await params;

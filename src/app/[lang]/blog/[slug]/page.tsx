@@ -40,14 +40,8 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
 }
 
-export async function generateStaticParams() {
-    const posts = await client.fetch(POSTS_QUERY);
-    return posts.map((post: any) => ({
-        slug: post.slug.current,
-    }));
-}
-
-export const revalidate = 60;
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { lang, slug } = await params;

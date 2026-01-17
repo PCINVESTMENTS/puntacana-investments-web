@@ -20,7 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     };
 }
 
-export const revalidate = 60;
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
