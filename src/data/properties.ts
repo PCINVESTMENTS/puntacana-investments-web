@@ -1225,7 +1225,7 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
     {
         id: 14,
         slug: "villa-en-renta-white-sands-punta-cana-amueblada",
-        title: "Villas | Villa en Renta Amueblada en White Sands Punta Cana",
+        title: "Villa en Renta Amueblada en White Sands Punta Cana",
         location: "bavaro",
         locationLabel: "White Sands, Bávaro",
         type: "villa",
@@ -1271,8 +1271,8 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
             }
         },
         features: {
-            en: ["Furnished", "1 Year Contract", "Private Beach Access", "Golf Course Access", "Clubhouse", "Private Pool", "Gated Community", "Service Room", "24/7 Security", "Private Parking"],
-            es: ["Amueblada", "Contrato 1 Año", "Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Piscina Privada", "Residencial Cerrado", "Habitación de Servicio", "Seguridad 24/7", "Parqueo Privado"]
+            en: ["US$2,000 / Month", "Furnished", "1 Year Contract", "Private Beach Access", "Golf Course Access", "Clubhouse", "Private Pool", "Gated Community", "Service Room", "24/7 Security", "Private Parking"],
+            es: ["US$2,000 / Mes", "Amueblada", "Contrato 1 Año", "Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Piscina Privada", "Residencial Cerrado", "Habitación de Servicio", "Seguridad 24/7", "Parqueo Privado"]
         },
         description: {
             en: `Furnished Villa for Rent in White Sands - 1 Year Contract
@@ -1386,7 +1386,7 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
     {
         id: 16,
         slug: "villa-en-venta-en-white-sands-punta-cana",
-        title: "Villas | Villa en Venta en White Sands Punta Cana",
+        title: "Villa en Venta en White Sands Punta Cana",
         location: "bavaro",
         locationLabel: "White Sands, Bávaro",
         type: "villa",
