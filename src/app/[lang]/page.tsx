@@ -46,10 +46,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const posts: BlogPost[] = rawPosts.map(mapSanityPost);
 
   const heroProperties = properties.filter(p =>
-    // Hero Allowed: Perla (8), Diana (3), Kerry (7), Ocean (9), Cap Cana Properties
-    // Exclude Commercial and Unauthorized.
-    [3, 7, 8, 9].includes(p.id) ||
-    (p.location === 'capcana' && p.type !== 'commercial' && p.id !== 17)
+    // Hero Allowed: City Place (2), Diana (3), Kerry (7), Perla (8), Ocean Village (9), Soto Grande (12), Miches (13)
+    [2, 3, 7, 8, 9, 12, 13].includes(p.id)
   );
 
   const heroImages = heroProperties.map(p => p.image);
