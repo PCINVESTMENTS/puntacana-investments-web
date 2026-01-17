@@ -75,6 +75,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
     const keywords = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+    const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;
+
     return {
         title: title,
         description: description,
@@ -87,7 +90,44 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             type: 'website',
         },
         alternates: {
-            canonical: `https://puntacanainvesment.com/${lang}/properties/${slug}`,
+            canonical: canonicalUrl,
+            languages: {
+                en: `${baseUrl}/en/properties/${slug}`,
+                es: `${baseUrl}/es/properties/${slug}`,
+                'x-default': `${baseUrl}/en/properties/${slug}`
+            }
+        },
+        other: {
+            // Injecting JSON-LD as script tag in body via page component or here? 
+            // Metadata 'other' is for meta tags. For JSON-LD better use a script component in the page.
+            // But we can pass it here if we use a specific way, but standard is Page component.
+            // Actually, next.js recommends adding script in the component.
+            // So we return standard metadata here.
+        }
+    };
+}
+
+// Helper for JSON-LD
+function generateJsonLd(property: Property, lang: string, baseUrl: string) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'RealEstateListing',
+        name: property.title,
+        description: property.description?.[lang as 'en' | 'es']?.substring(0, 160) || '',
+        image: property.image ? [property.image, ...(property.gallery || [])] : [],
+        url: `${baseUrl}/${lang}/properties/${property.slug}`,
+        datePosted: new Date().toISOString(), // Ideal if we had createdAt
+        offers: {
+            '@type': 'Offer',
+            price: property.price,
+            priceCurrency: 'USD',
+            availability: property.status === 'sale' || property.status === 'rent' ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
+        },
+        address: {
+            '@type': 'PostalAddress',
+            addressCountry: 'DO',
+            addressLocality: property.locationLabel || 'Punta Cana',
+            addressRegion: 'La Altagracia'
         }
     };
 }
@@ -98,8 +138,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     const { lang, slug } = await params;
     const dict = await getDictionary(lang as "es" | "en");
 
-    // Prioritize local data if it exists (for overrides/updates not yet in CMS)
-    // This ensures edits made in properties.ts (like Cruise On Land) are visible immediately.
+    // Check local data first
     const localProperty = properties.find(p => p.slug === slug);
     let property: Property;
 
@@ -107,13 +146,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
         property = localProperty;
     } else {
         const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-
-        if (!propertyData) {
-            notFound();
-        }
-
+        if (!propertyData) notFound();
         property = mapSanityProperty(propertyData);
     }
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+    const jsonLd = generateJsonLd(property, lang, baseUrl);
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -126,6 +164,10 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar dict={dict.nav} lang={lang} />
 
             {/* Extended Hero / Header */}

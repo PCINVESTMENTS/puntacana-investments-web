@@ -6,9 +6,46 @@ import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
+import type { Metadata } from "next";
 
 export const revalidate = 60;
 
+export async function generateMetadata({
+    params,
+    searchParams
+}: {
+    params: Promise<{ lang: 'es' | 'en' }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<Metadata> {
+    const { lang } = await params;
+    const resolvedSearchParams = await searchParams;
+    const dict = await getDictionary(lang);
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+
+    // SEO LOGIC:
+    // If ANY search params exist (filters), NOINDEX but FOLLOW.
+    // Canonical ALWAYS points to the clean URL (without params).
+    const hasFilters = Object.keys(resolvedSearchParams || {}).length > 0;
+
+    return {
+        title: dict.properties.title + ' | Punta Cana Investments',
+        description: dict.properties.subtitle,
+        robots: {
+            index: !hasFilters,
+            follow: true,
+        },
+        alternates: {
+            canonical: `${baseUrl}/${lang}/properties`,
+            languages: {
+                es: `${baseUrl}/es/properties`,
+                en: `${baseUrl}/en/properties`,
+                'x-default': `${baseUrl}/en/properties`
+            }
+        }
+    };
+}
+
+// Separate function for the component to keep it clean
 export default async function PropertiesPage({
     params,
     searchParams

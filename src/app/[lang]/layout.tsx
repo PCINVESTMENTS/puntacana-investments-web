@@ -18,10 +18,17 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
+  /* 
+     NOTE: We keep metadataBase here for absolute URL resolution in child pages.
+     We do NOT set specific canonicals here to avoid them being inherited by pages 
+     that should have their own. Each page should define its own alternates.
+  */
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+
   return {
     title: dict.meta.title,
     description: dict.meta.description,
-    metadataBase: new URL('https://puntacanainvesment.com'),
+    metadataBase: new URL(baseUrl),
     openGraph: {
       images: ['/images/home-share.png'],
       title: dict.meta.title,

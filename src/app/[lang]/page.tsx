@@ -17,7 +17,26 @@ import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost } from "@/data/blog";
 
+import type { Metadata } from "next";
+
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+
+  return {
+    alternates: {
+      canonical: `${baseUrl}/${lang}`,
+      languages: {
+        'en': `${baseUrl}/en`,
+        'es': `${baseUrl}/es`,
+        'x-default': `${baseUrl}/en`,
+      },
+    }
+  }
+}
 
 export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
   const { lang } = await params;
