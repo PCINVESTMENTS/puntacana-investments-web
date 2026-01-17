@@ -12,7 +12,7 @@ import PropertyGallery from "@/components/property/PropertyGallery";
 import VideoPlayer from "@/components/property/VideoPlayer";
 import MortgageCalculator from "@/components/property/MortgageCalculator";
 import ROICalculator from "@/components/property/ROICalculator";
-import InteractiveMap from "@/components/ui/InteractiveMap";
+
 import ConstructionProgress from "@/components/property/ConstructionProgress";
 import PriceDropNotify from "@/components/property/PriceDropNotify";
 import ShareButtons from "@/components/property/ShareButtons";
@@ -256,15 +256,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 />
                             )}
 
-                            {/* Lifestyle Map */}
-                            {property.coordinates && (
-                                <InteractiveMap
-                                    lat={property.coordinates.lat}
-                                    lng={property.coordinates.lng}
-                                    title={property.title}
-                                    lang={lang}
-                                />
-                            )}
+
 
                             {/* Construction Progress - Simulation for specific project status or just as premium feature */}
                             {property.status === 'sale' && property.constructionStages && (
