@@ -33,7 +33,7 @@ interface PropertyFilterBarProps {
     lang: string;
 }
 
-export default function PropertyFilterBar({ dict, locations, lang }: PropertyFilterBarProps) {
+function PropertyFilterBarContent({ dict, locations, lang }: PropertyFilterBarProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -145,5 +145,15 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                 </div>
             </div>
         </div>
+    );
+}
+
+import { Suspense } from "react";
+
+export default function PropertyFilterBar(props: PropertyFilterBarProps) {
+    return (
+        <Suspense fallback={<div className="h-32 bg-dark-gray shadow-2xl border-t-4 border-luxury-gold max-w-7xl mx-auto -mt-32"></div>}>
+            <PropertyFilterBarContent {...props} />
+        </Suspense>
     );
 }
