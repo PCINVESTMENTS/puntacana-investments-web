@@ -967,7 +967,7 @@ Ubicada en la prestigiosa Marina de Cap Cana, esta propiedad ofrece privacidad, 
                 es: ["Villa en Renta Cap Cana", "Alquiler Ocean 21", "Villa Amueblada Cap Cana", "Renta Larga Estancia Punta Cana", "Alquiler Lujo Republica Dominicana"]
             }
         },
-        featured: true
+        featured: false
     },
     {
         id: 11,
@@ -1081,7 +1081,7 @@ Ocean 21 ofrece un estilo de vida único con acceso directo a la Marina de Cap C
                 es: ["Bienes Raíces Cap Cana", "Villa Ocean 21", "Villa Lujo Punta Cana", "Inversión Marina Cap Cana", "Propiedades República Dominicana", "Inversión Alquiler Vacacional"]
             }
         },
-        featured: true
+        featured: false
     },
     {
         id: 12,
@@ -1186,7 +1186,7 @@ Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente resid
                 es: ["Soto Grande Cap Cana", "Loft en Venta Punta Cana", "Apartamento Vista Mar", "Bienes Raíces Cap Cana", "Loft de Lujo Caribe", "Inversión Inmobiliaria"]
             }
         },
-        featured: true
+        featured: false
     },
     {
         id: 13,
@@ -1543,7 +1543,7 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
         beds: 4,
         baths: 4.5,
         area: 600,
-        featured: true,
+        featured: false,
         features: {
             en: ["Prime Corner Location", "Marina Front", "Private Pool", "Water Filtration System", "Service Room", "High Privacy", "Premium ROI Potential", "637 m² Lot", "24/7 Security"],
             es: ["Frente a la Marina", "Piscina Privada", "Sistema Filtración Agua", "Habitación Servicio", "Alta Privacidad", "Retorno Premium", "Solar 637 m²", "Seguridad 24/7"]

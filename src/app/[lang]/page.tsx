@@ -45,14 +45,19 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const rawPosts = await client.fetch(POSTS_QUERY);
   const posts: BlogPost[] = rawPosts.map(mapSanityPost);
 
-  const featuredImages = properties
-    .filter(p => p.featured)
-    .map(p => p.image);
+  const heroProperties = properties.filter(p =>
+    // Hero Allowed: Perla (8), Diana (3), Kerry (7), Ocean (9), Cap Cana Properties
+    // Exclude Commercial and Unauthorized.
+    [3, 7, 8, 9].includes(p.id) ||
+    (p.location === 'capcana' && p.type !== 'commercial')
+  );
+
+  const heroImages = heroProperties.map(p => p.image);
 
   return (
     <main className="min-h-screen">
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
-      <Hero dict={dict.hero} featuredImages={featuredImages} />
+      <Hero dict={dict.hero} featuredImages={heroImages} />
       <PropertyFilterBar dict={dict.properties} locations={dict.sections.locations.items} lang={lang} />
 
       <PropertyListings

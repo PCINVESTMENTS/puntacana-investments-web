@@ -9,8 +9,15 @@ import { Property, properties as localProperties } from "@/data/properties";
 
 export const revalidate = 60;
 
-export default async function PropertiesPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function PropertiesPage({
+    params,
+    searchParams
+}: {
+    params: Promise<{ lang: 'es' | 'en' }>;
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
     const { lang } = await params;
+    const resolvedSearchParams = await searchParams;
     const dict = await getDictionary(lang);
 
     // Fetch properties
@@ -22,6 +29,9 @@ export default async function PropertiesPage({ params }: { params: Promise<{ lan
         const local = localProperties.find(lp => lp.id === p.id);
         return local || p;
     });
+
+    // Extract status for initial filtering
+    const statusParam = typeof resolvedSearchParams?.status === 'string' ? resolvedSearchParams.status : undefined;
 
     return (
         <main className="min-h-screen bg-primary-black">
@@ -37,7 +47,7 @@ export default async function PropertiesPage({ params }: { params: Promise<{ lan
                     dict={dict.properties}
                     lang={lang}
                     locations={dict.sections.locations.items}
-                    initialFilters={{}} // Show all by default (or let params handle it)
+                    initialFilters={{ status: statusParam }}
                     initialData={properties}
                 />
             </div>
