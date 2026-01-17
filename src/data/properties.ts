@@ -1220,7 +1220,7 @@ The project has been conceived for those seeking comfort, privacy, and a solid r
 - **Convenience:** Double Parking, Laundry Area, Appliances Included (Stove, Fridge, Extractor)
 
 ## Luxury Rooftop Villas (Selected Units)
-- **Feature:** 3 villas with private rooftop
+- **Exclusivity:** 3 villas with private rooftop
 - **Amenities:** Spacious terraces with Jacuzzi, pergola area, and luxury design
 - **Size:** From 155 m² up to 250 m² (including rooftops)
 - **Value:** These villas represent the most premium product, highly demanded in the vacation rental market.
