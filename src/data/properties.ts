@@ -1294,7 +1294,7 @@ El proyecto ha sido concebido para quienes buscan confort, privacidad y una inve
     },
     {
         id: 9,
-        title: "Ocean Village Punta Cana",
+        title: "Ocean Village – Villas Exclusivas en White Sands, Punta Cana",
         location: "whitesands",
         locationLabel: "White Sands",
         type: "villa",
@@ -1305,182 +1305,96 @@ El proyecto ha sido concebido para quienes buscan confort, privacidad y una inve
         baths: 2.5,
         area: 163,
         features: {
-            en: ["Private Beach Access", "Private Rooftop (80m²)", "Picuzzi or Pool", "Golf Course", "Clubhouse", "Sports Courts", "Double Parking", "Airbnb Friendly", "Pet Friendly", "Bar", "Restaurant", "Mini Market"],
-            es: ["Acceso Privado a Playa", "Rooftop Privado (80m²)", "Picuzzi o Piscina", "Campo de Golf", "Casa Club", "Canchas Deportivas", "Parqueo Doble", "Airbnb Amigable", "Pet Friendly", "Bar", "Restaurante", "Mini Market"]
+            en: ["White Sands Private Access", "Golf Course", "Large Rooftops (Duplex)", "Private Pool", "Double Parking", "Clubhouse & Restaurant", "Sports Courts", "Pet Park", "24/7 Security", "Airbnb Friendly", "Close to Casinos & Nightlife", "Internal Beach Transport"],
+            es: ["Acceso Privado White Sands", "Campo de Golf", "Rooftops Amplios (Dúplex)", "Piscina Privada", "Parqueo Doble", "Casa Club y Restaurante", "Canchas Deportivas", "Parque de Mascotas", "Seguridad 24/7", "Airbnb Amigable", "Cerca Casinos y Vida Nocturna", "Transporte Interno a Playa"]
         },
         description: {
-            en: `Ocean Village Punta Cana – Exclusive Villas in White Sands Residential
-## Welcome to Ocean Village Punta Cana
-An exclusive residential project located within the prestigious White Sands in Bávaro, Punta Cana. Ocean Village Punta Cana presents a modern concept of exclusive villas, designed for those seeking comfort, privacy, and a highly profitable real estate investment, ideal for both personal use and Airbnb-style vacation rentals.
+            en: `Ocean Village – Exclusive Villas in White Sands, Punta Cana
 
-## An exclusive and low-density project
-The project consists of 8 villas in total, carefully designed to offer privacy, contemporary design, and a differentiated residential experience:
-- Duplex villas with luxury private rooftop
-- Single-family villas, with modern and functional design
-This low-density format guarantees exclusivity and greater long-term appreciation.
+Ocean Village is an exclusive, low-density residential project located within the prestigious White Sands in Punta Cana.
+Conceived for those seeking contemporary design, privacy, and a solid investment, the project is ideal for both residential use and Airbnb-style vacation rentals.
 
-## Sizes and distribution
-The villas have been designed to maximize space and the living experience, combining spacious interior areas with high-value outdoor spaces for the vacation market.
-- 163 m² of construction
-- Private rooftop with an average of 80 m² (in duplex villas)
-- Double parking
-- Modern and functional distribution
-The combination of these sizes positions Ocean Village Punta Cana as a highly competitive product on Airbnb, especially in the premium segment.
+## Project Features
+- **Total Units:** 8 Villas (Single-family & Duplex)
+- **Concept:** Low-density project
+- **Design:** Modern and Functional Architectural Design
+- **Construction:** 163 m²
+- **Rooftop:** Private rooftop averaging 80 m² (in duplex villas)
+- **Layout:** 3 bedrooms, 2 full bathrooms
+- **Social Areas:** Open concept living room, dining room, and kitchen
+- **Exterior:** Private Pool, Double Parking
+- **Value:** Distribution designed for comfort, privacy, and profitability
 
-## Luxury Rooftop Duplex Villas
-The duplex villas with rooftop represent the project's main attraction and are designed to offer an elevated luxury experience, both for owners and guests.
-**Main features:**
-- Three levels, including private rooftop
-- 3 bedrooms
-- 2 full bathrooms
-- Open concept living room, dining room, and lounge
-- Modern kitchen with island
-- Guest bathroom
-- Laundry area
-- Picuzzi or private pool (depending on configuration)
-- Semi-covered double parking
+The duplex villas with rooftop represent the most attractive product of the project for the vacation rental market.
 
-## Private Rooftop – Luxury Terrace
-The rooftop, with an average of 80 m², has been conceived as a true luxury terrace, ideal for personal enjoyment and to maximize vacation rental profitability:
-- Jacuzzi
-- Pergola area
-- BBQ
-- Half bath
-- Ideal space for lounge, private events, and Caribbean sunsets
-This rooftop is a key differential value, highly demanded on platforms like Airbnb, allowing for higher rates and higher occupancy.
+## Profitability & Investment Profile
+- Excellent performance on Airbnb
+- High demand due to location within White Sands
+- Rooftop villas allow for premium rates
+- Ideal for passive income in dollars
 
-## Single-family villas
-The single-family villas offer a modern, comfortable, and functional design, ideal for families or investors seeking a solid and easy-to-rent product:
-- Spacious interior spaces
-- Private pool
-- Design focused on comfort and family life
-- Excellent potential for vacation rental
+## White Sands Amenities
+- Private Beach Access
+- Golf Course
+- Semi-Olympic Pool
+- Sports Courts (Tennis, Paddle, Basketball)
+- Clubhouse
+- Restaurant
+- Internal Transport to Beach
+- Pet Park
+- Social Area, Terrace & BBQ
+- 24/7 Private Security
+- **Nearby:** Casinos, nightclubs, bars, and entertainment zones
 
-## White Sands Residential Amenities
-As part of White Sands, Ocean Village Punta Cana offers access to resort-style amenities that significantly elevate quality of life and the vacation experience:
-- Private beach access
-- Golf course
-- Semi-Olympic pool
-- Complete sports areas (Tennis, Padel, Basketball)
-- Clubhouse with restaurants
-- Internal transport to the beach
-- Pet park
-- Double 24/7 security
+## Ideal For
+- Vacation Rental Investors
+- Buyers seeking villas with rooftop
+- Properties within a resort-style residential
+- Exclusive low-density project
+- Real estate heritage in White Sands`,
+            es: `Ocean Village – Villas Exclusivas en White Sands, Punta Cana
 
-## Strategic location
-- Surrounded by high-level hotels and tourist complexes
-- Close to casinos, bars, and entertainment zones
-- Easy road access
-- Just 20 minutes from Punta Cana International Airport
+Ocean Village es un proyecto residencial exclusivo y de baja densidad ubicado dentro del prestigioso White Sands, en Punta Cana.
+Concebido para quienes buscan diseño contemporáneo, privacidad y una inversión sólida, el proyecto es ideal tanto para uso residencial como para renta vacacional tipo Airbnb.
 
-## Investment and Airbnb
-Thanks to its size, luxury rooftops, and location within White Sands, Ocean Village Punta Cana is a highly Airbnb-friendly project, ideal for:
-- Generating passive income in dollars
-- Achieving high occupancy
-- Accessing premium rates
-- Investing in a differentiated and exclusive product
+## Características del Proyecto
+- **Total Unidades:** 8 Villas (Unifamiliares y Dúplex)
+- **Concepto:** Proyecto de baja densidad
+- **Diseño:** Arquitectónico moderno y funcional
+- **Construcción:** 163 m²
+- **Rooftop:** Rooftop privado con un promedio de 80 m² (en villas dúplex)
+- **Distribución:** 3 habitaciones, 2 baños completos
+- **Áreas Sociales:** Sala, comedor y cocina de concepto abierto
+- **Exterior:** Piscina privada, Parqueo doble
+- **Valor:** Distribución pensada para confort, privacidad y rentabilidad
 
-## Payment Plan
-- 30% down payment
-- 30% during construction
-- 40% upon delivery
+Las villas dúplex con rooftop representan el producto más atractivo del proyecto para el mercado de renta vacacional.
 
-## Estimated delivery date
-May 30, 2026
-
-## Ideal for those looking for
-- Exclusive villas within White Sands
-- Airbnb-friendly project
-- Luxury rooftop villas with large footage
-- Resort-style environment with private beach
-- Complete sports and recreational amenities
-- Solid real estate investment in Punta Cana`,
-            es: `Ocean Village Punta Cana – Villas Exclusivas en Residencial White Sands
-## Bienvenido a Ocean Village Punta Cana
-Un exclusivo proyecto residencial ubicado dentro del prestigioso White Sands, en Bávaro, Punta Cana. Ocean Village Punta Cana presenta un concepto moderno de villas exclusivas, diseñado para quienes buscan confort, privacidad y una inversión inmobiliaria altamente rentable, ideal tanto para uso personal como para renta vacacional tipo Airbnb.
-
-## Un proyecto exclusivo y de baja densidad
-El proyecto está compuesto por 8 villas en total, cuidadosamente diseñadas para ofrecer privacidad, diseño contemporáneo y una experiencia residencial diferenciada:
-- Villas dúplex con rooftop privado de lujo
-- Villas unifamiliares, de diseño moderno y funcional
-Este formato de baja densidad garantiza exclusividad y una mayor valorización a largo plazo.
-
-## Metraje y distribución
-Las villas han sido diseñadas para maximizar el espacio y la experiencia de vida, combinando áreas interiores amplias con espacios exteriores de alto valor para el mercado vacacional.
-- 163 m² de construcción
-- Rooftop privado con un promedio de 80 m² (en las villas dúplex)
-- Parqueo doble
-- Distribución moderna y funcional
-La combinación de estos metrajes posiciona a Ocean Village Punta Cana como un producto altamente competitivo en Airbnb, especialmente en el segmento premium.
-
-## Villas Dúplex con Rooftop de Lujo
-Las villas dúplex con rooftop representan el mayor atractivo del proyecto y están diseñadas para ofrecer una experiencia de lujo elevada, tanto para propietarios como para huéspedes.
-**Características principales:**
-- Tres niveles, incluyendo rooftop privado
-- 3 habitaciones
-- 2 baños completos
-- Sala, comedor y estar de concepto abierto
-- Cocina moderna con isla
-- Baño de visitas
-- Área de lavado
-- Piscuzi o piscina privada (según configuración)
-- Parqueo doble semi-techado
-
-## Rooftop privado – Terraza de lujo
-El rooftop, con un promedio de 80 m², ha sido concebido como una verdadera terraza de lujo, ideal para el disfrute personal y para maximizar la rentabilidad en renta vacacional:
-- Jacuzzi
-- Área pergolada
-- BBQ
-- Medio baño
-- Espacio ideal para lounge, eventos privados y atardeceres caribeños
-Este rooftop es un valor diferencial clave, altamente demandado en plataformas como Airbnb, permitiendo tarifas superiores y mayor ocupación.
-
-## Villas unifamiliares
-Las villas unifamiliares ofrecen un diseño moderno, cómodo y funcional, ideales para familias o inversionistas que buscan un producto sólido y fácil de rentar:
-- Amplios espacios interiores
-- Piscina privada
-- Diseño enfocado en confort y vida familiar
-- Excelente potencial para renta vacacional
+## Rentabilidad y Perfil de Inversión
+- Excelente desempeño en Airbnb
+- Alta demanda por ubicación dentro de White Sands
+- Villas con rooftop permiten tarifas premium
+- Ideal para ingresos pasivos en dólares
 
 ## Amenidades del Residencial White Sands
-Como parte de White Sands, Ocean Village Punta Cana ofrece acceso a amenidades tipo resort, que elevan significativamente la calidad de vida y la experiencia vacacional:
 - Acceso privado a la playa
 - Campo de golf
 - Piscina semi-olímpica
-- Áreas deportivas completas (Tenis, Pádel, Baloncesto)
-- Casa club con restaurantes
+- Canchas deportivas (tenis, pádel y baloncesto)
+- Casa club
+- Restaurante
 - Transporte interno a la playa
 - Parque para mascotas
-- Doble seguridad 24/7
+- Área social, terraza y BBQ
+- Seguridad privada 24/7
+- **Entorno:** Casinos, discotecas, bares y zonas de entretenimiento cercanas
 
-## Ubicación estratégica
-- Rodeado de hoteles y complejos turísticos de alto nivel
-- Cercano a casinos, bares y zonas de entretenimiento
-- Fácil acceso vial
-- A solo 20 minutos del Aeropuerto Internacional de Punta Cana
-
-## Inversión y Airbnb
-Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean Village Punta Cana es un proyecto altamente amigable con Airbnb, ideal para:
-- Generar ingresos pasivos en dólares
-- Lograr alta ocupación
-- Acceder a tarifas premium
-- Invertir en un producto diferenciado y exclusivo
-
-## Plan de pago
-- 30 % inicial
-- 30 % durante la construcción
-- 40 % contra entrega
-
-## Fecha estimada de entrega
-30 de mayo de 2026
-
-## Ideal para quienes buscan
-- Villas exclusivas dentro de White Sands
-- Proyecto amigable con Airbnb
-- Villas con rooftop de lujo de gran metraje
-- Entorno tipo resort con playa privada
-- Amenidades deportivas y recreativas completas
-- Inversión inmobiliaria sólida en Punta Cana`
+## Ideal Para
+- Inversionistas en renta vacacional
+- Compradores que buscan villas con rooftop
+- Propiedades dentro de un residencial tipo resort
+- Proyecto exclusivo de baja densidad
+- Patrimonio inmobiliario en White Sands`
         },
         gallery: [
             "/images/ocean-village-punta-cana-modern-facade.jpg",
