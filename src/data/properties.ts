@@ -1430,3 +1430,4 @@ Una emocionante oportunidad de inversión llega a Bávaro. Perfecto para renta v
 - **Ubicación:** Bávaro`
         },
     },
+];
