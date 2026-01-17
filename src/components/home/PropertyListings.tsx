@@ -55,6 +55,8 @@ interface PropertyListingsProps {
         status?: string;
         maxPrice?: string;
     };
+    lockedStatus?: 'sale' | 'rent';
+    exploreLink?: string;
     initialData: Property[];
 }
 
@@ -91,6 +93,8 @@ function PropertyListingsContent({
     sectionId = 'properties',
     sectionTitle,
     initialFilters = {},
+    lockedStatus,
+    exploreLink,
     initialData
 }: PropertyListingsProps) {
     const searchParams = useSearchParams();
@@ -99,7 +103,7 @@ function PropertyListingsContent({
     // Initialize state from URL params if available, else default (or featured defaults)
     const [selectedLocation, setSelectedLocation] = useState(searchParams.get("location") || initialFilters.location || "all");
     const [selectedType, setSelectedType] = useState(searchParams.get("type") || initialFilters.type || "all");
-    const [selectedStatus, setSelectedStatus] = useState(searchParams.get("status") || initialFilters.status || (featured ? featuredCategory : "all"));
+    const [selectedStatus, setSelectedStatus] = useState(lockedStatus || searchParams.get("status") || initialFilters.status || (featured ? featuredCategory : "all"));
     const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || initialFilters.maxPrice || "any");
 
     // Sync with URL changes (only if NOT featured, or allow override?)
@@ -115,10 +119,10 @@ function PropertyListingsContent({
 
             if (loc) setSelectedLocation(loc);
             if (type) setSelectedType(type);
-            if (status) setSelectedStatus(status);
+            if (!lockedStatus && status) setSelectedStatus(status);
             if (price) setMaxPrice(price);
         }
-    }, [searchParams, featured]);
+    }, [searchParams, featured, lockedStatus]);
 
     // Filter Logic
     useEffect(() => {
@@ -373,7 +377,7 @@ function PropertyListingsContent({
                     {featured && (
                         <div className="mt-12 text-center">
                             <Link
-                                href={`/${lang}/properties`}
+                                href={exploreLink || `/${lang}/properties`}
                                 className="inline-block bg-luxury-gold text-black font-bold py-4 px-10 rounded-sm hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-lg hover:shadow-xl"
                             >
                                 {dict.exploreMore}

@@ -64,6 +64,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredLimit={6}
         sectionId="properties-sale"
         sectionTitle={lang === 'en' ? 'Properties for Sale' : 'Propiedades en Venta'}
+        lockedStatus="sale"
+        exploreLink={`/${lang}/properties?status=sale`}
         initialData={properties}
       />
       <PropertyListings
@@ -75,6 +77,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredLimit={3}
         sectionId="properties-rent"
         sectionTitle={lang === 'en' ? 'Properties for Rent' : 'Propiedades en Renta'}
+        lockedStatus="rent"
+        exploreLink={`/${lang}/properties?status=rent`}
         initialData={properties}
       />
       <LocationsSection dict={dict.sections.locations} limit={3} lang={lang} />

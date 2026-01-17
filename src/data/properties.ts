@@ -137,7 +137,7 @@ The Beach opera bajo la **Ley CONFOTUR**, ofreciendo importantes exenciones fisc
         ],
         videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
         virtualTourUrl: "https://my.matterport.com/show/?m=aRGoTozjtCa",
-        featured: true,
+        featured: false,
         coordinates: { lat: 18.6658, lng: -68.4112 },
         completionPercent: 45,
         constructionStages: [
@@ -232,7 +232,7 @@ City Place se beneficia de la **Ley CONFOTUR** (Exenciones Fiscales) y su ubicac
             "/images/city-place-downtown-punta-cana.jpg"
         ],
         coordinates: { lat: 18.6650, lng: -68.4100 }, // Approx Downtown
-        featured: true
+        featured: false
     },
     {
         id: 3,
@@ -497,7 +497,7 @@ Con un enfoque en el confort y la conveniencia, los residentes disfrutan de fác
 - **Ubicación:** Cerca de centros comerciales y avenidas principales.
 - **Valor:** Potencial de plusvalía en un sector residencial en crecimiento.`
         },
-        featured: true,
+        featured: false,
         coordinates: { lat: 18.61, lng: -68.42 }
     },
     {
@@ -584,7 +584,7 @@ Tropical Breeze destaca por su precio accesible en una zona consolidada.
 
 *Los residentes disfrutan de áreas comunes que incluyen piscina, gazebo y área de BBQ.*`
         },
-        featured: true
+        featured: false
     },
     {
         id: 7,
@@ -769,6 +769,7 @@ Diseñado para maximizar el retorno a corto y mediano plazo.
 
 *Los propietarios disfrutan de acceso total a las amenidades de White Sands, incluyendo playa privada, campo de golf y casa club.*`
         },
+        featured: true
     },
     {
         id: 9,
@@ -965,7 +966,8 @@ Ubicada en la prestigiosa Marina de Cap Cana, esta propiedad ofrece privacidad, 
                 en: ["Villa for Rent Cap Cana", "Ocean 21 Rental", "Furnished Villa Cap Cana", "Long Term Rental Punta Cana", "Luxury Rental Dominican Republic"],
                 es: ["Villa en Renta Cap Cana", "Alquiler Ocean 21", "Villa Amueblada Cap Cana", "Renta Larga Estancia Punta Cana", "Alquiler Lujo Republica Dominicana"]
             }
-        }
+        },
+        featured: true
     },
     {
         id: 11,
@@ -1078,7 +1080,8 @@ Ocean 21 ofrece un estilo de vida único con acceso directo a la Marina de Cap C
                 en: ["Cap Cana Real Estate", "Ocean 21 Villa", "Luxury Villa Punta Cana", "Marina Cap Cana Investment", "Dominican Republic Property", "Vacation Rental Investment"],
                 es: ["Bienes Raíces Cap Cana", "Villa Ocean 21", "Villa Lujo Punta Cana", "Inversión Marina Cap Cana", "Propiedades República Dominicana", "Inversión Alquiler Vacacional"]
             }
-        }
+        },
+        featured: true
     },
     {
         id: 12,
@@ -1182,7 +1185,8 @@ Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente resid
                 en: ["Soto Grande Cap Cana", "Loft for Sale Punta Cana", "Ocean View Apartment", "Cap Cana Real Estate", "Luxury Loft Caribbean", "Investment Property"],
                 es: ["Soto Grande Cap Cana", "Loft en Venta Punta Cana", "Apartamento Vista Mar", "Bienes Raíces Cap Cana", "Loft de Lujo Caribe", "Inversión Inmobiliaria"]
             }
-        }
+        },
+        featured: true
     },
     {
         id: 13,
@@ -1194,7 +1198,7 @@ Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente resid
         status: "sale",
         price: 154000000,
         image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
-        featured: true,
+        featured: false,
         beds: 0,
         baths: 0,
         area: 1185000,
@@ -1420,7 +1424,8 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
 - Entusiastas del golf
 
 *Los huéspedes tienen acceso a muelle privado y todas las amenidades de Cap Cana.*`
-        }
+        },
+        featured: true
     },
     {
         id: 16,
@@ -1659,7 +1664,7 @@ Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y e
         beds: 0,
         baths: 4,
         area: 505,
-        featured: true,
+        featured: false,
         features: {
             en: ["Corporate HQ", "3 Levels", "Showroom", "Event Hall", "Private Offices", "10 Parking Spots", "Cafeteria", "Solid Construction", "Meeting Rooms", "Training Area"],
             es: ["Sede Corporativa", "3 Niveles", "Showroom", "Salón de Eventos", "Oficinas Privadas", "10 Parqueos", "Cafetería", "Construcción Sólida", "Salas de Reuniones", "Área de Capacitación"]
