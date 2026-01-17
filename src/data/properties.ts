@@ -328,7 +328,7 @@ Ubicado en una zona residencial consolidada, Diana Tropical Village ofrece alto 
         id: 4,
         slug: "condos-cruise-on-land-resort-punta-cana",
         title: "Condos | Cruise On Land Resort Punta Cana",
-        location: "punta_cana",
+        location: "puntacana",
         locationLabel: "Punta Cana",
         type: "condo",
         status: "sale",
@@ -677,7 +677,7 @@ Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un e
         locationLabel: "White Sands, Bávaro",
         type: "villa",
         status: "sale",
-        price: 850000,
+        price: 265000,
         image: "/images/perla-del-mar-villas-white-sands/perla-del-mar-villas-white-sands-main-facade.jpg",
         beds: 3,
         baths: 3,
@@ -1538,6 +1538,7 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
         beds: 4,
         baths: 4.5,
         area: 600,
+        featured: true,
         features: {
             en: ["Prime Corner Location", "Marina Front", "Private Pool", "Water Filtration System", "Service Room", "High Privacy", "Premium ROI Potential", "637 m² Lot", "24/7 Security"],
             es: ["Frente a la Marina", "Piscina Privada", "Sistema Filtración Agua", "Habitación Servicio", "Alta Privacidad", "Retorno Premium", "Solar 637 m²", "Seguridad 24/7"]
@@ -1658,6 +1659,7 @@ Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y e
         beds: 0,
         baths: 4,
         area: 505,
+        featured: true,
         features: {
             en: ["Corporate HQ", "3 Levels", "Showroom", "Event Hall", "Private Offices", "10 Parking Spots", "Cafeteria", "Solid Construction", "Meeting Rooms", "Training Area"],
             es: ["Sede Corporativa", "3 Niveles", "Showroom", "Salón de Eventos", "Oficinas Privadas", "10 Parqueos", "Cafetería", "Construcción Sólida", "Salas de Reuniones", "Área de Capacitación"]
