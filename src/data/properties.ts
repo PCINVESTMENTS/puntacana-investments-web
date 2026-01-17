@@ -1154,7 +1154,7 @@ El diseño del proyecto busca crear una experiencia de relajación, amplitud y p
     },
     {
         id: 8,
-        title: "Perla del Mar – Villas Exclusivas en White Sands, Punta Cana",
+        title: "Proyecto Perla del Mar White Sands",
         location: "whitesands",
         locationLabel: "White Sands",
         type: "villa",
@@ -1208,8 +1208,8 @@ El diseño del proyecto busca crear una experiencia de relajación, amplitud y p
         description: {
             en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
 
-Perla del Mar is an exclusive residential villa project located within the prestigious White Sands in Punta Cana.
-The project has been conceived for those seeking comfort, privacy, and a solid real estate investment, with excellent potential for Airbnb-style vacation rentals.
+Perla del Mar is an exclusive residential villa project located within the renowned White Sands in Punta Cana.
+Conceived for those seeking privacy, comfort, and a solid real estate investment, the project offers a highly attractive product for Airbnb-style vacation rentals and residential use.
 
 ## Project Features
 - **Type:** 7 Single-family Villas
@@ -1217,41 +1217,44 @@ The project has been conceived for those seeking comfort, privacy, and a solid r
 - **Design:** Modern and Functional Architectural Design
 - **Interior:** Integrated living room, dining room, and kitchen
 - **Exterior:** Private Pool, Outdoor Terrace, BBQ Area
-- **Convenience:** Double Parking, Laundry Area, Appliances Included (Stove, Fridge, Extractor)
+- **Convenience:** Double Parking, Appliances Included (Stove, Fridge, Extractor)
 
-## Luxury Rooftop Villas (Selected Units)
+## Premium Rooftop Villas
 - **Exclusivity:** 3 villas with private rooftop
-- **Amenities:** Spacious terraces with Jacuzzi, pergola area, and luxury design
-- **Size:** From 155 m² up to 250 m² (including rooftops)
-- **Value:** These villas represent the most premium product, highly demanded in the vacation rental market.
+- **Amenities:** Luxury terraces with Jacuzzi and pergola area, spaces designed for entertainment and relaxation
+- **Size:** From 155 m² up to 250 m² (including terraces and rooftop)
+- **Value:** *These units represent the most exclusive and profitable segment of the project.*
 
 ## Profitability & Investment Profile
 - Excellent performance on Airbnb
-- High demand due to location and beach access
+- High demand due to location within White Sands
 - Rooftop villas allow for superior rates
-- Resort-style environment increases occupancy
-- Ideal for short and medium-term rental investment
+- Resort-style environment favors high occupancy
+- Ideal for passive income in dollars
 
 ## White Sands Amenities
 - Private Beach Access
 - Golf Course
 - Semi-Olympic Pool
 - Sports Courts (Tennis, Paddle, Basketball)
-- Clubhouse and Restaurants
+- Clubhouse and Restaurant
 - Internal Transport to Beach
 - Pet Park
+- Social Area, Terrace & BBQ
+- School
 - 24/7 Private Security
+- **Surroundings:** Casinos, nightclubs, bars, and entertainment zones nearby
 
 ## Ideal For
-- Airbnb Investors
+- Vacation Rental Investors
 - Buyers seeking villas with rooftop
 - Properties within a resort-style residential
-- High occupancy and good income projection
+- High profitability and appreciation projection
 - Real estate heritage in a consolidated zone`,
             es: `Perla del Mar – Villas Exclusivas en White Sands, Punta Cana
 
-Perla del Mar es un proyecto residencial de villas exclusivas ubicado dentro del prestigioso White Sands, en Punta Cana.
-El proyecto ha sido concebido para quienes buscan confort, privacidad y una inversión inmobiliaria sólida, con excelente potencial para renta vacacional tipo Airbnb.
+Perla del Mar es un proyecto residencial exclusivo de villas ubicado dentro del reconocido White Sands, en Punta Cana.
+Concebido para quienes buscan privacidad, confort y una inversión inmobiliaria sólida, el proyecto ofrece un producto altamente atractivo para renta vacacional tipo Airbnb y uso residencial.
 
 ## Características del Proyecto
 - **Tipo:** Proyecto de 7 villas unifamiliares
@@ -1259,36 +1262,39 @@ El proyecto ha sido concebido para quienes buscan confort, privacidad y una inve
 - **Diseño:** Arquitectónico moderno y funcional
 - **Interior:** Sala, comedor y cocina integrados
 - **Exterior:** Piscina privada, Terraza exterior, Área de BBQ
-- **Comodidad:** Parqueo doble, Área de lavado, Línea blanca incluida (estufa, nevera y extractor)
+- **Comodidad:** Parqueo doble, Línea blanca incluida (estufa, nevera y extractor)
 
-## Villas con Rooftop de Lujo (unidades seleccionadas)
+## Villas Premium con Rooftop
 - **Exclusividad:** 3 villas cuentan con rooftop privado
-- **Amenidades:** Terrazas amplias con jacuzzi, área pergolada y diseño de lujo
+- **Amenidades:** Terrazas de lujo con jacuzzi y área pergolada, espacios diseñados para entretenimiento y descanso
 - **Metraje:** Desde 155 m² hasta 250 m² (incluyendo terrazas y rooftop)
-- **Valor:** Estas villas representan el producto más premium del proyecto, altamente demandado en el mercado de renta vacacional.
+- **Valor:** *Estas unidades representan el segmento más exclusivo y rentable del proyecto.*
 
 ## Rentabilidad y Perfil de Inversión
-- Excelente comportamiento en Airbnb
-- Alta demanda por ubicación y acceso a playa
+- Excelente desempeño en Airbnb
+- Alta demanda por ubicación dentro de White Sands
 - Villas con rooftop permiten tarifas superiores
-- Entorno tipo resort que incrementa la ocupación
-- Ideal para inversión en renta corta y media
+- Entorno tipo resort que favorece alta ocupación
+- Ideal para ingresos pasivos en dólares
 
 ## Amenidades del Residencial White Sands
 - Acceso privado a la playa
 - Campo de golf
 - Piscina semi-olímpica
 - Canchas deportivas (tenis, pádel y baloncesto)
-- Casa club y restaurantes
+- Casa club y Restaurante
 - Transporte interno a la playa
 - Parque para mascotas
+- Área social, terraza y BBQ
+- Colegio
 - Seguridad privada 24/7
+- **Entorno:** Casinos, discotecas, bares y zonas de entretenimiento cercanas
 
 ## Ideal Para
-- Inversionistas en Airbnb
+- Inversionistas en renta vacacional
 - Compradores que buscan villas con rooftop
 - Propiedades dentro de un residencial tipo resort
-- Alta ocupación y buena proyección de ingresos
+- Alta proyección de rentabilidad y plusvalía
 - Patrimonio inmobiliario en zona consolidada`
         },
     },
