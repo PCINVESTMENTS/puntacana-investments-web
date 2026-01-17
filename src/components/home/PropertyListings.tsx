@@ -360,7 +360,7 @@ function PropertyListingsContent({
                     {featured && (
                         <div className="mt-12 text-center">
                             <Link
-                                href={`/${lang}/properties?status=${featuredCategory}`}
+                                href={`/${lang}/properties`}
                                 className="inline-block bg-luxury-gold text-black font-bold py-4 px-10 rounded-sm hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-lg hover:shadow-xl"
                             >
                                 {dict.exploreMore}

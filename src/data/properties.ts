@@ -778,7 +778,7 @@ Diseñado para maximizar el retorno a corto y mediano plazo.
         locationLabel: "White Sands, Bávaro",
         type: "villa",
         status: "sale",
-        price: 236500,
+        price: 360000,
         image: "/images/ocean-village-villas-white-sands/ocean-village-villas-white-sands-main-view.jpg",
         beds: 3,
         baths: 2,

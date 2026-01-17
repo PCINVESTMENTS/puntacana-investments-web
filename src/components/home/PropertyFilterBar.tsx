@@ -49,12 +49,12 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
     };
 
     return (
-        <div className="relative z-30 -mt-6 md:-mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
+        <div id="properties" className="relative z-30 -mt-6 md:-mt-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-12">
             <div className="bg-dark-gray p-4 md:p-8 shadow-2xl border-t-4 border-luxury-gold">
                 {/* Mobile 'View All' Button */}
                 <div className="md:hidden mb-4">
                     <Link
-                        href={`/${lang}/properties?status=sale`}
+                        href={`/${lang}/properties`}
                         className="w-full bg-black/40 backdrop-blur-sm border border-luxury-gold/50 text-luxury-gold font-bold py-3 uppercase tracking-widest hover:bg-luxury-gold hover:text-black transition-all duration-300 flex justify-center items-center"
                     >
                         {lang === 'es' ? 'VER PROPIEDADES' : 'VIEW PROPERTIES'}

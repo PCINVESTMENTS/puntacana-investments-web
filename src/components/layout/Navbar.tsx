@@ -59,8 +59,8 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
             name: dict.properties,
             hasDropdown: true,
             subItems: [
-                { label: dict.rent, href: `/${lang}?status=rent#properties` },
-                { label: dict.sale, href: `/${lang}?status=sale#properties` }
+                { label: dict.rent, href: `/${lang}?status=rent#properties-rent` },
+                { label: dict.sale, href: `/${lang}?status=sale#properties-sale` }
             ]
         },
         {
