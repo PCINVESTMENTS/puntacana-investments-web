@@ -1052,143 +1052,91 @@ Un esquema pensado para facilitar la inversión y optimizar el flujo de pagos.`
     },
     {
         id: 7,
-        title: "KERRI PLUS",
-        location: "vistacana",
-        locationLabel: "Vista Cana",
+        title: "Kerry Residences – Villas Exclusivas en Brisas de Punta Cana",
+        location: "bavaro",
+        locationLabel: "Brisas de Punta Cana",
         type: "villa",
         status: "sale",
         price: 385000,
         image: "/images/kerry-plus-modern-villa-facade-punta-cana.jpg",
         beds: 3,
         baths: 3.5,
-        area: 321.24,
+        area: 185,
         features: {
-            en: ["Private Pool", "Artificial Beach", "Golf Course", "Clubhouse", "Eco Trails", "Double Parking", "Terrace", "Gated Security", "Airbnb Friendly"],
-            es: ["Piscina Privada", "Playa Artificial", "Campo de Golf", "Casa Club", "Senderos Ecológicos", "Parqueo Doble", "Terraza", "Seguridad Cerrada", "Airbnb Amigable"]
+            en: ["Brisas de Punta Cana Private Community", "Gated Security", "Close to Downtown Punta Cana", "Easy Beach Access", "Nearby Commercial Areas", "Private Picuzzi", "BBQ Area", "Double Parking", "Open Concept Design", "Terrace & Balconies", "Low Density (Only 4 Villas)"],
+            es: ["Residencial Privado Brisas de Punta Cana", "Seguridad y Acceso Controlado", "Cercanía a Downtown Punta Cana", "Fácil Acceso a Playas", "Áreas Comerciales Cercanas", "Picuzzi Privado", "Área de BBQ", "Marquesina Doble", "Diseño Concepto Abierto", "Terraza y Balcones", "Baja Densidad (Solo 4 Villas)"]
         },
         description: {
-            en: `KERRI PLUS – Luxury Villas in Vista Cana, Punta Cana
+            en: `Kerry Residences – Exclusive Villas in Brisas de Punta Cana
 
-Welcome to KERRI PLUS, an exclusive luxury villa project located within Vista Cana, one of the most modern, complete, and high-growth urban communities in Punta Cana.
+Kerry Residences is a low-density residential project located in Brisas de Punta Cana, conceived for those seeking privacy, comfort, and a solid investment, ideal for both residential use and Airbnb-style vacation rentals.
 
-Vista Cana has been conceived as a planned city, designed to integrate quality of life, entertainment, nature, and high real estate profitability. In this privileged environment, KERRI PLUS is born, ideal for living with high standards as well as for investing in vacation rentals and Airbnb.
+Its design prioritizes open spaces, connection with green areas, and a quiet lifestyle within a private and well-connected residential environment.
 
-## A project designed to live, enjoy, and rent
+## Property Features
+- **Exclusive Residential:** Only 4 independent villas
+- **Construction Area:** 185 m²
+- **Design:** Open concept architectural design
+- **Layout:** 3 bedrooms (Master with walk-in closet), 2 levels
+- **Social Areas:** Integrated living room, dining room, and kitchen
+- **Exterior:** Terrace, Picuzzi, BBQ Area, Balconies
+- **Parking:** Double carport
+- **Security:** Private residential with controlled access
 
-KERRI PLUS has been developed to make the most of the Vista Cana ecosystem, combining modern design villas, private amenities, and direct access to one of the communities most demanded by residents, investors, and tourists.
+The project design seeks to create an experience of relaxation, spaciousness, and privacy, highly valued by residents and guests.
 
-Thanks to its location and characteristics, the project is highly attractive for short and long-term rentals, including platforms like Airbnb, guaranteeing high occupancy and excellent return on investment.
+## Rentabilidad y Perfil de Inversión
+- **High Demand Zone:** Residential and vacation appeal
+- **Airbnb Ideal:** Privacy and layout suited for rentals
+- **Exclusivity:** Low density favors greater value
+- **Appreciation:** Excellent growth projection
+- **Stability:** Investment in a consolidated community
 
-## Villa Features
-- 2-level Villas
-- Total Construction Area: 321.24 m²
-- Land: 400 m²
-- 3 Master-style bedrooms
-- 3 full bathrooms + ½ guest bathroom
-- Private pool
-- Double covered parking
-- All bedrooms with private terrace
+## Ideal For
+- Families seeking tranquility and privacy
+- Vacation rental investors
+- Buyers valuing low density
+- Modern villas in a private community
+- Solid and functional real estate heritage`,
+            es: `Kerry Residences – Villas Exclusivas en Brisas de Punta Cana
 
-These features make KERRI PLUS an ideal product for premium rentals, focused on guests seeking comfort, privacy, and high-level experiences within Vista Cana.
+Kerry Residences es un proyecto residencial de baja densidad, ubicado en Brisas de Punta Cana, concebido para quienes buscan privacidad, confort y una inversión sólida, ideal tanto para uso residencial como para renta vacacional tipo Airbnb.
 
-## Villa Layout
-First Level:
-- Living Room
-- Dining Room
-- Kitchen
-- Terrace & BBQ Area
-- ½ Guest Bathroom
-- Laundry Area & Service Room
-- Double-height Staircase
+Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un estilo de vida tranquilo dentro de un entorno residencial privado y bien conectado.
 
-Second Level:
-- Master Bedroom with walk-in closet, private bathroom, and terrace
-- Bedroom 2 with closet, private bathroom, and terrace
-- Bedroom 3 with closet, private bathroom, and terrace
-- Double-height Staircase
+## Características de la Propiedad
+- **Residencial Exclusivo:** Solo 4 villas independientes
+- **Área de Construcción:** 185 m²
+- **Diseño:** Arquitectónico de concepto abierto
+- **Distribución:** 3 habitaciones (Principal con walk-in closet), 2 niveles
+- **Áreas Sociales:** Sala, comedor y cocina integrados
+- **Exterior:** Terraza exterior, Picuzzi, Área de BBQ, Balcones
+- **Estacionamiento:** Marquesina doble
+- **Seguridad:** Residencial privado con acceso controlado
 
-## Exclusive Vista Cana Amenities
-Being part of Vista Cana, KERRI PLUS owners enjoy world-class amenities:
-- Artificial white sand beach
-- Navigable artificial lake with recreational activities
-- Illuminated golf course
-- Clubhouse, Sports areas, and Ecological trails
-- Commercial zones, restaurants, and services
-- 24/7 Security and controlled access
+El diseño del proyecto busca crear una experiencia de relajación, amplitud y privacidad, altamente valorada por residentes y huéspedes.
 
-## Strategic Location within Vista Cana
-- 5 minutes from Downtown Punta Cana
-- 10 minutes from Bavaro beaches
-- 15 minutes from Punta Cana International Airport
+## Rentabilidad y Perfil de Inversión
+- Zona con alta demanda residencial y vacacional
+- Ideal para Airbnb por su privacidad y distribución
+- Baja densidad que favorece mayor exclusividad
+- Excelente proyección de plusvalía
+- Inversión estable en una comunidad consolidada
 
-## Investment Plan
-- Reservation: USD $5,000.00
-- Contract Signing: 20%
-- During Construction: 30%
-- Upon Delivery: 50%
-- Delivery Term: between 12 and 18 months`,
-            es: `KERRI PLUS – Villas de Lujo en Vista Cana, Punta Cana
+## Ubicación y Amenidades del Entorno
+- Residencial privado Brisas de Punta Cana
+- Seguridad y acceso controlado
+- Cercanía a Downtown Punta Cana
+- Fácil acceso a playas
+- Áreas comerciales cercanas
+- Entorno tranquilo y residencial
 
-Bienvenido a KERRI PLUS, un exclusivo proyecto de villas de lujo ubicado dentro de Vista Cana, una de las comunidades urbanísticas más modernas, completas y de mayor proyección de Punta Cana.
-
-Vista Cana ha sido concebida como una ciudad planificada, diseñada para integrar calidad de vida, entretenimiento, naturaleza y alta rentabilidad inmobiliaria. En este entorno privilegiado nace KERRI PLUS, ideal tanto para vivir con alto estándar como para invertir en renta vacacional y Airbnb.
-
-## Un proyecto pensado para vivir, disfrutar y rentar
-
-KERRI PLUS ha sido desarrollado para aprovechar al máximo el ecosistema de Vista Cana, combinando villas de diseño moderno, amenidades privadas y acceso directo a una de las comunidades más demandadas por residentes, inversionistas y turistas.
-
-Gracias a su ubicación y características, el proyecto es altamente atractivo para alquileres a corto y largo plazo, incluyendo plataformas como Airbnb, garantizando alta ocupación y excelente retorno de inversión.
-
-## Características de la villa
-
-- Villas de 2 niveles
-- Área total de construcción: 321.24 m²
-- Terreno: 400 m²
-- 3 habitaciones tipo máster
-- 3 baños completos + ½ baño de visitas
-- Piscina privada
-- Parqueo doble techado
-- Todas las habitaciones con terraza privada
-
-Estas características convierten a KERRI PLUS en un producto ideal para rentas premium, enfocado en huéspedes que buscan confort, privacidad y experiencias de alto nivel dentro de Vista Cana.
-
-## Distribución de la villa
-
-Primer Nivel:
-- Sala, Comedor y Cocina
-- Terraza y Área de BBQ
-- ½ baño de visitas
-- Área de lavado y Habitación de servicio
-- Escalera con doble altura
-
-Segundo Nivel:
-- Habitación principal con walk-in closet, baño privado y terraza
-- Habitación 2 con closet, baño privado y terraza
-- Habitación 3 con closet, baño privado y terraza
-- Escalera con doble altura
-
-## Amenidades exclusivas de Vista Cana
-
-Al formar parte de Vista Cana, los propietarios de KERRI PLUS disfrutan de un conjunto de amenidades de clase mundial:
-
-- Playa artificial de arena blanca
-- Lago artificial navegable
-- Campo de golf iluminado
-- Casa club, Áreas deportivas y Senderos ecológicos
-- Zonas comerciales y restaurantes
-- Seguridad 24/7
-
-## Ubicación estratégica
-- 5 minutos de Downtown Punta Cana
-- 10 minutos de las playas de Bávaro
-- 15 minutos del Aeropuerto Internacional de Punta Cana
-
-## Plan de pago
-- Reserva: USD $5,000.00
-- Firma de contrato: 20 %
-- Durante la construcción: 30 %
-- Contra entrega: 50 %
-- Plazo de entrega: entre 12 y 18 meses`
+## Ideal Para
+- Familias que buscan tranquilidad y privacidad
+- Inversionistas en renta vacacional
+- Compradores que valoran baja densidad
+- Villas modernas en comunidad privada
+- Patrimonio inmobiliario sólido y funcional`
         },
         gallery: [
             "/images/kerry-plus-modern-villa-facade-punta-cana.jpg",
