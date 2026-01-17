@@ -325,6 +325,182 @@ Ubicado en una zona residencial consolidada, Diana Tropical Village ofrece alto 
         coordinates: { lat: 18.6825, lng: -68.4110 }
     },
     {
+        id: 4,
+        slug: "condos-cruise-on-land-resort-punta-cana",
+        title: "Condos | Cruise On Land Resort Punta Cana",
+        location: "punta_cana",
+        locationLabel: "Punta Cana",
+        type: "condo",
+        status: "sale",
+        price: 75000,
+        image: "/images/cruises-on-land-main-exterior-punta-cana.jpg",
+        beds: 1,
+        baths: 1,
+        area: 45,
+        gallery: [
+            "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
+            "/images/cruises-on-land-crystal-lagoon-beach-view-punta-cana.jpg",
+            "/images/cruises-on-land-aerial-waterpark-view-punta-cana.jpg",
+            "/images/cruises-on-land-adventure-water-park-slides-punta-cana.jpg",
+            "/images/cruises-on-land-kids-water-park-zone-punta-cana.jpg",
+            "/images/cruises-on-land-wave-pool-event-stage-punta-cana.jpg",
+            "/images/cruises-on-land-lighthouse-lake-attraction-punta-cana.jpg",
+            "/images/cruises-on-land-spanish-plaza-restaurants-punta-cana.jpg",
+            "/images/cruises-on-land-dining-plaza-lake-view-punta-cana.jpg",
+            "/images/cruises-on-land-resort-amenities-lounge-punta-cana.jpg",
+            "/images/cruises-on-land-supermarket-grocery-store-punta-cana.jpg",
+            "/images/cruises-on-land-residences-aerial-view-punta-cana.jpg",
+            "/images/cruises-on-land-modern-living-dining-room-punta-cana.jpg",
+            "/images/cruises-on-land-luxury-living-room-interior-punta-cana.jpg",
+            "/images/cruises-on-land-living-room-dining-area-punta-cana.jpg",
+            "/images/cruises-on-land-living-area-sofa-detail-punta-cana.jpg",
+            "/images/cruises-on-land-master-bedroom-suite-interior-punta-cana.jpg",
+            "/images/cruises-on-land-bedroom-headboard-detail-punta-cana.jpg",
+            "/images/cruises-on-land-twin-bedroom-interior-punta-cana.jpg",
+            "/images/cruises-on-land-master-suite-balcony-view-punta-cana.jpg",
+            "/images/cruises-on-land-patio-picuzzi-jacuzzi-punta-cana.jpg",
+            "/images/cruises-on-land-villa-floor-plan-with-pool-punta-cana.jpg",
+            "/images/cruises-on-land-two-bedroom-suite-floor-plan-punta-cana.jpg",
+            "/images/cruises-on-land-garden-villa-floor-plan-punta-cana.jpg",
+            "/images/cruises-on-land-master-plan-map-punta-cana.png"
+        ],
+        features: {
+            en: ["Theme Park Resort", "Crystal Lagoon", "Water Park", "Airbnb Friendly", "High Tourism Traffic", "Restaurants & Bars", "Shuttle Service", "Investment Potential", "Confotur Tax Exemption"],
+            es: ["Resort Parque Temático", "Crystal Lagoon", "Parque Acuático", "Airbnb Amigable", "Alto Tráfico Turístico", "Restaurantes y Bares", "Servicio de Transporte", "Potencial de Inversión", "Exención Fiscal Confotur"]
+        },
+        description: {
+            en: `Cruise On Land – The First Theme Park Resort in Punta Cana
+        
+Cruise On Land is an innovative tourism real estate complex that integrates a high-end resort with a theme park, offering a unique entertainment experience in the Caribbean. Located strategically in Punta Cana, this project is designed to attract mass tourism and generate high occupancy rates for short-term rentals.
+
+With over 100 attractions including water parks, mechanical games, and ecological trails, Cruise On Land redefines the vacation concept, making it a perfect investment for those seeking high profitability through platforms like Airbnb.
+
+## Property Features
+- **Concept:** Theme Park & Resort Suites
+- **Attractions:** Water Park, Wave Pool, Mechanical Games
+- **Amenities:** Crystal Lagoon, Artificial Beach, Eco-Trails
+- **Services:** Hotel management, Shuttle to beaches/airport, Concierge
+- **Dining:** Gastronomic Boulevard, Bars, and Restaurants
+
+## Investment Profile & Lifestyle
+- **High Occupancy:** Attracts families and tourists seeking entertainment.
+- **Turnkey Investment:** Fully managed rental program available.
+- **Tax Benefits:** CONFOTUR Law applies (Tax Exemptions).
+- **Growth:** Located in a rapidly developing area of Punta Cana.
+
+## Ideal For
+- Investors seeking high-yield vacation rentals
+- Families wanting a vacation home with endless activities
+- First-time investors in the Caribbean market`,
+            es: `Cruise On Land – El Primer Resort de Parque Temático en Punta Cana
+
+Cruise On Land es un innovador complejo inmobiliario turístico que integra un resort de alta gama con un parque temático, ofreciendo una experiencia de entretenimiento única en el Caribe. Ubicado estratégicamente en Punta Cana, este proyecto está diseñado para atraer turismo masivo y generar altas tasas de ocupación en alquileres vacacionales.
+
+Con más de 100 atracciones que incluyen parques acuáticos, juegos mecánicos y senderos ecológicos, Cruise On Land redefine el concepto vacacional, convirtiéndolo en una inversión perfecta para quienes buscan alta rentabilidad a través de plataformas como Airbnb.
+
+## Características de la Propiedad
+- **Concepto:** Suites en Resort de Parque Temático
+- **Atracciones:** Parque Acuático, Piscina de Olas, Juegos Mecánicos
+- **Amenidades:** Crystal Lagoon, Playa Artificial, Eco-Senderos
+- **Servicios:** Gestión hotelera, Transporte a playas/aeropuerto, Concierge
+- **Gastronomía:** Bulevar Gastronómico, Bares y Restaurantes
+
+## Perfil de Inversión y Estilo de Vida
+- **Alta Ocupación:** Atrae a familias y turistas que buscan entretenimiento.
+- **Inversión Llave en Mano:** Programa de renta totalmente gestionado disponible.
+- **Beneficios Fiscales:** Aplica Ley CONFOTUR (Exenciones de Impuestos).
+- **Crecimiento:** Ubicado en una zona de rápido desarrollo en Punta Cana.
+
+## Ideal Para
+- Inversionistas que buscan altos rendimientos en renta vacacional
+- Familias que desean una casa de vacaciones con actividades infinitas
+- Primeros inversionistas en el mercado del Caribe`
+        },
+        featured: true,
+        coordinates: { lat: 18.60, lng: -68.45 },
+        completionPercent: 30
+    },
+    {
+        id: 5,
+        slug: "apartamentos-balcones-de-brisas-punta-cana",
+        title: "Apartamentos | Balcones de Brisas Punta Cana",
+        location: "bavaro",
+        locationLabel: "Brisas de Punta Cana",
+        type: "condo",
+        status: "sale",
+        price: 92000,
+        image: "/images/balcones-de-brisas-punta-cana-modern-apartment-facade.jpg",
+        beds: 2,
+        baths: 2,
+        area: 95,
+        gallery: [
+            "/images/balcones-de-brisas-punta-cana-building-facade-angle.jpg",
+            "/images/balcones-de-brisas-punta-cana-pool-area-daytime.jpg",
+            "/images/balcones-de-brisas-punta-cana-pool-lounge-area.jpg",
+            "/images/balcones-de-brisas-punta-cana-rooftop-terrace-jacuzzi.jpg",
+            "/images/balcones-de-brisas-punta-cana-exclusive-rooftop-amenities.jpg",
+            "/images/balcones-de-brisas-punta-cana-building-entrance-elevator.jpg",
+            "/images/balcones-de-brisas-punta-cana-gated-entrance-security.jpg",
+            "/images/balcones-de-brisas-punta-cana-street-view-building.jpg",
+            "/images/balcones-de-brisas-punta-cana-open-concept-living-dining-view.jpg",
+            "/images/balcones-de-brisas-punta-cana-living-room-interior-design.jpg",
+            "/images/balcones-de-brisas-punta-cana-living-room-tv-wall.jpg",
+            "/images/balcones-de-brisas-punta-cana-dining-living-area.jpg",
+            "/images/balcones-de-brisas-punta-cana-kitchen-side-view.jpg",
+            "/images/balcones-de-brisas-punta-cana-kitchen-island-detail.jpg",
+            "/images/balcones-de-brisas-punta-cana-master-bedroom-interior.jpg"
+        ],
+        features: {
+            en: ["Rooftop Pool", "Elevator", "Gated Community", "Covered Parking", "Social Area", "Gym", "Airbnb Friendly", "Low Maintenance"],
+            es: ["Piscina en Rooftop", "Ascensor", "Comunidad Cerrada", "Parqueo Techado", "Área Social", "Gimnasio", "Airbnb Amigable", "Bajo Mantenimiento"]
+        },
+        description: {
+            en: `Balcones de Brisas – Modern Living in Punta Cana
+        
+Balcones de Brisas offers a contemporary urban living experience in the heart of Brisas de Punta Cana. This development stands out for its modern architectural design, functional layouts, and premium amenities typically found in higher-priced projects.
+
+With a focus on comfort and convenience, residents enjoy easy access to downtown Punta Cana while residing in a secure, private community with exclusive rooftop social areas.
+
+## Property Features
+- **Design:** Modern apartments with high-quality finishes
+- **Rooftop:** Exclusive social area with pool and gym
+- **Accessibility:** Buildings equipped with elevators
+- **Security:** 24/7 surveillance and controlled access
+- **Parking:** Covered spaces for residents
+
+## Investment Profile & Lifestyle
+- **Affordability:** Excellent entry price for a quality product.
+- **Rental Potential:** Appeals to long-term residents and vacationers.
+- **Location:** Close to commercial centers and main avenues.
+- **Value:** Appreciation potential in a growing residential sector.
+
+## Ideal For
+- Young professionals
+- Small families
+- Investors looking for steady rental income`,
+            es: `Balcones de Brisas – Vida Moderna en Punta Cana
+
+Balcones de Brisas ofrece una experiencia de vida urbana y contemporánea en el corazón de Brisas de Punta Cana. Este desarrollo se destaca por su diseño arquitectónico moderno, distribución funcional y amenidades premium típicamente encontradas en proyectos de mayor precio.
+
+Con un enfoque en el confort y la conveniencia, los residentes disfrutan de fácil acceso al centro de Punta Cana mientras viven en una comunidad privada y segura con áreas sociales exclusivas en el rooftop.
+
+## Características de la Propiedad
+- **Diseño:** Apartamentos modernos con terminaciones de calidad
+- **Rooftop:** Área social exclusiva con piscina y gimnasio
+- **Accesibilidad:** Edificios equipados con ascensores
+- **Seguridad:** Vigilancia 24/7 y acceso controlado
+- **Estacionamiento:** Espacios techados para residentes
+
+## Perfil de Inversión y Estilo de Vida
+- **Asequibilidad:** Excelente precio de entrada para un producto de calidad.
+- **Potencial de Renta:** Atractivo para residentes a largo plazo y vacacionistas.
+- **Ubicación:** Cerca de centros comerciales y avenidas principales.
+- **Valor:** Potencial de plusvalía en un sector residencial en crecimiento.`
+        },
+        featured: true,
+        coordinates: { lat: 18.61, lng: -68.42 }
+    },
+    {
         id: 6,
         slug: "apartamentos-tropical-breeze-brisas-punta-cana",
         title: "Apartamentos | Tropical Breeze Brisas Punta Cana",
