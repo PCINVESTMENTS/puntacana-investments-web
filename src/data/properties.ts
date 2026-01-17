@@ -677,7 +677,7 @@ Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un e
         locationLabel: "White Sands, Bávaro",
         type: "villa",
         status: "sale",
-        price: 261775,
+        price: 850000,
         image: "/images/perla-del-mar-villas-white-sands/perla-del-mar-villas-white-sands-main-facade.jpg",
         beds: 3,
         baths: 3,
