@@ -317,7 +317,7 @@ function PropertyListingsContent({
                                                 }`}>
                                                 {prop.status === 'sale'
                                                     ? (lang === 'en' ? 'For Sale' : 'Venta')
-                                                    : (lang === 'en' ? 'For Rent' : 'Renta')
+                                                    : (lang === 'en' ? 'Monthly Rent' : 'Renta Mensual')
                                                 }
                                             </div>
                                             <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80"></div>

@@ -875,7 +875,7 @@ Ocean Village se posiciona como un proyecto **altamente Airbnb-friendly**, dise√
         type: "villa",
         status: "rent",
         price: 8000,
-        image: "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-main-pool.jpg",
+        image: "/images/properties/cap-cana-ocean21/ocean-21-rental-main.jpg",
         beds: 3,
         baths: 6,
         area: 255,
