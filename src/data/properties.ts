@@ -868,65 +868,104 @@ Ocean Village se posiciona como un proyecto **altamente Airbnb-friendly**, dise�
     },
     {
         id: 10,
-        slug: "villa-vacacional-paradise-punta-cana",
-        title: "Villa Vacacional | Paradise Rental Punta Cana",
-        location: "bavaro",
-        locationLabel: "Bávaro, Punta Cana",
+        slug: "villa-en-renta-ocean-21-marina-cap-cana-amueblada",
+        title: "Villa en Renta Ocean 21 Marina Cap Cana",
+        location: "capcana",
+        locationLabel: "Ocean 21, Marina Cap Cana",
         type: "villa",
         status: "rent",
-        price: 3500,
-        image: "https://images.unsplash.com/photo-1542856204-00101eb6add2?q=80&w=2070&auto=format&fit=crop",
-        beds: 4,
-        baths: 4,
-        area: 450,
+        price: 8000,
+        image: "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-main-pool.jpg",
+        beds: 3,
+        baths: 6,
+        area: 255,
         features: {
-            en: ["Private Pool", "Games Room", "BBQ", "Wifi", "Parking", "Air Conditioning", "Capacity 12 Guests", "Daily Cleaning"],
-            es: ["Piscina Privada", "Salón de Juegos", "BBQ", "Wifi", "Parqueo", "Aire Acondicionado", "Capacidad 12 Huéspedes", "Limpieza Diaria"]
+            en: ["US$8,000 / Month", "Furnished & Equipped", "1 Year Contract", "Private Pool", "Rooftop Jacuzzi", "Marina Access", "Gated Security", "High Speed Wifi", "Service Room"],
+            es: ["US$8,000 / Mes", "Amueblada y Equipada", "Contrato 1 Año", "Piscina Privada", "Jacuzzi en Rooftop", "Acceso Marina", "Seguridad Cerrada", "Wifi Alta Vel", "Habitación Servicio"]
         },
         description: {
-            en: `Paradise Rental – Luxury Vacation Villa in Punta Cana
+            en: `Luxury Villa Ocean 21 for Rent - Furnished & Equipped
 
-Experience the perfect vacation in this stunning private villa designed for families and large groups. Located in a secure area of Bávaro, this property combines luxury, comfort, and entertainment to ensure an unforgettable stay.
+Enjoy the exclusive lifestyle of Cap Cana in this fully furnished and equipped luxury villa in Ocean 21. Available for long-term rental (minimum 1 year) at US$8,000 per month.
 
-With spacious interiors and a private outdoor oasis, it is the ideal retreat for those seeking privacy without sacrificing proximity to Punta Cana's main attractions.
+Located in the prestigious Marina Cap Cana, this property offers privacy, luxury, and direct access to world-class amenities.
 
 ## Property Features
-- **Capacity:** Comfortable accommodation for up to 12 guests
-- **Accommodation:** 4 spacious bedrooms with private bathrooms
-- **Entertainment:** Games room with billiards and leisure areas
-- **Exterior:** Large private pool, terrace, and BBQ area
-- **Services:** High-speed Wifi, A/C in all areas, and daily cleaning
+- **Rent:** US$8,000 / Month
+- **Contract:** Minimum 1 Year
+- **Layout:** 3 Bedrooms, 6 Bathrooms, Service Room
+- **Amenities:** Private Pool, Rooftop Jacuzzi, BBQ Area
+- **Condition:** Fully Furnished and Equipped
 
-## Rental Experience
-Perfect for family reunions, group getaways, or special celebrations.
-- **Total Privacy:** Enjoy your own extensive space without interruptions.
-- **Strategic Location:** Close to beaches, restaurants, and nightlife.
-- **Concierge:** Assistance available to coordinate activities and transport.
-- **Comfort:** Fully equipped kitchen for preparing family meals.
+## Lifestyle & Location
+- **Exclusive Access:** Minutes from Juanillo Beach and Punta Espada Golf.
+- **Marina Life:** Restaurants and luxury shops steps away.
+- **Security:** 24/7 private security in a gated community.`,
+            es: `Villa Ocean 21 en Renta - Amueblada y Equipada
 
-*Guests have exclusive use of all villa amenities and private parking.*`,
-            es: `Paradise Rental – Villa Vacacional de Lujo en Punta Cana
+Disfrute del estilo de vida exclusivo de Cap Cana en esta villa de lujo totalmente amueblada y equipada en Ocean 21. Disponible para renta a largo plazo (mínimo 1 año) por US$8,000 mensuales.
 
-Disfrute de las vacaciones perfectas en esta impresionante villa privada diseñada para familias y grupos grandes. Ubicada en una zona segura de Bávaro, esta propiedad combina lujo, confort y entretenimiento para asegurar una estadía inolvidable.
-
-Con amplios interiores y un oasis exterior privado, es el refugio ideal para quienes buscan privacidad sin sacrificar la cercanía a las principales atracciones de Punta Cana.
+Ubicada en la prestigiosa Marina de Cap Cana, esta propiedad ofrece privacidad, lujo y acceso directo a amenidades de clase mundial.
 
 ## Características de la Propiedad
-- **Capacidad:** Alojamiento cómodo para hasta 12 huéspedes
-- **Alojamiento:** 4 habitaciones espaciosas con baños privados
-- **Entretenimiento:** Salón de juegos con billar y áreas de ocio
-- **Exterior:** Gran piscina privada, terraza y área de BBQ
-- **Servicios:** Wifi de alta velocidad, A/C en todas las áreas y limpieza diaria
+- **Renta:** US$8,000 / Mes
+- **Contrato:** Mínimo 1 Año
+- **Distribución:** 3 Habitaciones, 6 Baños, Habitación de Servicio
+- **Amenidades:** Piscina Privada, Jacuzzi en Rooftop, Área de BBQ
+- **Condición:** Totalmente Amueblada y Equipada
 
-## Experiencia de Alquiler
-Perfecto para reuniones familiares, escapadas en grupo o celebraciones especiales.
-- **Privacidad Total:** Disfrute de su propio espacio extenso sin interrupciones.
-- **Ubicación Estratégica:** Cerca de playas, restaurantes y vida nocturna.
-- **Concierge:** Asistencia disponible para coordinar actividades y transporte.
-- **Confort:** Cocina totalmente equipada para preparar comidas familiares.
-
-*Los huéspedes tienen uso exclusivo de todas las amenidades de la villa y parqueo privado.*`
+## Estilo de Vida y Ubicación
+- **Acceso Exclusivo:** A minutos de Playa Juanillo y Golf Punta Espada.
+- **Vida en la Marina:** Restaurantes y tiendas de lujo a pasos.
+- **Seguridad:** Seguridad privada 24/7 en comunidad cerrada.`
         },
+        gallery: [
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-main-pool.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-pool-lounge.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-exterior-facade.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-pool-terrace.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-garden-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-jacuzzi-aerial.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-marina-yacht-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-social-area.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-rooftop-bbq-kitchen.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-aerial-complex-overview.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-dining-room.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-living-kitchen-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-living-room-tv.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-living-room-sofa.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-interior-open-concept-living.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-dining-table-setup.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-kitchen-island-stools.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-kitchen-appliances-view.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-room-sofas.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-modern-kitchen-full.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-laundry-service-room.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-dining-open-space.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-dining-living-connection.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-living-room-seating-detail.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-guest-bedroom-blue.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-walk-in-closet-shelves.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-walk-in-closet-drawers.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bedroom-coral-bedding-wardrobe.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bedroom-coral-bedding-window.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-bathroom-double-vanity-shower.jpg",
+            "/images/properties/cap-cana-ocean21/cap-cana-ocean21-twin-bedroom-guest.jpg"
+        ],
+        seo: {
+            title: {
+                en: "Furnished Luxury Villa for Rent Ocean 21 Cap Cana | $8,000/mo",
+                es: "Villa de Lujo Amueblada en Renta Ocean 21 Cap Cana | US$8,000/mes"
+            },
+            description: {
+                en: "Rent this fully furnished luxury villa in Ocean 21, Cap Cana. 3 bedrooms, private pool, rooftop jacuzzi. Long term rental $8,000/month.",
+                es: "Rente esta villa de lujo totalmente amueblada en Ocean 21, Cap Cana. 3 habitaciones, piscina privada, jacuzzi. Renta larga estancia US$8,000/mes."
+            },
+            keywords: {
+                en: ["Villa for Rent Cap Cana", "Ocean 21 Rental", "Furnished Villa Cap Cana", "Long Term Rental Punta Cana", "Luxury Rental Dominican Republic"],
+                es: ["Villa en Renta Cap Cana", "Alquiler Ocean 21", "Villa Amueblada Cap Cana", "Renta Larga Estancia Punta Cana", "Alquiler Lujo Republica Dominicana"]
+            }
+        }
     },
     {
         id: 11,
