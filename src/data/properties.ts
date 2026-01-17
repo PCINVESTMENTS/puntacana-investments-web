@@ -720,8 +720,8 @@ Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un e
             "/images/perla-del-mar-rooftop-aerial-sunset.jpg"
         ],
         features: {
-            en: ["Private Beach Access", "Golf Course Access", "Gated Community", "Private Pool", "Rooftop Terrace", "Picuzzi", "24/7 Security", "Airbnb Friendly"],
-            es: ["Acceso Playa Privada", "Acceso Campo Golf", "Residencial Cerrado", "Piscina Privada", "Terraza Rooftop", "Picuzzi", "Seguridad 24/7", "Airbnb Amigable"]
+            en: ["Private Beach Access", "Golf Course Access", "Clubhouse", "Gated Community", "Private Pool", "Rooftop Terrace", "Picuzzi", "24/7 Security", "Airbnb Friendly"],
+            es: ["Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Residencial Cerrado", "Piscina Privada", "Terraza Rooftop", "Picuzzi", "Seguridad 24/7", "Airbnb Amigable"]
         },
         description: {
             en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
@@ -784,8 +784,8 @@ Diseñado para maximizar el retorno a corto y mediano plazo.
         baths: 2,
         area: 163,
         features: {
-            en: ["Gated Golf Community", "Private Beach Access", "Private Pool", "Private Rooftop (Duplex)", "Double Parking", "Airbnb Friendly", "Modern Design", "Low Density"],
-            es: ["Comunidad de Golf Cerrada", "Acceso Playa Privada", "Piscina Privada", "Rooftop Privado (Dúplex)", "Parqueo Doble", "Airbnb Amigable", "Diseño Moderno", "Baja Densidad"]
+            en: ["Private Beach Access", "Golf Course Access", "Clubhouse", "Gated Community", "Private Pool", "Private Rooftop (Duplex)", "Double Parking", "Airbnb Friendly", "Modern Design"],
+            es: ["Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Residencial Cerrado", "Piscina Privada", "Rooftop Privado (Dúplex)", "Parqueo Doble", "Airbnb Amigable", "Diseño Moderno"]
         },
         description: {
             en: `Ocean Village – Exclusive Villas in White Sands, Punta Cana
@@ -1361,7 +1361,7 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
     {
         id: 16,
         slug: "villa-moderna-white-sands-punta-cana",
-        title: "Villas | Villa Moderna White Sands Punta Cana",
+        title: "Villas | Villa en Venta en White Sands Punta Cana",
         location: "bavaro",
         locationLabel: "White Sands, Bávaro",
         type: "villa",
@@ -1372,8 +1372,8 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
         baths: 3.5,
         area: 180,
         features: {
-            en: ["Private Pool", "White Sands Beach Access", "Gated Community", "Service Room", "Open Concept", "High Rentability", "24/7 Security", "Private Parking"],
-            es: ["Piscina Privada", "Acceso Playa White Sands", "Residencial Cerrado", "Habitación de Servicio", "Concepto Abierto", "Alta Rentabilidad", "Seguridad 24/7", "Parqueo Privado"]
+            en: ["Private Beach Access", "Golf Course Access", "Clubhouse", "Private Pool", "Gated Community", "Service Room", "Open Concept", "24/7 Security", "Private Parking"],
+            es: ["Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Piscina Privada", "Residencial Cerrado", "Habitación de Servicio", "Concepto Abierto", "Seguridad 24/7", "Parqueo Privado"]
         },
         description: {
             en: `Modern Villa with Private Pool in White Sands
