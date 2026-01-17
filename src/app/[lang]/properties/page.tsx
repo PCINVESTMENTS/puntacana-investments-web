@@ -8,7 +8,8 @@ import { mapSanityProperty } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import type { Metadata } from "next";
 
-export const revalidate = 60;
+// Force dynamic because we use searchParams in generateMetadata for SEO logic
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
     params,
