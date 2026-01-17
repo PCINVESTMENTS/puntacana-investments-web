@@ -1381,7 +1381,12 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
             "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-paradise.png",
             "/images/properties/villa-white-sands-modern/white-sands-villa-living-area-decor.png",
             "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-high-angle.png",
-            "/images/properties/villa-white-sands-modern/white-sands-villa-coffee-table-detail.png"
+            "/images/properties/villa-white-sands-modern/white-sands-villa-coffee-table-detail.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-hallway-decor.jpg",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-staircase-lighting.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-master-balcony-view.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-tv-area.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-living-dining-wide.png"
         ],
         seo: {
             title: {
