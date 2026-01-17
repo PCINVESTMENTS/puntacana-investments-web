@@ -1360,38 +1360,70 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
     },
     {
         id: 16,
-        slug: "propiedad-exclusiva-proximamente-1",
-        title: "Villas | Nueva Propiedad Exclusiva 1",
-        location: "punta_cana",
-        locationLabel: "Punta Cana",
+        slug: "villa-moderna-white-sands-punta-cana",
+        title: "Villas | Villa Moderna White Sands Punta Cana",
+        location: "bavaro",
+        locationLabel: "White Sands, Bávaro",
         type: "villa",
         status: "sale",
-        price: 0,
-        image: "https://images.unsplash.com/photo-1600596542815-2a4d9fdd1243?q=80&w=2000&auto=format&fit=crop",
-        beds: 4,
-        baths: 4,
-        area: 300,
+        price: 365900,
+        image: "/images/villa-white-sands-modern-exterior.jpg",
+        beds: 3,
+        baths: 3.5,
+        area: 180,
         features: {
-            en: ["Coming Soon", "Exclusive Location", "Luxury Finishes"],
-            es: ["Próximamente", "Ubicación Exclusiva", "Terminaciones de Lujo"]
+            en: ["Private Pool", "White Sands Beach Access", "Gated Community", "Service Room", "Open Concept", "High Rentability", "24/7 Security", "Private Parking"],
+            es: ["Piscina Privada", "Acceso Playa White Sands", "Residencial Cerrado", "Habitación de Servicio", "Concepto Abierto", "Alta Rentabilidad", "Seguridad 24/7", "Parqueo Privado"]
         },
         description: {
-            en: `New Exclusive Listing - Coming Soon
+            en: `Modern Villa with Private Pool in White Sands
         
-This property is currently being prepared for market. It will feature luxury amenities and a prime location in Punta Cana.
+This villa for sale in White Sands offers an excellent opportunity to live or invest within one of the most consolidated and sought-after residential areas in Punta Cana. Located in the exclusive White Sands community, the property combines comfort, privacy, and high potential for Airbnb-style vacation rentals.
+
+Its design maximizes space and light, creating a perfect environment for families or tourists seeking a private retreat near the beach.
 
 ## Property Features
-- **Status:** Coming Soon
-- **Type:** Luxury Villa
-- **Location:** Punta Cana`,
-            es: `Nueva Propiedad Exclusiva - Próximamente
+- **Type:** Residential Villa
+- **Construction:** Approx. 180 m²
+- **Layout:** 3 Bedrooms + Service Room, 3.5 Bathrooms
+- **Social Areas:** Open concept living room, functional kitchen
+- **Exterior:** Private pool that elevates the user experience
+- **Convenience:** Comfortable and well-lit distribution
 
-Esta propiedad se está preparando para salir al mercado. Contará con amenidades de lujo y una ubicación privilegiada en Punta Cana.
+## Investment Profile & Lifestyle
+- **Excellent Location:** Inside White Sands, a secure and prestigious community.
+- **High Demand:** Ideal for short-term rentals due to amenities and security.
+- **Value Add:** Private pool allows for higher nightly rates and occupancy.
+- **Target Audience:** Families seeking a resort-style lifestyle and investors looking for solid returns.
+
+## Ideal For
+- Vacation rental investors
+- Families looking for a safe, resort-style home
+- Buyers valuing location and security`,
+            es: `Villa Moderna con Piscina Privada en White Sands
+
+Esta villa en venta en White Sands es una excelente oportunidad para vivir o invertir dentro de uno de los residenciales más consolidados y demandados de Punta Cana. Ubicada en el exclusivo White Sands, la propiedad combina confort, privacidad y alto potencial para renta vacacional tipo Airbnb.
+
+Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para familias o turistas que buscan un refugio privado cerca de la playa.
 
 ## Características de la Propiedad
-- **Estado:** Próximamente
-- **Tipo:** Villa de Lujo
-- **Ubicación:** Punta Cana`
+- **Tipo:** Villa residencial
+- **Construcción:** Aprox. 180 m²
+- **Distribución:** 3 Habitaciones + Habitación de servicio, 3.5 Baños
+- **Áreas Sociales:** Sala de concepto abierto, cocina funcional
+- **Exterior:** Piscina privada que eleva la experiencia del usuario
+- **Conveniencia:** Distribución cómoda y bien iluminada
+
+## Perfil de Inversión y Estilo de Vida
+- **Excelente ubicación:** Dentro de White Sands, comunidad segura y prestigiosa.
+- **Alta demanda:** Ideal para Airbnb y renta corta por sus amenidades.
+- **Valor Agregado:** La piscina privada permite mejores tarifas y ocupación.
+- **Público Objetivo:** Familias que buscan vivir estilo resort e inversionistas que buscan retorno sólido.
+
+## Ideal Para
+- Inversionistas en renta vacacional
+- Familias que buscan vivir en un residencial tipo resort
+- Compradores que valoran ubicación y seguridad`
         },
     },
     {
