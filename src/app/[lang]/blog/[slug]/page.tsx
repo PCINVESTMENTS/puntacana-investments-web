@@ -40,8 +40,15 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
 }
 
-// Force dynamic to avoid Turbopack build panic
-export const dynamic = 'force-dynamic';
+// Restoring ISR
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+    const posts = await client.fetch(POSTS_QUERY);
+    return posts.map((post: any) => ({
+        slug: post.slug.current,
+    }));
+}
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { lang, slug } = await params;

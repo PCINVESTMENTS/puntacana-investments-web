@@ -8,31 +8,26 @@ import { mapSanityProperty } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import type { Metadata } from "next";
 
-// Force dynamic because we use searchParams in generateMetadata for SEO logic
-export const dynamic = 'force-dynamic';
+// Restoring ISR to fix build panic. searchParams removed from generateMetadata to avoid dynamic bail-out issues in Turbopack.
+export const revalidate = 60;
 
 export async function generateMetadata({
-    params,
-    searchParams
+    params
 }: {
     params: Promise<{ lang: 'es' | 'en' }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<Metadata> {
     const { lang } = await params;
-    const resolvedSearchParams = await searchParams;
+    // searchParams removed to ensure static stability during build
+
     const dict = await getDictionary(lang);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
-
-    // SEO LOGIC:
-    // If ANY search params exist (filters), NOINDEX but FOLLOW.
-    // Canonical ALWAYS points to the clean URL (without params).
-    const hasFilters = Object.keys(resolvedSearchParams || {}).length > 0;
 
     return {
         title: dict.properties.title + ' | Punta Cana Investments',
         description: dict.properties.subtitle,
+        // Default robots allow index/follow
         robots: {
-            index: !hasFilters,
+            index: true,
             follow: true,
         },
         alternates: {

@@ -39,7 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   };
 }
 
-// Removed generateStaticParams to avoid Turbopack build panic (Conflict with dynamic children)
+export async function generateStaticParams() {
+  return [{ lang: 'es' }, { lang: 'en' }]
+}
 
 import { CompareProvider } from "@/components/property/CompareContext";
 import PropertyComparator from "@/components/property/PropertyComparator";
