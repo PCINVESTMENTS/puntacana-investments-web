@@ -168,7 +168,7 @@ export default function PropertyComparator({ lang }: { lang: string }) {
                                             {selectedProperties.map(prop => (
                                                 <td key={prop.id} className="p-6">
                                                     <a
-                                                        href={`/${lang}/properties/${prop.id}`}
+                                                        href={`/${lang}/properties/${prop.slug}`}
                                                         className="inline-block bg-white text-black font-bold px-6 py-2 uppercase text-xs tracking-widest hover:bg-luxury-gold transition-colors"
                                                     >
                                                         {lang === "en" ? "View Details" : "Ver Detalles"}

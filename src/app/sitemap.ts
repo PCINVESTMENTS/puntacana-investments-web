@@ -6,7 +6,7 @@ const BASE_URL = 'https://puntacanainvesment.com';
 
 const SITEMAP_QUERY = defineQuery(`
   {
-    "properties": *[_type == "property"] { "id": id, "_updatedAt": _updatedAt },
+    "properties": *[_type == "property"] { "slug": slug.current, "_updatedAt": _updatedAt },
     "posts": *[_type == "post"] { "slug": slug.current, "publishedAt": publishedAt }
   }
 `);
@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     properties.forEach((property: any) => {
         languages.forEach((lang) => {
             routes.push({
-                url: `${BASE_URL}/${lang}/properties/${property.id}`,
+                url: `${BASE_URL}/${lang}/properties/${property.slug}`,
                 lastModified: new Date(property._updatedAt),
                 changeFrequency: 'weekly',
                 priority: 0.9,

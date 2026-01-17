@@ -62,6 +62,37 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
   }
 `);
 
+export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "property" && slug.current == $slug][0] {
+    _id,
+    id,
+    title,
+    slug,
+    location,
+    locationLabel,
+    type,
+    status,
+    price,
+    completionPercent,
+    mainImage,
+    imageUrl,
+    gallery,
+    galleryUrls,
+    beds,
+    baths,
+    area,
+    featuresEn,
+    featuresEs,
+    descriptionEn,
+    descriptionEs,
+    videoUrl,
+    virtualTourUrl,
+    coordinates,
+    constructionStages,
+    featured
+  }
+`);
+
 export const POSTS_QUERY = defineQuery(`
   *[_type == "post"] | order(publishedAt desc) {
     _id,

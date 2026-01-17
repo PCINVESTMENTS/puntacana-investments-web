@@ -275,7 +275,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                         .map((property) => (
                                             <Link
                                                 key={property.id}
-                                                href={`/${lang}/properties/${property.id}`}
+                                                href={`/${lang}/properties/${property.slug}`}
                                                 className="group bg-dark-gray border border-white/5 rounded-sm overflow-hidden hover:border-luxury-gold/30 transition-all duration-300 block"
                                             >
                                                 <div className="relative h-64 overflow-hidden">

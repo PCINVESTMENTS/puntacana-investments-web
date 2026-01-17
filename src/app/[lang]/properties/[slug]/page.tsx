@@ -20,7 +20,7 @@ import ShareButtons from "@/components/property/ShareButtons";
 // Sanity imports
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { PROPERTY_BY_ID_QUERY } from "@/sanity/lib/queries";
+import { PROPERTY_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import { Property, properties } from "@/data/properties";
 
 // Helper to map Sanity data to our app's Property interface
@@ -50,19 +50,17 @@ function mapSanityProperty(data: any): Property {
     };
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string, id: string }> }) {
-    const { lang, id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
+    const { lang, slug } = await params;
 
-    // Check if ID is a number (legacy) or we should just try valid query
-    // Our query filters by `id == $id`. Sanity stores ID as number based on migration.
     // Check local data first for SEO consistency
-    const localProperty = properties.find(p => p.id === parseInt(id));
+    const localProperty = properties.find(p => p.slug === slug);
     let property: Property;
 
     if (localProperty) {
         property = localProperty;
     } else {
-        const propertyData = await client.fetch(PROPERTY_BY_ID_QUERY, { id: parseInt(id) });
+        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
 
         if (!propertyData) {
             return {
@@ -89,26 +87,26 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             type: 'website',
         },
         alternates: {
-            canonical: `https://puntacanainvesment.com/${lang}/properties/${id}`,
+            canonical: `https://puntacanainvesment.com/${lang}/properties/${slug}`,
         }
     };
 }
 
 export const revalidate = 60;
 
-export default async function PropertyPage({ params }: { params: Promise<{ lang: string, id: string }> }) {
-    const { lang, id } = await params;
+export default async function PropertyPage({ params }: { params: Promise<{ lang: string, slug: string }> }) {
+    const { lang, slug } = await params;
     const dict = await getDictionary(lang as "es" | "en");
 
     // Prioritize local data if it exists (for overrides/updates not yet in CMS)
     // This ensures edits made in properties.ts (like Cruise On Land) are visible immediately.
-    const localProperty = properties.find(p => p.id === parseInt(id));
+    const localProperty = properties.find(p => p.slug === slug);
     let property: Property;
 
     if (localProperty) {
         property = localProperty;
     } else {
-        const propertyData = await client.fetch(PROPERTY_BY_ID_QUERY, { id: parseInt(id) });
+        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
 
         if (!propertyData) {
             notFound();
@@ -320,7 +318,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             {/* Social Share Buttons */}
                             <ShareButtons
                                 title={`Mira esta propiedad: ${property.title}`}
-                                url={`https://puntacanainvesment.com/${lang}/properties/${property.id}`}
+                                url={`https://puntacanainvesment.com/${lang}/properties/${property.slug}`}
                             />
 
                             <PriceDropNotify lang={lang} propertyTitle={property.title} />
