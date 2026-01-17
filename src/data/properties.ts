@@ -1358,5 +1358,75 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
 *Los huéspedes tienen acceso a muelle privado y todas las amenidades de Cap Cana.*`
         }
     },
+    {
+        id: 16,
+        slug: "propiedad-exclusiva-proximamente-1",
+        title: "Villas | Nueva Propiedad Exclusiva 1",
+        location: "punta_cana",
+        locationLabel: "Punta Cana",
+        type: "villa",
+        status: "sale",
+        price: 0,
+        image: "https://images.unsplash.com/photo-1600596542815-2a4d9fdd1243?q=80&w=2000&auto=format&fit=crop",
+        beds: 4,
+        baths: 4,
+        area: 300,
+        features: {
+            en: ["Coming Soon", "Exclusive Location", "Luxury Finishes"],
+            es: ["Próximamente", "Ubicación Exclusiva", "Terminaciones de Lujo"]
+        },
+        description: {
+            en: `New Exclusive Listing - Coming Soon
+        
+This property is currently being prepared for market. It will feature luxury amenities and a prime location in Punta Cana.
 
-];
+## Property Features
+- **Status:** Coming Soon
+- **Type:** Luxury Villa
+- **Location:** Punta Cana`,
+            es: `Nueva Propiedad Exclusiva - Próximamente
+
+Esta propiedad se está preparando para salir al mercado. Contará con amenidades de lujo y una ubicación privilegiada en Punta Cana.
+
+## Características de la Propiedad
+- **Estado:** Próximamente
+- **Tipo:** Villa de Lujo
+- **Ubicación:** Punta Cana`
+        },
+    },
+    {
+        id: 17,
+        slug: "propiedad-exclusiva-proximamente-2",
+        title: "Condos | Nueva Propiedad Exclusiva 2",
+        location: "bavaro",
+        locationLabel: "Bávaro",
+        type: "condo",
+        status: "sale",
+        price: 0,
+        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+        beds: 2,
+        baths: 2,
+        area: 120,
+        features: {
+            en: ["Coming Soon", "Modern Design", "Great Investment"],
+            es: ["Próximamente", "Diseño Moderno", "Gran Inversión"]
+        },
+        description: {
+            en: `New Exclusive Condo - Coming Soon
+        
+An exciting new investment opportunity is coming to Bávaro. Perfect for vacation rentals or a Caribbean home.
+
+## Property Features
+- **Status:** Coming Soon
+- **Type:** Modern Condo
+- **Location:** Bávaro`,
+            es: `Nuevo Condominio Exclusivo - Próximamente
+
+Una emocionante oportunidad de inversión llega a Bávaro. Perfecto para renta vacacional o residencia en el Caribe.
+
+## Características de la Propiedad
+- **Estado:** Próximamente
+- **Tipo:** Condominio Moderno
+- **Ubicación:** Bávaro`
+        },
+    },
