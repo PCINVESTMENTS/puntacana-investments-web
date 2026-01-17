@@ -1224,70 +1224,95 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
     },
     {
         id: 14,
-        slug: "apartamento-vacacional-playa-bavaro",
-        title: "Apartamento Vacacional | Beachfront Condo Bávaro",
+        slug: "villa-en-renta-white-sands-punta-cana-amueblada",
+        title: "Villas | Villa en Renta Amueblada en White Sands Punta Cana",
         location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "condo",
+        locationLabel: "White Sands, Bávaro",
+        type: "villa",
         status: "rent",
-        price: 3500,
-        image: "/images/rental-condo-generated.png",
-        beds: 2,
-        baths: 2,
-        area: 110,
+        price: 2000,
+        image: "/images/villa-white-sands-modern-exterior.jpg",
+        beds: 3,
+        baths: 3.5,
+        area: 180,
+        gallery: [
+            "/images/properties/villa-white-sands-modern/white-sands-villa-pool-terrace.jpg",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-terrace-dining.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-modern-kitchen.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-open-concept.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-pool-deck.jpg",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-island-view.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-paradise.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-living-area-decor.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-high-angle.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-coffee-table-detail.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-hallway-decor.jpg",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-staircase-lighting.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-master-balcony-view.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-tv-area.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-living-dining-wide.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-tv.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-bathroom-modern.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-angle-2.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-wardrobe.png"
+        ],
+        seo: {
+            title: {
+                en: "Furnished Villa for Rent in White Sands Punta Cana | 1 Year Contract",
+                es: "Villa Amueblada en Renta en White Sands Punta Cana | Contrato 1 Año"
+            },
+            description: {
+                en: "Furnished 3-bedroom villa for rent in White Sands, Punta Cana. $2,000/month, 1-year contract. Private pool, beach access, and golf. Secure gated community.",
+                es: "Villa amueblada de 3 habitaciones en renta en White Sands, Punta Cana. US$2,000/mes, contrato de 1 año. Piscina privada, acceso a playa y golf. Residencial cerrado."
+            },
+            keywords: {
+                en: ["Villa for Rent Punta Cana", "White Sands Rental", "Furnished Villa Punta Cana", "Long Term Rental Punta Cana", "House for Rent Bavaro"],
+                es: ["Villa en Renta Punta Cana", "Renta White Sands", "Villa Amueblada Punta Cana", "Alquiler Larga Estancia Punta Cana", "Casa en Renta Bavaro"]
+            }
+        },
         features: {
-            en: ["Beach Access", "Furnished", "High Speed Wifi", "Security"],
-            es: ["Acceso Playa", "Amueblado", "Wifi Alta Vel", "Seguridad"]
+            en: ["Furnished", "1 Year Contract", "Private Beach Access", "Golf Course Access", "Clubhouse", "Private Pool", "Gated Community", "Service Room", "24/7 Security", "Private Parking"],
+            es: ["Amueblada", "Contrato 1 Año", "Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Piscina Privada", "Residencial Cerrado", "Habitación de Servicio", "Seguridad 24/7", "Parqueo Privado"]
         },
         description: {
-            en: `Beachfront Condo Rental – Vacation in Bávaro
+            en: `Furnished Villa for Rent in White Sands - 1 Year Contract
+        
+This fully furnished villa for rent in White Sands offers the perfect blend of comfort and luxury for long-term living. Located in one of Punta Cana's most prestigious gated communities, this property is available for a minimum 1-year contract at US$2,000 per month.
 
-Fully equipped vacation apartment steps from the beach. Ideal for short or medium stays. Enjoy the breeze and the sound of the ocean in this comfortable unit.
-
-Perfect for couples or small families seeking a relaxing getaway.
+The villa features a modern open-concept design, private pool, and access to exclusive amenities like the private beach and golf course.
 
 ## Property Features
-- **Type:** Condo
-- **Beds:** 2
-- **Baths:** 2
-- **Location:** Steps from the beach
-- **Amenities:** Wifi, Security, Furnished
+- **Type:** Residential Villa (Furnished)
+- **Rent:** US$2,000 / Month
+- **Contract:** Minimum 1 Year
+- **Layout:** 3 Bedrooms + Service Room, 3.5 Bathrooms
+- **Amenities:** Private Pool, Garden, BBQ Area
+- **Security:** 24/7 Gated Security
 
-## Rental Experience
-- **Beach Access:** Direct access to the beautiful Bávaro beach.
-- **Comfort:** Fully furnished for your convenience.
-- **Security:** Safe environment for peace of mind.
+## Lifestyle & Location
+Living in White Sands means enjoying a resort-style life every day. You are minutes away from the beach, golf courses, and downtown Bávaro.
+- **Convenience:** Close to supermarkets, restaurants, and schools.
+- **Community:** Quiet, safe, and family-friendly environment.
+- **Access:** Private access to the beautiful White Sands beach.`,
+            es: `Villa Amueblada en Renta en White Sands - Contrato de 1 Año
 
-## Ideal For
-- Couples or small families
-- Short or medium stays
-- Relaxing getaways
+Esta villa totalmente amueblada en renta en White Sands ofrece la combinación perfecta de confort y lujo para vivienda a largo plazo. Ubicada en uno de los residenciales cerrados más prestigiosos de Punta Cana, esta propiedad está disponible para contrato mínimo de 1 año a US$2,000 por mes.
 
-*Guests enjoy a prime location close to beach bars and restaurants.*`,
-            es: `Renta de Condominio Frente al Mar – Vacaciones en Bávaro
-
-Apartamento vacacional totalmente equipado a pasos de la playa. Ideal para estancias cortas o medianas. Disfrute de la brisa y el sonido del mar en esta cómoda unidad.
-
-Perfecto para parejas o familias pequeñas que buscan una escapada relajante.
+La villa cuenta con un diseño moderno de concepto abierto, piscina privada y acceso a amenidades exclusivas como la playa privada y el campo de golf.
 
 ## Características de la Propiedad
-- **Tipo:** Condominio
-- **Habitaciones:** 2
-- **Baños:** 2
-- **Ubicación:** A pasos de la playa
-- **Amenidades:** Wifi, Seguridad, Amueblado
+- **Tipo:** Villa Residencial (Amueblada)
+- **Renta:** US$2,000 / Mes
+- **Contrato:** Mínimo 1 Año
+- **Distribución:** 3 Habitaciones + Habitación de Servicio, 3.5 Baños
+- **Amenidades:** Piscina Privada, Jardín, Área de BBQ
+- **Seguridad:** Seguridad 24/7 con control de acceso
 
-## Experiencia de Alquiler
-- **Acceso a Playa:** Acceso directo a la hermosa playa de Bávaro.
-- **Comodidad:** Totalmente amueblado para su conveniencia.
-- **Seguridad:** Entorno seguro para su tranquilidad.
-
-## Ideal Para
-- Parejas o familias pequeñas
-- Estancias cortas o medianas
-- Escapadas relajantes
-
-*Los huéspedes disfrutan de una ubicación privilegiada cerca de bares de playa y restaurantes.*`
+## Estilo de Vida y Ubicación
+Vivir en White Sands significa disfrutar de una vida estilo resort todos los días. Está a minutos de la playa, campos de golf y el centro de Bávaro.
+- **Conveniencia:** Cerca de supermercados, restaurantes y escuelas.
+- **Comunidad:** Entorno tranquilo, seguro y familiar.
+- **Acceso:** Acceso privado a la hermosa playa de White Sands.`
         }
     },
     {
