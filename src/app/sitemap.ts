@@ -1,66 +1,70 @@
-import { MetadataRoute } from 'next';
-import { client } from '@/sanity/lib/client';
-import { defineQuery } from 'next-sanity';
+import { MetadataRoute } from 'next'
+import { client } from "@/sanity/lib/client";
+import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
+import { mapSanityProperty } from "@/sanity/lib/mappers";
+import { Property, properties as localProperties } from "@/data/properties";
 
-const BASE_URL = 'https://puntacanainvesment.com';
-
-const SITEMAP_QUERY = defineQuery(`
-  {
-    "properties": *[_type == "property"] { "slug": slug.current, "_updatedAt": _updatedAt },
-    "posts": *[_type == "post"] { "slug": slug.current, "publishedAt": publishedAt }
-  }
-`);
+// In ISR mode, this will run at build time and revalidate every hour
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const { properties, posts } = await client.fetch(SITEMAP_QUERY);
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
 
+    // 1. Fetch Key Pages
     const staticRoutes = [
         '',
+        '/properties',
+        '/investments',
         '/blog',
         '/contact',
-        '/privacy-policy',
-        '/terms-of-service',
+        '/about',
+        '/locations',
     ];
 
+    // 2. Fetch Properies from Sanity & Local
+    const rawProperties = await client.fetch(PROPERTIES_QUERY);
+    const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+
+    // Merge logic
+    const localMap = new Map(localProperties.map(p => [p.id, p]));
+    const unitedProperties = fetchedProperties.map(p => {
+        const local = localMap.get(p.id);
+        if (local) {
+            localMap.delete(p.id);
+            return local;
+        }
+        return p;
+    });
+    const allProperties = [...unitedProperties, ...Array.from(localMap.values())];
+
+    // 3. Generate Entries for Languages (ES / EN)
     const languages = ['es', 'en'];
 
-    const routes: MetadataRoute.Sitemap = [];
+    const sitemapEntries: MetadataRoute.Sitemap = [];
 
-    // Static Routes
-    languages.forEach((lang) => {
-        staticRoutes.forEach((route) => {
-            routes.push({
-                url: `${BASE_URL}/${lang}${route}`,
+    // Static Pages
+    staticRoutes.forEach(route => {
+        languages.forEach(lang => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${lang}${route}`,
                 lastModified: new Date(),
                 changeFrequency: 'daily',
-                priority: route === '' ? 1 : 0.8,
+                priority: route === '' ? 1.0 : 0.8,
             });
         });
     });
 
-    // Dynamic Property Routes
-    properties.forEach((property: any) => {
-        languages.forEach((lang) => {
-            routes.push({
-                url: `${BASE_URL}/${lang}/properties/${property.slug}`,
-                lastModified: new Date(property._updatedAt),
-                changeFrequency: 'weekly',
-                priority: 0.9,
+    // Property Pages
+    allProperties.forEach(property => {
+        languages.forEach(lang => {
+            sitemapEntries.push({
+                url: `${baseUrl}/${lang}/properties/${property.slug}`,
+                lastModified: new Date(), // Ideal if we had updatedAt from Sanity
+                changeFrequency: 'daily',
+                priority: 0.8,
             });
         });
     });
 
-    // Dynamic Blog Routes
-    posts.forEach((post: any) => {
-        languages.forEach((lang) => {
-            routes.push({
-                url: `${BASE_URL}/${lang}/blog/${post.slug}`,
-                lastModified: new Date(post.publishedAt),
-                changeFrequency: 'weekly',
-                priority: 0.7,
-            });
-        });
-    });
-
-    return routes;
+    return sitemapEntries;
 }
