@@ -1708,165 +1708,67 @@ Gracias a su metraje, rooftops de lujo y ubicación dentro de White Sands, Ocean
         baths: 6,
         area: 255,
         features: {
-            en: [
-                "Land: approx. 690 m²", "Open Concept Living Room",
-                "Construction: approx. 255 m²", "Modern Kitchen",
-                "Bedrooms: 3", "Private Pool",
-                "Service Room: 1", "Garden",
-                "Bathrooms: 6", "Parking: 2 vehicles",
-                "Rooftop Terrace", "Jacuzzi",
-                "BBQ Area", "24/7 Security"
-            ],
-            es: [
-                "Terreno: aprox. 690 m²", "Sala de concepto abierto",
-                "Construcción: aprox. 255 m²", "Cocina moderna",
-                "Habitaciones: 3", "Piscina privada",
-                "Habitación de servicio: 1", "Jardín",
-                "Baños: 6", "Parqueo: 2 vehículos",
-                "Terraza Rooftop", "Jacuzzi",
-                "Área de BBQ", "Seguridad 24/7"
-            ]
+            en: ["Land: 690 m²", "Construction: 255 m²", "3 Bedrooms", "6 Bathrooms", "Private Pool & Garden", "Rooftop Terrace with Jacuzzi", "BBQ & Social Area", "Cap Cana Marina Access", "Punta Espada Golf Club", "24/7 Security", "Private Parking (2)", "High ROI Potential"],
+            es: ["Terreno: 690 m²", "Construcción: 255 m²", "3 Habitaciones", "6 Baños", "Piscina y Jardín Privados", "Terraza Rooftop con Jacuzzi", "Área de BBQ y Social", "Acceso Marina Cap Cana", "Punta Espada Golf Club", "Seguridad 24/7", "Parqueo Privado (2)", "Alto Potencial de Retorno"]
         },
         description: {
-            en: `Luxury Villa in Ocean 21 Project – Cap Cana Marina
+            en: `Luxury Villa in Ocean 21 – Cap Cana Marina
 
-Exclusive luxury villa located within the Ocean 21 project, in the Cap Cana Marina, inside Cap Cana, one of the most prestigious and best-planned residential and tourist destinations in the Caribbean.
+Exclusive luxury villa located in the Ocean 21 project within Cap Cana Marina, one of the most prestigious and best-planned destinations in the Caribbean.
 
-This property combines contemporary architecture, spacious areas, and access to world-class amenities, positioning itself as a high-level residence and a premium real estate investment with excellent profitability.
+This property combines contemporary architecture, spacious areas, and world-class amenities, positioning itself as both a high-end residence and a premium investment with excellent profitability.
 
-## Luxury Rooftop Terrace
+## General Data
+- **Type:** Luxury Villa
+- **Land:** Approx. 690 m²
+- **Construction:** Approx. 255 m²
+- **Layout:** 3 Bedrooms, 6 Bathrooms, Service Room
+- **Exterior:** Private Pool, Garden, and Parking for 2 vehicles
+- **Rooftop:** Equipped with Jacuzzi, BBQ, and Social Area
 
-The property features an exterior rooftop terrace, designed as a space of high aesthetic and functional value, highly demanded in the premium vacation rental market.
+## Location & Value: Cap Cana Marina
+Ocean 21 offers a unique lifestyle with direct access to the Marina, recognized for its international atmosphere, gourmet dining, and capacity for large yachts.
 
-**Rooftop equipped with:**
-- Jacuzzi
-- BBQ Area
-- Independent Bathroom
-- Social area ideal for private events and relaxation
-
-The rooftop allows for higher occupancy, better reviews, and superior rates on rental platforms.
-
-## Profitability and Airbnb Performance
-
-**Average nightly rate: USD $950**
-
-This performance confirms:
-- High destination demand
-- Premium guest profile
-- Passive income in dollars
-- Excellent annual profitability projection
-
-## Exclusive Cap Cana Amenities & Benefits
-
-**Gastronomy & Entertainment ↔ Cap Cana Marina**
-- Gourmet restaurants and international cuisine
-- Bars, lounges, and social spaces
-- Exclusive events for residents
-- World-class Marina
-- Capacity for large yachts
-- Nautical, international atmosphere
-
-**Services & Facilities ↔ Security & Urban Order**
-- International School
-- Nearby medical centers
-- Commercial areas
-- Concierge services
-- 24/7 Private Security
-- Controlled access
-- Modern underground infrastructure
-
-**World-Class Golf ↔ Sports & Wellness**
-- Punta Espada Golf Club (Jack Nicklaus)
-- Top Caribbean golf course
-- High-level equestrian center
-- Tennis and paddle courts
-- Gym and wellness centers
-
-## Key Benefits of Investing in Cap Cana
-
-- Sustained high appreciation
+**Key Investment Benefits:**
+- High annual profitability projection (Avg. nightly rate ~$950 USD)
 - Consolidated international destination
 - Active premium vacation rental market
-- High purchasing power buyer/tenant profile
-- Planned, exclusive, and safe environment
-- Long-term real estate value protection
+- Long-term value protection and appreciation
 
 ## Ideal For
-
 - Investors seeking high returns
 - Luxury villa buyers in Cap Cana
 - Clients interested in premium vacation rentals
-- Those valuing rooftop, marina, and world-class amenities
+- Those who value privacy, rooftop amenities, and marina lifestyle
 - Solid and exclusive real estate heritage`,
-            es: `Villa de Lujo en el Proyecto Ocean 21 – Marina de Cap Cana
+            es: `Villa de Lujo en Ocean 21 – Marina de Cap Cana
 
-Exclusiva villa de lujo ubicada dentro del proyecto Ocean 21, en la Marina de Cap Cana, dentro de Cap Cana, uno de los destinos residenciales y turísticos más prestigiosos y mejor planificados del Caribe.
+Exclusiva villa de lujo ubicada en el proyecto Ocean 21 dentro de la Marina de Cap Cana, uno de los destinos más prestigiosos y mejor planificados del Caribe.
 
-Esta propiedad combina arquitectura contemporánea, amplios espacios y acceso a amenidades de clase mundial, posicionándose como una residencia de alto nivel y una inversión inmobiliaria premium con excelente rentabilidad.
+Esta propiedad combina arquitectura contemporánea, amplios espacios y amenidades de clase mundial, posicionándose como una residencia de alto nivel y una inversión premium con excelente rentabilidad.
 
-## Terraza Exterior Tipo Rooftop – Terraza de Lujo
+## Datos Generales
+- **Tipo:** Villa de Lujo
+- **Terreno:** Aprox. 690 m²
+- **Construcción:** Aprox. 255 m²
+- **Distribución:** 3 Habitaciones, 6 Baños, Habitación de servicio
+- **Exterior:** Piscina privada, Jardín y Parqueo para 2 vehículos
+- **Rooftop:** Equipado con Jacuzzi, BBQ y Área Social
 
-La propiedad cuenta con una terraza exterior tipo rooftop, diseñada como un espacio de alto valor estético y funcional, altamente demandado en el mercado de renta vacacional premium.
+## Ubicación y Valor: Marina de Cap Cana
+Ocean 21 ofrece un estilo de vida único con acceso directo a la Marina, reconocida por su ambiente internacional, gastronomía gourmet y capacidad para yates de gran eslora.
 
-**Rooftop equipado con:**
-- Jacuzzi
-- Área de BBQ
-- Baño independiente
-- Área social ideal para eventos privados y relajación
-
-El rooftop permite mayor ocupación, mejores reseñas y tarifas superiores en plataformas de alquiler.
-
-## Rentabilidad y Desempeño en Airbnb
-
-**Tarifa promedio por noche: USD $950**
-
-Este desempeño confirma:
-- Alta demanda del destino
-- Perfil de huésped premium
-- Ingresos pasivos en dólares
-- Excelente proyección de rentabilidad anual
-
-## Amenidades y Beneficios Exclusivos de Cap Cana
-
-**Gastronomy & Entertainment ↔ Marina de Cap Cana**
-- Restaurantes gourmet y cocina internacional
-- Bares, lounges y espacios sociales
-- Eventos exclusivos para residentes
-- Marina de categoría internacional
-- Capacidad para yates de gran eslora
-- Ambiente náutico internacional
-
-**Servicios y Facilidades ↔ Seguridad y Orden Urbano**
-- Colegio internacional
-- Centros médicos cercanos
-- Áreas comerciales
-- Servicios de concierge
-- Seguridad privada 24/7
-- Accesos controlados
-- Infraestructura moderna y soterrada
-
-**Golf de Nivel Mundial ↔ Deportes & Bienestar**
-- Punta Espada Golf Club (Jack Nicklaus)
-- Uno de los mejores campos del Caribe
-- Centro ecuestre de alto nivel
-- Canchas de tenis y pádel
-- Gimnasio y centros de wellness
-
-## Beneficios Clave de Invertir en Cap Cana
-
-- Alta plusvalía sostenida
+**Beneficios Clave de Inversión:**
+- Alta proyección de rentabilidad anual (Tarifa promedio ~$950 USD/noche)
 - Destino internacional consolidado
 - Mercado activo de renta vacacional premium
-- Perfil de comprador e inquilino de alto poder adquisitivo
-- Entorno planificado, exclusivo y seguro
-- Protección del valor inmobiliario a largo plazo
+- Protección de valor y plusvalía a largo plazo
 
 ## Ideal Para
-
 - Inversionistas que buscan alto retorno
 - Compradores de villas de lujo en Cap Cana
 - Clientes interesados en renta vacacional premium
-- Quienes valoran rooftop, marina y amenidades de clase mundial
+- Quienes valoran privacidad, rooftop y estilo de vida de marina
 - Patrimonio inmobiliario sólido y exclusivo`
         },
         gallery: [
