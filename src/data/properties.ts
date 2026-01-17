@@ -1202,8 +1202,8 @@ El diseño del proyecto busca crear una experiencia de relajación, amplitud y p
             "/images/perla-del-mar-rooftop-aerial-sunset.jpg"
         ],
         features: {
-            en: ["White Sands Private Access", "Golf Course", "Punta Cana Beach Access", "Private Pool", "Rooftop with Jacuzzi (Selected Units)", "Clubhouse & Restaurants", "Sports Courts (Tennis, Paddle)", "Pet Park", "Double Parking", "24/7 Security", "Airbnb Friendly", "High ROI Potential"],
-            es: ["Acceso Privado White Sands", "Campo de Golf", "Acceso Playa Punta Cana", "Piscina Privada", "Rooftop con Jacuzzi (Unidades Seleccionadas)", "Casa Club y Restaurantes", "Canchas Deportivas (Tenis, Pádel)", "Parque de Mascotas", "Parqueo Doble", "Seguridad 24/7", "Airbnb Amigable", "Alto Potencial de Retorno"]
+            en: ["Private Beach Access", "Golf Course", "Semi-Olympic Pool", "Sports Courts (Tennis, Paddle, Basketball)", "Clubhouse & Restaurant", "Internal Beach Transport", "Pet Park", "Social Area & BBQ", "School", "24/7 Private Security"],
+            es: ["Acceso privado a la playa", "Campo de Golf", "Piscina semi-olímpica", "Canchas deportivas (Tenis, Pádel, Baloncesto)", "Casa club y Restaurante", "Transporte interno a la playa", "Parque para mascotas", "Área social y BBQ", "Colegio", "Seguridad privada 24/7"]
         },
         description: {
             en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
@@ -1212,7 +1212,7 @@ Perla del Mar is an exclusive residential villa project located within the renow
 Conceived for those seeking privacy, comfort, and a solid real estate investment, the project offers a highly attractive product for Airbnb-style vacation rentals and residential use.
 
 ## Project Features
-- **Type:** 7 Single-family Villas
+- **Project Type:** 7 Single-family Villas
 - **Layout:** 2 Levels, 3 Bedrooms
 - **Design:** Modern and Functional Architectural Design
 - **Interior:** Integrated living room, dining room, and kitchen
@@ -1228,36 +1228,24 @@ Conceived for those seeking privacy, comfort, and a solid real estate investment
 ## Profitability & Investment Profile
 - Excellent performance on Airbnb
 - High demand due to location within White Sands
-- Rooftop villas allow for superior rates
+- Villas with rooftop allow for superior rates
 - Resort-style environment favors high occupancy
 - Ideal for passive income in dollars
-
-## White Sands Amenities
-- Private Beach Access
-- Golf Course
-- Semi-Olympic Pool
-- Sports Courts (Tennis, Paddle, Basketball)
-- Clubhouse and Restaurant
-- Internal Transport to Beach
-- Pet Park
-- Social Area, Terrace & BBQ
-- School
-- 24/7 Private Security
-- **Surroundings:** Casinos, nightclubs, bars, and entertainment zones nearby
 
 ## Ideal For
 - Vacation Rental Investors
 - Buyers seeking villas with rooftop
 - Properties within a resort-style residential
 - High profitability and appreciation projection
-- Real estate heritage in a consolidated zone`,
+- Real estate heritage in a consolidated zone
+- *White Sands Amenities accessible via the community card (Beach, Golf, Sports).*`,
             es: `Perla del Mar – Villas Exclusivas en White Sands, Punta Cana
 
 Perla del Mar es un proyecto residencial exclusivo de villas ubicado dentro del reconocido White Sands, en Punta Cana.
 Concebido para quienes buscan privacidad, confort y una inversión inmobiliaria sólida, el proyecto ofrece un producto altamente atractivo para renta vacacional tipo Airbnb y uso residencial.
 
 ## Características del Proyecto
-- **Tipo:** Proyecto de 7 villas unifamiliares
+- **Tipo de Proyecto:** 7 villas unifamiliares
 - **Distribución:** Villas de 2 niveles, 3 habitaciones
 - **Diseño:** Arquitectónico moderno y funcional
 - **Interior:** Sala, comedor y cocina integrados
@@ -1277,25 +1265,13 @@ Concebido para quienes buscan privacidad, confort y una inversión inmobiliaria 
 - Entorno tipo resort que favorece alta ocupación
 - Ideal para ingresos pasivos en dólares
 
-## Amenidades del Residencial White Sands
-- Acceso privado a la playa
-- Campo de golf
-- Piscina semi-olímpica
-- Canchas deportivas (tenis, pádel y baloncesto)
-- Casa club y Restaurante
-- Transporte interno a la playa
-- Parque para mascotas
-- Área social, terraza y BBQ
-- Colegio
-- Seguridad privada 24/7
-- **Entorno:** Casinos, discotecas, bares y zonas de entretenimiento cercanas
-
 ## Ideal Para
 - Inversionistas en renta vacacional
 - Compradores que buscan villas con rooftop
 - Propiedades dentro de un residencial tipo resort
 - Alta proyección de rentabilidad y plusvalía
-- Patrimonio inmobiliario en zona consolidada`
+- Patrimonio inmobiliario en zona consolidada
+- *Todas las amenidades de White Sands (Playa, Golf, Casa Club) están incluidas en la tarjeta de propietario.*`
         },
     },
     {
