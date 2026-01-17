@@ -24,10 +24,24 @@ export default async function PropertiesPage({
     const rawProperties = await client.fetch(PROPERTIES_QUERY);
     const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
 
-    // Merge with local overrides
-    const properties = fetchedProperties.map(p => {
-        const local = localProperties.find(lp => lp.id === p.id);
-        return local || p;
+    // Merge logic:
+    // 1. Create a map of local properties for quick lookup
+    const localMap = new Map(localProperties.map(p => [p.id, p]));
+
+    // 2. Map fetched properties, overriding with local if exists
+    const unitedProperties = fetchedProperties.map(p => {
+        const local = localMap.get(p.id);
+        if (local) {
+            localMap.delete(p.id); // Remove from map so we know it's used
+            return local;
+        }
+        return p;
+    });
+
+    // 3. Add remaining local properties that weren't in fetched
+    const properties = [...unitedProperties, ...Array.from(localMap.values())].sort((a, b) => {
+        // Optional: Sort by ID or some other criteria to keep stable order
+        return a.id - b.id;
     });
 
     // Extract status for initial filtering
