@@ -1767,3 +1767,4 @@ Esta propiedad representa una oportunidad única en la zona.
         }
     },
 ];
+
