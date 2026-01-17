@@ -1154,7 +1154,7 @@ El diseño del proyecto busca crear una experiencia de relajación, amplitud y p
     },
     {
         id: 8,
-        title: "Proyecto Perla del Mar",
+        title: "Perla del Mar – Villas Exclusivas en White Sands, Punta Cana",
         location: "whitesands",
         locationLabel: "White Sands",
         type: "villa",
@@ -1202,187 +1202,95 @@ El diseño del proyecto busca crear una experiencia de relajación, amplitud y p
             "/images/perla-del-mar-rooftop-aerial-sunset.jpg"
         ],
         features: {
-            en: ["Private Beach Access", "Golf Course", "Rooftop with Jacuzzi", "Private Pool", "Gated Security", "Airbnb Friendly", "Pet Friendly", "Clubhouse", "Bar", "Restaurant", "Mini Market"],
-            es: ["Acceso Privado a Playa", "Campo de Golf", "Rooftop con Jacuzzi", "Piscina Privada", "Seguridad Cerrada", "Airbnb Amigable", "Pet Friendly", "Casa Club", "Bar", "Restaurante", "Mini Market"]
+            en: ["White Sands Private Access", "Golf Course", "Punta Cana Beach Access", "Private Pool", "Rooftop with Jacuzzi (Selected Units)", "Clubhouse & Restaurants", "Sports Courts (Tennis, Paddle)", "Pet Park", "Double Parking", "24/7 Security", "Airbnb Friendly", "High ROI Potential"],
+            es: ["Acceso Privado White Sands", "Campo de Golf", "Acceso Playa Punta Cana", "Piscina Privada", "Rooftop con Jacuzzi (Unidades Seleccionadas)", "Casa Club y Restaurantes", "Canchas Deportivas (Tenis, Pádel)", "Parque de Mascotas", "Parqueo Doble", "Seguridad 24/7", "Airbnb Amigable", "Alto Potencial de Retorno"]
         },
         description: {
             en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
 
-Welcome to Perla del Mar, a boutique residential project located within the prestigious White Sands in Punta Cana.
+Perla del Mar is an exclusive residential villa project located within the prestigious White Sands in Punta Cana.
+The project has been conceived for those seeking comfort, privacy, and a solid real estate investment, with excellent potential for Airbnb-style vacation rentals.
 
-Perla del Mar has been conceived as a high-level villa concept, where modern design, privacy, a resort environment, and high profitability potential converge, ideal for both residential use and vacation rental investment like Airbnb.
+## Project Features
+- **Type:** 7 Single-family Villas
+- **Layout:** 2 Levels, 3 Bedrooms
+- **Design:** Modern and Functional Architectural Design
+- **Interior:** Integrated living room, dining room, and kitchen
+- **Exterior:** Private Pool, Outdoor Terrace, BBQ Area
+- **Convenience:** Double Parking, Laundry Area, Appliances Included (Stove, Fridge, Extractor)
 
-## An exclusive and low-density project
+## Luxury Rooftop Villas (Selected Units)
+- **Feature:** 3 villas with private rooftop
+- **Amenities:** Spacious terraces with Jacuzzi, pergola area, and luxury design
+- **Size:** From 155 m² up to 250 m² (including rooftops)
+- **Value:** These villas represent the most premium product, highly demanded in the vacation rental market.
 
-Perla del Mar consists of only 7 single-family villas, ensuring low density, exclusivity, and privacy, attributes highly valued by owners and guests in the premium segment.
+## Profitability & Investment Profile
+- Excellent performance on Airbnb
+- High demand due to location and beach access
+- Rooftop villas allow for superior rates
+- Resort-style environment increases occupancy
+- Ideal for short and medium-term rental investment
 
-## Villas and Sizes
+## White Sands Amenities
+- Private Beach Access
+- Golf Course
+- Semi-Olympic Pool
+- Sports Courts (Tennis, Paddle, Basketball)
+- Clubhouse and Restaurants
+- Internal Transport to Beach
+- Pet Park
+- 24/7 Private Security
 
-The project offers 3-bedroom villas, some with a service room, designed to provide spaciousness, functionality, and comfort, ideal for families, groups, and high-level vacation stays.
+## Ideal For
+- Airbnb Investors
+- Buyers seeking villas with rooftop
+- Properties within a resort-style residential
+- High occupancy and good income projection
+- Real estate heritage in a consolidated zone`,
+            es: `Perla del Mar – Villas Exclusivas en White Sands, Punta Cana
 
-- Construction area from approximately 155 m² to 250 m²
-- Private terraces from 18.34 m² to 52.00 m²
-- Three (3) exclusive villas with private rooftop of up to 65.05 m²
-- Double parking
+Perla del Mar es un proyecto residencial de villas exclusivas ubicado dentro del prestigioso White Sands, en Punta Cana.
+El proyecto ha sido concebido para quienes buscan confort, privacidad y una inversión inmobiliaria sólida, con excelente potencial para renta vacacional tipo Airbnb.
 
-The combination of spacious interiors and private outdoor areas positions Perla del Mar as a highly competitive product for Airbnb in Punta Cana.
+## Características del Proyecto
+- **Tipo:** Proyecto de 7 villas unifamiliares
+- **Distribución:** Villas de 2 niveles, 3 habitaciones
+- **Diseño:** Arquitectónico moderno y funcional
+- **Interior:** Sala, comedor y cocina integrados
+- **Exterior:** Piscina privada, Terraza exterior, Área de BBQ
+- **Comodidad:** Parqueo doble, Área de lavado, Línea blanca incluida (estufa, nevera y extractor)
 
-## Luxury Rooftop Villas – A Superior Experience
+## Villas con Rooftop de Lujo (unidades seleccionadas)
+- **Exclusividad:** 3 villas cuentan con rooftop privado
+- **Amenidades:** Terrazas amplias con jacuzzi, área pergolada y diseño de lujo
+- **Metraje:** Desde 155 m² hasta 250 m² (incluyendo terrazas y rooftop)
+- **Valor:** Estas villas representan el producto más premium del proyecto, altamente demandado en el mercado de renta vacacional.
 
-Within the project, only 3 villas feature a luxury private rooftop, conceived as a high-level terrace that elevates the living experience and maximizes premium vacation rental profitability.
-
-Each rooftop includes:
-- Private Jacuzzi
-- Pergola area, providing elegance, shade, and comfort
-- Spacious terrace, ideal for lounge, social gatherings, and exclusive outdoor experiences
-
-These villas represent the most exclusive product of the project, highly demanded on platforms like Airbnb for their differentiation, privacy, and experiential value.
-
-## Investment Concept and Airbnb
-
-Thanks to its location within White Sands, its functional sizes, and its rooftop options, Perla del Mar is a highly Airbnb-friendly project, allowing for passive income generation in dollars, with high occupancy and premium rates.
-
-The villas with spacious terraces and rooftop with Jacuzzi stand out for:
-- Higher preference in searches
-- Better positioning in listings
-- Superior nightly rates
-- More attractive return on investment
-
-## White Sands Residential Amenities
-
-Being part of White Sands, Perla del Mar owners enjoy a fully consolidated resort-style environment that elevates the quality of life and the project's appeal for residents and guests:
-
-- Private beach access (approx. 300 linear meters)
-- Golf course
-- Semi-Olympic pool
-- Clubhouse and restaurants
-- Complete sports areas, including: Tennis, Paddle, and Basketball courts
-- Social areas, terraces, and BBQ
-- Pet park, ideal for sharing with your dog
-- Children's playground
-- School within the residential area
-- Internal transport to the beach
-- Double 24/7 security and controlled access
-
-This set of amenities positions White Sands as one of the most complete residential and tourist communities in Bavaro–Punta Cana, significantly increasing appreciation and vacation demand.
-
-## Strategic Location
-
-Perla del Mar is surrounded by high-profile hotels and services:
-
-- Close to hotels like Ocean Blue, Paradisus Punta Cana, VIK, Caribe Club Princess, and Punta Cana Princess
-- Close to casinos, bars, and entertainment zones
-- Health centers just 5 minutes away
-- Surrounded by shopping centers
-- 20 minutes from Punta Cana International Airport
-
-## Payment Plan
-
-- Reservation: USD $2,000
-- Initial: 20%
-- 10% within 15 days of reservation
-- 10% within 30 days with contract signing
-- During Construction: 40% (Payable in 12 or 14 equal installments)
-- Upon Delivery: 40%
-
-## Ideal for those seeking
-
-- Exclusive villas within White Sands
-- Airbnb-friendly project
-- Villas with spacious terraces and luxury rooftop with Jacuzzi
-- Private beach access and complete sports amenities
-- Pet-friendly and family environment
-- Low density and high privacy
-- Solid real estate investment in Punta Cana`,
-            es: `Perla del Mar – Villas Exclusivas en Residencial White Sands, Punta Cana
-
-Bienvenido a Perla del Mar, un proyecto residencial boutique ubicado dentro del prestigioso White Sands, en Punta Cana.
-
-Perla del Mar ha sido concebido como un concepto de villas de alto nivel, donde convergen diseño moderno, privacidad, entorno resort y alto potencial de rentabilidad, ideal tanto para uso residencial como para inversión en renta vacacional tipo Airbnb.
-
-## Un proyecto exclusivo y de baja densidad
-
-Perla del Mar está conformado por solo 7 villas unifamiliares, lo que garantiza baja densidad, exclusividad y privacidad, atributos altamente valorados por propietarios y huéspedes del segmento premium.
-
-## Villas y metrajes
-
-El proyecto ofrece villas de 3 habitaciones, algunas con cuarto de servicio, diseñadas para brindar amplitud, funcionalidad y confort, ideales para familias, grupos y estancias vacacionales de alto nivel.
-
-- Área de construcción desde aproximadamente 155 m² hasta 250 m²
-- Terrazas privadas desde 18.34 m² hasta 52.00 m²
-- Tres (3) villas exclusivas con rooftop privado de hasta 65.05 m²
-- Parqueo doble
-
-La combinación de espacios interiores amplios y áreas exteriores privadas posiciona a Perla del Mar como un producto altamente competitivo para Airbnb en Punta Cana.
-
-## Villas con Rooftop de Lujo – Una Experiencia Superior
-
-Dentro del proyecto, solo 3 villas cuentan con un rooftop privado de lujo, concebido como una terraza de alto nivel que eleva la experiencia de vida y maximiza la rentabilidad en alquiler vacacional premium.
-
-Cada rooftop incluye:
-- Jacuzzi privado
-- Área pergolada, que aporta elegancia, sombra y confort
-- Amplia terraza, ideal para lounge, reuniones sociales y experiencias exclusivas al aire libre
-
-Estas villas representan el producto más exclusivo del proyecto, altamente demandado en plataformas como Airbnb por su diferenciación, privacidad y valor experiencial.
-
-## Concepto de inversión y Airbnb
-
-Gracias a su ubicación dentro de White Sands, sus metrajes funcionales y sus opciones con rooftop, Perla del Mar es un proyecto altamente amigable con Airbnb, permitiendo generar ingresos pasivos en dólares, con alta ocupación y tarifas premium.
-
-Las villas con terrazas amplias y rooftop con jacuzzi destacan por:
-- Mayor preferencia en búsquedas
-- Mejor posicionamiento en listados
-- Tarifas nocturnas superiores
-- Retorno de inversión más atractivo
+## Rentabilidad y Perfil de Inversión
+- Excelente comportamiento en Airbnb
+- Alta demanda por ubicación y acceso a playa
+- Villas con rooftop permiten tarifas superiores
+- Entorno tipo resort que incrementa la ocupación
+- Ideal para inversión en renta corta y media
 
 ## Amenidades del Residencial White Sands
-
-Al formar parte de White Sands, los propietarios de Perla del Mar disfrutan de un entorno tipo resort completamente consolidado, que eleva la calidad de vida y el atractivo del proyecto para residentes y huéspedes:
-
-- Acceso privado a la playa (aprox. 300 metros lineales)
+- Acceso privado a la playa
 - Campo de golf
 - Piscina semi-olímpica
+- Canchas deportivas (tenis, pádel y baloncesto)
 - Casa club y restaurantes
-- Áreas deportivas completas, que incluyen: Cancha de tenis, Cancha de pádel, Cancha de baloncesto
-- Áreas sociales, terrazas y BBQ
-- Parque para mascotas, ideal para compartir con el perro
-- Área de juegos para niños
-- Colegio dentro del residencial
-- Transporte interno hacia la playa
-- Doble seguridad 24/7 y acceso controlado
+- Transporte interno a la playa
+- Parque para mascotas
+- Seguridad privada 24/7
 
-Este conjunto de amenidades posiciona a White Sands como una de las comunidades residenciales y turísticas más completas de Bávaro–Punta Cana, incrementando significativamente la plusvalía y la demanda vacacional.
-
-## Ubicación estratégica
-
-Perla del Mar se encuentra rodeado de hoteles y servicios de alto perfil:
-
-- Próximo a hoteles como Ocean Blue, Paradisus Punta Cana, VIK, Caribe Club Princess y Punta Cana Princess
-- Cercano a casinos, bares y zonas de entretenimiento
-- Centros de salud a solo 5 minutos
-- Rodeado de centros comerciales
-- 20 minutos del Aeropuerto Internacional de Punta Cana
-
-## Plan de pago
-
-- Reserva: USD $2,000
-- Inicial: 20 %
-- 10 % a los 15 días de la reserva
-- 10 % a los 30 días con firma del contrato
-- Durante la construcción: 40 % (Pagadero en 12 o 14 cuotas iguales)
-- Contra entrega: 40 %
-
-## Ideal para quienes buscan
-
-- Villas exclusivas dentro de White Sands
-- Proyecto amigable con Airbnb
-- Villas con terrazas amplias y rooftop de lujo con jacuzzi
-- Acceso privado a playa y amenidades deportivas completas
-- Entorno pet-friendly y familiar
-- Baja densidad y alta privacidad
-- Inversión inmobiliaria sólida en Punta Cana`
-        }
+## Ideal Para
+- Inversionistas en Airbnb
+- Compradores que buscan villas con rooftop
+- Propiedades dentro de un residencial tipo resort
+- Alta ocupación y buena proyección de ingresos
+- Patrimonio inmobiliario en zona consolidada`
+        },
     },
     {
         id: 9,
