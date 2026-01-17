@@ -7,23 +7,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaCheck, FaArrowRight, FaWhatsapp } from "react-icons/fa";
 
-// Valid slugs for static generation
-const VALID_SLUGS = [
-    "legal-advice", "asesoria-legal",
-    "architecture", "arquitectura",
-    "interior-design", "diseno-interiores",
-    "civil-engineering", "ingenieria-civil",
-    "electrical-engineering", "ingenieria-electrica",
-    "construction", "construccion",
-    "development", "desarrollo"
-];
-
-export async function generateStaticParams() {
-    return VALID_SLUGS.flatMap((slug) => [
-        { lang: 'es', slug },
-        { lang: 'en', slug }
-    ]);
-}
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;

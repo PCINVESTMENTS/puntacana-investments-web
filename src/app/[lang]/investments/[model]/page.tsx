@@ -8,12 +8,8 @@ import { notFound } from "next/navigation";
 import { investmentModels } from "@/data/investment-models";
 import { FaCheck, FaArrowRight, FaChartPie, FaRegCheckCircle } from "react-icons/fa";
 
-export async function generateStaticParams() {
-    return investmentModels.flatMap((model) => [
-        { lang: 'es', model: model.slug },
-        { lang: 'en', model: model.slug }
-    ]);
-}
+// Force dynamic to avoid Turbopack build panic
+export const dynamic = 'force-dynamic';
 
 import ShareButtons from "@/components/property/ShareButtons";
 
