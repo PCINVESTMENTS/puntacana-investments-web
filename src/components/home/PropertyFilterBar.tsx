@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
 
 interface PropertyFilterBarProps {
@@ -35,12 +35,27 @@ interface PropertyFilterBarProps {
 
 export default function PropertyFilterBar({ dict, locations, lang }: PropertyFilterBarProps) {
     const router = useRouter();
-    const [selectedLocation, setSelectedLocation] = useState("all");
-    const [selectedType, setSelectedType] = useState("all");
-    const [maxPrice, setMaxPrice] = useState("any");
+    const searchParams = useSearchParams();
+
+    // Initialize state from URL or defaults
+    const [selectedLocation, setSelectedLocation] = useState(searchParams.get("location") || "all");
+    const [selectedType, setSelectedType] = useState(searchParams.get("type") || "all");
+    const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "any");
+
+    // Sync state if URL changes externally (optional but good for consistency)
+    useEffect(() => {
+        setSelectedLocation(searchParams.get("location") || "all");
+        setSelectedType(searchParams.get("type") || "all");
+        setMaxPrice(searchParams.get("maxPrice") || "any");
+    }, [searchParams]);
 
     const handleSearch = () => {
         const params = new URLSearchParams();
+
+        // Preserve existing relevant params (like status)
+        const currentStatus = searchParams.get("status");
+        if (currentStatus) params.set("status", currentStatus);
+
         if (selectedLocation !== "all") params.set("location", selectedLocation);
         if (selectedType !== "all") params.set("type", selectedType);
         if (maxPrice !== "any") params.set("maxPrice", maxPrice);
@@ -61,7 +76,7 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 items-end">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 items-end">
                     {/* Location Filter */}
                     <div className="col-span-1">
                         <label className="block text-luxury-gold text-[10px] md:text-xs uppercase tracking-wider mb-1 md:mb-2 font-bold truncate">
@@ -119,7 +134,7 @@ export default function PropertyFilterBar({ dict, locations, lang }: PropertyFil
                     </div>
 
                     {/* Search Button */}
-                    <div className="col-span-1">
+                    <div className="col-span-1 lg:col-span-1 md:col-span-2 md:mt-4 lg:mt-0">
                         <button
                             onClick={handleSearch}
                             className="w-full bg-luxury-gold text-black font-bold text-sm md:text-base py-2 md:py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2 h-[38px] md:h-[50px]"

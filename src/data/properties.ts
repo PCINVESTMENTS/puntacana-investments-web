@@ -1645,4 +1645,75 @@ Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y e
             }
         }
     },
+    {
+        id: 18,
+        slug: "sede-corporativa-lorenzo-despradel",
+        title: "Sede Corporativa | Lorenzo Despradel Santo Domingo",
+        location: "santodomingo",
+        locationLabel: "Lorenzo Despradel, Santo Domingo",
+        type: "commercial",
+        status: "sale",
+        price: 0, // Price on request
+        image: "/images/properties/lorenzo-despradel/corporate-hq-main-facade.jpg",
+        beds: 0,
+        baths: 4,
+        area: 505,
+        features: {
+            en: ["Corporate HQ", "3 Levels", "Showroom", "Event Hall", "Private Offices", "10 Parking Spots", "Cafeteria", "Solid Construction"],
+            es: ["Sede Corporativa", "3 Niveles", "Showroom", "Salón de Eventos", "Oficinas Privadas", "10 Parqueos", "Cafetería", "Construcción Sólida"]
+        },
+        description: {
+            en: `Exclusive 3-Level Corporate Headquarters in Lorenzo Despradel, Santo Domingo.
+
+Elevate your company's prestige in an unbeatable location. We present an extraordinary opportunity to establish your corporate headquarters or expand your investment portfolio. This imposing property of 505.13 m² of construction is located on the strategic Lorenzo Despradel street, guaranteeing high visibility and connectivity for your business in Santo Domingo.
+
+Conceived under the highest standards of versatility, the property is distributed over 3 functional levels that perfectly integrate commercial and administrative areas. From a showroom on the ground floor ideal for receiving clients, to a large event hall on the third level and multiple private offices.
+
+## Featured Characteristics
+- **Operational Autonomy:** The property has dining areas, an annexed kitchen, independent warehouse, and up to 10 private parking spaces, guaranteeing the comfort of your staff and visitors.
+- **Solid Construction:** Main base in reinforced concrete with modern improvements in sheetrock and lightweight structures on the top level.
+- **Secured Investment:** Property ready to operate immediately as a business center, academy, specialized store, or corporate office.
+
+## Property Details
+- **Land:** 410.45 m²
+- **Construction:** 505.13 m²
+- **Parking:** 8 to 10 units.`,
+            es: `Exclusiva Sede Corporativa de 3 Niveles en Lorenzo Despradel, Santo Domingo.
+
+Eleve el prestigio de su empresa en una ubicación inmejorable. Presentamos una extraordinaria oportunidad para establecer su sede corporativa o expandir su portafolio de inversiones. Este imponente inmueble de 505.13 m² de construcción se ubica en la estratégica calle Lorenzo Despradel, garantizando a su negocio alta visibilidad y conectividad en Santo Domingo.
+
+Concebido bajo los más altos estándares de versatilidad, la propiedad se distribuye en 3 niveles funcionales que integran a la perfección áreas comerciales y administrativas. Desde un showroom en planta baja ideal para la recepción de clientes, hasta un gran salón de eventos en el tercer nivel y múltiples oficinas privadas.
+
+## Características Destacadas
+- **Autonomía Operativa:** El inmueble cuenta con áreas de comedor, cocina anexa, almacén independiente y hasta 10 estacionamientos privados, garantizando la comodidad de su personal y visitantes.
+- **Construcción Sólida:** Base principal en hormigón armado con mejoras modernas en sheetrock y estructuras ligeras en el último nivel.
+- **Inversión Asegurada:** Propiedad lista para operar de inmediato como centro de negocios, academia, tienda especializada o corporativo.
+
+## Detalles del Inmueble
+- **Terreno:** 410.45 m²
+- **Construcción:** 505.13 m²
+- **Parqueos:** 8 a 10 unidades.`
+        },
+        gallery: [
+            "/images/properties/lorenzo-despradel/corporate-hq-main-facade.jpg",
+            "/images/properties/lorenzo-despradel/corporate-hq-exterior-side.jpg",
+            "/images/properties/lorenzo-despradel/corporate-hq-showroom-interior.jpg",
+            "/images/properties/lorenzo-despradel/corporate-hq-lobby-area.jpg",
+            "/images/properties/lorenzo-despradel/corporate-hq-interior-detail.jpg"
+        ],
+        seo: {
+            title: {
+                en: "Corporate HQ Lorenzo Despradel | Santo Domingo Investment",
+                es: "Sede Corporativa Lorenzo Despradel | Inversión Santo Domingo"
+            },
+            description: {
+                en: "Corporate building for sale in Santo Domingo. 3 levels, 505m2 construction, 10 parking spots. Ideal for HQ or business center. Lorenzo Despradel.",
+                es: "Edificio corporativo en venta en Santo Domingo. 3 niveles, 505m2, 10 parqueos. Ideal para sede o centro de negocios. Calle Lorenzo Despradel."
+            },
+            keywords: {
+                en: ["Corporate HQ Santo Domingo", "Commercial Building for Sale", "Lorenzo Despradel Real Estate", "Santo Domingo Investment", "Office Building"],
+                es: ["Sede Corporativa Santo Domingo", "Edificio Comercial Venta", "Inversión Santo Domingo", "Oficinas Lorenzo Despradel", "Local Comercial"]
+            }
+        }
+    },
 ];

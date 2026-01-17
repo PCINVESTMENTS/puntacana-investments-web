@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Property } from "@/data/properties";
-import { FaBed, FaRulerCombined, FaSearch, FaArrowRight, FaExchangeAlt } from "react-icons/fa";
+import { FaBed, FaBath, FaRulerCombined, FaSearch, FaArrowRight, FaExchangeAlt } from "react-icons/fa";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { useCompare } from "@/components/property/CompareContext";
 import PropertyCardCarousel from "@/components/property/PropertyCardCarousel";
@@ -325,7 +325,13 @@ function PropertyListingsContent({
 
                                         <div className="p-8 relative">
                                             <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
-                                                {lang === 'en' ? 'From ' : 'Desde '} {formatPrice(prop.price)}
+                                                {prop.price > 0 ? (
+                                                    <>
+                                                        {lang === 'en' ? 'From ' : 'Desde '} {formatPrice(prop.price)}
+                                                    </>
+                                                ) : (
+                                                    lang === 'en' ? 'Price on Request' : 'Precio a Consultar'
+                                                )}
                                             </div>
                                             <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
                                                 {prop.title}
@@ -336,9 +342,16 @@ function PropertyListingsContent({
 
                                             <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto">
                                                 <div className="flex space-x-4 text-gray-400 text-xs">
-                                                    <span className="flex items-center gap-1">
-                                                        <FaBed /> {prop.beds}
-                                                    </span>
+                                                    {prop.beds > 0 && (
+                                                        <span className="flex items-center gap-1">
+                                                            <FaBed /> {prop.beds}
+                                                        </span>
+                                                    )}
+                                                    {prop.baths > 0 && (
+                                                        <span className="flex items-center gap-1">
+                                                            <FaBath /> {prop.baths}
+                                                        </span>
+                                                    )}
                                                     <span className="flex items-center gap-1">
                                                         <FaRulerCombined /> {prop.area} m² <span className="text-gray-500">/</span> {Math.round(prop.area * 10.764)} ft²
                                                     </span>
