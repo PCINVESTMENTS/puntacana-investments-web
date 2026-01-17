@@ -1231,7 +1231,7 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
         type: "villa",
         status: "rent",
         price: 2000,
-        image: "/images/villa-white-sands-modern-exterior.jpg",
+        image: "/images/properties/villa-white-sands-modern/white-sands-villa-rental-main.png",
         beds: 3,
         baths: 3.5,
         area: 180,
