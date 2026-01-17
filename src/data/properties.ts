@@ -1371,6 +1371,27 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
         beds: 3,
         baths: 3.5,
         area: 180,
+        gallery: [
+            "/images/properties/villa-white-sands-modern/white-sands-villa-pool-terrace.jpg",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-terrace-dining.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-modern-kitchen.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-open-concept.png",
+            "/images/properties/villa-white-sands-modern/white-sands-villa-pool-deck.jpg"
+        ],
+        seo: {
+            title: {
+                en: "Modern Villa for Sale in White Sands Punta Cana | Private Pool",
+                es: "Villa Moderna en Venta en White Sands Punta Cana | Piscina Privada"
+            },
+            description: {
+                en: "Exclusive 3-bedroom villa for sale in White Sands, Punta Cana. Features private pool, beach access, golf course access, and 24/7 security. Ideal for Airbnb investment.",
+                es: "Exclusiva villa de 3 habitaciones en venta en White Sands, Punta Cana. Con piscina privada, acceso a playa, campo de golf y seguridad 24/7. Ideal para inversión Airbnb."
+            },
+            keywords: {
+                en: ["White Sands Punta Cana", "Villa for Sale Punta Cana", "Punta Cana Real Estate", "Airbnb Investment Punta Cana", "Private Pool Villa"],
+                es: ["White Sands Punta Cana", "Villas en Venta Punta Cana", "Inmobiliaria Punta Cana", "Inversión Airbnb Punta Cana", "Villa con Piscina Privada"]
+            }
+        },
         features: {
             en: ["Private Beach Access", "Golf Course Access", "Clubhouse", "Private Pool", "Gated Community", "Service Room", "Open Concept", "24/7 Security", "Private Parking"],
             es: ["Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Piscina Privada", "Residencial Cerrado", "Habitación de Servicio", "Concepto Abierto", "Seguridad 24/7", "Parqueo Privado"]
