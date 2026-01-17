@@ -49,7 +49,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     // Hero Allowed: Perla (8), Diana (3), Kerry (7), Ocean (9), Cap Cana Properties
     // Exclude Commercial and Unauthorized.
     [3, 7, 8, 9].includes(p.id) ||
-    (p.location === 'capcana' && p.type !== 'commercial')
+    (p.location === 'capcana' && p.type !== 'commercial' && p.id !== 17)
   );
 
   const heroImages = heroProperties.map(p => p.image);

@@ -1543,10 +1543,10 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
         beds: 4,
         baths: 4.5,
         area: 600,
-        featured: false,
+        featured: true,
         features: {
-            en: ["Prime Corner Location", "Marina Front", "Private Pool", "Water Filtration System", "Service Room", "High Privacy", "Premium ROI Potential", "637 m² Lot", "24/7 Security"],
-            es: ["Frente a la Marina", "Piscina Privada", "Sistema Filtración Agua", "Habitación Servicio", "Alta Privacidad", "Retorno Premium", "Solar 637 m²", "Seguridad 24/7"]
+            en: ["Prime Corner Location", "Marina Front", "Private Pool", "Water Filtration System", "Service Room", "High Privacy", "Premium ROI Potential", "637 m² Lot", "24/7 Security", "Private Beach Access", "Golf Course Access", "Clubhouse", "Gated Community", "Picuzzi", "Airbnb Friendly", "Soto Grande Private Beach", "Cap Cana Marina", "Gourmet Restaurants & Beach Clubs", "Punta Espada Golf Club", "Tennis & Paddle Courts", "Equestrian Center", "Gym & Wellness", "Hiking & Biking Trails", "International School", "Commercial Areas", "Controlled Access"],
+            es: ["Frente a la Marina", "Piscina Privada", "Sistema Filtración Agua", "Habitación Servicio", "Alta Privacidad", "Retorno Premium", "Solar 637 m²", "Seguridad 24/7", "Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Residencial Cerrado", "Picuzzi", "Airbnb Amigable", "Playa Privada Soto Grande", "Marina de Cap Cana", "Restaurantes Gourmet y Beach Clubs", "Punta Espada Golf Club", "Canchas de Tenis y Pádel", "Centro Ecuestre", "Gimnasio y Wellness", "Senderos para Caminatas y Ciclismo", "Colegio Internacional", "Áreas Comerciales", "Accesos Controlados"]
         },
         description: {
             en: `Luxury Villa Marina Cap Cana. Exclusive waterfront property located directly on the prestigious Marina Cap Cana. This unique residence combines sophisticated design with the ultimate nautical lifestyle, offering privacy and direct access to world-class amenities.
@@ -1664,7 +1664,7 @@ Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y e
         beds: 0,
         baths: 4,
         area: 505,
-        featured: false,
+        featured: true,
         features: {
             en: ["Corporate HQ", "3 Levels", "Showroom", "Event Hall", "Private Offices", "10 Parking Spots", "Cafeteria", "Solid Construction", "Meeting Rooms", "Training Area"],
             es: ["Sede Corporativa", "3 Niveles", "Showroom", "Salón de Eventos", "Oficinas Privadas", "10 Parqueos", "Cafetería", "Construcción Sólida", "Salas de Reuniones", "Área de Capacitación"]
