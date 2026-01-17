@@ -586,7 +586,7 @@ Durante la etapa de preconstrucción, el propietario tiene la posibilidad de per
     },
     {
         id: 4,
-        title: "Cruises on Land Punta Cana",
+        title: "Proyecto Cruise On Land – Resort Temático de Inversión en Punta Cana",
         location: "puntacana",
         locationLabel: "Punta Cana",
         type: "condohotel",
@@ -597,98 +597,85 @@ Durante la etapa de preconstrucción, el propietario tiene la posibilidad de per
         baths: 1,
         area: 45,
         features: {
-            en: [
-                "High ROI & Managed Rental Program",
-                "15,000m² Artificial Beach & Wave Pool",
-                "100+ Resort Amenities & Theme Park",
-                "15 mins from Punta Cana Airport",
-                "Tennis, Paddle, Basketball & Soccer Courts",
-                "Museum, Planetarium & Film Studio",
-                "20+ Gourmet Theme Restaurants",
-                "24/7 Gated Security & Heliport"
-            ],
-            es: [
-                "Alta Rentabilidad y Programa de Gestión de Alquileres",
-                "15,000m² Playa Artificial y Piscina de Olas",
-                "Más de 100 Amenidades y Parque Temático",
-                "A 15 minutos del Aeropuerto de Punta Cana",
-                "Canchas de Tenis, Pádel, Básquet y Fútbol",
-                "Museo, Planetario y Estudios de Cine",
-                "Más de 20 Restaurantes Temáticos",
-                "Seguridad 24/7 y Helipuerto"
-            ]
+            en: ["Theme Park Resort", "100+ Attractions", "1, 2 & 3 Bedrooms", "Rental Management Program", "Airbnb Friendly", "CONFOTUR Tax Exemptions", "15,000m² Artificial Beach", "Wave Pool", "Sports Complex", "Theme Restaurants", "24/7 Security", "Strategic Location"],
+            es: ["Resort con Parque Temático", "Más de 100 Atracciones", "1, 2 y 3 Habitaciones", "Programa de Gestión de Rentas", "Airbnb Amigable", "Exención Impuestos CONFOTUR", "Playa Artificial 15,000m²", "Piscina de Olas", "Complejo Deportivo", "Restaurantes Temáticos", "Seguridad 24/7", "Ubicación Estratégica"]
         },
         description: {
             en: `Cruise On Land Project – Thematic Investment Resort in Punta Cana
 
 Welcome aboard, Captain!
-Prepare to discover one of the most innovative and disruptive real estate investment opportunities in the Caribbean.
+Prepare to discover one of the most innovative real estate investment opportunities in the Caribbean, strategically located in Punta Cana.
 
-Cruise On Land Project is the first resort with an integrated theme park in the Caribbean, a revolutionary real estate concept that combines entertainment, tourism, and real estate into a single ecosystem designed to maximize guest experience and investor profitability.
+Cruise On Land is the first resort with an integrated theme park in the Caribbean, a revolutionary concept designed to maximize vacation rental profitability, combining entertainment, strategic location, and unique tax benefits.
 
-The project offers modern 1, 2, and 3-bedroom units, carefully designed to suit different traveler profiles—couples, families, and groups—and investors seeking high occupancy, income diversification, and long-term stability. This versatility guarantees constant rental demand throughout the year.
+## General Data
+- **Type:** Thematic Resort
+- **Units:** 1, 2, and 3 Bedrooms
+- **Attractions:** Over 100 integrated attractions
+- **Concept:** Designed for high occupancy and extended stays
+- **Management:** Professional rental management program available
+- **Benefits:** CONFOTUR (Tax Exemptions)
+  - 15 years 1% Property Tax exemption
+  - 0% Transfer Tax
 
-With over 100 attractions, Cruise On Land creates a unique experience in the region, encouraging longer stays, higher guest turnover, and above-average market occupancy, translating into sustained income and attractive returns on investment.
+## Profitability & Investment Profile
+The project design allows for passive income generation in US dollars, reducing seasonality and ensuring a constant flow of guests year-round.
 
-## An investment designed to maximize your profitability
+**Key Highlights:**
+- High continuous tourist demand
+- Highly differentiated product in the market
+- Excellent performance in short and medium-term rentals
+- Professional management optimizing income
+- Ideal for investors seeking constant flow and stability
 
-This exclusive development has been structured to optimize the investor's financial performance, offering significant benefits, including:
-
-- Professional rental management program, focused on maximizing passive income, eliminating the operational burden for the owner
-
-Thanks to this structure, the investor can enjoy an efficient, secure, and result-oriented real estate investment without needing to manage the day-to-day operations of the property.
-
-## Strategic location in Punta Cana
-
-Cruise On Land is strategically located in one of the most solid and high-demand tourist areas in the Caribbean:
-
-- Just 15 minutes from Punta Cana International Airport
+## Location & Value
+Strategically located to ensure high connectivity and demand:
+- 15 minutes from Punta Cana International Airport
 - 10 minutes from Downtown Punta Cana
-- Close to beaches, shopping centers, restaurants, entertainment zones, and key services
 
-This privileged location guarantees high capital appreciation, excellent connectivity, and constant national and international tourist demand, key factors for a successful real estate investment.
-
-## Ideal for investors seeking:
-- Passive income in US dollars
-- High occupancy in vacation rentals
-- Tourism properties with excellent appreciation projection
-- Highly demanded 1, 2, and 3-bedroom units
-- A smart balance between investment, security, and personal enjoyment`,
+## Ideal For
+- Vacation rental investors
+- Buyers seeking passive income
+- Tourism real estate portfolios
+- Projects with tax benefits
+- High occupancy and turnover assets`,
             es: `Proyecto Cruise On Land – Resort Temático de Inversión en Punta Cana
 
 ¡Bienvenido a bordo, Capitán!
-Prepárese para descubrir una de las oportunidades de inversión inmobiliaria más innovadoras y disruptivas del Caribe.
+Prepárese para descubrir una de las oportunidades de inversión inmobiliaria más innovadoras del Caribe, ubicada estratégicamente en Punta Cana.
 
-Proyecto Cruise On Land es el primer resort con parque temático integrado del Caribe, un concepto inmobiliario revolucionario que combina entretenimiento, turismo y bienes raíces en un solo ecosistema diseñado para maximizar la experiencia del huésped y la rentabilidad del inversionista.
+Cruise On Land es el primer resort con parque temático integrado del Caribe, un concepto revolucionario diseñado para maximizar la rentabilidad en renta vacacional, combinando entretenimiento, ubicación estratégica y beneficios fiscales únicos.
 
-El proyecto ofrece unidades modernas de 1, 2 y 3 habitaciones, cuidadosamente diseñadas para adaptarse a distintos perfiles de viajeros —parejas, familias y grupos— y a inversionistas que buscan alta ocupación, diversificación de ingresos y estabilidad a largo plazo. Esta versatilidad garantiza una demanda de alquiler constante durante todo el año.
+## Datos Generales
+- **Tipo:** Resort Temático
+- **Unidades:** 1, 2 y 3 Habitaciones
+- **Atracciones:** Más de 100 atracciones integradas
+- **Concepto:** Diseñado para alta ocupación y estancias prolongadas
+- **Gestión:** Programa profesional de gestión de alquileres
+- **Beneficios:** Ley CONFOTUR
+  - Hasta 15 años de exención del IPI
+  - 0 % de impuesto de transferencia
 
-Con más de 100 atracciones, Cruise On Land crea una experiencia única en la región, incentivando estancias más largas, mayor rotación de huéspedes y una ocupación superior al promedio del mercado, lo que se traduce en ingresos sostenidos y atractivos retornos de inversión.
+## Rentabilidad y Perfil de Inversión
+El diseño del proyecto está orientado a generar ingresos pasivos en dólares, reduciendo la estacionalidad y asegurando un flujo constante de huéspedes durante todo el año.
 
-## Una inversión diseñada para maximizar su rentabilidad
+**Puntos Clave:**
+- Alta demanda turística continua
+- Producto altamente diferenciado en el mercado
+- Excelente desempeño en renta corta y media
+- Gestión profesional que optimiza ingresos
+- Ideal para inversionistas que buscan flujo constante y estabilidad
 
-Este exclusivo desarrollo ha sido estructurado para optimizar el rendimiento financiero del inversionista, ofreciendo importantes beneficios, entre ellos:
+## Ubicación Estratégica
+- 15 minutos del Aeropuerto Internacional de Punta Cana
+- 10 minutos de Downtown Punta Cana
 
-- Programa profesional de gestión de alquileres, enfocado en maximizar los ingresos pasivos, eliminando la carga operativa para el propietario
-
-Gracias a esta estructura, el inversionista puede disfrutar de una inversión inmobiliaria eficiente, segura y orientada a resultados, sin necesidad de gestionar el día a día de la propiedad.
-
-## Ubicación estratégica en Punta Cana
-
-Cruise On Land se encuentra estratégicamente ubicado en una de las zonas turísticas más sólidas y demandadas del Caribe:
-
-- A solo 15 minutos del Aeropuerto Internacional de Punta Cana
-- A 10 minutos de Downtown Punta Cana
-- Cercano a playas, centros comerciales, restaurantes, zonas de entretenimiento y servicios clave
-
-Esta ubicación privilegiada garantiza alta plusvalía, excelente conectividad y una demanda turística nacional e internacional constante, factores clave para una inversión inmobiliaria exitosa.
-
-## Ideal para inversionistas que buscan:
-- Ingresos pasivos en dólares
-- Alta ocupación en rentas vacacionales
-- Propiedades turísticas con excelente proyección de valorización
-- Unidades de 1, 2 y 3 habitaciones altamente demandadas
-- Un equilibrio inteligente entre inversión, seguridad y disfrute personal`
+## Ideal Para
+- Inversionistas en renta vacacional
+- Compradores que buscan ingresos pasivos
+- Portafolios inmobiliarios turísticos
+- Proyectos con beneficios fiscales
+- Activos de alta ocupación y rotación`
         },
         gallery: [
             "/images/cruises-on-land-main-exterior-punta-cana.jpg",
