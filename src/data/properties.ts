@@ -588,10 +588,10 @@ Tropical Breeze destaca por su precio accesible en una zona consolidada.
     },
     {
         id: 7,
-        slug: "villas-kerry-residences-brisas-punta-cana",
-        title: "Villas | Kerry Residences Brisas Punta Cana",
+        slug: "villas-kerry-residences-vista-cana-punta-cana",
+        title: "Villas | Kerry Residences Vista Cana Punta Cana",
         location: "bavaro",
-        locationLabel: "Brisas de Punta Cana",
+        locationLabel: "Vista Cana, Bávaro",
         type: "villa",
         status: "sale",
         price: 385000,
@@ -600,13 +600,13 @@ Tropical Breeze destaca por su precio accesible en una zona consolidada.
         baths: 3.5,
         area: 185,
         features: {
-            en: ["Brisas de Punta Cana Private Community", "Gated Security", "Close to Downtown Punta Cana", "Easy Beach Access", "Nearby Commercial Areas", "Private Picuzzi", "BBQ Area", "Double Parking", "Open Concept Design", "Terrace & Balconies", "Low Density (Only 4 Villas)"],
-            es: ["Residencial Privado Brisas de Punta Cana", "Seguridad y Acceso Controlado", "Cercanía a Downtown Punta Cana", "Fácil Acceso a Playas", "Áreas Comerciales Cercanas", "Picuzzi Privado", "Área de BBQ", "Marquesina Doble", "Diseño Concepto Abierto", "Terraza y Balcones", "Baja Densidad (Solo 4 Villas)"]
+            en: ["Vista Cana Private Community", "Gated Security", "Close to Downtown Punta Cana", "Artificial Beach Access", "Nearby Commercial Areas", "Private Picuzzi", "BBQ Area", "Double Parking", "Open Concept Design", "Terrace & Balconies", "Low Density (Only 4 Villas)"],
+            es: ["Residencial Privado Vista Cana", "Seguridad y Acceso Controlado", "Cercanía a Downtown Punta Cana", "Acceso Playa Artificial", "Áreas Comerciales Cercanas", "Picuzzi Privado", "Área de BBQ", "Marquesina Doble", "Diseño Concepto Abierto", "Terraza y Balcones", "Baja Densidad (Solo 4 Villas)"]
         },
         description: {
-            en: `Kerry Residences – Exclusive Villas in Brisas de Punta Cana
+            en: `Kerry Residences – Exclusive Villas in Vista Cana
 
-Kerry Residences is a low-density residential project located in Brisas de Punta Cana, conceived for those seeking privacy, comfort, and a solid investment, ideal for both residential use and Airbnb-style vacation rentals.
+Kerry Residences is a low-density residential project located in Vista Cana, conceived for those seeking privacy, comfort, and a solid investment, ideal for both residential use and Airbnb-style vacation rentals.
 
 Its design prioritizes open spaces, connection with green areas, and a quiet lifestyle within a private and well-connected residential environment.
 
@@ -619,7 +619,7 @@ Its design prioritizes open spaces, connection with green areas, and a quiet lif
 - **Parking:** Double carport
 
 ## Investment Profile & Lifestyle
-- **High Demand Zone:** Residential and vacation appeal
+- **High Demand Zone:** Residential and vacation appeal in Vista Cana
 - **Airbnb Ideal:** Privacy and layout suited for rentals
 - **Exclusivity:** Low density favors greater value
 - **Appreciation:** Excellent growth projection
@@ -629,9 +629,9 @@ Its design prioritizes open spaces, connection with green areas, and a quiet lif
 - Vacation rental investors
 - Buyers valuing low density
 - Modern villas in a private community`,
-            es: `Kerry Residences – Villas Exclusivas en Brisas de Punta Cana
+            es: `Kerry Residences – Villas Exclusivas en Vista Cana
 
-Kerry Residences es un proyecto residencial de baja densidad, ubicado en Brisas de Punta Cana, concebido para quienes buscan privacidad, confort y una inversión sólida, ideal tanto para uso residencial como para renta vacacional tipo Airbnb.
+Kerry Residences es un proyecto residencial de baja densidad, ubicado en Vista Cana, concebido para quienes buscan privacidad, confort y una inversión sólida, ideal tanto para uso residencial como para renta vacacional tipo Airbnb.
 
 Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un estilo de vida tranquilo dentro de un entorno residencial privado y bien conectado.
 
