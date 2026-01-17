@@ -1409,42 +1409,34 @@ Ocean Village se posiciona como un proyecto **altamente Airbnb-friendly**, dise�
             es: ["Terreno: 690 m²", "Construcción: 255 m²", "3 Habitaciones", "6 Baños", "Piscina y Jardín Privados", "Terraza Rooftop con Jacuzzi", "Área de BBQ y Social", "Acceso Marina Cap Cana", "Punta Espada Golf Club", "Seguridad 24/7", "Parqueo Privado (2)", "Alto Potencial de Retorno"]
         },
         description: {
-            en: `Luxury Villa in Ocean 21 – Cap Cana Marina
+            en: `Ocean 21 – Luxury Villa in Cap Cana Marina
 
-Exclusive luxury villa located in the Ocean 21 project within Cap Cana Marina, one of the most prestigious and best-planned destinations in the Caribbean.
+Exclusive luxury villa located in the Ocean 21 project within Cap Cana Marina, one of the most prestigious and best-planned nautical destinations in the Caribbean.
+This property combines contemporary architecture, spacious areas, and world-class amenities, positioning itself as both a high-end residence and a premium investment asset.
 
-This property combines contemporary architecture, spacious areas, and world-class amenities, positioning itself as both a high-end residence and a premium investment with excellent profitability.
-
-## General Data
+## Property Features
 - **Type:** Luxury Villa
 - **Land:** Approx. 690 m²
 - **Construction:** Approx. 255 m²
 - **Layout:** 3 Bedrooms, 6 Bathrooms, Service Room
+- **Social Areas:** Open concept living and dining with marina views
 - **Exterior:** Private Pool, Garden, and Parking for 2 vehicles
 - **Rooftop:** Equipped with Jacuzzi, BBQ, and Social Area
 
-## Location & Value: Cap Cana Marina
-Ocean 21 offers a unique lifestyle with direct access to the Marina, recognized for its international atmosphere, gourmet dining, and capacity for large yachts.
+## Investment Profile & Lifestyle
+Ocean 21 offers a unique lifestyle with direct access to the Marina, recognized for its international atmosphere and gourmet dining.
+- **High Return Potential:** Average nightly rates (~$950 USD) drive excellent annual profitability.
+- **Consolidated Destination:** Cap Cana is the most exclusive destination in the Dominican Republic.
+- **Target Audience:** Ideal for high-net-worth investors and buyers seeking a luxury vacation home with marina access.
+- **Value Protection:** A property in Cap Cana guarantees long-term appreciation.
 
-**Key Investment Benefits:**
-- High annual profitability projection (Avg. nightly rate ~$950 USD)
-- Consolidated international destination
-- Active premium vacation rental market
-- Long-term value protection and appreciation
+*Residents enjoy the exclusive lifestyle of Cap Cana, including access to Punta Espada Golf Club, Juanillo Beach, and the Marina.*`,
+            es: `Ocean 21 – Villa de Lujo en Marina Cap Cana
 
-## Ideal For
-- Investors seeking high returns
-- Luxury villa buyers in Cap Cana
-- Clients interested in premium vacation rentals
-- Those who value privacy, rooftop amenities, and marina lifestyle
-- Solid and exclusive real estate heritage`,
-            es: `Villa de Lujo en Ocean 21 – Marina de Cap Cana
+Exclusiva villa de lujo ubicada en el proyecto Ocean 21 dentro de la Marina de Cap Cana, uno de los destinos náuticos más prestigiosos y mejor planificados del Caribe.
+Esta propiedad combina arquitectura contemporánea, amplios espacios y amenidades de clase mundial, posicionándose como una residencia de alto nivel y un activo de inversión premium.
 
-Exclusiva villa de lujo ubicada en el proyecto Ocean 21 dentro de la Marina de Cap Cana, uno de los destinos más prestigiosos y mejor planificados del Caribe.
-
-Esta propiedad combina arquitectura contemporánea, amplios espacios y amenidades de clase mundial, posicionándose como una residencia de alto nivel y una inversión premium con excelente rentabilidad.
-
-## Datos Generales
+## Características de la Propiedad
 - **Tipo:** Villa de Lujo
 - **Terreno:** Aprox. 690 m²
 - **Construcción:** Aprox. 255 m²
@@ -1536,57 +1528,43 @@ Ocean 21 ofrece un estilo de vida único con acceso directo a la Marina, reconoc
             en: `Ocean View Loft Apartment – Soto Grande, Cap Cana
 
 Exclusive ocean-view loft apartment located in Soto Grande, Cap Cana, one of the most prestigious residential communities in the Caribbean.
-
 This loft combines contemporary design, spaciousness, and a premium location, making it ideal for both residential use and vacation rental investment, with excellent Airbnb performance.
 
-## General Data
-- **Type:** Loft
+## Property Features
+- **Type:** Loft Apartment
 - **Construction Area:** 106 m²
 - **View:** Direct Ocean View
-- **Layout:** Open concept with living-dining area, modern kitchen, and loft-style sleeping area
-- **Features:** Natural lighting and functional design
+- **Layout:** Open concept with living-dining area, modern kitchen, and mezzanine sleeping area
+- **Design:** Double-height ceilings with abundant natural light
 
-## Location & Value: Soto Grande
-Soto Grande is one of the most valued areas in Cap Cana due to its exclusive residential environment, private beach for residents, proximity to the Marina, and high demand for vacation rentals.
+## Investment Profile & Lifestyle
+Soto Grande is one of the most valued areas in Cap Cana due to its exclusive residential environment and direct access to private beaches.
+- **High Airbnb Occupancy:** The loft concept with ocean view is highly demanded by couples and digital nomads.
+- **Premium Guest Profile:** Attracts high-value tourism seeking privacy and luxury.
+- **Asset Value:** High preservation of value and continuous appreciation within Cap Cana.
+- **Strategic Location:** Steps from the Marina, restaurants, and the beach.
 
-**Properties in this area stand out for:**
-- Excellent Airbnb occupancy
-- Premium guest profile
-- High value preservation and appreciation
-
-## Ideal For
-- Airbnb Investment
-- Buyers seeking ocean views
-- Second home in Cap Cana
-- Exclusive property in a secure environment
-- High-end real estate heritage`,
+*Residents enjoy all Cap Cana amenities, including the private Soto Grande beach, Punta Espada Golf Course, and equestrian center.*`,
             es: `Apartamento Tipo Loft con Vista al Mar – Soto Grande, Cap Cana
 
 Exclusivo apartamento tipo loft con vista al mar, ubicado en Soto Grande, dentro de Cap Cana, una de las comunidades residenciales más prestigiosas del Caribe.
-
 Este loft combina diseño contemporáneo, amplitud y ubicación premium, siendo ideal tanto para uso residencial como para inversión en renta vacacional, con muy buen desempeño en Airbnb.
 
-## Datos Generales
-- **Tipo:** Loft
+## Características de la Propiedad
+- **Tipo:** Apartamento Loft
 - **Área de construcción:** 106 m²
 - **Vista:** Vista directa al mar
-- **Distribución:** Espacio abierto con sala–comedor, cocina moderna y área de descanso tipo loft
-- **Características:** Iluminación natural y diseño funcional
+- **Distribución:** Espacio abierto con sala–comedor, cocina moderna y área de descanso en mezzanine
+- **Diseño:** Techos de doble altura con abundante iluminación natural
 
-## Ubicación y Valor de Soto Grande
-Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente residencial exclusivo, su playa privada para residentes, cercanía a la Marina y su alta demanda en alquiler vacacional.
+## Perfil de Inversión y Estilo de Vida
+Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente residencial exclusivo y acceso directo a playas privadas.
+- **Alta Ocupación Airbnb:** El concepto loft con vista al mar es altamente demandado por parejas y nómadas digitales.
+- **Perfil de Huésped Premium:** Atrae un turismo de alto valor que busca privacidad y lujo.
+- **Valor del Activo:** Alta preservación de valor y plusvalía continua dentro de Cap Cana.
+- **Ubicación Estratégica:** A pasos de la Marina, restaurantes y la playa.
 
-**Las propiedades en esta zona destacan por:**
-- Excelente ocupación en Airbnb
-- Perfil de huésped premium
-- Alta preservación de valor y plusvalía
-
-## Ideal Para
-- Inversión en Airbnb
-- Compradores que buscan vista al mar
-- Segunda vivienda en Cap Cana
-- Propiedad exclusiva en entorno seguro
-- Patrimonio inmobiliario de alta gama`
+*Los propietarios disfrutan de todas las amenidades de Cap Cana, incluyendo la playa privada de Soto Grande, el campo de golf Punta Espada y el centro ecuestre.*`
         },
         gallery: [
             "/images/properties/soto-grande-loft/soto-grande-loft-ocean-view-main.jpg",
