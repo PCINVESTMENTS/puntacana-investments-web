@@ -590,7 +590,7 @@ Tropical Breeze destaca por su precio accesible en una zona consolidada.
         id: 7,
         slug: "villas-kerry-residences-vista-cana-punta-cana",
         title: "Villas | Kerry Residences Vista Cana Punta Cana",
-        location: "bavaro",
+        location: "vistacana",
         locationLabel: "Vista Cana, Bávaro",
         type: "villa",
         status: "sale",

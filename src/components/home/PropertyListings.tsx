@@ -127,7 +127,9 @@ function PropertyListingsContent({
     // Filter Logic
     useEffect(() => {
         let filtered = initialData.filter((p) => {
-            const matchLoc = selectedLocation === "all" || p.location === selectedLocation;
+            const matchLoc = selectedLocation === "all" ||
+                p.location === selectedLocation ||
+                (selectedLocation === 'bavaro' && ['vistacana', 'whitesands'].includes(p.location));
             const matchType = selectedType === "all" || p.type === selectedType;
             const matchStatus = selectedStatus === "all" || p.status === selectedStatus;
             const matchPrice = maxPrice === "any" || p.price <= parseInt(maxPrice);
