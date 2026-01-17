@@ -1659,7 +1659,7 @@ Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y e
         locationLabel: "Lorenzo Despradel, Santo Domingo",
         type: "commercial",
         status: "sale",
-        price: 0,
+        price: 850000,
         image: "/images/properties/lorenzo-despradel/corporate-hq-main-facade.jpg",
         beds: 0,
         baths: 4,
