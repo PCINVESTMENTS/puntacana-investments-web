@@ -79,10 +79,10 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
 
                                         {/* Features Preview */}
                                         <ul className="space-y-3 mb-8">
-                                            {program.features.slice(0, 3).map((feature, idx) => (
+                                            {program.includes.slice(0, 3).map((section, idx) => (
                                                 <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
                                                     <FaCheck className="text-luxury-gold mt-1 flex-shrink-0 text-xs" />
-                                                    <span>{feature[lang as 'es' | 'en']}</span>
+                                                    <span>{section.title[lang as 'es' | 'en']}</span>
                                                 </li>
                                             ))}
                                         </ul>
