@@ -156,7 +156,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                                 href={`/${lang}/contact?subject=${program.slug}`}
                                                 className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl w-full text-center md:w-auto"
                                             >
-                                                {isEs ? "Reservar Programa" : "Book Program"}
+                                                {isEs ? "Consultar sobre el programa" : "Inquire about program"}
                                             </Link>
                                         </div>
                                     </ScrollReveal>
