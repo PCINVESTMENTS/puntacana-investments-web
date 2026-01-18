@@ -6,11 +6,14 @@ import Hero from '@/components/home/Hero';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
 
 export default async function ContactPage({
-    params
+    params,
+    searchParams
 }: {
-    params: Promise<{ lang: 'es' | 'en' }>
+    params: Promise<{ lang: 'es' | 'en' }>,
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
     const { lang } = await params;
+    const { subject } = await searchParams;
     const dict = await getDictionary(lang);
 
     return (
@@ -107,7 +110,7 @@ export default async function ContactPage({
                     {/* Form */}
                     <div className="bg-zinc-950 p-8 md:p-10 rounded-2xl border border-zinc-800 shadow-2xl">
                         <h3 className="text-2xl font-playfair text-white mb-6">Envia un mensaje</h3>
-                        <ContactForm dict={dict.contact.form} />
+                        <ContactForm dict={dict.contact.form} subject={typeof subject === 'string' ? subject : undefined} />
                     </div>
 
                 </div>
