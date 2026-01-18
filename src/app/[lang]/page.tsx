@@ -7,6 +7,7 @@ import BlogSection from "@/components/home/BlogSection";
 import { AboutSection, LocationsSection, ContactSection, Footer } from "@/components/home/PageSections";
 import InvestmentsSection from "@/components/home/InvestmentsSection";
 import OffMarketClub from "@/components/home/OffMarketClub";
+import FlyAndBuySection from "@/components/home/FlyAndBuySection";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import PropertyFilterBar from "@/components/home/PropertyFilterBar";
 
@@ -118,6 +119,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         initialData={properties}
       />
       <InvestmentsSection dict={dict.sections.investments} lang={lang} />
+      <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
       <OffMarketClub lang={lang} />
       <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={posts} />
       <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />

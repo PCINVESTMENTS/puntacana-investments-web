@@ -117,6 +117,12 @@ export default {
             ],
             exploreModel: "Explore Model"
         },
+        flyAndBuy: {
+            title: "Fly & Buy Program",
+            subtitle: "Travel, Confirm, and Buy",
+            description: "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments.",
+            cta: "View Program Details"
+        },
         testimonials: {
             title: "Testimonials",
             subtitle: "What Our Clients Say",
