@@ -22,7 +22,8 @@ const getIcon = (iconName: string) => {
     }
 };
 
-export default function FlyAndBuyPage({ params: { lang } }: { params: { lang: string } }) {
+export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: string }> }) {
+    const { lang } = await params;
     const isEs = lang === 'es';
 
     return (
