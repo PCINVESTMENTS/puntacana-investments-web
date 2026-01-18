@@ -145,12 +145,12 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
                     */}
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center space-x-6">
+                    <div className="hidden lg:flex items-center gap-x-2 xl:gap-x-6">
                         {menuItems.map((item) => (
                             <div key={item.name} className="relative group">
                                 <Link
                                     href={item.href || "#"}
-                                    className="text-white hover:text-luxury-gold px-1 py-4 text-xs font-bold transition-colors uppercase tracking-widest flex items-center gap-1 group-hover:text-luxury-gold"
+                                    className="text-white hover:text-luxury-gold px-1 py-4 text-[10px] xl:text-xs font-bold transition-colors uppercase tracking-wider flex items-center gap-1 group-hover:text-luxury-gold whitespace-nowrap"
                                 >
                                     {item.name}
                                     {item.hasDropdown && <FaChevronDown className="text-[10px] transition-transform group-hover:rotate-180" />}
