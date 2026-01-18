@@ -16,6 +16,7 @@ interface NavbarProps {
         contact: string;
         services: string;
         investments: string;
+        flyAndBuy: string;
         rent: string;
         sale: string;
         // Add minimal types for safety, though full dict is passed
@@ -79,6 +80,11 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes }:
             name: dict.investments,
             hasDropdown: false,
             href: `/${lang}/investments`
+        },
+        {
+            name: dict.flyAndBuy,
+            hasDropdown: false,
+            href: `/${lang}/fly-and-buy`
         },
         {
             name: dict.services,

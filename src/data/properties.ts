@@ -1766,5 +1766,93 @@ Esta propiedad representa una oportunidad única en la zona.
             }
         }
     },
+    {
+        id: 998,
+        slug: "placeholder-luxury-villa-modern-design",
+        title: "Placeholder | Luxury Villa Modern Design",
+        location: "capcana",
+        locationLabel: "Cap Cana, Punta Cana",
+        type: "villa",
+        status: "sale",
+        price: 1250000,
+        image: "/images/placeholder-1.png",
+        beds: 5,
+        baths: 6,
+        area: 550,
+        gallery: [
+            "/images/placeholder-1.png",
+            "/images/placeholder-2.png"
+        ],
+        features: {
+            en: ["Ocean View", "Infinity Pool", "Smart Home", "Private Gym", "Wine Cellar", "Cinema Room", "Gated Community", "Golf Course Access"],
+            es: ["Vista al Mar", "Piscina Infinita", "Casa Inteligente", "Gimnasio Privado", "Cava de Vinos", "Sala de Cine", "Comunidad Cerrada", "Acceso Campo de Golf"]
+        },
+        description: {
+            en: `Exclusive Modern Villa with Ocean Views in Cap Cana
+
+This stunning architectural masterpiece represents the pinnacle of luxury living in the Caribbean. Designed with clean lines and expansive glass walls, it offers seamless indoor-outdoor living with breathtaking views of the ocean and golf course.
+
+## Property Highlights
+- **Architecture:** Contemporary design with premium materials
+- **Outdoor:** Expansive terrace with infinity pool and jacuzzi
+- **Privacy:** Located in an exclusive gated enclave
+- **Amenities:** Access to all Cap Cana resort amenities including beaches and marina`,
+            es: `Exclusiva Villa Moderna con Vista al Mar en Cap Cana
+
+Esta impresionante obra maestra arquitectónica representa la cúspide de la vida de lujo en el Caribe. Diseñada con líneas limpias y amplios ventanales de vidrio, ofrece una integración perfecta entre interior y exterior con vistas impresionantes al mar y al campo de golf.
+
+## Destacados de la Propiedad
+- **Arquitectura:** Diseño contemporáneo con materiales premium
+- **Exterior:** Terraza expansiva con piscina infinita y jacuzzi
+- **Privacidad:** Ubicada en un enclave cerrado exclusivo
+- **Amenidades:** Acceso a todas las amenidades del resort Cap Cana incluyendo playas y marina`
+        },
+        featured: true,
+        coordinates: { lat: 18.50, lng: -68.38 }
+    },
+    {
+        id: 999,
+        slug: "placeholder-luxury-condo-beachfront-living",
+        title: "Placeholder | Luxury Condo Beachfront Living",
+        location: "puntacana",
+        locationLabel: "Punta Cana Beach Resort",
+        type: "condo",
+        status: "sale",
+        price: 450000,
+        image: "/images/placeholder-2.png",
+        beds: 3,
+        baths: 3,
+        area: 220,
+        gallery: [
+            "/images/placeholder-2.png",
+            "/images/placeholder-1.png"
+        ],
+        features: {
+            en: ["Beachfront", "Concierge Service", "Rooftop Lounge", "Private Beach Club", "Underground Parking", "High ROI Potential", "Fully Furnished"],
+            es: ["Frente a la Playa", "Servicio de Concierge", "Lounge en Azotea", "Club de Playa Privado", "Parqueo Soterrado", "Alto Potencial ROI", "Totalmente Amueblado"]
+        },
+        description: {
+            en: `Sophisticated Beachfront Condo
+
+Experience the ultimate in coastal luxury with this exquisitely designed condo. Featuring spacious interiors, high-end finishes, and direct access to pristine white sand beaches, this property is perfect for a vacation retreat or a high-yield rental investment.
+
+## Property Highlights
+- **Interior:** Open concept living with designer furniture
+- **Location:** Steps away from the turquoise waters
+- **Investment:** Proven track record for vacation rentals
+- **Lifestyle:** Resort-style living with concierge and security`,
+            es: `Sofisticado Condominio Frente a la Playa
+
+Experimente lo último en lujo costero con este condominio exquisitamente diseñado. Con interiores espaciosos, acabados de alta gama y acceso directo a prístinas playas de arena blanca, esta propiedad es perfecta como retiro vacacional o inversión de alta rentabilidad.
+
+## Destacados de la Propiedad
+- **Interior:** Sala de concepto abierto con mobiliario de diseñador
+- **Ubicación:** A pasos de las aguas turquesas
+- **Inversión:** Historial probado en alquileres vacacionales
+- **Estilo de Vida:** Vida estilo resort con concierge y seguridad`
+        },
+        featured: true,
+        coordinates: { lat: 18.55, lng: -68.36 }
+    }
 ];
 

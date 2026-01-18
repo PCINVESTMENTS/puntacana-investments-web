@@ -13,6 +13,7 @@ export default {
         contact: "Contact",
         services: "Services",
         investments: "Investments",
+        flyAndBuy: "Fly & Buy",
         rent: "Rent",
         sale: "Sale"
     },
