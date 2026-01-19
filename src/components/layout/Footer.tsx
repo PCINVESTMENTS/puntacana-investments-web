@@ -93,6 +93,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                 <button
                                     type="submit"
                                     disabled={isPending}
+                                    aria-label={dict.footer.newsletterButton || "Subscribe to newsletter"}
                                     className="bg-white/10 text-luxury-gold px-4 py-2 hover:bg-luxury-gold hover:text-black transition-colors disabled:opacity-50"
                                 >
                                     {isPending ? <FaSpinner className="animate-spin" /> : <FaArrowRight />}

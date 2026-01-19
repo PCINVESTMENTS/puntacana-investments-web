@@ -76,6 +76,7 @@ function CompareToggle({ property }: { property: Property }) {
                 : "bg-black/60 text-white hover:bg-luxury-gold/80 hover:text-black"
                 }`}
             title={active ? "Quitar de comparación" : "Añadir a comparación"}
+            aria-label={active ? "Quitar de comparación" : "Añadir a comparación"}
         >
             <FaExchangeAlt className={active ? "rotate-180 transition-transform" : ""} />
         </button>
