@@ -49,6 +49,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                                     src={post.mainImage}
                                     alt={post.title[l]}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 33vw"
                                     className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                 />
                                 <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">

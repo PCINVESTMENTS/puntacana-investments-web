@@ -49,6 +49,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                         src={images[0]}
                         alt="Property Main"
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
@@ -63,6 +64,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                             src={img}
                             alt={`Property Image ${idx + 2}`}
                             fill
+                            sizes="25vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors"></div>
@@ -101,6 +103,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                             src={images[currentIndex]}
                             alt={`Gallery Image ${currentIndex + 1}`}
                             fill
+                            sizes="100vw"
                             className="object-contain"
                             priority
                         />

@@ -67,6 +67,7 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
                                 src={loc.img}
                                 alt={loc.title}
                                 fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="object-cover transition-transform duration-700 group-hover:scale-110 relative z-10"
                             />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 z-20"></div>

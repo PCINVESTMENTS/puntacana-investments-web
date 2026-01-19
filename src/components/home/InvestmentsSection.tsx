@@ -59,6 +59,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
                                             src={model.heroImage}
                                             alt={model.title[lang as 'es' | 'en']}
                                             fill
+                                            sizes="(max-width: 768px) 100vw, 33vw"
                                             className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
                                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
