@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
@@ -216,8 +217,19 @@ export function PersonaFisicaForm() {
                     </div>
                 </div>
 
-                <div className="print:block hidden mb-8 text-center">
-                    <h1 className="text-2xl font-bold uppercase border-b-2 border-black pb-2 mb-4">Formulario de Debida Diligencia - Persona Física</h1>
+                <div className="print:block hidden mb-8 text-center space-y-4">
+                    <div className="flex justify-center mb-4">
+                        <div className="relative w-48 h-24">
+                            <Image
+                                src="/form-logo.png"
+                                alt="Punta Cana Investments"
+                                fill
+                                style={{ objectFit: 'contain' }}
+                                priority
+                            />
+                        </div>
+                    </div>
+                    <h1 className="text-2xl font-bold uppercase border-b-2 border-black pb-2 mb-4">Formulario de Debida Diligencia - Persona Física / Due Diligence Form - Individual</h1>
                 </div>
 
                 <FormSection icon={<CircleUserRound size={20} />} title="Datos Generales del Cliente / Customer General Data">
@@ -452,9 +464,10 @@ export function PersonaFisicaForm() {
                                     </FormControl>
                                     <div className="space-y-1 leading-none">
                                         <FormLabel className="font-normal text-white">
-                                            <span className="font-semibold text-luxury-gold">Declaración de Origen Lícito de Fondos y Prevención de Lavado de Activos / Declaration of Lawful Origin of Funds and Prevention of Money Laundering</span>
-                                            <br />
+                                            <span className="font-bold text-luxury-gold block mb-2">Declaración de Origen Lícito de Fondos y Prevención de Lavado de Activos / Declaration of Lawful Origin of Funds and Prevention of Money Laundering</span>
                                             Declaro y garantizo que los fondos utilizados en la presente operación provienen de actividades lícitas, y que no constituyen ni provendrán, directa o indirectamente, de actos vinculados al lavado de activos, al financiamiento del terrorismo ni de ninguna otra actividad ilícita tipificada por las leyes de la República Dominicana o por convenios internacionales suscritos y ratificados por el país.
+                                            <br /><br />
+                                            <span className="italic block mt-1 opacity-80">I declare and guarantee that the funds used in this transaction come from lawful activities, and that they do not constitute nor will they come, directly or indirectly, from acts related to money laundering, financing of terrorism, or any other illicit activity defined by the laws of the Dominican Republic or by international conventions subscribed and ratified by the country.</span>
                                             <br /><br />
                                             Asimismo, me obligo a cumplir con las disposiciones de la Ley No. 155-17 sobre Lavado de Activos y Financiamiento del Terrorismo, así como con todas las normas reglamentarias vigentes, liberando a la otra parte de cualquier responsabilidad que pudiera derivarse por falsedad en esta declaración.
                                         </FormLabel>
