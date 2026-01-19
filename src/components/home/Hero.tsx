@@ -51,17 +51,17 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
             </div>
 
             {/* Overlay */}
-            <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/10 via-transparent to-primary-black/40"></div>
+            <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/30 via-transparent to-primary-black/60"></div>
 
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
                 <ScrollReveal delay={0.2} width="100%">
-                    <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-sm p-4 md:p-8 shadow-2xl max-w-2xl mx-auto">
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-luxury-gold leading-tight font-serif uppercase tracking-wider drop-shadow-md">
+                    <div className="p-4 md:p-8 max-w-4xl mx-auto">
+                        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
                             {dict.title}
                         </h1>
-                        <div className="h-1 w-16 bg-luxury-gold mx-auto my-3"></div>
-                        <p className="text-base md:text-xl text-gray-100 font-serif italic leading-relaxed drop-shadow-sm tracking-wide">
+                        <div className="h-1 w-24 bg-luxury-gold mx-auto my-6 shadow-[0_2px_4px_rgba(0,0,0,0.5)]"></div>
+                        <p className="text-xl md:text-3xl text-white font-serif italic font-light leading-relaxed drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)] tracking-wide">
                             {dict.subtitle}
                         </p>
                     </div>
