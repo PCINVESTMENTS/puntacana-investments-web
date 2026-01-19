@@ -78,7 +78,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Programs Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20 space-y-16 lg:space-y-32">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-20 space-y-12 lg:space-y-32">
                 {flyAndBuyPrograms.map((program, index) => {
                     const isEven = index % 2 === 0;
                     return (
@@ -172,7 +172,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                             </div>
                                         </div>
 
-                                        <div className="mt-10">
+                                        <div className="mt-6 lg:mt-10">
                                             <Link
                                                 href={`/${lang}/fly-and-buy/form`}
                                                 className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl w-full text-center md:w-auto"
@@ -189,7 +189,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Comparison Table */}
-            <section className="bg-dark-gray py-20 border-t border-white/10">
+            <section className="bg-dark-gray py-10 lg:py-20 border-t border-white/10">
                 <div className="max-w-5xl mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
@@ -236,7 +236,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </section>
 
             {/* Final CTA */}
-            <section className="py-24 bg-primary-black relative overflow-hidden">
+            <section className="py-12 lg:py-24 bg-primary-black relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5"></div>
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
                     <FaPlane className="text-5xl text-luxury-gold mx-auto mb-8 animate-pulse" />
