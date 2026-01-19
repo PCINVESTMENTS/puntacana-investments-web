@@ -32,7 +32,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
-            <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
+            <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} variant="solid" />
 
             {/* Hero Section */}
             <div className="relative h-[60vh] max-h-[800px] overflow-hidden">
@@ -242,8 +242,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                     </Link>
                 </div>
             </section>
-            </section>
-            
+
             <Footer dict={dict} lang={lang} />
         </main >
     );
