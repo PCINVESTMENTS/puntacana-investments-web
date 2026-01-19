@@ -79,8 +79,11 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         },
         {
             name: dict.investments,
-            hasDropdown: false,
-            href: `/${lang}/investments`
+            hasDropdown: true,
+            subItems: [
+                { label: dict.investments, href: `/${lang}/investments` },
+                { label: dict.dueDiligence, href: `/${lang}/investments/due-diligence` }
+            ]
         },
         {
             name: dict.flyAndBuy,

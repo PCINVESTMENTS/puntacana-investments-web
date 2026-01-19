@@ -13,6 +13,7 @@ export default {
         contact: "Contacto",
         services: "Servicios",
         investments: "Inversiones",
+        dueDiligence: "Debida Diligencia",
         flyAndBuy: "Fly & Buy",
         rent: "Rentas",
         sale: "Ventas"
