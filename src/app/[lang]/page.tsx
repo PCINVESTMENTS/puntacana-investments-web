@@ -25,10 +25,44 @@ export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
   const { lang } = await params;
-  const dict = await getDictionary(lang);
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
 
+  const title = lang === 'en'
+    ? "Punta Cana Investments | Luxury Real Estate & Exclusive Properties"
+    : "Punta Cana Investments | Inmobiliaria de Lujo y Propiedades Exclusivas";
+
+  const description = lang === 'en'
+    ? "Discover exclusive luxury villas, condos, and investment opportunities in Punta Cana. Access off-market listings and our signature Fly & Buy program."
+    : "Descubre villas de lujo exclusivas, condominios y oportunidades de inversión en Punta Cana. Accede a listados off-market y nuestro programa Fly & Buy.";
+
   return {
+    title,
+    description,
+    keywords: lang === 'en'
+      ? ['Punta Cana Real Estate', 'Luxury Villas', 'Investment Dominican Republic', 'Fly and Buy', 'Condos for Sale']
+      : ['Bienes Raíces Punta Cana', 'Villas de Lujo', 'Inversión República Dominicana', 'Fly and Buy', 'Apartamentos en Venta'],
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/${lang}`,
+      siteName: 'Punta Cana Investments',
+      images: [
+        {
+          url: '/images/og-home-luxury.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Luxury Real Estate in Punta Cana - Night View',
+        },
+      ],
+      locale: lang === 'en' ? 'en_US' : 'es_DO',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/images/og-home-luxury.jpg'],
+    },
     alternates: {
       canonical: `${baseUrl}/${lang}`,
       languages: {
