@@ -23,6 +23,7 @@ interface ContactFormProps {
     };
     subject?: string;
     className?: string; // Allow custom styling
+    lang?: string;
 }
 
 const initialState = {
@@ -30,7 +31,7 @@ const initialState = {
     message: '',
 };
 
-export default function ContactForm({ dict, subject, className }: ContactFormProps) {
+export default function ContactForm({ dict, subject, className, lang = 'en' }: ContactFormProps) {
     const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
 
     if (state.success) {
@@ -58,6 +59,7 @@ export default function ContactForm({ dict, subject, className }: ContactFormPro
     return (
         <form action={formAction} className={`space-y-6 ${className || ''}`}>
             {subject && <input type="hidden" name="subject" value={subject} />}
+            <input type="hidden" name="lang" value={lang} />
 
             {state.message && !state.success && (
                 <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-sm">

@@ -110,7 +110,7 @@ export default async function ContactPage({
                     {/* Form */}
                     <div className="bg-zinc-950 p-8 md:p-10 rounded-2xl border border-zinc-800 shadow-2xl">
                         <h3 className="text-2xl font-playfair text-white mb-6">Envia un mensaje</h3>
-                        <ContactForm dict={dict.contact.form} subject={typeof subject === 'string' ? subject : undefined} />
+                        <ContactForm dict={dict.contact.form} subject={typeof subject === 'string' ? subject : undefined} lang={lang} />
                     </div>
 
                 </div>

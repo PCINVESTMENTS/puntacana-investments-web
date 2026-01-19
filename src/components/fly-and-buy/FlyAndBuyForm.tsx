@@ -7,6 +7,7 @@ import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 
 interface FlyAndBuyFormProps {
     dict: any; // Using any for flexibility with the deeply nested dictionary structure
+    lang: string;
 }
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
     message: '',
 };
 
-export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
+export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
     const [state, formAction, isPending] = useActionState(submitFlyAndBuyForm, initialState);
     const [selectedObjectives, setSelectedObjectives] = useState<string[]>([]);
 
@@ -59,7 +60,7 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
 
     return (
         <form action={formAction} className="max-w-4xl mx-auto space-y-12 bg-zinc-900/50 p-8 md:p-12 border border-white/5 rounded-sm shadow-2xl backdrop-blur-sm">
-
+            <input type="hidden" name="lang" value={lang} />
             {state.message && !state.success && (
                 <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-center">
                     {state.message}

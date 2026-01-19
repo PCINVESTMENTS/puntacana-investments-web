@@ -22,7 +22,7 @@ export default async function FlyAndBuyFormPage({ params }: { params: Promise<{ 
                     </p>
                 </div>
 
-                <FlyAndBuyForm dict={dict.flyAndBuyForm} />
+                <FlyAndBuyForm dict={dict.flyAndBuyForm} lang={lang} />
             </div>
 
             <Footer dict={dict} lang={lang} />

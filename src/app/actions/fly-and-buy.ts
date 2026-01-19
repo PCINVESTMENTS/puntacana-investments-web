@@ -20,11 +20,63 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const motivation = formData.getAll('motivation') as string[];
     const comments = formData.get('comments') as string;
 
+    const lang = (formData.get('lang') as string) || 'en';
+
+    // Email translations
+    const t = {
+        en: {
+            title: "Fly & Buy Inquiry",
+            personalDetails: "Personal Details",
+            name: "Name",
+            email: "Email",
+            phone: "Phone",
+            country: "Country",
+            interestProfile: "Interest Profile",
+            objective: "Main Objective",
+            propertyInterest: "Property Interest",
+            specificProperty: "Specific Property or Project",
+            notSpecified: "Not specified",
+            investmentFocus: "Investment Focus",
+            experience: "Experience",
+            timeframe: "Timeframe",
+            flyAndBuyProgram: "Fly & Buy Program",
+            visitedBefore: "Visited Before",
+            motivation: "Motivation",
+            additionalComments: "Additional Comments",
+            noComments: "No comments provided.",
+            footer: "Sent from Punta Cana Investments Web"
+        },
+        es: {
+            title: "Consulta Fly & Buy",
+            personalDetails: "Datos Personales",
+            name: "Nombre",
+            email: "Correo",
+            phone: "Teléfono",
+            country: "País",
+            interestProfile: "Perfil de Interés",
+            objective: "Objetivo Principal",
+            propertyInterest: "Tipo de Propiedad",
+            specificProperty: "Propiedad o Proyecto Específico",
+            notSpecified: "No especificado",
+            investmentFocus: "Enfoque de Inversión",
+            experience: "Experiencia",
+            timeframe: "Plazo",
+            flyAndBuyProgram: "Programa Fly & Buy",
+            visitedBefore: "¿Ha visitado antes?",
+            motivation: "Motivación",
+            additionalComments: "Comentarios Adicionales",
+            noComments: "Sin comentarios.",
+            footer: "Enviado desde Web Punta Cana Investments"
+        }
+    };
+
+    const dict = t[lang as keyof typeof t] || t.en;
+
     // Validation
     if (!name || !email || !phone || !country) {
         return {
             success: false,
-            message: 'Please fill in all required fields.'
+            message: lang === 'es' ? 'Por favor complete todos los campos requeridos.' : 'Please fill in all required fields.'
         };
     }
 
@@ -32,53 +84,53 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         const data = await resend.emails.send({
             from: 'Punta Cana Investments <onboarding@resend.dev>',
             to: ['uepcrealestate@gmail.com'],
-            subject: `New Fly & Buy Inquiry: ${name}`,
+            subject: `${dict.title}: ${name}`,
             html: `
         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
             <div style="background-color: #000; padding: 20px; text-align: center;">
-                <h1 style="color: #E4CA7C; margin: 0;">Fly & Buy Inquiry</h1>
+                <h1 style="color: #E4CA7C; margin: 0;">${dict.title}</h1>
             </div>
             
             <div style="padding: 20px; border: 1px solid #ddd; border-top: none;">
-                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px;">Personal Details</h2>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Phone:</strong> ${phone}</p>
-                <p><strong>Country:</strong> ${country}</p>
+                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px;">${dict.personalDetails}</h2>
+                <p><strong>${dict.name}:</strong> ${name}</p>
+                <p><strong>${dict.email}:</strong> ${email}</p>
+                <p><strong>${dict.phone}:</strong> ${phone}</p>
+                <p><strong>${dict.country}:</strong> ${country}</p>
 
-                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px; margin-top: 30px;">Interest Profile</h2>
+                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px; margin-top: 30px;">${dict.interestProfile}</h2>
                 
-                <p><strong>Main Objective:</strong><br/>
+                <p><strong>${dict.objective}:</strong><br/>
                 ${objective.map(o => `• ${o}`).join('<br/>')}</p>
 
-                <p><strong>Property Interest:</strong><br/>
+                <p><strong>${dict.propertyInterest}:</strong><br/>
                 ${propertyType.map(p => `• ${p}`).join('<br/>')}</p>
 
                 ${hasSpecificProperty === 'yes' ? `
-                <p><strong>Specific Property or Project:</strong><br/>
-                ${specificProperty || 'Not specified'}</p>
+                <p><strong>${dict.specificProperty}:</strong><br/>
+                ${specificProperty || dict.notSpecified}</p>
                 ` : ''}
 
                 ${investmentFocus.length > 0 ? `
-                <p><strong>Investment Focus:</strong><br/>
+                <p><strong>${dict.investmentFocus}:</strong><br/>
                 ${investmentFocus.map(i => `• ${i}`).join('<br/>')}</p>
                 ` : ''}
 
-                <p><strong>Experience:</strong> ${experience}</p>
-                <p><strong>Timeframe:</strong> ${horizon}</p>
+                <p><strong>${dict.experience}:</strong> ${experience}</p>
+                <p><strong>${dict.timeframe}:</strong> ${horizon}</p>
 
-                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px; margin-top: 30px;">Fly & Buy Program</h2>
-                <p><strong>Visited Before:</strong> ${visited}</p>
+                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px; margin-top: 30px;">${dict.flyAndBuyProgram}</h2>
+                <p><strong>${dict.visitedBefore}:</strong> ${visited}</p>
                 
-                <p><strong>Motivation:</strong><br/>
+                <p><strong>${dict.motivation}:</strong><br/>
                 ${motivation.map(m => `• ${m}`).join('<br/>')}</p>
 
-                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px; margin-top: 30px;">Additional Comments</h2>
-                <p style="background-color: #f9f9f9; padding: 15px; border-left: 4px solid #E4CA7C;">${comments || 'No comments provided.'}</p>
+                <h2 style="color: #000; border-bottom: 2px solid #E4CA7C; padding-bottom: 10px; margin-top: 30px;">${dict.additionalComments}</h2>
+                <p style="background-color: #f9f9f9; padding: 15px; border-left: 4px solid #E4CA7C;">${comments || dict.noComments}</p>
             </div>
             
             <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666; margin-top: 20px;">
-                Sent from Punta Cana Investments Web
+                ${dict.footer}
             </div>
         </div>
       `

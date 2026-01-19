@@ -10,11 +10,37 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     const phone = formData.get('phone') as string;
     const message = formData.get('message') as string;
 
+    const lang = (formData.get('lang') as string) || 'en';
+
+    // Email translations
+    const t = {
+        en: {
+            title: "New Contact Form Submission",
+            name: "Name",
+            email: "Email",
+            phone: "Phone",
+            messageLabel: "Message",
+            footer: "Sent from Punta Cana Investments Web",
+            error: "Please fill in all required fields."
+        },
+        es: {
+            title: "Nuevo Mensaje de Contacto",
+            name: "Nombre",
+            email: "Correo",
+            phone: "Teléfono",
+            messageLabel: "Mensaje",
+            footer: "Enviado desde Web Punta Cana Investments",
+            error: "Por favor complete todos los campos requeridos."
+        }
+    };
+
+    const dict = t[lang as keyof typeof t] || t.en;
+
     // Simple validation
     if (!name || !email || !message) {
         return {
             success: false,
-            message: 'Please fill in all required fields.'
+            message: dict.error
         };
     }
 
@@ -27,15 +53,15 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             to: ['uepcrealestate@gmail.com'],
             subject: emailSubject,
             html: `
-        <h1>New Contact Form Submission</h1>
+        <h1>${dict.title}</h1>
         <h2>${emailSubject}</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Message:</strong></p>
+        <p><strong>${dict.name}:</strong> ${name}</p>
+        <p><strong>${dict.email}:</strong> ${email}</p>
+        <p><strong>${dict.phone}:</strong> ${phone}</p>
+        <p><strong>${dict.messageLabel}:</strong></p>
         <p>${message}</p>
         <hr />
-        <p>Sent from Punta Cana Investments Web</p>
+        <p>${dict.footer}</p>
       `
         });
 

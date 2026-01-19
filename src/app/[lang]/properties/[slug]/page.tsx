@@ -341,6 +341,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 dict={dict.contact.form}
                                 subject={`${lang === 'en' ? 'Inquiry about' : 'Consulta sobre'}: ${property.title}`}
                                 className="mt-4"
+                                lang={lang}
                             />
 
                             <div className="mt-8 text-center pt-8 border-t border-white/10">
