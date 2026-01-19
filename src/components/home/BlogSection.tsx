@@ -22,9 +22,9 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
     const l = lang as 'es' | 'en';
 
     return (
-        <section id="blog" className="py-16 bg-primary-black border-t border-white/5">
+        <section id="blog" className="py-8 lg:py-16 bg-primary-black border-t border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-8 lg:mb-16">
                     <div className="max-w-2xl">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.title}

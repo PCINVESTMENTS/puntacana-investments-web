@@ -264,13 +264,13 @@ import { useActionState } from "react";
 export function ContactSection({ dict }: ContactSectionProps) {
     // Reusing the same verified ContactForm component
     return (
-        <section id="contact" className="pt-12 pb-24 bg-primary-black relative overflow-hidden">
+        <section id="contact" className="pt-8 pb-10 lg:pt-12 lg:pb-24 bg-primary-black relative overflow-hidden">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-luxury-gold/5 rounded-full blur-3xl pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-8 lg:mb-16">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.title}
                         </span>

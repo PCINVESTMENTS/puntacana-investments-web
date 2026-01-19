@@ -10,7 +10,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
     const [state, formAction, isPending] = useActionState(submitNewsletter, { success: false, message: '' });
 
     return (
-        <section className="py-24 bg-black relative overflow-hidden">
+        <section className="py-10 lg:py-24 bg-black relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-luxury-gold/5 blur-[120px] rounded-full -mr-64 -mt-64"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-luxury-gold/5 blur-[120px] rounded-full -ml-64 -mb-64"></div>
@@ -27,7 +27,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                             className="object-cover opacity-60 grayscale-[40%]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-dark-gray/90 to-transparent"></div>
-                        <div className="absolute inset-0 flex flex-col justify-center p-12">
+                        <div className="absolute inset-0 flex flex-col justify-center p-6 lg:p-12">
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                     </div>
 
                     {/* Form Side */}
-                    <div className="lg:w-1/2 p-12 bg-black/40 flex flex-col justify-center">
+                    <div className="lg:w-1/2 p-6 lg:p-12 bg-black/40 flex flex-col justify-center">
                         <AnimatePresence mode="wait">
                             {!state.success ? (
                                 <motion.div
