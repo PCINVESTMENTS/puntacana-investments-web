@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import { flyAndBuyPrograms, flyAndBuyComparison } from "@/data/fly-and-buy";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Navbar from "@/components/layout/Navbar";
@@ -24,6 +25,21 @@ const getIcon = (iconName: string) => {
         default: return <FaCheck />;
     }
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+    const { lang } = await params;
+    const isEs = lang === 'es';
+
+    return {
+        title: `Fly & Buy | Punta Cana Investments`,
+        description: isEs
+            ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
+            : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments.",
+        openGraph: {
+            images: ['/images/fly-and-buy/premium.jpg'],
+        }
+    };
+}
 
 export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
@@ -62,7 +78,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Programs Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-32">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-20 lg:space-y-32">
                 {flyAndBuyPrograms.map((program, index) => {
                     const isEven = index % 2 === 0;
                     return (

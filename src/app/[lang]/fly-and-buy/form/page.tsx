@@ -3,6 +3,20 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/home/PageSections";
 import FlyAndBuyForm from "@/components/fly-and-buy/FlyAndBuyForm";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+
+    return {
+        title: `${dict.flyAndBuyForm.title} | Punta Cana Investments`,
+        description: dict.flyAndBuyForm.subtitle,
+        openGraph: {
+            images: ['/images/fly-and-buy/premium.jpg'],
+        }
+    };
+}
 
 export default async function FlyAndBuyFormPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
