@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     description: dict.meta.description,
     metadataBase: new URL(baseUrl),
     openGraph: {
-      images: ['/images/home-share.png'],
+      images: ['/images/og-home-luxury.jpg'],
       title: dict.meta.title,
       description: dict.meta.description,
       type: 'website',

@@ -1,0 +1,97 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { ScrollReveal } from "../ui/ScrollReveal";
+
+interface LocationsSectionProps {
+    dict: {
+        title: string;
+        subtitle: string;
+        exploreMore: string;
+        items?: readonly {
+            title: string;
+            slug: string;
+            img: string;
+        }[];
+    };
+    limit?: number;
+    lang?: string;
+}
+
+export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionProps) {
+    // Fallback list to ensure content always renders
+    const defaultLocations = [
+        { title: "Punta Cana", slug: "puntacana", img: "/images/locations/bavaro.jpg" },
+        { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.jpg" },
+        { title: "Bávaro", slug: "bavaro", img: "/images/locations/bavaro.jpg" },
+        { title: "La Romana", slug: "laromana", img: "/images/locations/la_romana.png" },
+        { title: "Casa de Campo", slug: "casacampo", img: "/images/locations/casa_de_campo.jpg" },
+        { title: "Juan Dolio", slug: "juandolio", img: "/images/locations/juan_dolio.jpg" },
+        { title: "Miches", slug: "miches", img: "/images/locations/miches.jpg" },
+        { title: "El Seibo", slug: "elseibo", img: "/images/locations/el_seibo.jpg" },
+        { title: "Higüey", slug: "higuey", img: "/images/locations/higuey.jpg" },
+        { title: "Santo Domingo", slug: "santodomingo", img: "/images/locations/santo_domingo.jpg" },
+        { title: "Las Terrenas", slug: "lasterrenas", img: "/images/locations/las_terrenas.jpg" },
+        { title: "Samaná", slug: "samana", img: "/images/locations/samana.jpg" },
+        { title: "Puerto Plata", slug: "puertoplata", img: "https://upcrealestate.com/wp-content/uploads/2023/02/1.jpg" }
+    ];
+
+    let locations = (dict.items && dict.items.length > 0) ? dict.items : defaultLocations;
+
+    if (limit) {
+        locations = locations.slice(0, limit);
+    }
+
+    return (
+        <section id="locations" className="pt-12 pb-8 bg-primary-black text-center text-white relative">
+            {/* Background Decoration - Optional to match other dark sections */}
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/pattern.png')] opacity-5 pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 relative z-10">
+                <ScrollReveal width="100%">
+                    <div className="mb-12">
+                        <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">{dict.subtitle}</span>
+                        <h2 className="text-4xl font-serif font-bold mt-2 text-white">{dict.title}</h2>
+                    </div>
+                </ScrollReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {locations.map((loc, idx) => (
+                        <Link
+                            key={idx}
+                            href={`/${lang}/properties?location=${loc.slug}`}
+                            className="group relative h-64 overflow-hidden cursor-pointer rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 block"
+                        >
+                            <div className="absolute inset-0 bg-gray-200" />
+                            <Image
+                                src={loc.img}
+                                alt={loc.title}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-110 relative z-10"
+                            />
+                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 z-20"></div>
+
+                            <div className="absolute inset-0 flex items-center justify-center z-30">
+                                <h3 className="text-3xl font-bold text-luxury-gold drop-shadow-md text-center px-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+                                    {loc.title}
+                                </h3>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+
+                {/* Explore More Button */}
+                {limit && (
+                    <div className="mt-12 text-center">
+                        <Link
+                            href={`/${lang}/locations`}
+                            className="inline-block bg-luxury-gold text-black font-bold py-4 px-10 rounded-sm hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-lg hover:shadow-xl"
+                        >
+                            {dict.exploreMore}
+                        </Link>
+                    </div>
+                )}
+            </div>
+        </section>
+    );
+}

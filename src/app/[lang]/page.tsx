@@ -1,15 +1,24 @@
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 import PropertyListings from "@/components/home/PropertyListings";
-import ServicesSection from "@/components/home/ServicesSection";
-import TestimonialsSection from "@/components/home/TestimonialsSection";
-import BlogSection from "@/components/home/BlogSection";
-import { AboutSection, LocationsSection, ContactSection, Footer } from "@/components/home/PageSections";
-import InvestmentsSection from "@/components/home/InvestmentsSection";
-import OffMarketClub from "@/components/home/OffMarketClub";
-import FlyAndBuySection from "@/components/home/FlyAndBuySection";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import PropertyFilterBar from "@/components/home/PropertyFilterBar";
+
+// Lazy loading below-the-fold sections
+import dynamic from 'next/dynamic';
+
+const ServicesSection = dynamic(() => import("@/components/home/ServicesSection"));
+const TestimonialsSection = dynamic(() => import("@/components/home/TestimonialsSection"));
+const BlogSection = dynamic(() => import("@/components/home/BlogSection"));
+const InvestmentsSection = dynamic(() => import("@/components/home/InvestmentsSection"));
+const OffMarketClub = dynamic(() => import("@/components/home/OffMarketClub"));
+const FlyAndBuySection = dynamic(() => import("@/components/home/FlyAndBuySection"));
+
+// Refactored components
+const LocationsSection = dynamic(() => import("@/components/home/LocationsSection").then(mod => mod.LocationsSection));
+const AboutSection = dynamic(() => import("@/components/home/AboutSection").then(mod => mod.AboutSection));
+const ContactSection = dynamic(() => import("@/components/home/ContactSection").then(mod => mod.ContactSection));
+const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer));
 
 // Sanity
 import { client } from "@/sanity/lib/client";

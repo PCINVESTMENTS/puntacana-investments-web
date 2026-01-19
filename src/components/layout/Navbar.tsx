@@ -186,6 +186,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     <div className="lg:hidden flex items-center">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
+                            aria-label={isOpen ? "Close menu" : "Open menu"}
                             className="text-luxury-gold hover:text-white focus:outline-none text-2xl transition-transform"
                         >
                             {isOpen ? <FaTimes /> : <FaBars />}
