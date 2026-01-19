@@ -51,7 +51,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} variant="solid" />
 
             {/* Hero Section */}
-            <div className="relative h-[60vh] max-h-[800px] overflow-hidden">
+            <div className="relative h-[45vh] md:h-[60vh] max-h-[800px] overflow-hidden">
                 <Image
                     src="/images/fly-and-buy/premium.jpg" // Using Premium image as main hero or a general one
                     alt="Fly & Buy Punta Cana"
@@ -78,7 +78,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Programs Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-20 space-y-12 lg:space-y-32">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-6 lg:py-20 space-y-12 lg:space-y-32">
                 {flyAndBuyPrograms.map((program, index) => {
                     const isEven = index % 2 === 0;
                     return (
