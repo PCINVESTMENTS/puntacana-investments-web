@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { flyAndBuyPrograms, flyAndBuyComparison } from "@/data/fly-and-buy";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import Navbar from "@/components/layout/Navbar";
+import { Footer } from "@/components/home/PageSections";
+import { getDictionary } from "@/dictionaries/get-dictionary";
 import { FaCheck, FaBuilding, FaHandshake, FaMapMarkedAlt, FaBriefcase, FaHotel, FaCar, FaChartLine, FaStar, FaPen, FaPlane, FaChevronDown } from "react-icons/fa";
 
 // Icon mapping helper
@@ -25,9 +28,11 @@ const getIcon = (iconName: string) => {
 export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const isEs = lang === 'es';
+    const dict = await getDictionary(lang);
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
+            <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
 
             {/* Hero Section */}
             <div className="relative h-[60vh] max-h-[800px] overflow-hidden">
@@ -237,6 +242,9 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                     </Link>
                 </div>
             </section>
-        </main>
+            </section>
+            
+            <Footer dict={dict} lang={lang} />
+        </main >
     );
 }
