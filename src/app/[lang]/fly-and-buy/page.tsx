@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import { flyAndBuyPrograms, flyAndBuyComparison } from "@/data/fly-and-buy";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/home/PageSections";
+import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { FaCheck, FaBuilding, FaHandshake, FaMapMarkedAlt, FaBriefcase, FaHotel, FaCar, FaChartLine, FaStar, FaPen, FaPlane, FaChevronDown } from "react-icons/fa";
 

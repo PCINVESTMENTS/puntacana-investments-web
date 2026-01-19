@@ -1,7 +1,7 @@
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import ContactForm from '@/components/contact/ContactForm';
 import Navbar from '@/components/layout/Navbar';
-import { Footer } from '@/components/home/PageSections';
+import { Footer } from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
 

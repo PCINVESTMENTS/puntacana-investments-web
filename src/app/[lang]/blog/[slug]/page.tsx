@@ -1,6 +1,6 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/home/PageSections";
+import { Footer } from "@/components/layout/Footer";
 import { BlogPost, blogPosts } from "@/data/blog";
 import { properties } from "@/data/properties";
 import { notFound } from "next/navigation";

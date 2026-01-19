@@ -1,6 +1,6 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/home/PageSections";
+import { Footer } from "@/components/layout/Footer";
 import PropertyListings from "@/components/home/PropertyListings";
 import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";

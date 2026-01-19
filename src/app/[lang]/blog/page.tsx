@@ -4,7 +4,7 @@ import { mapSanityPost } from "@/sanity/lib/mappers";
 import { BlogPost } from "@/data/blog";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/home/PageSections";
+import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { FaCalendarAlt, FaArrowRight, FaSearch } from "react-icons/fa";

@@ -1,6 +1,6 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/home/PageSections";
+import { Footer } from "@/components/layout/Footer";
 import ServicesSection from "@/components/home/ServicesSection";
 
 export default async function ServicesPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {

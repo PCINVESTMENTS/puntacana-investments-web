@@ -5,7 +5,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { FaBed, FaBath, FaRulerCombined, FaCheck, FaArrowLeft, FaWhatsapp } from "react-icons/fa";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/home/PageSections";
+import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import ContactForm from "@/components/contact/ContactForm";
 import PropertyGallery from "@/components/property/PropertyGallery";
