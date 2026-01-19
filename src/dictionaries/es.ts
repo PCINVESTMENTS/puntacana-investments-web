@@ -447,6 +447,7 @@ export default {
             phone: "Teléfono / WhatsApp",
             country: "País de Residencia"
         },
+        multipleChoice: "(Seleccione todas las que apliquen)",
         objective: {
             question: "¿Cuál es el propósito principal de su interés inmobiliario?",
             options: {
@@ -467,8 +468,15 @@ export default {
                 townhouse: "Townhouse",
                 project: "Proyecto en desarrollo",
                 airbnb: "Propiedad para renta turística (Airbnb)",
+
                 advisory: "Deseo asesoría para definirlo"
             }
+        },
+        specificProperty: {
+            question: "¿Tiene ya una propiedad específica en mente?",
+            yes: "Sí, ya la tengo identificada",
+            no: "No, aún estoy buscando",
+            placeholder: "Por favor especifique el nombre del proyecto o propiedad..."
         },
         investmentFocus: {
             question: "Enfoque de inversión",
@@ -485,6 +493,7 @@ export default {
             options: {
                 local: "Sí, en mi país",
                 abroad: "Sí, en el extranjero",
+                both: "Sí, en mi país y en el extranjero",
                 firstTime: "No, sería mi primera inversión",
                 limited: "Experiencia limitada"
             }
@@ -508,7 +517,8 @@ export default {
                 visitProjects: "Visitar personalmente los proyectos",
                 meetTeam: "Conocer a Punta Cana Investments",
                 validateLocation: "Validar la ubicación y el entorno",
-                confidence: "Tomar una decisión con mayor confianza"
+                confidence: "Tomar una decisión con mayor confianza",
+                all: "Todas las anteriores"
             }
         },
         comments: {

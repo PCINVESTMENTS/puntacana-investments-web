@@ -27,6 +27,9 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
         }
     };
 
+    // New state for specific property question
+    const [hasSpecificProperty, setHasSpecificProperty] = useState<string | null>(null);
+
     // Check if any investment-related option is selected
     const showInvestmentFocus = selectedObjectives.some(obj =>
         ['investment', 'mixed', 'development'].includes(obj)
@@ -91,7 +94,7 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
             {/* 2. Objective */}
             <section className="space-y-6">
                 <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
-                    {dict.objective.question}
+                    {dict.objective.question} <span className="text-sm font-normal text-gray-400 ml-2 block sm:inline">{dict.multipleChoice}</span>
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {Object.entries(dict.objective.options).map(([key, label]) => (
@@ -112,7 +115,7 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
             {/* 3. Property Type */}
             <section className="space-y-6">
                 <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
-                    {dict.propertyType.question}
+                    {dict.propertyType.question} <span className="text-sm font-normal text-gray-400 ml-2 block sm:inline">{dict.multipleChoice}</span>
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {Object.entries(dict.propertyType.options).map(([key, label]) => (
@@ -124,26 +127,74 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
                 </div>
             </section>
 
-            {/* 4. Investment Focus (Conditional) */}
-            {showInvestmentFocus && (
-                <motion.section
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="space-y-6 overflow-hidden"
-                >
-                    <h3 className="text-xl font-serif text-luxury-gold border-b border-white/10 pb-2">
-                        {dict.investmentFocus.question}
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {Object.entries(dict.investmentFocus.options).map(([key, label]) => (
-                            <label key={key} className="flex items-center gap-3 p-4 bg-luxury-gold/5 border border-luxury-gold/20 hover:border-luxury-gold cursor-pointer transition-all rounded-sm group">
-                                <input type="checkbox" name="investmentFocus" value={key} className="w-5 h-5 accent-luxury-gold" />
-                                <span className="text-gray-300 group-hover:text-white transition-colors">{label as string}</span>
-                            </label>
-                        ))}
+            {/* 3.b Specific Property Question */}
+            <section className="space-y-6">
+                <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
+                    {dict.specificProperty.question}
+                </h3>
+                <div className="space-y-4">
+                    <div className="flex gap-6">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="radio"
+                                name="hasSpecificProperty"
+                                value="yes"
+                                onChange={(e) => setHasSpecificProperty(e.target.value)}
+                                className="w-4 h-4 accent-luxury-gold"
+                            />
+                            <span className="text-gray-300">{dict.specificProperty.yes}</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                                type="radio"
+                                name="hasSpecificProperty"
+                                value="no"
+                                onChange={(e) => setHasSpecificProperty(e.target.value)}
+                                className="w-4 h-4 accent-luxury-gold"
+                            />
+                            <span className="text-gray-300">{dict.specificProperty.no}</span>
+                        </label>
                     </div>
-                </motion.section>
-            )}
+
+                    {hasSpecificProperty === 'yes' && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            className="overflow-hidden"
+                        >
+                            <input
+                                type="text"
+                                name="specificProperty"
+                                placeholder={dict.specificProperty.placeholder}
+                                className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors"
+                            />
+                        </motion.div>
+                    )}
+                </div>
+            </section>
+
+            {/* 4. Investment Focus (Conditional) */}
+            {
+                showInvestmentFocus && (
+                    <motion.section
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        className="space-y-6 overflow-hidden"
+                    >
+                        <h3 className="text-xl font-serif text-luxury-gold border-b border-white/10 pb-2">
+                            {dict.investmentFocus.question} <span className="text-sm font-normal text-luxury-gold/60 ml-2 block sm:inline">{dict.multipleChoice}</span>
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {Object.entries(dict.investmentFocus.options).map(([key, label]) => (
+                                <label key={key} className="flex items-center gap-3 p-4 bg-luxury-gold/5 border border-luxury-gold/20 hover:border-luxury-gold cursor-pointer transition-all rounded-sm group">
+                                    <input type="checkbox" name="investmentFocus" value={key} className="w-5 h-5 accent-luxury-gold" />
+                                    <span className="text-gray-300 group-hover:text-white transition-colors">{label as string}</span>
+                                </label>
+                            ))}
+                        </div>
+                    </motion.section>
+                )
+            }
 
             {/* 5. Experience & Horizon */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -197,7 +248,9 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
                 </div>
 
                 <div className="space-y-4 pt-4">
-                    <p className="text-white font-medium">{dict.flyAndBuy.motivation}</p>
+                    <p className="text-white font-medium">
+                        {dict.flyAndBuy.motivation} <span className="text-sm font-normal text-gray-400 ml-2 block sm:inline">{dict.multipleChoice}</span>
+                    </p>
                     <div className="grid grid-cols-1 gap-3">
                         {Object.entries(dict.flyAndBuy.options).map(([key, label]) => (
                             <label key={key} className="flex items-center gap-3 p-3 bg-white/5 border border-white/5 hover:bg-white/10 cursor-pointer transition-colors rounded-sm">
@@ -245,6 +298,6 @@ export default function FlyAndBuyForm({ dict }: FlyAndBuyFormProps) {
                 </button>
             </div>
 
-        </form>
+        </form >
     );
 }

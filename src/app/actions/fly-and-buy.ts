@@ -11,6 +11,8 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const country = formData.get('country') as string;
     const objective = formData.getAll('objective') as string[];
     const propertyType = formData.getAll('propertyType') as string[];
+    const hasSpecificProperty = formData.get('hasSpecificProperty') as string;
+    const specificProperty = formData.get('specificProperty') as string;
     const investmentFocus = formData.getAll('investmentFocus') as string[];
     const experience = formData.get('experience') as string;
     const horizon = formData.get('horizon') as string;
@@ -51,6 +53,11 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
 
                 <p><strong>Property Interest:</strong><br/>
                 ${propertyType.map(p => `• ${p}`).join('<br/>')}</p>
+
+                ${hasSpecificProperty === 'yes' ? `
+                <p><strong>Specific Property or Project:</strong><br/>
+                ${specificProperty || 'Not specified'}</p>
+                ` : ''}
 
                 ${investmentFocus.length > 0 ? `
                 <p><strong>Investment Focus:</strong><br/>

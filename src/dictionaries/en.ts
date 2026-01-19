@@ -446,6 +446,7 @@ export default {
             phone: "Phone / WhatsApp",
             country: "Country of Residence"
         },
+        multipleChoice: "(Select all that apply)",
         objective: {
             question: "What is the main purpose of your real estate interest?",
             options: {
@@ -469,6 +470,12 @@ export default {
                 advisory: "I need advice to define it"
             }
         },
+        specificProperty: {
+            question: "Do you have a specific property in mind?",
+            yes: "Yes, I have identified it",
+            no: "No, still looking",
+            placeholder: "Please specify the project or property name..."
+        },
         investmentFocus: {
             question: "Investment Focus",
             options: {
@@ -484,6 +491,7 @@ export default {
             options: {
                 local: "Yes, in my country",
                 abroad: "Yes, abroad",
+                both: "Yes, in both (local and abroad)",
                 firstTime: "No, it would be my first investment",
                 limited: "Limited experience"
             }
@@ -507,7 +515,8 @@ export default {
                 visitProjects: "Visit projects personally",
                 meetTeam: "Meet Punta Cana Investments",
                 validateLocation: "Validate location and environment",
-                confidence: "Make a decision with more confidence"
+                confidence: "Make a decision with more confidence",
+                all: "All of the above"
             }
         },
         comments: {
