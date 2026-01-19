@@ -73,8 +73,8 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                     </h2>
                     <p>
                         {lang === 'en'
-                            ? 'If you have any questions about this Privacy Policy, please contact us at info@puntacanainvesment.com.'
-                            : 'Si tiene alguna pregunta sobre esta Política de Privacidad, contáctenos en info@puntacanainvesment.com.'}
+                            ? 'If you have any questions about this Privacy Policy, please contact us at info@puntacanainvestmentsrd.com.'
+                            : 'Si tiene alguna pregunta sobre esta Política de Privacidad, contáctenos en info@puntacanainvestmentsrd.com.'}
                     </p>
                 </div>
             </div>

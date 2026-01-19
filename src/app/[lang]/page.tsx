@@ -34,7 +34,7 @@ export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
   const { lang } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
   const title = lang === 'en'
     ? "Punta Cana Investments | Luxury Real Estate & Exclusive Properties"

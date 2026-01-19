@@ -20,7 +20,7 @@ export async function generateMetadata({
     // searchParams removed to ensure static stability during build
 
     const dict = await getDictionary(lang);
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
     return {
         title: dict.properties.title + ' | Punta Cana Investments',

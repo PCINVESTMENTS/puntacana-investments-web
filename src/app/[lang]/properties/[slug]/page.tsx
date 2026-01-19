@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
     const keywords = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;
 
     return {
@@ -151,7 +151,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
         property = mapSanityProperty(propertyData);
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const jsonLd = generateJsonLd(property, lang, baseUrl);
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {

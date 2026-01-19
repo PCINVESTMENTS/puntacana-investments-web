@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
      We do NOT set specific canonicals here to avoid them being inherited by pages 
      that should have their own. Each page should define its own alternates.
   */
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
   return {
     title: dict.meta.title,

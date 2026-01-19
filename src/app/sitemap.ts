@@ -8,7 +8,7 @@ import { Property, properties as localProperties } from "@/data/properties";
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://puntacanainvesment.com';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
     // 1. Fetch Key Pages
     const staticRoutes = [

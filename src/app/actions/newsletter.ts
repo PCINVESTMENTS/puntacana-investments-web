@@ -40,7 +40,7 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
             <p>Dear Investor,</p>
             <p>Thank you for requesting access to our private <strong>Off-Market Portfolio</strong>.</p>
             <p>We have received your request. One of our senior investment advisors will review your profile and contact you shortly with our current exclusive opportunities that are not available to the public.</p>
-            <p>In the meantime, feel free to browse our <a href="https://puntacanainvesment.com">public collection</a>.</p>
+            <p>In the meantime, feel free to browse our <a href="https://www.puntacanainvestmentsrd.com">public collection</a>.</p>
             <br/>
             <p>Sincerely,</p>
             <p><strong>The Punta Cana Investments Team</strong></p>
