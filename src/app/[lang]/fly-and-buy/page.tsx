@@ -189,9 +189,9 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Comparison Table */}
-            <section className="bg-dark-gray py-10 lg:py-20 border-t border-white/10">
+            <section className="bg-dark-gray py-6 lg:py-20 border-t border-white/10">
                 <div className="max-w-5xl mx-auto px-4">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-8 lg:mb-12">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
                             {isEs ? "Comparativa de Programas" : "Program Comparison"}
                         </h2>
@@ -236,16 +236,16 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </section>
 
             {/* Final CTA */}
-            <section className="py-12 lg:py-24 bg-primary-black relative overflow-hidden">
+            <section className="py-8 lg:py-24 bg-primary-black relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5"></div>
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-                    <FaPlane className="text-5xl text-luxury-gold mx-auto mb-8 animate-pulse" />
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-8 leading-tight">
+                    <FaPlane className="text-5xl text-luxury-gold mx-auto mb-6 lg:mb-8 animate-pulse" />
+                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 lg:mb-8 leading-tight">
                         &quot;{isEs
                             ? "Fly & Buy no es un viaje, es una decisión inteligente."
                             : "Fly & Buy is not just a trip, it's a smart decision."}&quot;
                     </h2>
-                    <p className="text-xl text-gray-300 mb-12">
+                    <p className="text-xl text-gray-300 mb-8 lg:mb-12">
                         {isEs
                             ? "Venga, confirme y compre con Punta Cana Investments."
                             : "Come, confirm, and buy with Punta Cana Investments."}
