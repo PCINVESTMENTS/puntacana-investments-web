@@ -105,7 +105,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
 
     return (
         <nav
-            className={`fixed w-full z-50 transition-all duration-300 ${scrolled || isOpen || variant === 'solid'
+            className={`fixed w-full z-50 transition-all duration-300 print:hidden ${scrolled || isOpen || variant === 'solid'
                 ? "bg-primary-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl"
                 : "bg-gradient-to-b from-black/[0.17] to-transparent border-transparent"
                 }`}

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { User, Building2, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 
 export default function DueDiligenceContent() {
@@ -19,7 +20,7 @@ export default function DueDiligenceContent() {
             <div className="max-w-5xl mx-auto space-y-8">
 
                 {/* Back Button */}
-                <div className="flex justify-start">
+                <div className="flex justify-start print:hidden">
                     <Link
                         href={`/${lang}/investments`}
                         className="flex items-center gap-2 text-luxury-gold hover:text-white transition-colors group"
@@ -30,7 +31,18 @@ export default function DueDiligenceContent() {
                 </div>
 
                 {/* Header Section */}
-                <div className="text-center space-y-4 pt-4">
+                <div className="text-center space-y-4 pt-4 print:hidden">
+                    <div className="flex justify-center mb-6">
+                        <div className="relative w-64 h-24">
+                            <Image
+                                src="/form-logo.png"
+                                alt="Punta Cana Investments"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
+                    </div>
                     <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent">
                         Debida Diligencia
                     </h1>
@@ -42,7 +54,7 @@ export default function DueDiligenceContent() {
                 </div>
 
                 {/* Form Type Selector */}
-                <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 print:hidden">
                     <Button
                         onClick={() => setFormType("fisica")}
                         variant={formType === "fisica" ? "default" : "outline"}
