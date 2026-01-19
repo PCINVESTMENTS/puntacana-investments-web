@@ -1,4 +1,4 @@
-"use client";
+
 
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ const getIcon = (iconName: string) => {
     }
 };
 
-export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
     const isEs = lang === 'es';
     const dict = await getDictionary(lang);
