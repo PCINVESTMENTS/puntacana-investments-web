@@ -435,5 +435,94 @@ export default {
         netIncome: "Annual Net Income",
         roi: "Estimated ROI (%)",
         disclaimer: "These figures are projections based on market averages and do not guarantee future returns."
+    },
+    flyAndBuyForm: {
+        title: "Fly & Buy Program Inquiry",
+        subtitle: "Designed to offer you a personalized investment experience.",
+        personalDetails: {
+            title: "Personal Details",
+            name: "Full Name",
+            email: "Email Address",
+            phone: "Phone / WhatsApp",
+            country: "Country of Residence"
+        },
+        objective: {
+            question: "What is the main purpose of your real estate interest?",
+            options: {
+                investment: "Real Estate Investment",
+                secondHome: "Second Home",
+                vacation: "Vacation Use",
+                retirement: "Retirement",
+                mixed: "Investment + Vacation Use",
+                development: "Investment via Real Estate Development Participation",
+                evaluating: "Still Evaluating"
+            }
+        },
+        propertyType: {
+            question: "What type of property are you interested in?",
+            options: {
+                apartment: "Apartment",
+                villa: "Villa",
+                townhouse: "Townhouse",
+                project: "Development Project",
+                airbnb: "Vacation Rental Property (Airbnb)",
+                advisory: "I need advice to define it"
+            }
+        },
+        investmentFocus: {
+            question: "Investment Focus",
+            options: {
+                airbnb: "Vacation Rental (Airbnb)",
+                appreciation: "Medium / Long Term Appreciation",
+                development: "Real Estate Development Participation",
+                diversification: "Wealth Diversification",
+                all: "I want to know available options"
+            }
+        },
+        experience: {
+            question: "Have you invested in real estate before?",
+            options: {
+                local: "Yes, in my country",
+                abroad: "Yes, abroad",
+                firstTime: "No, it would be my first investment",
+                limited: "Limited experience"
+            }
+        },
+        horizon: {
+            question: "What is your timeframe for making a decision?",
+            options: {
+                immediate: "Immediate (0–3 months)",
+                short: "Short term (3–6 months)",
+                medium: "Medium term (6–12 months)",
+                exploratory: "Exploratory"
+            }
+        },
+        flyAndBuy: {
+            visited: "Have you visited Dominican Republic or Punta Cana before?",
+            yes: "Yes",
+            no: "No",
+            motivation: "What motivates you to consider the Fly & Buy program?",
+            options: {
+                meetCountry: "Get to know the country before investing",
+                visitProjects: "Visit projects personally",
+                meetTeam: "Meet Punta Cana Investments",
+                validateLocation: "Validate location and environment",
+                confidence: "Make a decision with more confidence"
+            }
+        },
+        comments: {
+            label: "Additional Comments",
+            placeholder: "Please share more details about your interest: estimated budget, preferred location, investment type, if traveling alone or accompanied..."
+        },
+        submit: "Request Personalized Fly & Buy Advisory",
+        sending: "Sending request...",
+        success: {
+            title: "Request Sent!",
+            message: "Thank you for your interest. One of our senior advisors at Punta Cana Investments will contact you shortly to provide personalized attention."
+        },
+        errors: {
+            required: "This field is required",
+            email: "Invalid email address"
+        }
     }
 } as const

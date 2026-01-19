@@ -436,5 +436,94 @@ export default {
         netIncome: "Ingreso Neto Anual",
         roi: "ROI Estimado (%)",
         disclaimer: "Estas cifras son proyecciones basadas en datos promedio del mercado y no garantizan rendimientos futuros."
+    },
+    flyAndBuyForm: {
+        title: "Consulta Programa Fly & Buy",
+        subtitle: "Diseñado para ofrecerle una experiencia de inversión personalizada.",
+        personalDetails: {
+            title: "Datos Básicos",
+            name: "Nombre Completo",
+            email: "Correo Electrónico",
+            phone: "Teléfono / WhatsApp",
+            country: "País de Residencia"
+        },
+        objective: {
+            question: "¿Cuál es el propósito principal de su interés inmobiliario?",
+            options: {
+                investment: "Inversión inmobiliaria",
+                secondHome: "Segunda vivienda",
+                vacation: "Uso vacacional",
+                retirement: "Retiro",
+                mixed: "Inversión + uso vacacional",
+                development: "Inversión mediante participación en desarrollo inmobiliario",
+                evaluating: "Aún lo estoy evaluando"
+            }
+        },
+        propertyType: {
+            question: "¿Qué tipo de propiedad le interesa?",
+            options: {
+                apartment: "Apartamento",
+                villa: "Villa",
+                townhouse: "Townhouse",
+                project: "Proyecto en desarrollo",
+                airbnb: "Propiedad para renta turística (Airbnb)",
+                advisory: "Deseo asesoría para definirlo"
+            }
+        },
+        investmentFocus: {
+            question: "Enfoque de inversión",
+            options: {
+                airbnb: "Renta turística (Airbnb)",
+                appreciation: "Plusvalía a mediano / largo plazo",
+                development: "Participación en desarrollo inmobiliario",
+                diversification: "Diversificación patrimonial",
+                all: "Deseo conocer las opciones disponibles"
+            }
+        },
+        experience: {
+            question: "¿Ha invertido anteriormente en bienes raíces?",
+            options: {
+                local: "Sí, en mi país",
+                abroad: "Sí, en el extranjero",
+                firstTime: "No, sería mi primera inversión",
+                limited: "Experiencia limitada"
+            }
+        },
+        horizon: {
+            question: "¿En qué plazo estima tomar una decisión?",
+            options: {
+                immediate: "Inmediato (0–3 meses)",
+                short: "Corto plazo (3–6 meses)",
+                medium: "Mediano plazo (6–12 meses)",
+                exploratory: "Exploratorio"
+            }
+        },
+        flyAndBuy: {
+            visited: "¿Ha visitado anteriormente la República Dominicana o Punta Cana?",
+            yes: "Sí",
+            no: "No",
+            motivation: "¿Qué le motiva a considerar el programa Fly & Buy?",
+            options: {
+                meetCountry: "Conocer el país antes de invertir",
+                visitProjects: "Visitar personalmente los proyectos",
+                meetTeam: "Conocer a Punta Cana Investments",
+                validateLocation: "Validar la ubicación y el entorno",
+                confidence: "Tomar una decisión con mayor confianza"
+            }
+        },
+        comments: {
+            label: "Comentarios Adicionales",
+            placeholder: "Por favor, compártanos más detalles sobre su interés: presupuesto estimado, ubicación preferida, tipo de inversión, si viajaría solo o acompañado..."
+        },
+        submit: "Solicitar asesoría personalizada Fly & Buy",
+        sending: "Enviando solicitud...",
+        success: {
+            title: "¡Solicitud Enviada!",
+            message: "Gracias por su interés. Uno de nuestros asesores senior de Punta Cana Investments se pondrá en contacto con usted en breve para brindarle una atención personalizada."
+        },
+        errors: {
+            required: "Este campo es obligatorio",
+            email: "Correo electrónico inválido"
+        }
     }
 } as const

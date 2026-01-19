@@ -158,7 +158,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
 
                                         <div className="mt-10">
                                             <Link
-                                                href={`/${lang}/contact?subject=${program.slug}`}
+                                                href={`/${lang}/fly-and-buy/form`}
                                                 className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl w-full text-center md:w-auto"
                                             >
                                                 {isEs ? "Consultar sobre el programa" : "Inquire about program"}
@@ -235,7 +235,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                             : "Come, confirm, and buy with Punta Cana Investments."}
                     </p>
                     <Link
-                        href={`/${lang}/contact`}
+                        href={`/${lang}/fly-and-buy/form`}
                         className="inline-block bg-white text-black hover:bg-luxury-gold px-10 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-xl hover:scale-105"
                     >
                         {isEs ? "Agendar Mi Visita Ahora" : "Schedule My Visit Now"}
