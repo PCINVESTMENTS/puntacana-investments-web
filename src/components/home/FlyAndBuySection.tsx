@@ -47,7 +47,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                     {flyAndBuyPrograms.map((program, index) => (
                         <ScrollReveal key={program.slug} delay={index * 0.2}>
                             <Link href={`/${lang}/fly-and-buy#${program.slug}`} className="group block h-full">
-                                <div className="bg-primary-black border border-white/10 rounded-sm overflow-hidden h-full hover:border-luxury-gold/50 transition-all duration-300 flex flex-col hover:shadow-2xl hover:-translate-y-2 relative">
+                                <div className="bg-primary-black border-2 border-luxury-gold/30 rounded-sm overflow-hidden h-full hover:border-luxury-gold transition-all duration-300 flex flex-col hover:shadow-2xl hover:-translate-y-2 relative">
                                     {/* Image Area */}
                                     <div className="relative h-64 overflow-hidden">
                                         <Image
