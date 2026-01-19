@@ -78,7 +78,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Programs Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-20 lg:space-y-32">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-20 space-y-16 lg:space-y-32">
                 {flyAndBuyPrograms.map((program, index) => {
                     const isEven = index % 2 === 0;
                     return (
@@ -86,7 +86,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                             <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-20 items-stretch`}>
 
                                 {/* Image Column */}
-                                <div className="lg:w-1/2 relative min-h-[500px] lg:min-h-full">
+                                <div className="lg:w-1/2 relative h-72 md:h-96 lg:h-auto lg:min-h-full">
                                     <div className="sticky top-32 h-full max-h-[80vh] w-full rounded-sm overflow-hidden border border-white/10 shadow-2xl group">
                                         <Image
                                             src={program.heroImage}
