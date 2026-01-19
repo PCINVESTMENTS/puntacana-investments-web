@@ -18,7 +18,7 @@ interface FlyAndBuySectionProps {
 
 export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) {
     return (
-        <section id="fly-and-buy" className="py-20 bg-dark-gray relative overflow-hidden">
+        <section id="fly-and-buy" className="py-20 bg-primary-black relative overflow-hidden">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-luxury-gold/5 blur-3xl rounded-full translate-x-1/2 pointer-events-none"></div>
 
