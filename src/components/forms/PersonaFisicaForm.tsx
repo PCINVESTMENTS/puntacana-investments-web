@@ -438,7 +438,7 @@ export function PersonaFisicaForm() {
 
                 <FormSection icon={<CheckCircle size={20} />} title="Declaraciones y Autorización / Declarations and Authorization">
                     <div className="space-y-4">
-                        <FormField control={form.control} name="declaration1" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Declaro que la información contenida en este formulario es verdadera, completa y actualizada. / I declare that the information contained in this form is true, complete, and up-to-date.</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="declaration1" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Declaro que la información contenida en este formulario es verdadera, completa y actualizada. / I declare that the information contained in this form is true, complete, and up-to-date.</FormLabel></div><FormMessage /></FormItem>)} />
                         <FormField
                             control={form.control}
                             name="declarationLicitFunds"
@@ -446,8 +446,8 @@ export function PersonaFisicaForm() {
                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                                     <FormControl>
                                         <Checkbox
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
+                                            checked={!!field.value}
+                                            onChange={field.onChange}
                                         />
                                     </FormControl>
                                     <div className="space-y-1 leading-none">
@@ -463,8 +463,8 @@ export function PersonaFisicaForm() {
                                 </FormItem>
                             )}
                         />
-                        <FormField control={form.control} name="authorization" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresa e irrevocablemente a Punta Cana Real Estate and Investment U&E S.R.L. a realizar el análisis y las verificaciones que considere necesarias... / I expressly and irrevocably authorize Punta Cana Real Estate and Investment U&E S.R.L. to carry out the analysis and verifications it deems necessary...</FormLabel></div><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="declaration4" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresamente compartir información con instituciones financieras dominicanas y autoridades competentes según leyes vigentes. / I expressly authorize the sharing of information with Dominican financial institutions and competent authorities according to current laws.</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="authorization" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresa e irrevocablemente a Punta Cana Real Estate and Investment U&E S.R.L. a realizar el análisis y las verificaciones que considere necesarias... / I expressly and irrevocably authorize Punta Cana Real Estate and Investment U&E S.R.L. to carry out the analysis and verifications it deems necessary...</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="declaration4" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresamente compartir información con instituciones financieras dominicanas y autoridades competentes según leyes vigentes. / I expressly authorize the sharing of information with Dominican financial institutions and competent authorities according to current laws.</FormLabel></div><FormMessage /></FormItem>)} />
                     </div>
                 </FormSection>
 

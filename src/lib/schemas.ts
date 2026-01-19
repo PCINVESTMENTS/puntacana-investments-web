@@ -80,10 +80,10 @@ export const personaFisicaSchema = z.object({
     workLetterFile: fileSchema,
 
     // Declarations
-    declaration1: z.boolean().default(false),
-    declarationLicitFunds: z.boolean().default(false),
-    authorization: z.boolean().default(false),
-    declaration4: z.boolean().default(false),
+    declaration1: z.boolean().optional(),
+    declarationLicitFunds: z.boolean().optional(),
+    authorization: z.boolean().optional(),
+    declaration4: z.boolean().optional(),
 
     signature: z.string().min(1, "Firma requerida"),
 });
@@ -128,10 +128,10 @@ export const personaJuridicaSchema = z.object({
     financialStatementsFile: fileSchema,
 
     // Declarations
-    declaration: z.boolean().default(false),
-    declaration2: z.boolean().default(false),
-    authorization: z.boolean().default(false),
-    declaration4: z.boolean().default(false),
+    declaration: z.boolean().optional(),
+    declaration2: z.boolean().optional(),
+    authorization: z.boolean().optional(),
+    declaration4: z.boolean().optional(),
 
     signature: z.string().min(1, "Firma requerida"),
 });
