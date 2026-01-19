@@ -27,7 +27,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
     const isEs = lang === 'es';
 
     return (
-        <main className="min-h-screen bg-primary-black text-white pt-24">
+        <main className="min-h-screen bg-primary-black text-white">
 
             {/* Hero Section */}
             <div className="relative h-[60vh] max-h-[800px] overflow-hidden">
