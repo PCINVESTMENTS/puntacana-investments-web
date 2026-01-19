@@ -106,20 +106,20 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                 {/* Content Column */}
                                 <div className="lg:w-1/2 flex flex-col justify-center">
                                     <ScrollReveal>
-                                        <h2 className="text-4xl md:text-5xl font-serif font-bold text-luxury-gold mb-2">
+                                        <h2 className="text-4xl md:text-5xl font-serif font-bold text-luxury-gold mb-1 md:mb-2">
                                             {program.title[isEs ? 'es' : 'en']}
                                         </h2>
-                                        <h3 className="text-xl text-white/90 font-medium mb-6 uppercase tracking-wide">
+                                        <h3 className="text-xl text-white/90 font-medium mb-4 uppercase tracking-wide">
                                             {program.subtitle[isEs ? 'es' : 'en']}
                                         </h3>
-                                        <p className="text-gray-300 text-lg leading-relaxed mb-10 border-l-2 border-luxury-gold/50 pl-6">
+                                        <p className="text-gray-300 text-lg leading-relaxed mb-6 border-l-2 border-luxury-gold/50 pl-6">
                                             {program.description[isEs ? 'es' : 'en']}
                                         </p>
 
                                         {/* Includes Grid */}
-                                        <div className="grid grid-cols-1 gap-8 mb-10">
+                                        <div className="grid grid-cols-1 gap-4 lg:gap-8 mb-6 lg:mb-10">
                                             {program.includes.map((section, idx) => (
-                                                <div key={idx} className="bg-white/5 p-6 rounded-sm border border-white/5 hover:border-luxury-gold/30 transition-colors">
+                                                <div key={idx} className="bg-white/5 p-4 lg:p-6 rounded-sm border border-white/5 hover:border-luxury-gold/30 transition-colors">
                                                     <div className="flex items-center gap-3 mb-4 text-luxury-gold">
                                                         <span className="text-xl">{getIcon(section.icon || 'check')}</span>
                                                         <h4 className="font-bold uppercase tracking-wider text-sm">
@@ -139,7 +139,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                         </div>
 
                                         {/* Conditions & Pricing */}
-                                        <div className="bg-luxury-gold/10 border border-luxury-gold/20 p-8 rounded-sm">
+                                        <div className="bg-luxury-gold/10 border border-luxury-gold/20 p-6 lg:p-8 rounded-sm">
                                             <h4 className="text-luxury-gold font-bold uppercase tracking-wider text-sm mb-4">
                                                 {isEs ? "Condiciones Económicas" : "Economic Conditions"}
                                             </h4>
@@ -239,8 +239,8 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             <section className="py-8 lg:py-24 bg-primary-black relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5"></div>
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-                    <FaPlane className="text-5xl text-luxury-gold mx-auto mb-6 lg:mb-8 animate-pulse" />
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 lg:mb-8 leading-tight">
+                    <FaPlane className="text-5xl text-luxury-gold mx-auto mb-4 lg:mb-8 animate-pulse" />
+                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4 lg:mb-8 leading-tight">
                         &quot;{isEs
                             ? "Fly & Buy no es un viaje, es una decisión inteligente."
                             : "Fly & Buy is not just a trip, it's a smart decision."}&quot;
