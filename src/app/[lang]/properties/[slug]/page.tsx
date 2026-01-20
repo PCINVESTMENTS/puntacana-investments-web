@@ -46,6 +46,10 @@ function mapSanityProperty(data: any): Property {
             title: { en: stage.titleEn, es: stage.titleEs },
             description: { en: stage.descriptionEn, es: stage.descriptionEs },
             status: stage.status
+        })),
+        detailedSections: data.detailedSections?.map((section: any) => ({
+            title: { en: section.titleEn, es: section.titleEs },
+            content: { en: section.contentEn, es: section.contentEs }
         }))
     };
 }
@@ -251,6 +255,22 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 </ReactMarkdown>
                             </div>
                         </div>
+
+                        {/* Detailed Sections (e.g. Growth Developments) */}
+                        {property.detailedSections && property.detailedSections.length > 0 && (
+                            <div className="space-y-8">
+                                {property.detailedSections.map((section, idx) => (
+                                    <div key={idx} className="bg-white/5 p-8 rounded border border-luxury-gold/20">
+                                        <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-4 uppercase tracking-wider">
+                                            {section.title[lang as 'en' | 'es']}
+                                        </h2>
+                                        <p className="text-gray-300 leading-relaxed text-lg">
+                                            {section.content[lang as 'en' | 'es']}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
 
                         {/* Gallery Section */}
                         {galleryImages.length > 0 && (
