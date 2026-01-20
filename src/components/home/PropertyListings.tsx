@@ -317,6 +317,13 @@ function PropertyListingsContent({
                                             {/* Compare Toggle */}
                                             <CompareToggle property={prop} />
 
+                                            {/* Pre-Launch Badge */}
+                                            {prop.preLaunch && (
+                                                <div className="absolute bottom-4 left-16 z-20 bg-emerald-600 text-white px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg ml-2">
+                                                    Pre-Launch
+                                                </div>
+                                            )}
+
                                             {/* Status Badge */}
                                             <div className={`absolute top-4 right-4 px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg z-10 ${prop.status === 'sale'
                                                 ? 'bg-luxury-gold text-black'

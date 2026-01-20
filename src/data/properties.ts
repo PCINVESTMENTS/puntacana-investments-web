@@ -31,6 +31,7 @@ export interface Property {
     videoUrl?: string;
     virtualTourUrl?: string;
     featured?: boolean;
+    preLaunch?: boolean;
     coordinates?: {
         lat: number;
         lng: number;
@@ -1845,10 +1846,13 @@ Cap Cana is one of the most exclusive tourist and residential developments in th
 - Over 15 restaurants within the complex
 - Cap Cana Marina and Los Establos
 - Medical center, pharmacy, mini market, and banks
-- EV charging stations`,
+- Estaciones de carga para vehículos eléctricos (EV)
+
+## Early Investment Opportunities (Pre-Launch)
+"Invest at the origin of success. Acquiring a property off-plan allows you to secure the most competitive price in the market and maximize appreciation from day one. Be part of the most innovative projects in Punta Cana before construction begins, with flexible payment plans and the possibility of choosing the most privileged locations within the development."`,
             es: `Descubre el Lujo sin Límites: Tu Villa Exclusiva en Cap Cana
         
-Vive donde el lujo, la naturaleza y la sofisticación se encuentran. Esta impresionante villa de alto nivel en Cap Cana ha sido diseñada para quienes exigen excelencia, privacidad y una experiencia residencial sin comparación en el Caribe.
+Vive donde el lujo, la naturaleza y la sofisticación se encuentran. Esta impresionante villa de alto nivel en Cap Cana ha sido diseñado para quienes exigen excelencia, privacidad y una experiencia residencial sin comparación en el Caribe.
 
 Una propiedad que integra arquitectura contemporánea, espacios sociales amplios y una conexión armoniosa con el entorno, convirtiéndola tanto en un hogar excepcional como en una inversión inmobiliaria estratégica.
 
@@ -1901,7 +1905,10 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
 - Más de 15 restaurantes dentro del complejo
 - Marina Cap Cana y Los Establos
 - Centro médico, farmacia, mini market y bancos
-- Estaciones de carga para vehículos eléctricos (EV)`
+- Estaciones de carga para vehículos eléctricos (EV)
+
+## Oportunidades de Inversión Temprana (Pre-Launch)
+"Invierta en el origen del éxito. Adquirir una propiedad en plano le permite asegurar el precio más competitivo del mercado y maximizar la plusvalía desde el primer día. Sea parte de los proyectos más innovadores de Punta Cana antes de que inicie la construcción, con planes de pago flexibles y la posibilidad de elegir las ubicaciones más privilegiadas dentro del desarrollo."`
         },
         seo: {
             title: {
@@ -1918,6 +1925,7 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
             }
         },
         featured: true,
+        preLaunch: true,
         coordinates: { lat: 18.50, lng: -68.38 }
     },
     {
@@ -2018,7 +2026,10 @@ Luxury Villa Frame represents:
 - ✔ Strategic location within a consolidated destination
 
 **Schedule your Private Presentation**
-Luxury Villa Frame is not just a villa, it is an exclusive residential experience in one of the Caribbean's most prestigious destinations. Contact us today and discover why Cap Cana is the place where luxury makes sense.`,
+Luxury Villa Frame is not just a villa, it is an exclusive residential experience in one of the Caribbean's most prestigious destinations. Contact us today and discover why Cap Cana is the place where luxury makes sense.
+
+## Early Investment Opportunities (Pre-Launch)
+"Invest at the origin of success. Acquiring a property off-plan allows you to secure the most competitive price in the market and maximize appreciation from day one. Be part of the most innovative projects in Punta Cana before construction begins, with flexible payment plans and the possibility of choosing the most privileged locations within the development."`,
             es: `Luxury Villa Frame: Diseño Contemporáneo en el Alma de Cap Cana
 
 Descubre Luxury Villa Frame, una residencia de lujo que redefine el concepto de elegancia moderna en Cap Cana, uno de los destinos residenciales y turísticos más exclusivos del Caribe.
@@ -2089,7 +2100,10 @@ Luxury Villa Frame representa:
 - ✔ Ubicación estratégica dentro de un destino consolidado
 
 **Agenda tu Presentación Privada**
-Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiva en uno de los destinos más prestigiosos del Caribe. Contáctanos hoy y descubre por qué Cap Cana es el lugar donde el lujo cobra sentido.`
+Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiva en uno de los destinos más prestigiosos del Caribe. Contáctanos hoy y descubre por qué Cap Cana es el lugar donde el lujo cobra sentido.
+
+## Oportunidades de Inversión Temprana (Pre-Launch)
+"Invierta en el origen del éxito. Adquirir una propiedad en plano le permite asegurar el precio más competitivo del mercado y maximizar la plusvalía desde el primer día. Sea parte de los proyectos más innovadores de Punta Cana antes de que inicie la construcción, con planes de pago flexibles y la posibilidad de elegir las ubicaciones más privilegiadas dentro del desarrollo."`
         },
         seo: {
             title: {
@@ -2106,6 +2120,7 @@ Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiv
             }
         },
         featured: true,
+        preLaunch: true,
         coordinates: { lat: 18.52, lng: -68.39 }
     }
 ];
