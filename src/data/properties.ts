@@ -2359,44 +2359,193 @@ Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiv
     },
     {
         id: 1000,
-        slug: "placeholder-property-punta-cana",
-        title: "New Development | Coming Soon",
+        slug: "proyecto-villas-perla-bavaro-punta-cana",
+        title: "Proyecto Villas Perla | Modernidad, Ubicación Estratégica y Alta Rentabilidad en Bávaro – Punta Cana",
         location: "bavaro",
         locationLabel: "Bávaro",
-        type: "condo",
+        type: "villa",
         status: "sale",
         price: 0,
-        image: "/images/placeholder.jpg",
-        beds: 2,
-        baths: 2,
-        area: 120,
+        image: "/images/properties/villas-perla/image-1.jpg",
+        beds: 3,
+        baths: 3,
+        area: 0,
         gallery: [
-            "/images/placeholder.jpg"
+            "/images/properties/villas-perla/image-1.jpg",
+            "/images/properties/villas-perla/image-2.jpg",
+            "/images/properties/villas-perla/image-3.jpg",
+            "/images/properties/villas-perla/image-4.jpg",
+            "/images/properties/villas-perla/image-5.jpg"
         ],
         features: {
-            en: ["Coming Soon", "Prime Location"],
-            es: ["Próximamente", "Ubicación Privilegiada"]
+            en: ["Strategic Location", "Gated Community", "24/7 Security", "Terrace & Private Yard", "Solar Panel Ready", "Carport for 2 Vehicles"],
+            es: ["Ubicación Estratégica", "Proyecto Cerrado", "Seguridad 24/7", "Terraza y Patio Privado", "Pre-instalación Paneles Solares", "Marquesina 2 Vehículos"]
         },
         description: {
-            en: "New development coming soon to Punta Cana. Stay tuned for details.",
-            es: "Nuevo desarrollo próximamente en Punta Cana. Manténgase atento para más detalles."
+            en: `Villas Perla: Invest Today in a Modern Villa in a High-Growth Area
+
+Villas Perla Project is an exclusive residential development located within El Ejecutivo, one of the most consolidated private residential areas in Bávaro Punta Cana.
+
+This project has been designed for those seeking to secure an excellent location, high profitability potential, and a modern, functional, and well-connected villa, ideal for both living and investing.
+
+## Strategic Location – El Ejecutivo, Bávaro Punta Cana
+- **Residential:** El Ejecutivo
+- **Zone:** Bávaro – Punta Cana
+- **Type:** Gated community with 24/7 security
+
+**Key Connectivity:**
+- 10 minutes from Bávaro beaches
+- 10 minutes from Downtown Punta Cana
+- 20 minutes from Punta Cana International Airport
+- 5 minutes from international hospitals (Punta Cana Medical Center and IMG)
+
+A location that guarantees high rental demand, ease of resale, and sustained value growth.
+
+## Project Concept
+- Exclusive project of 6 modern villas
+- Contemporary, elegant, and functional design
+- Large windows with natural lighting and cross ventilation
+- Villas prepared for:
+  - Split type air conditioners
+  - Solar panel installation
+  - Private terrace and green patio
+
+*The project is currently in the development stage, allowing access to preferential prices and staggered payment plans.*
+
+## Villa Distribution
+**First Level**
+- Living room
+- Dining room
+- Modular kitchen with breakfast bar
+- Storage closet
+- Laundry area
+- Half bathroom (Powder room)
+- Terrace and private patio
+- Carport for 2 vehicles
+- *Optional (additional cost):* Pool or Jacuzzi
+
+**Second Level**
+- 3 bedrooms
+- Master bedroom with:
+  - En-suite bathroom
+  - Walk-in closet
+  - Private terrace
+- 1 additional independent bathroom
+
+## Key Project Advantages
+- ✔ Strategic location in Bávaro – Punta Cana
+- ✔ Gated project with security
+- ✔ High demand for residential and vacation rentals
+- ✔ Excellent price-location ratio
+- ✔ Short and medium-term appreciation potential
+
+## Flexible Payment Plan
+- **US$ 5,000** – Reservation
+- **40%** – Contract signing (14 days)
+- **50%** – During project development
+- **10%** – Upon delivery
+
+*Estimated delivery: 6 to 12 months*
+*Discounts available for accelerated payment plans*
+
+*(Renders and illustrative images. Finishes and furniture may vary.)*
+
+## High Profitability and Investment Security
+Villas Perla represents a solid opportunity for:
+- Investors looking to enter the project early
+- End buyers wishing to secure location
+- Clients who value liquidity, demand, and appreciation`,
+
+            es: `Villas Perla: Invierte Hoy en una Villa Moderna en una Zona de Alto Crecimiento
+
+Proyecto Villas Perla es un desarrollo residencial exclusivo ubicado dentro de El Ejecutivo, uno de los residenciales privados más consolidados de Bávaro Punta Cana.
+
+Este proyecto ha sido diseñado para quienes buscan asegurar una excelente ubicación, alto potencial de rentabilidad y una villa moderna, funcional y bien conectada, ideal tanto para vivir como para invertir.
+
+## Ubicación Estratégica – El Ejecutivo, Bávaro Punta Cana
+- **Residencial:** El Ejecutivo
+- **Zona:** Bávaro – Punta Cana
+- **Tipo:** Proyecto cerrado con seguridad 24/7
+
+**Conectividad Clave:**
+- 10 minutos de las playas de Bávaro
+- 10 minutos de Downtown Punta Cana
+- 20 minutos del Aeropuerto Internacional de Punta Cana
+- 5 minutos de hospitales internacionales (Centro Médico Punta Cana e IMG)
+
+Una ubicación que garantiza alta demanda de alquiler, facilidad de reventa y crecimiento sostenido de valor.
+
+## Concepto del Proyecto Villas Perla
+- Proyecto exclusivo de 6 villas modernas
+- Diseño contemporáneo, elegante y funcional
+- Amplios ventanales con iluminación natural y ventilación cruzada
+- Villas preparadas para:
+  - Aires acondicionados tipo split
+  - Instalación de paneles solares
+  - Terraza privada y patio verde
+
+*El proyecto se encuentra actualmente en etapa de desarrollo, lo que permite acceder a precios preferenciales y planes de pago escalonados.*
+
+## Distribución de la Villa
+**Primer Nivel**
+- Sala
+- Comedor
+- Cocina modular con desayunador
+- Clóset de almacenamiento y lavandería
+- Área de lavado
+- Baño de visitas
+- Terraza y patio privado
+- Marquesina para 2 vehículos
+- *Opcional (costo adicional):* Piscina o jacuzzi
+
+**Segundo Nivel**
+- 3 habitaciones
+- Habitación principal con:
+  - Baño en suite
+  - Walk-in closet
+  - Terraza privada
+- 1 baño adicional independiente
+
+## Ventajas Clave del Proyecto
+- ✔ Ubicación estratégica en Bávaro – Punta Cana
+- ✔ Proyecto cerrado con seguridad
+- ✔ Alta demanda de alquiler residencial y vacacional
+- ✔ Excelente relación precio–ubicación
+- ✔ Potencial de valorización a corto y mediano plazo
+
+## Plan de Pago Flexible
+- **US$ 5,000** – Reserva
+- **40 %** – Firma de contrato (14 días)
+- **50 %** – Durante el desarrollo del proyecto
+- **10 %** – A la entrega
+
+*Entrega estimada: 6 a 12 meses*
+*Descuentos disponibles para planes de pago acelerados*
+
+*(Renders e imágenes ilustrativas. Acabados y mobiliario pueden variar.)*
+
+## Alta Rentabilidad y Seguridad de Inversión
+Villas Perla representa una oportunidad sólida para:
+- Inversionistas que buscan ingresar temprano al proyecto
+- Compradores finales que desean asegurar ubicación
+- Clientes que valoran liquidez, demanda y plusvalía`
         },
         seo: {
             title: {
-                en: "New Development Coming Soon | Punta Cana Investments",
-                es: "Nuevo Desarrollo Próximamente | Punta Cana Investments"
+                en: "Project Villas Perla | Modern Villas in Bávaro Punta Cana",
+                es: "Proyecto Villas Perla | Villas Modernas en Bávaro Punta Cana"
             },
             description: {
-                en: "Exciting new real estate opportunity coming soon to Punta Cana.",
-                es: "Emocionante nueva oportunidad inmobiliaria próximamente en Punta Cana."
+                en: "Villas Perla Project in Bávaro Punta Cana. Modern villas with private patio and excellent location. Ideal for living or investing.",
+                es: "Proyecto Villas Perla en Bávaro Punta Cana. Villas modernas con patio privado y excelente ubicación. Ideal para vivir o invertir."
             },
             keywords: {
-                en: ["Punta Cana Real Estate", "Coming Soon"],
-                es: ["Bienes Raíces Punta Cana", "Próximamente"]
+                en: ["villas in Bávaro Punta Cana", "Villas Perla Project", "modern villas in Punta Cana", "real estate investment in Bávaro", "houses for sale Punta Cana"],
+                es: ["villas en Bávaro Punta Cana", "Proyecto Villas Perla", "villas modernas en Punta Cana", "inversión inmobiliaria en Bávaro", "casas en venta Punta Cana"]
             }
         },
         featured: false,
-        preLaunch: true,
+        preLaunch: false,
         preConstruction: true,
         detailedSections: [
             {
