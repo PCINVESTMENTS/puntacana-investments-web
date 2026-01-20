@@ -2613,6 +2613,62 @@ Villas Perla representa una oportunidad sólida para:
             }
         ],
         coordinates: { lat: 18.55, lng: -68.42 }
+    },
+    {
+        id: 1002,
+        slug: "exclusive-interiors-coming-soon",
+        title: "Exclusive Interiors | Coming Soon",
+        location: "bavaro",
+        locationLabel: "Bávaro",
+        type: "villa",
+        status: "sale",
+        price: 0,
+        image: "/images/properties/placeholder-1002/image-1.png",
+        beds: 3,
+        baths: 3,
+        area: 0,
+        gallery: [
+            "/images/properties/placeholder-1002/image-1.png",
+            "/images/properties/placeholder-1002/image-2.png",
+            "/images/properties/placeholder-1002/image-3.png",
+            "/images/properties/placeholder-1002/image-4.png",
+            "/images/properties/placeholder-1002/image-5.png"
+        ],
+        features: {
+            en: ["Modern Interiors", "Coming Soon"],
+            es: ["Interiores Modernos", "Próximamente"]
+        },
+        description: {
+            en: "Exclusive new property with modern interiors coming soon to Punta Cana.",
+            es: "Exclusiva nueva propiedad con interiores modernos próximamente en Punta Cana."
+        },
+        seo: {
+            title: {
+                en: "Exclusive Interiors Coming Soon | Punta Cana Investments",
+                es: "Interiores Exclusivos Próximamente | Punta Cana Investments"
+            },
+            description: {
+                en: "New luxury property with stunning interiors coming soon.",
+                es: "Nueva propiedad de lujo con impresionantes interiores próximamente."
+            },
+            keywords: {
+                en: ["Punta Cana Real Estate", "Luxury Interiors"],
+                es: ["Bienes Raíces Punta Cana", "Interiores de Lujo"]
+            }
+        },
+        featured: false,
+        preLaunch: true,
+        preConstruction: true,
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ],
+        coordinates: { lat: 18.55, lng: -68.42 }
     }
 ];
 
