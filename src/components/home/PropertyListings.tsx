@@ -330,10 +330,13 @@ function PropertyListingsContent({
                                         </div>
 
                                         <div className="p-8 relative">
-                                            {/* Pre-Construction Badge - Mirrored to Price */}
+                                            {/* Pre-Construction / Pre-Sales Badge */}
                                             {(prop.preLaunch || prop.preConstruction) && (
                                                 <div className="absolute -top-6 left-2 md:left-8 bg-emerald-600 text-white font-bold px-2 md:px-4 py-2 shadow-lg text-[10px] md:text-sm z-30 uppercase tracking-tight md:tracking-wider">
-                                                    {lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción'}
+                                                    {prop.preConstruction
+                                                        ? (lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción')
+                                                        : (lang === 'en' ? 'Pre-Sales' : 'Pre-Ventas')
+                                                    }
                                                 </div>
                                             )}
 

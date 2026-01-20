@@ -2142,6 +2142,16 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
         },
         featured: true,
         preLaunch: true,
+        preConstruction: false,
+        detailedSections: [
+            {
+                title: { en: "Early Investment Opportunities (Pre-Sales)", es: "Oportunidades de Inversión Temprana (Pre-Ventas)" },
+                content: {
+                    en: "Invest at the origin of success. Acquiring a property off-plan allows you to secure the most competitive price in the market and maximize appreciation from day one. Be part of the most innovative projects in Punta Cana before construction begins, with flexible payment plans and the possibility of choosing the most privileged locations within the development.",
+                    es: "Invierta en el origen del éxito. Adquirir una propiedad en plano le permite asegurar el precio más competitivo del mercado y maximizar la plusvalía desde el primer día. Sea parte de los proyectos más innovadores de Punta Cana antes de que inicie la construcción, con planes de pago flexibles y la posibilidad de elegir las ubicaciones más privilegiadas dentro del desarrollo."
+                }
+            }
+        ],
         coordinates: { lat: 18.50, lng: -68.38 }
     },
     {
@@ -2335,6 +2345,16 @@ Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiv
         },
         featured: true,
         preLaunch: true,
+        preConstruction: false,
+        detailedSections: [
+            {
+                title: { en: "Early Investment Opportunities (Pre-Sales)", es: "Oportunidades de Inversión Temprana (Pre-Ventas)" },
+                content: {
+                    en: "Invest at the origin of success. Acquiring a property off-plan allows you to secure the most competitive price in the market and maximize appreciation from day one. Be part of the most innovative projects in Punta Cana before construction begins, with flexible payment plans and the possibility of choosing the most privileged locations within the development.",
+                    es: "Invierta en el origen del éxito. Adquirir una propiedad en plano le permite asegurar el precio más competitivo del mercado y maximizar la plusvalía desde el primer día. Sea parte de los proyectos más innovadores de Punta Cana antes de que inicie la construcción, con planes de pago flexibles y la posibilidad de elegir las ubicaciones más privilegiadas dentro del desarrollo."
+                }
+            }
+        ],
         coordinates: { lat: 18.52, lng: -68.39 }
     }
 ];
