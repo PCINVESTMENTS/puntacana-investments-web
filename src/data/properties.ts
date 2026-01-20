@@ -1922,47 +1922,184 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
     },
     {
         id: 999,
-        slug: "placeholder-luxury-condo-beachfront-living",
-        title: "Placeholder | Luxury Condo Beachfront Living",
-        location: "puntacana",
-        locationLabel: "Punta Cana Beach Resort",
-        type: "condo",
+        slug: "luxury-villa-frame-cap-cana",
+        title: "Luxury Villa Frame en Cap Cana | Arquitectura, Exclusividad y Estilo de Vida Premium",
+        location: "capcana",
+        locationLabel: "Cap Cana",
+        type: "villa",
         status: "sale",
         price: 450000,
-        image: "/images/placeholder-2.png",
+        image: "/images/luxury-villa-frame-cap-cana.jpg",
         beds: 3,
-        baths: 3,
-        area: 220,
+        baths: 4,
+        area: 927,
         gallery: [
-            "/images/placeholder-2.png",
-            "/images/placeholder-1.png"
+            "/images/luxury-villa-frame-cap-cana.jpg"
         ],
         features: {
-            en: ["Beachfront", "Concierge Service", "Rooftop Lounge", "Private Beach Club", "Underground Parking", "High ROI Potential", "Fully Furnished"],
-            es: ["Frente a la Playa", "Servicio de Concierge", "Lounge en Azotea", "Club de Playa Privado", "Parqueo Soterrado", "Alto Potencial ROI", "Totalmente Amueblado"]
+            en: ["Construction: 927.22 m²", "Lot: 450-500 m²", "3 Bedrooms with ensuite", "Convertible Studio", "Family Room", "Private Pool", "BBQ Area", "Parking for 2-4 vehicles", "Maid's Quarters", "Eden Roc Beach Club Access", "Punta Espada Golf Access"],
+            es: ["Construcción: 927.22 m²", "Solar: 450-500 m²", "3 Dormitorios con baño", "Estudio convertible", "Family Room", "Piscina Privada", "Área de BBQ", "Marquesina 2-4 vehículos", "Cuarto de Servicio", "Acceso Eden Roc Beach Club", "Acceso Punta Espada Golf"]
         },
         description: {
-            en: `Sophisticated Beachfront Condo
+            en: `Luxury Villa Frame: Contemporary Design in the Soul of Cap Cana
 
-Experience the ultimate in coastal luxury with this exquisitely designed condo. Featuring spacious interiors, high-end finishes, and direct access to pristine white sand beaches, this property is perfect for a vacation retreat or a high-yield rental investment.
+Discover Luxury Villa Frame, a luxury residence that redefines the concept of modern elegance in Cap Cana, one of the most exclusive residential and tourist destinations in the Caribbean.
 
-## Property Highlights
-- **Interior:** Open concept living with designer furniture
-- **Location:** Steps away from the turquoise waters
-- **Investment:** Proven track record for vacation rentals
-- **Lifestyle:** Resort-style living with concierge and security`,
-            es: `Sofisticado Condominio Frente a la Playa
+This project combines avant-garde architecture, noble materials, and an intelligent distribution that integrates comfort, privacy, and social life into a single space designed for those seeking excellence.
 
-Experimente lo último en lujo costero con este condominio exquisitamente diseñado. Con interiores espaciosos, acabados de alta gama y acceso directo a prístinas playas de arena blanca, esta propiedad es perfecta como retiro vacacional o inversión de alta rentabilidad.
+## Project General Information
+- **Project:** Luxury Villa Frame
+- **Developer:** Grupo Joseda
+- **Location:** Cap Cana, Dominican Republic
 
-## Destacados de la Propiedad
-- **Interior:** Sala de concepto abierto con mobiliario de diseñador
-- **Ubicación:** A pasos de las aguas turquesas
-- **Inversión:** Historial probado en alquileres vacacionales
-- **Estilo de Vida:** Vida estilo resort con concierge y seguridad`
+**The Destination**
+Cap Cana is a world-class urban, tourist, and hotel enclave, recognized as one of the best destinations in the Caribbean, with top-tier infrastructure, private security, and a highly solid real estate projection.
+
+**Architectural Concept**
+- Two-level villa
+- Fusion of modern elegance with natural warmth
+- Design combining stone, wood, and steel
+- Strategically located "in the soul of Cap Cana"
+
+## Villa Technical Specifications
+**Dimensions**
+- **Construction Area:** 927.22 m²
+- **Lot Area:** 450 m² – 500 m², plus integrated social area
+
+A residence designed to offer spaciousness, functionality, and a high-level residential experience.
+
+## Distribution and Amenities by Level
+**Level 1 – Social and Functional Life**
+- Studio convertible into guest bedroom
+- Full guest bathroom, integrated into the studio
+- Open concept main living room
+- Spacious dining room
+- Cold kitchen
+- **Service Area:** Integrated hot kitchen, laundry area, maid's quarters with bathroom
+
+**Level 2 – Private Area**
+- 3 bedrooms, each with private bathroom and walk-in closet
+- Office-style studio
+- Open concept Family Room
+
+**Exterior Area – Resort-Style Experience**
+- Private pool
+- Spacious terrace
+- BBQ area with mini bar
+- Carport for 2 to 4 vehicles
+
+## Exclusive Amenities and Access
+Living in Luxury Villa Frame means enjoying a privileged lifestyle within Cap Cana.
+
+**Owner Benefits:**
+- Membership included and exclusive access to **Eden Roc Beach Club**
+- Access to **Juanillo Beach**
+- Proximity to **Punta Espada Golf Club**
+- **Cap Cana Heritage School**
+- **El Dorado Water Park**
+- **Scape Park at Cap Cana**
+- **Green Village Clubhouse**
+- Over 15 restaurants within Cap Cana
+- Full access to the complex's beaches and internal facilities
+
+## A High-Value Investment in Cap Cana
+Luxury Villa Frame represents:
+- ✔ Ideal residence for family use or second home
+- ✔ Excellent option for luxury real estate investment
+- ✔ High demand in premium rentals
+- ✔ Strong medium and long-term appreciation
+- ✔ Strategic location within a consolidated destination
+
+**Schedule your Private Presentation**
+Luxury Villa Frame is not just a villa, it is an exclusive residential experience in one of the Caribbean's most prestigious destinations. Contact us today and discover why Cap Cana is the place where luxury makes sense.`,
+            es: `Luxury Villa Frame: Diseño Contemporáneo en el Alma de Cap Cana
+
+Descubre Luxury Villa Frame, una residencia de lujo que redefine el concepto de elegancia moderna en Cap Cana, uno de los destinos residenciales y turísticos más exclusivos del Caribe.
+
+Este proyecto combina arquitectura de vanguardia, materiales nobles y una distribución inteligente que integra confort, privacidad y vida social en un solo espacio diseñado para quienes buscan excelencia.
+
+## Información General del Proyecto
+- **Proyecto:** Luxury Villa Frame
+- **Desarrollador:** Grupo Joseda
+- **Ubicación:** Cap Cana, República Dominicana
+
+**El Destino**
+Cap Cana es un enclave urbano, turístico y hotelero de clase mundial, reconocido como uno de los mejores destinos del Caribe, con infraestructura de primer nivel, seguridad privada y una proyección inmobiliaria altamente sólida.
+
+**Concepto Arquitectónico**
+- Villa de dos niveles
+- Fusión de elegancia moderna con calidez natural
+- Diseño que combina piedra, madera y acero
+- Ubicada estratégicamente “en el alma de Cap Cana”
+
+## Especificaciones Técnicas de la Villa
+**Dimensiones**
+- **Área de construcción:** 927.22 m²
+- **Área de solar:** 450 m² – 500 m², más área social integrada
+
+Una residencia diseñada para ofrecer amplitud, funcionalidad y una experiencia residencial de alto nivel.
+
+## Distribución y Amenidades por Nivel
+**Nivel 1 – Vida Social y Funcional**
+- Estudio convertible en habitación de visitas
+- Baño completo de visitas, integrado al estudio
+- Sala principal de concepto abierto
+- Comedor amplio
+- Cocina fría
+- **Área de servicio:** Cocina caliente integrada, área de lavado, cuarto de servicio con baño
+
+**Nivel 2 – Área Privada**
+- 3 dormitorios, cada uno con baño privado y walk-in closet
+- Estudio tipo oficina
+- Family room en concepto abierto
+
+**Área Exterior – Experiencia Tipo Resort**
+- Piscina privada
+- Terraza amplia
+- Área de BBQ junto a mini bar
+- Marquesina para 2 a 4 vehículos
+
+## Amenidades y Accesos Exclusivos
+Vivir en Luxury Villa Frame es disfrutar de un estilo de vida privilegiado dentro de Cap Cana.
+
+**Beneficios del Propietario:**
+- Membresía incluida y acceso exclusivo al **Eden Roc Beach Club**
+- Acceso a **Juanillo Beach**
+- Cercanía al **Punta Espada Golf Club**
+- **Cap Cana Heritage School**
+- **El Dorado Water Park**
+- **Scape Park at Cap Cana**
+- **Casa Club Green Village**
+- Más de 15 restaurantes dentro de Cap Cana
+- Acceso completo a las playas y facilidades internas del complejo
+
+## Una Inversión de Alto Valor en Cap Cana
+Luxury Villa Frame representa:
+- ✔ Residencia ideal para uso familiar o segunda vivienda
+- ✔ Excelente opción para inversión inmobiliaria de lujo
+- ✔ Alta demanda en rentas premium
+- ✔ Fuerte plusvalía a mediano y largo plazo
+- ✔ Ubicación estratégica dentro de un destino consolidado
+
+**Agenda tu Presentación Privada**
+Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiva en uno de los destinos más prestigiosos del Caribe. Contáctanos hoy y descubre por qué Cap Cana es el lugar donde el lujo cobra sentido.`
+        },
+        seo: {
+            title: {
+                en: "Luxury Villa Frame in Cap Cana | Exclusive Luxury Villa",
+                es: "Luxury Villa Frame en Cap Cana | Villa de Lujo Exclusiva"
+            },
+            description: {
+                en: "Luxury Villa Frame in Cap Cana: luxury villa with modern design, pool, and beach club access. Ideal for living or investing in Punta Cana.",
+                es: "Luxury Villa Frame en Cap Cana: villa de lujo con diseño moderno, piscina y acceso a club de playa. Ideal para vivir o invertir en Punta Cana."
+            },
+            keywords: {
+                en: ["Luxury Villa Frame Cap Cana", "Luxury villa Cap Cana", "villas for sale Cap Cana", "real estate Punta Cana", "exclusive properties Cap Cana"],
+                es: ["villa de lujo en Cap Cana", "Luxury Villa Frame Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria en Punta Cana", "propiedades exclusivas en Cap Cana"]
+            }
         },
         featured: true,
-        coordinates: { lat: 18.55, lng: -68.36 }
+        coordinates: { lat: 18.52, lng: -68.39 }
     }
 ];
 
