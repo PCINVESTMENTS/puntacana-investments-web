@@ -1920,8 +1920,8 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
                 es: "Villa de lujo en Cap Cana con piscina, 4 habitaciones, diseño moderno y acceso a club de playa. Ideal para vivir o invertir en Punta Cana."
             },
             keywords: {
-                en: ["Luxury Villa Cap Cana", "Villas for sale Cap Cana", "Real Estate Punta Cana", "Villa with Pool Cap Cana", "Exclusive Properties Cap Cana"],
-                es: ["villa de lujo en Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria Punta Cana", "villa con piscina en Cap Cana", "propiedades exclusivas en Cap Cana"]
+                en: ["Luxury Villa Cap Cana", "Villas for sale Cap Cana", "Real Estate Punta Cana", "Villa with Pool Cap Cana", "Exclusive Properties Cap Cana", "Pre-Launch investment Cap Cana"],
+                es: ["villa de lujo en Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria Punta Cana", "villa con piscina en Cap Cana", "propiedades exclusivas en Cap Cana", "Pre-Ventas Cap Cana", "Pre-Venta Punta Cana", "Inversión temprana"]
             }
         },
         featured: true,
@@ -2114,7 +2114,7 @@ Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiv
             },
             keywords: {
                 en: ["Luxury Villa Frame Cap Cana", "Luxury villa Cap Cana", "villas for sale Cap Cana", "real estate Punta Cana", "exclusive properties Cap Cana", "Pre-Launch investment Punta Cana", "Off-plan villas Cap Cana"],
-                es: ["villa de lujo en Cap Cana", "Luxury Villa Frame Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria en Punta Cana", "propiedades exclusivas en Cap Cana", "Inversión en planos Punta Cana", "Pre-venta villas Cap Cana"]
+                es: ["villa de lujo en Cap Cana", "Luxury Villa Frame Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria en Punta Cana", "propiedades exclusivas en Cap Cana", "Inversión en planos Punta Cana", "Pre-venta villas Cap Cana", "Pre-Ventas Cap Cana", "Proyectos en Pre-Venta Punta Cana"]
             }
         },
         featured: true,
