@@ -1937,12 +1937,12 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
         type: "villa",
         status: "sale",
         price: 450000,
-        image: "/images/luxury-villa-frame-main.jpg",
+        image: "/images/luxury-villa-frame-hero.jpg",
         beds: 3,
         baths: 4,
         area: 927,
         gallery: [
-            "/images/luxury-villa-frame-main.jpg",
+            "/images/luxury-villa-frame-hero.jpg",
             "/images/luxury-villa-frame-bedroom.jpg",
             "/images/luxury-villa-frame-dining.jpg",
             "/images/luxury-villa-frame-pool-side.jpg",
@@ -1964,7 +1964,6 @@ This project combines avant-garde architecture, noble materials, and an intellig
 
 ## Project General Information
 - **Project:** Luxury Villa Frame
-- **Developer:** Grupo Joseda
 - **Location:** Cap Cana, Dominican Republic
 
 **The Destination**
@@ -2038,7 +2037,6 @@ Este proyecto combina arquitectura de vanguardia, materiales nobles y una distri
 
 ## Información General del Proyecto
 - **Proyecto:** Luxury Villa Frame
-- **Desarrollador:** Grupo Joseda
 - **Ubicación:** Cap Cana, República Dominicana
 
 **El Destino**
@@ -2115,8 +2113,8 @@ Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiv
                 es: "Luxury Villa Frame en Cap Cana: villa de lujo con diseño moderno, piscina y acceso a club de playa. Ideal para vivir o invertir en Punta Cana."
             },
             keywords: {
-                en: ["Luxury Villa Frame Cap Cana", "Luxury villa Cap Cana", "villas for sale Cap Cana", "real estate Punta Cana", "exclusive properties Cap Cana"],
-                es: ["villa de lujo en Cap Cana", "Luxury Villa Frame Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria en Punta Cana", "propiedades exclusivas en Cap Cana"]
+                en: ["Luxury Villa Frame Cap Cana", "Luxury villa Cap Cana", "villas for sale Cap Cana", "real estate Punta Cana", "exclusive properties Cap Cana", "Pre-Launch investment Punta Cana", "Off-plan villas Cap Cana"],
+                es: ["villa de lujo en Cap Cana", "Luxury Villa Frame Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria en Punta Cana", "propiedades exclusivas en Cap Cana", "Inversión en planos Punta Cana", "Pre-venta villas Cap Cana"]
             }
         },
         featured: true,
