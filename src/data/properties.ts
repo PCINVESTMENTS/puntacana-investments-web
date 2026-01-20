@@ -32,6 +32,7 @@ export interface Property {
     virtualTourUrl?: string;
     featured?: boolean;
     preLaunch?: boolean;
+    preConstruction?: boolean;
     coordinates?: {
         lat: number;
         lng: number;
@@ -139,6 +140,30 @@ The Beach opera bajo la **Ley CONFOTUR**, ofreciendo importantes exenciones fisc
         videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
         virtualTourUrl: "https://my.matterport.com/show/?m=aRGoTozjtCa",
         featured: false,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "The Beach | Apartments with Crystal Lagoon Punta Cana",
+                es: "The Beach | Apartamentos con Crystal Lagoon Punta Cana"
+            },
+            description: {
+                en: "Apartments for sale at The Beach Punta Cana City Place. Artificial beach, Confotur tax exemption, and resort amenities. Pre-construction investment.",
+                es: "Apartamentos en venta en The Beach Punta Cana City Place. Playa artificial, exención fiscal Confotur y amenidades tipo resort. Inversión en pre-construcción."
+            },
+            keywords: {
+                en: ["The Beach Punta Cana", "City Place Punta Cana", "Crystal Lagoon Punta Cana", "Pre-construction apartments Punta Cana", "Confotur properties"],
+                es: ["The Beach Punta Cana", "City Place Punta Cana", "Crystal Lagoon Punta Cana", "Apartamentos en pre-construcción", "Propiedades Confotur", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ],
         coordinates: { lat: 18.6658, lng: -68.4112 },
         completionPercent: 45,
         constructionStages: [
@@ -233,7 +258,31 @@ City Place se beneficia de la **Ley CONFOTUR** (Exenciones Fiscales) y su ubicac
             "/images/city-place-downtown-punta-cana.jpg"
         ],
         coordinates: { lat: 18.6650, lng: -68.4100 }, // Approx Downtown
-        featured: false
+        featured: false,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "City Place | Modern Apartments Downtown Punta Cana",
+                es: "City Place | Apartamentos Modernos Downtown Punta Cana"
+            },
+            description: {
+                en: "City Place: Modern apartments in Downtown Punta Cana. Rooftop pool, smart investment for Airbnb, and Confotur tax benefits. Pre-construction.",
+                es: "City Place: Apartamentos modernos en Downtown Punta Cana. Piscina en rooftop, inversión inteligente para Airbnb y beneficios Confotur. Pre-construcción."
+            },
+            keywords: {
+                en: ["City Place Punta Cana", "Downtown Punta Cana Apartments", "Invest in Punta Cana", "Airbnb Punta Cana", "Pre-construction deals"],
+                es: ["City Place Punta Cana", "Apartamentos Downtown Punta Cana", "Inversión Punta Cana", "Airbnb Punta Cana", "Pre-ventas Punta Cana", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 3,
@@ -323,7 +372,30 @@ Ubicado en una zona residencial consolidada, Diana Tropical Village ofrece alto 
             "/images/diana-tropical-village-outdoor-bbq-kitchen-brisas-punta-cana.jpg"
         ],
         featured: true,
-        coordinates: { lat: 18.6825, lng: -68.4110 }
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Diana Tropical Village | Villas in Brisas de Punta Cana",
+                es: "Diana Tropical Village | Villas en Brisas de Punta Cana"
+            },
+            description: {
+                en: "Villas with private pool in Brisas de Punta Cana. Secure investment, customizable plans and Airbnb friendly. Pre-construction offers.",
+                es: "Villas con piscina privada en Brisas de Punta Cana. Inversión segura, planos personalizables y Airbnb friendly. Ofertas de pre-construcción."
+            },
+            keywords: {
+                en: ["Diana Tropical Village", "Villas for sale Punta Cana", "Brisas de Punta Cana Real Estate", "Punta Cana Villas with Pool", "Pre-construction villas"],
+                es: ["Diana Tropical Village", "Villas en venta Punta Cana", "Inmobiliaria Brisas de Punta Cana", "Villas con piscina Punta Cana", "Villas en pre-construcción", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 4,
@@ -419,7 +491,31 @@ Con más de 100 atracciones que incluyen parques acuáticos, juegos mecánicos y
         },
         featured: true,
         coordinates: { lat: 18.60, lng: -68.45 },
-        completionPercent: 30
+        completionPercent: 30,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Cruise On Land | Theme Park Resort Condos Punta Cana",
+                es: "Cruise On Land | Condos en Resort Parque Temático Punta Cana"
+            },
+            description: {
+                en: "Condos for sale at Cruise On Land Resort, Punta Cana. First theme park resort, high rental profitability, and Confotur tax benefits. Pre-construction.",
+                es: "Condos en venta en Cruise On Land Resort, Punta Cana. Primer resort parque temático, alta rentabilidad en alquileres y beneficios fiscales Confotur. Pre-construcción."
+            },
+            keywords: {
+                en: ["Cruise On Land Punta Cana", "Theme Park Resort Punta Cana", "Invest in Punta Cana Resort", "Vacation rentals Punta Cana", "Pre-construction resort"],
+                es: ["Cruise On Land Punta Cana", "Resort Parque Temático Punta Cana", "Inversión en Resort Punta Cana", "Rentas vacacionales Punta Cana", "Resort en pre-construcción", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 5,
@@ -499,7 +595,31 @@ Con un enfoque en el confort y la conveniencia, los residentes disfrutan de fác
 - **Valor:** Potencial de plusvalía en un sector residencial en crecimiento.`
         },
         featured: false,
-        coordinates: { lat: 18.61, lng: -68.42 }
+        coordinates: { lat: 18.61, lng: -68.42 },
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Balcones de Brisas | Affordable Apartments Punta Cana",
+                es: "Balcones de Brisas | Apartamentos Asequibles Punta Cana"
+            },
+            description: {
+                en: "Balcones de Brisas: Modern and affordable apartments in Punta Cana. Rooftop pool, gated community, perfect for first investment or living. Pre-construction.",
+                es: "Balcones de Brisas: Apartamentos modernos y asequibles en Punta Cana. Piscina en rooftop, comunidad cerrada, perfecto para primera inversión o vivir. Pre-construcción."
+            },
+            keywords: {
+                en: ["Balcones de Brisas Punta Cana", "Affordable apartments Punta Cana", "Punta Cana Real Estate", "First home Punta Cana", "Pre-construction deals"],
+                es: ["Balcones de Brisas Punta Cana", "Apartamentos económicos Punta Cana", "Bienes Raíces Punta Cana", "Primera vivienda Punta Cana", "Ofertas pre-construcción", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 6,
@@ -585,7 +705,31 @@ Tropical Breeze destaca por su precio accesible en una zona consolidada.
 
 *Los residentes disfrutan de áreas comunes que incluyen piscina, gazebo y área de BBQ.*`
         },
-        featured: false
+        featured: false,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Tropical Breeze | Apartments in Brisas de Punta Cana",
+                es: "Tropical Breeze | Apartamentos en Brisas de Punta Cana"
+            },
+            description: {
+                en: "Tropical Breeze: Affordable 2-bedroom apartments in Brisas de Punta Cana. Pool, BBQ area, and secure community. Ideal for first investment. Pre-construction.",
+                es: "Tropical Breeze: Apartamentos asequibles de 2 habitaciones en Brisas de Punta Cana. Piscina, área de BBQ y comunidad segura. Ideal primera inversión. Pre-construcción."
+            },
+            keywords: {
+                en: ["Tropical Breeze Punta Cana", "Brisas de Punta Cana Real Estate", "Affordable condos Punta Cana", "Pre-construction Punta Cana", "First home Caribbean"],
+                es: ["Tropical Breeze Punta Cana", "Inmobiliaria Brisas de Punta Cana", "Condos económicos Punta Cana", "Pre-construcción Punta Cana", "Primera vivienda Caribe", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 7,
@@ -668,7 +812,31 @@ Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un e
             "/images/kerry-plus-master-bedroom-lighting-design-punta-cana.jpg",
             "/images/kerry-plus-kitchen-island-pendant-lights-punta-cana.jpg"
         ],
-        featured: true
+        featured: true,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Kerry Residences | Exclusive Villas Vista Cana Punta Cana",
+                es: "Kerry Residences | Villas Exclusivas Vista Cana Punta Cana"
+            },
+            description: {
+                en: "Exclusive 3-bedroom villas in Vista Cana. Kerry Residences offers private pool, low density, and high rental potential. Pre-construction.",
+                es: "Villas exclusivas de 3 habitaciones en Vista Cana. Kerry Residences ofrece piscina privada, baja densidad y alto potencial de renta. Pre-construcción."
+            },
+            keywords: {
+                en: ["Kerry Residences Vista Cana", "Vista Cana Villas", "Punta Cana Real Estate", "Villas for sale Vista Cana", "Pre-construction villas"],
+                es: ["Kerry Residences Vista Cana", "Villas Vista Cana", "Bienes Raíces Punta Cana", "Villas en venta Vista Cana", "Villas en pre-construcción", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 8,
@@ -770,7 +938,31 @@ Diseñado para maximizar el retorno a corto y mediano plazo.
 
 *Los propietarios disfrutan de acceso total a las amenidades de White Sands, incluyendo playa privada, campo de golf y casa club.*`
         },
-        featured: true
+        featured: true,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Perla del Mar | Luxury Villas White Sands Punta Cana",
+                es: "Perla del Mar | Villas de Lujo White Sands Punta Cana"
+            },
+            description: {
+                en: "Luxury villas for sale in White Sands, Punta Cana. Perla del Mar features private pools, rooftop terraces, and beach access. Pre-construction investment.",
+                es: "Villas de lujo en venta en White Sands, Punta Cana. Perla del Mar cuenta con piscinas privadas, terrazas en rooftop y acceso a playa. Inversión en pre-construcción."
+            },
+            keywords: {
+                en: ["Perla del Mar White Sands", "White Sands Villas", "Luxury Real Estate Punta Cana", "Villas with Private Pool", "Pre-construction luxury"],
+                es: ["Perla del Mar White Sands", "Villas White Sands", "Inmobiliaria de Lujo Punta Cana", "Villas con Piscina Privada", "Lujo en pre-construcción", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 9,
@@ -811,9 +1003,9 @@ Ocean Village is positioned as a **highly Airbnb-friendly project**, designed to
 - **Target Audience:** Investors seeking a differentiated product and families looking for a vacation home.
 
 *Residents have full access to White Sands amenities, including private beach access, golf course, and clubhouse.*`,
-            es: `Ocean Village – Villas Exclusivas en White Sands, Punta Cana
+            es: `Ocean Village – Villas Exclusivas en White Sands, Punta Cana (Pre-Construcción)
 
-Ocean Village es un proyecto residencial exclusivo y de baja densidad ubicado dentro del reconocido White Sands, en Punta Cana. Concebido para quienes buscan diseño contemporáneo, privacidad y una inversión sólida, el proyecto es ideal tanto para uso residencial como para renta vacacional tipo Airbnb.
+Ocean Village es un proyecto residencial exclusivo y de baja densidad ubicado dentro del reconocido White Sands, en Punta Cana. Concebido para quienes buscan diseño contemporáneo, privacidad y una inversión sólida, el proyecto es ideal tanto para uso residencial como para renta vacacional tipo Airbnb. Como oportunidad de pre-construcción, ofrece precios preferenciales y un potencial de plusvalía significativo.
 
 Sus villas dúplex con rooftop privado representan el producto más atractivo del proyecto, ofreciendo amenidades de lujo que impulsan una mayor ocupación y mejores tarifas.
 
@@ -866,7 +1058,31 @@ Ocean Village se posiciona como un proyecto **altamente Airbnb-friendly**, dise�
             "/images/ocean-village-punta-cana-bedroom-closet-mirror.jpg",
             "/images/ocean-village-punta-cana-bedroom-large-rug-design.jpg"
         ],
-        featured: true
+        featured: true,
+        preConstruction: true,
+        seo: {
+            title: {
+                en: "Ocean Village | Duplex Villas White Sands Punta Cana",
+                es: "Ocean Village | Villas Dúplex White Sands Punta Cana"
+            },
+            description: {
+                en: "Ocean Village Villas in White Sands. Exclusive community, private pool, and rooftop. Great for vacation rentals. Pre-construction investment.",
+                es: "Villas Ocean Village en White Sands. Comunidad exclusiva, piscina privada y rooftop. Excelente para rentas vacacionales. Inversión en pre-construcción."
+            },
+            keywords: {
+                en: ["Ocean Village White Sands", "Punta Cana Duplex Villas", "White Sands Real Estate", "Villas with Rooftop Punta Cana", "Pre-construction duplex"],
+                es: ["Ocean Village White Sands", "Villas Dúplex Punta Cana", "Bienes Raíces White Sands", "Villas con Rooftop Punta Cana", "Dúplex en pre-construcción", "Desarrollos en Progresión de Valor"]
+            }
+        },
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ]
     },
     {
         id: 10,

@@ -318,7 +318,7 @@ function PropertyListingsContent({
                                             <CompareToggle property={prop} />
 
                                             {/* Pre-Launch Badge */}
-                                            {prop.preLaunch && (
+                                            {(prop.preLaunch || prop.preConstruction) && (
                                                 <div className="absolute bottom-4 left-16 z-20 bg-emerald-600 text-white px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg ml-2">
                                                     {lang === 'en' ? 'Pre-Launch' : 'Pre-Venta'}
                                                 </div>

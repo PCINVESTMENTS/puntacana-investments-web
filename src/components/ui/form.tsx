@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { useForm, Controller, FormProvider, useFormContext, ControllerProps, FieldPath, FieldValues } from "react-hook-form"
+import { Slot } from "@radix-ui/react-slot"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 
@@ -94,13 +95,13 @@ const FormLabel = React.forwardRef<
 FormLabel.displayName = "FormLabel"
 
 const FormControl = React.forwardRef<
-    HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
+    React.ElementRef<typeof Slot>,
+    React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
     const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
     return (
-        <div
+        <Slot
             ref={ref}
             id={formItemId}
             aria-describedby={
@@ -108,7 +109,7 @@ const FormControl = React.forwardRef<
                     ? `${formDescriptionId}`
                     : `${formDescriptionId} ${formMessageId}`
             }
-            aria-invalid={!!error ? "true" : "false"}
+            aria-invalid={!!error}
             {...props}
         />
     )
