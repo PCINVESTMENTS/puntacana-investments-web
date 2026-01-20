@@ -2557,6 +2557,62 @@ Villas Perla representa una oportunidad sólida para:
             }
         ],
         coordinates: { lat: 18.55, lng: -68.40 }
+    },
+    {
+        id: 1001,
+        slug: "new-development-coming-soon",
+        title: "New Opportunity | Coming Soon",
+        location: "bavaro",
+        locationLabel: "Bávaro",
+        type: "villa",
+        status: "sale",
+        price: 0,
+        image: "/images/properties/placeholder-1001/image-1.jpg",
+        beds: 3,
+        baths: 3,
+        area: 0,
+        gallery: [
+            "/images/properties/placeholder-1001/image-1.jpg",
+            "/images/properties/placeholder-1001/image-2.jpg",
+            "/images/properties/placeholder-1001/image-3.jpg",
+            "/images/properties/placeholder-1001/image-4.jpg",
+            "/images/properties/placeholder-1001/image-5.jpg"
+        ],
+        features: {
+            en: ["Coming Soon", "Prime Location"],
+            es: ["Próximamente", "Ubicación Privilegiada"]
+        },
+        description: {
+            en: "New development coming soon to Punta Cana. Stay tuned for details.",
+            es: "Nuevo desarrollo próximamente en Punta Cana. Manténgase atento para más detalles."
+        },
+        seo: {
+            title: {
+                en: "New Opportunity Coming Soon | Punta Cana Investments",
+                es: "Nueva Oportunidad Próximamente | Punta Cana Investments"
+            },
+            description: {
+                en: "Exciting new real estate opportunity coming soon.",
+                es: "Emocionante nueva oportunidad inmobiliaria próximamente."
+            },
+            keywords: {
+                en: ["Punta Cana Real Estate", "Coming Soon"],
+                es: ["Bienes Raíces Punta Cana", "Próximamente"]
+            }
+        },
+        featured: false,
+        preLaunch: true,
+        preConstruction: true,
+        detailedSections: [
+            {
+                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
+                content: {
+                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
+                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
+                }
+            }
+        ],
+        coordinates: { lat: 18.55, lng: -68.42 }
     }
 ];
 
