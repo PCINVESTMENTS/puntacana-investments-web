@@ -2162,7 +2162,7 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
         locationLabel: "Cap Cana",
         type: "villa",
         status: "sale",
-        price: 450000,
+        price: 1390000,
         image: "/images/luxury-villa-frame-hero.jpg",
         beds: 3,
         baths: 4,
