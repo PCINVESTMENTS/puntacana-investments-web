@@ -1938,7 +1938,10 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
             "/images/luxury-villa-frame-bedroom.jpg",
             "/images/luxury-villa-frame-dining.jpg",
             "/images/luxury-villa-frame-pool-side.jpg",
-            "/images/luxury-villa-frame-rear-view.jpg"
+            "/images/luxury-villa-frame-rear-view.jpg",
+            "/images/luxury-villa-frame-facade-angle.jpg",
+            "/images/luxury-villa-frame-side-view.jpg",
+            "/images/luxury-villa-frame-pool-day.jpg"
         ],
         features: {
             en: ["Construction: 927.22 m²", "Lot: 450-500 m²", "3 Bedrooms with ensuite", "Convertible Studio", "Family Room", "Private Pool", "BBQ Area", "Parking for 2-4 vehicles", "Maid's Quarters", "Eden Roc Beach Club Access", "Punta Espada Golf Access"],
