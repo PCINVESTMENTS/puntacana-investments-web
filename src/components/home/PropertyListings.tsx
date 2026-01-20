@@ -314,15 +314,7 @@ function PropertyListingsContent({
                                                 </div>
                                             </div>
 
-                                            {/* Compare Toggle */}
-                                            <CompareToggle property={prop} />
 
-                                            {/* Pre-Launch Badge */}
-                                            {(prop.preLaunch || prop.preConstruction) && (
-                                                <div className="absolute bottom-14 left-4 z-20 bg-emerald-600 text-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide shadow-lg">
-                                                    {lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción'}
-                                                </div>
-                                            )}
 
                                             {/* Status Badge */}
                                             <div className={`absolute top-4 right-4 px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg z-10 ${prop.status === 'sale'
@@ -338,6 +330,13 @@ function PropertyListingsContent({
                                         </div>
 
                                         <div className="p-8 relative">
+                                            {/* Pre-Construction Badge - Mirrored to Price */}
+                                            {(prop.preLaunch || prop.preConstruction) && (
+                                                <div className="absolute -top-6 left-8 bg-emerald-600 text-white font-bold px-4 py-2 shadow-lg text-sm z-30 uppercase tracking-wider">
+                                                    {lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción'}
+                                                </div>
+                                            )}
+
                                             <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
                                                 {prop.price > 0 ? (
                                                     <>
