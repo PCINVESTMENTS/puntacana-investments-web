@@ -51,17 +51,17 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
             </div>
 
             {/* Overlay */}
-            <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/30 via-transparent to-primary-black/60"></div>
+            <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/20 via-transparent to-primary-black/50"></div>
 
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
                 <ScrollReveal delay={0.2} width="100%">
-                    <div className="p-4 md:p-8 max-w-4xl mx-auto">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
+                    <div className="bg-black/20 backdrop-blur-[2px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-md">
                             {dict.title}
                         </h1>
-                        <div className="h-1 w-24 bg-luxury-gold mx-auto my-6 shadow-[0_2px_4px_rgba(0,0,0,0.5)]"></div>
-                        <p className="text-xl md:text-3xl text-white font-serif italic font-light leading-relaxed drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)] tracking-wide">
+                        <div className="h-1 w-24 bg-luxury-gold mx-auto my-6 shadow-sm"></div>
+                        <p className="text-xl md:text-2xl text-white font-serif italic font-light leading-relaxed drop-shadow-md tracking-wide">
                             {dict.subtitle}
                         </p>
                     </div>

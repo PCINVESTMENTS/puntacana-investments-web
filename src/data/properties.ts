@@ -1768,44 +1768,154 @@ Esta propiedad representa una oportunidad única en la zona.
     },
     {
         id: 998,
-        slug: "placeholder-luxury-villa-modern-design",
-        title: "Placeholder | Luxury Villa Modern Design",
+        slug: "villa-lujo-cap-cana-exclusividad-privacidad",
+        title: "Villa de Lujo en Cap Cana | Exclusividad, Privacidad y Estilo de Vida Elite",
         location: "capcana",
-        locationLabel: "Cap Cana, Punta Cana",
+        locationLabel: "Cap Cana",
         type: "villa",
         status: "sale",
-        price: 1250000,
-        image: "/images/placeholder-1.png",
-        beds: 5,
-        baths: 6,
-        area: 550,
+        price: 1490000,
+        image: "/images/cap-cana-luxury-villa-facade.jpg",
+        beds: 4,
+        baths: 5,
+        area: 597,
         gallery: [
-            "/images/placeholder-1.png",
-            "/images/placeholder-2.png"
+            "/images/cap-cana-luxury-villa-facade.jpg",
+            "/images/cap-cana-luxury-villa-rear-view.jpg",
+            "/images/cap-cana-luxury-villa-pool-terrace.jpg",
+            "/images/cap-cana-luxury-villa-pool-lounge.jpg",
+            "/images/cap-cana-luxury-villa-garden.jpg"
         ],
         features: {
-            en: ["Ocean View", "Infinity Pool", "Smart Home", "Private Gym", "Wine Cellar", "Cinema Room", "Gated Community", "Golf Course Access"],
-            es: ["Vista al Mar", "Piscina Infinita", "Casa Inteligente", "Gimnasio Privado", "Cava de Vinos", "Sala de Cine", "Comunidad Cerrada", "Acceso Campo de Golf"]
+            en: ["Lot: 1,080.25 m²", "Construction: 596.99 m²", "4 Bedrooms with ensuite", "Private Pool", "Parking for 4-6 vehicles", "Cold & Hot Kitchens", "Service Quarters", "Family Room", "Office/Studio", "Eden Roc Beach Club Access", "Punta Espada Golf Access"],
+            es: ["Solar: 1,080.25 m²", "Construcción: 596.99 m²", "4 Dormitorios con baño", "Piscina Privada", "Parqueo 4-6 vehículos", "Cocina Fría y Caliente", "Cuarto de Servicio", "Family Room", "Estudio/Oficina", "Acceso Eden Roc Beach Club", "Acceso Punta Espada Golf"]
         },
         description: {
-            en: `Exclusive Modern Villa with Ocean Views in Cap Cana
+            en: `Discover Limitless Luxury: Your Exclusive Villa in Cap Cana
+        
+Live where luxury, nature, and sophistication meet. This stunning high-end villa in Cap Cana has been designed for those who demand excellence, privacy, and an unmatched residential experience in the Caribbean.
 
-This stunning architectural masterpiece represents the pinnacle of luxury living in the Caribbean. Designed with clean lines and expansive glass walls, it offers seamless indoor-outdoor living with breathtaking views of the ocean and golf course.
+A property that integrates contemporary architecture, spacious social areas, and a harmonious connection with the environment, making it both an exceptional home and a strategic real estate investment.
 
-## Property Highlights
-- **Architecture:** Contemporary design with premium materials
-- **Outdoor:** Expansive terrace with infinity pool and jacuzzi
-- **Privacy:** Located in an exclusive gated enclave
-- **Amenities:** Access to all Cap Cana resort amenities including beaches and marina`,
-            es: `Exclusiva Villa Moderna con Vista al Mar en Cap Cana
+## Villa Key Features
+**Large Scale Private Land**
+- **Lot Area:** 1,080.25 m²
+- Expansive gardens, maximum privacy, and appreciation potential.
 
-Esta impresionante obra maestra arquitectónica representa la cúspide de la vida de lujo en el Caribe. Diseñada con líneas limpias y amplios ventanales de vidrio, ofrece una integración perfecta entre interior y exterior con vistas impresionantes al mar y al campo de golf.
+**Luxury Construction**
+- **Construction Area:** 596.99 m²
+- Modern design with integrated social areas and excellent distribution.
 
-## Destacados de la Propiedad
-- **Arquitectura:** Diseño contemporáneo con materiales premium
-- **Exterior:** Terraza expansiva con piscina infinita y jacuzzi
-- **Privacidad:** Ubicada en un enclave cerrado exclusivo
-- **Amenidades:** Acceso a todas las amenidades del resort Cap Cana incluyendo playas y marina`
+**High Comfort Bedrooms**
+- **4 Bedrooms on Level 2:** Each with private bathroom and walk-in closet.
+- Designed for absolute privacy and rest.
+
+**Social Level – Main Floor**
+- Open concept main living room
+- Elegant dining room
+- Guest bedroom
+- Full guest bathroom
+- Studio / Flexible room for office or additional use
+
+**Premium Service Areas**
+- Cold kitchen and integrated hot kitchen
+- Laundry area
+- Maid's quarters with bathroom
+- Independent service area
+
+**Level 2 – Versatile Spaces**
+- Open concept Family Room
+- Office-style studio ideal for home office
+
+**Resort-Style Exterior**
+- Modern design private pool
+- Spacious terrace
+- BBQ area with mini bar
+- Parking for 4 to 6 vehicles
+
+## Live Cap Cana: A World-Class Destination City
+Cap Cana is one of the most exclusive tourist and residential developments in the Caribbean, recognized for its top-tier infrastructure, security, constant appreciation, and high international demand.
+
+**Exclusive Owner Benefits:**
+- Access to Eden Roc Beach Club
+- Enjoy Juanillo Beach
+- Membership and proximity to Punta Espada Golf Club
+- Cap Cana Heritage School (bilingual school)
+- Scape Park and El Dorado Water Park
+- Over 15 restaurants within the complex
+- Cap Cana Marina and Los Establos
+- Medical center, pharmacy, mini market, and banks
+- EV charging stations`,
+            es: `Descubre el Lujo sin Límites: Tu Villa Exclusiva en Cap Cana
+        
+Vive donde el lujo, la naturaleza y la sofisticación se encuentran. Esta impresionante villa de alto nivel en Cap Cana ha sido diseñada para quienes exigen excelencia, privacidad y una experiencia residencial sin comparación en el Caribe.
+
+Una propiedad que integra arquitectura contemporánea, espacios sociales amplios y una conexión armoniosa con el entorno, convirtiéndola tanto en un hogar excepcional como en una inversión inmobiliaria estratégica.
+
+## Características Principales de la Villa
+**Terreno Privado de Gran Escala**
+- **Área de solar:** 1,080.25 m²
+- Amplios jardines, máxima privacidad y potencial de valorización.
+
+**Construcción de Lujo**
+- **Área de construcción:** 596.99 m²
+- Diseño moderno con áreas sociales integradas y excelente distribución.
+
+**Dormitorios de Alto Confort**
+- **4 dormitorios en el Nivel 2:** Cada uno con baño privado y walk-in closet
+- Diseño pensado para privacidad y descanso absoluto.
+
+**Nivel Social – Planta Principal**
+- Sala principal de concepto abierto
+- Comedor elegante
+- Habitación de visitas
+- Baño completo de visitas
+- Estudio / habitación flexible para oficina o uso adicional
+
+**Áreas de Servicio Premium**
+- Cocina fría
+- Cocina caliente integrada
+- Área de lavado
+- Cuarto de servicio con baño
+- Área de servicio independiente
+
+**Nivel 2 – Espacios Versátiles**
+- Family Room en concepto abierto
+- Estudio tipo oficina ideal para home office
+
+**Exterior Tipo Resort**
+- Piscina privada de diseño moderno
+- Terraza amplia
+- Área de BBQ junto a mini bar
+- Parqueo para 4 a 6 vehículos
+
+## Vive Cap Cana: Una Ciudad Destino de Clase Mundial
+Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos del Caribe, reconocido por su infraestructura de primer nivel, seguridad, plusvalía constante y alta demanda internacional.
+
+**Beneficios Exclusivos del Propietario:**
+- Acceso al Eden Roc Beach Club
+- Disfruta de Juanillo Beach
+- Membresía y cercanía al Punta Espada Golf Club
+- Cap Cana Heritage School (escuela bilingüe)
+- Scape Park y El Dorado Water Park
+- Más de 15 restaurantes dentro del complejo
+- Marina Cap Cana y Los Establos
+- Centro médico, farmacia, mini market y bancos
+- Estaciones de carga para vehículos eléctricos (EV)`
+        },
+        seo: {
+            title: {
+                en: "Luxury Villa in Cap Cana | Exclusivity and Privacy",
+                es: "Villa de Lujo en Cap Cana | Exclusividad y Privacidad"
+            },
+            description: {
+                en: "Luxury villa in Cap Cana with pool, 4 bedrooms, modern design, and beach club access. Ideal for living or investing in Punta Cana.",
+                es: "Villa de lujo en Cap Cana con piscina, 4 habitaciones, diseño moderno y acceso a club de playa. Ideal para vivir o invertir en Punta Cana."
+            },
+            keywords: {
+                en: ["Luxury Villa Cap Cana", "Villas for sale Cap Cana", "Real Estate Punta Cana", "Villa with Pool Cap Cana", "Exclusive Properties Cap Cana"],
+                es: ["villa de lujo en Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria Punta Cana", "villa con piscina en Cap Cana", "propiedades exclusivas en Cap Cana"]
+            }
         },
         featured: true,
         coordinates: { lat: 18.50, lng: -68.38 }
