@@ -2365,21 +2365,36 @@ Luxury Villa Frame no es solo una villa, es una experiencia residencial exclusiv
         locationLabel: "Bávaro",
         type: "villa",
         status: "sale",
-        price: 0,
+        price: 184000,
         image: "/images/properties/villas-perla/image-1.jpg",
         beds: 3,
         baths: 3,
-        area: 0,
+        area: 150,
         gallery: [
             "/images/properties/villas-perla/image-1.jpg",
             "/images/properties/villas-perla/image-2.jpg",
             "/images/properties/villas-perla/image-3.jpg",
             "/images/properties/villas-perla/image-4.jpg",
-            "/images/properties/villas-perla/image-5.jpg"
+            "/images/properties/villas-perla/image-5.jpg",
+            "/images/properties/villas-perla/image-6.jpg",
+            "/images/properties/villas-perla/image-7.jpg",
+            "/images/properties/villas-perla/image-8.jpg",
+            "/images/properties/villas-perla/image-9.jpg",
+            "/images/properties/villas-perla/image-10.jpg",
+            "/images/properties/villas-perla/image-11.png",
+            "/images/properties/villas-perla/image-12.png",
+            "/images/properties/villas-perla/image-13.png",
+            "/images/properties/villas-perla/image-14.png",
+            "/images/properties/villas-perla/image-15.png",
+            "/images/properties/villas-perla/image-16.png",
+            "/images/properties/villas-perla/image-17.png",
+            "/images/properties/villas-perla/image-18.jpg",
+            "/images/properties/villas-perla/image-19.png",
+            "/images/properties/villas-perla/image-20.jpg"
         ],
         features: {
-            en: ["Strategic Location", "Gated Community", "24/7 Security", "Terrace & Private Yard", "Solar Panel Ready", "Carport for 2 Vehicles"],
-            es: ["Ubicación Estratégica", "Proyecto Cerrado", "Seguridad 24/7", "Terraza y Patio Privado", "Pre-instalación Paneles Solares", "Marquesina 2 Vehículos"]
+            en: ["Strategic Location", "Gated Community", "24/7 Security", "Terrace & Private Yard", "Solar Panel Ready", "Carport for 2 Vehicles", "Lot: 275 m²", "Construction: 150 m²"],
+            es: ["Ubicación Estratégica", "Proyecto Cerrado", "Seguridad 24/7", "Terraza y Patio Privado", "Pre-instalación Paneles Solares", "Marquesina 2 Vehículos", "Terreno: 275 m²", "Construcción: 150 m²"]
         },
         description: {
             en: `Villas Perla: Invest Today in a Modern Villa in a High-Growth Area
@@ -2412,6 +2427,11 @@ A location that guarantees high rental demand, ease of resale, and sustained val
 
 *The project is currently in the development stage, allowing access to preferential prices and staggered payment plans.*
 
+## Property Dimensions
+- **Lot:** 275 m²
+- **Construction:** 150 m²
+- **Starting Price:** From US$184,000
+
 ## Villa Distribution
 **First Level**
 - Living room
@@ -2423,32 +2443,6 @@ A location that guarantees high rental demand, ease of resale, and sustained val
 - Terrace and private patio
 - Carport for 2 vehicles
 - *Optional (additional cost):* Pool or Jacuzzi
-
-**Second Level**
-- 3 bedrooms
-- Master bedroom with:
-  - En-suite bathroom
-  - Walk-in closet
-  - Private terrace
-- 1 additional independent bathroom
-
-## Key Project Advantages
-- ✔ Strategic location in Bávaro – Punta Cana
-- ✔ Gated project with security
-- ✔ High demand for residential and vacation rentals
-- ✔ Excellent price-location ratio
-- ✔ Short and medium-term appreciation potential
-
-## Flexible Payment Plan
-- **US$ 5,000** – Reservation
-- **40%** – Contract signing (14 days)
-- **50%** – During project development
-- **10%** – Upon delivery
-
-*Estimated delivery: 6 to 12 months*
-*Discounts available for accelerated payment plans*
-
-*(Renders and illustrative images. Finishes and furniture may vary.)*
 
 ## High Profitability and Investment Security
 Villas Perla represents a solid opportunity for:
@@ -2486,6 +2480,11 @@ Una ubicación que garantiza alta demanda de alquiler, facilidad de reventa y cr
 
 *El proyecto se encuentra actualmente en etapa de desarrollo, lo que permite acceder a precios preferenciales y planes de pago escalonados.*
 
+## Dimensiones de la Propiedad
+- **Terreno:** 275 m²
+- **Construcción:** 150 m²
+- **Precio Desde:** US$184,000
+
 ## Distribución de la Villa
 **Primer Nivel**
 - Sala
@@ -2498,32 +2497,6 @@ Una ubicación que garantiza alta demanda de alquiler, facilidad de reventa y cr
 - Marquesina para 2 vehículos
 - *Opcional (costo adicional):* Piscina o jacuzzi
 
-**Segundo Nivel**
-- 3 habitaciones
-- Habitación principal con:
-  - Baño en suite
-  - Walk-in closet
-  - Terraza privada
-- 1 baño adicional independiente
-
-## Ventajas Clave del Proyecto
-- ✔ Ubicación estratégica en Bávaro – Punta Cana
-- ✔ Proyecto cerrado con seguridad
-- ✔ Alta demanda de alquiler residencial y vacacional
-- ✔ Excelente relación precio–ubicación
-- ✔ Potencial de valorización a corto y mediano plazo
-
-## Plan de Pago Flexible
-- **US$ 5,000** – Reserva
-- **40 %** – Firma de contrato (14 días)
-- **50 %** – Durante el desarrollo del proyecto
-- **10 %** – A la entrega
-
-*Entrega estimada: 6 a 12 meses*
-*Descuentos disponibles para planes de pago acelerados*
-
-*(Renders e imágenes ilustrativas. Acabados y mobiliario pueden variar.)*
-
 ## Alta Rentabilidad y Seguridad de Inversión
 Villas Perla representa una oportunidad sólida para:
 - Inversionistas que buscan ingresar temprano al proyecto
@@ -2532,16 +2505,16 @@ Villas Perla representa una oportunidad sólida para:
         },
         seo: {
             title: {
-                en: "Project Villas Perla | Modern Villas in Bávaro Punta Cana",
-                es: "Proyecto Villas Perla | Villas Modernas en Bávaro Punta Cana"
+                en: "Villas Perla | Exclusive Modern Villas in Bávaro Punta Cana",
+                es: "Villas Perla | Villas Modernas Exclusivas en Bávaro Punta Cana"
             },
             description: {
-                en: "Villas Perla Project in Bávaro Punta Cana. Modern villas with private patio and excellent location. Ideal for living or investing.",
-                es: "Proyecto Villas Perla en Bávaro Punta Cana. Villas modernas con patio privado y excelente ubicación. Ideal para vivir o invertir."
+                en: "Discover Villas Perla in El Ejecutivo, Bávaro. Modern 3-bedroom villas with private yards, strategic location, and high investment potential. Pre-construction pricing available.",
+                es: "Descubre Villas Perla en El Ejecutivo, Bávaro. Villas modernas de 3 habitaciones con patio privado, ubicación estratégica y alto potencial de inversión. Precios de pre-construcción."
             },
             keywords: {
-                en: ["villas in Bávaro Punta Cana", "Villas Perla Project", "modern villas in Punta Cana", "real estate investment in Bávaro", "houses for sale Punta Cana"],
-                es: ["villas en Bávaro Punta Cana", "Proyecto Villas Perla", "villas modernas en Punta Cana", "inversión inmobiliaria en Bávaro", "casas en venta Punta Cana"]
+                en: ["Villas Perla Punta Cana", "Bavaro Real Estate", "Villas for sale El Ejecutivo", "Punta Cana Investment", "Modern Villas Bavaro", "Pre-construction Punta Cana", "Caribbean Real Estate"],
+                es: ["Villas Perla Punta Cana", "Bienes Raíces Bávaro", "Villas en venta El Ejecutivo", "Inversión Punta Cana", "Villas modernas Bávaro", "Pre-construcción Punta Cana", "Inmobiliaria Caribe"]
             }
         },
         featured: false,
@@ -2557,118 +2530,6 @@ Villas Perla representa una oportunidad sólida para:
             }
         ],
         coordinates: { lat: 18.55, lng: -68.40 }
-    },
-    {
-        id: 1001,
-        slug: "new-development-coming-soon",
-        title: "New Opportunity | Coming Soon",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "villa",
-        status: "sale",
-        price: 0,
-        image: "/images/properties/placeholder-1001/image-1.jpg",
-        beds: 3,
-        baths: 3,
-        area: 0,
-        gallery: [
-            "/images/properties/placeholder-1001/image-1.jpg",
-            "/images/properties/placeholder-1001/image-2.jpg",
-            "/images/properties/placeholder-1001/image-3.jpg",
-            "/images/properties/placeholder-1001/image-4.jpg",
-            "/images/properties/placeholder-1001/image-5.jpg"
-        ],
-        features: {
-            en: ["Coming Soon", "Prime Location"],
-            es: ["Próximamente", "Ubicación Privilegiada"]
-        },
-        description: {
-            en: "New development coming soon to Punta Cana. Stay tuned for details.",
-            es: "Nuevo desarrollo próximamente en Punta Cana. Manténgase atento para más detalles."
-        },
-        seo: {
-            title: {
-                en: "New Opportunity Coming Soon | Punta Cana Investments",
-                es: "Nueva Oportunidad Próximamente | Punta Cana Investments"
-            },
-            description: {
-                en: "Exciting new real estate opportunity coming soon.",
-                es: "Emocionante nueva oportunidad inmobiliaria próximamente."
-            },
-            keywords: {
-                en: ["Punta Cana Real Estate", "Coming Soon"],
-                es: ["Bienes Raíces Punta Cana", "Próximamente"]
-            }
-        },
-        featured: false,
-        preLaunch: true,
-        preConstruction: true,
-        detailedSections: [
-            {
-                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
-                content: {
-                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
-                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
-                }
-            }
-        ],
-        coordinates: { lat: 18.55, lng: -68.42 }
-    },
-    {
-        id: 1002,
-        slug: "exclusive-interiors-coming-soon",
-        title: "Exclusive Interiors | Coming Soon",
-        location: "bavaro",
-        locationLabel: "Bávaro",
-        type: "villa",
-        status: "sale",
-        price: 0,
-        image: "/images/properties/placeholder-1002/image-1.png",
-        beds: 3,
-        baths: 3,
-        area: 0,
-        gallery: [
-            "/images/properties/placeholder-1002/image-1.png",
-            "/images/properties/placeholder-1002/image-2.png",
-            "/images/properties/placeholder-1002/image-3.png",
-            "/images/properties/placeholder-1002/image-4.png",
-            "/images/properties/placeholder-1002/image-5.png"
-        ],
-        features: {
-            en: ["Modern Interiors", "Coming Soon"],
-            es: ["Interiores Modernos", "Próximamente"]
-        },
-        description: {
-            en: "Exclusive new property with modern interiors coming soon to Punta Cana.",
-            es: "Exclusiva nueva propiedad con interiores modernos próximamente en Punta Cana."
-        },
-        seo: {
-            title: {
-                en: "Exclusive Interiors Coming Soon | Punta Cana Investments",
-                es: "Interiores Exclusivos Próximamente | Punta Cana Investments"
-            },
-            description: {
-                en: "New luxury property with stunning interiors coming soon.",
-                es: "Nueva propiedad de lujo con impresionantes interiores próximamente."
-            },
-            keywords: {
-                en: ["Punta Cana Real Estate", "Luxury Interiors"],
-                es: ["Bienes Raíces Punta Cana", "Interiores de Lujo"]
-            }
-        },
-        featured: false,
-        preLaunch: true,
-        preConstruction: true,
-        detailedSections: [
-            {
-                title: { en: "Growth Developments", es: "Desarrollos en Progresión de Valor" },
-                content: {
-                    en: "Watch your investment grow with total security. Our pre-construction properties combine the advantage of preferential pricing with the certainty of a project already underway. It is the ideal time for those seeking a balance between future profitability and the peace of mind of seeing progress in one of the Caribbean's most demanded tourist areas.",
-                    es: "Vea crecer su inversión con total seguridad. Nuestras propiedades en fase de pre-construcción combinan la ventaja de precios preferenciales con la certeza de un proyecto que ya está en marcha. Es el momento ideal para quienes buscan un equilibrio entre rentabilidad futura y la tranquilidad de ver materializado el avance de obra en una de las zonas de mayor demanda turística del Caribe."
-                }
-            }
-        ],
-        coordinates: { lat: 18.55, lng: -68.42 }
     }
 ];
 
