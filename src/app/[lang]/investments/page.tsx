@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             description: dict.sections.investments.description,
             images: [
                 {
-                    url: 'https://www.puntacanainvestmentsrd.com/images/og/investments-card.png?v=3',
+                    url: 'https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=4',
                     width: 1200,
                     height: 630,
                     alt: dict.sections.investments.title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             card: 'summary_large_image',
             title: `${dict.nav.investments} | Punta Cana Investments`,
             description: dict.sections.investments.description,
-            images: ['https://www.puntacanainvestmentsrd.com/images/og/investments-card.png?v=3'],
+            images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=4'],
         },
     };
 }
@@ -97,10 +97,10 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
             <div className="relative h-[60vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
-                        src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=2649&auto=format&fit=crop"
+                        src="/images/investments/modern-investments-hero.jpg"
                         alt="Investments in Punta Cana"
                         fill
-                        className="object-cover opacity-60"
+                        className="object-cover opacity-80"
                         priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/40 to-transparent"></div>
