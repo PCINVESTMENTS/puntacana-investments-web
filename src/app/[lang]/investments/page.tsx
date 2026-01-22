@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             description: dict.sections.investments.description,
             images: [
                 {
-                    url: 'https://www.puntacanainvestmentsrd.com/images/og/investment-opportunities-og.png?v=2',
+                    url: 'https://www.puntacanainvestmentsrd.com/images/og/investments-card.png?v=3',
                     width: 1200,
                     height: 630,
                     alt: dict.sections.investments.title,
