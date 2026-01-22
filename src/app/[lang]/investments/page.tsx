@@ -11,12 +11,27 @@ import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty } from "@/sanity/lib/mappers";
 import { Property } from "@/data/properties";
 
+
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en");
+
     return {
         title: `${dict.nav.investments} | Punta Cana Investments`,
         description: dict.sections.investments.description,
+        openGraph: {
+            title: `${dict.nav.investments} | Punta Cana Investments`,
+            description: dict.sections.investments.description,
+            images: [
+                {
+                    url: '/images/og/investment-opportunities-og.png',
+                    width: 1200,
+                    height: 630,
+                    alt: dict.sections.investments.title,
+                }
+            ],
+        },
     };
 }
 
