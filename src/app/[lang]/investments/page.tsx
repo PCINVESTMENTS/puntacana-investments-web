@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             description: dict.sections.investments.description,
             images: [
                 {
-                    url: 'https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=4',
+                    url: 'https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=5',
                     width: 1200,
                     height: 630,
                     alt: dict.sections.investments.title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             card: 'summary_large_image',
             title: `${dict.nav.investments} | Punta Cana Investments`,
             description: dict.sections.investments.description,
-            images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=4'],
+            images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=5'],
         },
     };
 }
@@ -100,12 +100,13 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                         src="/images/investments/modern-investments-hero.jpg"
                         alt="Investments in Punta Cana"
                         fill
-                        className="object-cover opacity-80"
+                        className="object-cover"
                         priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/40 to-transparent"></div>
+                    {/* Subtle overlay for text readability only at the bottom */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black/80 via-transparent to-transparent"></div>
                 </div>
-                <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
+                <div className="relative z-10 max-w-7xl mx-auto px-4 text-center mt-32">
                     <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-4 block animate-fade-in-up">
                         {dict.sections.investments.subtitle}
                     </span>
