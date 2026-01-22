@@ -60,6 +60,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         {
             name: dict.properties,
             hasDropdown: true,
+            href: `/${lang}/properties`,
             subItems: [
                 { label: dict.rent, href: `/${lang}/properties?status=rent` },
                 { label: dict.sale, href: `/${lang}/properties?status=sale` }
@@ -68,6 +69,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         {
             name: dict.projects,
             hasDropdown: true,
+            href: `/${lang}/properties`,
             subItems: [
                 { label: types.condo, href: `/${lang}?type=condo#properties` },
                 { label: types.condohotel, href: `/${lang}?type=condohotel#properties` },
@@ -80,6 +82,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         {
             name: dict.investments,
             hasDropdown: true,
+            href: `/${lang}/investments`,
             subItems: [
                 { label: dict.investments, href: `/${lang}/investments` },
                 { label: dict.dueDiligence, href: `/${lang}/investments/due-diligence` }
@@ -93,6 +96,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         {
             name: dict.services,
             hasDropdown: true,
+            href: `/${lang}/services`,
             subItems: servicesList.length > 0 ? servicesList.map(s => ({
                 label: s.title,
                 href: `/${lang}/services/${s.slug}`
@@ -208,7 +212,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         <div key={item.name} className="border-b border-white/5 last:border-0">
                             <Link
                                 href={item.href || "#"}
-                                onClick={() => !item.hasDropdown && setIsOpen(false)}
+                                onClick={() => setIsOpen(false)}
                                 className="block px-3 py-4 text-base font-bold text-gray-300 hover:text-luxury-gold uppercase tracking-wider flex justify-between items-center"
                             >
                                 {item.name}
