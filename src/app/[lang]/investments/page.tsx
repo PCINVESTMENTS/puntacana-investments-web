@@ -31,6 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                     alt: dict.sections.investments.title,
                 }
             ],
+            type: 'website',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${dict.nav.investments} | Punta Cana Investments`,
+            description: dict.sections.investments.description,
+            images: ['https://www.puntacanainvestmentsrd.com/images/og/investments-card.png?v=3'],
         },
     };
 }
