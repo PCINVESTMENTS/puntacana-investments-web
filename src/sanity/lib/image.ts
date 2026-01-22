@@ -7,5 +7,5 @@ const imageBuilder = createImageUrlBuilder({
 })
 
 export const urlFor = (source: any) => {
-    return imageBuilder.image(source)
+    return imageBuilder.image(source).auto('format').quality(75)
 }
