@@ -137,11 +137,10 @@ function PropertyListingsContent({
 
             // Project logic: preConstruction/preLaunch define a "project"
             const isP = p.preConstruction || p.preLaunch;
-            // If isProject is 'all' or null, show everything.
+            // If isProject is null or 'all', show everything.
             // If isProject is 'true', show only projects.
             // If isProject is 'false', show only non-projects.
-            const matchProject = (isProject === null || isProject === "all") ||
-                (isProject === "true" ? isP : !isP);
+            const matchProject = (isProject === null || isProject === "all") ? true : (isProject === "true" ? isP : !isP);
 
             return matchLoc && matchType && matchStatus && matchPrice && matchProject;
         });
