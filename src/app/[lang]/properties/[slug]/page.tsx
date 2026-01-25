@@ -50,7 +50,8 @@ function mapSanityProperty(data: any): Property {
         detailedSections: data.detailedSections?.map((section: any) => ({
             title: { en: section.titleEn, es: section.titleEs },
             content: { en: section.contentEn, es: section.contentEs }
-        }))
+        })),
+        hideFromLabel: data.hideFromLabel || false
     };
 }
 
@@ -207,7 +208,9 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : 'Desde'}</span> {formatPrice(property.price)}
+                                    {(!property.hideFromLabel && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
+                                        <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : 'Desde'}</span>
+                                    )} {formatPrice(property.price)}
                                 </p>
                             </div>
                         </div>

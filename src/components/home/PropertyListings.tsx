@@ -343,7 +343,7 @@ function PropertyListingsContent({
                                             <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
                                                 {prop.price > 0 ? (
                                                     <>
-                                                        {lang === 'en' ? 'From ' : 'Desde '} {formatPrice(prop.price)}
+                                                        {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.price)}
                                                     </>
                                                 ) : (
                                                     lang === 'en' ? 'Price on Request' : 'Precio a Consultar'

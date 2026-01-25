@@ -49,6 +49,7 @@ export interface Property {
         description: { en: string; es: string };
         keywords: { en: string[]; es: string[] };
     };
+    hideFromLabel?: boolean;
 }
 
 export const properties: Property[] = [
@@ -1184,6 +1185,7 @@ Ubicada en la prestigiosa Marina de Cap Cana, esta propiedad ofrece privacidad, 
                 es: ["Villa en Renta Cap Cana", "Alquiler Ocean 21", "Villa Amueblada Cap Cana", "Renta Larga Estancia Punta Cana", "Alquiler Lujo Republica Dominicana"]
             }
         },
+        hideFromLabel: true,
         featured: false
     },
     {
@@ -1195,6 +1197,7 @@ Ubicada en la prestigiosa Marina de Cap Cana, esta propiedad ofrece privacidad, 
         type: "villa",
         status: "sale",
         price: 1300000,
+        hideFromLabel: true,
         image: "/images/properties/cap-cana-ocean21/cap-cana-luxury-villa-ocean21-main-pool.jpg",
         beds: 3,
         baths: 6,
@@ -1309,6 +1312,7 @@ Ocean 21 ofrece un estilo de vida único con acceso directo a la Marina de Cap C
         type: "condo",
         status: "sale",
         price: 410000,
+        hideFromLabel: true,
         image: "/images/properties/soto-grande-loft/soto-grande-loft-ocean-view-main.jpg",
         beds: 1,
         baths: 1,
@@ -1411,9 +1415,10 @@ Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente resid
         title: "Terrenos | Terreno Hotelero Miches",
         location: "miches",
         locationLabel: "Miches",
-        type: "resorts",
+        type: "land",
         status: "sale",
         price: 154000000,
+        hideFromLabel: true,
         image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
         featured: false,
         beds: 0,
@@ -1491,6 +1496,7 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
         type: "villa",
         status: "rent",
         price: 2000,
+        hideFromLabel: true,
         image: "/images/properties/villa-white-sands-modern/white-sands-villa-rental-main.png",
         beds: 3,
         baths: 3.5,
@@ -1584,6 +1590,7 @@ Vivir en White Sands significa disfrutar de una vida estilo resort todos los dí
         type: "villa",
         status: "rent",
         price: 8000,
+        hideFromLabel: true,
         image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
         beds: 4,
         baths: 4.5,
@@ -1653,6 +1660,7 @@ Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
         type: "villa",
         status: "sale",
         price: 365900,
+        hideFromLabel: true,
         image: "/images/villa-white-sands-modern-exterior.jpg",
         beds: 3,
         baths: 3.5,
@@ -1756,6 +1764,7 @@ Su diseño maximiza el espacio y la luz, creando un ambiente perfecto para famil
         type: "villa",
         status: "sale",
         price: 1975000,
+        hideFromLabel: true,
         image: "/images/properties/cap-cana-marina-villa/main-marina-view.jpg",
         beds: 4,
         baths: 4.5,
@@ -1877,6 +1886,7 @@ Inversionistas que buscan activos de alto rendimiento, vacacionistas de lujo y e
         type: "commercial",
         status: "sale",
         price: 850000,
+        hideFromLabel: true,
         image: "/images/properties/lorenzo-despradel/corporate-hq-main-facade.jpg",
         beds: 0,
         baths: 4,
@@ -2140,6 +2150,7 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
                 es: ["villa de lujo en Cap Cana", "villas en venta Cap Cana", "inversión inmobiliaria Punta Cana", "villa con piscina en Cap Cana", "propiedades exclusivas en Cap Cana", "Pre-Ventas Cap Cana", "Pre-Venta Punta Cana", "Inversión temprana"]
             }
         },
+        hideFromLabel: true,
         featured: true,
         preLaunch: true,
         preConstruction: false,
