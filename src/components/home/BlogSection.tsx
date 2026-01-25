@@ -34,7 +34,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                         </h2>
                     </div>
                     <Link href={`/${lang}/blog`} className="hidden md:flex items-center gap-2 text-white hover:text-luxury-gold transition-colors uppercase tracking-widest text-sm font-bold mt-6 md:mt-0">
-                        {dict.viewAll} <FaArrowRight />
+                        {dict.viewAll} <FaArrowRight aria-hidden="true" />
                     </Link>
                 </div>
 
@@ -58,7 +58,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                             </Link>
                             <div className="p-8">
                                 <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
-                                    <FaCalendarAlt /> {post.date[l]}
+                                    <FaCalendarAlt aria-hidden="true" /> {post.date[l]}
                                 </div>
                                 <h3 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
                                     <Link href={`/${lang}/blog/${post.slug}`}>
@@ -69,7 +69,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                                     {post.excerpt[l]}
                                 </p>
                                 <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
-                                    {dict.readMore} <FaArrowRight className="text-[10px]" />
+                                    {dict.readMore} <FaArrowRight aria-hidden="true" className="text-[10px]" />
                                 </Link>
                             </div>
                         </article>
@@ -78,7 +78,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
 
                 <div className="mt-12 text-center md:hidden">
                     <Link href={`/${lang}/blog`} className="inline-flex items-center gap-2 text-white hover:text-luxury-gold transition-colors uppercase tracking-widest text-sm font-bold">
-                        {dict.viewAll} <FaArrowRight />
+                        {dict.viewAll} <FaArrowRight aria-hidden="true" />
                     </Link>
                 </div>
             </div>

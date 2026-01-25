@@ -55,7 +55,7 @@ export default async function ContactPage({
                         <div className="space-y-8">
                             <div className="flex items-start gap-6 group">
                                 <div className="p-4 bg-zinc-900 rounded-full border border-zinc-800 text-luxury-gold group-hover:border-luxury-gold transition-colors">
-                                    <FaPhone size={24} />
+                                    <FaPhone aria-hidden="true" size={24} />
                                 </div>
                                 <div>
                                     <h3 className="text-gray-400 text-sm uppercase tracking-wide mb-1">{dict.contact.info.phone}</h3>
@@ -70,7 +70,7 @@ export default async function ContactPage({
 
                             <div className="flex items-start gap-6 group">
                                 <div className="p-4 bg-zinc-900 rounded-full border border-zinc-800 text-luxury-gold group-hover:border-luxury-gold transition-colors">
-                                    <FaEnvelope size={24} />
+                                    <FaEnvelope aria-hidden="true" size={24} />
                                 </div>
                                 <div>
                                     <h3 className="text-gray-400 text-sm uppercase tracking-wide mb-1">{dict.contact.info.email}</h3>
@@ -82,7 +82,7 @@ export default async function ContactPage({
 
                             <div className="flex items-start gap-6 group">
                                 <div className="p-4 bg-zinc-900 rounded-full border border-zinc-800 text-luxury-gold group-hover:border-luxury-gold transition-colors">
-                                    <FaMapMarkerAlt size={24} />
+                                    <FaMapMarkerAlt aria-hidden="true" size={24} />
                                 </div>
                                 <div>
                                     <h3 className="text-gray-400 text-sm uppercase tracking-wide mb-1">{dict.contact.info.office}</h3>
@@ -101,7 +101,7 @@ export default async function ContactPage({
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-3 bg-green-600/10 text-green-500 px-6 py-3 rounded-full border border-green-500/20 hover:bg-green-600 hover:text-white transition-all"
                             >
-                                <FaWhatsapp size={20} />
+                                <FaWhatsapp aria-hidden="true" size={20} />
                                 <span className="font-semibold">Chat en WhatsApp</span>
                             </a>
                         </div>

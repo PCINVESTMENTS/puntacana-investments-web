@@ -27,7 +27,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                 <div className="text-center mb-16">
                     <ScrollReveal width="100%">
                         <div className="flex items-center justify-center gap-2 mb-4">
-                            <FaPlane className="text-luxury-gold text-2xl" />
+                            <FaPlane aria-hidden="true" className="text-luxury-gold text-2xl" />
                             <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                                 {dict.subtitle}
                             </span>
@@ -81,7 +81,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                                         <ul className="space-y-3 mb-8">
                                             {program.includes.slice(0, 3).map((section, idx) => (
                                                 <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
-                                                    <FaCheck className="text-luxury-gold mt-1 flex-shrink-0 text-xs" />
+                                                    <FaCheck aria-hidden="true" className="text-luxury-gold mt-1 flex-shrink-0 text-xs" />
                                                     <span>{section.title[lang as 'es' | 'en']}</span>
                                                 </li>
                                             ))}
@@ -89,7 +89,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
 
                                         <div className="mt-auto flex items-center justify-between text-white group-hover:text-luxury-gold transition-colors text-sm font-bold uppercase tracking-wider">
                                             <span>{dict.cta}</span>
-                                            <FaArrowRight className="transform group-hover:translate-x-2 transition-transform" />
+                                            <FaArrowRight aria-hidden="true" className="transform group-hover:translate-x-2 transition-transform" />
                                         </div>
                                     </div>
                                 </div>

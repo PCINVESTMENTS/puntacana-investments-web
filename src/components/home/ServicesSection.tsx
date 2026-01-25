@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
+import Image from "next/image";
 
 interface ServiceItem {
     title: string;
@@ -64,9 +65,11 @@ export default function ServicesSection({ dict, lang, limit }: ServicesSectionPr
                             {/* Background Image with Overlay */}
                             <div className="absolute inset-0 z-0">
                                 {service.img ? (
-                                    <img
+                                    <Image
                                         src={service.img}
                                         alt={service.title}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                 ) : (
@@ -84,7 +87,7 @@ export default function ServicesSection({ dict, lang, limit }: ServicesSectionPr
                                     {service.description}
                                 </p>
                                 <span className="text-xs text-luxury-gold uppercase tracking-widest font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
-                                    {dict.cta} <FaArrowRight />
+                                    {dict.cta} <FaArrowRight aria-hidden="true" />
                                 </span>
                             </div>
                         </Link>

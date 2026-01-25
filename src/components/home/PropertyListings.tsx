@@ -78,7 +78,7 @@ function CompareToggle({ property }: { property: Property }) {
             title={active ? "Quitar de comparación" : "Añadir a comparación"}
             aria-label={active ? "Quitar de comparación" : "Añadir a comparación"}
         >
-            <FaExchangeAlt className={active ? "rotate-180 transition-transform" : ""} />
+            <FaExchangeAlt aria-hidden="true" className={active ? "rotate-180 transition-transform" : ""} />
         </button>
     );
 }
@@ -238,7 +238,7 @@ function PropertyListingsContent({
                                         document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' });
                                     }}
                                 >
-                                    <FaSearch /> {dict.filters.search}
+                                    <FaSearch aria-hidden="true" /> {dict.filters.search}
                                 </button>
                             </div>
                         </div>
@@ -367,22 +367,22 @@ function PropertyListingsContent({
                                                 <div className="flex space-x-4 text-gray-400 text-xs">
                                                     {prop.beds > 0 && (
                                                         <span className="flex items-center gap-1">
-                                                            <FaBed /> {prop.beds}
+                                                            <FaBed aria-hidden="true" /> {prop.beds}
                                                         </span>
                                                     )}
                                                     {prop.baths > 0 && (
                                                         <span className="flex items-center gap-1">
-                                                            <FaBath /> {prop.baths}
+                                                            <FaBath aria-hidden="true" /> {prop.baths}
                                                         </span>
                                                     )}
                                                     <span className="flex items-center gap-1">
-                                                        <FaRulerCombined /> {prop.area} m² <span className="text-gray-500">/</span> {Math.round(prop.area * 10.764)} ft²
+                                                        <FaRulerCombined aria-hidden="true" /> {prop.area} m² <span className="text-gray-500">/</span> {Math.round(prop.area * 10.764)} ft²
                                                     </span>
                                                 </div>
                                                 <span
                                                     className="text-luxury-gold uppercase text-xs font-bold tracking-widest group-hover:text-white transition-colors flex items-center"
                                                 >
-                                                    {dict.viewDetails} <FaArrowRight className="ml-2 text-[10px]" />
+                                                    {dict.viewDetails} <FaArrowRight aria-hidden="true" className="ml-2 text-[10px]" />
                                                 </span>
                                             </div>
                                         </div>

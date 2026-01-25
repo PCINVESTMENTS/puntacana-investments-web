@@ -42,7 +42,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
                 className="bg-zinc-900 border border-luxury-gold/30 p-8 rounded-xl text-center shadow-2xl"
             >
                 <div className="flex justify-center mb-4 text-luxury-gold">
-                    <FaCheckCircle size={48} />
+                    <FaCheckCircle aria-hidden="true" size={48} />
                 </div>
                 <h3 className="text-2xl font-playfair text-white mb-2">{dict.success}</h3>
                 <p className="text-gray-300">{dict.successText}</p>
@@ -78,6 +78,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
                         name="name"
                         placeholder={dict.placeholders.name}
                         required
+                        autoComplete="name"
                         className="w-full bg-zinc-900 border border-zinc-800 focus:border-luxury-gold rounded-lg px-4 py-3 text-white placeholder-zinc-600 outline-none transition-colors"
                     />
                 </div>
@@ -91,6 +92,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
                         id="phone"
                         name="phone"
                         placeholder="+1 (555) 000-0000"
+                        autoComplete="tel"
                         className="w-full bg-zinc-900 border border-zinc-800 focus:border-luxury-gold rounded-lg px-4 py-3 text-white placeholder-zinc-600 outline-none transition-colors"
                     />
                 </div>
@@ -106,6 +108,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
                     name="email"
                     placeholder={dict.placeholders.email}
                     required
+                    autoComplete="email"
                     className="w-full bg-zinc-900 border border-zinc-800 focus:border-luxury-gold rounded-lg px-4 py-3 text-white placeholder-zinc-600 outline-none transition-colors"
                 />
             </div>
@@ -131,12 +134,12 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
             >
                 {isPending ? (
                     <>
-                        <FaSpinner className="animate-spin" />
+                        <FaSpinner aria-hidden="true" className="animate-spin" />
                         {dict.sending}
                     </>
                 ) : (
                     <>
-                        <FaPaperPlane className="group-hover:translate-x-1 transition-transform" />
+                        <FaPaperPlane aria-hidden="true" className="group-hover:translate-x-1 transition-transform" />
                         {dict.send}
                     </>
                 )}

@@ -68,7 +68,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                     className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-luxury-gold hover:text-black transition-all duration-300"
                                     aria-label={`Visit our ${Icon.name.replace('Fa', '')} page`}
                                 >
-                                    <Icon />
+                                    <Icon aria-hidden="true" />
                                 </a>
                             ))}
                         </div>
@@ -96,7 +96,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                     aria-label={dict.footer.newsletterButton || "Subscribe to newsletter"}
                                     className="bg-white/10 text-luxury-gold px-4 py-2 hover:bg-luxury-gold hover:text-black transition-colors disabled:opacity-50"
                                 >
-                                    {isPending ? <FaSpinner className="animate-spin" /> : <FaArrowRight />}
+                                    {isPending ? <FaSpinner aria-hidden="true" className="animate-spin" /> : <FaArrowRight aria-hidden="true" />}
                                 </button>
                             </form>
                         )}

@@ -139,7 +139,7 @@ function PropertyFilterBarContent({ dict, locations, lang }: PropertyFilterBarPr
                             onClick={handleSearch}
                             className="w-full bg-luxury-gold text-black font-bold text-sm md:text-base py-2 md:py-3 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2 h-[38px] md:h-[50px]"
                         >
-                            <FaSearch /> {dict.filters.search}
+                            <FaSearch aria-hidden="true" /> {dict.filters.search}
                         </button>
                     </div>
                 </div>

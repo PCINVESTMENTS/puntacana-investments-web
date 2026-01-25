@@ -44,7 +44,7 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                 className="bg-zinc-900/80 backdrop-blur-md border border-luxury-gold p-12 rounded-sm text-center shadow-2xl max-w-2xl mx-auto"
             >
                 <div className="flex justify-center mb-6 text-luxury-gold">
-                    <FaCheckCircle size={64} />
+                    <FaCheckCircle aria-hidden="true" size={64} />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-white mb-4">{dict.success.title}</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">{dict.success.message}</p>
@@ -75,19 +75,19 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label htmlFor="name" className="text-xs uppercase tracking-wider text-gray-400 font-semibold">{dict.personalDetails.name} *</label>
-                        <input type="text" id="name" name="name" required className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
+                        <input type="text" id="name" name="name" required autoComplete="name" className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="email" className="text-xs uppercase tracking-wider text-gray-400 font-semibold">{dict.personalDetails.email} *</label>
-                        <input type="email" id="email" name="email" required className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
+                        <input type="email" id="email" name="email" required autoComplete="email" className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="phone" className="text-xs uppercase tracking-wider text-gray-400 font-semibold">{dict.personalDetails.phone} *</label>
-                        <input type="tel" id="phone" name="phone" required className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
+                        <input type="tel" id="phone" name="phone" required autoComplete="tel" className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="country" className="text-xs uppercase tracking-wider text-gray-400 font-semibold">{dict.personalDetails.country} *</label>
-                        <input type="text" id="country" name="country" required className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
+                        <input type="text" id="country" name="country" required autoComplete="country-name" className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors" />
                     </div>
                 </div>
             </section>
@@ -287,12 +287,12 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                 >
                     {isPending ? (
                         <>
-                            <FaSpinner className="animate-spin" />
+                            <FaSpinner aria-hidden="true" className="animate-spin" />
                             {dict.sending}
                         </>
                     ) : (
                         <>
-                            <FaPaperPlane />
+                            <FaPaperPlane aria-hidden="true" />
                             {dict.submit}
                         </>
                     )}

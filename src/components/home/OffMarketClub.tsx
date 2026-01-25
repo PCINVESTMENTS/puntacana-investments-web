@@ -47,10 +47,10 @@ export default function OffMarketClub({ lang }: { lang: string }) {
 
                             <div className="mt-8 grid grid-cols-2 gap-6">
                                 <div className="flex items-center gap-2 text-gray-400 text-sm">
-                                    <FaLock className="text-luxury-gold" /> {lang === "en" ? "Private Listings" : "Listados Privados"}
+                                    <FaLock aria-hidden="true" className="text-luxury-gold" /> {lang === "en" ? "Private Listings" : "Listados Privados"}
                                 </div>
                                 <div className="flex items-center gap-2 text-gray-400 text-sm">
-                                    <FaGem className="text-luxury-gold" /> {lang === "en" ? "Priority Alerts" : "Alertas Prioritarias"}
+                                    <FaGem aria-hidden="true" className="text-luxury-gold" /> {lang === "en" ? "Priority Alerts" : "Alertas Prioritarias"}
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                 >
                                     <div className="mb-8">
                                         <div className="w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center text-luxury-gold text-xl mb-4">
-                                            <FaUserSecret />
+                                            <FaUserSecret aria-hidden="true" />
                                         </div>
                                         <h3 className="text-2xl font-bold text-white mb-2">
                                             {lang === "en" ? "Unlock the Secret Portfolio" : "Desbloquea el Portafolio Secreto"}
@@ -90,6 +90,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                                 type="email"
                                                 name="email"
                                                 required
+                                                autoComplete="email"
                                                 placeholder="investor@domain.com"
                                                 className="w-full bg-black border border-white/10 rounded p-4 text-white focus:border-luxury-gold outline-none transition-all placeholder:text-gray-700"
                                             />
@@ -99,7 +100,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                             disabled={isPending}
                                             className="w-full bg-luxury-gold text-black font-bold py-4 uppercase tracking-[0.2em] text-sm hover:bg-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg disabled:opacity-50"
                                         >
-                                            {isPending ? <FaSpinner className="animate-spin mx-auto" /> : (lang === "en" ? "Get Instant Access" : "Obtener Acceso Instantáneo")}
+                                            {isPending ? <FaSpinner aria-hidden="true" className="animate-spin mx-auto" /> : (lang === "en" ? "Get Instant Access" : "Obtener Acceso Instantáneo")}
                                         </button>
                                         <p className="text-[10px] text-gray-600 text-center uppercase tracking-widest">
                                             {lang === "en" ? "No commitment required. 100% Confidential." : "Sin compromiso. 100% Confidencial."}
@@ -114,7 +115,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                     className="text-center"
                                 >
                                     <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                                        <FaCheckCircle />
+                                        <FaCheckCircle aria-hidden="true" />
                                     </div>
                                     <h3 className="text-3xl font-bold text-white mb-4">
                                         {lang === "en" ? "Welcome to the Club" : "Bienvenido al Club"}

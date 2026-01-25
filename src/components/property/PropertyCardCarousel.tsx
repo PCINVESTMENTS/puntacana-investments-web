@@ -82,7 +82,7 @@ export default function PropertyCardCarousel({ images, title }: PropertyCardCaro
                         aria-label="Previous image"
                         title="Anterior"
                     >
-                        <FaChevronLeft size={20} />
+                        <FaChevronLeft aria-hidden="true" size={20} />
                     </button>
                     <button
                         onClick={nextStep}
@@ -90,14 +90,14 @@ export default function PropertyCardCarousel({ images, title }: PropertyCardCaro
                         aria-label="Next image"
                         title="Siguiente"
                     >
-                        <FaChevronRight size={20} />
+                        <FaChevronRight aria-hidden="true" size={20} />
                     </button>
                 </>
             )}
 
             {/* Dots Indicator */}
             {images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5" aria-hidden="true">
                     {images.map((_, idx) => (
                         <div
                             key={idx}

@@ -81,7 +81,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
 
                                         <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-luxury-gold text-sm font-bold uppercase tracking-wider">
                                             <span>{dict.exploreModel}</span>
-                                            <FaArrowRight className="transform group-hover:translate-x-2 transition-transform" />
+                                            <FaArrowRight aria-hidden="true" className="transform group-hover:translate-x-2 transition-transform" />
                                         </div>
                                     </div>
                                 </div>

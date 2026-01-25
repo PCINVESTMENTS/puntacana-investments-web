@@ -27,7 +27,8 @@ export const PROPERTIES_QUERY = defineQuery(`
     virtualTourUrl,
     coordinates,
     constructionStages,
-    featured
+    featured,
+    seo
   }
 `);
 
@@ -58,7 +59,8 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
     virtualTourUrl,
     coordinates,
     constructionStages,
-    featured
+    featured,
+    seo
   }
 `);
 
@@ -89,7 +91,8 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     virtualTourUrl,
     coordinates,
     constructionStages,
-    featured
+    featured,
+    seo
   }
 `);
 
@@ -126,6 +129,7 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
     authorRole,
     authorBio,
     authorImage,
-    category
+    category,
+    seo
   }
 `);

@@ -2,6 +2,7 @@
 
 import { FaGem, FaHandshake, FaChartLine } from "react-icons/fa";
 import { ScrollReveal } from "../ui/ScrollReveal";
+import Image from "next/image";
 
 interface AboutSectionProps {
     dict: {
@@ -38,10 +39,11 @@ export function AboutSection({ dict }: AboutSectionProps) {
 
                             {/* Image Container */}
                             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm shadow-2xl">
-                                <img
+                                <Image
                                     src="/images/ceo-final.jpg"
                                     alt="Ulises Ubiera - CEO Punta Cana Investments"
-                                    className="object-cover hover:scale-105 transition-transform duration-700 w-full h-full"
+                                    fill
+                                    className="object-cover hover:scale-105 transition-transform duration-700"
                                 />
 
                                 {/* Name Overlay (Bottom) */}
@@ -104,7 +106,7 @@ export function AboutSection({ dict }: AboutSectionProps) {
                                             <div key={index} className="flex gap-4 group">
                                                 <div className="flex-shrink-0 mt-1">
                                                     <div className="w-12 h-12 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30 group-hover:bg-luxury-gold group-hover:text-black transition-all duration-300 text-luxury-gold">
-                                                        <Icon size={18} />
+                                                        <Icon aria-hidden="true" size={18} />
                                                     </div>
                                                 </div>
                                                 <div>

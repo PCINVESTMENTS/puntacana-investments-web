@@ -164,7 +164,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                     className="text-white hover:text-luxury-gold px-1 py-4 text-[10px] xl:text-xs font-bold transition-colors uppercase tracking-wider flex items-center gap-1 group-hover:text-luxury-gold whitespace-nowrap"
                                 >
                                     {item.name}
-                                    {item.hasDropdown && <FaChevronDown className="text-[10px] transition-transform group-hover:rotate-180" />}
+                                    {item.hasDropdown && <FaChevronDown aria-hidden="true" className="text-[10px] transition-transform group-hover:rotate-180" />}
                                 </Link>
 
                                 {/* Dropdown Menu */}
@@ -199,7 +199,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             aria-label={isOpen ? "Close menu" : "Open menu"}
                             className="text-luxury-gold hover:text-white focus:outline-none text-2xl transition-transform"
                         >
-                            {isOpen ? <FaTimes /> : <FaBars />}
+                            {isOpen ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
                         </button>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 className="block px-3 py-4 text-base font-bold text-gray-300 hover:text-luxury-gold uppercase tracking-wider flex justify-between items-center"
                             >
                                 {item.name}
-                                {item.hasDropdown && <FaChevronDown className="text-xs" />}
+                                {item.hasDropdown && <FaChevronDown aria-hidden="true" className="text-xs" />}
                             </Link>
                             {item.hasDropdown && item.subItems && (
                                 <div className="pl-6 bg-black/20 pb-2">

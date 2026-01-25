@@ -49,11 +49,11 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                     {dict.reviews.map((testim, index) => (
                         <ScrollReveal key={testim.id} delay={index * 0.1}>
                             <div className="bg-primary-black p-8 border border-white/5 relative group hover:border-luxury-gold/30 transition-colors h-full">
-                                <FaQuoteLeft className="text-4xl text-luxury-gold/20 mb-6 group-hover:text-luxury-gold/40 transition-colors" />
+                                <FaQuoteLeft aria-hidden="true" className="text-4xl text-luxury-gold/20 mb-6 group-hover:text-luxury-gold/40 transition-colors" />
 
                                 <div className="flex gap-1 mb-6">
                                     {[...Array(5)].map((_, i) => (
-                                        <FaStar key={i} className="text-luxury-gold text-sm" />
+                                        <FaStar key={i} aria-hidden="true" className="text-luxury-gold text-sm" />
                                     ))}
                                 </div>
 

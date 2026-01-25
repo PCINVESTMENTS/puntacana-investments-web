@@ -71,7 +71,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                         {idx === 3 && remainingCount > 0 && (
                             <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                                 <span className="text-white font-bold text-xl flex items-center gap-2">
-                                    <FaImages /> +{remainingCount}
+                                    <FaImages aria-hidden="true" /> +{remainingCount}
                                 </span>
                             </div>
                         )}
@@ -87,7 +87,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                         className="absolute top-4 right-4 text-white hover:text-luxury-gold text-3xl z-20"
                         aria-label="Close gallery"
                     >
-                        <FaTimes />
+                        <FaTimes aria-hidden="true" />
                     </button>
 
                     <button
@@ -95,7 +95,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                         className="absolute left-2 md:left-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/20 p-2 rounded-full md:bg-transparent"
                         aria-label="Previous image"
                     >
-                        <FaChevronLeft />
+                        <FaChevronLeft aria-hidden="true" />
                     </button>
 
                     <div className="relative w-full max-w-6xl h-[80vh]">
@@ -114,7 +114,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                         className="absolute right-2 md:right-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/20 p-2 rounded-full md:bg-transparent"
                         aria-label="Next image"
                     >
-                        <FaChevronRight />
+                        <FaChevronRight aria-hidden="true" />
                     </button>
 
                     {/* Bottom strip / counter */}
@@ -131,7 +131,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                                 className={`relative w-16 h-16 flex-shrink-0 border-2 ${idx === currentIndex ? 'border-luxury-gold' : 'border-transparent'}`}
                                 aria-label={`View image ${idx + 1}`}
                             >
-                                <Image src={img} alt="thumb" fill className="object-cover" />
+                                <Image src={img} alt={`Property thumbnail ${idx + 1}`} fill className="object-cover" />
                             </button>
                         ))}
                     </div>

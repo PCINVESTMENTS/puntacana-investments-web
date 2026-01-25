@@ -82,9 +82,9 @@ export default async function OffMarketPage({
                         <ScrollReveal direction="left">
                             <div className="relative">
                                 <div className="absolute -inset-4 bg-luxury-gold/5 blur-2xl rounded-full"></div>
-                                <FaLock className="text-[12rem] text-luxury-gold/20 mx-auto" />
+                                <FaLock aria-hidden="true" className="text-[12rem] text-luxury-gold/20 mx-auto" />
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                    <FaKey className="text-5xl text-luxury-gold" />
+                                    <FaKey aria-hidden="true" className="text-5xl text-luxury-gold" />
                                 </div>
                             </div>
                         </ScrollReveal>
@@ -93,7 +93,7 @@ export default async function OffMarketPage({
                             <div className="space-y-8">
                                 <div className="flex gap-4">
                                     <div className="h-12 w-12 rounded-full bg-luxury-gold/10 flex items-center justify-center flex-shrink-0">
-                                        <FaShieldAlt className="text-luxury-gold" />
+                                        <FaShieldAlt aria-hidden="true" className="text-luxury-gold" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-white mb-2">
@@ -109,7 +109,7 @@ export default async function OffMarketPage({
 
                                 <div className="flex gap-4">
                                     <div className="h-12 w-12 rounded-full bg-luxury-gold/10 flex items-center justify-center flex-shrink-0">
-                                        <FaEnvelope className="text-luxury-gold" />
+                                        <FaEnvelope aria-hidden="true" className="text-luxury-gold" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-bold text-white mb-2">
