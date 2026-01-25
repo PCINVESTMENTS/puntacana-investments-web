@@ -60,23 +60,23 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         {
             name: dict.properties,
             hasDropdown: true,
-            href: `/${lang}/properties`,
+            href: `/${lang}/properties?project=false`,
             subItems: [
+                { label: types.villa, href: `/${lang}/properties?type=villa&project=false` },
+                { label: types.condo, href: `/${lang}/properties?type=condo&project=false` },
+                { label: types.land, href: `/${lang}/properties?type=land&project=false` },
+                { label: types.commercial, href: `/${lang}/properties?type=commercial&project=false` },
                 { label: dict.rent, href: `/${lang}/properties?status=rent` },
-                { label: dict.sale, href: `/${lang}/properties?status=sale` }
             ]
         },
         {
             name: dict.projects,
             hasDropdown: true,
-            href: `/${lang}/properties`,
+            href: `/${lang}/properties?project=true`,
             subItems: [
-                { label: types.condo, href: `/${lang}?type=condo#properties` },
-                { label: types.condohotel, href: `/${lang}?type=condohotel#properties` },
-                { label: types.villa, href: `/${lang}?type=villa#properties` },
-                { label: types.resorts, href: `/${lang}?type=resorts#properties` },
-                { label: types.land, href: `/${lang}?type=land#properties` },
-                { label: types.commercial, href: `/${lang}?type=commercial#properties` },
+                { label: types.projects_villas || "Proyectos de Villas", href: `/${lang}/properties?type=villa&project=true` },
+                { label: types.projects_apartments || "Proyectos de Apartamentos", href: `/${lang}/properties?type=condo&project=true` },
+                { label: types.projects_land || "Proyectos de Solares", href: `/${lang}/properties?type=land&project=true` },
             ]
         },
         {

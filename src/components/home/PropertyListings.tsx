@@ -106,22 +106,22 @@ function PropertyListingsContent({
     const [selectedType, setSelectedType] = useState(searchParams.get("type") || initialFilters.type || "all");
     const [selectedStatus, setSelectedStatus] = useState(lockedStatus || searchParams.get("status") || initialFilters.status || (featured ? featuredCategory : "all"));
     const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || initialFilters.maxPrice || "any");
+    const [isProject, setIsProject] = useState<string | null>(searchParams.get("project") || null);
 
-    // Sync with URL changes (only if NOT featured, or allow override?)
-    // For featured, we want to stick to "sale" usually, unless we want it dynamic.
-    // User requested "solo aparezcan 6... de ventas". Implies fixed.
-
+    // Sync with URL changes
     useEffect(() => {
         if (!featured) {
             const loc = searchParams.get("location");
             const type = searchParams.get("type");
             const status = searchParams.get("status");
             const price = searchParams.get("maxPrice");
+            const project = searchParams.get("project");
 
             if (loc) setSelectedLocation(loc);
             if (type) setSelectedType(type);
             if (!lockedStatus && status) setSelectedStatus(status);
             if (price) setMaxPrice(price);
+            setIsProject(project);
         }
     }, [searchParams, featured, lockedStatus]);
 
@@ -134,18 +134,22 @@ function PropertyListingsContent({
             const matchType = selectedType === "all" || p.type === selectedType;
             const matchStatus = selectedStatus === "all" || p.status === selectedStatus;
             const matchPrice = maxPrice === "any" || p.price <= parseInt(maxPrice);
-            return matchLoc && matchType && matchStatus && matchPrice;
+
+            // Project logic: preConstruction/preLaunch define a "project"
+            const isP = p.preConstruction || p.preLaunch;
+            const matchProject = isProject === null || (isProject === "true" ? isP : !isP);
+
+            return matchLoc && matchType && matchStatus && matchPrice && matchProject;
         });
 
         if (showFeaturedOnly) {
             filtered = initialData.filter(p => p.featured === true).slice(0, featuredLimit);
         } else if (featured) {
-            // Legacy featured logic (by status) if needed, or just status filter
             filtered = initialData.filter(p => p.status === featuredCategory).slice(0, featuredLimit);
         }
 
         setFilteredProperties(filtered);
-    }, [selectedLocation, selectedType, selectedStatus, maxPrice, featured, featuredCategory, featuredLimit, initialData]);
+    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, featured, featuredCategory, featuredLimit, initialData]);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {

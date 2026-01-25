@@ -77,8 +77,10 @@ export default async function PropertiesPage({
         return a.id - b.id;
     });
 
-    // Extract status for initial filtering
+    // Extract parameters for initial filtering
     const statusParam = typeof resolvedSearchParams?.status === 'string' ? resolvedSearchParams.status : undefined;
+    const locationParam = typeof resolvedSearchParams?.location === 'string' ? resolvedSearchParams.location : undefined;
+    const typeParam = typeof resolvedSearchParams?.type === 'string' ? resolvedSearchParams.type : undefined;
 
     return (
         <main className="min-h-screen bg-primary-black">
@@ -94,7 +96,11 @@ export default async function PropertiesPage({
                     dict={dict.properties}
                     lang={lang}
                     locations={dict.sections.locations.items}
-                    initialFilters={{ status: statusParam }}
+                    initialFilters={{
+                        status: statusParam,
+                        location: locationParam,
+                        type: typeParam
+                    }}
                     initialData={properties}
                 />
             </div>

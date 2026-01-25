@@ -375,9 +375,12 @@ export default {
             villa: "Villas",
             penthouse: "Penthouses",
             land: "Land",
-            commercial: "Commercial",
+            commercial: "Commercial Premises",
             condohotel: "Condo-Hotel",
-            resorts: "Hotels & Resorts"
+            resorts: "Hotels & Resorts",
+            projects_villas: "Villa Projects",
+            projects_apartments: "Apartment Projects",
+            projects_land: "Land Projects"
         },
         priceRanges: {
             any: "Any Price",

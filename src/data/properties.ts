@@ -142,6 +142,7 @@ The Beach opera bajo la **Ley CONFOTUR**, ofreciendo importantes exenciones fisc
         virtualTourUrl: "https://my.matterport.com/show/?m=aRGoTozjtCa",
         featured: false,
         preConstruction: true,
+        preLaunch: false,
         seo: {
             title: {
                 en: "The Beach | Apartments with Crystal Lagoon Punta Cana",
@@ -261,6 +262,7 @@ City Place se beneficia de la **Ley CONFOTUR** (Exenciones Fiscales) y su ubicac
         coordinates: { lat: 18.6650, lng: -68.4100 }, // Approx Downtown
         featured: false,
         preConstruction: true,
+        preLaunch: false,
         seo: {
             title: {
                 en: "City Place | Modern Apartments Downtown Punta Cana",
@@ -374,6 +376,7 @@ Ubicado en una zona residencial consolidada, Diana Tropical Village ofrece alto 
         ],
         featured: true,
         preConstruction: true,
+        preLaunch: false,
         seo: {
             title: {
                 en: "Diana Tropical Village | Villas in Brisas de Punta Cana",
@@ -494,6 +497,7 @@ Con más de 100 atracciones que incluyen parques acuáticos, juegos mecánicos y
         coordinates: { lat: 18.60, lng: -68.45 },
         completionPercent: 30,
         preConstruction: true,
+        preLaunch: false,
         seo: {
             title: {
                 en: "Cruise On Land | Theme Park Resort Condos Punta Cana",
@@ -598,6 +602,7 @@ Con un enfoque en el confort y la conveniencia, los residentes disfrutan de fác
         featured: false,
         coordinates: { lat: 18.61, lng: -68.42 },
         preConstruction: true,
+        preLaunch: false,
         seo: {
             title: {
                 en: "Balcones de Brisas | Affordable Apartments Punta Cana",
@@ -708,6 +713,7 @@ Tropical Breeze destaca por su precio accesible en una zona consolidada.
         },
         featured: false,
         preConstruction: true,
+        preLaunch: false,
         seo: {
             title: {
                 en: "Tropical Breeze | Apartments in Brisas de Punta Cana",
