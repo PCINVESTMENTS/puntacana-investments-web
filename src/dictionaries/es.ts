@@ -1,7 +1,7 @@
 export default {
     meta: {
-        title: "Punta Cana Investments - Bienes Raíces de Lujo Exclusivos",
-        description: "Descubre propiedades exclusivas en los destinos más prestigiosos del Caribe."
+        title: "Punta Cana Investments | Real Estate de Lujo en el Caribe",
+        description: "Invierta en las propiedades más exclusivas de Punta Cana. Villas de lujo, proyectos en planos y oportunidades off-market con la mejor asesoría del Caribe."
     },
     nav: {
         home: "Inicio",
@@ -13,10 +13,11 @@ export default {
         contact: "Contacto",
         services: "Servicios",
         investments: "Inversiones",
+        offMarket: "Off-Market",
         dueDiligence: "Debida Diligencia",
         flyAndBuy: "Fly & Buy",
-        rent: "Rentas",
-        sale: "Ventas"
+        rent: "Renta",
+        sale: "Venta"
     },
     blog: {
         back: "Volver al Blog",

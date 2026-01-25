@@ -26,15 +26,44 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
   return {
-    title: dict.meta.title,
+    title: {
+      template: `%s | Punta Cana Investments`,
+      default: dict.meta.title,
+    },
     description: dict.meta.description,
+    keywords: ["Punta Cana Real Estate", "Luxury Villas Punta Cana", "Property Investment Dominican Republic", "Cap Cana Properties", "Off-market real estate"],
     metadataBase: new URL(baseUrl),
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     openGraph: {
-      images: ['/images/og-home-luxury.jpg'],
+      images: [
+        {
+          url: '/images/og-home-luxury.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'Punta Cana Investments Luxury Real Estate',
+        }
+      ],
       title: dict.meta.title,
       description: dict.meta.description,
       type: 'website',
-      locale: lang,
+      locale: lang === 'es' ? 'es_DO' : 'en_US',
+      siteName: 'Punta Cana Investments',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: dict.meta.title,
+      description: dict.meta.description,
+      images: ['/images/og-home-luxury.jpg'],
     },
   };
 }

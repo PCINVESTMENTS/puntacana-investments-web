@@ -15,10 +15,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '',
         '/properties',
         '/investments',
+        '/investments/off-market',
+        '/investments/due-diligence',
         '/blog',
         '/contact',
         '/about',
         '/locations',
+        '/fly-and-buy',
+        '/services',
     ];
 
     // 2. Fetch Properies from Sanity & Local

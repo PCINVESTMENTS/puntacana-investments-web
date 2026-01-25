@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const seo = property.seo;
     const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${property.title} | Punta Cana Investments`;
     const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
-    const keywords = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
+    const keywords = (seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : []).join(', ');
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;
@@ -87,12 +87,38 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         title: title,
         description: description,
         keywords: keywords,
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            },
+        },
         openGraph: {
             title: title,
             description: description,
-            images: [property.image],
-            locale: lang === 'es' ? 'es_ES' : 'en_US',
+            url: canonicalUrl,
+            images: [
+                {
+                    url: property.image,
+                    width: 1200,
+                    height: 630,
+                    alt: property.title,
+                }
+            ],
+            locale: lang === 'es' ? 'es_DO' : 'en_US',
             type: 'website',
+            siteName: 'Punta Cana Investments',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: title,
+            description: description,
+            images: [property.image],
         },
         alternates: {
             canonical: canonicalUrl,
@@ -101,13 +127,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                 es: `${baseUrl}/es/properties/${slug}`,
                 'x-default': `${baseUrl}/en/properties/${slug}`
             }
-        },
-        other: {
-            // Injecting JSON-LD as script tag in body via page component or here? 
-            // Metadata 'other' is for meta tags. For JSON-LD better use a script component in the page.
-            // But we can pass it here if we use a specific way, but standard is Page component.
-            // Actually, next.js recommends adding script in the component.
-            // So we return standard metadata here.
         }
     };
 }

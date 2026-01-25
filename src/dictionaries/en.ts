@@ -1,7 +1,7 @@
 export default {
     meta: {
-        title: "Punta Cana Investments - Exclusive Luxury Real Estate",
-        description: "Discover exclusive properties in the most prestigious destinations of the Caribbean."
+        title: "Punta Cana Investments | Exclusive Luxury Real Estate & Investments",
+        description: "Invest in the most exclusive properties in Punta Cana. Luxury villas, pre-construction projects, and off-market opportunities with expert Caribbean advisory."
     },
     nav: {
         home: "Home",
@@ -13,6 +13,7 @@ export default {
         contact: "Contact",
         services: "Services",
         investments: "Investments",
+        offMarket: "Off-Market",
         dueDiligence: "Due Diligence",
         flyAndBuy: "Fly & Buy",
         rent: "Rent",

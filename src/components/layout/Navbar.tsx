@@ -87,6 +87,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
             href: `/${lang}/investments`,
             subItems: [
                 { label: dict.investments, href: `/${lang}/investments` },
+                { label: dict.offMarket || "Off-Market", href: `/${lang}/investments/off-market` },
                 { label: dict.dueDiligence, href: `/${lang}/investments/due-diligence` }
             ]
         },
