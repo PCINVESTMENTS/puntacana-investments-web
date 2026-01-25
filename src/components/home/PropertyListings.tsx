@@ -71,7 +71,7 @@ function CompareToggle({ property }: { property: Property }) {
                 e.stopPropagation();
                 active ? removeFromCompare(property.id) : addToCompare(property);
             }}
-            className={`absolute bottom-4 left-4 z-20 p-2 rounded-full transition-all duration-300 shadow-lg ${active
+            className={`absolute bottom-4 left-4 z-20 p-4 rounded-full transition-all duration-300 shadow-lg ${active
                 ? "bg-luxury-gold text-black scale-110"
                 : "bg-black/60 text-white hover:bg-luxury-gold/80 hover:text-black"
                 }`}
@@ -306,22 +306,17 @@ function PropertyListingsContent({
                         ) : (
                             filteredProperties.map((prop, index) => (
                                 <ScrollReveal key={prop.id} delay={index * 0.1}>
-                                    <Link
-                                        href={`/${lang}/properties/${prop.slug}`}
-                                        className="group bg-dark-gray border border-white/5 hover:border-luxury-gold/50 transition-all duration-500 overflow-hidden relative block"
-                                    >
+                                    <div className="group bg-dark-gray border border-white/5 hover:border-luxury-gold/50 transition-all duration-500 overflow-hidden relative flex flex-col h-full shadow-xl">
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
                                                 images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
                                                 title={prop.title}
                                             />
-                                            <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
+                                            <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 pointer-events-none">
                                                 <div className="bg-black/80 text-white px-4 py-1 text-xs uppercase tracking-wider border-l-2 border-luxury-gold">
                                                     {prop.locationLabel}
                                                 </div>
                                             </div>
-
-
 
                                             {/* Status Badge */}
                                             <div className={`absolute top-4 right-4 px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg z-10 ${prop.status === 'sale'
@@ -333,60 +328,68 @@ function PropertyListingsContent({
                                                     : (lang === 'en' ? 'Monthly Rent' : 'Renta Mensual')
                                                 }
                                             </div>
-                                            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80"></div>
+
+                                            <CompareToggle property={prop} />
+                                            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80 pointer-events-none"></div>
                                         </div>
 
-                                        <div className="p-8 relative">
-                                            {/* Pre-Construction / Pre-Sales Badge */}
-                                            {(prop.preLaunch || prop.preConstruction) && (
-                                                <div className="absolute -top-6 left-2 md:left-8 bg-emerald-600 text-white font-bold px-2 md:px-4 py-2 shadow-lg text-[10px] md:text-sm z-30 uppercase tracking-tight md:tracking-wider">
-                                                    {prop.preConstruction
-                                                        ? (lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción')
-                                                        : (lang === 'en' ? 'Pre-Sales' : 'Pre-Ventas')
-                                                    }
-                                                </div>
-                                            )}
-
-                                            <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
-                                                {prop.price > 0 ? (
-                                                    <>
-                                                        {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.price)}
-                                                    </>
-                                                ) : (
-                                                    lang === 'en' ? 'Price on Request' : 'Precio a Consultar'
+                                        <Link
+                                            href={`/${lang}/properties/${prop.slug}`}
+                                            className="flex-grow flex flex-col"
+                                        >
+                                            <div className="p-8 relative flex-grow flex flex-col">
+                                                {/* Pre-Construction / Pre-Sales Badge */}
+                                                {(prop.preLaunch || prop.preConstruction) && (
+                                                    <div className="absolute -top-6 left-2 md:left-8 bg-emerald-600 text-white font-bold px-2 md:px-4 py-2 shadow-lg text-[10px] md:text-sm z-30 uppercase tracking-tight md:tracking-wider">
+                                                        {prop.preConstruction
+                                                            ? (lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción')
+                                                            : (lang === 'en' ? 'Pre-Sales' : 'Pre-Ventas')
+                                                        }
+                                                    </div>
                                                 )}
-                                            </div>
-                                            <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
-                                                {prop.title}
-                                            </h3>
-                                            <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
-                                                {prop.description[lang as 'en' | 'es']}
-                                            </p>
 
-                                            <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto">
-                                                <div className="flex space-x-4 text-gray-400 text-xs">
-                                                    {prop.beds > 0 && (
-                                                        <span className="flex items-center gap-1">
-                                                            <FaBed aria-hidden="true" /> {prop.beds}
-                                                        </span>
+                                                <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
+                                                    {prop.price > 0 ? (
+                                                        <>
+                                                            {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.price)}
+                                                        </>
+                                                    ) : (
+                                                        lang === 'en' ? 'Price on Request' : 'Precio a Consultar'
                                                     )}
-                                                    {prop.baths > 0 && (
+                                                </div>
+
+                                                <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
+                                                    {prop.title}
+                                                </h3>
+                                                <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
+                                                    {prop.description[lang as 'en' | 'es']}
+                                                </p>
+
+                                                <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto">
+                                                    <div className="flex space-x-4 text-gray-400 text-xs">
+                                                        {prop.beds > 0 && (
+                                                            <span className="flex items-center gap-1">
+                                                                <FaBed aria-hidden="true" /> {prop.beds}
+                                                            </span>
+                                                        )}
+                                                        {prop.baths > 0 && (
+                                                            <span className="flex items-center gap-1">
+                                                                <FaBath aria-hidden="true" /> {prop.baths}
+                                                            </span>
+                                                        )}
                                                         <span className="flex items-center gap-1">
-                                                            <FaBath aria-hidden="true" /> {prop.baths}
+                                                            <FaRulerCombined aria-hidden="true" /> {prop.area} m² <span className="text-gray-500">/</span> {Math.round(prop.area * 10.764)} ft²
                                                         </span>
-                                                    )}
-                                                    <span className="flex items-center gap-1">
-                                                        <FaRulerCombined aria-hidden="true" /> {prop.area} m² <span className="text-gray-500">/</span> {Math.round(prop.area * 10.764)} ft²
+                                                    </div>
+                                                    <span
+                                                        className="text-luxury-gold uppercase text-xs font-bold tracking-widest group-hover:text-white transition-colors flex items-center p-2 -mr-2"
+                                                    >
+                                                        {dict.viewDetails} <FaArrowRight aria-hidden="true" className="ml-2 text-[10px]" />
                                                     </span>
                                                 </div>
-                                                <span
-                                                    className="text-luxury-gold uppercase text-xs font-bold tracking-widest group-hover:text-white transition-colors flex items-center"
-                                                >
-                                                    {dict.viewDetails} <FaArrowRight aria-hidden="true" className="ml-2 text-[10px]" />
-                                                </span>
                                             </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                    </div>
                                 </ScrollReveal>
                             ))
                         )}
@@ -403,8 +406,8 @@ function PropertyListingsContent({
                             </Link>
                         </div>
                     )}
-                </div>
-            </section>
+                </div >
+            </section >
         </>
     );
 }

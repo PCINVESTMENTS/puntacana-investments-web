@@ -84,7 +84,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                 <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
                     <button
                         onClick={closeGallery}
-                        className="absolute top-4 right-4 text-white hover:text-luxury-gold text-3xl z-20"
+                        className="absolute top-4 right-4 text-white hover:text-luxury-gold text-3xl z-20 p-2"
                         aria-label="Close gallery"
                     >
                         <FaTimes aria-hidden="true" />
@@ -92,7 +92,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
 
                     <button
                         onClick={prevImage}
-                        className="absolute left-2 md:left-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/20 p-2 rounded-full md:bg-transparent"
+                        className="absolute left-2 md:left-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/40 p-3 rounded-full md:bg-transparent"
                         aria-label="Previous image"
                     >
                         <FaChevronLeft aria-hidden="true" />
@@ -111,7 +111,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
 
                     <button
                         onClick={nextImage}
-                        className="absolute right-2 md:right-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/20 p-2 rounded-full md:bg-transparent"
+                        className="absolute right-2 md:right-4 text-white hover:text-luxury-gold text-4xl z-20 bg-black/40 p-3 rounded-full md:bg-transparent"
                         aria-label="Next image"
                     >
                         <FaChevronRight aria-hidden="true" />

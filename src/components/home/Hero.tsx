@@ -43,6 +43,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                             alt="Background"
                             fill
                             priority={index === 0}
+                            {...(index === 0 ? { fetchPriority: "high" } : {})}
                             sizes="(max-width: 768px) 100vw, 100vw"
                             className="object-cover"
                         />

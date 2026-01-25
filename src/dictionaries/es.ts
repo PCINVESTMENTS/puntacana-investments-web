@@ -397,8 +397,10 @@ export default {
             search: "Buscar"
         },
         exploreMore: "Explorar Más Propiedades",
-        featuredProperties: "Propiedades Destacadas"
-
+        featuredProperties: "Propiedades Destacadas",
+        beds: "Habitaciones",
+        baths: "Baños",
+        area: "Área"
     },
     contact: {
         title: "Contáctanos",

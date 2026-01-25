@@ -197,7 +197,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             aria-label={isOpen ? "Close menu" : "Open menu"}
-                            className="text-luxury-gold hover:text-white focus:outline-none text-2xl transition-transform"
+                            className="text-luxury-gold hover:text-white focus:outline-none text-2xl transition-transform p-3 -mr-3"
                         >
                             {isOpen ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
                         </button>
@@ -216,7 +216,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             <Link
                                 href={item.href || "#"}
                                 onClick={() => setIsOpen(false)}
-                                className="block px-3 py-4 text-base font-bold text-gray-300 hover:text-luxury-gold uppercase tracking-wider flex justify-between items-center"
+                                className="block px-3 py-5 text-base font-bold text-gray-300 hover:text-luxury-gold uppercase tracking-wider flex justify-between items-center"
                             >
                                 {item.name}
                                 {item.hasDropdown && <FaChevronDown aria-hidden="true" className="text-xs" />}
@@ -228,7 +228,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                             key={subItem.label}
                                             href={subItem.href}
                                             onClick={() => setIsOpen(false)}
-                                            className="block py-2 text-sm text-gray-400 hover:text-luxury-gold uppercase tracking-wide"
+                                            className="block py-4 text-sm text-gray-400 hover:text-luxury-gold uppercase tracking-wide min-h-[48px] flex items-center"
                                         >
                                             {subItem.label}
                                         </Link>
@@ -237,9 +237,9 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             )}
                         </div>
                     ))}
-                    <div className="p-4 flex gap-4 justify-center">
-                        <Link href="/es" className={`text-lg font-bold ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
-                        <Link href="/en" className={`text-lg font-bold ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
+                    <div className="p-4 flex gap-8 justify-center mt-6">
+                        <Link href="/es" className={`text-lg font-bold p-4 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
+                        <Link href="/en" className={`text-lg font-bold p-4 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
                     </div>
                 </div>
             </div>

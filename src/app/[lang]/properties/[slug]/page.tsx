@@ -210,8 +210,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
                     <div className="max-w-7xl mx-auto">
-                        <Link href={`/${lang}#properties`} className="inline-flex items-center text-luxury-gold hover:text-white mb-6 uppercase tracking-widest text-xs font-bold transition-colors">
-                            <FaArrowLeft className="mr-2" /> {dict.properties.filters.allLocations}
+                        <Link href={`/${lang}#properties`} className="inline-flex items-center text-luxury-gold hover:text-white mb-6 uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px]">
+                            <FaArrowLeft aria-hidden="true" className="mr-2" /> {dict.properties.filters.allLocations}
                         </Link>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
@@ -246,14 +246,14 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         {/* Key Stats */}
                         <div className="bg-dark-gray p-8 border border-white/5 grid grid-cols-2 md:grid-cols-3 gap-8 text-center rounded-lg">
                             <div className="flex flex-col items-center">
-                                <FaBed className="text-4xl text-luxury-gold mb-3" />
+                                <FaBed aria-hidden="true" className="text-4xl text-luxury-gold mb-3" />
                                 <span className="text-2xl font-bold">{property.beds}</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">Habitaciones</span>
+                                <span className="text-gray-400 text-xs uppercase tracking-wider">{dict.properties.beds || 'Beds'}</span>
                             </div>
                             <div className="flex flex-col items-center">
-                                <FaBath className="text-4xl text-luxury-gold mb-3" />
+                                <FaBath aria-hidden="true" className="text-4xl text-luxury-gold mb-3" />
                                 <span className="text-2xl font-bold">{property.baths}</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">Baños</span>
+                                <span className="text-gray-400 text-xs uppercase tracking-wider">{dict.properties.baths || 'Baths'}</span>
                             </div>
                             <div className="flex flex-col items-center">
                                 <FaRulerCombined className="text-4xl text-luxury-gold mb-3" />
@@ -362,7 +362,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 {property.features[lang as 'en' | 'es'].map((feat, idx) => (
                                     <div key={idx} className="flex items-center gap-3 bg-white/5 p-4 rounded hover:bg-white/10 transition-colors">
                                         <div className="bg-luxury-gold/20 p-2 rounded-full">
-                                            <FaCheck className="text-luxury-gold" />
+                                            <FaCheck aria-hidden="true" className="text-luxury-gold" />
                                         </div>
                                         <span className="text-gray-200">{feat}</span>
                                     </div>
@@ -388,8 +388,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                             <div className="mt-8 text-center pt-8 border-t border-white/10">
                                 <p className="text-sm text-gray-500 mb-4">WhatsApp:</p>
-                                <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-500 hover:text-green-400 font-bold text-lg transition-colors">
-                                    <FaWhatsapp className="text-2xl" /> Chat Directo
+                                <a href="https://wa.me/18294084322" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-500 hover:text-green-400 font-bold text-lg transition-colors min-h-[48px]">
+                                    <FaWhatsapp aria-hidden="true" className="text-2xl" /> Chat Directo
                                 </a>
                             </div>
 

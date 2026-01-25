@@ -34,11 +34,11 @@ export function Footer({ dict, lang }: FooterProps) {
                         <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
                             Explorar
                         </h4>
-                        <ul className="space-y-3 text-sm text-gray-400">
-                            <li><Link href={`/${lang}/properties`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.properties}</Link></li>
-                            <li><Link href={`/${lang}/projects`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.projects}</Link></li>
-                            <li><Link href={`/${lang}/investments`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.investments}</Link></li>
-                            <li><Link href={`/${lang}/hotels`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.hotels}</Link></li>
+                        <ul className="space-y-1 text-sm text-gray-400">
+                            <li><Link href={`/${lang}/properties`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.properties}</Link></li>
+                            <li><Link href={`/${lang}/projects`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.projects}</Link></li>
+                            <li><Link href={`/${lang}/investments`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.investments}</Link></li>
+                            <li><Link href={`/${lang}/hotels`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.hotels}</Link></li>
                         </ul>
                     </div>
 
@@ -47,11 +47,11 @@ export function Footer({ dict, lang }: FooterProps) {
                         <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
                             Empresa
                         </h4>
-                        <ul className="space-y-3 text-sm text-gray-400">
-                            <li><Link href={`/${lang}/services`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.services}</Link></li>
-                            <li><Link href={`/${lang}/about`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.about}</Link></li>
-                            <li><Link href={`/${lang}/contact`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.contact}</Link></li>
-                            <li><Link href={`/${lang}/blog`} className="text-luxury-gold hover:text-white transition-colors">{dict.footer.links.blog}</Link></li>
+                        <ul className="space-y-1 text-sm text-gray-400">
+                            <li><Link href={`/${lang}/services`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.services}</Link></li>
+                            <li><Link href={`/${lang}/about`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.about}</Link></li>
+                            <li><Link href={`/${lang}/contact`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.contact}</Link></li>
+                            <li><Link href={`/${lang}/blog`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.blog}</Link></li>
                         </ul>
                     </div>
 
@@ -65,10 +65,10 @@ export function Footer({ dict, lang }: FooterProps) {
                                 <a
                                     key={i}
                                     href="#"
-                                    className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-luxury-gold hover:text-black transition-all duration-300"
+                                    className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-luxury-gold hover:text-black transition-all duration-300"
                                     aria-label={`Visit our ${Icon.name.replace('Fa', '')} page`}
                                 >
-                                    <Icon aria-hidden="true" />
+                                    <Icon aria-hidden="true" size={20} />
                                 </a>
                             ))}
                         </div>
@@ -94,7 +94,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                     type="submit"
                                     disabled={isPending}
                                     aria-label={dict.footer.newsletterButton || "Subscribe to newsletter"}
-                                    className="bg-white/10 text-luxury-gold px-4 py-2 hover:bg-luxury-gold hover:text-black transition-colors disabled:opacity-50"
+                                    className="bg-white/10 text-luxury-gold px-6 py-3 hover:bg-luxury-gold hover:text-black transition-colors disabled:opacity-50 min-h-[48px]"
                                 >
                                     {isPending ? <FaSpinner aria-hidden="true" className="animate-spin" /> : <FaArrowRight aria-hidden="true" />}
                                 </button>
