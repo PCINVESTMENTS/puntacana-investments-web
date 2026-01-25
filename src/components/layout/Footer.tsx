@@ -20,13 +20,23 @@ export function Footer({ dict, lang }: FooterProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-8 lg:mb-16">
                     {/* Brand & Address */}
                     <div className="space-y-6">
-                        <Image
-                            src="/images/pci-logo-new.png"
-                            alt="Punta Cana Investments"
-                            width={280}
-                            height={280}
-                            className="object-contain"
-                        />
+                        <Link
+                            href={`/${lang}`}
+                            onClick={() => {
+                                if (window.location.pathname === `/${lang}`) {
+                                    window.scrollTo({ top: 0, behavior: "smooth" });
+                                }
+                            }}
+                            className="block"
+                        >
+                            <Image
+                                src="/images/pci-logo-new.png"
+                                alt="Punta Cana Investments"
+                                width={280}
+                                height={280}
+                                className="object-contain"
+                            />
+                        </Link>
                     </div>
 
                     {/* Navigation - Column 1 */}

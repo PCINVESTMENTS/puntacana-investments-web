@@ -127,7 +127,16 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     {/* Logo - Centered on Mobile, Left on Desktop */}
                     {/* Mobile Logo - Centered and Big */}
                     <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:hidden">
-                        <Link href={`/${lang}`} className="block relative h-20 w-[80vw] transition-all duration-300">
+                        <Link
+                            href={`/${lang}`}
+                            onClick={() => {
+                                if (window.location.pathname === `/${lang}`) {
+                                    window.scrollTo({ top: 0, behavior: "smooth" });
+                                }
+                                setIsOpen(false);
+                            }}
+                            className="block relative h-20 w-[80vw] transition-all duration-300"
+                        >
                             <Image
                                 src="/images/pci-logo-new.png"
                                 alt="Punta Cana Investments"
@@ -139,7 +148,15 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     </div>
 
                     {/* Desktop Logo - Original Layout (Left aligned, standard size) */}
-                    <Link href={`/${lang}`} className="hidden lg:flex flex-shrink-0 items-center justify-start group relative h-24 w-80">
+                    <Link
+                        href={`/${lang}`}
+                        onClick={() => {
+                            if (window.location.pathname === `/${lang}`) {
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                            }
+                        }}
+                        className="hidden lg:flex flex-shrink-0 items-center justify-start group relative h-24 w-80"
+                    >
                         <Image
                             src="/images/pci-logo-new.png"
                             alt="Punta Cana Investments"
