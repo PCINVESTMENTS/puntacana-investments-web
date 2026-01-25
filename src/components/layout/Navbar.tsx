@@ -60,7 +60,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         {
             name: dict.properties,
             hasDropdown: true,
-            href: `/${lang}/properties?project=false`,
+            href: `/${lang}/properties?project=all`,
             subItems: [
                 { label: types.villa, href: `/${lang}/properties?type=villa&project=false` },
                 { label: types.condo, href: `/${lang}/properties?type=condo&project=false` },

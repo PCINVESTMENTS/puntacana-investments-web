@@ -407,7 +407,7 @@ Ubicado en una zona residencial consolidada, Diana Tropical Village ofrece alto 
         title: "Condos | Cruise On Land Resort Punta Cana",
         location: "puntacana",
         locationLabel: "Punta Cana",
-        type: "condo",
+        type: "condohotel",
         status: "sale",
         price: 71700,
         image: "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
