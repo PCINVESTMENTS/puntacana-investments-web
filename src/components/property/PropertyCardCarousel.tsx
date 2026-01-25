@@ -4,13 +4,15 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { sanityLoader } from "@/sanity/lib/image";
 
 interface PropertyCardCarouselProps {
     images: string[];
+    rawImages?: any[];
     title: string;
 }
 
-export default function PropertyCardCarousel({ images, title }: PropertyCardCarouselProps) {
+export default function PropertyCardCarousel({ images, rawImages, title }: PropertyCardCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
 
@@ -63,13 +65,25 @@ export default function PropertyCardCarousel({ images, title }: PropertyCardCaro
                     }}
                     className="absolute inset-0"
                 >
-                    <Image
-                        src={images[currentIndex]}
-                        alt={`${title} - Image ${currentIndex + 1}`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
-                    />
+                    {rawImages && rawImages[currentIndex] ? (
+                        <Image
+                            loader={sanityLoader}
+                            src={rawImages[currentIndex]}
+                            alt={`${title} - Image ${currentIndex + 1}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
+                            quality={75}
+                        />
+                    ) : (
+                        <Image
+                            src={images[currentIndex]}
+                            alt={`${title} - Image ${currentIndex + 1}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
+                        />
+                    )}
                 </motion.div>
             </AnimatePresence>
 

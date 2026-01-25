@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ScrollReveal } from "../ui/ScrollReveal";
 
+import { urlFor, sanityLoader } from "@/sanity/lib/image";
+
 interface HeroProps {
     dict: {
         subtitle: string;
@@ -11,19 +13,20 @@ interface HeroProps {
         cta: string;
         scroll: string;
     };
-    featuredImages: string[];
+    featuredImages: {
+        id: number;
+        mainImage: any;
+        backupImage: string;
+    }[];
 }
 
 export default function Hero({ dict, featuredImages }: HeroProps) {
-    // Featured images are now passed as props
-
-
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % featuredImages.length);
-        }, 5000); // Change image every 5 seconds
+        }, 6000);
 
         return () => clearInterval(interval);
     }, [featuredImages.length]);
@@ -32,23 +35,40 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
         <section className="relative h-screen flex items-center justify-center overflow-hidden bg-primary-black">
             {/* Background Slider */}
             <div className="absolute inset-0 z-0">
-                {featuredImages.map((src, index) => (
-                    <div
-                        key={index}
-                        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
-                            }`}
-                    >
-                        <Image
-                            src={src}
-                            alt="Background"
-                            fill
-                            priority={index === 0}
-                            {...(index === 0 ? { fetchPriority: "high" } : {})}
-                            sizes="(max-width: 768px) 100vw, 100vw"
-                            className="object-cover"
-                        />
-                    </div>
-                ))}
+                {featuredImages.map((img, index) => {
+                    const isPriority = index === 0;
+
+                    return (
+                        <div
+                            key={img.id}
+                            className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
+                                }`}
+                        >
+                            {img.mainImage ? (
+                                <Image
+                                    loader={sanityLoader}
+                                    src={img.mainImage}
+                                    alt={dict.title}
+                                    fill
+                                    priority={isPriority}
+                                    {...(isPriority ? { fetchPriority: "high" } : {})}
+                                    sizes="100vw"
+                                    className="object-cover"
+                                    quality={85}
+                                />
+                            ) : (
+                                <Image
+                                    src={img.backupImage}
+                                    alt={dict.title}
+                                    fill
+                                    priority={isPriority}
+                                    sizes="100vw"
+                                    className="object-cover"
+                                />
+                            )}
+                        </div>
+                    );
+                })}
             </div>
 
             {/* Overlay */}

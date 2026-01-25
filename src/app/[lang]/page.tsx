@@ -22,7 +22,7 @@ const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mo
 
 // Sanity
 import { client } from "@/sanity/lib/client";
-import { PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
+import { HOME_PAGE_PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost } from "@/data/blog";
@@ -87,8 +87,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
-  // Fetch data from Sanity (no-store for fresh data during verification)
-  const rawProperties = await client.fetch(PROPERTIES_QUERY);
+  // Fetch data from Sanity
+  const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
   const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
 
   // Merge with local overrides and include local-only properties
@@ -112,14 +112,16 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const heroProperties = properties.filter(p =>
     // Hero Allowed: City Place (2), Diana (3), Kerry (7), Perla (8), Ocean Village (9), Soto Grande (12), Miches (13)
     [2, 3, 7, 8, 9, 12, 13].includes(p.id)
-  );
-
-  const heroImages = heroProperties.map(p => p.image);
+  ).map(p => ({
+    id: p.id,
+    mainImage: p.mainImage,
+    backupImage: p.image // Still keep the string URL as backup
+  }));
 
   return (
     <main className="min-h-screen">
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
-      <Hero dict={dict.hero} featuredImages={heroImages} />
+      <Hero dict={dict.hero} featuredImages={heroProperties} />
       <PropertyFilterBar dict={dict.properties} locations={dict.sections.locations.items} lang={lang} />
 
       <PropertyListings

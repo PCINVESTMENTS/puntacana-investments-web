@@ -8,6 +8,7 @@ export interface Property {
     status: 'sale' | 'rent';
     price: number;
     image: string;
+    mainImage?: any;
     beds: number;
     baths: number;
     area: number;
@@ -28,6 +29,7 @@ export interface Property {
         es: string;
     };
     gallery?: string[];
+    rawGallery?: any[];
     videoUrl?: string;
     virtualTourUrl?: string;
     featured?: boolean;

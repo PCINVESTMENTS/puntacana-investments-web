@@ -36,9 +36,11 @@ export function mapSanityProperty(data: any): Property {
     return {
         ...data,
         image: data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || ""),
+        mainImage: data.mainImage,
         gallery: data.gallery
             ? data.gallery.map((img: any) => urlFor(img).url())
             : (data.galleryUrls || []),
+        rawGallery: data.gallery,
         features: {
             en: data.featuresEn || [],
             es: data.featuresEs || []

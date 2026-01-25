@@ -1,34 +1,37 @@
-import { defineQuery } from "next-sanity";
-
 export const PROPERTIES_QUERY = defineQuery(`
   *[_type == "property"] {
     _id,
     id,
     title,
     slug,
-    location,
     locationLabel,
     type,
     status,
     price,
-    completionPercent,
     mainImage,
-    imageUrl, // Fallback
-    gallery,
-    galleryUrls, // Fallback
+    beds,
+    baths,
+    area
+  }
+`);
+
+export const HOME_PAGE_PROPERTIES_QUERY = defineQuery(`
+  *[_type == "property"] {
+    _id,
+    id,
+    title,
+    slug,
+    locationLabel,
+    type,
+    status,
+    price,
+    mainImage,
     beds,
     baths,
     area,
-    featuresEn,
-    featuresEs,
     descriptionEn,
     descriptionEs,
-    videoUrl,
-    virtualTourUrl,
-    coordinates,
-    constructionStages,
-    featured,
-    seo
+    featured
   }
 `);
 
