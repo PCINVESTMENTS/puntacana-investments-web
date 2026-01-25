@@ -1,3 +1,5 @@
+import { defineQuery } from "next-sanity";
+
 export const PROPERTIES_QUERY = defineQuery(`
   *[_type == "property"] {
     _id,
