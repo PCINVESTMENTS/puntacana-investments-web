@@ -77,6 +77,8 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 { label: types.projects_villas || "Proyectos de Villas", href: `/${lang}/properties?type=villa&project=true` },
                 { label: types.projects_apartments || "Proyectos de Apartamentos", href: `/${lang}/properties?type=condo&project=true` },
                 { label: types.projects_land || "Proyectos de Solares", href: `/${lang}/properties?type=land&project=true` },
+                { label: types.condohotel, href: `/${lang}/properties?type=condohotel&project=true` },
+                { label: types.resorts, href: `/${lang}/properties?type=resorts&project=true` },
             ]
         },
         {
