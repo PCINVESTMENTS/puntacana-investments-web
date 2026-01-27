@@ -22,6 +22,11 @@ interface HeroProps {
 
 export default function Hero({ dict, featuredImages }: HeroProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -37,6 +42,10 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
             <div className="absolute inset-0 z-0">
                 {featuredImages.map((img, index) => {
                     const isPriority = index === 0;
+
+                    // Defer rendering of non-priority images until client-side hydration
+                    // This ensures the LCP image gets full bandwidth
+                    if (!isPriority && !mounted) return null;
 
                     return (
                         <div
