@@ -85,7 +85,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
 
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
-                <div className="bg-black/20 backdrop-blur-[2px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto animate-fade-in-up">
+                <div className="bg-black/20 backdrop-blur-[2px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto animate-fade-in-up min-h-[300px] flex flex-col justify-center">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-md">
                         {dict.title}
                     </h1>
