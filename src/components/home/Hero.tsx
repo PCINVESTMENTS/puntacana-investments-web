@@ -63,7 +63,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                                     {...(isPriority ? { fetchPriority: "high" } : {})}
                                     sizes="100vw"
                                     className="object-cover"
-                                    quality={85}
+                                    quality={75}
                                 />
                             ) : (
                                 <Image
