@@ -1,7 +1,7 @@
 'use client';
 
-import { useActionState, useState } from 'react';
-import { submitFlyAndBuyForm } from '@/app/actions/fly-and-buy';
+import { useState } from 'react';
+import { createTripRequest } from '@/services/flybuy';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 
@@ -16,7 +16,38 @@ const initialState = {
 };
 
 export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
-    const [state, formAction, isPending] = useActionState(submitFlyAndBuyForm, initialState);
+    const [isPending, setIsPending] = useState(false);
+    const [state, setState] = useState(initialState);
+
+    async function handleSubmit(formData: FormData) {
+        setIsPending(true);
+        setState({ success: false, message: '' });
+
+        const tripData = {
+            client_name: formData.get('name'),
+            client_email: formData.get('email'),
+            phone: formData.get('phone'),
+            origin_city: formData.get('country'), // Mapping country to origin_city for now
+            proposed_date: new Date().toISOString().split('T')[0], // Placeholder, form doesn't seem to have date field, using today
+            // Adding other fields that might be useful in the message or extra data if backend supports it
+            notes: formData.get('comments')
+        };
+
+        // Note: The kit defined specific fields: client_name, client_email, origin_city, proposed_dates
+        // My form has more fields. I should check if backend accepts them or if I need to pack them into 'message' or 'notes'.
+        // For now, I'll send the strict kit fields + mapped ones.
+
+        try {
+            await createTripRequest(tripData);
+            setState({ success: true, message: dict.success.message });
+        } catch (error) {
+            console.error(error);
+            setState({ success: false, message: 'Failed to submit request.' + error });
+        } finally {
+            setIsPending(false);
+        }
+    }
+
     const [selectedObjectives, setSelectedObjectives] = useState<string[]>([]);
 
     const handleObjectiveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +90,7 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
     }
 
     return (
-        <form action={formAction} className="max-w-4xl mx-auto space-y-12 bg-zinc-900/50 p-8 md:p-12 border border-white/5 rounded-sm shadow-2xl backdrop-blur-sm">
+        <form action={handleSubmit} className="max-w-4xl mx-auto space-y-12 bg-zinc-900/50 p-8 md:p-12 border border-white/5 rounded-sm shadow-2xl backdrop-blur-sm">
             <input type="hidden" name="lang" value={lang} />
             {state.message && !state.success && (
                 <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-center">

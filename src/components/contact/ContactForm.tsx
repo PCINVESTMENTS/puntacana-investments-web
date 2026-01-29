@@ -1,7 +1,7 @@
 'use client';
 
-import { useActionState, useRef } from 'react';
-import { submitContactForm } from '@/app/actions/contact';
+import { useState, useRef } from 'react';
+import { submitLead } from '@/services/leads';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 
@@ -32,7 +32,34 @@ const initialState = {
 };
 
 export default function ContactForm({ dict, subject, className, lang = 'en' }: ContactFormProps) {
-    const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
+    const [isPending, setIsPending] = useState(false);
+    const [state, setState] = useState(initialState);
+    const formRef = useRef<HTMLFormElement>(null);
+
+    async function handleSubmit(formData: FormData) {
+        setIsPending(true);
+        setState({ success: false, message: '' });
+
+        const data = {
+            first_name: formData.get('name')?.toString().split(' ')[0] || 'Unknown',
+            last_name: formData.get('name')?.toString().split(' ').slice(1).join(' ') || '.', // Fallback for last name
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            message: formData.get('message'),
+            source: 'Website Contact Form'
+        };
+
+        try {
+            await submitLead(data);
+            setState({ success: true, message: dict.successText });
+            formRef.current?.reset();
+        } catch (error) {
+            console.error(error);
+            setState({ success: false, message: 'Failed to send message. Please try again.' });
+        } finally {
+            setIsPending(false);
+        }
+    }
 
     if (state.success) {
         return (
@@ -57,7 +84,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
     }
 
     return (
-        <form action={formAction} className={`space-y-6 ${className || ''}`}>
+        <form action={handleSubmit} ref={formRef} className={`space-y-6 ${className || ''}`}>
             {subject && <input type="hidden" name="subject" value={subject} />}
             <input type="hidden" name="lang" value={lang} />
 
