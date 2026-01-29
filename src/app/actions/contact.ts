@@ -48,8 +48,40 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     const emailSubject = subjectInput || `New Lead from Website: ${name}`;
 
     try {
+        // 1. Send to "Fortaleza Digital" Backend (Django) - Server-to-Server (No CORS issues)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (apiUrl) {
+            const backendData = {
+                first_name: name.split(' ')[0],
+                last_name: name.split(' ').slice(1).join(' ') || '.',
+                email: email,
+                phone: phone,
+                message: message,
+                source: "Website Contact Form"
+            };
+
+            await fetch(`${apiUrl}/api/public/leads/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(backendData),
+            }).then(async (res) => {
+                if (!res.ok) {
+                    const err = await res.text();
+                    console.error("Backend Error:", err);
+                    // We don't throw here to ensure email still sends as backup
+                } else {
+                    console.log("Lead saved to Backend successfully");
+                }
+            }).catch(err => {
+                console.error("Backend Connection Error:", err);
+            });
+        }
+
+        // 2. Send Notification Email via Resend
         const data = await resend.emails.send({
-            from: 'Punta Cana Investments <onboarding@resend.dev>', // Use verification email or this for testing
+            from: 'Punta Cana Investments <onboarding@resend.dev>',
             to: ['uepcrealestate@gmail.com'],
             subject: emailSubject,
             html: `
@@ -67,7 +99,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
         if (data.error) {
             console.error("Resend Error:", data.error);
-            return { success: false, message: 'Failed to send message. Please try again.' };
+            return { success: false, message: 'Failed to send message via email. Please check backend.' };
         }
 
         return {
