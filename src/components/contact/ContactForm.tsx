@@ -53,9 +53,13 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
             await submitLead(data);
             setState({ success: true, message: dict.successText });
             formRef.current?.reset();
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            setState({ success: false, message: 'Failed to send message. Please try again.' });
+            // Show the actual error message for debugging
+            setState({
+                success: false,
+                message: error.message || 'Failed to send message. Please try again.'
+            });
         } finally {
             setIsPending(false);
         }
