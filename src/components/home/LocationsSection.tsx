@@ -59,25 +59,12 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
             });
     }, []);
 
-    // Fallback list to ensure content always renders
-    const defaultLocations = [
-        { title: "Punta Cana", slug: "puntacana", img: "/images/locations/bavaro.jpg" },
-        { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.jpg" },
-        { title: "Bávaro", slug: "bavaro", img: "/images/locations/bavaro.jpg" },
-        { title: "La Romana", slug: "laromana", img: "/images/locations/la_romana.png" },
-        { title: "Casa de Campo", slug: "casacampo", img: "/images/locations/casa_de_campo.jpg" },
-        { title: "Juan Dolio", slug: "juandolio", img: "/images/locations/juan_dolio.jpg" },
-        { title: "Miches", slug: "miches", img: "/images/locations/miches.jpg" },
-        { title: "El Seibo", slug: "elseibo", img: "/images/locations/el_seibo.jpg" },
-        { title: "Higüey", slug: "higuey", img: "/images/locations/higuey.jpg" },
-        { title: "Santo Domingo", slug: "santodomingo", img: "/images/locations/santo_domingo.jpg" },
-        { title: "Las Terrenas", slug: "lasterrenas", img: "/images/locations/las_terrenas.jpg" },
-        { title: "Samaná", slug: "samana", img: "/images/locations/samana.jpg" },
-        { title: "Puerto Plata", slug: "puertoplata", img: "https://upcrealestate.com/wp-content/uploads/2023/02/1.jpg" }
-    ];
+    // Fallback list REMOVED to force API usage as per user request
+    // const defaultLocations = [ ... ];
 
-    // Priority: API -> Dict (Static Props) -> Default Hardcoded
-    let locations = apiLocations.length > 0 ? apiLocations : ((dict.items && dict.items.length > 0) ? dict.items : defaultLocations);
+    // Priority: API Only. If API fails, show nothing (or empty).
+    // This ensures we never show stale/hardcoded data.
+    let locations = apiLocations.length > 0 ? apiLocations : (dict.items || []);
 
     if (limit) {
         locations = locations.slice(0, limit);
