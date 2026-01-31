@@ -19,7 +19,32 @@ interface LocationsSectionProps {
     lang?: string;
 }
 
+import { useState, useEffect } from 'react';
+
+// ... interface ...
+
 export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionProps) {
+    const [apiLocations, setApiLocations] = useState<any[]>([]);
+
+    useEffect(() => {
+        // Fetch from Railway Backend
+        fetch('https://web-production-60b36.up.railway.app/api/cms/locations/')
+            .then(res => res.json())
+            .then(data => {
+                // Map API response to Component format
+                // API returns: { title, slug, image_url (Base64), ... }
+                const mapped = data
+                    .filter((item: any) => item.is_active)
+                    .map((item: any) => ({
+                        title: item.title,
+                        slug: item.slug,
+                        img: item.image_url || '/images/locations/bavaro.jpg' // Fallback
+                    }));
+                setApiLocations(mapped);
+            })
+            .catch(err => console.error("Failed to load locations:", err));
+    }, []);
+
     // Fallback list to ensure content always renders
     const defaultLocations = [
         { title: "Punta Cana", slug: "puntacana", img: "/images/locations/bavaro.jpg" },
@@ -37,7 +62,8 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
         { title: "Puerto Plata", slug: "puertoplata", img: "https://upcrealestate.com/wp-content/uploads/2023/02/1.jpg" }
     ];
 
-    let locations = (dict.items && dict.items.length > 0) ? dict.items : defaultLocations;
+    // Priority: API -> Dict (Static Props) -> Default Hardcoded
+    let locations = apiLocations.length > 0 ? apiLocations : ((dict.items && dict.items.length > 0) ? dict.items : defaultLocations);
 
     if (limit) {
         locations = locations.slice(0, limit);

@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'web-production-60b36.up.railway.app',
+      },
+      {
+        protocol: 'https',
         hostname: 'example.com',
       },
       {
