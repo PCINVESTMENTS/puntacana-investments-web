@@ -27,22 +27,36 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
     const [apiLocations, setApiLocations] = useState<any[]>([]);
 
     useEffect(() => {
-        // Fetch from Railway Backend
-        fetch('https://web-production-60b36.up.railway.app/api/cms/locations/')
-            .then(res => res.json())
+        // Prioritize ENV Var -> Hardcoded Production URL
+        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+
+        console.log("Fetching locations from:", `${API_BASE}/api/cms/locations/`);
+
+        fetch(`${API_BASE}/api/cms/locations/`)
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+                return res.json();
+            })
             .then(data => {
+                if (!Array.isArray(data)) throw new Error("API response is not an array");
+
                 // Map API response to Component format
-                // API returns: { title, slug, image_url (Base64), ... }
                 const mapped = data
                     .filter((item: any) => item.is_active)
                     .map((item: any) => ({
                         title: item.title,
                         slug: item.slug,
-                        img: item.image_url || '/images/locations/bavaro.jpg' // Fallback
+                        img: item.image_url || '/images/locations/bavaro.jpg'
                     }));
-                setApiLocations(mapped);
+
+                if (mapped.length > 0) {
+                    setApiLocations(mapped);
+                }
             })
-            .catch(err => console.error("Failed to load locations:", err));
+            .catch(err => {
+                console.error("FAILED to load locations from Backend:", err);
+                // We do NOT set apiLocations here, so it falls back to static content
+            });
     }, []);
 
     // Fallback list to ensure content always renders
