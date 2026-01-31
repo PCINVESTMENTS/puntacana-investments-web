@@ -28,11 +28,16 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
 
     useEffect(() => {
         // Prioritize ENV Var -> Hardcoded Production URL
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+        // Remove trailing slash from API_BASE to prevent double-slashes (common cause of 308 redirects)
+        const envUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+        const API_BASE = envUrl.replace(/\/$/, '');
 
-        console.log("Fetching locations from:", `${API_BASE}/api/cms/locations/`);
+        // Removed trailing slash from endpoint as per user request to avoid 308 Redirects
+        const endpoint = `${API_BASE}/api/cms/locations`;
 
-        fetch(`${API_BASE}/api/cms/locations/`)
+        console.log("Fetching locations from:", endpoint);
+
+        fetch(endpoint)
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
                 return res.json();
