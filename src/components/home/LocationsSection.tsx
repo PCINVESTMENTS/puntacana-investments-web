@@ -32,8 +32,9 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
         const envUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
         const API_BASE = envUrl.replace(/\/$/, '');
 
-        // Removed trailing slash from endpoint as per user request to avoid 308 Redirects
-        const endpoint = `${API_BASE}/api/cms/locations`;
+        // Correct Route: /api/cms/locations/ (With Trailing Slash)
+        // Note: We fixed the Backend SSL Proxy Header to prevent 308 Loops.
+        const endpoint = `${API_BASE}/api/cms/locations/`;
 
         console.log("Fetching locations from:", endpoint);
 
