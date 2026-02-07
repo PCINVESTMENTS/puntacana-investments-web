@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty } from "@/sanity/lib/mappers";
-import { Property, properties as localProperties } from "@/data/properties";
+import { Property } from "@/data/properties";
 
 // In ISR mode, this will run at build time and revalidate every hour
 export const revalidate = 3600;
@@ -29,17 +29,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const rawProperties = await client.fetch(PROPERTIES_QUERY);
     const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
 
-    // Merge logic
-    const localMap = new Map(localProperties.map(p => [p.id, p]));
-    const unitedProperties = fetchedProperties.map(p => {
-        const local = localMap.get(p.id);
-        if (local) {
-            localMap.delete(p.id);
-            return local;
-        }
-        return p;
-    });
-    const allProperties = [...unitedProperties, ...Array.from(localMap.values())];
+    // Use fetched properties directly
+    const allProperties = fetchedProperties;
 
     // 3. Generate Entries for Languages (ES / EN)
     const languages = ['es', 'en'];

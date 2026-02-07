@@ -21,7 +21,7 @@ import ShareButtons from "@/components/property/ShareButtons";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { PROPERTY_BY_SLUG_QUERY } from "@/sanity/lib/queries";
-import { Property, properties } from "@/data/properties";
+import { Property } from "@/data/properties";
 
 // Helper to map Sanity data to our app's Property interface
 function mapSanityProperty(data: any): Property {
@@ -58,22 +58,14 @@ function mapSanityProperty(data: any): Property {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
 
-    // Check local data first for SEO consistency
-    const localProperty = properties.find(p => p.slug === slug);
-    let property: Property;
+    const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
 
-    if (localProperty) {
-        property = localProperty;
-    } else {
-        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-
-        if (!propertyData) {
-            return {
-                title: 'Propiedad no encontrada',
-            };
-        }
-        property = mapSanityProperty(propertyData);
+    if (!propertyData) {
+        return {
+            title: 'Propiedad no encontrada',
+        };
     }
+    const property = mapSanityProperty(propertyData);
 
     const seo = property.seo;
     const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${property.title} | Punta Cana Investments`;
@@ -163,17 +155,9 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     const { lang, slug } = await params;
     const dict = await getDictionary(lang as "es" | "en");
 
-    // Check local data first
-    const localProperty = properties.find(p => p.slug === slug);
-    let property: Property;
-
-    if (localProperty) {
-        property = localProperty;
-    } else {
-        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-        if (!propertyData) notFound();
-        property = mapSanityProperty(propertyData);
-    }
+    const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
+    if (!propertyData) notFound();
+    const property = mapSanityProperty(propertyData);
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const jsonLd = generateJsonLd(property, lang, baseUrl);

@@ -49,11 +49,20 @@ export function mapSanityProperty(data: any): Property {
             en: data.descriptionEn || "",
             es: data.descriptionEs || ""
         },
+        detailedSections: data.detailedSections?.map((section: any) => ({
+            title: { en: section.titleEn || section.title?.en || "", es: section.titleEs || section.title?.es || "" },
+            content: { en: section.contentEn || section.content?.en || "", es: section.contentEs || section.content?.es || "" }
+        })),
         constructionStages: data.constructionStages?.map((stage: any) => ({
             date: stage.date,
-            title: { en: stage.titleEn, es: stage.titleEs },
-            description: { en: stage.descriptionEn, es: stage.descriptionEs },
+            title: { en: stage.titleEn || stage.title?.en || "", es: stage.titleEs || stage.title?.es || "" },
+            description: { en: stage.descriptionEn || stage.description?.en || "", es: stage.descriptionEs || stage.description?.es || "" },
             status: stage.status
-        }))
+        })),
+        completionPercent: data.completionPercent || 0,
+        coordinates: data.coordinates,
+        videoUrl: data.videoUrl || "",
+        virtualTourUrl: data.virtualTourUrl || "",
+        locationLabel: data.locationLabel || data.location?.current || ""
     };
 }
