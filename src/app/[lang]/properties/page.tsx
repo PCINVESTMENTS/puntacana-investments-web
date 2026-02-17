@@ -53,9 +53,103 @@ export default async function PropertiesPage({
     const resolvedSearchParams = await searchParams;
     const dict = await getDictionary(lang);
 
-    // Fetch properties
-    const rawProperties = await client.fetch(PROPERTIES_QUERY);
+    // Fetch properties with Fallback Strategy
+    let rawProperties: any[] = [];
+    let source = "sanity";
+
+    try {
+        // 1. Try Sanity
+        rawProperties = await client.fetch(PROPERTIES_QUERY);
+
+        // 2. If Sanity is empty (and not just a filter issue), try Django
+        if (!rawProperties || rawProperties.length === 0) {
+            console.warn("⚠️ Sanity returned 0 properties. Switching to Django Web Fallback...");
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+            const res = await fetch(`${apiUrl}/api/public/properties/`, { next: { revalidate: 60 } });
+
+            if (res.ok) {
+                const djangoData = await res.json();
+                // Map Django Data to Sanity Interface Structure
+                rawProperties = djangoData.map((d: any) => ({
+                    _id: `django-${d.id}`,
+                    title: d.title,
+                    slug: d.slug,
+                    price: parseFloat(d.price),
+                    beds: d.bedrooms,
+                    baths: d.bathrooms,
+                    area: parseFloat(d.area_sqm),
+                    locationLabel: d.location_label,
+                    status: d.status === 'Disponible' ? 'sale' : 'sold', // Basic mapping
+                    descriptionEs: d.description,
+                    descriptionEn: d.description_en,
+                    featured: d.is_featured,
+                    main_image_url: d.main_image || d.main_image_url,
+                    gallery_urls: d.gallery_urls || [], // Prefer raw URLs if available
+                    features: d.features || { en: [], es: [] },
+                    videoUrl: d.video_url,
+                    virtualTourUrl: d.virtual_tour_url,
+                    coordinates: { lat: parseFloat(d.latitude), lng: parseFloat(d.longitude) },
+                    detailedSections: d.detailed_sections,
+                    constructionStages: d.construction_stages,
+                    completionPercent: d.completion_percent,
+                    seo: {
+                        title: { es: d.seo_title, en: d.seo_title },
+                        description: { es: d.seo_description, en: d.seo_description },
+                        keywords: { es: d.seo_keywords?.split(',') || [], en: d.seo_keywords?.split(',') || [] }
+                    }
+                }));
+                source = "django";
+                console.log(`✅ Loaded ${rawProperties.length} properties from Django Fallback.`);
+            } else {
+                console.error("❌ Django Fallback failed:", res.status, res.statusText);
+            }
+        }
+    } catch (error) {
+        console.error("❌ Sanity Fetch Error:", error);
+        // Retry Django in catch block
+        try {
+            console.warn("⚠️ Retrying with Django Fallback after Sanity error...");
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+            const res = await fetch(`${apiUrl}/api/public/properties/`, { next: { revalidate: 60 } });
+            if (res.ok) {
+                const djangoData = await res.json();
+                rawProperties = djangoData.map((d: any) => ({
+                    _id: `django-${d.id}`,
+                    title: d.title,
+                    slug: d.slug,
+                    price: parseFloat(d.price),
+                    beds: d.bedrooms,
+                    baths: d.bathrooms,
+                    area: parseFloat(d.area_sqm),
+                    locationLabel: d.location_label,
+                    status: d.status === 'Disponible' ? 'sale' : 'sold',
+                    descriptionEs: d.description,
+                    descriptionEn: d.description_en,
+                    featured: d.is_featured,
+                    main_image_url: d.main_image || d.main_image_url,
+                    gallery_urls: d.gallery_urls || [],
+                    features: d.features || { en: [], es: [] },
+                    videoUrl: d.video_url,
+                    virtualTourUrl: d.virtual_tour_url,
+                    coordinates: { lat: parseFloat(d.latitude), lng: parseFloat(d.longitude) },
+                    detailedSections: d.detailed_sections,
+                    constructionStages: d.construction_stages,
+                    completionPercent: d.completion_percent,
+                    seo: {
+                        title: { es: d.seo_title, en: d.seo_title },
+                        description: { es: d.seo_description, en: d.seo_description },
+                        keywords: { es: d.seo_keywords?.split(',') || [], en: d.seo_keywords?.split(',') || [] }
+                    }
+                }));
+                source = "django";
+            }
+        } catch (e) {
+            console.error("❌ Fatal: Both Sanity and Django failed.", e);
+        }
+    }
+
     const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+
 
     // Merge logic:
     // 1. Create a map of local properties for quick lookup

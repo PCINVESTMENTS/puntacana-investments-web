@@ -16,10 +16,28 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
     }
 
     try {
-        // 1. Send Admin Notification
+        // 1. Send to "Fortaleza Digital" Backend (Django)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (apiUrl) {
+            const backendData = {
+                first_name: "Subscriber",
+                last_name: email.split('@')[0],
+                email: email,
+                message: `Newsletter Subscription from ${source}`,
+                source: "Investors Club Newsletter"
+            };
+
+            await fetch(`${apiUrl}/api/public/leads/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(backendData),
+            }).catch(err => console.error("Newsletter Backend Error:", err));
+        }
+
+        // 2. Send Admin Notification
         await resend.emails.send({
             from: 'Punta Cana Investments <onboarding@resend.dev>',
-            to: ['uepcrealestate@gmail.com'],
+            to: ['info@puntacanainvestmentsrd.com'],
             subject: `New Investors Club Member (${source})`,
             html: `
         <h1>New Member Joined</h1>

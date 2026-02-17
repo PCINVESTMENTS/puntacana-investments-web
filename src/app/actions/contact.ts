@@ -82,7 +82,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         // 2. Send Notification Email via Resend
         const data = await resend.emails.send({
             from: 'Punta Cana Investments <onboarding@resend.dev>',
-            to: ['uepcrealestate@gmail.com'],
+            to: ['info@puntacanainvestmentsrd.com'],
             subject: emailSubject,
             html: `
         <h1>${dict.title}</h1>
