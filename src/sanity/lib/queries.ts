@@ -1,3 +1,4 @@
+/** Revision: 2024-02-17-02 */
 import { defineQuery } from "next-sanity";
 
 export const PROPERTIES_QUERY = defineQuery(`
