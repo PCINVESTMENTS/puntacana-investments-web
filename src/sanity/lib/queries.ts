@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 export const PROPERTIES_QUERY = defineQuery(`
-  *[_type == "property"] {
+  *[_type == "property" && !(_id in path("drafts.**")) && status != "draft"] {
     _id,
     id,
     title,
@@ -18,7 +18,7 @@ export const PROPERTIES_QUERY = defineQuery(`
 `);
 
 export const HOME_PAGE_PROPERTIES_QUERY = defineQuery(`
-  *[_type == "property"] {
+  *[_type == "property" && !(_id in path("drafts.**")) && status != "draft"] {
     _id,
     id,
     title,
