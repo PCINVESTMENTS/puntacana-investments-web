@@ -64,7 +64,7 @@ export default async function PropertiesPage({
         // 2. If Sanity is empty (and not just a filter issue), try Django
         if (!rawProperties || rawProperties.length === 0) {
             console.warn("⚠️ Sanity returned 0 properties. Switching to Django Web Fallback...");
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
             const res = await fetch(`${apiUrl}/api/public/properties/`, { next: { revalidate: 60 } });
 
             if (res.ok) {
@@ -109,7 +109,7 @@ export default async function PropertiesPage({
         // Retry Django in catch block
         try {
             console.warn("⚠️ Retrying with Django Fallback after Sanity error...");
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
             const res = await fetch(`${apiUrl}/api/public/properties/`, { next: { revalidate: 60 } });
             if (res.ok) {
                 const djangoData = await res.json();

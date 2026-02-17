@@ -29,7 +29,7 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
     useEffect(() => {
         // Prioritize ENV Var -> Hardcoded Production URL
         // Remove trailing slash from API_BASE to prevent double-slashes (common cause of 308 redirects)
-        const envUrl = process.env.NEXT_PUBLIC_API_URL || 'https://web-production-60b36.up.railway.app';
+        const envUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
         const API_BASE = envUrl.replace(/\/$/, '');
 
         // Correct Route: /api/cms/locations/ (With Trailing Slash)

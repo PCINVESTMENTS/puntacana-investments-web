@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'web-production-60b36.up.railway.app',
+        hostname: 'puntacana-fortress-production.up.railway.app',
       },
       {
         protocol: 'https',
