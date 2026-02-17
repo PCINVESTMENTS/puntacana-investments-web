@@ -54,6 +54,20 @@ export function mapSanityProperty(data: any): Property {
             title: { en: stage.titleEn, es: stage.titleEs },
             description: { en: stage.descriptionEn, es: stage.descriptionEs },
             status: stage.status
-        }))
+        })),
+        seo: {
+            title: {
+                en: data.seo?.title?.en || data.title,
+                es: data.seo?.title?.es || data.title
+            },
+            description: {
+                en: data.seo?.description?.en || data.descriptionEn || "",
+                es: data.seo?.description?.es || data.descriptionEs || ""
+            },
+            keywords: {
+                en: data.seo?.keywords?.en || [],
+                es: data.seo?.keywords?.es || []
+            }
+        }
     };
 }
