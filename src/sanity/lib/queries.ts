@@ -6,7 +6,7 @@ export const PROPERTIES_QUERY = defineQuery(`
     _id,
     id,
     title,
-    slug,
+    "slug": slug.current,
     locationLabel,
     type,
     status,
@@ -14,7 +14,9 @@ export const PROPERTIES_QUERY = defineQuery(`
     mainImage,
     beds,
     baths,
-    area
+    area,
+    is_rental_active,
+    rental_price
   }
 `);
 
@@ -23,7 +25,7 @@ export const HOME_PAGE_PROPERTIES_QUERY = defineQuery(`
     _id,
     id,
     title,
-    slug,
+    "slug": slug.current,
     locationLabel,
     type,
     status,
@@ -34,7 +36,9 @@ export const HOME_PAGE_PROPERTIES_QUERY = defineQuery(`
     area,
     descriptionEn,
     descriptionEs,
-    featured
+    featured,
+    is_rental_active,
+    rental_price
   }
 `);
 
@@ -43,7 +47,7 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
     _id,
     id,
     title,
-    slug,
+    "slug": slug.current,
     location,
     locationLabel,
     type,
@@ -66,7 +70,9 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
     coordinates,
     constructionStages,
     featured,
-    seo
+    seo,
+    is_rental_active,
+    rental_price
   }
 `);
 
@@ -75,7 +81,7 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     _id,
     id,
     title,
-    slug,
+    "slug": slug.current,
     location,
     locationLabel,
     type,
@@ -98,7 +104,9 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     coordinates,
     constructionStages,
     featured,
-    seo
+    seo,
+    is_rental_active,
+    rental_price
   }
 `);
 
@@ -106,7 +114,7 @@ export const POSTS_QUERY = defineQuery(`
   *[_type == "post"] | order(publishedAt desc) {
     _id,
     title,
-    slug,
+    "slug": slug.current,
     publishedAt,
     mainImage,
     imageUrl, // Fallback
@@ -122,7 +130,7 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
   *[_type == "post" && slug.current == $slug][0] {
     _id,
     title,
-    slug,
+    "slug": slug.current,
     publishedAt,
     mainImage,
     imageUrl, // Fallback

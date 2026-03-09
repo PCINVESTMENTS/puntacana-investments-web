@@ -335,7 +335,7 @@ function PropertyListingsContent({
                                         </div>
 
                                         <Link
-                                            href={`/${lang}/properties/${prop.slug}`}
+                                            href={`/${lang}/properties/${typeof prop.slug === 'object' && prop.slug !== null ? (prop.slug as any).current : prop.slug}`}
                                             className="flex-grow flex flex-col"
                                         >
                                             <div className="p-8 relative flex-grow flex flex-col">
@@ -350,9 +350,10 @@ function PropertyListingsContent({
                                                 )}
 
                                                 <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
-                                                    {prop.price > 0 ? (
+                                                    {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
                                                         <>
-                                                            {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.price)}
+                                                            {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
+                                                            {prop.status === 'rent' && (lang === 'en' ? ' /mo' : ' /mes')}
                                                         </>
                                                     ) : (
                                                         lang === 'en' ? 'Price on Request' : 'Precio a Consultar'

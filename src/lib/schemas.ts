@@ -15,6 +15,7 @@ export const personaFisicaSchema = z.object({
     birthDate: z.date({ required_error: "Fecha nacimiento requerida" }),
     birthPlace: z.string().min(1, "Lugar nacimiento requerido"),
     nationality: z.string().min(1, "Nacionalidad requerida"),
+    maritalStatus: z.string().min(1, "Estado civil requerido"),
     homePhone: z.string().optional(),
     mobilePhone1: z.string().min(1, "Celular requerido"),
     mobilePhone2: z.string().optional(),
@@ -51,6 +52,7 @@ export const personaFisicaSchema = z.object({
 
     // PEP
     isPEP: z.enum(["si", "no"], { required_error: "Requerido" }),
+    fundsOrigin: z.string().min(1, "Origen de fondos requerido"),
     pepPosition: z.string().optional(),
     pepInstitution: z.string().optional(),
     pepCountry: z.string().optional(),
@@ -80,10 +82,10 @@ export const personaFisicaSchema = z.object({
     workLetterFile: fileSchema,
 
     // Declarations
-    declaration1: z.boolean().optional(),
-    declarationLicitFunds: z.boolean().optional(),
-    authorization: z.boolean().optional(),
-    declaration4: z.boolean().optional(),
+    declaration1: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
+    declarationLicitFunds: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
+    authorization: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
+    declaration4: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
 
     signature: z.string().min(1, "Firma requerida"),
 });
@@ -113,11 +115,16 @@ export const personaJuridicaSchema = z.object({
     legalRepPosition: z.string().min(1, "Requerido"),
     legalRepPositionOther: z.string().optional(),
     legalRepDesignation: z.string().min(1, "Designación requerida"),
+    isPEP: z.enum(["si", "no"], { required_error: "Requerido" }),
+    pepPosition: z.string().optional(),
+    pepInstitution: z.string().optional(),
+    pepCountry: z.string().optional(),
 
     // Econ
     averageIncome: z.string().optional(),
     annualIncome: z.string().optional(),
     incomeUSD: z.string().optional(),
+    fundsOrigin: z.string().min(1, "Origen de fondos requerido"),
 
     // Files
     commercialRegistryFile: fileSchema,
@@ -128,10 +135,10 @@ export const personaJuridicaSchema = z.object({
     financialStatementsFile: fileSchema,
 
     // Declarations
-    declaration: z.boolean().optional(),
-    declaration2: z.boolean().optional(),
-    authorization: z.boolean().optional(),
-    declaration4: z.boolean().optional(),
+    declaration: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
+    declaration2: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
+    authorization: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
+    declaration4: z.boolean().refine(val => val === true, "Debe aceptar esta declaración"),
 
     signature: z.string().min(1, "Firma requerida"),
 });

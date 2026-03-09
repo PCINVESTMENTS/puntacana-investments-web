@@ -6,6 +6,9 @@ export interface Property {
     locationLabel: string;
     type: string;
     status: 'sale' | 'rent';
+    is_rental_active?: boolean;
+    rental_price?: number;
+    airbnb_friendly?: boolean;
     price: number;
     image: string;
     mainImage?: any;

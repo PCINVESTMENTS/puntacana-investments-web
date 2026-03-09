@@ -31,6 +31,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.puntacanainvestmentsrd.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'puntacanainvestmentsrd.com',
+      },
     ],
   },
   // Trigger reload for image cache clear

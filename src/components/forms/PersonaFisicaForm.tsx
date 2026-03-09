@@ -7,9 +7,7 @@ import Image from "next/image";
 import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { doc, setDoc } from "@/firebase";
-import { useFirestore } from "@/firebase";
-import { uploadFile } from "@/lib/storage";
+import { submitKYCFromClient } from "@/app/actions/kyc";
 import {
     Form,
     FormControl,
@@ -34,31 +32,63 @@ import { FileUpload } from "./file-upload";
 import { SignaturePad } from "./signature-pad";
 import { CircleUserRound, Gem, Briefcase, Landmark, Handshake, FileText, CheckCircle, Pencil, PlusCircle, X, Loader2 } from "lucide-react";
 import { DatePicker } from "@/components/ui/date-picker";
-import { sendSubmissionEmail } from "@/lib/actions";
-// import { v4 as uuidv4 } from 'uuid'; // Using native randomUUID
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
 
 
 const defaultValues: Partial<PersonaFisicaData> = {
-    firstName: "",
-    nationality: "",
-    profession: "",
-    position: "",
-    address: "",
-    email: "",
-    mobilePhone1: "",
+    customerCode: "",
+    date: new Date(),
+    idType: "",
     idDocument: "",
-    idDocumentFile: undefined,
-    proofOfAddressFile: undefined,
-    declaration1: false,
-    declarationLicitFunds: false,
-    authorization: false,
-    declaration4: false,
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: undefined,
+    birthDate: new Date(),
+    birthPlace: "",
+    nationality: "",
+    maritalStatus: "",
+    homePhone: "",
+    mobilePhone1: "",
+    mobilePhone2: "",
+    address: "",
+    province: "",
+    state: "",
+    residenceCountry: "",
+    hasSpouse: "no",
+    spouseFirstName: "",
+    spouseLastName: "",
+    spouseIdType: "",
+    spouseIdDocument: "",
+    spouseBirthDate: undefined,
+    spouseBirthPlace: "",
+    spouseNationality: "",
+    spouseEmail: "",
+    spouseHomePhone: "",
+    spouseMobilePhone: "",
+    profession: "",
+    professionOther: "",
+    position: "",
+    positionOther: "",
+    company: "",
+    monthlyIncome: "",
+    fundsOrigin: "",
+    hasOtherIncome: "no",
+    otherIncomeSource: "",
+    otherIncomeSourceOther: "",
+    otherIncomeAmount: "",
+    incomeUSD: "",
+    isPEP: "no",
+    pepPosition: "",
+    pepInstitution: "",
+    pepCountry: "",
     personalReferences: [{ name: "", relationship: "", phone: "" }],
     commercialReferences: [{ entity: "", relationshipType: "", phone: "" }],
     bankReferences: [{ entity: "", type: "", phone: "" }],
     signature: "",
+    declaration1: false,
+    declarationLicitFunds: false,
+    authorization: false,
+    declaration4: false,
 };
 
 const FormSection = ({ icon, title, children }: { icon: React.ReactNode, title: string, children: React.ReactNode }) => (
@@ -86,7 +116,6 @@ const fuentesIngresos = [
 
 export function PersonaFisicaForm() {
     const { toast } = useToast();
-    const firestore = useFirestore();
     const [draft, setDraft] = useLocalStorage<Partial<PersonaFisicaData> | null>('persona-fisica-draft', null);
 
     const form = useForm<PersonaFisicaData>({
@@ -130,57 +159,37 @@ export function PersonaFisicaForm() {
 
         // Perform background tasks
         (async () => {
-            const submissionId = crypto.randomUUID();
-            const fileFields = ['idDocumentFile', 'proofOfFundsFile', 'creditBureauFile', 'proofOfAddressFile', 'workLetterFile'];
-            const fileUrls: { [key: string]: string } = {};
-
             try {
-                const uploadPromises = fileFields.map(async (field) => {
-                    const fileList = data[field as keyof PersonaFisicaData] as FileList | undefined;
-                    if (fileList && fileList.length > 0) {
-                        const file = fileList[0];
-                        const url = await uploadFile(file, `${submissionId}/${file.name}`);
-                        fileUrls[`${field}Url`] = url;
+                const formData = new FormData();
+                formData.append('formType', 'Persona Física');
+
+                // Append all text fields
+                Object.entries(data).forEach(([key, value]) => {
+                    // For arrays (like references) we might need to stringify, or just ignore for now if backend doesn't handle JSON string arrays perfectly yet
+                    // The Django model expects text or JSON for references. In the frontend it's an array of objects.
+                    if (value !== undefined && value !== null && !(value instanceof FileList) && !Array.isArray(value)) {
+                        formData.append(key, value.toString());
+                    } else if (Array.isArray(value)) {
+                        formData.append(key, JSON.stringify(value));
                     }
                 });
 
-                await Promise.all(uploadPromises);
-            } catch (uploadError) {
-                console.error("Error uploading files:", uploadError);
-            }
-
-            const submissionData = {
-                ...data,
-                id: submissionId,
-                ...fileUrls,
-                formType: 'Persona Física',
-                submissionDate: new Date().toISOString(),
-                status: 'Pending',
-            };
-
-            fileFields.forEach(field => delete (submissionData as any)[field]);
-
-            const docRef = doc(firestore, "personaFisicaForms", submissionId);
-
-            setDoc(docRef, submissionData)
-                .then(() => {
-                    sendSubmissionEmail({
-                        formType: "Persona Física",
-                        customerName: `${data.firstName} ${data.lastName}`,
-                        submissionId: submissionId,
-                    }).catch(emailError => {
-                        console.error("Failed to send submission email:", emailError);
-                    });
-                })
-                .catch((error) => {
-                    console.error("Firestore setDoc failed:", error);
-                    const permissionError = new FirestorePermissionError({
-                        path: docRef.path,
-                        operation: 'create',
-                        requestResourceData: submissionData,
-                    });
-                    errorEmitter.emit('permission-error', permissionError);
+                // Append Files
+                const fileFields = ['idDocumentFile', 'proofOfFundsFile', 'creditBureauFile', 'proofOfAddressFile', 'workLetterFile'];
+                fileFields.forEach(field => {
+                    const fileList = data[field as keyof PersonaFisicaData] as FileList | undefined;
+                    if (fileList && fileList.length > 0) {
+                        formData.append(field, fileList[0]);
+                    }
                 });
+
+                const result = await submitKYCFromClient(formData);
+                if (!result.success) {
+                    console.error("KYC Submission Error:", result.error);
+                }
+            } catch (error) {
+                console.error("Critical submission failed", error);
+            }
         })();
     };
 
@@ -235,35 +244,36 @@ export function PersonaFisicaForm() {
                 <FormSection icon={<CircleUserRound size={20} />} title="Datos Generales del Cliente / Customer General Data">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                         <FormField control={form.control} name="customerCode" render={({ field }) => (<FormItem><FormLabel>Código Cliente / Customer Code</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="date" render={({ field }) => (<FormItem><FormLabel>Fecha / Date</FormLabel><FormControl><DatePicker field={field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="idType" render={({ field }) => (<FormItem><FormLabel>Tipo de Identificación / ID Type</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar tipo / Select type" /></SelectTrigger></FormControl><SelectContent><SelectItem value="cedula">Cédula</SelectItem><SelectItem value="pasaporte">Pasaporte</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="idDocument" render={({ field }) => (<FormItem><FormLabel>Número de Identificación / ID Number</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="firstName" render={({ field }) => (<FormItem><FormLabel>Nombres / First Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="lastName" render={({ field }) => (<FormItem><FormLabel>Apellidos / Last Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="email" render={({ field }) => (<FormItem><FormLabel>Correo Electrónico / Email</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="gender" render={({ field }) => (<FormItem><FormLabel>Sexo / Gender</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="femenino" /><FormLabel className="font-normal text-white">Femenino / Female</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="masculino" /><FormLabel className="font-normal text-white">Masculino / Male</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem><FormLabel>Fecha de Nacimiento / Date of Birth</FormLabel><FormControl><DatePicker field={field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="birthPlace" render={({ field }) => (<FormItem><FormLabel>Lugar de Nacimiento / Place of Birth</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="nationality" render={({ field }) => (<FormItem><FormLabel>Nacionalidad / Nationality</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="date" render={({ field }) => (<FormItem><FormLabel>Fecha / Date *</FormLabel><FormControl><DatePicker field={field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="idType" render={({ field }) => (<FormItem><FormLabel>Tipo de Identificación / ID Type *</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar tipo / Select type" /></SelectTrigger></FormControl><SelectContent><SelectItem value="cedula">Cédula</SelectItem><SelectItem value="pasaporte">Pasaporte</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="idDocument" render={({ field }) => (<FormItem><FormLabel>Número de Identificación / ID Number *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="firstName" render={({ field }) => (<FormItem><FormLabel>Nombres / First Name *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="lastName" render={({ field }) => (<FormItem><FormLabel>Apellidos / Last Name *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="email" render={({ field }) => (<FormItem><FormLabel>Correo Electrónico / Email *</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="gender" render={({ field }) => (<FormItem><FormLabel>Sexo / Gender *</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="femenino" /><FormLabel className="font-normal text-white">Femenino / Female</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="masculino" /><FormLabel className="font-normal text-white">Masculino / Male</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="birthDate" render={({ field }) => (<FormItem><FormLabel>Fecha de Nacimiento / Date of Birth *</FormLabel><FormControl><DatePicker field={field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="birthPlace" render={({ field }) => (<FormItem><FormLabel>Lugar de Nacimiento / Place of Birth *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="nationality" render={({ field }) => (<FormItem><FormLabel>Nacionalidad / Nationality *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="maritalStatus" render={({ field }) => (<FormItem><FormLabel>Estado Civil / Marital Status *</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar / Select" /></SelectTrigger></FormControl><SelectContent><SelectItem value="soltero">Soltero/a / Single</SelectItem><SelectItem value="casado">Casado/a / Married</SelectItem><SelectItem value="union_libre">Unión Libre / Domestic Partnership</SelectItem><SelectItem value="divorciado">Divorciado/a / Divorced</SelectItem><SelectItem value="viudo">Viudo/a / Widowed</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="homePhone" render={({ field }) => (<FormItem><FormLabel>Teléfono Residencial / Home Phone</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="mobilePhone1" render={({ field }) => (<FormItem><FormLabel>Teléfono Móvil 1 / Mobile Phone 1</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="mobilePhone1" render={({ field }) => (<FormItem><FormLabel>Teléfono Móvil 1 / Mobile Phone 1 *</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="mobilePhone2" render={({ field }) => (<FormItem><FormLabel>Teléfono Móvil 2 / Mobile Phone 2</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="address" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Dirección / Address</FormLabel><FormControl><Input placeholder="Sector, Calle, #, Residencial, Apto. / Neighborhood, Street, #, Building, Apt." {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="address" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Dirección / Address *</FormLabel><FormControl><Input placeholder="Sector, Calle, #, Residencial, Apto. / Neighborhood, Street, #, Building, Apt." {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="province" render={({ field }) => (<FormItem><FormLabel>Provincia / Province</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="state" render={({ field }) => (<FormItem><FormLabel>Estado / State</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="residenceCountry" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>País de Residencia / Country of Residence</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="residenceCountry" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>País de Residencia / Country of Residence *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                     </div>
                 </FormSection>
 
                 <Separator className="bg-white/10" />
 
                 <FormSection icon={<Gem size={20} />} title="Datos del Cónyuge / Spouse's Data">
-                    <FormField control={form.control} name="hasSpouse" render={({ field }) => (<FormItem><FormLabel>¿Aplica Cónyuge? / Does Spouse Apply?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="hasSpouse" render={({ field }) => (<FormItem><FormLabel>¿Aplica Cónyuge? / Does Spouse Apply? *</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
                     {hasSpouse === 'si' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-4 border-t border-dashed border-white/20 mt-4 animate-in fade-in slide-in-from-top-4">
                             <FormField control={form.control} name="spouseFirstName" render={({ field }) => (<FormItem><FormLabel>Nombres del Cónyuge / Spouse's First Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="spouseLastName" render={({ field }) => (<FormItem><FormLabel>Apellidos del Cónyuge / Spouse's Last Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                            <FormField control={form.control} name="spouseIdType" render={({ field }) => (<FormItem><FormLabel>Tipo de Identificación / ID Type</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar tipo / Select type" /></SelectTrigger></FormControl><SelectContent><SelectItem value="cedula">Cédula</SelectItem><SelectItem value="pasaporte">Pasaporte</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
+                            <FormField control={form.control} name="spouseIdType" render={({ field }) => (<FormItem><FormLabel>Tipo de Identificación / ID Type</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar tipo / Select type" /></SelectTrigger></FormControl><SelectContent><SelectItem value="cedula">Cédula</SelectItem><SelectItem value="pasaporte">Pasaporte</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="spouseIdDocument" render={({ field }) => (<FormItem><FormLabel>Número de Identificación / ID Number</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="spouseBirthDate" render={({ field }) => (<FormItem><FormLabel>Fecha de Nacimiento / Date of Birth</FormLabel><FormControl><DatePicker field={field} /></FormControl><FormMessage /></FormItem>)} />
                             <FormField control={form.control} name="spouseBirthPlace" render={({ field }) => (<FormItem><FormLabel>Lugar de Nacimiento / Place of Birth</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -284,8 +294,8 @@ export function PersonaFisicaForm() {
                             name="profession"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Profesión / Profession</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormLabel>Profesión / Profession *</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Seleccionar profesión / Select profession" /></SelectTrigger>
                                         </FormControl>
@@ -305,8 +315,8 @@ export function PersonaFisicaForm() {
                             name="position"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Cargo / Position</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormLabel>Cargo / Position *</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Seleccionar cargo / Select position" /></SelectTrigger>
                                         </FormControl>
@@ -323,7 +333,7 @@ export function PersonaFisicaForm() {
                         )}
 
                         <FormField control={form.control} name="company" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Nombre de la Empresa / Company Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="monthlyIncome" render={({ field }) => (<FormItem><FormLabel>Ingresos Mensuales / Monthly Income</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar rango / Select range" /></SelectTrigger></FormControl><SelectContent>
+                        <FormField control={form.control} name="monthlyIncome" render={({ field }) => (<FormItem><FormLabel>Ingresos Mensuales / Monthly Income *</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar rango / Select range" /></SelectTrigger></FormControl><SelectContent>
                             <SelectItem value="<50000">Menos de RD$50,000.00</SelectItem>
                             <SelectItem value="50001-100000">RD$50,001 a 100,000</SelectItem>
                             <SelectItem value="100001-500000">RD$100,001 a 500,000</SelectItem>
@@ -331,8 +341,10 @@ export function PersonaFisicaForm() {
                             <SelectItem value=">1000000">Más de RD$1,000,000.00</SelectItem>
                         </SelectContent></Select><FormMessage /></FormItem>)} />
 
+                        <FormField control={form.control} name="fundsOrigin" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Origen de los Fondos / Source of Funds *</FormLabel><FormControl><Input placeholder="Ej. Ahorros, Salario, Inversiones / e.g. Savings, Salary, Investments" {...field} /></FormControl><FormMessage /></FormItem>)} />
+
                         <div className="md:col-span-2">
-                            <FormField control={form.control} name="hasOtherIncome" render={({ field }) => (<FormItem><FormLabel>¿Posee otros ingresos? / Do you have other income?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
+                            <FormField control={form.control} name="hasOtherIncome" render={({ field }) => (<FormItem><FormLabel>¿Posee otros ingresos? / Do you have other income?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
                         </div>
 
                         {hasOtherIncome === 'si' && (
@@ -343,7 +355,7 @@ export function PersonaFisicaForm() {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Fuente de Otros Ingresos / Source of Other Income</FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger><SelectValue placeholder="Seleccionar fuente / Select source" /></SelectTrigger>
                                                 </FormControl>
@@ -369,7 +381,7 @@ export function PersonaFisicaForm() {
                 <Separator className="bg-white/10" />
 
                 <FormSection icon={<Landmark size={20} />} title="Información Política (Vinculación PEP) / Political Information (PEP Affiliation)">
-                    <FormField control={form.control} name="isPEP" render={({ field }) => (<FormItem><FormLabel>¿Es usted o tiene vinculación con una Persona Políticamente Expuesta (PEP)? / Are you or do you have a connection with a Politically Exposed Person (PEP)?</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
+                    <FormField control={form.control} name="isPEP" render={({ field }) => (<FormItem><FormLabel>¿Es usted o tiene vinculación con una Persona Políticamente Expuesta (PEP)? / Are you or do you have a connection with a Politically Exposed Person (PEP)? *</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
                     {isPEP === 'si' && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-4 border-t border-dashed border-white/20 mt-4 animate-in fade-in slide-in-from-top-4">
                             <FormField control={form.control} name="pepPosition" render={({ field }) => (<FormItem><FormLabel>Cargo que desempeña / Position held</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -416,7 +428,7 @@ export function PersonaFisicaForm() {
                                     <FormField control={form.control} name={`bankReferences.${index}.entity`} render={({ field }) => (<FormItem><FormLabel>Entidad / Entity</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                                     <FormField control={form.control} name={`bankReferences.${index}.type`} render={({ field }) => (
                                         <FormItem><FormLabel>Tipo / Type</FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl><SelectTrigger><SelectValue placeholder="Seleccionar... / Select..." /></SelectTrigger></FormControl>
                                                 <SelectContent><SelectItem value="cuenta">Cuenta / Account</SelectItem><SelectItem value="tarjeta_credito">Tarjeta de Crédito / Credit Card</SelectItem><SelectItem value="otro">Otro / Other</SelectItem></SelectContent>
                                             </Select>
@@ -450,7 +462,7 @@ export function PersonaFisicaForm() {
 
                 <FormSection icon={<CheckCircle size={20} />} title="Declaraciones y Autorización / Declarations and Authorization">
                     <div className="space-y-4">
-                        <FormField control={form.control} name="declaration1" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Declaro que la información contenida en este formulario es verdadera, completa y actualizada. / I declare that the information contained in this form is true, complete, and up-to-date.</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="declaration1" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Declaro que la información contenida en este formulario es verdadera, completa y actualizada. / I declare that the information contained in this form is true, complete, and up-to-date. *</FormLabel></div><FormMessage /></FormItem>)} />
                         <FormField
                             control={form.control}
                             name="declarationLicitFunds"
@@ -459,12 +471,12 @@ export function PersonaFisicaForm() {
                                     <FormControl>
                                         <Checkbox
                                             checked={!!field.value}
-                                            onChange={field.onChange}
+                                            onCheckedChange={field.onChange}
                                         />
                                     </FormControl>
                                     <div className="space-y-1 leading-none">
                                         <FormLabel className="font-normal text-white">
-                                            <span className="font-bold text-luxury-gold block mb-2">Declaración de Origen Lícito de Fondos y Prevención de Lavado de Activos / Declaration of Lawful Origin of Funds and Prevention of Money Laundering</span>
+                                            <span className="font-bold text-luxury-gold block mb-2">Declaración de Origen Lícito de Fondos y Prevención de Lavado de Activos / Declaration of Lawful Origin of Funds and Prevention of Money Laundering *</span>
                                             Declaro y garantizo que los fondos utilizados en la presente operación provienen de actividades lícitas, y que no constituyen ni provendrán, directa o indirectamente, de actos vinculados al lavado de activos, al financiamiento del terrorismo ni de ninguna otra actividad ilícita tipificada por las leyes de la República Dominicana o por convenios internacionales suscritos y ratificados por el país.
                                             <br /><br />
                                             <span className="italic block mt-1 opacity-80">I declare and guarantee that the funds used in this transaction come from lawful activities, and that they do not constitute nor will they come, directly or indirectly, from acts related to money laundering, financing of terrorism, or any other illicit activity defined by the laws of the Dominican Republic or by international conventions subscribed and ratified by the country.</span>
@@ -476,15 +488,18 @@ export function PersonaFisicaForm() {
                                 </FormItem>
                             )}
                         />
-                        <FormField control={form.control} name="authorization" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresa e irrevocablemente a Punta Cana Real Estate and Investment U&E S.R.L. a realizar el análisis y las verificaciones que considere necesarias... / I expressly and irrevocably authorize Punta Cana Real Estate and Investment U&E S.R.L. to carry out the analysis and verifications it deems necessary...</FormLabel></div><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="declaration4" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresamente compartir información con instituciones financieras dominicanas y autoridades competentes según leyes vigentes. / I expressly authorize the sharing of information with Dominican financial institutions and competent authorities according to current laws.</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="authorization" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresa e irrevocablemente a Punta Cana Real Estate and Investment U&E S.R.L. a realizar el análisis y las verificaciones que considere necesarias... / I expressly and irrevocably authorize Punta Cana Real Estate and Investment U&E S.R.L. to carry out the analysis and verifications it deems necessary... *</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="declaration4" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresamente compartir información con instituciones financieras dominicanas y autoridades competentes según leyes vigentes. / I expressly authorize the sharing of information with Dominican financial institutions and competent authorities according to current laws. *</FormLabel></div><FormMessage /></FormItem>)} />
                     </div>
                 </FormSection>
 
                 <Separator className="bg-white/10" />
 
                 <FormSection icon={<Pencil size={20} />} title="Firma Digital / Digital Signature">
-                    <SignaturePad />
+                    <div className="space-y-4">
+                        <FormLabel className="text-white block mb-2 font-medium underline">Firma Digital / Digital Signature *</FormLabel>
+                        <SignaturePad />
+                    </div>
                 </FormSection>
 
                 <div className="flex flex-col-reverse gap-4 pt-8 sm:flex-row sm:justify-end print:hidden">

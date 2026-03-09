@@ -7,9 +7,7 @@ import Image from "next/image";
 import { personaJuridicaSchema, type PersonaJuridicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { doc, setDoc } from "@/firebase";
-import { useFirestore } from "@/firebase";
-import { uploadFile } from "@/lib/storage";
+import { submitKYCFromClient } from "@/app/actions/kyc";
 import {
     Form,
     FormControl,
@@ -31,21 +29,37 @@ import {
 } from "@/components/ui/select";
 import { FileUpload } from "./file-upload";
 import { SignaturePad } from "./signature-pad";
-import { Building, Users, UserCheck, Banknote, FileText, CheckCircle, Pencil, Loader2 } from "lucide-react";
+import { Building, Users, UserCheck, Banknote, FileText, CheckCircle, Pencil, Loader2, Landmark } from "lucide-react";
 import { DatePicker } from "@/components/ui/date-picker";
-import { sendSubmissionEmail } from "@/lib/actions";
-import { errorEmitter } from "@/firebase/error-emitter";
-import { FirestorePermissionError } from "@/firebase/errors";
-
-
 const defaultValues: Partial<PersonaJuridicaData> = {
+    customerCode: "",
+    date: new Date(),
     companyName: "",
+    commercialName: "",
+    incorporationDate: new Date(),
+    constitutionCountry: "",
+    city: "",
     rnc: "",
     legalRepFirstName: "",
+    legalRepLastName: "",
     legalRepId: "",
-    commercialRegistryFile: undefined,
-    legalRepIdFile: undefined,
-    shareholderAssemblyFile: undefined,
+    legalRepBirthDate: new Date(),
+    legalRepAddress: "",
+    legalRepPhone: "",
+    legalRepEmail: "",
+    legalRepProfession: "",
+    legalRepProfessionOther: "",
+    legalRepPosition: "",
+    legalRepPositionOther: "",
+    legalRepDesignation: "",
+    averageIncome: "",
+    annualIncome: "",
+    incomeUSD: "",
+    fundsOrigin: "",
+    isPEP: "no",
+    pepPosition: "",
+    pepInstitution: "",
+    pepCountry: "",
     declaration: false,
     declaration2: false,
     authorization: false,
@@ -73,13 +87,14 @@ const cargos = [
 
 export function PersonaJuridicaForm() {
     const { toast } = useToast();
-    const firestore = useFirestore();
     const [draft, setDraft] = useLocalStorage<Partial<PersonaJuridicaData> | null>('persona-juridica-draft', null);
 
     const form = useForm<PersonaJuridicaData>({
         resolver: zodResolver(personaJuridicaSchema),
         defaultValues: draft || defaultValues,
     });
+
+    const isPEP = form.watch('isPEP');
 
     useEffect(() => {
         if (draft) {
@@ -107,57 +122,33 @@ export function PersonaJuridicaForm() {
 
         // Perform background tasks
         (async () => {
-            const submissionId = crypto.randomUUID();
-            const fileFields = ['commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile'];
-            const fileUrls: { [key: string]: string } = {};
-
             try {
-                const uploadPromises = fileFields.map(async (field) => {
-                    const fileList = data[field as keyof PersonaJuridicaData] as FileList | undefined;
-                    if (fileList && fileList.length > 0) {
-                        const file = fileList[0];
-                        const url = await uploadFile(file, `${submissionId}/${file.name}`);
-                        fileUrls[`${field}Url`] = url;
+                const formData = new FormData();
+                formData.append('formType', 'Persona Jurídica');
+
+                // Append all text fields
+                Object.entries(data).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null && !(value instanceof FileList)) {
+                        formData.append(key, value.toString());
                     }
                 });
 
-                await Promise.all(uploadPromises);
-            } catch (uploadError) {
-                console.error("Error uploading files:", uploadError);
-            }
-
-            const submissionData = {
-                ...data,
-                id: submissionId,
-                ...fileUrls,
-                formType: 'Persona Jurídica',
-                submissionDate: new Date().toISOString(),
-                status: 'Pending',
-            };
-
-            fileFields.forEach(field => delete (submissionData as any)[field]);
-
-            const docRef = doc(firestore, "personaJuridicaForms", submissionId);
-
-            setDoc(docRef, submissionData)
-                .then(() => {
-                    sendSubmissionEmail({
-                        formType: "Persona Jurídica",
-                        customerName: data.companyName,
-                        submissionId: submissionId,
-                    }).catch(emailError => {
-                        console.error("Failed to send submission email:", emailError);
-                    });
-                })
-                .catch((error) => {
-                    console.error("Firestore setDoc failed:", error);
-                    const permissionError = new FirestorePermissionError({
-                        path: docRef.path,
-                        operation: 'create',
-                        requestResourceData: submissionData,
-                    });
-                    errorEmitter.emit('permission-error', permissionError);
+                // Append Files
+                const fileFields = ['commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile'];
+                fileFields.forEach(field => {
+                    const fileList = data[field as keyof PersonaJuridicaData] as FileList | undefined;
+                    if (fileList && fileList.length > 0) {
+                        formData.append(field, fileList[0]);
+                    }
                 });
+
+                const result = await submitKYCFromClient(formData);
+                if (!result.success) {
+                    console.error("KYC Submission Error:", result.error);
+                }
+            } catch (error) {
+                console.error("Critical submission failed", error);
+            }
         })();
     };
 
@@ -249,7 +240,7 @@ export function PersonaJuridicaForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Profesión / Profession *</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Seleccionar profesión / Select profession" /></SelectTrigger>
                                         </FormControl>
@@ -271,7 +262,7 @@ export function PersonaJuridicaForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Cargo / Position *</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger><SelectValue placeholder="Seleccionar cargo / Select position" /></SelectTrigger>
                                         </FormControl>
@@ -287,7 +278,7 @@ export function PersonaJuridicaForm() {
                             <FormField control={form.control} name="legalRepPositionOther" render={({ field }) => (<FormItem><FormLabel>Especifique su cargo / Specify your position</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                         )}
 
-                        <FormField control={form.control} name="legalRepDesignation" render={({ field }) => (<FormItem><FormLabel>Designación / Designation *</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar designación / Select designation" /></SelectTrigger></FormControl><SelectContent>
+                        <FormField control={form.control} name="legalRepDesignation" render={({ field }) => (<FormItem><FormLabel>Designación / Designation *</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar designación / Select designation" /></SelectTrigger></FormControl><SelectContent>
                             <SelectItem value="presidente">Presidente / President</SelectItem>
                             <SelectItem value="vicepresidente">Vicepresidente / Vice President</SelectItem>
                             <SelectItem value="secretario">Secretario / Secretary</SelectItem>
@@ -305,7 +296,7 @@ export function PersonaJuridicaForm() {
 
                 <FormSection icon={<Banknote size={20} />} title="Información Económica / Economic Information">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                        <FormField control={form.control} name="averageIncome" render={({ field }) => (<FormItem><FormLabel>Ingresos Promedios Mensuales / Average Monthly Income *</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar rango / Select range" /></SelectTrigger></FormControl><SelectContent>
+                        <FormField control={form.control} name="averageIncome" render={({ field }) => (<FormItem><FormLabel>Ingresos Promedios Mensuales / Average Monthly Income *</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Seleccionar rango / Select range" /></SelectTrigger></FormControl><SelectContent>
                             <SelectItem value="<100000">Menos de RD$100,000</SelectItem>
                             <SelectItem value="100001-500000">RD$100,001 a 500,000</SelectItem>
                             <SelectItem value="500001-1000000">RD$500,001 a 1,000,000</SelectItem>
@@ -315,6 +306,22 @@ export function PersonaJuridicaForm() {
                         </SelectContent></Select><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="annualIncome" render={({ field }) => (<FormItem><FormLabel>Ingreso Anual / Annual Income</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
                         <FormField control={form.control} name="incomeUSD" render={({ field }) => (<FormItem><FormLabel>Equivalente en USD / Equivalent in USD *</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="fundsOrigin" render={({ field }) => (<FormItem className="md:col-span-2"><FormLabel>Origen de los Fondos / Source of Funds *</FormLabel><FormControl><Input placeholder="Ej. Ahorros, Salario, Inversiones / e.g. Savings, Salary, Investments" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                    </div>
+                </FormSection>
+
+                <Separator className="bg-white/10" />
+
+                <FormSection icon={<Landmark size={20} />} title="Información Política (Vinculación PEP) / Political Information (PEP Affiliation)">
+                    <div className="space-y-4">
+                        <FormField control={form.control} name="isPEP" render={({ field }) => (<FormItem><FormLabel>¿Es el representante o beneficiario final una Persona Políticamente Expuesta (PEP)? / Is the representative or ultimate beneficial owner a Politically Exposed Person (PEP)? *</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">Sí / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
+                        {isPEP === 'si' && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-4 border-t border-dashed border-white/20 mt-4 animate-in fade-in slide-in-from-top-4">
+                                <FormField control={form.control} name="pepPosition" render={({ field }) => (<FormItem><FormLabel>Cargo que desempeña / Position held</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                <FormField control={form.control} name="pepInstitution" render={({ field }) => (<FormItem><FormLabel>Institución / Institution</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                <FormField control={form.control} name="pepCountry" render={({ field }) => (<FormItem><FormLabel>País / Country</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                            </div>
+                        )}
                     </div>
                 </FormSection>
 
@@ -335,10 +342,10 @@ export function PersonaJuridicaForm() {
 
                 <FormSection icon={<CheckCircle size={20} />} title="Declaraciones y Autorización / Declarations and Authorization">
                     <div className="space-y-4">
-                        <FormField control={form.control} name="declaration" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Declaro que la información contenida en este formulario es verdadera, completa y actualizada, y me comprometo a mantenerla actualizada. / I declare that the information in this form is true, complete, and up-to-date, and I commit to keeping it updated.</FormLabel></div><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="declaration2" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none">
+                        <FormField control={form.control} name="declaration" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Declaro que la información contenida en este formulario es verdadera, completa y actualizada, y me comprometo a mantenerla actualizada. / I declare that the information in this form is true, complete, and up-to-date, and I commit to keeping it updated. *</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="declaration2" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none">
                             <FormLabel className="font-normal text-white">
-                                <span className="font-bold text-luxury-gold block mb-2">Declaración de Origen Lícito de Fondos y Prevención de Lavado de Activos / Declaration of Lawful Origin of Funds and Prevention of Money Laundering</span>
+                                <span className="font-bold text-luxury-gold block mb-2">Declaración de Origen Lícito de Fondos y Prevención de Lavado de Activos / Declaration of Lawful Origin of Funds and Prevention of Money Laundering *</span>
                                 Declaro y garantizo que los fondos utilizados en la presente operación provienen de actividades lícitas, y que no constituyen ni provendrán, directa o indirectamente, de actos vinculados al lavado de activos, al financiamiento del terrorismo ni de ninguna otra actividad ilícita tipificada por las leyes de la República Dominicana o por convenios internacionales suscritos y ratificados por el país.
                                 <br /><br />
                                 <span className="italic block mt-1 opacity-80">I declare and guarantee that the funds used in this transaction come from lawful activities, and that they do not constitute nor will they come, directly or indirectly, from acts related to money laundering, financing of terrorism, or any other illicit activity defined by the laws of the Dominican Republic or by international conventions subscribed and ratified by the country.</span>
@@ -346,15 +353,18 @@ export function PersonaJuridicaForm() {
                                 Asimismo, me obligo a cumplir con las disposiciones de la Ley No. 155-17 sobre Lavado de Activos y Financiamiento del Terrorismo, así como con todas las normas reglamentarias vigentes, liberando a la otra parte de cualquier responsabilidad que pudiera derivarse por falsedad en esta declaración.
                             </FormLabel>
                         </div><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="authorization" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresa e irrevocablemente a PCI a realizar las verificaciones necesarias... / I expressly and irrevocably authorize PCI to carry out the necessary verifications...</FormLabel></div><FormMessage /></FormItem>)} />
-                        <FormField control={form.control} name="declaration4" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresamente compartir información con instituciones financieras y autoridades competentes. / I expressly authorize the sharing of information with financial institutions and competent authorities.</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="authorization" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresa e irrevocablemente a PCI a realizar las verificaciones necesarias... / I expressly and irrevocably authorize PCI to carry out the necessary verifications... *</FormLabel></div><FormMessage /></FormItem>)} />
+                        <FormField control={form.control} name="declaration4" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0"><FormControl><Checkbox checked={!!field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel className="font-normal text-white">Autorizo expresamente compartir información con instituciones financieras y autoridades competentes. / I expressly authorize the sharing of information with financial institutions and competent authorities. *</FormLabel></div><FormMessage /></FormItem>)} />
                     </div>
                 </FormSection>
 
                 <Separator className="bg-white/10" />
 
                 <FormSection icon={<Pencil size={20} />} title="Firma Digital / Digital Signature">
-                    <SignaturePad />
+                    <div className="space-y-4">
+                        <FormLabel className="text-white block mb-2 font-medium underline">Firma Digital / Digital Signature *</FormLabel>
+                        <SignaturePad />
+                    </div>
                 </FormSection>
 
                 <div className="flex flex-col-reverse gap-4 pt-8 sm:flex-row sm:justify-end print:hidden">
