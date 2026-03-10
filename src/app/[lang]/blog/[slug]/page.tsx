@@ -45,9 +45,11 @@ export const revalidate = 60;
 
 export async function generateStaticParams() {
     const posts = await client.fetch(POSTS_QUERY);
-    return posts.map((post: any) => ({
-        slug: post.slug.current,
-    }));
+    return posts
+        .filter((post: any) => post && post.slug && post.slug.current)
+        .map((post: any) => ({
+            slug: post.slug.current,
+        }));
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
