@@ -16,7 +16,10 @@ export const PROPERTIES_QUERY = defineQuery(`
     baths,
     area,
     is_rental_active,
-    rental_price
+    rental_price,
+    preLaunch,
+    preConstruction,
+    isResale
   }
 `);
 
@@ -38,7 +41,10 @@ export const HOME_PAGE_PROPERTIES_QUERY = defineQuery(`
     descriptionEs,
     featured,
     is_rental_active,
-    rental_price
+    rental_price,
+    preLaunch,
+    preConstruction,
+    isResale
   }
 `);
 
@@ -72,7 +78,10 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
     featured,
     seo,
     is_rental_active,
-    rental_price
+    rental_price,
+    preLaunch,
+    preConstruction,
+    isResale
   }
 `);
 
@@ -106,7 +115,10 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     featured,
     seo,
     is_rental_active,
-    rental_price
+    rental_price,
+    preLaunch,
+    preConstruction,
+    isResale
   }
 `);
 

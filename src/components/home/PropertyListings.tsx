@@ -339,12 +339,15 @@ function PropertyListingsContent({
                                             className="flex-grow flex flex-col"
                                         >
                                             <div className="p-8 relative flex-grow flex flex-col">
-                                                {/* Pre-Construction / Pre-Sales Badge */}
-                                                {(prop.preLaunch || prop.preConstruction) && (
-                                                    <div className="absolute -top-6 left-2 md:left-8 bg-emerald-600 text-white font-bold px-2 md:px-4 py-2 shadow-lg text-[10px] md:text-sm z-30 uppercase tracking-tight md:tracking-wider">
-                                                        {prop.preConstruction
-                                                            ? (lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción')
-                                                            : (lang === 'en' ? 'Pre-Sales' : 'Pre-Ventas')
+                                                {/* Pre-Construction / Pre-Sales / Resale Badge */}
+                                                {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
+                                                    <div className={`absolute -top-6 left-2 md:left-8 text-white font-bold px-2 md:px-4 py-2 shadow-lg text-[10px] md:text-sm z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-600' : 'bg-emerald-600'}`}>
+                                                        {prop.isResale
+                                                            ? (lang === 'en' ? 'Resale' : 'Reventa')
+                                                            : (prop.preConstruction
+                                                                ? (lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción')
+                                                                : (lang === 'en' ? 'Pre-Sales' : 'Pre-Ventas')
+                                                            )
                                                         }
                                                     </div>
                                                 )}

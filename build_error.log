@@ -1,0 +1,31 @@
+
+> web@0.1.0 build
+> next build
+
+ÔÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\Ulises\Downloads\Puntacana_System\pagina web Punta Cana Investments\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Ulises\Downloads\Puntacana_System\pagina web Punta Cana Investments\web\package-lock.json
+
+Ôû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+ÔÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 84s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/forms/PersonaJuridicaForm.tsx:317:317
+Type error: Cannot find name 'RadioGroup'.
+
+  315 |                 <FormSection icon={<Landmark size={20} />} title="Informaci├│n Pol├¡tica (Vinculaci├│n PEP) / Political Information (PEP Affiliation)">
+  316 |                     <div className="space-y-4">
+> 317 |                         <FormField control={form.control} name="isPEP" render={({ field }) => (<FormItem><FormLabel>┬┐Es el representante o beneficiario final una Persona Pol├¡ticamente Expuesta (PEP)? / Is the representative or ultimate beneficial owner a Politically Exposed Person (PEP)? *</FormLabel><FormControl><RadioGroup onValueChange={field.onChange} value={field.value} className="flex items-center gap-4 pt-2"><div className="flex items-center space-x-2"><RadioGroupItem value="si" /><FormLabel className="font-normal text-white">S├¡ / Yes</FormLabel></div><div className="flex items-center space-x-2"><RadioGroupItem value="no" /><FormLabel className="font-normal text-white">No</FormLabel></div></RadioGroup></FormControl><FormMessage /></FormItem>)} />
+      |                                                                                                                                                                                                                                                                                                                             ^
+  318 |                         {isPEP === 'si' && (
+  319 |                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-4 border-t border-dashed border-white/20 mt-4 animate-in fade-in slide-in-from-top-4">
+  320 |                                 <FormField control={form.control} name="pepPosition" render={({ field }) => (<FormItem><FormLabel>Cargo que desempe├▒a / Position held</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+Next.js build worker exited with code: 1 and signal: null

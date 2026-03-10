@@ -38,6 +38,7 @@ export interface Property {
     featured?: boolean;
     preLaunch?: boolean;
     preConstruction?: boolean;
+    isResale?: boolean;
     coordinates?: {
         lat: number;
         lng: number;
