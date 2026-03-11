@@ -3,7 +3,7 @@ import ContactForm from '@/components/contact/ContactForm';
 import Navbar from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 export default async function ContactPage({
     params,
@@ -94,7 +94,7 @@ export default async function ContactPage({
                         </div>
 
                         {/* Quick Actions */}
-                        <div className="pt-8 border-t border-zinc-800">
+                        <div className="pt-8 border-t border-zinc-800 flex flex-wrap gap-4">
                             <a
                                 href="https://wa.me/18294084322"
                                 target="_blank"
@@ -103,6 +103,24 @@ export default async function ContactPage({
                             >
                                 <FaWhatsapp aria-hidden="true" size={20} />
                                 <span className="font-semibold">Chat en WhatsApp</span>
+                            </a>
+                            <a
+                                href="https://www.instagram.com/puntacanainvestmentsrd/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 bg-pink-600/10 text-pink-500 px-6 py-3 rounded-full border border-pink-500/20 hover:bg-pink-600 hover:text-white transition-all"
+                            >
+                                <FaInstagram aria-hidden="true" size={20} />
+                                <span className="font-semibold">Instagram</span>
+                            </a>
+                            <a
+                                href="https://www.linkedin.com/in/ulises-ubiera-b442b685"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 bg-blue-600/10 text-blue-500 px-6 py-3 rounded-full border border-blue-500/20 hover:bg-blue-600 hover:text-white transition-all"
+                            >
+                                <FaLinkedin aria-hidden="true" size={20} />
+                                <span className="font-semibold">LinkedIn</span>
                             </a>
                         </div>
                     </div>

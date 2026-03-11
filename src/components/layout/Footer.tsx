@@ -71,12 +71,19 @@ export function Footer({ dict, lang }: FooterProps) {
                             {dict.footer.socials}
                         </h4>
                         <div className="flex gap-4 mb-8">
-                            {[FaInstagram, FaFacebookF, FaLinkedinIn, FaYoutube].map((Icon, i) => (
+                            {[
+                                { Icon: FaInstagram, url: "https://www.instagram.com/puntacanainvestmentsrd/", label: "Instagram" },
+                                { Icon: FaFacebookF, url: "#", label: "Facebook" },
+                                { Icon: FaLinkedinIn, url: "https://www.linkedin.com/in/ulises-ubiera-b442b685", label: "LinkedIn" },
+                                { Icon: FaYoutube, url: "#", label: "YouTube" }
+                            ].map(({ Icon, url, label }, i) => (
                                 <a
                                     key={i}
-                                    href="#"
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-luxury-gold hover:text-black transition-all duration-300"
-                                    aria-label={`Visit our ${Icon.name.replace('Fa', '')} page`}
+                                    aria-label={`Visit our ${label} page`}
                                 >
                                     <Icon aria-hidden="true" size={20} />
                                 </a>

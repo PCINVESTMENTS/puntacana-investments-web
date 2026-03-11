@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGem, FaHandshake, FaChartLine } from "react-icons/fa";
+import { FaGem, FaHandshake, FaChartLine, FaLinkedin } from "react-icons/fa";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import Image from "next/image";
 
@@ -49,7 +49,16 @@ export function AboutSection({ dict }: AboutSectionProps) {
                                 {/* Name Overlay (Bottom) */}
                                 <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-8 pt-24 text-center">
                                     <h3 className="text-3xl font-serif font-bold text-white tracking-wide">Ulises Ubiera</h3>
-                                    <p className="text-luxury-gold text-sm font-bold uppercase tracking-[0.2em] mt-2">{dict.ceoRole}</p>
+                                    <p className="text-luxury-gold text-sm font-bold uppercase tracking-[0.2em] mt-2 mb-4">{dict.ceoRole}</p>
+                                    <a
+                                        href="https://www.linkedin.com/in/ulises-ubiera-b442b685"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 text-white hover:bg-luxury-gold hover:text-black transition-all duration-300"
+                                        aria-label="LinkedIn Profile"
+                                    >
+                                        <FaLinkedin aria-hidden="true" size={18} />
+                                    </a>
                                 </div>
                             </div>
                         </div>
