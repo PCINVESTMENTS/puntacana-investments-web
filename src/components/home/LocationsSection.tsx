@@ -27,10 +27,9 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
     const [apiLocations, setApiLocations] = useState<any[]>([]);
 
     useEffect(() => {
-        // Prioritize ENV Var -> Hardcoded Production URL
-        // Remove trailing slash from API_BASE to prevent double-slashes (common cause of 308 redirects)
-        const envUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
-        const API_BASE = envUrl.replace(/\/$/, '');
+        // FORCE PRODUCTION URL: Vercel is injecting the wrong environment variable (dashboard...)
+        // We hardcode the Railway backend here temporarily to bypass the cache/env bug.
+        const API_BASE = 'https://puntacana-fortress-production.up.railway.app';
 
         // Correct Route: /api/cms/locations/ (With Trailing Slash)
         // Note: We fixed the Backend SSL Proxy Header to prevent 308 Loops.
