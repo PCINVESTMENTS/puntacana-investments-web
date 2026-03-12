@@ -60,23 +60,29 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 source: "Website Contact Form"
             };
 
-            await fetch(`${apiUrl}/api/public/leads/`, {
+        try {
+            const res = await fetch(`${apiUrl}/api/public/leads/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(backendData),
-            }).then(async (res) => {
-                if (!res.ok) {
-                    const err = await res.text();
-                    console.error("Backend Error:", err);
-                    // We don't throw here to ensure email still sends as backup
-                } else {
-                    console.log("Lead saved to Backend successfully");
-                }
-            }).catch(err => {
-                console.error("Backend Connection Error:", err);
             });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error("CRITICAL: Backend rejected the Lead payload:", errText);
+                throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
+            }
+            console.log("Lead saved to Backend successfully");
+        } catch (backendError) {
+            console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
+            // We forcefully return the error to the frontend so it DOES NOT show a green checkmark
+            return {
+                success: false,
+                message: 'Error de conexión con el servidor principal. ' + (backendError instanceof Error ? backendError.message : 'Fallo desconocido.')
+            };
+        }
 
         // 2. Send Notification Email via Resend
         const data = await resend.emails.send({
