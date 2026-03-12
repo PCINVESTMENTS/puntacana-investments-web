@@ -59,7 +59,8 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 email: email,
                 phone: phone,
                 message: message,
-                source: "Website Contact Form"
+                source: "Website Contact Form",
+                interest: subjectInput ? subjectInput.replace(/^(Inquiry about|Consulta sobre):\s*/, '') : "General"
             };
 
         try {
