@@ -99,7 +99,8 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
         if (data.error) {
             console.error("Resend Error:", data.error);
-            return { success: false, message: 'Failed to send message via email. Please check backend.' };
+            // IMPORTANT: Never return an error to the user if the lead is saved in Django. 
+            // The email failure is temporal, the data is safe.
         }
 
         return {
