@@ -12,9 +12,15 @@ export function SignaturePad() {
     const signature = watch("signature");
 
     useEffect(() => {
-        // If there is a signature value (e.g. from draft), load it
-        // Implementation skipped for draft loading complex images for now to keep it simple, 
-        // but in a real app createNewImage() with src would go here.
+        // Init canvas with white background so JPEG export doesn't turn transparent pixels black
+        const canvas = canvasRef.current;
+        if (canvas && !signature) {
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
     }, [signature]);
 
     const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
@@ -57,7 +63,8 @@ export function SignaturePad() {
             setIsDrawing(false);
             const canvas = canvasRef.current;
             if (canvas) {
-                setValue("signature", canvas.toDataURL());
+                // Compress to JPEG to prevent massive Base64 payloads
+                setValue("signature", canvas.toDataURL("image/jpeg", 0.5));
             }
         }
     };
@@ -66,7 +73,11 @@ export function SignaturePad() {
         const canvas = canvasRef.current;
         if (canvas) {
             const ctx = canvas.getContext("2d");
-            ctx?.clearRect(0, 0, canvas.width, canvas.height);
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
             setValue("signature", "");
         }
     };
