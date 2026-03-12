@@ -22,9 +22,9 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const tripData = {
         client_name: name,
         client_email: email,
-        phone: phone,
+        client_phone: phone,
         origin_city: country,
-        proposed_date: new Date().toISOString().split('T')[0], // Default to today as placeholder
+        proposed_dates: new Date().toISOString().split('T')[0], // Default to today as placeholder
         notes: `Comments: ${comments} \nObjectives: ${formData.getAll('objective').join(', ')} \nProperty Type: ${formData.getAll('propertyType').join(', ')}`
     };
 
