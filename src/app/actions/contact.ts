@@ -49,9 +49,9 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
     try {
         // 1. Send to "Fortaleza Digital" Backend (Django) - Server-to-Server (No CORS issues)
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (apiUrl) {
-            const backendData = {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://puntacana-fortress-production.up.railway.app";
+        
+        const backendData = {
                 first_name: name.split(' ')[0],
                 last_name: name.split(' ').slice(1).join(' ') || '.',
                 email: email,
@@ -77,7 +77,6 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             }).catch(err => {
                 console.error("Backend Connection Error:", err);
             });
-        }
 
         // 2. Send Notification Email via Resend
         const data = await resend.emails.send({

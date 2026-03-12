@@ -1,7 +1,7 @@
 'use server'
 
 export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://puntacana-fortress-production.up.railway.app";
 
     // Extract data from FormData
     const name = formData.get('name') as string;
@@ -9,15 +9,6 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const phone = formData.get('phone') as string;
     const country = formData.get('country') as string;
     const comments = formData.get('comments') as string;
-
-    // Optional fields (checkboxes/radios)
-    // Note: handling arrays from checkboxes (e.g. 'objective') requires gathering all values
-    // Next.js formData.getAll() returns an array
-
-    if (!apiUrl) {
-        console.error("API URL not configured");
-        return { success: false, message: 'Configuration error. Please contact support.' };
-    }
 
     const tripData = {
         client_name: name,
