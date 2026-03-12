@@ -49,7 +49,9 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
     try {
         // 1. Send to "Fortaleza Digital" Backend (Django) - Server-to-Server (No CORS issues)
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://puntacana-fortress-production.up.railway.app";
+        // FORCE PRODUCTION URL: Vercel's environment variables are injecting 'dashboard.puntacanainvestmentsrd.com' (Next.js app).
+        // We MUST hardcode the Railway Django Backend URL here to avoid hitting our own frontend and getting a 404 HTML response.
+        const apiUrl = "https://puntacana-fortress-production.up.railway.app";
         
         const backendData = {
                 first_name: name.split(' ')[0],
