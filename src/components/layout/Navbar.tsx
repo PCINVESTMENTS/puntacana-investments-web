@@ -181,10 +181,13 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
 
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center gap-x-2 xl:gap-x-6">
-                        {menuItems.map((item) => (
+                        {menuItems.map((item) => {
+                            const shouldDisablePrefetch = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => item.href.includes(p));
+                            return (
                             <div key={item.name} className="relative group">
                                 <Link
                                     href={item.href || "#"}
+                                    prefetch={shouldDisablePrefetch ? false : undefined}
                                     className="text-white hover:text-luxury-gold px-1 py-4 text-[10px] xl:text-xs font-bold transition-colors uppercase tracking-wider flex items-center gap-1 group-hover:text-luxury-gold whitespace-nowrap"
                                 >
                                     {item.name}
@@ -195,20 +198,23 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 {item.hasDropdown && item.subItems && (
                                     <div className="absolute top-full left-0 w-56 bg-primary-black border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 pt-2">
                                         <div className="bg-primary-black border-t-2 border-luxury-gold flex flex-col">
-                                            {item.subItems.map((subItem) => (
+                                            {item.subItems.map((subItem) => {
+                                                const subShouldDisable = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => subItem.href.includes(p));
+                                                return (
                                                 <Link
                                                     key={subItem.label}
                                                     href={subItem.href}
+                                                    prefetch={subShouldDisable ? false : undefined}
                                                     className="px-6 py-3 text-sm text-gray-300 hover:bg-luxury-gold hover:text-black transition-colors uppercase tracking-wider font-semibold border-b border-white/5 last:border-0"
                                                 >
                                                     {subItem.label}
                                                 </Link>
-                                            ))}
+                                            )})}
                                         </div>
                                     </div>
                                 )}
                             </div>
-                        ))}
+                        )})}
                         {/* Language Switcher */}
                         <div className="flex gap-2 text-xs font-bold text-white border-l border-white/20 pl-4 ml-2">
                             <Link href="/es" className={`hover:text-luxury-gold ${lang === 'es' ? 'text-luxury-gold' : ''}`}>ES</Link>
@@ -235,10 +241,13 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     }`}
             >
                 <div className="px-4 pt-2 pb-24 space-y-1">
-                    {menuItems.map((item) => (
+                    {menuItems.map((item) => {
+                        const shouldDisablePrefetch = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => item.href.includes(p));
+                        return (
                         <div key={item.name} className="border-b border-white/5 last:border-0">
                             <Link
                                 href={item.href || "#"}
+                                prefetch={shouldDisablePrefetch ? false : undefined}
                                 onClick={() => setIsOpen(false)}
                                 className="block px-3 py-5 text-base font-bold text-gray-300 hover:text-luxury-gold uppercase tracking-wider flex justify-between items-center"
                             >
@@ -247,20 +256,23 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             </Link>
                             {item.hasDropdown && item.subItems && (
                                 <div className="pl-6 bg-black/20 pb-2">
-                                    {item.subItems.map((subItem) => (
+                                    {item.subItems.map((subItem) => {
+                                        const subShouldDisable = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => subItem.href.includes(p));
+                                        return (
                                         <Link
                                             key={subItem.label}
                                             href={subItem.href}
+                                            prefetch={subShouldDisable ? false : undefined}
                                             onClick={() => setIsOpen(false)}
                                             className="block py-4 text-sm text-gray-400 hover:text-luxury-gold uppercase tracking-wide min-h-[48px] flex items-center"
                                         >
                                             {subItem.label}
                                         </Link>
-                                    ))}
+                                    )})}
                                 </div>
                             )}
                         </div>
-                    ))}
+                    )})}
                     <div className="p-4 flex gap-8 justify-center mt-6">
                         <Link href="/es" className={`text-lg font-bold p-4 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
                         <Link href="/en" className={`text-lg font-bold p-4 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
