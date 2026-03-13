@@ -184,7 +184,6 @@ export function PersonaFisicaForm() {
                 toast({
                     title: "Error de Validación",
                     description: typeof result.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
-                    variant: "destructive",
                 });
                 console.error("KYC Submission Error:", result.error);
             }
@@ -192,7 +191,6 @@ export function PersonaFisicaForm() {
             toast({
                 title: "Error de Conexión",
                 description: "No se pudo conectar con el servidor para procesar la petición.",
-                variant: "destructive",
             });
             console.error("Critical submission failed", error);
         }
