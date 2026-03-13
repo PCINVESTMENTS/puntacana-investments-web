@@ -74,7 +74,7 @@ export function SignaturePad() {
             const canvas = canvasRef.current;
             if (canvas) {
                 // Compress to JPEG to prevent massive Base64 payloads
-                setValue("signature", canvas.toDataURL("image/jpeg", 0.5));
+                setValue("signature", canvas.toDataURL("image/jpeg", 0.4));
             }
         }
     };
