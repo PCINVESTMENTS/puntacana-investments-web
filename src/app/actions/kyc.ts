@@ -114,15 +114,29 @@ export async function submitKYCFromClient(formData: FormData) {
         }
 
         // 3. Post to Django (Fortress)
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL
+        // If Vercel env variable is missing or says "undefined", fallback to the known Railway Production URL
+        let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app'
+        
+        // Clean trailing slashes or "undefined" strings
+        if (apiUrl === 'undefined' || apiUrl === 'null') {
+            apiUrl = 'https://puntacana-fortress-production.up.railway.app'
+        }
+        if (apiUrl.endsWith('/')) {
+            apiUrl = apiUrl.slice(0, -1)
+        }
+
         const endpoint = isFisica ? '/api/public/kyc/fisica/' : '/api/public/kyc/juridica/'
 
-        if (apiUrl) {
-            const djangoRes = await fetch(`${apiUrl}${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
+        if (!apiUrl.startsWith('http')) {
+            console.error("Critical Error: apiUrl does not start with http. Value:", apiUrl)
+            return { success: false, error: "Error interno del servidor: URL de API no configurada correctamente en Producción." }
+        }
+
+        const djangoRes = await fetch(`${apiUrl}${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
 
             if (!djangoRes.ok) {
                 const errText = await djangoRes.text()
