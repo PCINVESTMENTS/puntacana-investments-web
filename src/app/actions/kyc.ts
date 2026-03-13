@@ -140,8 +140,32 @@ export async function submitKYCFromClient(formData: FormData) {
 
         if (!djangoRes.ok) {
             const errText = await djangoRes.text()
-            console.error("Django KYC Error:", errText)
-            return { success: false, error: errText }
+            console.error("Django KYC Status:", djangoRes.status, "Error:", errText)
+            
+            let parsedError = errText;
+            try {
+                const jsonErr = JSON.parse(errText);
+                if (typeof jsonErr === 'object' && jsonErr !== null) {
+                    const errorMessages = [];
+                    for (const [key, val] of Object.entries(jsonErr)) {
+                        if (Array.isArray(val)) {
+                            errorMessages.push(`${key}: ${val.join(', ')}`);
+                        } else {
+                            errorMessages.push(`${key}: ${val}`);
+                        }
+                    }
+                    if (errorMessages.length > 0) {
+                        parsedError = errorMessages.join(' | ');
+                    }
+                }
+            } catch (parseEx) {
+                // If it's pure HTML or huge text
+                if (parsedError.length > 200) {
+                    parsedError = parsedError.substring(0, 200) + '... (Error truncado por límite de Vercel)';
+                }
+            }
+
+            return { success: false, error: parsedError }
         }
 
         // 4. Send Confirmation Email via Resend
