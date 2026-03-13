@@ -14,6 +14,11 @@ function getLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
+
+    // ABSOLUTE BYPASS FOR API ROUTES
+    if (pathname.startsWith('/api')) {
+        return NextResponse.next();
+    }
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     );
