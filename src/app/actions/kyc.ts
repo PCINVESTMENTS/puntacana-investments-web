@@ -138,11 +138,10 @@ export async function submitKYCFromClient(formData: FormData) {
             body: JSON.stringify(payload)
         })
 
-            if (!djangoRes.ok) {
-                const errText = await djangoRes.text()
-                console.error("Django KYC Error:", errText)
-                return { success: false, error: errText }
-            }
+        if (!djangoRes.ok) {
+            const errText = await djangoRes.text()
+            console.error("Django KYC Error:", errText)
+            return { success: false, error: errText }
         }
 
         // 4. Send Confirmation Email via Resend
