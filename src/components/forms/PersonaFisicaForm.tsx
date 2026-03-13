@@ -7,7 +7,6 @@ import Image from "next/image";
 import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { submitKYCFromClient } from "@/app/actions/kyc";
 import {
     Form,
     FormControl,
@@ -156,8 +155,9 @@ export function PersonaFisicaForm() {
 
     const onSubmit = async (data: PersonaFisicaData) => {
         try {
-            const cleanFormData = new FormData();
-            cleanFormData.append('formType', 'Persona Física');
+            const payloadJSON: any = {
+                formType: 'Persona Física',
+            };
 
             const textFields = [
                 'customerCode', 'idType', 'idDocument', 'firstName', 'lastName', 'email', 'gender',
@@ -177,24 +177,33 @@ export function PersonaFisicaForm() {
             const arrayFields = ['personalReferences', 'commercialReferences', 'bankReferences'];
 
             textFields.forEach(field => {
-                if (data[field as keyof PersonaFisicaData]) cleanFormData.append(field, data[field as keyof PersonaFisicaData] as string);
+                if (data[field as keyof PersonaFisicaData]) payloadJSON[field] = data[field as keyof PersonaFisicaData];
             });
 
             dateFields.forEach(field => {
                 const val = data[field as keyof PersonaFisicaData];
-                if (val instanceof Date) cleanFormData.append(field, val.toISOString().split('T')[0]);
-                else if (typeof val === 'string') cleanFormData.append(field, val.split('T')[0]); 
+                if (val instanceof Date) payloadJSON[field] = val.toISOString().split('T')[0];
+                else if (typeof val === 'string') payloadJSON[field] = val.split('T')[0]; 
             });
 
             booleanFields.forEach(field => {
-                cleanFormData.append(field, data[field as keyof PersonaFisicaData] ? 'true' : 'false');
+                payloadJSON[field] = data[field as keyof PersonaFisicaData] ? true : false;
             });
 
             arrayFields.forEach(field => {
-                if (data[field as keyof PersonaFisicaData]) cleanFormData.append(field, JSON.stringify(data[field as keyof PersonaFisicaData]));
+                if (data[field as keyof PersonaFisicaData]) payloadJSON[field] = data[field as keyof PersonaFisicaData];
             });
 
-            const result = await submitKYCFromClient(cleanFormData);
+            const payloadString = JSON.stringify(payloadJSON);
+            console.log("PESO EXACTO EN KB:", new Blob([payloadString]).size / 1024);
+
+            const res = await fetch('/api/kyc', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payloadString
+            });
+
+            const result = await res.json();
             
             if (result.success) {
                 toast({

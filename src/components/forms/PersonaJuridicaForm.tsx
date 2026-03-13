@@ -7,7 +7,6 @@ import Image from "next/image";
 import { personaJuridicaSchema, type PersonaJuridicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { submitKYCFromClient } from "@/app/actions/kyc";
 import {
     Form,
     FormControl,
@@ -121,8 +120,9 @@ export function PersonaJuridicaForm() {
 
     const onSubmit = async (data: PersonaJuridicaData) => {
         try {
-            const cleanFormData = new FormData();
-            cleanFormData.append('formType', 'Persona Jurídica');
+            const payloadJSON: any = {
+                formType: 'Persona Jurídica',
+            };
 
             const textFields = [
                 'customerCode', 'companyName', 'commercialName', 'constitutionCountry', 'city', 'rnc',
@@ -138,20 +138,29 @@ export function PersonaJuridicaForm() {
             const booleanFields = ['declaration', 'declaration2', 'authorization', 'declaration4'];
 
             textFields.forEach(field => {
-                if (data[field as keyof PersonaJuridicaData]) cleanFormData.append(field, data[field as keyof PersonaJuridicaData] as string);
+                if (data[field as keyof PersonaJuridicaData]) payloadJSON[field] = data[field as keyof PersonaJuridicaData];
             });
 
             dateFields.forEach(field => {
                 const val = data[field as keyof PersonaJuridicaData];
-                if (val instanceof Date) cleanFormData.append(field, val.toISOString().split('T')[0]);
-                else if (typeof val === 'string') cleanFormData.append(field, val.split('T')[0]); 
+                if (val instanceof Date) payloadJSON[field] = val.toISOString().split('T')[0];
+                else if (typeof val === 'string') payloadJSON[field] = val.split('T')[0]; 
             });
 
             booleanFields.forEach(field => {
-                cleanFormData.append(field, data[field as keyof PersonaJuridicaData] ? 'true' : 'false');
+                payloadJSON[field] = data[field as keyof PersonaJuridicaData] ? true : false;
             });
 
-            const result = await submitKYCFromClient(cleanFormData);
+            const payloadString = JSON.stringify(payloadJSON);
+            console.log("PESO EXACTO EN KB:", new Blob([payloadString]).size / 1024);
+
+            const res = await fetch('/api/kyc', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payloadString
+            });
+
+            const result = await res.json();
             
             if (result.success) {
                 toast({
