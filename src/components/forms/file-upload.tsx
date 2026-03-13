@@ -58,7 +58,7 @@ export function FileUpload({ name, label, description }: FileUploadProps) {
             formData.append('file', fileToUpload);
             
             // Send to our secure proxy route that has the Sanity write token.
-            const res = await fetch('/api/upload-sanity', {
+            const res = await fetch('https://www.puntacanainvestmentsrd.com/api/upload-sanity', {
                 method: 'POST',
                 body: formData
             });
