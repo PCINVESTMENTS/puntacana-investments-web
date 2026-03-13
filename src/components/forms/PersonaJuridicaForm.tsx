@@ -99,11 +99,11 @@ export function PersonaJuridicaForm() {
 
     useEffect(() => {
         if (draft) {
-            form.reset(draft);
-            //   toast({
-            //     title: "Borrador Cargado",
-            //     description: "Se ha cargado un borrador guardado anteriormente.",
-            //   });
+            const parsedDraft = { ...draft };
+            if (typeof parsedDraft.date === 'string') parsedDraft.date = new Date(parsedDraft.date);
+            if (typeof parsedDraft.incorporationDate === 'string') parsedDraft.incorporationDate = new Date(parsedDraft.incorporationDate);
+            if (typeof parsedDraft.legalRepBirthDate === 'string') parsedDraft.legalRepBirthDate = new Date(parsedDraft.legalRepBirthDate);
+            form.reset(parsedDraft);
         }
     }, [draft, form]);
 
@@ -121,29 +121,37 @@ export function PersonaJuridicaForm() {
 
     const onSubmit = async (data: PersonaJuridicaData) => {
         try {
-            const formData = new FormData();
-            formData.append('formType', 'Persona Jurídica');
+            const cleanFormData = new FormData();
+            cleanFormData.append('formType', 'Persona Jurídica');
 
-            // EXTREME PAYLOAD SANITIZATION:
-            // Append all text fields and strings ONLY. Strip out any residual File or FileList structures.
-            Object.entries(data).forEach(([key, value]) => {
-                if (value !== undefined && value !== null) {
-                    if (value instanceof FileList || value instanceof File || (typeof window !== 'undefined' && value instanceof Blob)) {
-                        return; // Violent stripping of binary data
-                    }
-                    if (Array.isArray(value)) {
-                        formData.append(key, JSON.stringify(value));
-                    } else {
-                        formData.append(key, value.toString());
-                    }
-                }
+            const textFields = [
+                'customerCode', 'companyName', 'commercialName', 'constitutionCountry', 'city', 'rnc',
+                'legalRepFirstName', 'legalRepLastName', 'legalRepId', 'legalRepAddress', 'legalRepPhone',
+                'legalRepEmail', 'legalRepProfession', 'legalRepProfessionOther', 'legalRepPosition',
+                'legalRepPositionOther', 'legalRepDesignation', 'averageIncome', 'annualIncome', 'incomeUSD',
+                'fundsOrigin', 'isPEP', 'pepPosition', 'pepInstitution', 'pepCountry', 'signature',
+                // File URL fields from Sanity
+                'commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile'
+            ];
+
+            const dateFields = ['date', 'incorporationDate', 'legalRepBirthDate'];
+            const booleanFields = ['declaration', 'declaration2', 'authorization', 'declaration4'];
+
+            textFields.forEach(field => {
+                if (data[field as keyof PersonaJuridicaData]) cleanFormData.append(field, data[field as keyof PersonaJuridicaData] as string);
             });
 
-            // Note: FileUpload now injects the Sanity CDN string URL directly into data.
-            // So data.commercialRegistryFile is a string 'https://cdn.sanity...'.
-            // The loop above automatically captures and appends it. No manual File iteration needed.
+            dateFields.forEach(field => {
+                const val = data[field as keyof PersonaJuridicaData];
+                if (val instanceof Date) cleanFormData.append(field, val.toISOString().split('T')[0]);
+                else if (typeof val === 'string') cleanFormData.append(field, val.split('T')[0]); 
+            });
 
-            const result = await submitKYCFromClient(formData);
+            booleanFields.forEach(field => {
+                cleanFormData.append(field, data[field as keyof PersonaJuridicaData] ? 'true' : 'false');
+            });
+
+            const result = await submitKYCFromClient(cleanFormData);
             
             if (result.success) {
                 toast({

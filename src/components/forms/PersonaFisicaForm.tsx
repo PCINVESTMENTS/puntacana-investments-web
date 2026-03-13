@@ -125,11 +125,11 @@ export function PersonaFisicaForm() {
 
     useEffect(() => {
         if (draft) {
-            form.reset(draft);
-            // toast({
-            //   title: "Borrador Cargado",
-            //   description: "Se ha cargado un borrador guardado anteriormente.",
-            // });
+            const parsedDraft = { ...draft };
+            if (typeof parsedDraft.date === 'string') parsedDraft.date = new Date(parsedDraft.date);
+            if (typeof parsedDraft.birthDate === 'string') parsedDraft.birthDate = new Date(parsedDraft.birthDate);
+            if (typeof parsedDraft.spouseBirthDate === 'string') parsedDraft.spouseBirthDate = new Date(parsedDraft.spouseBirthDate);
+            form.reset(parsedDraft);
         }
     }, [draft, form]);
 
@@ -156,29 +156,45 @@ export function PersonaFisicaForm() {
 
     const onSubmit = async (data: PersonaFisicaData) => {
         try {
-            const formData = new FormData();
-            formData.append('formType', 'Persona Física');
+            const cleanFormData = new FormData();
+            cleanFormData.append('formType', 'Persona Física');
 
-            // EXTREME PAYLOAD SANITIZATION:
-            // Append all text fields and strings ONLY. Strip out any residual File or FileList structures.
-            Object.entries(data).forEach(([key, value]) => {
-                if (value !== undefined && value !== null) {
-                    if (value instanceof FileList || value instanceof File || (typeof window !== 'undefined' && value instanceof Blob)) {
-                        return; // Violent stripping of binary data
-                    }
-                    if (Array.isArray(value)) {
-                        formData.append(key, JSON.stringify(value));
-                    } else {
-                        formData.append(key, value.toString());
-                    }
-                }
+            const textFields = [
+                'customerCode', 'idType', 'idDocument', 'firstName', 'lastName', 'email', 'gender',
+                'birthPlace', 'nationality', 'maritalStatus', 'homePhone', 'mobilePhone1', 'mobilePhone2',
+                'address', 'province', 'state', 'residenceCountry', 'hasSpouse', 'spouseFirstName',
+                'spouseLastName', 'spouseIdType', 'spouseIdDocument', 'spouseBirthPlace', 'spouseNationality',
+                'spouseEmail', 'spouseHomePhone', 'spouseMobilePhone', 'profession', 'professionOther',
+                'position', 'positionOther', 'company', 'monthlyIncome', 'fundsOrigin', 'hasOtherIncome',
+                'otherIncomeSource', 'otherIncomeSourceOther', 'otherIncomeAmount', 'incomeUSD', 'isPEP',
+                'pepPosition', 'pepInstitution', 'pepCountry', 'signature',
+                // File URL fields from Sanity
+                'identidadFile', 'estadoCuentaFile', 'comprobanteDomicilioFile', 'certificadoLaboralFile'
+            ];
+
+            const dateFields = ['date', 'birthDate', 'spouseBirthDate'];
+            const booleanFields = ['declaration1', 'declarationLicitFunds', 'authorization', 'declaration4'];
+            const arrayFields = ['personalReferences', 'commercialReferences', 'bankReferences'];
+
+            textFields.forEach(field => {
+                if (data[field as keyof PersonaFisicaData]) cleanFormData.append(field, data[field as keyof PersonaFisicaData] as string);
             });
 
-            // Note: FileUpload now injects the Sanity CDN string URL directly into data.
-            // So data.identidadFile is a string 'https://cdn.sanity...'.
-            // The loop above automatically captures and appends it. No manual File iteration needed.
+            dateFields.forEach(field => {
+                const val = data[field as keyof PersonaFisicaData];
+                if (val instanceof Date) cleanFormData.append(field, val.toISOString().split('T')[0]);
+                else if (typeof val === 'string') cleanFormData.append(field, val.split('T')[0]); 
+            });
 
-            const result = await submitKYCFromClient(formData);
+            booleanFields.forEach(field => {
+                cleanFormData.append(field, data[field as keyof PersonaFisicaData] ? 'true' : 'false');
+            });
+
+            arrayFields.forEach(field => {
+                if (data[field as keyof PersonaFisicaData]) cleanFormData.append(field, JSON.stringify(data[field as keyof PersonaFisicaData]));
+            });
+
+            const result = await submitKYCFromClient(cleanFormData);
             
             if (result.success) {
                 toast({
