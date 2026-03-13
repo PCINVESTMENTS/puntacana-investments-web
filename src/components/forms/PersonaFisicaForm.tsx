@@ -145,31 +145,38 @@ export function PersonaFisicaForm() {
     const hasOtherIncome = form.watch('hasOtherIncome');
     const otherIncomeSource = form.watch('otherIncomeSource');
 
+    // Auto-Save: Watch all fields and save to local storage
+    const currentValues = form.watch();
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDraft(currentValues as Partial<PersonaFisicaData>);
+        }, 500); // 500ms debounce
+        return () => clearTimeout(timeoutId);
+    }, [currentValues, setDraft]);
 
     const onSubmit = async (data: PersonaFisicaData) => {
         try {
             const formData = new FormData();
             formData.append('formType', 'Persona Física');
 
-            // Append all text fields
+            // EXTREME PAYLOAD SANITIZATION:
+            // Append all text fields and strings ONLY. Strip out any residual File or FileList structures.
             Object.entries(data).forEach(([key, value]) => {
-                // For arrays (like references) we might need to stringify, or just ignore for now if backend doesn't handle JSON string arrays perfectly yet
-                // The Django model expects text or JSON for references. In the frontend it's an array of objects.
-                if (value !== undefined && value !== null && !(value instanceof FileList) && !Array.isArray(value)) {
-                    formData.append(key, value.toString());
-                } else if (Array.isArray(value)) {
-                    formData.append(key, JSON.stringify(value));
+                if (value !== undefined && value !== null) {
+                    if (value instanceof FileList || value instanceof File || (typeof window !== 'undefined' && value instanceof Blob)) {
+                        return; // Violent stripping of binary data
+                    }
+                    if (Array.isArray(value)) {
+                        formData.append(key, JSON.stringify(value));
+                    } else {
+                        formData.append(key, value.toString());
+                    }
                 }
             });
 
-            // Append Files
-            const fileFields = ['idDocumentFile', 'proofOfFundsFile', 'creditBureauFile', 'proofOfAddressFile', 'workLetterFile'];
-            fileFields.forEach(field => {
-                const fileList = data[field as keyof PersonaFisicaData] as FileList | undefined;
-                if (fileList && fileList.length > 0) {
-                    formData.append(field, fileList[0]);
-                }
-            });
+            // Note: FileUpload now injects the Sanity CDN string URL directly into data.
+            // So data.identidadFile is a string 'https://cdn.sanity...'.
+            // The loop above automatically captures and appends it. No manual File iteration needed.
 
             const result = await submitKYCFromClient(formData);
             

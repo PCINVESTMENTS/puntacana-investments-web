@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { UploadCloud, CheckCircle2, Trash2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { createClient } from "@sanity/client";
+import imageCompression from "browser-image-compression";
 
 // Minimal local client just for uploading. 
 // Note: Exposing a token to the browser is generally unsafe for production.
@@ -40,8 +41,21 @@ export function FileUpload({ name, label, description }: FileUploadProps) {
         setUploadError(null);
 
         try {
+            let fileToUpload = file;
+            
+            // Aggressive client-side compression for images before sending to Sanity proxy
+            if (file.type.startsWith('image/')) {
+                const options = {
+                    maxSizeMB: 1, // Compress to under 1MB
+                    maxWidthOrHeight: 1920,
+                    useWebWorker: true,
+                    initialQuality: 0.7
+                };
+                fileToUpload = await imageCompression(file, options);
+            }
+
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', fileToUpload);
             
             // Send to our secure proxy route that has the Sanity write token
             const res = await fetch('/api/upload-sanity', {
