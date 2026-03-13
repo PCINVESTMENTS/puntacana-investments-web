@@ -154,7 +154,8 @@ export function PersonaJuridicaForm() {
             const payloadString = JSON.stringify(payloadJSON);
             console.log("PESO EXACTO EN KB:", new Blob([payloadString]).size / 1024);
 
-            const res = await fetch('/api/kyc', {
+            // Hardcode absolute production URL to prevent Vercel edge relative 308 redirects from mutating POST to GET
+            const res = await fetch('https://www.puntacanainvestmentsrd.com/api/kyc', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: payloadString
