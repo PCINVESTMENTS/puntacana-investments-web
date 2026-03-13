@@ -17,26 +17,21 @@ export async function submitKYCFromClient(formData: FormData) {
         const type = formData.get('formType') as string
         const isFisica = type === 'Persona Física'
 
+        // The frontend now uploads directly to Sanity via /api/upload-sanity. 
+        // We no longer receive File objects, but rather the string URLs returned by Sanity.
+        const uploadedUrls: Record<string, string> = {}
+        
         // Expected file fields depending on type
         const fisicaFiles = ['identidadFile', 'estadoCuentaFile', 'comprobanteDomicilioFile', 'certificadoLaboralFile']
         const juridicaFiles = ['commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile']
 
         const filesToProcess = isFisica ? fisicaFiles : juridicaFiles
-        const uploadedUrls: Record<string, string> = {}
 
-        // 1. Upload files to Sanity Assets
+        // 1. Extract Sanity URLs from FormData
         for (const field of filesToProcess) {
-            const file = formData.get(field) as File | null
-            if (file && file.size > 0) {
-                const arrayBuffer = await file.arrayBuffer()
-                const buffer = Buffer.from(arrayBuffer)
-
-                // Upload to Sanity
-                const asset = await writeClient.assets.upload('file', buffer, {
-                    filename: file.name,
-                    contentType: file.type,
-                })
-                uploadedUrls[`${field}Url`] = asset.url
+            const url = formData.get(field) as string | null
+            if (url && typeof url === 'string' && url.startsWith('http')) {
+                uploadedUrls[`${field}Url`] = url
             }
         }
 
