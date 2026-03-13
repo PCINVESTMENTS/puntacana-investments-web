@@ -127,7 +127,7 @@ export async function submitKYCFromClient(formData: FormData) {
             if (!djangoRes.ok) {
                 const errText = await djangoRes.text()
                 console.error("Django KYC Error:", errText)
-                throw new Error("API rechazó los datos.")
+                return { success: false, error: errText }
             }
         }
 

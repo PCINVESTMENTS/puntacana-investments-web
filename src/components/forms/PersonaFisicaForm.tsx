@@ -146,51 +146,56 @@ export function PersonaFisicaForm() {
     const otherIncomeSource = form.watch('otherIncomeSource');
 
 
-    const onSubmit = (data: PersonaFisicaData) => {
-        // Show immediate feedback
-        toast({
-            title: "Formulario Enviado",
-            description: "Su formulario de Persona Física ha sido enviado con éxito.",
-        });
+    const onSubmit = async (data: PersonaFisicaData) => {
+        try {
+            const formData = new FormData();
+            formData.append('formType', 'Persona Física');
 
-        // Reset form immediately
-        setDraft(null);
-        form.reset(defaultValues);
-
-        // Perform background tasks
-        (async () => {
-            try {
-                const formData = new FormData();
-                formData.append('formType', 'Persona Física');
-
-                // Append all text fields
-                Object.entries(data).forEach(([key, value]) => {
-                    // For arrays (like references) we might need to stringify, or just ignore for now if backend doesn't handle JSON string arrays perfectly yet
-                    // The Django model expects text or JSON for references. In the frontend it's an array of objects.
-                    if (value !== undefined && value !== null && !(value instanceof FileList) && !Array.isArray(value)) {
-                        formData.append(key, value.toString());
-                    } else if (Array.isArray(value)) {
-                        formData.append(key, JSON.stringify(value));
-                    }
-                });
-
-                // Append Files
-                const fileFields = ['idDocumentFile', 'proofOfFundsFile', 'creditBureauFile', 'proofOfAddressFile', 'workLetterFile'];
-                fileFields.forEach(field => {
-                    const fileList = data[field as keyof PersonaFisicaData] as FileList | undefined;
-                    if (fileList && fileList.length > 0) {
-                        formData.append(field, fileList[0]);
-                    }
-                });
-
-                const result = await submitKYCFromClient(formData);
-                if (!result.success) {
-                    console.error("KYC Submission Error:", result.error);
+            // Append all text fields
+            Object.entries(data).forEach(([key, value]) => {
+                // For arrays (like references) we might need to stringify, or just ignore for now if backend doesn't handle JSON string arrays perfectly yet
+                // The Django model expects text or JSON for references. In the frontend it's an array of objects.
+                if (value !== undefined && value !== null && !(value instanceof FileList) && !Array.isArray(value)) {
+                    formData.append(key, value.toString());
+                } else if (Array.isArray(value)) {
+                    formData.append(key, JSON.stringify(value));
                 }
-            } catch (error) {
-                console.error("Critical submission failed", error);
+            });
+
+            // Append Files
+            const fileFields = ['idDocumentFile', 'proofOfFundsFile', 'creditBureauFile', 'proofOfAddressFile', 'workLetterFile'];
+            fileFields.forEach(field => {
+                const fileList = data[field as keyof PersonaFisicaData] as FileList | undefined;
+                if (fileList && fileList.length > 0) {
+                    formData.append(field, fileList[0]);
+                }
+            });
+
+            const result = await submitKYCFromClient(formData);
+            
+            if (result.success) {
+                toast({
+                    title: "Formulario Enviado",
+                    description: "Su formulario de Persona Física ha sido enviado con éxito.",
+                });
+                setDraft(null);
+                form.reset(defaultValues);
+            } else {
+                toast({
+                    title: "Error de Validación",
+                    description: typeof result.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
+                    variant: "destructive",
+                });
+                console.error("KYC Submission Error:", result.error);
             }
-        })();
+        } catch (error) {
+            toast({
+                title: "Error de Conexión",
+                description: "No se pudo conectar con el servidor para procesar la petición.",
+                variant: "destructive",
+            });
+            console.error("Critical submission failed", error);
+        }
     };
 
     const handleSaveDraft = () => {

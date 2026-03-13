@@ -32,14 +32,20 @@ export function SignaturePad() {
         if (!ctx) return;
 
         const rect = canvas.getBoundingClientRect();
-        const x = ('touches' in e) ? e.touches[0].clientX - rect.left : (e as React.MouseEvent).nativeEvent.offsetX;
-        const y = ('touches' in e) ? e.touches[0].clientY - rect.top : (e as React.MouseEvent).nativeEvent.offsetY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const clientX = ('touches' in e) ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+        const clientY = ('touches' in e) ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+        const x = (clientX - rect.left) * scaleX;
+        const y = (clientY - rect.top) * scaleY;
 
         ctx.beginPath();
         ctx.moveTo(x, y);
+        ctx.lineTo(x, y); // To make sure simple clicks draw a dot
         ctx.lineWidth = 2;
         ctx.lineCap = "round";
         ctx.strokeStyle = "#000";
+        ctx.stroke();
     };
 
     const draw = (e: React.MouseEvent | React.TouchEvent) => {
@@ -51,8 +57,12 @@ export function SignaturePad() {
         if (!ctx) return;
 
         const rect = canvas.getBoundingClientRect();
-        const x = ('touches' in e) ? e.touches[0].clientX - rect.left : (e as React.MouseEvent).nativeEvent.offsetX;
-        const y = ('touches' in e) ? e.touches[0].clientY - rect.top : (e as React.MouseEvent).nativeEvent.offsetY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const clientX = ('touches' in e) ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+        const clientY = ('touches' in e) ? e.touches[0].clientY : (e as React.MouseEvent).clientY;
+        const x = (clientX - rect.left) * scaleX;
+        const y = (clientY - rect.top) * scaleY;
 
         ctx.lineTo(x, y);
         ctx.stroke();

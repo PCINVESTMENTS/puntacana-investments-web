@@ -110,47 +110,52 @@ export function PersonaJuridicaForm() {
     const legalRepProfession = form.watch('legalRepProfession');
     const legalRepPosition = form.watch('legalRepPosition');
 
-    const onSubmit = (data: PersonaJuridicaData) => {
-        // Show immediate feedback
-        toast({
-            title: "Formulario Enviado",
-            description: "Su formulario de Persona Jurídica ha sido enviado con éxito.",
-        });
+    const onSubmit = async (data: PersonaJuridicaData) => {
+        try {
+            const formData = new FormData();
+            formData.append('formType', 'Persona Jurídica');
 
-        // Reset form immediately
-        setDraft(null);
-        form.reset(defaultValues);
-
-        // Perform background tasks
-        (async () => {
-            try {
-                const formData = new FormData();
-                formData.append('formType', 'Persona Jurídica');
-
-                // Append all text fields
-                Object.entries(data).forEach(([key, value]) => {
-                    if (value !== undefined && value !== null && !(value instanceof FileList)) {
-                        formData.append(key, value.toString());
-                    }
-                });
-
-                // Append Files
-                const fileFields = ['commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile'];
-                fileFields.forEach(field => {
-                    const fileList = data[field as keyof PersonaJuridicaData] as FileList | undefined;
-                    if (fileList && fileList.length > 0) {
-                        formData.append(field, fileList[0]);
-                    }
-                });
-
-                const result = await submitKYCFromClient(formData);
-                if (!result.success) {
-                    console.error("KYC Submission Error:", result.error);
+            // Append all text fields
+            Object.entries(data).forEach(([key, value]) => {
+                if (value !== undefined && value !== null && !(value instanceof FileList)) {
+                    formData.append(key, value.toString());
                 }
-            } catch (error) {
-                console.error("Critical submission failed", error);
+            });
+
+            // Append Files
+            const fileFields = ['commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile'];
+            fileFields.forEach(field => {
+                const fileList = data[field as keyof PersonaJuridicaData] as FileList | undefined;
+                if (fileList && fileList.length > 0) {
+                    formData.append(field, fileList[0]);
+                }
+            });
+
+            const result = await submitKYCFromClient(formData);
+            
+            if (result.success) {
+                toast({
+                    title: "Formulario Enviado",
+                    description: "Su formulario de Persona Jurídica ha sido enviado con éxito.",
+                });
+                setDraft(null);
+                form.reset(defaultValues);
+            } else {
+                toast({
+                    title: "Error de Validación",
+                    description: typeof result.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
+                    variant: "destructive",
+                });
+                console.error("KYC Submission Error:", result.error);
             }
-        })();
+        } catch (error) {
+            toast({
+                title: "Error de Conexión",
+                description: "No se pudo conectar con el servidor para procesar la petición.",
+                variant: "destructive",
+            });
+            console.error("Critical submission failed", error);
+        }
     };
 
     const handleSaveDraft = () => {
