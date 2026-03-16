@@ -197,7 +197,7 @@ export function PersonaFisicaForm() {
             const payloadString = JSON.stringify(payloadJSON);
             console.log("PESO EXACTO EN KB:", new Blob([payloadString]).size / 1024);
 
-            const res = await fetch(window.location.origin + '/api/kyc', {
+            const res = await fetch('/api/kyc', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: payloadString
