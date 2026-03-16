@@ -203,9 +203,17 @@ export function PersonaFisicaForm() {
                 body: payloadString
             });
 
-            const result = await res.json();
+            let result: any;
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                result = await res.json();
+            } else {
+                const text = await res.text().catch(() => '');
+                console.error("Non-JSON API response:", text);
+                result = { success: false, error: `Error del servidor (${res.status}): Respuesta no válida.` };
+            }
             
-            if (result.success) {
+            if (res.ok && result?.success) {
                 toast({
                     title: "Formulario Enviado",
                     description: "Su formulario de Persona Física ha sido enviado con éxito.",

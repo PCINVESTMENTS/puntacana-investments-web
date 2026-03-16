@@ -10,6 +10,8 @@ const client = createClient({
     useCdn: false // Don't use CDN for uploads
 });
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();

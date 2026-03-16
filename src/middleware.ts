@@ -15,19 +15,23 @@ function getLocale(request: NextRequest): string {
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // ABSOLUTE BYPASS FOR API ROUTES
-    if (pathname.startsWith('/api')) {
+    // ABSOLUTE BYPASS FOR API, STUDIO, AND ASSETS
+    if (
+        pathname.startsWith('/api') || 
+        pathname.startsWith('/studio') || 
+        pathname.startsWith('/images') || 
+        pathname.startsWith('/_next') || 
+        pathname.includes('.')
+    ) {
         return NextResponse.next();
     }
+    
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     );
 
-    if (pathnameHasLocale) return;
-
-    // Avoid redirecting assets, api, or studio
-    if (pathname.startsWith('/images') || pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.startsWith('/studio') || pathname.includes('.')) {
-        return;
+    if (pathnameHasLocale) {
+        return NextResponse.next();
     }
 
     const locale = getLocale(request);
@@ -36,6 +40,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    // Only run middleware on paths that are NOT API routes or static assets
-    matcher: ['/((?!api|_next/static|_next/image|favicon.ico|images|studio).*)'],
+    // Only run middleware on paths that are NOT static assets
+    matcher: ['/((?!_next/static|_next/image|favicon.ico|images).*)'],
 };
