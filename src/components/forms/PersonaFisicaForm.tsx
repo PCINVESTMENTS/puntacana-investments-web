@@ -181,26 +181,68 @@ export function PersonaFisicaForm() {
             const booleanFields = ['declaration1', 'declarationLicitFunds', 'authorization', 'declaration4'];
             const arrayFields = ['personalReferences', 'commercialReferences', 'bankReferences'];
 
+            const fieldMap: Record<string, string> = {
+                firstName: 'nombres',
+                lastName: 'apellidos',
+                idDocument: 'pasaporte_cedula',
+                nationality: 'nacionalidad',
+                maritalStatus: 'estado_civil',
+                birthPlace: 'lugar_nacimiento',
+                homePhone: 'tel_residencia',
+                mobilePhone1: 'tel_celular',
+                email: 'email',
+                address: 'direccion',
+                province: 'ciudad', // Mapped province/city
+                residenceCountry: 'pais',
+                profession: 'profesion_ocupacion',
+                company: 'lugar_trabajo',
+                position: 'posicion',
+                monthlyIncome: 'ingreso_promedio',
+                incomeUSD: 'equivalente_usd',
+                isPEP: 'es_pep',
+                fundsOrigin: 'origen_fondos',
+            };
+
+            const dateFieldsMap: Record<string, string> = {
+                birthDate: 'fecha_nacimiento'
+            };
+
+            const booleanFieldsMap: Record<string, string> = {
+                declaration1: 'declaracion_jurada'
+            };
+
+            const arrayFieldsMap: Record<string, string> = {
+                personalReferences: 'referencias_personales',
+                commercialReferences: 'referencias_comerciales',
+                bankReferences: 'referencias_bancarias',
+            };
+
             textFields.forEach(field => {
-                if (data[field as keyof PersonaFisicaData] !== undefined && data[field as keyof PersonaFisicaData] !== null) {
-                    formData.append(field, String(data[field as keyof PersonaFisicaData]));
+                const val = data[field as keyof PersonaFisicaData];
+                if (val !== undefined && val !== null && fieldMap[field]) {
+                    formData.append(fieldMap[field], String(val));
                 }
             });
 
             dateFields.forEach(field => {
                 const val = data[field as keyof PersonaFisicaData];
-                if (val instanceof Date) formData.append(field, val.toISOString().split('T')[0]);
-                else if (typeof val === 'string') formData.append(field, val.split('T')[0]); 
+                if (val && dateFieldsMap[field]) {
+                    if (val instanceof Date) formData.append(dateFieldsMap[field], val.toISOString().split('T')[0]);
+                    else if (typeof val === 'string') formData.append(dateFieldsMap[field], val.split('T')[0]); 
+                }
             });
 
             booleanFields.forEach(field => {
-                formData.append(field, data[field as keyof PersonaFisicaData] ? 'true' : 'false');
+                const val = data[field as keyof PersonaFisicaData];
+                if (booleanFieldsMap[field]) {
+                    formData.append(booleanFieldsMap[field], val ? 'true' : 'false');
+                }
             });
 
             arrayFields.forEach(field => {
                 const val = data[field as keyof PersonaFisicaData];
-                if (val && Array.isArray(val)) {
-                    formData.append(field, JSON.stringify(val));
+                if (val && Array.isArray(val) && arrayFieldsMap[field]) {
+                    formData.append(arrayFieldsMap[field], JSON.stringify(val));
                 }
             });
 

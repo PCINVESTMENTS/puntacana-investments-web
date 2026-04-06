@@ -143,18 +143,58 @@ export function PersonaJuridicaForm() {
             const dateFields = ['date', 'incorporationDate', 'legalRepBirthDate'];
             const booleanFields = ['declaration', 'declaration2', 'authorization', 'declaration4'];
 
+            const fieldMap: Record<string, string> = {
+                customerCode: 'codigo_cliente',
+                companyName: 'razon_social',
+                commercialName: 'nombre_comercial',
+                constitutionCountry: 'pais_constitucion',
+                city: 'ciudad',
+                rnc: 'rnc',
+                legalRepFirstName: 'rep_nombres',
+                legalRepLastName: 'rep_apellidos',
+                legalRepId: 'rep_id',
+                legalRepAddress: 'rep_direccion',
+                legalRepPhone: 'rep_telefono',
+                legalRepEmail: 'rep_email',
+                legalRepProfession: 'rep_profesion',
+                legalRepPosition: 'rep_cargo',
+                legalRepDesignation: 'rep_designacion',
+                averageIncome: 'ingreso_promedio',
+                annualIncome: 'ingreso_anual',
+                incomeUSD: 'equivalente_usd',
+                fundsOrigin: 'origen_fondos',
+                isPEP: 'es_pep',
+            };
+
+            const dateFieldsMap: Record<string, string> = {
+                incorporationDate: 'fecha_constitucion',
+                legalRepBirthDate: 'rep_fecha_nacimiento'
+            };
+
+            const booleanFieldsMap: Record<string, string> = {
+                declaration: 'declaracion_jurada'
+            };
+
             textFields.forEach(field => {
-                if (data[field as keyof PersonaJuridicaData]) formData.append(field, String(data[field as keyof PersonaJuridicaData]));
+                const val = data[field as keyof PersonaJuridicaData];
+                if (val !== undefined && val !== null && fieldMap[field]) {
+                    formData.append(fieldMap[field], String(val));
+                }
             });
 
             dateFields.forEach(field => {
                 const val = data[field as keyof PersonaJuridicaData];
-                if (val instanceof Date) formData.append(field, val.toISOString().split('T')[0]);
-                else if (typeof val === 'string') formData.append(field, val.split('T')[0]); 
+                if (val && dateFieldsMap[field]) {
+                    if (val instanceof Date) formData.append(dateFieldsMap[field], val.toISOString().split('T')[0]);
+                    else if (typeof val === 'string') formData.append(dateFieldsMap[field], val.split('T')[0]); 
+                }
             });
 
             booleanFields.forEach(field => {
-                formData.append(field, data[field as keyof PersonaJuridicaData] ? 'true' : 'false');
+                const val = data[field as keyof PersonaJuridicaData];
+                if (booleanFieldsMap[field]) {
+                    formData.append(booleanFieldsMap[field], val ? 'true' : 'false');
+                }
             });
 
             // Map Frontend File Names to Django Model Field Names
