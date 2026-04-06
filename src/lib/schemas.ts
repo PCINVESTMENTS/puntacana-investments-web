@@ -20,7 +20,7 @@ export const personaFisicaSchema = z.object({
     mobilePhone1: z.string().min(1, "Celular requerido"),
     mobilePhone2: z.string().optional(),
     address: z.string().min(1, "Dirección requerida"),
-    province: z.string().optional(),
+    province: z.string().min(1, "Provincia requerida"),
     state: z.string().optional(),
     residenceCountry: z.string().min(1, "País requerido"),
 
