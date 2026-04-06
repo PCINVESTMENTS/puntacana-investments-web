@@ -178,7 +178,8 @@ export function PersonaJuridicaForm() {
             textFields.forEach(field => {
                 const val = data[field as keyof PersonaJuridicaData];
                 if (val !== undefined && val !== null && fieldMap[field]) {
-                    formData.append(fieldMap[field], String(val));
+                    const stringVal = String(val).trim();
+                    formData.append(fieldMap[field], stringVal !== '' ? stringVal : 'No especificado');
                 }
             });
 
