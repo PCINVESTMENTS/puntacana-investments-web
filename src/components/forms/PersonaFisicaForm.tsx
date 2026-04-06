@@ -290,7 +290,7 @@ export function PersonaFisicaForm() {
                 result = { success: false, error: `Error del servidor (${res.status}): Respuesta no válida.` };
             }
             
-            if (res.ok && result?.success) {
+            if (res.ok) {
                 toast({
                     title: "Formulario Enviado",
                     description: "Su formulario de Persona Física ha sido enviado con éxito.",
@@ -302,7 +302,7 @@ export function PersonaFisicaForm() {
                     title: "Error de Validación",
                     description: typeof result.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
                 });
-                console.error("KYC Submission Error:", result.error);
+                console.error("KYC Submission Error:", result);
             }
         } catch (error) {
             toast({
@@ -310,6 +310,21 @@ export function PersonaFisicaForm() {
                 description: "No se pudo conectar con el servidor para procesar la petición.",
             });
             console.error("Critical submission failed", error);
+        }
+    };
+
+    const onError = (errors: any) => {
+        const firstErrorKey = Object.keys(errors)[0];
+        const errorElement = document.querySelector(`[name="${firstErrorKey}"]`);
+        
+        toast({
+            title: "Cuidado, faltan campos",
+            description: "Por favor, complete los campos remarcados en rojo para continuar.",
+        });
+
+        if (errorElement) {
+            errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            (errorElement as HTMLElement).focus();
         }
     };
 
@@ -334,7 +349,7 @@ export function PersonaFisicaForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 p-6 md:p-8 bg-zinc-950 text-white rounded-lg border border-white/10 shadow-2xl">
+            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-4 p-6 md:p-8 bg-zinc-950 text-white rounded-lg border border-white/10 shadow-2xl">
                 <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-white/10 px-6 py-4 -mx-6 md:-mx-8 print:hidden">
                     <div className="flex justify-between items-center text-center text-xs font-medium text-gray-400">
                         {['Datos Generales', 'Cónyuge', 'Ocupación', 'Político', 'Ref. & Decl.'].map((step, i) => (
