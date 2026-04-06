@@ -280,30 +280,37 @@ export function PersonaFisicaForm() {
                 body: formData
             });
 
-            let result: any;
-            const contentType = res.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                result = await res.json();
-            } else {
-                const text = await res.text().catch(() => '');
-                console.error("Non-JSON API response:", text);
-                result = { success: false, error: `Error del servidor (${res.status}): Respuesta no válida.` };
-            }
-            
-            if (res.ok) {
+            // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
+            if (res.ok || res.status === 201) {
                 toast({
                     title: "Formulario Enviado",
                     description: "Su formulario de Persona Física ha sido enviado con éxito.",
                 });
                 setDraft(null);
                 form.reset(defaultValues);
-            } else {
-                toast({
-                    title: "Error de Validación",
-                    description: typeof result.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
-                });
-                console.error("KYC Submission Error:", result);
+                return; // Termina la ejecución exitosa aquí
             }
+
+            let result: any;
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                try {
+                    result = await res.json();
+                } catch (e) {
+                    result = { error: "Unparseable JSON error." };
+                }
+            } else {
+                const text = await res.text().catch(() => '');
+                console.error("Non-JSON API response:", text);
+                result = { success: false, error: `Error del servidor (${res.status}): Respuesta no válida.` };
+            }
+            
+            // Llegamos aquí solo si res.ok es FALSE
+            toast({
+                title: "Error de Validación",
+                description: typeof result?.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
+            });
+            console.error("KYC Submission Error:", result);
         } catch (error) {
             toast({
                 title: "Error de Conexión",
