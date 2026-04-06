@@ -14,6 +14,15 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
     try {
+        const origin = request.headers.get('origin');
+        const allowedOrigins = ['https://www.puntacanainvestmentsrd.com', 'https://puntacanainvestmentsrd.com', 'http://localhost:3000', 'http://localhost:3001', 'https://puntacana-investments-web.vercel.app'];
+        
+        // Block requests from unauthorized origins
+        if (!origin || !allowedOrigins.includes(origin)) {
+            console.warn(`Unauthorized upload attempt from origin: ${origin}`);
+            return NextResponse.json({ error: "Unauthorized Origin" }, { status: 403 });
+        }
+
         const formData = await request.formData();
         const file = formData.get('file') as File;
 
