@@ -85,6 +85,15 @@ const cargos = [
     "Director", "Gerente", "Analista", "Coordinador", "Especialista", "Asistente", "Consultor", "CEO (Director Ejecutivo)", "CFO (Director Financiero)", "CTO (Director de Tecnología)", "COO (Director de Operaciones)", "Presidente", "Vicepresidente", "Supervisor", "Jefe de Departamento", "Empleado", "Socio / Propietario", "Freelancer / Independiente", "Otro"
 ];
 
+const dataURLtoFile = (dataurl: string, filename: string) => {
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)![1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+}
+
 export function PersonaJuridicaForm() {
     const { toast } = useToast();
     const [draft, setDraft] = useLocalStorage<Partial<PersonaJuridicaData> | null>('persona-juridica-draft', null);
@@ -120,44 +129,63 @@ export function PersonaJuridicaForm() {
 
     const onSubmit = async (data: PersonaJuridicaData) => {
         try {
-            const payloadJSON: any = {
-                formType: 'Persona Jurídica',
-            };
+            const formData = new FormData();
+            formData.append('formType', 'Persona Jurídica');
 
             const textFields = [
                 'customerCode', 'companyName', 'commercialName', 'constitutionCountry', 'city', 'rnc',
                 'legalRepFirstName', 'legalRepLastName', 'legalRepId', 'legalRepAddress', 'legalRepPhone',
                 'legalRepEmail', 'legalRepProfession', 'legalRepProfessionOther', 'legalRepPosition',
                 'legalRepPositionOther', 'legalRepDesignation', 'averageIncome', 'annualIncome', 'incomeUSD',
-                'fundsOrigin', 'isPEP', 'pepPosition', 'pepInstitution', 'pepCountry', 'signature',
-                // File URL fields from Sanity
-                'commercialRegistryFile', 'legalRepIdFile', 'shareholderAssemblyFile', 'authorizedSignaturesFile', 'shareholderListFile', 'financialStatementsFile'
+                'fundsOrigin', 'isPEP', 'pepPosition', 'pepInstitution', 'pepCountry'
             ];
 
             const dateFields = ['date', 'incorporationDate', 'legalRepBirthDate'];
             const booleanFields = ['declaration', 'declaration2', 'authorization', 'declaration4'];
 
             textFields.forEach(field => {
-                if (data[field as keyof PersonaJuridicaData]) payloadJSON[field] = data[field as keyof PersonaJuridicaData];
+                if (data[field as keyof PersonaJuridicaData]) formData.append(field, String(data[field as keyof PersonaJuridicaData]));
             });
 
             dateFields.forEach(field => {
                 const val = data[field as keyof PersonaJuridicaData];
-                if (val instanceof Date) payloadJSON[field] = val.toISOString().split('T')[0];
-                else if (typeof val === 'string') payloadJSON[field] = val.split('T')[0]; 
+                if (val instanceof Date) formData.append(field, val.toISOString().split('T')[0]);
+                else if (typeof val === 'string') formData.append(field, val.split('T')[0]); 
             });
 
             booleanFields.forEach(field => {
-                payloadJSON[field] = data[field as keyof PersonaJuridicaData] ? true : false;
+                formData.append(field, data[field as keyof PersonaJuridicaData] ? 'true' : 'false');
             });
 
-            const payloadString = JSON.stringify(payloadJSON);
-            console.log("PESO EXACTO EN KB:", new Blob([payloadString]).size / 1024);
+            // Map Frontend File Names to Django Model Field Names
+            const fileMappings: Record<string, keyof PersonaJuridicaData> = {
+                'doc_registro_mercantil': 'commercialRegistryFile',
+                'doc_rep_id': 'legalRepIdFile',
+                'doc_asamblea': 'shareholderAssemblyFile',
+                'doc_firmas': 'authorizedSignaturesFile',
+                'doc_nomina_socios': 'shareholderListFile',
+                'doc_estados_financieros': 'financialStatementsFile'
+            };
 
-            const res = await fetch('/api/kyc', {
+            for (const [djangoField, formField] of Object.entries(fileMappings)) {
+                const file = data[formField];
+                if (file instanceof File) {
+                    formData.append(djangoField, file);
+                }
+            }
+
+            if (data.signature) {
+                const sigFile = dataURLtoFile(data.signature, 'firma.png');
+                formData.append('firma_digital', sigFile);
+            }
+
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
+            const baseUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+
+            const res = await fetch(`${baseUrl}/api/public/kyc/juridica/`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: payloadString
+                // FormData sets correct Content-Type with boundary!
+                body: formData
             });
 
             let result: any;

@@ -112,6 +112,14 @@ const fuentesIngresos = [
     "Alquiler de propiedades", "Inversiones / Dividendos", "Servicios profesionales", "Negocio propio", "Herencia", "Pensión / Jubilación", "Otro"
 ];
 
+const dataURLtoFile = (dataurl: string, filename: string) => {
+    let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)![1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+}
 
 export function PersonaFisicaForm() {
     const { toast } = useToast();
@@ -155,9 +163,8 @@ export function PersonaFisicaForm() {
 
     const onSubmit = async (data: PersonaFisicaData) => {
         try {
-            const payloadJSON: any = {
-                formType: 'Persona Física',
-            };
+            const formData = new FormData();
+            formData.append('formType', 'Persona Física');
 
             const textFields = [
                 'customerCode', 'idType', 'idDocument', 'firstName', 'lastName', 'email', 'gender',
@@ -167,9 +174,7 @@ export function PersonaFisicaForm() {
                 'spouseEmail', 'spouseHomePhone', 'spouseMobilePhone', 'profession', 'professionOther',
                 'position', 'positionOther', 'company', 'monthlyIncome', 'fundsOrigin', 'hasOtherIncome',
                 'otherIncomeSource', 'otherIncomeSourceOther', 'otherIncomeAmount', 'incomeUSD', 'isPEP',
-                'pepPosition', 'pepInstitution', 'pepCountry', 'signature',
-                // File URL fields from Sanity
-                'identidadFile', 'estadoCuentaFile', 'comprobanteDomicilioFile', 'certificadoLaboralFile'
+                'pepPosition', 'pepInstitution', 'pepCountry'
             ];
 
             const dateFields = ['date', 'birthDate', 'spouseBirthDate'];
@@ -177,30 +182,56 @@ export function PersonaFisicaForm() {
             const arrayFields = ['personalReferences', 'commercialReferences', 'bankReferences'];
 
             textFields.forEach(field => {
-                if (data[field as keyof PersonaFisicaData]) payloadJSON[field] = data[field as keyof PersonaFisicaData];
+                if (data[field as keyof PersonaFisicaData] !== undefined && data[field as keyof PersonaFisicaData] !== null) {
+                    formData.append(field, String(data[field as keyof PersonaFisicaData]));
+                }
             });
 
             dateFields.forEach(field => {
                 const val = data[field as keyof PersonaFisicaData];
-                if (val instanceof Date) payloadJSON[field] = val.toISOString().split('T')[0];
-                else if (typeof val === 'string') payloadJSON[field] = val.split('T')[0]; 
+                if (val instanceof Date) formData.append(field, val.toISOString().split('T')[0]);
+                else if (typeof val === 'string') formData.append(field, val.split('T')[0]); 
             });
 
             booleanFields.forEach(field => {
-                payloadJSON[field] = data[field as keyof PersonaFisicaData] ? true : false;
+                formData.append(field, data[field as keyof PersonaFisicaData] ? 'true' : 'false');
             });
 
             arrayFields.forEach(field => {
-                if (data[field as keyof PersonaFisicaData]) payloadJSON[field] = data[field as keyof PersonaFisicaData];
+                const val = data[field as keyof PersonaFisicaData];
+                if (val && Array.isArray(val)) {
+                    formData.append(field, JSON.stringify(val));
+                }
             });
 
-            const payloadString = JSON.stringify(payloadJSON);
-            console.log("PESO EXACTO EN KB:", new Blob([payloadString]).size / 1024);
+            // Map Frontend File Names to Django Model Field Names
+            const fileMappings: Record<string, keyof PersonaFisicaData> = {
+                'doc_identidad': 'idDocumentFile',
+                'doc_estado_cuenta': 'proofOfFundsFile',
+                'doc_comprobante_domicilio': 'proofOfAddressFile',
+                'doc_certificado_laboral': 'workLetterFile',
+                'doc_bureau_credito': 'creditBureauFile'
+            };
 
-            const res = await fetch('/api/kyc', {
+            for (const [djangoField, formField] of Object.entries(fileMappings)) {
+                const file = data[formField];
+                if (file instanceof File) {
+                    formData.append(djangoField, file);
+                }
+            }
+
+            if (data.signature) {
+                const sigFile = dataURLtoFile(data.signature, 'firma.png');
+                formData.append('firma_digital', sigFile);
+            }
+
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
+            const baseUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+
+            const res = await fetch(`${baseUrl}/api/public/kyc/fisica/`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: payloadString
+                // FormData automatically sets correct Content-Type with boundary!
+                body: formData
             });
 
             let result: any;
