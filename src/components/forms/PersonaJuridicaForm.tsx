@@ -105,15 +105,20 @@ export function PersonaJuridicaForm() {
 
     const isPEP = form.watch('isPEP');
 
+    const [hasLoadedDraft, setHasLoadedDraft] = useState(false);
+
     useEffect(() => {
-        if (draft) {
+        if (draft && !hasLoadedDraft) {
             const parsedDraft = { ...draft };
             if (typeof parsedDraft.date === 'string') parsedDraft.date = new Date(parsedDraft.date);
             if (typeof parsedDraft.incorporationDate === 'string') parsedDraft.incorporationDate = new Date(parsedDraft.incorporationDate);
             if (typeof parsedDraft.legalRepBirthDate === 'string') parsedDraft.legalRepBirthDate = new Date(parsedDraft.legalRepBirthDate);
             form.reset(parsedDraft);
+            setHasLoadedDraft(true);
+        } else if (!draft && !hasLoadedDraft) {
+            setHasLoadedDraft(true);
         }
-    }, [draft, form]);
+    }, [draft, form, hasLoadedDraft]);
 
     const legalRepProfession = form.watch('legalRepProfession');
     const legalRepPosition = form.watch('legalRepPosition');

@@ -130,15 +130,20 @@ export function PersonaFisicaForm() {
         defaultValues: draft || defaultValues,
     });
 
+    const [hasLoadedDraft, setHasLoadedDraft] = useState(false);
+
     useEffect(() => {
-        if (draft) {
+        if (draft && !hasLoadedDraft) {
             const parsedDraft = { ...draft };
             if (typeof parsedDraft.date === 'string') parsedDraft.date = new Date(parsedDraft.date);
             if (typeof parsedDraft.birthDate === 'string') parsedDraft.birthDate = new Date(parsedDraft.birthDate);
             if (typeof parsedDraft.spouseBirthDate === 'string') parsedDraft.spouseBirthDate = new Date(parsedDraft.spouseBirthDate);
             form.reset(parsedDraft);
+            setHasLoadedDraft(true);
+        } else if (!draft && !hasLoadedDraft) {
+            setHasLoadedDraft(true);
         }
-    }, [draft, form]);
+    }, [draft, form, hasLoadedDraft]);
 
 
     const { fields: personalFields, append: appendPersonal, remove: removePersonal } = useFieldArray({ control: form.control, name: "personalReferences" });
