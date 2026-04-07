@@ -270,13 +270,10 @@ export function PersonaFisicaForm() {
                 formData.append('firma_digital', sigFile);
             }
 
-            // The NEXT_PUBLIC_API_URL is configured as dashboard.puntacanainvestmentsrd.com which points to the Vercel Dashboard, NOT the Railway Django server.
-            // We force the true Django Railway URL to bypass the "Server: Vercel" 308 Redirect error.
-            const baseUrl = 'https://puntacana-fortress-production.up.railway.app';
-
-            const res = await fetch(`${baseUrl}/api/public/kyc/fisica/`, {
+            // Enviar los datos a la capa intermedia de Next.js (ruta serverless)
+            // Esto asegura que la X-API-KEY se inyecte de manera segura desde el entorno del servidor sin exponerla.
+            const res = await fetch('/api/kyc', {
                 method: 'POST',
-                // FormData automatically sets correct Content-Type with boundary!
                 body: formData
             });
 
