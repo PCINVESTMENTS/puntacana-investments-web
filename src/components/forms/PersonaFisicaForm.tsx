@@ -178,7 +178,7 @@ export function PersonaFisicaForm() {
                 'spouseLastName', 'spouseIdType', 'spouseIdDocument', 'spouseBirthPlace', 'spouseNationality',
                 'spouseEmail', 'spouseHomePhone', 'spouseMobilePhone', 'profession', 'professionOther',
                 'position', 'positionOther', 'company', 'monthlyIncome', 'fundsOrigin', 'hasOtherIncome',
-                'otherIncomeSource', 'otherIncomeSourceOther', 'otherIncomeAmount', 'incomeUSD', 'isPEP',
+                'otherIncomeSource', 'otherIncomeSourceOther', 'otherIncomeAmount', 'incomeUSD',
                 'pepPosition', 'pepInstitution', 'pepCountry'
             ];
 
@@ -246,6 +246,9 @@ export function PersonaFisicaForm() {
                     formData.append(booleanFieldsMap[field], val ? 'true' : 'false');
                 }
             });
+
+            // Handle isPEP manually since it's "si" / "no" in the frontend
+            formData.append('es_pep', data.isPEP === 'si' ? 'true' : 'false');
 
             arrayFields.forEach(field => {
                 const val = data[field as keyof PersonaFisicaData];

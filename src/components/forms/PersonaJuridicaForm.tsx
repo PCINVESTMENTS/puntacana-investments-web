@@ -142,7 +142,7 @@ export function PersonaJuridicaForm() {
                 'legalRepFirstName', 'legalRepLastName', 'legalRepId', 'legalRepAddress', 'legalRepPhone',
                 'legalRepEmail', 'legalRepProfession', 'legalRepProfessionOther', 'legalRepPosition',
                 'legalRepPositionOther', 'legalRepDesignation', 'averageIncome', 'annualIncome', 'incomeUSD',
-                'fundsOrigin', 'isPEP', 'pepPosition', 'pepInstitution', 'pepCountry'
+                'fundsOrigin', 'pepPosition', 'pepInstitution', 'pepCountry'
             ];
 
             const dateFields = ['date', 'incorporationDate', 'legalRepBirthDate'];
@@ -202,6 +202,9 @@ export function PersonaJuridicaForm() {
                     formData.append(booleanFieldsMap[field], val ? 'true' : 'false');
                 }
             });
+
+            // Handle isPEP manually since it's "si" / "no" in the frontend
+            formData.append('es_pep', data.isPEP === 'si' ? 'true' : 'false');
 
             // Map Frontend File Names to Django Model Field Names
             const fileMappings: Record<string, keyof PersonaJuridicaData> = {
