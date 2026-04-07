@@ -89,15 +89,20 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 </html>
                 `;
 
-                await resend.emails.send({
+                const { error, data } = await resend.emails.send({
                     from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                     to: [email],
                     subject: 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
                     html: htmlTemplate
                 });
-            } catch (emailErr) {
-                console.error("Resend internal autoresponder failed:", emailErr);
-                // Do not block the success return if email fails
+                
+                if (error) {
+                    console.error("Resend internal autoresponder failed:", error);
+                    return { success: false, message: `Request sent but email failed: ${error.message}` };
+                }
+            } catch (emailErr: any) {
+                console.error("Resend internal autoresponder exception exception:", emailErr);
+                return { success: false, message: `Request sent but email threw error: ${emailErr.message}` };
             }
 
             return { success: true, message: 'Request sent successfully!' };
