@@ -17,15 +17,15 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
 
     try {
         // 1. Send to "Fortaleza Digital" Backend (Django)
-        // Hardcode Railway url to avoid Vercel 404 rewrite issues on non-JSON endpoints
         const apiUrl = "https://puntacana-fortress-production.up.railway.app";
+        const isOffMarket = String(source).toLowerCase().includes('off market');
         
         const backendData = {
-            first_name: "Inversor Elite",
+            first_name: isOffMarket ? "Inversor Elite" : "Suscriptor Newsletter",
             last_name: email.split('@')[0],
             email: email,
-            message: `Solicitud de acceso al club Off Market. Origen: ${source}`,
-            source: source // Conservar 'Off Market Club' o lo que provenga del form
+            message: isOffMarket ? `Solicitud de acceso al club Off Market. Origen: ${source}` : `Suscripción a boletín registrada desde: ${source}`,
+            source: source // Conservar 'Off Market Club' o lo que provenga del form ('Footer Newsletter')
         };
 
         const res = await fetch(`${apiUrl}/api/public/leads/`, {
@@ -51,8 +51,8 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
       `
         });
 
-        // 3. Send Subscriber Confirmation (Welcome Email VIP)
-        const isOffMarket = source.toLowerCase().includes('off market');
+        // 3. Send Subscriber Confirmation (Welcome Email VIP or Standard)
+        // isOffMarket is already defined above
         
         let subjectStr = isOffMarket ? 'Acceso Exclusivo: Off-Market Portfolio | Punta Cana Investments' : 'Bienvenido al Club | Punta Cana Investments';
         
