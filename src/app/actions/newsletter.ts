@@ -17,24 +17,28 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
 
     try {
         // 1. Send to "Fortaleza Digital" Backend (Django)
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        if (apiUrl) {
-            const backendData = {
-                first_name: "Subscriber",
-                last_name: email.split('@')[0],
-                email: email,
-                message: `Newsletter Subscription from ${source}`,
-                source: "Investors Club Newsletter"
-            };
+        // Hardcode Railway url to avoid Vercel 404 rewrite issues on non-JSON endpoints
+        const apiUrl = "https://puntacana-fortress-production.up.railway.app";
+        
+        const backendData = {
+            first_name: "Inversor Elite",
+            last_name: email.split('@')[0],
+            email: email,
+            message: `Solicitud de acceso al club Off Market. Origen: ${source}`,
+            source: source // Conservar 'Off Market Club' o lo que provenga del form
+        };
 
-            await fetch(`${apiUrl}/api/public/leads/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(backendData),
-            }).catch(err => console.error("Newsletter Backend Error:", err));
+        const res = await fetch(`${apiUrl}/api/public/leads/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(backendData),
+        });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            console.error("Backend Error:", errText);
+            throw new Error(`Error del sistema central: ${res.status}`);
         }
-
-        // 2. Send Admin Notification
         await resend.emails.send({
             from: 'Punta Cana Investments <onboarding@resend.dev>',
             to: ['info@puntacanainvestmentsrd.com'],
@@ -47,24 +51,68 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
       `
         });
 
-        // 2. Send Subscriber Confirmation (Welcome Email)
-        await resend.emails.send({
-            from: 'Punta Cana Investments <onboarding@resend.dev>',
-            to: [email],
-            subject: 'Welcome to the Club | Punta Cana Investments',
-            html: `
+        // 3. Send Subscriber Confirmation (Welcome Email VIP)
+        const isOffMarket = source.toLowerCase().includes('off market');
+        
+        let subjectStr = isOffMarket ? 'Acceso Exclusivo: Off-Market Portfolio | Punta Cana Investments' : 'Bienvenido al Club | Punta Cana Investments';
+        
+        let htmlBody = isOffMarket ? `
+        <html>
+            <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                    <img src="https://puntacanainvestmentsrd.com/images/pci-logo-gold.png" alt="Punta Cana Investments Logo" style="max-width: 180px; height: auto;" />
+                </div>
+                <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                    <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Acceso Aprobado</h2>
+                    <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                        Estimado Inversor,
+                    </p>
+                    <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                        Su solicitud para ingresar a nuestro <strong>Círculo de Inversionistas Elite</strong> ha sido procesada con éxito.
+                    </p>
+                    <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
+                        Debido a la naturaleza altamente confidencial y exclusiva de nuestras propiedades Off Market, no publicamos ni enviamos estos portafolios masivamente. Su acceso ha sido aprobado, y el siguiente paso es agendar una presentación privada 1-a-1 con uno de nuestros Directores de Inversión para estructurar este portafolio acorde a su fondo.
+                    </p>
+                    
+                    <div style="background-color: #1a1a1a; padding: 25px; border-left: 4px solid #c9ae5d; margin: 30px 0; border-radius: 4px;">
+                        <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 15px;"><strong>Agende su sesión confidencial:</strong></p>
+                        <p style="margin: 0;">
+                            <a href="https://calendly.com/" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Programar Videollamada VIP</a>
+                        </p>
+                    </div>
+                </div>
+                <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
+                    <p style="margin: 0; font-size: 14px; color: #c9ae5d; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Punta Cana Investments</p>
+                    <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">Reserva absoluta.</p>
+                </div>
+            </body>
+        </html>
+        ` : `
         <div style="font-family: serif; color: #111; max-width: 600px; margin: 0 auto;">
             <h1 style="color: #d4af37; text-transform: uppercase; letter-spacing: 2px;">Welcome to the Club</h1>
             <p>Dear Investor,</p>
-            <p>Thank you for requesting access to our private <strong>Off-Market Portfolio</strong>.</p>
-            <p>We have received your request. One of our senior investment advisors will review your profile and contact you shortly with our current exclusive opportunities that are not available to the public.</p>
-            <p>In the meantime, feel free to browse our <a href="https://www.puntacanainvestmentsrd.com">public collection</a>.</p>
+            <p>Thank you for subscribing to our newsletter.</p>
+            <p>We will send you our best insights periodically.</p>
             <br/>
             <p>Sincerely,</p>
             <p><strong>The Punta Cana Investments Team</strong></p>
         </div>
-      `
+        `;
+
+        const welcomeMailObj = await resend.emails.send({
+            from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            to: [email],
+            subject: subjectStr,
+            html: htmlBody
         });
+
+        if (welcomeMailObj.error) {
+            console.error("Resend VIP Client Mail Error:", welcomeMailObj.error);
+            return {
+                success: false,
+                message: `Hubo un error del servidor confirmando tu correo institucional: ${welcomeMailObj.error.message}`
+            };
+        }
 
         return {
             success: true,
@@ -75,7 +123,7 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
         console.error("Newsletter Error:", error);
         return {
             success: false,
-            message: 'Failed to subscribe. Try again.'
+            message: `Failed to subscribe. ${error instanceof Error ? error.message : 'Try again.'}`
         };
     }
 }
