@@ -131,6 +131,7 @@ export function PersonaFisicaForm() {
     });
 
     const [hasLoadedDraft, setHasLoadedDraft] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
         if (draft && !hasLoadedDraft) {
@@ -267,9 +268,13 @@ export function PersonaFisicaForm() {
             };
 
             for (const [djangoField, formField] of Object.entries(fileMappings)) {
-                const file = data[formField];
-                if (file instanceof File) {
-                    formData.append(djangoField, file);
+                const fileData = data[formField];
+                if (fileData instanceof File) {
+                    formData.append(djangoField, fileData);
+                } else if (fileData instanceof FileList && fileData.length > 0) {
+                    formData.append(djangoField, fileData[0]);
+                } else if (Array.isArray(fileData) && fileData.length > 0 && fileData[0] instanceof File) {
+                    formData.append(djangoField, fileData[0]);
                 }
             }
 
@@ -292,6 +297,7 @@ export function PersonaFisicaForm() {
                 });
                 setDraft(null);
                 form.reset(defaultValues);
+                setIsSuccess(true);
                 return; // Termina la ejecución exitosa aquí
             }
 
@@ -357,6 +363,22 @@ export function PersonaFisicaForm() {
     };
 
     const { isSubmitting } = form.formState;
+
+    if (isSuccess) {
+        return (
+            <div className="flex flex-col items-center justify-center p-12 text-center bg-zinc-950 rounded-lg border border-luxury-gold/50 shadow-2xl min-h-[50vh] animate-in fade-in zoom-in duration-500">
+                <CheckCircle className="w-24 h-24 text-green-500 mb-6" />
+                <h2 className="text-3xl font-bold text-white mb-4">Formulario Registrado con Éxito</h2>
+                <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                    Su expediente KYC ha sido encriptado y guardado de manera segura en nuestra Bóveda de Fortress. 
+                    Nuestro equipo evaluará sus datos próximamente.
+                </p>
+                <Button onClick={() => setIsSuccess(false)} className="bg-luxury-gold text-black hover:bg-white font-bold px-8">
+                    Completar Otro Formulario
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <Form {...form}>
