@@ -45,6 +45,7 @@ export async function POST(request: Request) {
             body: djangoFormData,
             headers: {
                 'Accept': 'application/json',
+                'X-API-KEY': process.env.API_SHARED_SECRET || '',
                 // Fetch automatically sets Content-Type to multipart/form-data with boundary when body is FormData
             },
         });
@@ -79,4 +80,17 @@ export async function POST(request: Request) {
         console.error("KYC API Route Error:", error);
         return NextResponse.json({ success: false, error: 'Failed to process request in Next.js Server.' }, { status: 500 });
     }
+}
+
+export async function GET() {
+    return NextResponse.json({ error: "Restricted Method. Endpoint configured for POST architecture strictly." }, { status: 405 });
+}
+
+export async function OPTIONS() {
+    return new NextResponse(null, {
+        status: 204,
+        headers: {
+            'Allow': 'POST, OPTIONS'
+        }
+    });
 }

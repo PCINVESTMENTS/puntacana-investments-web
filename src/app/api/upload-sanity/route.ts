@@ -1,48 +1,11 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@sanity/client';
-
-// Construct the Sanity Client using secure server-side environment variables
-const client = createClient({
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "vj4eb90m",
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-    token: process.env.SANITY_API_TOKEN, // Critical: Only available on the server
-    apiVersion: "2024-01-01",
-    useCdn: false // Don't use CDN for uploads
-});
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(request: Request) {
-    try {
-        const origin = request.headers.get('origin');
-        const allowedOrigins = ['https://www.puntacanainvestmentsrd.com', 'https://puntacanainvestmentsrd.com', 'http://localhost:3000', 'http://localhost:3001', 'https://puntacana-investments-web.vercel.app'];
-        
-        // Block requests from unauthorized origins
-        if (!origin || !allowedOrigins.includes(origin)) {
-            console.warn(`Unauthorized upload attempt from origin: ${origin}`);
-            return NextResponse.json({ error: "Unauthorized Origin" }, { status: 403 });
-        }
-
-        const formData = await request.formData();
-        const file = formData.get('file') as File;
-
-        if (!file) {
-            return NextResponse.json({ error: "No file provided" }, { status: 400 });
-        }
-
-        const buffer = Buffer.from(await file.arrayBuffer());
-
-        // Upload directly to Sanity Assets API
-        const asset = await client.assets.upload('file', buffer, {
-            filename: file.name,
-            contentType: file.type
-        });
-
-        // Return the resulting URL to the frontend component
-        return NextResponse.json({ url: asset.url }, { status: 200 });
-
-    } catch (error: any) {
-        console.error("Sanity Direct Upload Error:", error);
-        return NextResponse.json({ error: error.message || "Upload failed" }, { status: 500 });
-    }
+export async function POST() {
+    // 🔴 OPERACIÓN CANCELADA: Por cumplimiento Anti-Lavado AML y Protección de Datos.
+    // Todos los Buffers e ID Sensitivos deben transmitirse usando la encapsulación via API de 'api/kyc/'
+    return NextResponse.json({ 
+        error: "Forbidden. Inseguridad de CDN detectada. Use endpoints de Bóveda Fortress internos." 
+    }, { status: 403 });
 }
