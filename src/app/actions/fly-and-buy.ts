@@ -26,13 +26,14 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
             body: JSON.stringify(tripData),
         });
 
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error("Backend Error:", errorText);
-            return { success: false, message: 'Failed to submit request to backend.' };
+        // Cortocircuito de éxito inmediato si el servidor responde 200 o 201
+        if (res.ok || res.status === 201 || res.status === 200) {
+            return { success: true, message: 'Request sent successfully!' };
         }
 
-        return { success: true, message: 'Request sent successfully!' };
+        const errorText = await res.text();
+        console.error("Backend Error:", errorText);
+        return { success: false, message: 'Failed to submit request to backend.' };
 
     } catch (error) {
         console.error("Server Action Error:", error);
