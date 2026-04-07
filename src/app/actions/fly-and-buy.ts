@@ -10,13 +10,23 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const country = formData.get('country') as string;
     const comments = formData.get('comments') as string;
 
+    // Additional fields
+    const experience = formData.get('experience') as string || 'N/A';
+    const horizon = formData.get('horizon') as string || 'N/A';
+    const visited = formData.get('visited') as string || 'N/A';
+    
+    // Check dynamic select/input correctly
+    const propertySelection = formData.get('specificPropertySelect') as string;
+    const propertyInput = formData.get('specificPropertyName') as string;
+    const specificProperty = (propertySelection === 'other' || !propertySelection) ? propertyInput : propertySelection; 
+
     const tripData = {
         client_name: name,
         client_email: email,
         client_phone: phone,
         origin_city: country,
-        proposed_dates: new Date().toISOString().split('T')[0], // Default to today as placeholder
-        notes: `Comments: ${comments} \nObjectives: ${formData.getAll('objective').join(', ')} \nProperty Type: ${formData.getAll('propertyType').join(', ')}`
+        proposed_dates: 'Por Definir', 
+        notes: `Comments: ${comments}\nObjectives: ${formData.getAll('objective').join(', ')}\nProperty Type: ${formData.getAll('propertyType').join(', ')}\nExperience: ${experience}\nHorizon: ${horizon}\nVisited DR: ${visited}\nSpecific Property: ${specificProperty || 'None'}`
     };
 
     try {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { useActionState, useState, useEffect } from 'react';
 import { submitFlyAndBuyForm } from '@/app/actions/fly-and-buy';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
@@ -19,6 +19,26 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
     const [state, formAction, isPending] = useActionState(submitFlyAndBuyForm, initialState);
 
     const [selectedObjectives, setSelectedObjectives] = useState<string[]>([]);
+    
+    // Properties Data for dynamic dropdown
+    const [properties, setProperties] = useState<any[]>([]);
+    const [specificPropertySelect, setSpecificPropertySelect] = useState<string>('');
+    
+    useEffect(() => {
+        // Fetch properties strictly from absolute public endpoint
+        const fetchProperties = async () => {
+            try {
+                const res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/properties/');
+                if (res.ok) {
+                    const data = await res.json();
+                    setProperties(data.results || data);
+                }
+            } catch (err) {
+                console.error("Failed to load properties for dropdown", err);
+            }
+        };
+        fetchProperties();
+    }, []);
 
     const handleObjectiveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
@@ -162,14 +182,29 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                         <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
-                            className="overflow-hidden"
+                            className="overflow-hidden space-y-4"
                         >
-                            <input
-                                type="text"
-                                name="specificProperty"
-                                placeholder={dict.specificProperty.placeholder}
-                                className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors"
-                            />
+                            <select
+                                name="specificPropertySelect"
+                                value={specificPropertySelect}
+                                onChange={(e) => setSpecificPropertySelect(e.target.value)}
+                                className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors appearance-none"
+                            >
+                                <option value="" disabled>Selecciona un Proyecto...</option>
+                                {properties.map((prop: any) => (
+                                    <option key={prop.id} value={prop.title}>{prop.title}</option>
+                                ))}
+                                <option value="other">Otro (Especificar)</option>
+                            </select>
+
+                            {specificPropertySelect === 'other' && (
+                                <input
+                                    type="text"
+                                    name="specificPropertyName"
+                                    placeholder={dict.specificProperty?.placeholder || "Escribe el nombre de la propiedad..."}
+                                    className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors"
+                                />
+                            )}
                         </motion.div>
                     )}
                 </div>
