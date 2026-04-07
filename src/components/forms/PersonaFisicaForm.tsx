@@ -278,13 +278,10 @@ export function PersonaFisicaForm() {
                 formData.append('firma_digital', sigFile);
             }
 
-            // Enviar los datos directamente al backend de Django en Railway
+            // Enviar los datos directamente al backend de Django en Railway sin headers bloqueantes
             const res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/kyc/fisica/', {
                 method: 'POST',
-                body: formData,
-                headers: {
-                    'X-API-KEY': process.env.NEXT_PUBLIC_API_SHARED_SECRET || 'f0rtr3ssm4st3rk3y2025*!!'
-                }
+                body: formData
             });
 
             // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
