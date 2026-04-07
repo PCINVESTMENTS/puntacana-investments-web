@@ -106,9 +106,69 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         });
 
         if (data.error) {
-            console.error("Resend Error:", data.error);
+            console.error("Resend Error (Internal Notification):", data.error);
             // IMPORTANT: Never return an error to the user if the lead is saved in Django. 
             // The email failure is temporal, the data is safe.
+        }
+
+        // 3. Send Auto-Responder to the CLIENT
+        try {
+            const firstName = name.split(' ')[0] || 'Cliente';
+            // Custom message depending on if it's a property inquiry or general
+            let contextualMessage = `Hemos recibido tu mensaje exitosamente.`;
+            if (subjectInput) {
+                 contextualMessage = `Hemos recibido tu solicitud de información relacionada con: <strong>${subjectInput.replace(/^(Inquiry about|Consulta sobre):\s*/, '')}</strong>.`;
+            }
+
+            const htmlTemplate = `
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/pci-logo-gold.png" alt="Punta Cana Investments Logo" style="max-width: 180px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Confirmación de Contacto</h2>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Hola <strong>${firstName}</strong>,
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            ${contextualMessage}
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
+                            Un asesor de nuestro equipo está revisando tu solicitud y se comunicará contigo a la mayor brevedad posible para brindarte la atención premium que mereces.
+                        </p>
+                        
+                        <div style="background-color: #1a1a1a; padding: 25px; border-left: 4px solid #c9ae5d; margin: 30px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 15px;"><strong>¿Deseas agilizar el proceso?</strong><br>
+                            Puedes agendar una videollamada personalizada con nuestros expertos inmediatamente:</p>
+                            <p style="margin: 0;">
+                                <a href="https://calendly.com/" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Agendar Videollamada</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
+                        <p style="margin: 0; font-size: 14px; color: #c9ae5d; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Punta Cana Investments</p>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">Construyendo tu patrimonio en el paraíso</p>
+                    </div>
+                </body>
+            </html>
+            `;
+
+            const clientEmailRes = await resend.emails.send({
+                from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+                to: [email],
+                subject: 'Hemos recibido tu solicitud - Punta Cana Investments',
+                html: htmlTemplate
+            });
+
+            if (clientEmailRes.error) {
+                console.error("Resend Error (Client Autoresponder):", clientEmailRes.error);
+                // Si la Vercel Env no tiene el dominio verificado, esto fallará. Devolvemos el error visible en el form si queremos debugguear rápido.
+                return { success: false, message: `Request sent but autoresponder failed: ${clientEmailRes.error.message}` };
+            }
+        } catch (autoResponderError: any) {
+            console.error("Client Autoresponder Exception:", autoResponderError);
+            return { success: false, message: `Request sent but inner autoresponder failed: ${autoResponderError.message}` };
         }
 
         return {
