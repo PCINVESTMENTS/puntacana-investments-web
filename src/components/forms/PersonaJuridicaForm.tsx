@@ -228,11 +228,13 @@ export function PersonaJuridicaForm() {
                 formData.append('firma_digital', sigFile);
             }
 
-            // Enviar los datos a la capa intermedia de Next.js (ruta serverless)
-            // Esto asegura que la X-API-KEY se inyecte de manera segura desde el entorno del servidor sin exponerla.
-            const res = await fetch('/api/kyc', {
+            // Enviar los datos directamente al backend de Django en Railway
+            const res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/kyc/juridica/', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'X-API-KEY': process.env.NEXT_PUBLIC_API_SHARED_SECRET || 'f0rtr3ssm4st3rk3y2025*!!'
+                }
             });
 
             // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
