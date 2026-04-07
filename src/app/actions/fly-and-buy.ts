@@ -1,7 +1,8 @@
 'use server'
 
 export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://puntacana-fortress-production.up.railway.app";
+    // Obligamos a la acción a ir directo a Railway, ignorando NEXT_PUBLIC_API_URL de Vercel.
+    const apiUrl = "https://puntacana-fortress-production.up.railway.app";
 
     // Extract data from FormData
     const name = (formData.get('name') as string) || '';
