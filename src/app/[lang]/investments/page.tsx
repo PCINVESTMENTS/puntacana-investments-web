@@ -163,7 +163,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                         <div className="relative h-[500px] rounded-lg overflow-hidden shadow-2xl group">
                             <div className="absolute inset-0 bg-gradient-to-tr from-luxury-gold/20 to-transparent z-10"></div>
                             <Image
-                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+                                src="/images/og-home-luxury.jpg"
                                 alt="Financial Growth"
                                 fill
                                 className="object-cover transform group-hover:scale-105 transition-transform duration-700"

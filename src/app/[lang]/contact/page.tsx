@@ -28,7 +28,7 @@ export default async function ContactPage({
             {/* Short Hero for Context - Reusing generic style but simpler */}
             <section className="relative h-[40vh] min-h-[400px] flex items-center justify-center overflow-hidden">
                 <div
-                    className="absolute inset-0 z-0 bg-cover bg-center bg-[url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop')] brightness-[0.4]"
+                    className="absolute inset-0 z-0 bg-cover bg-center bg-[url('/images/og-home-luxury.jpg')] brightness-[0.4]"
                 />
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-20">
                     <h1 className="text-5xl md:text-6xl font-playfair text-white mb-6">

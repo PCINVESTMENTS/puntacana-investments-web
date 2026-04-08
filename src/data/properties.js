@@ -875,13 +875,13 @@ exports.properties = [
         status: "sale",
         price: 154000000,
         hideFromLabel: true,
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+        image: "/images/og-home-luxury.jpg",
         featured: false,
         beds: 0,
         baths: 0,
         area: 1185000,
         gallery: [
-            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",
+            "/images/og-home-luxury.jpg",
             "/images/terreno-hotelero-miches-beachfront-aerial.png"
         ],
         features: {
@@ -961,7 +961,7 @@ exports.properties = [
         status: "rent",
         price: 8000,
         hideFromLabel: true,
-        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2070&auto=format&fit=crop",
+        image: "/images/og-home-luxury.jpg",
         beds: 4,
         baths: 4.5,
         area: 500,

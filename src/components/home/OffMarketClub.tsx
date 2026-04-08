@@ -21,7 +21,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                     {/* Visual Side */}
                     <div className="lg:w-1/2 relative min-h-[400px]">
                         <Image
-                            src="https://images.unsplash.com/photo-1600607687940-4e2003e059ea?q=80&w=2070&auto=format&fit=crop"
+                            src="/images/og-home-luxury.jpg"
                             alt="Luxury Interior"
                             fill
                             className="object-cover opacity-60 grayscale-[40%]"

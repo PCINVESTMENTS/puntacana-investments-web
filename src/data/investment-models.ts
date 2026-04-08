@@ -18,7 +18,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "pre-construction",
         title: { es: "Proyectos en Pre-construcción", en: "Pre-construction Projects" },
-        heroImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "Maximice su plusvalía entrando en el momento cero. Comprar en planos es la estrategia número uno para obtener rendimientos inmediatos.",
             en: "Maximize appreciation by entering at ground zero. Buying off-plan is the number one strategy for immediate returns."
@@ -53,14 +53,14 @@ export const investmentModels: InvestmentModel[] = [
                     es: "Los desarrolladores ofrecen precios de 'Lista Cero' o 'Friends & Family' para financiar el inicio de obra. Al entrar aquí, usted está comprando al costo más bajo posible. A medida que se venden unidades y se construye, el desarrollador sube los precios gradualmente.",
                     en: "Developers offer 'Zero List' or 'Friends & Family' prices to fund the start of work. By entering here, you are buying at the lowest possible cost. As units are sold and construction progresses, the developer gradually raises prices."
                 },
-                image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2689&auto=format&fit=crop"
+                image: "/images/og-home-luxury.jpg"
             }
         ]
     },
     {
         slug: "vacation-villas",
         title: { es: "Villas Premium Vacacionales", en: "Premium Vacation Villas" },
-        heroImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2670&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "El pináculo del lujo y la rentabilidad. Propiedades exclusivas diseñadas para el mercado de alquiler a corto plazo de alto nivel.",
             en: "The pinnacle of luxury and profitability. Exclusive properties designed for the high-end short-term rental market."
@@ -90,14 +90,14 @@ export const investmentModels: InvestmentModel[] = [
                     es: "Nuestras villas se seleccionan o construyen pensando en el huésped: habitaciones con baño privado (ensuite), áreas sociales abiertas y mantenimiento eficiente para maximizar las reseñas de 5 estrellas.",
                     en: "Our villas are selected or built with the guest in mind: ensuite bedrooms, open social areas, and efficient maintenance to maximize 5-star reviews."
                 },
-                image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2671&auto=format&fit=crop"
+                image: "/images/og-home-luxury.jpg"
             }
         ]
     },
     {
         slug: "rent-pool",
         title: { es: "Rent Pool / Condo-Hotel", en: "Rent Pool / Condo-Hotel" },
-        heroImage: "https://images.unsplash.com/photo-1460472178825-e5240623afd5?q=80&w=2669&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "Inversión sin preocupaciones. Entregue las llaves a un operador hotelero profesional y reciba sus dividendos trimestralmente.",
             en: "Worry-free investment. Hand the keys to a professional hotel operator and receive your dividends quarterly."
@@ -127,14 +127,14 @@ export const investmentModels: InvestmentModel[] = [
                     es: "Al invertir en proyectos respaldados por cadenas hoteleras o grandes operadores, usted se beneficia de sus canales de distribución globales y programas de lealtad, asegurando ocupaciones más altas que un Airbnb individual.",
                     en: "By investing in projects backed by hotel chains or major operators, you benefit from their global distribution channels and loyalty programs, ensuring higher occupancy than an individual Airbnb."
                 },
-                image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2670&auto=format&fit=crop"
+                image: "/images/og-home-luxury.jpg"
             }
         ]
     },
     {
         slug: "development-participation",
         title: { es: "Participación en Desarrollos", en: "Development Participation" },
-        heroImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2670&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "Conviértase en socio, no solo en propietario. Invierta capital directamente en la empresa desarrolladora a cambio de acciones y altos rendimientos.",
             en: "Become a partner, not just an owner. Invest capital directly in the development company in exchange for shares and high returns."
@@ -162,7 +162,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "passive-investments",
         title: { es: "Inversiones Pasivas", en: "Passive Investments" },
-        heroImage: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=2671&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "Instrumentos de deuda privada con retorno fijo garantizado, respaldados por garantías hipotecarias.",
             en: "Private debt instruments with guaranteed fixed returns, backed by mortgage collateral."
@@ -186,7 +186,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "strategic-buy-resale",
         title: { es: "Compra y Reventa Estratégica", en: "Strategic Buy & Resale" },
-        heroImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2673&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "Detectar valor oculto, renovar y vender (Flipping). O comprar en zonas emergentes antes del boom.",
             en: "Detect hidden value, renovate, and sell (Flipping). Or buy in emerging zones before the boom."
@@ -204,7 +204,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "off-market",
         title: { es: "Oportunidades Off-Market", en: "Off-Market Opportunities" },
-        heroImage: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2670&auto=format&fit=crop",
+        heroImage: "/images/og-home-luxury.jpg",
         description: {
             es: "Acceso exclusivo a propiedades que nunca llegan a los portales públicos. El verdadero tesoro para inversionistas institucionales.",
             en: "Exclusive access to properties that never reach public portals. The true treasure for institutional investors."

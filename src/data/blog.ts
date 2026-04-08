@@ -29,7 +29,7 @@ export const blogPosts: BlogPost[] = [
         },
         date: { es: "14 Enero, 2026", en: "January 14, 2026" },
         category: { es: "Inversión Estratégica", en: "Strategic Investment" },
-        mainImage: "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=2070&auto=format&fit=crop",
+        mainImage: "/images/og-home-luxury.jpg",
         excerpt: {
             es: "Descubre por qué Punta Cana se ha convertido en el destino número uno para inversores inteligentes. Desde incentivos fiscales únicos hasta una rentabilidad que supera la media global.",
             en: "Discover why Punta Cana has become the number one destination for smart investors. From unique tax incentives to profitability that exceeds the global average."
@@ -54,7 +54,7 @@ export const blogPosts: BlogPost[] = [
                     es: "A diferencia de mercados saturados en Europa o Estados Unidos, donde el ROI (Retorno de Inversión) suele rondar el 3-4%, Punta Cana ofrece rendimientos netos que oscilan entre el **6% y el 10% anual**. \n\nEsto se debe a la demanda turística incesante. Con más de 8 millones de visitantes al año, la ocupación hotelera y de rentas vacacionales se mantiene alta durante todo el año. Al invertir aquí, no solo obtienes una propiedad, adquieres un negocio llave en mano que genera ingresos en moneda fuerte (USD) desde el primer día.",
                     en: "Unlike saturated markets in Europe or the United States, where ROI (Return on Investment) typically hovers around 3-4%, Punta Cana offers net yields ranging between **6% and 10% annually**. \n\nThis is due to ceaseless tourism demand. With over 8 million visitors annually, hotel and vacation rental occupancy remains high year-round. Investing here means acquiring not just a property, but a turnkey business generating hard currency (USD) income from day one."
                 },
-                image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=2025&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: { es: "Altos retornos de inversión en propiedades turísticas", en: "High investment returns on tourist properties" }
             },
             {
@@ -63,7 +63,7 @@ export const blogPosts: BlogPost[] = [
                     es: "La República Dominicana posee una de las leyes de incentivo a la inversión extranjera más atractivas de la región: la Ley de CONFOTUR. \n\nAl comprar una propiedad bajo esta ley, estás **exento del impuesto de transferencia del 3%** y del **impuesto sobre la propiedad inmobiliaria (IPI) del 1% anual durante 15 años**. Esto se traduce en un ahorro directo de decenas de miles de dólares, aumentando significativamente tu margen de beneficio a largo plazo.",
                     en: "The Dominican Republic boasts one of the region's most attractive foreign investment incentive laws: the CONFOTUR Law. \n\nBuying under this law exempts you from the **3% transfer tax** and the **1% annual real estate property tax (IPI) for 15 years**. This translates to tens of thousands of dollars in direct savings, significantly boosting your long-term profit margin."
                 },
-                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2000&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: { es: "Beneficios fiscales que maximizan tu inversión", en: "Tax benefits that maximize your investment" }
             },
             {
@@ -72,7 +72,7 @@ export const blogPosts: BlogPost[] = [
                     es: "República Dominicana es la economía de más rápido crecimiento en América Latina y el Caribe. Su estabilidad política y jurídica brinda seguridad a los inversores extranjeros. El gobierno ha hecho del turismo y la inversión extranjera una prioridad nacional, garantizando infraestructura de primera clase, seguridad y un clima de negocios favorable.",
                     en: "The Dominican Republic is the fastest-growing economy in Latin America and the Caribbean. Its political and legal stability provides security for foreign investors. The government has made tourism and foreign investment a national priority, ensuring world-class infrastructure, security, and a favorable business climate."
                 },
-                image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: { es: "Crecimiento económico y modernización constante", en: "Economic growth and constant modernization" }
             },
             {
@@ -81,7 +81,7 @@ export const blogPosts: BlogPost[] = [
                     es: "En Punta Cana, el lujo es asequible. Puedes adquirir un apartamento en un complejo con campo de golf, playa privada y seguridad 24/7 por una fracción de lo que costaría en Miami o el Mediterráneo. \n\nEl costo de vida es significativamente menor, permitiéndote disfrutar de cenas gourmet, golf de campeonato y actividades náuticas sin sacrificar tu presupuesto. Es el lugar ideal para un retiro dorado o para disfrutar de vacaciones de ensueño mientras tu activo se revaloriza.",
                     en: "In Punta Cana, luxury is affordable. You can acquire a condo in a complex with a golf course, private beach, and 24/7 security for a fraction of what it would cost in Miami or the Mediterranean. \n\nThe cost of living is significantly lower, allowing you to enjoy gourmet dining, championship golf, and nautical activities without breaking the bank. It's the ideal place for a golden retirement or dream vacations while your asset appreciates."
                 },
-                image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2070&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: { es: "Villas de lujo con piscina y acceso a golf", en: "Luxury villas with pool and golf access" }
             },
             {
@@ -104,7 +104,7 @@ export const blogPosts: BlogPost[] = [
         },
         date: { es: "05 Enero, 2026", en: "January 5, 2026" },
         category: { es: "Consejos", en: "Tips" },
-        mainImage: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?q=80&w=2070&auto=format&fit=crop",
+        mainImage: "/images/og-home-luxury.jpg",
         excerpt: {
             es: "Maximiza tu retorno de inversión aprovechando los precios de preventa con nuestra guía experta.",
             en: "Maximize your return on investment by taking advantage of pre-sale prices with our expert guide."
@@ -122,7 +122,7 @@ export const blogPosts: BlogPost[] = [
                     es: "Comprar en planos (pre-construcción) es una de las estrategias más inteligentes para maximizar el capital en el mercado inmobiliario dominicano. Esta modalidad permite adquirir inmuebles a precios significativamente menores que el valor de mercado final, garantizando una plusvalía automática al momento de la entrega.",
                     en: "Buying off-plan (pre-construction) is one of the smartest strategies to maximize capital in the Dominican real estate market. This modality allows acquiring properties at significantly lower prices than the final market value, guaranteeing automatic appreciation at the time of delivery."
                 },
-                image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2089&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: {
                     es: "Proyectos en fase de diseño ofrecen los mejores precios de entrada.",
                     en: "Projects in the design phase offer the best entry prices."
@@ -141,7 +141,7 @@ export const blogPosts: BlogPost[] = [
                     es: "A diferencia de la compra de propiedades listas que requieren el pago total inmediato o financiamiento bancario, la compra en planos permite fraccionar el inicial durante el periodo de construcción (usualmente 18-24 meses). Esto mejora el flujo de caja del inversionista y permite entrar al mercado con un capital inicial más bajo.",
                     en: "Unlike buying ready properties that require immediate full payment or bank financing, buying off-plan allows splitting the down payment during the construction period (usually 18-24 months). This improves the investor's cash flow and allows entering the market with lower initial capital."
                 },
-                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2000&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: {
                     es: "Planes de pago flexibles adaptados a tu capacidad de inversión.",
                     en: "Flexible payment plans adapted to your investment capacity."
@@ -164,7 +164,7 @@ export const blogPosts: BlogPost[] = [
         },
         date: { es: "28 Diciembre, 2025", en: "December 28, 2025" },
         category: { es: "Estilo de Vida", en: "Lifestyle" },
-        mainImage: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop",
+        mainImage: "/images/og-home-luxury.jpg",
         excerpt: {
             es: "Materiales naturales, espacios abiertos y lujo sostenible: lo que se lleva en las villas modernas.",
             en: "Natural materials, open spaces, and sustainable luxury: what's trending in modern villas."
@@ -201,7 +201,7 @@ export const blogPosts: BlogPost[] = [
                     es: "Los límites entre adentro y afuera se desdibujan por completo. Grandes ventanales corredizos de piso a techo, duchas al aire libre, cocinas de verano y terrazas que funcionan como salas de estar son elementos estándar en las propiedades de lujo modernas en Punta Cana.",
                     en: "The boundaries between inside and outside are completely blurred. Large floor-to-ceiling sliding windows, outdoor showers, summer kitchens, and terraces that function as living rooms are standard elements in modern luxury properties in Punta Cana."
                 },
-                image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop",
+                image: "/images/og-home-luxury.jpg",
                 imageCaption: {
                     es: "La naturaleza como protagonista del diseño.",
                     en: "Nature as the protagonist of design."

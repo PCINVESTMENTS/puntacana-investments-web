@@ -103,7 +103,7 @@ export default {
                 { title: "Las Terrenas", slug: "lasterrenas", img: "/images/locations/las_terrenas.jpg" },
                 { title: "Samaná", slug: "samana", img: "/images/locations/samana.jpg" },
                 { title: "Puerto Plata", slug: "puertoplata", img: "https://upcrealestate.com/wp-content/uploads/2023/02/1.jpg" },
-                { title: "Bayahibe", slug: "bayahibe", img: "https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?q=80&w=2070&auto=format&fit=crop" },
+                { title: "Bayahibe", slug: "bayahibe", img: "/images/og-home-luxury.jpg" },
                 { title: "Vista Cana", slug: "vistacana", img: "/images/locations/bavaro.jpg" },
                 { title: "White Sands Bavaro", slug: "whitesands", img: "/images/locations/bavaro.jpg" }
             ]
@@ -160,7 +160,7 @@ export default {
                     slug: "legal-advice",
                     title: "Legal Advice",
                     description: "Complete contract management, due diligence, and tax advice to guarantee safe investments.",
-                    img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2000&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "Our legal team specialized in real estate law provides total coverage to ensure that your investment in the Dominican Republic is solid and risk-free. We handle every legal detail, from title verification to tax optimization.",
                     contentSections: [
                         {
@@ -171,12 +171,12 @@ export default {
                         {
                             title: "Contract Management and Closing",
                             text: "We meticulously draft and review all contracts (Reservation, Promise of Sale, Final Sale) protecting your interests. We accompany the signing process and fund transfers until the title is delivered in your name.",
-                            image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Tax Benefits and CONFOTUR",
                             text: "We advise you to maximize the benefits of the CONFOTUR Law, which offers exemptions from real estate transfer taxes and real estate property tax (IPI) for up to 15 years in qualified projects.",
-                            image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [
@@ -191,23 +191,23 @@ export default {
                     slug: "architecture",
                     title: "Architecture",
                     description: "Avant-garde conceptual design and architectural planning for residential and commercial projects.",
-                    img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2089&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "We transform visions into tangible realities. Our architecture department fuses modern aesthetics with Caribbean functionality, creating spaces that are not only beautiful but also integrate harmoniously with the tropical environment.",
                     contentSections: [
                         {
                             title: "Conceptual Design and Preliminary Project",
                             text: "We start with a deep analysis of your needs and the terrain. We develop volumetric and spatial concepts that capture the essence of your vision, prioritizing natural light, ventilation, and views.",
-                            image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2089&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Photorealistic 3D Visualization",
                             text: "We use state-of-the-art technology to create renders and virtual tours that allow you to 'live' the space before building it. Every texture, material, and lighting is defined with precision.",
-                            image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Executive Plans and Permits",
                             text: "We develop the complete technical documentation necessary for construction and obtaining licenses. We ensure strict compliance with local building regulations.",
-                            image: "https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [
@@ -222,23 +222,23 @@ export default {
                     slug: "interior-design",
                     title: "Interior Design",
                     description: "Creation of exclusive and functional environments, selection of luxury furniture and finishes.",
-                    img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "Luxury is in the details. We design interiors that tell stories, carefully selecting every piece, texture, and finish to create atmospheres of unmatched sophistication and comfort.",
                     contentSections: [
                         {
                             title: "Concept and Styling",
                             text: "We define a palette of colors and materials that reflects your personality. From modern minimalism to tropical chic, we curate every element to create visual harmony.",
-                            image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Furniture and Equipment (FF&E)",
                             text: "We manage the selection, purchase, and logistics of all furniture and equipment. We work with exclusive brands and local artisans for custom pieces.",
-                            image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Home Staging for Investment",
                             text: "We prepare properties for rent or sale, optimizing distribution and decoration to maximize commercial appeal and profitability.",
-                            image: "https://images.unsplash.com/photo-1616137466211-f939a420be84?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [
@@ -253,18 +253,18 @@ export default {
                     slug: "civil-engineering",
                     title: "Civil Engineering",
                     description: "Execution and supervision of works with the highest standards of quality and structural safety.",
-                    img: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "The foundation of every great work is solid engineering. We guarantee the structural integrity and constructive efficiency of every project, applying technical rigor and constant supervision.",
                     contentSections: [
                         {
                             title: "Structural Calculation and Analysis",
                             text: "We use advanced software to design resilient and safe structures, optimized for the region's seismic and climatic conditions.",
-                            image: "https://images.unsplash.com/photo-1581094794320-c91ae316ecac?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Supervision and Work Control",
                             text: "Our team of resident engineers monitors every stage of the construction process, ensuring that specifications, timelines, and budgets are met.",
-                            image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [
@@ -279,23 +279,23 @@ export default {
                     slug: "electrical-engineering",
                     title: "Electrical Engineering",
                     description: "Design and implementation of efficient and sustainable electrical systems for all types of buildings.",
-                    img: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2070&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "Efficient and safe energy. We design intelligent electrical systems that guarantee optimal functioning of your property, integrating sustainable solutions and home automation.",
                     contentSections: [
                         {
                             title: "Medium and Low Voltage Installations",
                             text: "Comprehensive design of electrical networks, substations, and internal distribution, complying with all international safety standards.",
-                            image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Renewable Energy",
                             text: "Implementation of solar panel systems and energy storage to reduce operating costs and carbon footprint.",
-                            image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Home Automation and Smart Home",
                             text: "Integration of smart systems for lighting, climate control, and security control from your mobile device.",
-                            image: "https://images.unsplash.com/photo-1558002038-1091a1661116?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [
@@ -310,18 +310,18 @@ export default {
                     slug: "construction",
                     title: "Construction",
                     description: "We materialize projects from the foundations to turnkey, guaranteeing excellence in every meter.",
-                    img: "https://images.unsplash.com/photo-1590986422204-0322c3664fa7?q=80&w=1786&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "Construction quality without compromise. As a general contractor, we assume full responsibility for execution, coordinating teams, materials, and timelines to deliver impeccable works.",
                     contentSections: [
                         {
                             title: "Comprehensive Project Management",
                             text: "From initial logistics to final finishes, we manage every aspect of the work. We report detailed progress for your total peace of mind.",
-                            image: "https://images.unsplash.com/photo-1590986422204-0322c3664fa7?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Luxury Residential",
                             text: "Specialists in the construction of high-level villas and condominiums, with obsessive attention to detail and premium finishes.",
-                            image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [
@@ -336,18 +336,18 @@ export default {
                     slug: "development",
                     title: "Development",
                     description: "Planning and execution of large real estate and tourism developments with a vision of the future.",
-                    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+                    img: "/images/og-home-luxury.jpg",
                     longDescription: "We create destinations. We participate in the conception and development of master communities and tourism projects that generate long-term value and transform the environment.",
                     contentSections: [
                         {
                             title: "Master Planning",
                             text: "Strategic planning of land use, infrastructures, and amenities to create vibrant and sustainable communities.",
-                            image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Investment Structuring",
                             text: "We develop solid financial models and capital raising strategies to make large-scale projects viable.",
-                            image: "https://images.unsplash.com/photo-1460472178825-e5240623afd5?q=80&w=2000&auto=format&fit=crop"
+                            image: "/images/og-home-luxury.jpg"
                         }
                     ],
                     details: [

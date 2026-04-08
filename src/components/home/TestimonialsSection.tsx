@@ -19,9 +19,9 @@ interface TestimonialsSectionProps {
 
 export default function TestimonialsSection({ dict }: TestimonialsSectionProps) {
     const images = [
-        "https://via.placeholder.com/150/1c1c1c/E4CA7C?text=CR",
-        "https://via.placeholder.com/150/1c1c1c/E4CA7C?text=SJ",
-        "https://via.placeholder.com/150/1c1c1c/E4CA7C?text=MT"
+        "/images/logo-footer-v2.png",
+        "/images/logo-footer-v2.png",
+        "/images/logo-footer-v2.png"
     ];
 
     return (
