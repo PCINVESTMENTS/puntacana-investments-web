@@ -4,15 +4,22 @@ import { Property } from "@/data/properties";
 export function mapSanityPost(data: any): BlogPost {
     if (!data) return null as any;
 
+    // Fallback Image definition
+    const DUMMY_IMAGE = "/images/og-home-luxury.jpg";
+    let safeImageUrl = data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "");
+    if (safeImageUrl.includes("via.placeholder.com") || safeImageUrl.includes("unsplash.com") && !safeImageUrl.startsWith("/")) {
+        safeImageUrl = DUMMY_IMAGE;
+    }
+
     return {
-        slug: data.slug.current,
+        slug: data.slug?.current || data.slug || "",
         title: { en: data.title, es: data.title }, // Fallback mainly, or fetch both if defined
         date: {
             en: new Date(data.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
             es: new Date(data.publishedAt).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
         },
         category: data.category || { es: "General", en: "General" },
-        mainImage: data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || ""),
+        mainImage: safeImageUrl,
         excerpt: {
             en: data.excerptEn || "",
             es: data.excerptEs || ""
@@ -33,13 +40,28 @@ import { urlFor } from "@/sanity/lib/image";
 export function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
+    const DUMMY_IMAGE = "/images/og-home-luxury.jpg";
+    let safeMainImage = data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "");
+    if (safeMainImage.includes("via.placeholder.com") || safeMainImage.includes("unsplash.com")) {
+        safeMainImage = DUMMY_IMAGE;
+    }
+    
+    const safeGalleryUrls = data.gallery 
+        ? data.gallery.map((img: any) => urlFor(img).url()) 
+        : (data.galleryUrls || []);
+
+    const safeGallery = safeGalleryUrls.map((imgUrl: string) => {
+        if (imgUrl.includes("via.placeholder.com") || imgUrl.includes("unsplash.com")) {
+            return DUMMY_IMAGE;
+        }
+        return imgUrl;
+    });
+
     return {
         ...data,
-        image: data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || ""),
+        image: safeMainImage,
         mainImage: data.mainImage,
-        gallery: data.gallery
-            ? data.gallery.map((img: any) => urlFor(img).url())
-            : (data.galleryUrls || []),
+        gallery: safeGallery,
         rawGallery: data.gallery,
         features: {
             en: data.featuresEn || [],

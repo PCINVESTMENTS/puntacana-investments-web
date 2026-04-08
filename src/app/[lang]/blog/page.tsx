@@ -58,7 +58,7 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
 
                     {/* Blog Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {posts.map((post, index) => (
+                        {posts.filter(post => post && post.slug && post.slug !== "undefined").map((post, index) => (
                             <ScrollReveal key={index} delay={index * 0.1}>
                                 <article className="group bg-dark-gray border border-white/5 overflow-hidden hover:border-luxury-gold/30 transition-all duration-300 h-full flex flex-col">
                                     <Link href={`/${lang}/blog/${post.slug}`} className="block aspect-[4/3] overflow-hidden relative">

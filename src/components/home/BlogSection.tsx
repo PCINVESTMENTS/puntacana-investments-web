@@ -39,7 +39,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {recentPosts.map((post, index) => (
+                    {recentPosts.filter(post => post && post.slug && post.slug !== "undefined").map((post, index) => (
                         <article
                             key={index}
                             className="group bg-dark-gray border border-white/5 overflow-hidden hover:border-luxury-gold/30 transition-all duration-300"
