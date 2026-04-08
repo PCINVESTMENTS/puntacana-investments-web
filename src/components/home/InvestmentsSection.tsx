@@ -28,7 +28,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
     return (
         <section id="investments" className="py-16 bg-primary-black relative overflow-hidden text-white">
             {/* Background Decoration */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0.8),rgba(0,0,0,0.95)),url('/images/pattern.png')] opacity-10 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0.8),rgba(0,0,0,0.95))] opacity-10 pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}

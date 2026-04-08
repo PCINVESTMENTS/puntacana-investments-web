@@ -48,11 +48,19 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
                 // Map API response to Component format
                 const mapped = data
                     .filter((item: any) => item.is_active)
-                    .map((item: any) => ({
-                        title: item.title,
-                        slug: item.slug,
-                        img: item.image_url || '/images/locations/bavaro.jpg'
-                    }));
+                    .map((item: any) => {
+                        const imgUrl = item.image_url || '/images/locations/bavaro.jpg';
+                        
+                        if (imgUrl.includes('unsplash.com') || imgUrl.includes('via.placeholder.com')) {
+                            console.warn(`[DATA CLEANUP REQUIRED] Location '${item.title}' (ID/Slug: ${item.slug}) is using a broken or deprecated external image URL: ${imgUrl}. Please update this record in the backend database.`);
+                        }
+
+                        return {
+                            title: item.title,
+                            slug: item.slug,
+                            img: imgUrl
+                        };
+                    });
 
                 if (mapped.length > 0) {
                     setApiLocations(mapped);
@@ -78,7 +86,7 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
     return (
         <section id="locations" className="pt-12 pb-8 bg-primary-black text-center text-white relative">
             {/* Background Decoration - Optional to match other dark sections */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/pattern.png')] opacity-5 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                 <ScrollReveal width="100%">

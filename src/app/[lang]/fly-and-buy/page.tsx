@@ -237,7 +237,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
 
             {/* Final CTA */}
             <section className="py-8 lg:py-24 bg-primary-black relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-5"></div>
+                <div className="absolute inset-0 opacity-5"></div>
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
                     <FaPlane className="text-5xl text-luxury-gold mx-auto mb-4 lg:mb-8 animate-pulse" />
                     <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4 lg:mb-8 leading-tight">
