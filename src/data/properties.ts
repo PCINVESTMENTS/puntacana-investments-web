@@ -1728,7 +1728,11 @@ Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que 
             "/images/luxury-villa-marina-cap-cana-comedor-doble-altura.jpg",
             "/images/luxury-villa-marina-cap-cana-mesa-comedor-rattan.jpg",
             "/images/luxury-villa-marina-cap-cana-sala-estar-tapiz-grande.jpg",
-            "/images/luxury-villa-marina-cap-cana-patio-area-bbq.jpg"
+            "/images/luxury-villa-marina-cap-cana-patio-area-bbq.jpg",
+            "/images/luxury-villa-marina-cap-cana-piscina-larga-con-tumbonas.jpg",
+            "/images/luxury-villa-marina-cap-cana-patio-exterior-amplio-piscina.jpg",
+            "/images/luxury-villa-marina-cap-cana-columpio-exterior-pintura-arte.jpg",
+            "/images/luxury-villa-marina-cap-cana-piscina-agua-cristalina-jacuzzi.jpg"
         ],
         featured: true
     },
