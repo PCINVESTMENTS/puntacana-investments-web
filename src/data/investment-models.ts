@@ -97,7 +97,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "rent-pool",
         title: { es: "Rent Pool / Condo-Hotel", en: "Rent Pool / Condo-Hotel" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/investments/rent-pool-condo-hotel.webp",
         description: {
             es: "Inversión sin preocupaciones. Entregue las llaves a un operador hotelero profesional y reciba sus dividendos trimestralmente.",
             en: "Worry-free investment. Hand the keys to a professional hotel operator and receive your dividends quarterly."
@@ -127,7 +127,7 @@ export const investmentModels: InvestmentModel[] = [
                     es: "Al invertir en proyectos respaldados por cadenas hoteleras o grandes operadores, usted se beneficia de sus canales de distribución globales y programas de lealtad, asegurando ocupaciones más altas que un Airbnb individual.",
                     en: "By investing in projects backed by hotel chains or major operators, you benefit from their global distribution channels and loyalty programs, ensuring higher occupancy than an individual Airbnb."
                 },
-                image: "/images/og-home-luxury.jpg"
+                image: "/images/investments/rent-pool-condo-hotel.webp"
             }
         ]
     },
