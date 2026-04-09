@@ -22,11 +22,20 @@ interface HeroProps {
 
 export default function Hero({ dict, featuredImages }: HeroProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [mounted, setMounted] = useState(false);
+    const [renderedIndexes, setRenderedIndexes] = useState<number[]>([0]);
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
+        if (featuredImages.length > 0) {
+            const nextIndex = (currentImageIndex + 1) % featuredImages.length;
+            setRenderedIndexes(prev => {
+                let changed = false;
+                const newSet = new Set(prev);
+                if (!newSet.has(currentImageIndex)) { newSet.add(currentImageIndex); changed = true; }
+                if (!newSet.has(nextIndex)) { newSet.add(nextIndex); changed = true; }
+                return changed ? Array.from(newSet) : prev;
+            });
+        }
+    }, [currentImageIndex, featuredImages.length]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -43,9 +52,9 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                 {featuredImages.map((img, index) => {
                     const isPriority = index === 0;
 
-                    // Defer rendering of non-priority images until client-side hydration
-                    // This ensures the LCP image gets full bandwidth
-                    if (!isPriority && !mounted) return null;
+                    // Defer rendering of images until they are the current or next slide
+                    // This critically prevents 6+ concurrent full-res background downloads on hydration
+                    if (!renderedIndexes.includes(index)) return null;
 
                     return (
                         <div
