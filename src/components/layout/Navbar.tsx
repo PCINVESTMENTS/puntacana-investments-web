@@ -144,7 +144,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             className="flex items-center justify-center lg:justify-start transition-all duration-300 h-16 sm:h-20 xl:h-24 hover:opacity-90 flex-shrink-0 group"
                         >
                             <Image
-                                src="/images/logo-pci-investments-gold.png"
+                                src="/images/logo-pci-investments-gold.webp"
                                 alt="Punta Cana Investments"
                                 width={160}
                                 height={160}
@@ -152,7 +152,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 priority
                             />
                             <Image
-                                src="/images/logo-pci-construction-gold.png"
+                                src="/images/logo-pci-construction-gold.webp"
                                 alt="PCI Construction Group"
                                 width={160}
                                 height={160}

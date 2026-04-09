@@ -30,14 +30,14 @@ export function Footer({ dict, lang }: FooterProps) {
                             className="flex items-center w-full max-w-[240px] xl:max-w-[280px] mx-auto md:mx-0"
                         >
                             <Image
-                                src="/images/logo-pci-investments-gold.png"
+                                src="/images/logo-pci-investments-gold.webp"
                                 alt="Punta Cana Investments"
                                 width={140}
                                 height={140}
                                 className="w-1/2 h-auto object-contain"
                             />
                             <Image
-                                src="/images/logo-pci-construction-gold.png"
+                                src="/images/logo-pci-construction-gold.webp"
                                 alt="PCI Construction Group"
                                 width={140}
                                 height={140}
