@@ -229,7 +229,7 @@ export default {
                         {
                             title: "Concept and Styling",
                             text: "We define a palette of colors and materials that reflects your personality. From modern minimalism to tropical chic, we curate every element to create visual harmony.",
-                            image: "/images/services/concepto-y-estilismo.webp"
+                            image: "/images/services/concepto-y-estilismo-nuevo.webp"
                         },
                         {
                             title: "Furniture and Equipment (FF&E)",
@@ -239,7 +239,7 @@ export default {
                         {
                             title: "Home Staging for Investment",
                             text: "We prepare properties for rent or sale, optimizing distribution and decoration to maximize commercial appeal and profitability.",
-                            image: "/images/services/home-staging-para-inversion.webp"
+                            image: "/images/services/home-staging-para-inversion-nuevo.webp"
                         }
                     ],
                     details: [

@@ -229,7 +229,7 @@ export default {
                         {
                             title: "Concepto y Estilismo",
                             text: "Definimos una paleta de colores y materiales que refleje su personalidad. Desde el minimalismo moderno hasta el tropical chic, curamos cada elemento para crear armonía visual.",
-                            image: "/images/services/concepto-y-estilismo.webp"
+                            image: "/images/services/concepto-y-estilismo-nuevo.webp"
                         },
                         {
                             title: "Mobiliario y Equipamiento (FF&E)",
@@ -239,7 +239,7 @@ export default {
                         {
                             title: "Home Staging para Inversión",
                             text: "Preparamos propiedades para la renta o venta, optimizando la distribución y decoración para maximizar su atractivo comercial y rentabilidad.",
-                            image: "/images/services/home-staging-para-inversion.webp"
+                            image: "/images/services/home-staging-para-inversion-nuevo.webp"
                         }
                     ],
                     details: [
