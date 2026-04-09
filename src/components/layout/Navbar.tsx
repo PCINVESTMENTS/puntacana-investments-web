@@ -132,7 +132,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     */}
 
                     {/* Logo - Centered on Mobile, Left on Desktop */}
-                    {/* Mobile Logo - Centered and Big */}
+                    {/* Mobile Logo - Centered */}
                     <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:hidden">
                         <Link
                             href={`/${lang}`}
@@ -142,19 +142,28 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 }
                                 setIsOpen(false);
                             }}
-                            className="block relative h-20 w-[80vw] transition-all duration-300"
+                            className="flex items-center justify-center transition-all duration-300 h-16 sm:h-20"
                         >
                             <Image
-                                src="/images/pci-logo-new.png"
+                                src="/images/logo-pci-investments-gold.jpg"
                                 alt="Punta Cana Investments"
-                                fill
-                                className="object-contain"
+                                width={120}
+                                height={120}
+                                className="h-full w-auto object-contain"
+                                priority
+                            />
+                            <Image
+                                src="/images/logo-pci-construction-gold.jpg"
+                                alt="PCI Construction Group"
+                                width={120}
+                                height={120}
+                                className="h-full w-auto object-contain"
                                 priority
                             />
                         </Link>
                     </div>
 
-                    {/* Desktop Logo - Original Layout (Left aligned, standard size) */}
+                    {/* Desktop Logo - Left aligned */}
                     <Link
                         href={`/${lang}`}
                         onClick={() => {
@@ -162,13 +171,22 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             }
                         }}
-                        className="hidden lg:flex flex-shrink-0 items-center justify-start group relative h-24 w-80"
+                        className="hidden lg:flex flex-shrink-0 items-center justify-start group h-20 xl:h-24 hover:opacity-90 transition-opacity"
                     >
                         <Image
-                            src="/images/pci-logo-new.png"
+                            src="/images/logo-pci-investments-gold.jpg"
                             alt="Punta Cana Investments"
-                            fill
-                            className="object-contain object-left"
+                            width={160}
+                            height={160}
+                            className="h-full w-auto object-contain"
+                            priority
+                        />
+                        <Image
+                            src="/images/logo-pci-construction-gold.jpg"
+                            alt="PCI Construction Group"
+                            width={160}
+                            height={160}
+                            className="h-full w-auto object-contain"
                             priority
                         />
                     </Link>

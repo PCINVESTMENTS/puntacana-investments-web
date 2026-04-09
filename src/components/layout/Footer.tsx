@@ -27,14 +27,21 @@ export function Footer({ dict, lang }: FooterProps) {
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                 }
                             }}
-                            className="block"
+                            className="flex items-center"
                         >
                             <Image
-                                src="/images/pci-logo-new.png"
+                                src="/images/logo-pci-investments-gold.jpg"
                                 alt="Punta Cana Investments"
-                                width={280}
-                                height={280}
-                                className="object-contain"
+                                width={140}
+                                height={140}
+                                className="object-contain h-auto w-auto"
+                            />
+                            <Image
+                                src="/images/logo-pci-construction-gold.jpg"
+                                alt="PCI Construction Group"
+                                width={140}
+                                height={140}
+                                className="object-contain h-auto w-auto"
                             />
                         </Link>
                     </div>
