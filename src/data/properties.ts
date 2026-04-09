@@ -1694,7 +1694,12 @@ Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que 
             }
         },
         gallery: [
-            "/images/luxury-villa-marina-cap-cana-renta-frente-al-agua.jpg"
+            "/images/luxury-villa-marina-cap-cana-renta-frente-al-agua.jpg",
+            "/images/luxury-villa-marina-cap-cana-piscina-privada-terraza.jpg",
+            "/images/luxury-villa-marina-cap-cana-vista-aerea-yard.jpg",
+            "/images/luxury-villa-marina-cap-cana-arquitectura-moderna-exterior.jpg",
+            "/images/luxury-villa-marina-cap-cana-patio-piscina-jardin.jpg",
+            "/images/luxury-villa-marina-cap-cana-vista-techo-marina.jpg"
         ],
         featured: true
     },
