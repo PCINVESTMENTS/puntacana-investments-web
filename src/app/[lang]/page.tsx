@@ -118,6 +118,25 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     backupImage: p.image // Still keep the string URL as backup
   }));
 
+  // Perform server-side filtering to prevent sending the entire dataset to client components
+  // Also strip heavy data arrays (like 50-image galleries) to drastically reduce Server-to-Client JSON payload (improves FCP & LCP)
+  const stripPayload = (props: Property[]) => props.map(p => ({
+    ...p,
+    description: {
+       es: p.description?.es?.substring(0, 200) || "",
+       en: p.description?.en?.substring(0, 200) || ""
+    },
+    gallery: p.gallery?.slice(0, 4) || [],
+    rawGallery: p.rawGallery?.slice(0, 4) || [],
+    features: { es: [], en: [] },
+    constructionStages: [],
+    seo: null
+  } as unknown as Property));
+
+  const saleProperties = stripPayload(properties.filter(p => p.status === "sale").slice(0, 6));
+  const rentProperties = stripPayload(properties.filter(p => p.status === "rent").slice(0, 3));
+  const featuredOnlyProperties = stripPayload(properties.filter(p => p.featured === true).slice(0, 3));
+
   return (
     <main className="min-h-screen">
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
@@ -135,7 +154,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         sectionTitle={lang === 'en' ? 'Properties for Sale' : 'Propiedades en Venta'}
         lockedStatus="sale"
         exploreLink={`/${lang}/properties?status=sale`}
-        initialData={properties}
+        initialData={saleProperties}
       />
       <PropertyListings
         dict={dict.properties}
@@ -148,7 +167,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         sectionTitle={lang === 'en' ? 'Properties for Rent' : 'Propiedades en Renta'}
         lockedStatus="rent"
         exploreLink={`/${lang}/properties?status=rent`}
-        initialData={properties}
+        initialData={rentProperties}
       />
       <LocationsSection dict={dict.sections.locations} limit={3} lang={lang} />
       <PropertyListings
@@ -161,7 +180,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredLimit={3}
         sectionId="featured-properties"
         sectionTitle={lang === 'en' ? 'Featured Properties' : 'Propiedades Destacadas'}
-        initialData={properties}
+        initialData={featuredOnlyProperties}
       />
       <InvestmentsSection dict={dict.sections.investments} lang={lang} />
       <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
