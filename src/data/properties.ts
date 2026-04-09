@@ -1699,7 +1699,12 @@ Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que 
             "/images/luxury-villa-marina-cap-cana-vista-aerea-yard.jpg",
             "/images/luxury-villa-marina-cap-cana-arquitectura-moderna-exterior.jpg",
             "/images/luxury-villa-marina-cap-cana-patio-piscina-jardin.jpg",
-            "/images/luxury-villa-marina-cap-cana-vista-techo-marina.jpg"
+            "/images/luxury-villa-marina-cap-cana-vista-techo-marina.jpg",
+            "/images/luxury-villa-marina-cap-cana-habitacion-principal-suite.jpg",
+            "/images/luxury-villa-marina-cap-cana-habitacion-cama-king.jpg",
+            "/images/luxury-villa-marina-cap-cana-suite-walk-in-closet-madera.jpg",
+            "/images/luxury-villa-marina-cap-cana-habitacion-con-bano-privado.jpg",
+            "/images/luxury-villa-marina-cap-cana-dormitorio-huespedes-decoracion.jpg"
         ],
         featured: true
     },
