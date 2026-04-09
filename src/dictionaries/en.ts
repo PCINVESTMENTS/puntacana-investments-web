@@ -317,7 +317,7 @@ export default {
                         {
                             title: "Comprehensive Project Management",
                             text: "From initial logistics to final finishes, we manage every aspect of the work. We report detailed progress for your total peace of mind.",
-                            image: "/images/services/gestion-integral-de-proyectos.webp"
+                            image: "/images/services/gestion-integral-de-proyectos-nuevo.webp"
                         },
                         {
                             title: "Luxury Residential",

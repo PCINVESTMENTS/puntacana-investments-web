@@ -317,7 +317,7 @@ export default {
                         {
                             title: "Gestión Integral de Proyectos",
                             text: "Desde la logística inicial hasta los acabados finales, gestionamos cada aspecto de la obra. Reportamos avances detallados para su total tranquilidad.",
-                            image: "/images/services/gestion-integral-de-proyectos.webp"
+                            image: "/images/services/gestion-integral-de-proyectos-nuevo.webp"
                         },
                         {
                             title: "Residencial de Lujo",
