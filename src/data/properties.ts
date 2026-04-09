@@ -1714,7 +1714,12 @@ Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que 
             "/images/luxury-villa-marina-cap-cana-bano-inodoro-suite.jpg",
             "/images/luxury-villa-marina-cap-cana-bano-elegante-espejo-iluminado.jpg",
             "/images/luxury-villa-marina-cap-cana-bano-lavabo-doble-espejo.jpg",
-            "/images/luxury-villa-marina-cap-cana-bano-ducha-piedra-coral.jpg"
+            "/images/luxury-villa-marina-cap-cana-bano-ducha-piedra-coral.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-madera-detalle-espejo.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-ducha-spa-pared-coralina.jpg",
+            "/images/luxury-villa-marina-cap-cana-patio-privado-sillas-rattan.jpg",
+            "/images/luxury-villa-marina-cap-cana-ducha-exterior-jardin-coralina.jpg",
+            "/images/luxury-villa-marina-cap-cana-patio-descanso-exterior.jpg"
         ],
         featured: true
     },
