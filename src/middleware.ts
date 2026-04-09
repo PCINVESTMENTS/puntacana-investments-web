@@ -14,6 +14,9 @@ if (API_URL.endsWith('/')) {
 
 const SUSPICIOUS_PATHS = ['.git', '.env', 'wp-admin', 'wp-login.php', 'config.php', 'phpinfo', 'eval(', 'base64_decode'];
 
+// In-Memory map for Edge Rate Limiting. Resets naturally as isolates are born and die, acting as a perfect zero-cost shock absorber.
+const ipCache = new Map();
+
 function getLocale(request: NextRequest): string {
     const headers = { 'accept-language': request.headers.get('accept-language') || '' };
     const languages = new Negotiator({ headers }).languages();
@@ -103,6 +106,77 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
                             `<!DOCTYPE html><html><head><title>Access Denied</title></head><body style="background:#0a0a0a;color:#ef4444;font-family:monospace;padding:40px;"><h1>403 Forbidden</h1><p>Edge Security WAF: Conexi&oacute;n denegada desde tu regi&oacute;n geogr&aacute;fica (${country}).</p></body></html>`,
                             { status: 403, headers: { 'content-type': 'text/html' } }
                         );
+                    }
+                }
+                // Rate Limiting (In-Memory Fast Check)
+                if (config.rate_limiting === true || config.rate_limiting === 'true' || config.rate_limiting === 'True') {
+                    if (ip !== 'Unknown') {
+                        const now = Date.now();
+                        const windowMs = 60000;
+                        const reqLimit = 30; // 30 req/min per isolate
+                        let ipData = ipCache.get(ip) || { count: 0, startTime: now };
+                        if (now - ipData.startTime > windowMs) {
+                            ipData = { count: 1, startTime: now };
+                        } else {
+                            ipData.count++;
+                        }
+                        ipCache.set(ip, ipData);
+
+                        if (ipData.count > reqLimit) {
+                            event.waitUntil(
+                                fetch(`${API_URL}/api/security/ingest-edge/`, {
+                                    method: 'POST',
+                                    headers: { 
+                                        'Content-Type': 'application/json', 
+                                        'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY || 'c8f9d2a1b4e6g7h8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1'
+                                    },
+                                    body: JSON.stringify({ ip, country, reason: 'Rate Limit Excedido', path: pathname })
+                                }).catch(() => {})
+                            );
+                            return new NextResponse(
+                                `<!DOCTYPE html><html><head><title>Too Many Requests</title></head><body style="background:#0a0a0a;color:#eab308;font-family:monospace;padding:40px;"><h1>429 Too Many Requests</h1><p>Edge Security WAF: Has excedido el l&iacute;mite de peticiones permitidas por minuto.</p></body></html>`,
+                                { status: 429, headers: { 'content-type': 'text/html', 'Retry-After': '60' } }
+                            );
+                        }
+                    }
+                }
+
+                // JS-Challenge (Smart Captcha Invisible)
+                if (config.smart_captcha === true || config.smart_captcha === 'true' || config.smart_captcha === 'True') {
+                    const hasHumanCookie = request.cookies.get('x-human-verified');
+                    if (!hasHumanCookie) {
+                        event.waitUntil(
+                            fetch(`${API_URL}/api/security/ingest-edge/`, {
+                                method: 'POST',
+                                headers: { 
+                                    'Content-Type': 'application/json', 
+                                    'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY || 'c8f9d2a1b4e6g7h8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1'
+                                },
+                                body: JSON.stringify({ ip, country, reason: 'Smart Captcha Triggered', path: pathname })
+                            }).catch(() => {})
+                        );
+
+                        const htmlCaptcha = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Safe Connection Check</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>body{background:#000;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;} .loader {border: 4px solid #333; border-top: 4px solid #D4AF37; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin-bottom:15px; margin-left:auto; margin-right:auto;} @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+</head>
+<body>
+    <div style="text-align:center;">
+        <div class="loader"></div>
+        <p style="color:#888;font-size:14px;letter-spacing:1px;font-weight:300;">Validando conexi&oacute;n segura...</p>
+    </div>
+    <script>
+        setTimeout(function(){
+            document.cookie = "x-human-verified=true; path=/; max-age=86400; SameSite=Lax";
+            window.location.reload();
+        }, 300);
+    </script>
+</body>
+</html>`;
+                        return new NextResponse(htmlCaptcha, { status: 200, headers: { 'content-type': 'text/html' } });
                     }
                 }
             }
