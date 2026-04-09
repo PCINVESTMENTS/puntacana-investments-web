@@ -171,10 +171,11 @@ function PropertyListingsContent({
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
                             {/* Location Filter */}
                             <div>
-                                <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
+                                <label htmlFor="properties-location" className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
                                     {dict.filters.allLocations}
                                 </label>
                                 <select
+                                    id="properties-location"
                                     value={selectedLocation}
                                     onChange={(e) => setSelectedLocation(e.target.value)}
                                     aria-label="Filtrar por ubicación"
@@ -191,10 +192,11 @@ function PropertyListingsContent({
 
                             {/* Type Filter */}
                             <div>
-                                <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
+                                <label htmlFor="properties-type" className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
                                     {dict.filters.allTypes}
                                 </label>
                                 <select
+                                    id="properties-type"
                                     value={selectedType}
                                     onChange={(e) => setSelectedType(e.target.value)}
                                     aria-label="Filtrar por tipo de propiedad"
@@ -213,10 +215,11 @@ function PropertyListingsContent({
 
                             {/* Price Filter */}
                             <div>
-                                <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
+                                <label htmlFor="properties-price" className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold">
                                     {dict.filters.maxPrice}
                                 </label>
                                 <select
+                                    id="properties-price"
                                     value={maxPrice}
                                     onChange={(e) => setMaxPrice(e.target.value)}
                                     aria-label="Filtrar por precio máximo"

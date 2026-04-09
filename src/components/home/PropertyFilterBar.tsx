@@ -79,10 +79,11 @@ function PropertyFilterBarContent({ dict, locations, lang }: PropertyFilterBarPr
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 items-end">
                     {/* Location Filter */}
                     <div className="col-span-1">
-                        <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold truncate">
+                        <label htmlFor="filter-location" className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold truncate">
                             {dict.filters.allLocations}
                         </label>
                         <select
+                            id="filter-location"
                             value={selectedLocation}
                             onChange={(e) => setSelectedLocation(e.target.value)}
                             className="w-full bg-black border border-white/10 text-white text-base px-3 py-3 md:px-4 md:py-3 focus:outline-none focus:border-luxury-gold transition-colors min-h-[48px]"
@@ -98,10 +99,11 @@ function PropertyFilterBarContent({ dict, locations, lang }: PropertyFilterBarPr
 
                     {/* Type Filter */}
                     <div className="col-span-1">
-                        <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold truncate">
+                        <label htmlFor="filter-type" className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold truncate">
                             {dict.filters.allTypes}
                         </label>
                         <select
+                            id="filter-type"
                             value={selectedType}
                             onChange={(e) => setSelectedType(e.target.value)}
                             className="w-full bg-black border border-white/10 text-white text-base px-3 py-3 md:px-4 md:py-3 focus:outline-none focus:border-luxury-gold transition-colors min-h-[48px]"
@@ -117,12 +119,14 @@ function PropertyFilterBarContent({ dict, locations, lang }: PropertyFilterBarPr
 
                     {/* Price Filter */}
                     <div className="col-span-1">
-                        <label className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold truncate">
+                        <label htmlFor="filter-price" className="block text-luxury-gold text-xs uppercase tracking-wider mb-2 font-bold truncate">
                             {dict.filters.maxPrice}
                         </label>
                         <select
+                            id="filter-price"
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
+                            aria-label={dict.filters.maxPrice}
                             className="w-full bg-black border border-white/10 text-white text-base px-3 py-3 md:px-4 md:py-3 focus:outline-none focus:border-luxury-gold transition-colors min-h-[48px]"
                         >
                             <option value="any">{dict.priceRanges.any}</option>

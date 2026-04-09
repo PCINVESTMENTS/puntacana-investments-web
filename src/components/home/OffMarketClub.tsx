@@ -57,7 +57,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                     </div>
 
                     {/* Form Side */}
-                    <div className="lg:w-1/2 p-6 lg:p-12 bg-black/40 flex flex-col justify-center">
+                    <div className="lg:w-1/2 p-6 lg:p-12 bg-black/70 flex flex-col justify-center">
                         <AnimatePresence mode="wait">
                             {!state.success ? (
                                 <motion.div
@@ -83,16 +83,17 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                     <form action={formAction} className="space-y-4">
                                         <input type="hidden" name="source" value="Off Market Club" />
                                         <div>
-                                            <label className="block text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-2">
+                                            <label htmlFor="email-offmarket" className="block text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-2">
                                                 {lang === "en" ? "Professional Email" : "Email Profesional"}
                                             </label>
                                             <input
+                                                id="email-offmarket"
                                                 type="email"
                                                 name="email"
                                                 required
                                                 autoComplete="email"
                                                 placeholder="investor@domain.com"
-                                                className="w-full bg-black border border-white/10 rounded p-4 text-white focus:border-luxury-gold outline-none transition-all placeholder:text-gray-700"
+                                                className="w-full bg-black border border-white/10 rounded p-4 text-white focus:border-luxury-gold outline-none transition-all placeholder:text-gray-500"
                                             />
                                         </div>
                                         <button
@@ -102,7 +103,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                         >
                                             {isPending ? <FaSpinner aria-hidden="true" className="animate-spin mx-auto" /> : (lang === "en" ? "Get Instant Access" : "Obtener Acceso Instantáneo")}
                                         </button>
-                                        <p className="text-[10px] text-gray-600 text-center uppercase tracking-widest">
+                                        <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest">
                                             {lang === "en" ? "No commitment required. 100% Confidential." : "Sin compromiso. 100% Confidencial."}
                                         </p>
                                     </form>

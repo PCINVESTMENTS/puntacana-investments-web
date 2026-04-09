@@ -71,7 +71,7 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                                         />
                                     </div>
                                     <div>
-                                        <h4 className="text-white font-bold text-sm tracking-wide">{testim.name}</h4>
+                                        <h3 className="text-white font-bold text-sm tracking-wide">{testim.name}</h3>
                                         <p className="text-xs text-luxury-gold uppercase tracking-wider">{testim.role}</p>
                                     </div>
                                 </div>

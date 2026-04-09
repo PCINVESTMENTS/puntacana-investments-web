@@ -112,7 +112,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                     name="email"
                                     required
                                     placeholder={dict.footer.emailPlaceholder}
-                                    className="bg-transparent text-white px-4 py-2 w-full focus:outline-none placeholder-gray-600 text-sm"
+                                    className="bg-transparent text-white px-4 py-2 w-full focus:outline-none placeholder-gray-400 text-sm"
                                 />
                                 <button
                                     type="submit"
@@ -128,13 +128,13 @@ export function Footer({ dict, lang }: FooterProps) {
                 </div>
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                    <p className="text-gray-500 text-xs uppercase tracking-wider mb-4 md:mb-0">
+                    <p className="text-gray-400 text-xs uppercase tracking-wider mb-4 md:mb-0">
                         © {new Date().getFullYear()} Punta Cana Investments. {dict.footer.rights}
                     </p>
-                    <div className="text-gray-600 text-xs uppercase tracking-wider space-x-4">
-                        <Link href={`/${lang}/privacy-policy`} className="hover:text-gray-400">{dict.footer.legal?.privacy || "Privacy Policy"}</Link>
+                    <div className="text-gray-400 text-xs uppercase tracking-wider space-x-4">
+                        <Link href={`/${lang}/privacy-policy`} className="hover:text-white transition-colors">{dict.footer.legal?.privacy || "Privacy Policy"}</Link>
                         <span>|</span>
-                        <Link href={`/${lang}/terms-of-service`} className="hover:text-gray-400">{dict.footer.legal?.terms || "Terms of Service"}</Link>
+                        <Link href={`/${lang}/terms-of-service`} className="hover:text-white transition-colors">{dict.footer.legal?.terms || "Terms of Service"}</Link>
                     </div>
                 </div>
             </div>
