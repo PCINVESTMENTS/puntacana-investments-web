@@ -1719,7 +1719,11 @@ Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que 
             "/images/luxury-villa-marina-cap-cana-bano-ducha-spa-pared-coralina.jpg",
             "/images/luxury-villa-marina-cap-cana-patio-privado-sillas-rattan.jpg",
             "/images/luxury-villa-marina-cap-cana-ducha-exterior-jardin-coralina.jpg",
-            "/images/luxury-villa-marina-cap-cana-patio-descanso-exterior.jpg"
+            "/images/luxury-villa-marina-cap-cana-patio-descanso-exterior.jpg",
+            "/images/luxury-villa-marina-cap-cana-dormitorio-con-silla-naranja.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-cristal-frase-inspiradora.jpg",
+            "/images/luxury-villa-marina-cap-cana-sala-abierta-piscina.jpg",
+            "/images/luxury-villa-marina-cap-cana-sofa-decoracion-marina.jpg"
         ],
         featured: true
     },
