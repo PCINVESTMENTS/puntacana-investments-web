@@ -18,7 +18,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "pre-construction",
         title: { es: "Proyectos en Pre-construcción", en: "Pre-construction Projects" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/investments/proyectos-en-pre-construccion.webp",
         description: {
             es: "Maximice su plusvalía entrando en el momento cero. Comprar en planos es la estrategia número uno para obtener rendimientos inmediatos.",
             en: "Maximize appreciation by entering at ground zero. Buying off-plan is the number one strategy for immediate returns."
@@ -53,7 +53,7 @@ export const investmentModels: InvestmentModel[] = [
                     es: "Los desarrolladores ofrecen precios de 'Lista Cero' o 'Friends & Family' para financiar el inicio de obra. Al entrar aquí, usted está comprando al costo más bajo posible. A medida que se venden unidades y se construye, el desarrollador sube los precios gradualmente.",
                     en: "Developers offer 'Zero List' or 'Friends & Family' prices to fund the start of work. By entering here, you are buying at the lowest possible cost. As units are sold and construction progresses, the developer gradually raises prices."
                 },
-                image: "/images/og-home-luxury.jpg"
+                image: "/images/investments/proyectos-en-pre-construccion.webp"
             }
         ]
     },
