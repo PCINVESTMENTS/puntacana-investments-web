@@ -1609,72 +1609,93 @@ Vivir en White Sands significa disfrutar de una vida estilo resort todos los dí
     },
     {
         id: 15,
-        slug: "villa-lujo-cap-cana-punta-espada",
-        title: "Villa | Luxury Villa Cap Cana Punta Espada",
+        slug: "luxury-villa-marina-cap-cana-renta",
+        title: "Villa en Renta | Luxury Villa Marina Cap Cana",
         location: "capcana",
-        locationLabel: "Cap Cana",
+        locationLabel: "Marina Cap Cana",
         type: "villa",
         status: "rent",
-        price: 8000,
+        price: 16000,
         hideFromLabel: true,
-        image: "/images/og-home-luxury.jpg",
-        beds: 4,
+        image: "/images/luxury-villa-marina-cap-cana-renta-frente-al-agua.jpg",
+        beds: 5,
         baths: 4.5,
-        area: 500,
+        area: 600,
         features: {
-            en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
-            es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
+            en: ["Marina Front", "Private Pool", "VIP Service Team Included", "Water Filtration System", "High Efficiency AC", "BBQ Area", "Private Security 24/7", "Punta Espada Golf Access", "Eden Roc Beach Club Access"],
+            es: ["Frente a la Marina", "Piscina Privada", "Servicio VIP Incluido", "Filtración de Agua", "AC Alta Eficiencia", "Área de BBQ", "Seguridad Privada 24/7", "Acceso Punta Espada", "Acceso Eden Roc"]
         },
         description: {
-            en: `Luxury Villa Cap Cana – Exclusive Vacation Rental
+            en: `Luxury Villa Marina Cap Cana
+            
+Exclusive waterfront property located directly in the prestigious Marina of Cap Cana. This unique residence combines sophisticated design with the ultimate nautical lifestyle, offering privacy and direct access to world-class amenities.
 
-Luxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included. Experience the ultimate Caribbean getaway in this masterpiece of design.
+Designed for those seeking a premium residential experience or a dream vacation home, the villa features ample open spaces, natural light, and perfect indoor-outdoor flow to enjoy the unparalleled Caribbean climate.
 
-Located in the heart of Cap Cana, offering privacy and exclusivity.
+## Rental Conditions
+- **Monthly Rent:** US$16,000
+- **VIP Service Included:** The monthly rate covers a full team of service staff, ensuring an impeccable, comfortable, and completely worry-free stay.
 
 ## Property Features
-- **Type:** Luxury Villa
-- **Beds:** 4 Spacious Suites
-- **Baths:** 4.5
-- **Staff:** Chef and Maid included
-- **Exterior:** Private Pool and Marina View
+- **Location:** Directly facing the Marina, Cap Cana.
+- **Layout:** 5 Luxury Bedrooms, 4.5 Bathrooms, Service Room. (Flexibility to enable a 6th room if required).
+- **Exterior:** Private Pool, expansive terrace, and BBQ Area.
+- **Systems:** High-quality water filtration, high-efficiency Air Conditioning.
 
-## Rental Experience
-- **Exclusive Access:** Access to Eden Roc Beach Club.
-- **Golf:** Minutes from Punta Espada Golf Course.
-- **Lifestyle:** Enjoy the luxury life of Cap Cana with a golf cart included.
+## Exclusive Cap Cana Amenities
+- **Beaches:** Close access to Juanillo Beach, Api Beach, and Caletón Beach Club (Eden Roc).
+- **Golf:** Punta Espada Golf Course (Jack Nicklaus Signature).
+- **Marina:** World-class marina with yacht capacity, restaurants, and luxury shops.
+- **Activities:** Scape Park (Eco-adventure) and Los Establos (Equestrian City).
+- **Lifestyle:** Gourmet dining, exclusive bars, spas, and beach clubs.
+- **Security:** Double controlled access with 24/7 private patrolling.
 
 ## Ideal For
-- Luxury vacationers
-- Families or groups seeking exclusivity
-- Golf enthusiasts
+Families, executives, luxury vacationers, and boating enthusiasts seeking a private, exclusive retreat with first-class assistance in the heart of the Caribbean.`,
+            es: `Luxury Villa Marina Cap Cana
 
-*Guests have access to private dock and all Cap Cana amenities.*`,
-            es: `Villa de Lujo Cap Cana – Renta Vacacional Exclusiva
+Exclusiva propiedad frente al agua ubicada directamente en la prestigiosa Marina de Cap Cana. Esta residencia única combina un diseño sofisticado con el máximo estilo de vida náutico, ofreciendo privacidad y acceso directo a amenidades de clase mundial.
 
-Experiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido. Viva la escapada caribeña definitiva en esta obra maestra del diseño.
+Diseñada para quienes buscan una experiencia residencial premium o una casa vacacional de ensueño, la villa cuenta con amplios espacios abiertos, luz natural y una fluidez interior-exterior perfecta para disfrutar del inigualable clima caribeño.
 
-Ubicada en el corazón de Cap Cana, ofreciendo privacidad y exclusividad.
+## Condiciones de Alquiler
+- **Renta Mensual:** US$16,000
+- **Servicio VIP Incluido:** La tarifa mensual cubre un equipo completo de personal de servicios, garantizando una estadía impecable, cómoda y totalmente libre de preocupaciones.
 
 ## Características de la Propiedad
-- **Tipo:** Villa de Lujo
-- **Habitaciones:** 4 Suites Espaciosas
-- **Baños:** 4.5
-- **Personal:** Chef y Camarera incluidos
-- **Exterior:** Piscina Privada y Vista a la Marina
+- **Ubicación:** Directamente frente a la Marina, Cap Cana.
+- **Distribución:** 5 Habitaciones de lujo, 4.5 Baños, Habitación de Servicio. (Flexibilidad: Cuenta con el espacio y la posibilidad de habilitar una 6ta habitación si el cliente lo requiere).
+- **Exterior:** Piscina Privada, Terraza expansiva y Área de BBQ.
+- **Sistemas:** Filtración de agua de alta calidad, Aire Acondicionado de alta eficiencia.
 
-## Experiencia de Alquiler
-- **Acceso Exclusivo:** Acceso al Eden Roc Beach Club.
-- **Golf:** A minutos del Campo de Golf Punta Espada.
-- **Estilo de Vida:** Disfrute la vida de lujo de Cap Cana con carrito de golf incluido.
+## Amenidades Exclusivas de Cap Cana
+- **Playas:** Acceso cercano a Playa Juanillo, Api Beach y Caletón Beach Club (Eden Roc).
+- **Golf:** Punta Espada Golf Course (Firma de Jack Nicklaus).
+- **Marina:** Marina de clase mundial con capacidad para yates, restaurantes y tiendas de lujo.
+- **Actividades:** Scape Park (Eco-aventura) y Los Establos (Ciudad Ecuestre).
+- **Estilo de Vida:** Gastronomía gourmet, exclusivos bares, spas y clubes de playa.
+- **Seguridad:** Doble acceso controlado con patrullaje privado 24/7.
 
 ## Ideal Para
-- Vacacionistas de lujo
-- Familias o grupos que buscan exclusividad
-- Entusiastas del golf
-
-*Los huéspedes tienen acceso a muelle privado y todas las amenidades de Cap Cana.*`
+Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que buscan un retiro privado, exclusivo y con asistencia de primer nivel en el corazón del Caribe.`
         },
+        seo: {
+            title: {
+                en: "Luxury Villa for Rent Cap Cana Marina | Waterfront Property",
+                es: "Villa de Lujo en Renta Marina Cap Cana | Frente al Agua VIP"
+            },
+            description: {
+                en: "Rent exclusive luxury villa in Marina Cap Cana for $16,000/month. 5 bedrooms, waterfront, VIP service included. Contact us for the ultimate Caribbean lifestyle.",
+                es: "Renta exclusiva villa de lujo en Marina Cap Cana por US$16,000/mes. 5 habitaciones, frente al agua, servicio VIP incluido. Disfrute el estilo de vida Cap Cana."
+            },
+            keywords: {
+                en: ["Cap Cana Luxury Rental", "Marina Cap Cana Villa", "Villa for Rent Dominican Republic", "Waterfront property Punta Cana", "Cap Cana VIP Service", "Punta Espada golf rental"],
+                es: ["Alquiler Villa Lujo Cap Cana", "Villa Marina Cap Cana Renta", "Propiedad frente al agua Punta Cana", "Villa VIP Republica Dominicana", "Alquiler Vacacional Cap Cana", "Alquiler Marina Cap Cana"]
+            }
+        },
+        gallery: [
+            "/images/luxury-villa-marina-cap-cana-renta-frente-al-agua.jpg"
+        ],
         featured: true
     },
     {
