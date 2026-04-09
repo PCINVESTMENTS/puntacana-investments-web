@@ -75,8 +75,9 @@ export async function generateStaticParams() {
 }
 
 import { CompareProvider } from "@/components/property/CompareContext";
-import PropertyComparator from "@/components/property/PropertyComparator";
+import dynamic from "next/dynamic";
 
+const PropertyComparator = dynamic(() => import("@/components/property/PropertyComparator"), { ssr: false });
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 
