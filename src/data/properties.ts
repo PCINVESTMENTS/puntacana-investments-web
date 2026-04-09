@@ -1709,7 +1709,12 @@ Familias, ejecutivos, vacacionistas de lujo y entusiastas de la navegación que 
             "/images/luxury-villa-marina-cap-cana-dormitorio-con-tv.jpg",
             "/images/luxury-villa-marina-cap-cana-suite-doble-detalles.jpg",
             "/images/luxury-villa-marina-cap-cana-dormitorio-ropero-madera.jpg",
-            "/images/luxury-villa-marina-cap-cana-bano-lavamanos-estilo.jpg"
+            "/images/luxury-villa-marina-cap-cana-bano-lavamanos-estilo.jpg",
+            "/images/luxury-villa-marina-cap-cana-suite-maestra-amplia.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-inodoro-suite.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-elegante-espejo-iluminado.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-lavabo-doble-espejo.jpg",
+            "/images/luxury-villa-marina-cap-cana-bano-ducha-piedra-coral.jpg"
         ],
         featured: true
     },
