@@ -161,7 +161,7 @@ export default {
                     slug: "legal-advice",
                     title: "Legal Advice",
                     description: "Complete contract management, due diligence, and tax advice to guarantee safe investments.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/services/asesoria-legal.webp",
                     longDescription: "Our legal team specialized in real estate law provides total coverage to ensure that your investment in the Dominican Republic is solid and risk-free. We handle every legal detail, from title verification to tax optimization.",
                     contentSections: [
                         {
@@ -192,7 +192,7 @@ export default {
                     slug: "architecture",
                     title: "Architecture",
                     description: "Avant-garde conceptual design and architectural planning for residential and commercial projects.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/services/diseno-conceptual-y-anteproyecto.webp",
                     longDescription: "We transform visions into tangible realities. Our architecture department fuses modern aesthetics with Caribbean functionality, creating spaces that are not only beautiful but also integrate harmoniously with the tropical environment.",
                     contentSections: [
                         {
@@ -203,12 +203,12 @@ export default {
                         {
                             title: "Photorealistic 3D Visualization",
                             text: "We use state-of-the-art technology to create renders and virtual tours that allow you to 'live' the space before building it. Every texture, material, and lighting is defined with precision.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/visualizacion-3d-fotorrealista.webp"
                         },
                         {
                             title: "Executive Plans and Permits",
                             text: "We develop the complete technical documentation necessary for construction and obtaining licenses. We ensure strict compliance with local building regulations.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/planos-ejecutivos-y-permisos.webp"
                         }
                     ],
                     details: [
@@ -223,23 +223,23 @@ export default {
                     slug: "interior-design",
                     title: "Interior Design",
                     description: "Creation of exclusive and functional environments, selection of luxury furniture and finishes.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/services/mobiliario-y-equipamiento-ffe.webp",
                     longDescription: "Luxury is in the details. We design interiors that tell stories, carefully selecting every piece, texture, and finish to create atmospheres of unmatched sophistication and comfort.",
                     contentSections: [
                         {
                             title: "Concept and Styling",
                             text: "We define a palette of colors and materials that reflects your personality. From modern minimalism to tropical chic, we curate every element to create visual harmony.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/concepto-y-estilismo.webp"
                         },
                         {
                             title: "Furniture and Equipment (FF&E)",
                             text: "We manage the selection, purchase, and logistics of all furniture and equipment. We work with exclusive brands and local artisans for custom pieces.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/mobiliario-y-equipamiento-ffe.webp"
                         },
                         {
                             title: "Home Staging for Investment",
                             text: "We prepare properties for rent or sale, optimizing distribution and decoration to maximize commercial appeal and profitability.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/home-staging-para-inversion.webp"
                         }
                     ],
                     details: [
@@ -254,18 +254,18 @@ export default {
                     slug: "civil-engineering",
                     title: "Civil Engineering",
                     description: "Execution and supervision of works with the highest standards of quality and structural safety.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/services/ingenieria-civil.webp",
                     longDescription: "The foundation of every great work is solid engineering. We guarantee the structural integrity and constructive efficiency of every project, applying technical rigor and constant supervision.",
                     contentSections: [
                         {
                             title: "Structural Calculation and Analysis",
                             text: "We use advanced software to design resilient and safe structures, optimized for the region's seismic and climatic conditions.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/calculo-y-analisis-estructural.webp"
                         },
                         {
                             title: "Supervision and Work Control",
                             text: "Our team of resident engineers monitors every stage of the construction process, ensuring that specifications, timelines, and budgets are met.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/supervision-y-control-de-obra.webp"
                         }
                     ],
                     details: [
@@ -280,23 +280,23 @@ export default {
                     slug: "electrical-engineering",
                     title: "Electrical Engineering",
                     description: "Design and implementation of efficient and sustainable electrical systems for all types of buildings.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/services/ingenieria-electrica.webp",
                     longDescription: "Efficient and safe energy. We design intelligent electrical systems that guarantee optimal functioning of your property, integrating sustainable solutions and home automation.",
                     contentSections: [
                         {
                             title: "Medium and Low Voltage Installations",
                             text: "Comprehensive design of electrical networks, substations, and internal distribution, complying with all international safety standards.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/instalaciones-de-media-y-baja-tension.webp"
                         },
                         {
                             title: "Renewable Energy",
                             text: "Implementation of solar panel systems and energy storage to reduce operating costs and carbon footprint.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/energia-renovable.webp"
                         },
                         {
                             title: "Home Automation and Smart Home",
                             text: "Integration of smart systems for lighting, climate control, and security control from your mobile device.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/domotica-y-smart-home.webp"
                         }
                     ],
                     details: [
@@ -317,12 +317,12 @@ export default {
                         {
                             title: "Comprehensive Project Management",
                             text: "From initial logistics to final finishes, we manage every aspect of the work. We report detailed progress for your total peace of mind.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/gestion-integral-de-proyectos.webp"
                         },
                         {
                             title: "Luxury Residential",
                             text: "Specialists in the construction of high-level villas and condominiums, with obsessive attention to detail and premium finishes.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/residencial-de-lujo.webp"
                         }
                     ],
                     details: [
@@ -337,18 +337,18 @@ export default {
                     slug: "development",
                     title: "Development",
                     description: "Planning and execution of large real estate and tourism developments with a vision of the future.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/services/master-planning.webp",
                     longDescription: "We create destinations. We participate in the conception and development of master communities and tourism projects that generate long-term value and transform the environment.",
                     contentSections: [
                         {
                             title: "Master Planning",
                             text: "Strategic planning of land use, infrastructures, and amenities to create vibrant and sustainable communities.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/master-planning.webp"
                         },
                         {
                             title: "Investment Structuring",
                             text: "We develop solid financial models and capital raising strategies to make large-scale projects viable.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/estructuracion-de-inversion.webp"
                         }
                     ],
                     details: [
