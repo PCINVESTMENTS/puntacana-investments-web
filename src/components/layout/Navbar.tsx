@@ -141,22 +141,22 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 }
                                 setIsOpen(false);
                             }}
-                            className="flex items-center justify-center lg:justify-start transition-all duration-300 h-16 sm:h-20 xl:h-24 hover:opacity-90 flex-shrink-0 group"
+                            className="flex items-center justify-center lg:justify-start transition-all duration-300 hover:opacity-90 flex-shrink-0 group gap-1 lg:gap-2"
                         >
                             <Image
                                 src="/images/logo-pci-investments-gold.webp"
                                 alt="Punta Cana Investments"
-                                width={160}
-                                height={160}
-                                className="h-full w-auto object-contain"
+                                width={120}
+                                height={120}
+                                className="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 object-contain"
                                 priority
                             />
                             <Image
                                 src="/images/logo-pci-construction-gold.webp"
                                 alt="PCI Construction Group"
-                                width={160}
-                                height={160}
-                                className="h-full w-auto object-contain"
+                                width={120}
+                                height={120}
+                                className="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 object-contain"
                                 priority
                             />
                         </Link>
