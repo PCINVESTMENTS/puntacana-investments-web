@@ -343,12 +343,12 @@ export default {
                         {
                             title: "Master Planning",
                             text: "Strategic planning of land use, infrastructures, and amenities to create vibrant and sustainable communities.",
-                            image: "/images/services/master-planning.webp"
+                            image: "/images/services/master-planning-nuevo.webp"
                         },
                         {
                             title: "Investment Structuring",
                             text: "We develop solid financial models and capital raising strategies to make large-scale projects viable.",
-                            image: "/images/services/estructuracion-de-inversion.webp"
+                            image: "/images/services/estructuracion-de-inversion-nuevo.webp"
                         }
                     ],
                     details: [

@@ -343,12 +343,12 @@ export default {
                         {
                             title: "Master Planning",
                             text: "Planificación estratégica de uso de suelo, infraestructuras y amenidades para crear comunidades vibrantes y sostenibles.",
-                            image: "/images/services/master-planning.webp"
+                            image: "/images/services/master-planning-nuevo.webp"
                         },
                         {
                             title: "Estructuración de Inversión",
                             text: "Desarrollamos modelos financieros sólidos y  estrategias de captación de capital para viabilizar proyectos de gran envergadura.",
-                            image: "/images/services/estructuracion-de-inversion.webp"
+                            image: "/images/services/estructuracion-de-inversion-nuevo.webp"
                         }
                     ],
                     details: [
