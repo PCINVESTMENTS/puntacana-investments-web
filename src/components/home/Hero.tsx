@@ -23,8 +23,10 @@ interface HeroProps {
 export default function Hero({ dict, featuredImages }: HeroProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [renderedIndexes, setRenderedIndexes] = useState<number[]>([0]);
+    const [isInitialRender, setIsInitialRender] = useState(true);
 
     useEffect(() => {
+        setIsInitialRender(false);
         if (featuredImages.length > 0) {
             const nextIndex = (currentImageIndex + 1) % featuredImages.length;
             
@@ -66,7 +68,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                     return (
                         <div
                             key={img.id}
-                            className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
+                            className={`absolute inset-0 ${!isInitialRender ? "transition-opacity duration-1500 ease-in-out" : ""} ${index === currentImageIndex ? "opacity-100" : "opacity-0"
                                 }`}
                         >
                             {img.mainImage ? (
