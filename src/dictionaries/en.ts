@@ -172,7 +172,7 @@ export default {
                         {
                             title: "Contract Management and Closing",
                             text: "We meticulously draft and review all contracts (Reservation, Promise of Sale, Final Sale) protecting your interests. We accompany the signing process and fund transfers until the title is delivered in your name.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/gestion-contratos-cierre-asesoria-legal.webp"
                         },
                         {
                             title: "Tax Benefits and CONFOTUR",

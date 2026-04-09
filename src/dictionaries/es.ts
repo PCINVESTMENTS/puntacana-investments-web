@@ -172,7 +172,7 @@ export default {
                         {
                             title: "Gestión de Contratos y Cierre",
                             text: "Redactamos y revisamos minuciosamente todos los contratos (Reserva, Promesa de Venta, Venta Definitiva) protegiendo sus intereses. Acompañamos el proceso de firma y transferencias de fondos hasta la entrega del título a su nombre.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/gestion-contratos-cierre-asesoria-legal.webp"
                         },
                         {
                             title: "Beneficios Fiscales y CONFOTUR",
