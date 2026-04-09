@@ -39,7 +39,11 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
         event.waitUntil(
             fetch(`${API_URL}/api/security/ingest-edge/`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Accept': 'application/json',
+                    'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY || 'c8f9d2a1b4e6g7h8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1'
+                },
                 body: JSON.stringify({ ip, country, reason: 'Edge Suspicious Access', path: pathname })
             }).catch(() => {})
         );
@@ -55,6 +59,9 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
         try {
             const configReq = await fetch(`${API_URL}/api/security/config/current/`, {
                 next: { revalidate: 30 },
+                headers: {
+                    'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY || 'c8f9d2a1b4e6g7h8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1'
+                }
             });
             if (configReq.ok) {
                 const config = await configReq.json();
