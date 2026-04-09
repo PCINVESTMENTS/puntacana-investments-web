@@ -322,7 +322,7 @@ export default {
                         {
                             title: "Luxury Residential",
                             text: "Specialists in the construction of high-level villas and condominiums, with obsessive attention to detail and premium finishes.",
-                            image: "/images/services/residencial-de-lujo.webp"
+                            image: "/images/services/residencial-de-lujo-nuevo.webp"
                         }
                     ],
                     details: [

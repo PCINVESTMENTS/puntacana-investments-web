@@ -322,7 +322,7 @@ export default {
                         {
                             title: "Residencial de Lujo",
                             text: "Especialistas en la construcción de villas y condominios de alto nivel, con atención obsesiva a los detalles y terminaciones premium.",
-                            image: "/images/services/residencial-de-lujo.webp"
+                            image: "/images/services/residencial-de-lujo-nuevo.webp"
                         }
                     ],
                     details: [
