@@ -27,13 +27,20 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
     useEffect(() => {
         if (featuredImages.length > 0) {
             const nextIndex = (currentImageIndex + 1) % featuredImages.length;
-            setRenderedIndexes(prev => {
-                let changed = false;
-                const newSet = new Set(prev);
-                if (!newSet.has(currentImageIndex)) { newSet.add(currentImageIndex); changed = true; }
-                if (!newSet.has(nextIndex)) { newSet.add(nextIndex); changed = true; }
-                return changed ? Array.from(newSet) : prev;
-            });
+            
+            // Delay preloading the next image by 3.5 seconds
+            // This ensures the current LCP image gets 100% of the network bandwidth first
+            const timeout = setTimeout(() => {
+                setRenderedIndexes(prev => {
+                    let changed = false;
+                    const newSet = new Set(prev);
+                    if (!newSet.has(currentImageIndex)) { newSet.add(currentImageIndex); changed = true; }
+                    if (!newSet.has(nextIndex)) { newSet.add(nextIndex); changed = true; }
+                    return changed ? Array.from(newSet) : prev;
+                });
+            }, 3500);
+
+            return () => clearTimeout(timeout);
         }
     }, [currentImageIndex, featuredImages.length]);
 
