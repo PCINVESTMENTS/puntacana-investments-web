@@ -177,7 +177,7 @@ export default {
                         {
                             title: "Beneficios Fiscales y CONFOTUR",
                             text: "Le asesoramos para maximizar los beneficios de la Ley de CONFOTUR, que ofrece exenciones de impuestos sobre transferencias inmobiliarias y sobre la propiedad inmobiliaria (IPI) por hasta 15 años en proyectos calificados.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/beneficios-fiscales-confotur-asesoria-legal.webp"
                         }
                     ],
                     details: [

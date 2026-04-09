@@ -177,7 +177,7 @@ export default {
                         {
                             title: "Tax Benefits and CONFOTUR",
                             text: "We advise you to maximize the benefits of the CONFOTUR Law, which offers exemptions from real estate transfer taxes and real estate property tax (IPI) for up to 15 years in qualified projects.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/beneficios-fiscales-confotur-asesoria-legal.webp"
                         }
                     ],
                     details: [
