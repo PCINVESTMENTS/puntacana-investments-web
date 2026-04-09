@@ -39,11 +39,11 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     }
     
     // --- SECURITY MODULE ---
+    const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for') || 'Unknown';
+    const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
+
     // 1. Drop bad bots immediately
     if (SUSPICIOUS_PATHS.some(susp => pathLower.includes(susp))) {
-        const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for') || 'Unknown';
-        const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
-
         event.waitUntil(
             fetch(`${API_URL}/api/security/ingest-edge/`, {
                 method: 'POST',
@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
         );
     }
 
-    // 2. Kill Switch (Panic Mode) via ISR Edge Cache
+    // 2. Kill Switch & Geo-Block via ISR Edge Cache
     if (!pathname.startsWith('/api')) {
         try {
             const configReq = await fetch(`${API_URL}/api/security/config/current/`, {
@@ -73,11 +73,37 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
             });
             if (configReq.ok) {
                 const config = await configReq.json();
+                
+                // Panic Mode
                 if (config.panic_mode === true || config.panic_mode === 'true' || config.panic_mode === 'True') {
                      return new NextResponse(
                         `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Mantenimiento Preventivo</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet"></head><body style="background:#050505;color:#e5e5e5;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;padding:20px;text-align:center;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><h1 style="font-weight:300;font-size:24px;margin-bottom:10px;">Sistema Restringido</h1><p style="font-size:14px;color:#888;max-width:400px;line-height:1.6;">Nuestra plataforma se encuentra bajo protecci&oacute;n defensiva m&aacute;xima (Modo P&aacute;nico) y no acepta conexiones por el momento. Regresaremos en breve.</p></body></html>`,
                         { status: 503, headers: { 'content-type': 'text/html', 'Retry-After': '3600' } }
                     );
+                }
+
+                // Geo-Blocking
+                if (config.blocked_countries && country !== 'Unknown') {
+                    const blockList = config.blocked_countries.split(',').map((c: string) => c.trim().toUpperCase());
+                    if (blockList.includes(country.toUpperCase())) {
+                        
+                        // Fire-and-forget telemetry
+                        event.waitUntil(
+                            fetch(`${API_URL}/api/security/ingest-edge/`, {
+                                method: 'POST',
+                                headers: { 
+                                    'Content-Type': 'application/json', 
+                                    'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY || 'c8f9d2a1b4e6g7h8j9k0l1m2n3o4p5q6r7s8t9u0v1w2x3y4z5a6b7c8d9e0f1'
+                                },
+                                body: JSON.stringify({ ip, country, reason: 'Geo-Block Restringido', path: pathname })
+                            }).catch(() => {})
+                        );
+
+                        return new NextResponse(
+                            `<!DOCTYPE html><html><head><title>Access Denied</title></head><body style="background:#0a0a0a;color:#ef4444;font-family:monospace;padding:40px;"><h1>403 Forbidden</h1><p>Edge Security WAF: Conexi&oacute;n denegada desde tu regi&oacute;n geogr&aacute;fica (${country}).</p></body></html>`,
+                            { status: 403, headers: { 'content-type': 'text/html' } }
+                        );
+                    }
                 }
             }
         } catch (e) {
