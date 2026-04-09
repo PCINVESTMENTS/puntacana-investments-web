@@ -90,22 +90,23 @@ export default {
             subtitle: "Explore the most prestigious areas",
             exploreMore: "Explore All Locations",
             items: [
-                { title: "Punta Cana", slug: "puntacana", img: "/images/locations/bavaro.jpg" },
+                { title: "Punta Cana", slug: "puntacana", img: "/images/locations/punta_cana.jpg" },
                 { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.jpg" },
                 { title: "Bávaro", slug: "bavaro", img: "/images/locations/bavaro.jpg" },
-                { title: "La Romana", slug: "laromana", img: "/images/locations/la_romana.png" },
+                { title: "La Romana", slug: "laromana", img: "/images/locations/la_romana.jpeg" },
                 { title: "Casa de Campo", slug: "casacampo", img: "/images/locations/casa_de_campo.jpg" },
                 { title: "Juan Dolio", slug: "juandolio", img: "/images/locations/juan_dolio.jpg" },
-                { title: "Miches", slug: "miches", img: "/images/locations/miches.jpg" },
+                { title: "Miches", slug: "miches", img: "/images/locations/miches.jpeg" },
                 { title: "El Seibo", slug: "elseibo", img: "/images/locations/el_seibo.jpg" },
                 { title: "Higüey", slug: "higuey", img: "/images/locations/higuey.jpg" },
-                { title: "Santo Domingo", slug: "santodomingo", img: "/images/locations/santo_domingo.jpg" },
+                { title: "Santo Domingo", slug: "santodomingo", img: "/images/locations/Santo_domingo.jpeg" },
                 { title: "Las Terrenas", slug: "lasterrenas", img: "/images/locations/las_terrenas.jpg" },
                 { title: "Samaná", slug: "samana", img: "/images/locations/samana.jpg" },
-                { title: "Puerto Plata", slug: "puertoplata", img: "https://upcrealestate.com/wp-content/uploads/2023/02/1.jpg" },
-                { title: "Bayahibe", slug: "bayahibe", img: "/images/og-home-luxury.jpg" },
-                { title: "Vista Cana", slug: "vistacana", img: "/images/locations/bavaro.jpg" },
-                { title: "White Sands Bavaro", slug: "whitesands", img: "/images/locations/bavaro.jpg" }
+                { title: "Puerto Plata", slug: "puertoplata", img: "/images/locations/puerto_plata.jpg" },
+                { title: "Bayahibe", slug: "bayahibe", img: "/images/locations/bayahibe.png" },
+                { title: "Vista Cana", slug: "vistacana", img: "/images/locations/vista_cana.jpg" },
+                { title: "White Sands Bavaro", slug: "whitesands", img: "/images/locations/white_sands.png" },
+                { title: "Santiago", slug: "santiago", img: "/images/locations/santiago.jpg" }
             ]
         },
         investments: {
