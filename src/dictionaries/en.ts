@@ -337,7 +337,7 @@ export default {
                     slug: "development",
                     title: "Development",
                     description: "Planning and execution of large real estate and tourism developments with a vision of the future.",
-                    img: "/images/services/master-planning.webp",
+                    img: "/images/services/desarrollo-nuevo.webp",
                     longDescription: "We create destinations. We participate in the conception and development of master communities and tourism projects that generate long-term value and transform the environment.",
                     contentSections: [
                         {

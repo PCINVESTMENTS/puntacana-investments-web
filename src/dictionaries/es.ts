@@ -337,7 +337,7 @@ export default {
                     slug: "desarrollo",
                     title: "Desarrollo",
                     description: "Planificación y ejecución de grandes desarrollos inmobiliarios y turísticos con visión de futuro.",
-                    img: "/images/services/desarrollo.webp",
+                    img: "/images/services/desarrollo-nuevo.webp",
                     longDescription: "Creamos destinos. Participamos en la concepción y desarrollo de comunidades maestras y proyectos turísticos que generan valor a largo plazo y transforman el entorno.",
                     contentSections: [
                         {
