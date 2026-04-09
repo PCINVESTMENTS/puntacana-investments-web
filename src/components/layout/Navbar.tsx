@@ -131,9 +131,8 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         Let's put burger right (standard) and logo center.
                     */}
 
-                    {/* Logo - Centered on Mobile, Left on Desktop */}
-                    {/* Mobile Logo - Centered */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:hidden">
+                    {/* Unified Logo - Centered on Mobile, Left on Desktop */}
+                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:static lg:transform-none">
                         <Link
                             href={`/${lang}`}
                             onClick={() => {
@@ -142,14 +141,14 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 }
                                 setIsOpen(false);
                             }}
-                            className="flex items-center justify-center transition-all duration-300 h-16 sm:h-20"
+                            className="flex items-center justify-center lg:justify-start transition-all duration-300 hover:opacity-90 flex-shrink-0 group gap-1 lg:gap-2"
                         >
                             <Image
                                 src="/images/logo-pci-investments-gold.webp"
                                 alt="Punta Cana Investments"
                                 width={120}
                                 height={120}
-                                className="h-full w-auto object-contain"
+                                className="w-[60px] h-[60px] sm:w-20 sm:h-20 xl:w-24 xl:h-24 object-contain"
                                 priority
                             />
                             <Image
@@ -157,39 +156,11 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 alt="PCI Construction Group"
                                 width={120}
                                 height={120}
-                                className="h-full w-auto object-contain"
+                                className="w-[60px] h-[60px] sm:w-20 sm:h-20 xl:w-24 xl:h-24 object-contain"
                                 priority
                             />
                         </Link>
                     </div>
-
-                    {/* Desktop Logo - Left aligned */}
-                    <Link
-                        href={`/${lang}`}
-                        onClick={() => {
-                            if (window.location.pathname === `/${lang}`) {
-                                window.scrollTo({ top: 0, behavior: "smooth" });
-                            }
-                        }}
-                        className="hidden lg:flex flex-shrink-0 items-center justify-start group h-20 xl:h-24 hover:opacity-90 transition-opacity"
-                    >
-                        <Image
-                            src="/images/logo-pci-investments-gold.webp"
-                            alt="Punta Cana Investments"
-                            width={160}
-                            height={160}
-                            className="h-full w-auto object-contain"
-                            priority
-                        />
-                        <Image
-                            src="/images/logo-pci-construction-gold.webp"
-                            alt="PCI Construction Group"
-                            width={160}
-                            height={160}
-                            className="h-full w-auto object-contain"
-                            priority
-                        />
-                    </Link>
 
                     {/* Desktop Menu - Pushed to right by flex spacer or justify-between */}
                     {/* We need to ensure the layout still works. Default was justify-between. */}
