@@ -198,7 +198,7 @@ export default {
                         {
                             title: "Diseño Conceptual y Anteproyecto",
                             text: "Iniciamos con un análisis profundo de sus necesidades y del terreno. Desarrollamos conceptos volumétricos y espaciales que capturan la esencia de su visión, priorizando la luz natural, la ventilación y las vistas.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/diseno-conceptual-anteproyecto-arquitectura.webp"
                         },
                         {
                             title: "Visualización 3D Fotorrealista",

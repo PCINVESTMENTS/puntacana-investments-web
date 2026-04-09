@@ -198,7 +198,7 @@ export default {
                         {
                             title: "Conceptual Design and Preliminary Project",
                             text: "We start with a deep analysis of your needs and the terrain. We develop volumetric and spatial concepts that capture the essence of your vision, prioritizing natural light, ventilation, and views.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/services/diseno-conceptual-anteproyecto-arquitectura.webp"
                         },
                         {
                             title: "Photorealistic 3D Visualization",
