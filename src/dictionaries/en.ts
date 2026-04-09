@@ -265,7 +265,7 @@ export default {
                         {
                             title: "Supervision and Work Control",
                             text: "Our team of resident engineers monitors every stage of the construction process, ensuring that specifications, timelines, and budgets are met.",
-                            image: "/images/services/supervision-y-control-de-obra.webp"
+                            image: "/images/services/supervision-y-control-de-obra-nuevo.webp"
                         }
                     ],
                     details: [

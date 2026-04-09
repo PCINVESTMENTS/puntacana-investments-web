@@ -265,7 +265,7 @@ export default {
                         {
                             title: "Supervisión y Control de Obra",
                             text: "Nuestro equipo de ingenieros residentes vigila cada etapa del proceso constructivo, asegurando que se cumplan las especificaciones, tiempos y presupuesto.",
-                            image: "/images/services/supervision-y-control-de-obra.webp"
+                            image: "/images/services/supervision-y-control-de-obra-nuevo.webp"
                         }
                     ],
                     details: [
