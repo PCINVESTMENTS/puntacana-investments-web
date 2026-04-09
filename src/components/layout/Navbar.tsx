@@ -145,7 +145,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             className="flex items-center justify-center transition-all duration-300 h-16 sm:h-20"
                         >
                             <Image
-                                src="/images/logo-pci-investments-gold.jpg"
+                                src="/images/logo-pci-investments-gold.png"
                                 alt="Punta Cana Investments"
                                 width={120}
                                 height={120}
@@ -153,7 +153,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 priority
                             />
                             <Image
-                                src="/images/logo-pci-construction-gold.jpg"
+                                src="/images/logo-pci-construction-gold.png"
                                 alt="PCI Construction Group"
                                 width={120}
                                 height={120}
@@ -174,7 +174,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         className="hidden lg:flex flex-shrink-0 items-center justify-start group h-20 xl:h-24 hover:opacity-90 transition-opacity"
                     >
                         <Image
-                            src="/images/logo-pci-investments-gold.jpg"
+                            src="/images/logo-pci-investments-gold.png"
                             alt="Punta Cana Investments"
                             width={160}
                             height={160}
@@ -182,7 +182,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             priority
                         />
                         <Image
-                            src="/images/logo-pci-construction-gold.jpg"
+                            src="/images/logo-pci-construction-gold.png"
                             alt="PCI Construction Group"
                             width={160}
                             height={160}

@@ -1,11 +1,12 @@
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
-import PropertyListings from "@/components/home/PropertyListings";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import PropertyFilterBar from "@/components/home/PropertyFilterBar";
 
 // Lazy loading below-the-fold sections
 import dynamic from 'next/dynamic';
+
+const PropertyListings = dynamic(() => import("@/components/home/PropertyListings"), { ssr: true });
 
 const ServicesSection = dynamic(() => import("@/components/home/ServicesSection"));
 const TestimonialsSection = dynamic(() => import("@/components/home/TestimonialsSection"));
