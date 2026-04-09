@@ -260,7 +260,7 @@ export default {
                         {
                             title: "Structural Calculation and Analysis",
                             text: "We use advanced software to design resilient and safe structures, optimized for the region's seismic and climatic conditions.",
-                            image: "/images/services/calculo-y-analisis-estructural.webp"
+                            image: "/images/services/calculo-y-analisis-estructural-nuevo.webp"
                         },
                         {
                             title: "Supervision and Work Control",

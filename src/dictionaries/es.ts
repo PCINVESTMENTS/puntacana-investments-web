@@ -260,7 +260,7 @@ export default {
                         {
                             title: "Cálculo y Análisis Estructural",
                             text: "Utilizamos software avanzado para diseñar estructuras resilientes y seguras, optimizadas para las condiciones sísmicas y climáticas de la región.",
-                            image: "/images/services/calculo-y-analisis-estructural.webp"
+                            image: "/images/services/calculo-y-analisis-estructural-nuevo.webp"
                         },
                         {
                             title: "Supervisión y Control de Obra",
