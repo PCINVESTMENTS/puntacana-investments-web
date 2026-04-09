@@ -286,7 +286,7 @@ export default {
                         {
                             title: "Instalaciones de Media y Baja Tensión",
                             text: "Diseño integral de redes eléctricas, subestaciones y distribución interna, cumpliendo con todas las normas internacionales de seguridad.",
-                            image: "/images/services/instalaciones-de-media-y-baja-tension.webp"
+                            image: "/images/services/instalaciones-de-media-y-baja-tension-nuevo.webp"
                         },
                         {
                             title: "Energía Renovable",

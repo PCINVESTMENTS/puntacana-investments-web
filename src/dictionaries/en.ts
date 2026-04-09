@@ -286,7 +286,7 @@ export default {
                         {
                             title: "Medium and Low Voltage Installations",
                             text: "Comprehensive design of electrical networks, substations, and internal distribution, complying with all international safety standards.",
-                            image: "/images/services/instalaciones-de-media-y-baja-tension.webp"
+                            image: "/images/services/instalaciones-de-media-y-baja-tension-nuevo.webp"
                         },
                         {
                             title: "Renewable Energy",
