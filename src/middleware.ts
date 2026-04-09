@@ -6,7 +6,12 @@ import { match } from '@formatjs/intl-localematcher';
 const locales = ['en', 'es'];
 const defaultLocale = 'es';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
+// Safely parse API_URL to prevent double-slash errors (e.g. https://...//api/)
+let API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
+if (API_URL.endsWith('/')) {
+    API_URL = API_URL.slice(0, -1);
+}
+
 const SUSPICIOUS_PATHS = ['.git', '.env', 'wp-admin', 'wp-login.php', 'config.php', 'phpinfo', 'eval(', 'base64_decode'];
 
 function getLocale(request: NextRequest): string {
@@ -18,6 +23,9 @@ function getLocale(request: NextRequest): string {
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
     const { pathname } = request.nextUrl;
     const pathLower = pathname.toLowerCase();
+    
+    // Safely parse API_URL to prevent double-slash errors (e.g. https://...//api/)
+    // Removed duplicate API_URL logic here.
 
     // ABSOLUTE BYPASS FOR API, STUDIO, AND ASSETS
     if (
