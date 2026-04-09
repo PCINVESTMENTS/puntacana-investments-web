@@ -1431,13 +1431,13 @@ Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente resid
         status: "sale",
         price: 154000000,
         hideFromLabel: true,
-        image: "/images/og-home-luxury.jpg",
+        image: "/images/playa-esmeralda-miches-terreno-hotelero.jpg",
         featured: false,
         beds: 0,
         baths: 0,
         area: 1185000,
         gallery: [
-            "/images/og-home-luxury.jpg",
+            "/images/playa-esmeralda-miches-terreno-hotelero.jpg",
             "/images/terreno-hotelero-miches-beachfront-aerial.png"
         ],
         features: {
@@ -1497,6 +1497,20 @@ Miches se posiciona como el nuevo destino estrella para desarrollos turísticos 
 - Desarrolladores turísticos
 - Proyectos hoteleros de gran escala
 - Inversiones estratégicas a largo plazo`
+        },
+        seo: {
+            title: {
+                en: "Beachfront Hotel Land for Sale in Miches | 1.18M m² Playa Esmeralda",
+                es: "Venta de Terreno Hotelero Frente al Mar en Miches | Playa Esmeralda"
+            },
+            description: {
+                en: "Prime 1,185,000 m² beachfront land in Miches, Dominican Republic. Approved high-density hotel zoning, CONFOTUR tax exemptions, and 800m of pristine beach.",
+                es: "Exclusivo terreno de 1,185,000 m² frente al mar en Miches. Zonificación hotelera de alta densidad aprobada, exención CONFOTUR y 800m de playa virgen."
+            },
+            keywords: {
+                en: ["Miches land for sale", "Hotel land Dominican Republic", "Beachfront property Miches", "Commercial real estate Punta Cana", "Playa Esmeralda investment", "CONFOTUR land"],
+                es: ["Venta terreno Miches", "Terreno hotelero Republica Dominicana", "Terreno frente al mar Miches", "Inversión Playa Esmeralda", "Bienes Raíces Miches", "Terreno CONFOTUR"]
+            }
         }
     },
     {
