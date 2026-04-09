@@ -203,12 +203,12 @@ export default {
                         {
                             title: "Visualización 3D Fotorrealista",
                             text: "Utilizamos tecnología de punta para crear renders y recorridos virtuales que le permiten 'vivir' el espacio antes de construirlo. Cada textura, material e iluminación se define con precisión.",
-                            image: "/images/services/visualizacion-3d-fotorrealista.webp"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Planos Ejecutivos y Permisos",
                             text: "Desarrollamos la documentación técnica completa necesaria para la construcción y la obtención de licencias. Aseguramos el cumplimiento estricto de las normativas locales de construcción.",
-                            image: "/images/services/planos-ejecutivos-y-permisos.webp"
+                            image: "/images/services/planos-ejecutivos-y-permisos-arquitectura.webp"
                         }
                     ],
                     details: [

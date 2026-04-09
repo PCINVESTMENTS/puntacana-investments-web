@@ -203,12 +203,12 @@ export default {
                         {
                             title: "Photorealistic 3D Visualization",
                             text: "We use state-of-the-art technology to create renders and virtual tours that allow you to 'live' the space before building it. Every texture, material, and lighting is defined with precision.",
-                            image: "/images/services/visualizacion-3d-fotorrealista.webp"
+                            image: "/images/og-home-luxury.jpg"
                         },
                         {
                             title: "Executive Plans and Permits",
                             text: "We develop the complete technical documentation necessary for construction and obtaining licenses. We ensure strict compliance with local building regulations.",
-                            image: "/images/services/planos-ejecutivos-y-permisos.webp"
+                            image: "/images/services/planos-ejecutivos-y-permisos-arquitectura.webp"
                         }
                     ],
                     details: [
