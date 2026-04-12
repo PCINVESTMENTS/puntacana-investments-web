@@ -1,7 +1,7 @@
 export default {
     meta: {
-        title: "Punta Cana Real Estate | Luxury Villas & Condos for Sale",
-        description: "Invest in Punta Cana Real Estate. Discover exclusive luxury villas, condos for sale, and off-market investment properties in the Dominican Republic."
+        title: "Punta Cana Real Estate | Hotels, Land, Villas & Commercial Properties",
+        description: "Invest in Dominican Republic Real Estate. Discover high ROI condo hotels, beachfront land for hotel development, retail spaces, and luxury villas across Punta Cana, Bavaro, and Miches."
     },
     nav: {
         home: "Home",
@@ -26,7 +26,7 @@ export default {
         contactAuthor: "Contact Author"
     },
     hero: {
-        subtitle: "Your exclusive real estate agency to invest in condos, luxury villas, and properties in Punta Cana.",
+        subtitle: "Your specialized agency for high ROI investments. Discover hotels for sale, beachfront land for developments, commercial properties, and luxury villas in Punta Cana, Bavaro, and Miches.",
         title: "Punta Cana Real Estate Investments",
         cta: "View Condos for Sale",
         scroll: "Explore Investments"

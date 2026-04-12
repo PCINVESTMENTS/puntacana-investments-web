@@ -1,7 +1,7 @@
 export default {
     meta: {
-        title: "Punta Cana Investments | Real Estate y Villas de Lujo",
-        description: "Invierta en bienes raíces en Punta Cana. Descubra apartamentos en venta, villas de lujo y proyectos inmobiliarios en República Dominicana."
+        title: "Punta Cana Investments | Real Estate, Villas, Terrenos y Hoteles en Venta",
+        description: "Invierta en bienes raíces con especialistas en Punta Cana y Miches. Descubra condohoteles de alto ROI, terrenos para construir, locales comerciales y villas de lujo frente al mar en República Dominicana."
     },
     nav: {
         home: "Inicio",
@@ -26,7 +26,7 @@ export default {
         contactAuthor: "Contactar Autor"
     },
     hero: {
-        subtitle: "Tu agencia inmobiliaria exclusiva para invertir en apartamentos, villas de lujo y propiedades en Punta Cana.",
+        subtitle: "Tu agencia especializada en inversiones de alto retorno. Descubre hoteles en venta, terrenos para desarrollos, locales comerciales, solares y villas de lujo en Punta Cana, Bávaro y Miches.",
         title: "Punta Cana Real Estate Investments",
         cta: "Ver Apartamentos en Venta",
         scroll: "Explorar Inversiones"
