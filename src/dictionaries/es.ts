@@ -192,7 +192,7 @@ export default {
                     slug: "arquitectura",
                     title: "Arquitectura",
                     description: "Diseño conceptual y planificación arquitectónica de vanguardia para proyectos residenciales y comerciales.",
-                    img: "/images/services/arquitectura.webp?v=2",
+                    img: "/images/services/arquitectura-v2.webp",
                     longDescription: "Transformamos visiones en realidades tangibles. Nuestro departamento de arquitectura fusiona estética moderna con funcionalidad caribeña, creando espacios que no solo son hermosos, sino que se integran armónicamente con el entorno tropical.",
                     contentSections: [
                         {
