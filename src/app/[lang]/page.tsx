@@ -49,8 +49,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     title,
     description,
     keywords: lang === 'en'
-      ? ['Punta Cana Investments', 'Punta Cana Real Estate', 'Luxury Villas for sale Dominican Republic', 'Condos for sale Punta Cana', 'Cap Cana Real Estate', 'Invest in Bavaro properties', 'Dominican Republic real estate', 'Fly and Buy', 'Punta Cana homes for sale', 'Dominican Republic investment properties', 'Construction Punta Cana', 'Real Estate Developer Dominican Republic', 'Building contractors Punta Cana', 'Custom luxury villas construction']
-      : ['Punta Cana Investments', 'Real Estate Punta Cana', 'Apartamentos en venta Punta Cana', 'Villas de lujo Republica Dominicana', 'Bienes raices Cap Cana', 'Invertir en Bavaro', 'Casas en venta Punta Cana', 'Proyectos inmobiliarios Punta Cana', 'Fly and Buy RD', 'Inmobiliaria Punta Cana', 'Constructora en Punta Cana', 'Construcción de villas', 'Desarrolladores de proyectos inmobiliarios RD', 'Ingeniería civil y arquitectura Punta Cana'],
+      ? ['Punta Cana Investments', 'Punta Cana Real Estate', 'Luxury Villas for sale Dominican Republic', 'Condos for sale Punta Cana', 'Cap Cana Real Estate', 'Invest in Bavaro properties', 'Dominican Republic real estate', 'Fly and Buy', 'Punta Cana homes for sale', 'Dominican Republic investment properties', 'Construction Punta Cana', 'Real Estate Developer Dominican Republic', 'Building contractors Punta Cana', 'Custom luxury villas construction', 'Retire in Punta Cana', 'Expat communities Dominican Republic', 'Beachfront villas for sale Punta Cana', 'Ocean view condos Bavaro', 'Airbnb investment Punta Cana', 'CONFOTUR law properties Dominican Republic', 'Tax-free real estate Punta Cana', 'Pre-construction condos Punta Cana', 'Vista Cana real estate', 'Punta Cana Resort and Club properties']
+      : ['Punta Cana Investments', 'Real Estate Punta Cana', 'Apartamentos en venta Punta Cana', 'Villas de lujo Republica Dominicana', 'Bienes raices Cap Cana', 'Invertir en Bavaro', 'Casas en venta Punta Cana', 'Proyectos inmobiliarios Punta Cana', 'Fly and Buy RD', 'Inmobiliaria Punta Cana', 'Constructora en Punta Cana', 'Construcción de villas', 'Desarrolladores de proyectos inmobiliarios RD', 'Ingeniería civil y arquitectura Punta Cana', 'Jubilarse en Punta Cana', 'Comprar casa en República Dominicana siendo extranjero', 'Villas frente al mar en Punta Cana', 'Casas cerca de la playa Punta Cana', 'Propiedades de alta rentabilidad para Airbnb', 'Proyectos en Planos Punta Cana', 'Casas en Vista Cana', 'Apartamentos en Los Corales Bavaro'],
     openGraph: {
       title,
       description,
@@ -138,8 +138,49 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const rentProperties = stripPayload(properties.filter(p => p.status === "rent").slice(0, 3));
   const featuredOnlyProperties = stripPayload(properties.filter(p => p.featured === true).slice(0, 3));
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": lang === 'en' ? "Can a foreigner buy property in Punta Cana, Dominican Republic?" : "¿Puede un extranjero comprar propiedad en Punta Cana?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": lang === 'en' 
+            ? "Yes, foreigners can buy property in the Dominican Republic with the same rights as citizens. It is a very friendly environment for expats looking to retire in Punta Cana or invest."
+            : "Sí, los extranjeros pueden comprar propiedades en República Dominicana con los mismos derechos que un ciudadano. Es un destino ideal para expatriados e inversores."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": lang === 'en' ? "What is the CONFOTUR Law for DR Real Estate?" : "¿Qué es la Ley de CONFOTUR en Bienes Raíces?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": lang === 'en'
+            ? "The CONFOTUR law offers a 15-year tax exemption for approved real estate projects, completely waiving the 3% property transfer tax and the annual 1% property tax (IPI)."
+            : "La ley de CONFOTUR ofrece una exención de impuestos de hasta 15 años para proyectos turísticos aprobados, exonerando el 3% de transferencia y el 1% de IPI anual."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": lang === 'en' ? "Are beachfront villas in Punta Cana good for Airbnb investment?" : "¿Son las villas frente al mar buenas para inversión Airbnb?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": lang === 'en'
+            ? "Absolutely. Oceanfront condos and beachfront villas yield some of the highest ROI in the Caribbean due to year-round high occupancy from vacation rentals."
+            : "Totalmente. Los condominios frente al mar y las villas de lujo tienen algunos de los mayores retornos de inversión (ROI) del Caribe gracias a la altísima ocupación de rentas vacacionales todo el año."
+        }
+      }
+    ]
+  };
+
   return (
     <main className="min-h-screen">
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
       <Hero dict={dict.hero} featuredImages={heroProperties} />
       <PropertyFilterBar dict={dict.properties} locations={dict.sections.locations.items} lang={lang} />

@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     },
     description: dict.meta.description,
     keywords: lang === 'en' 
-      ? ["Punta Cana Real Estate", "Luxury Villas Punta Cana", "Property Investment Dominican Republic", "Cap Cana Properties", "Off-market real estate", "Condos for sale Dominican Republic", "Bavaro Real Estate"] 
-      : ["Bienes Raíces Punta Cana", "Villas de Lujo Punta Cana", "Inversión Inmobiliaria República Dominicana", "Propiedades Cap Cana", "Bienes Raíces Off-market", "Apartamentos en venta Punta Cana", "Bávaro Inmobiliaria"],
+      ? ["Punta Cana Real Estate", "Luxury Villas Punta Cana", "Property Investment Dominican Republic", "Cap Cana Properties", "Off-market real estate", "Condos for sale Dominican Republic", "Bavaro Real Estate", "Retire in Punta Cana", "Expat living Dominican Republic", "Tax-free real estate Punta Cana", "Beachfront villas for sale", "Pre-construction condos Punta Cana"] 
+      : ["Bienes Raíces Punta Cana", "Villas de Lujo Punta Cana", "Inversión Inmobiliaria República Dominicana", "Propiedades Cap Cana", "Bienes Raíces Off-market", "Apartamentos en venta Punta Cana", "Bávaro Inmobiliaria", "Jubilarse en Punta Cana", "Comunidades de expatriados", "Bienes raíces libres de impuestos CONFOTUR", "Villas frente al mar en venta", "Proyectos en planos Punta Cana"],
     metadataBase: new URL(baseUrl),
     robots: {
       index: true,
