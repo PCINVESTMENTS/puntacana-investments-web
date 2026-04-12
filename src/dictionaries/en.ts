@@ -1,7 +1,7 @@
 export default {
     meta: {
-        title: "Punta Cana Investments | Exclusive Luxury Real Estate & Investments",
-        description: "Invest in the most exclusive properties in Punta Cana. Luxury villas, pre-construction projects, and off-market opportunities with expert Caribbean advisory."
+        title: "Punta Cana Real Estate | Luxury Villas & Condos for Sale",
+        description: "Invest in Punta Cana Real Estate. Discover exclusive luxury villas, condos for sale, and off-market investment properties in the Dominican Republic."
     },
     nav: {
         home: "Home",
@@ -26,10 +26,10 @@ export default {
         contactAuthor: "Contact Author"
     },
     hero: {
-        subtitle: "Your gateway to the best investments in the Caribbean.",
-        title: "Punta Cana Investments",
-        cta: "View Properties",
-        scroll: "Discover More"
+        subtitle: "Your exclusive real estate agency to invest in condos, luxury villas, and properties in Punta Cana.",
+        title: "Punta Cana Real Estate Investments",
+        cta: "View Condos for Sale",
+        scroll: "Explore Investments"
     },
     footer: {
         newsletter: "Newsletter",

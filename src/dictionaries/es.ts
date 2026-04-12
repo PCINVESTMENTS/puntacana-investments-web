@@ -1,7 +1,7 @@
 export default {
     meta: {
-        title: "Punta Cana Investments | Real Estate de Lujo en el Caribe",
-        description: "Invierta en las propiedades más exclusivas de Punta Cana. Villas de lujo, proyectos en planos y oportunidades off-market con la mejor asesoría del Caribe."
+        title: "Punta Cana Investments | Real Estate y Villas de Lujo",
+        description: "Invierta en bienes raíces en Punta Cana. Descubra apartamentos en venta, villas de lujo y proyectos inmobiliarios en República Dominicana."
     },
     nav: {
         home: "Inicio",
@@ -26,10 +26,10 @@ export default {
         contactAuthor: "Contactar Autor"
     },
     hero: {
-        subtitle: "Tu puerta de entrada a las mejores inversiones del Caribe.",
-        title: "Punta Cana Investments",
-        cta: "Ver Propiedades",
-        scroll: "Descubre Más"
+        subtitle: "Tu agencia inmobiliaria exclusiva para invertir en apartamentos, villas de lujo y propiedades en Punta Cana.",
+        title: "Punta Cana Real Estate Investments",
+        cta: "Ver Apartamentos en Venta",
+        scroll: "Explorar Inversiones"
     },
     footer: {
         newsletter: "Boletín",

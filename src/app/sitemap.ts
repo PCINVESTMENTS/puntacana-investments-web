@@ -49,11 +49,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Static Pages
     staticRoutes.forEach(route => {
         languages.forEach(lang => {
+            const alternateLanguages: Record<string, string> = {
+                'x-default': `${baseUrl}/en${route}`,
+            };
+            languages.forEach(l => {
+                alternateLanguages[l] = `${baseUrl}/${l}${route}`;
+            });
+
             sitemapEntries.push({
                 url: `${baseUrl}/${lang}${route}`,
                 lastModified: new Date(),
                 changeFrequency: 'daily',
                 priority: route === '' ? 1.0 : 0.8,
+                alternates: {
+                    languages: alternateLanguages
+                }
             });
         });
     });
@@ -61,11 +71,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Property Pages
     allProperties.forEach(property => {
         languages.forEach(lang => {
+            const alternateLanguages: Record<string, string> = {
+                'x-default': `${baseUrl}/en/properties/${property.slug}`,
+            };
+            languages.forEach(l => {
+                alternateLanguages[l] = `${baseUrl}/${l}/properties/${property.slug}`;
+            });
+
             sitemapEntries.push({
                 url: `${baseUrl}/${lang}/properties/${property.slug}`,
                 lastModified: new Date(), // Ideal if we had updatedAt from Sanity
                 changeFrequency: 'daily',
                 priority: 0.8,
+                alternates: {
+                    languages: alternateLanguages
+                }
             });
         });
     });

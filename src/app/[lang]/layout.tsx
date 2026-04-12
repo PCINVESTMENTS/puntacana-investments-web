@@ -33,7 +33,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       default: dict.meta.title,
     },
     description: dict.meta.description,
-    keywords: ["Punta Cana Real Estate", "Luxury Villas Punta Cana", "Property Investment Dominican Republic", "Cap Cana Properties", "Off-market real estate"],
+    keywords: lang === 'en' 
+      ? ["Punta Cana Real Estate", "Luxury Villas Punta Cana", "Property Investment Dominican Republic", "Cap Cana Properties", "Off-market real estate", "Condos for sale Dominican Republic", "Bavaro Real Estate"] 
+      : ["Bienes Raíces Punta Cana", "Villas de Lujo Punta Cana", "Inversión Inmobiliaria República Dominicana", "Propiedades Cap Cana", "Bienes Raíces Off-market", "Apartamentos en venta Punta Cana", "Bávaro Inmobiliaria"],
     metadataBase: new URL(baseUrl),
     robots: {
       index: true,
@@ -80,6 +82,7 @@ import dynamic from "next/dynamic";
 const PropertyComparator = dynamic(() => import("@/components/property/PropertyComparator"));
 
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export default async function RootLayout({
   children,
@@ -97,6 +100,7 @@ export default async function RootLayout({
         className={`${inter.variable} ${playfair.variable} antialiased bg-primary-black text-white`}
       >
         <CompareProvider>
+          <LocalBusinessSchema lang={lang} />
           {children}
           <PropertyComparator lang={lang} />
           {/* ChatBot temporarily removed */}

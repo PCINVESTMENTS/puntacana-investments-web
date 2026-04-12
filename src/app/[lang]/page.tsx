@@ -39,18 +39,18 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 
   const title = lang === 'en'
     ? "Punta Cana Investments | Luxury Real Estate & Exclusive Properties"
-    : "Punta Cana Investments | Inmobiliaria de Lujo y Propiedades Exclusivas";
+    : "Punta Cana Investments | Inmobiliaria de Lujo y Bienes Raíces";
 
   const description = lang === 'en'
-    ? "Discover exclusive luxury villas, condos, and investment opportunities in Punta Cana. Access off-market listings and our signature Fly & Buy program."
-    : "Descubre villas de lujo exclusivas, condominios y oportunidades de inversión en Punta Cana. Accede a listados off-market y nuestro programa Fly & Buy.";
+    ? "Discover exclusive luxury villas, condos for sale, and real estate investment opportunities in Punta Cana, Bavaro, and Cap Cana, Dominican Republic."
+    : "Descubre exclusivas villas de lujo, apartamentos en venta, y oportunidades de inversión en bienes raíces en Punta Cana, Bávaro, y Cap Cana, República Dominicana.";
 
   return {
     title,
     description,
     keywords: lang === 'en'
-      ? ['Punta Cana Real Estate', 'Luxury Villas', 'Investment Dominican Republic', 'Fly and Buy', 'Condos for Sale']
-      : ['Bienes Raíces Punta Cana', 'Villas de Lujo', 'Inversión República Dominicana', 'Fly and Buy', 'Apartamentos en Venta'],
+      ? ['Punta Cana Investments', 'Punta Cana Real Estate', 'Luxury Villas for sale Dominican Republic', 'Condos for sale Punta Cana', 'Cap Cana Real Estate', 'Invest in Bavaro properties', 'Dominican Republic real estate', 'Fly and Buy', 'Punta Cana homes for sale', 'Dominican Republic investment properties', 'Construction Punta Cana', 'Real Estate Developer Dominican Republic', 'Building contractors Punta Cana', 'Custom luxury villas construction']
+      : ['Punta Cana Investments', 'Real Estate Punta Cana', 'Apartamentos en venta Punta Cana', 'Villas de lujo Republica Dominicana', 'Bienes raices Cap Cana', 'Invertir en Bavaro', 'Casas en venta Punta Cana', 'Proyectos inmobiliarios Punta Cana', 'Fly and Buy RD', 'Inmobiliaria Punta Cana', 'Constructora en Punta Cana', 'Construcción de villas', 'Desarrolladores de proyectos inmobiliarios RD', 'Ingeniería civil y arquitectura Punta Cana'],
     openGraph: {
       title,
       description,

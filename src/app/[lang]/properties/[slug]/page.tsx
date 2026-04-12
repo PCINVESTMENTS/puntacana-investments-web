@@ -92,7 +92,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const seo = property.seo;
     const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${property.title} | Punta Cana Investments`;
     const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
-    const keywords = (seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : []).join(', ');
+    
+    let keywordList = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
+    if (!keywordList || keywordList.length === 0) {
+        if (lang === 'en') {
+             keywordList = [
+                 `Punta Cana ${property.type} for sale`,
+                 `${property.title}`,
+                 `${property.type} in ${property.locationLabel}`,
+                 `Dominican Republic Real Estate`,
+                 `Buy property in Punta Cana`
+             ];
+        } else {
+             keywordList = [
+                 `${property.type === 'villa' ? 'Villa' : 'Apartamento'} en venta en Punta Cana`,
+                 `${property.title}`,
+                 `${property.type === 'villa' ? 'Comprar Villa' : 'Comprar Apartamento'} en ${property.locationLabel}`,
+                 `Bienes Raíces República Dominicana`,
+                 `Inversión en Punta Cana`
+             ];
+        }
+    }
+    const keywords = keywordList.join(', ');
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;

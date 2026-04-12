@@ -4,7 +4,7 @@ import Negotiator from 'negotiator';
 import { match } from '@formatjs/intl-localematcher';
 
 const locales = ['en', 'es'];
-const defaultLocale = 'es';
+const defaultLocale = 'en';
 
 // Safely parse API_URL to prevent double-slash errors (e.g. https://...//api/)
 let API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
