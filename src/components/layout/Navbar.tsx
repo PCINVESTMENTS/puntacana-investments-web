@@ -125,9 +125,9 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="relative flex justify-between h-20 items-center">
-                    {/* Unified Logo - Centered on Mobile, Left on Desktop */}
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:static lg:transform-none">
+                <div className="flex justify-between items-center h-20 lg:h-24">
+                    {/* Unified Logo */}
+                    <div className="flex items-center flex-shrink-0">
                         <Link
                             href={`/${lang}`}
                             onClick={() => {
@@ -136,7 +136,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 }
                                 setIsOpen(false);
                             }}
-                            className="flex items-center justify-center lg:justify-start transition-all duration-300 hover:opacity-90 flex-shrink-0 group gap-1 lg:gap-2"
+                            className="flex items-center justify-start transition-all duration-300 hover:opacity-90 group gap-2"
                         >
                             <Image
                                 src="/images/logo-pci-investments-gold.webp"
