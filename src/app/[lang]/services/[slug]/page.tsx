@@ -111,10 +111,10 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         src={service.img}
                         alt={service.title}
                         fill
-                        className="object-cover opacity-85"
+                        className="object-cover"
                         priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/30 to-black/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent"></div>
                 </div>
                 <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
                     <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-4 block animate-fade-in-up">

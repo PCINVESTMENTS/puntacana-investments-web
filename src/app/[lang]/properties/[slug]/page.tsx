@@ -254,7 +254,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         priority
                         className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/10 to-transparent"></div>
                 </div>
 
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
