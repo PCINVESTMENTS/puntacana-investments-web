@@ -91,7 +91,7 @@ export default {
             exploreMore: "Explore All Locations",
             items: [
                 { title: "Punta Cana", slug: "puntacana", img: "/images/locations/punta_cana.jpg" },
-                { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.jpg" },
+                { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.webp" },
                 { title: "Bávaro", slug: "bavaro", img: "/images/locations/bavaro.jpg" },
                 { title: "La Romana", slug: "laromana", img: "/images/locations/la_romana.jpeg" },
                 { title: "Casa de Campo", slug: "casacampo", img: "/images/locations/casa_de_campo.jpg" },
@@ -203,7 +203,7 @@ export default {
                         {
                             title: "Photorealistic 3D Visualization",
                             text: "We use state-of-the-art technology to create renders and virtual tours that allow you to 'live' the space before building it. Every texture, material, and lighting is defined with precision.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/og-home-luxury.webp"
                         },
                         {
                             title: "Executive Plans and Permits",
@@ -311,7 +311,7 @@ export default {
                     slug: "construction",
                     title: "Construction",
                     description: "We materialize projects from the foundations to turnkey, guaranteeing excellence in every meter.",
-                    img: "/images/og-home-luxury.jpg",
+                    img: "/images/og-home-luxury.webp",
                     longDescription: "Construction quality without compromise. As a general contractor, we assume full responsibility for execution, coordinating teams, materials, and timelines to deliver impeccable works.",
                     contentSections: [
                         {

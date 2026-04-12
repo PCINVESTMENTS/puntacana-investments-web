@@ -91,7 +91,7 @@ export default {
             exploreMore: "Explorar Más Ubicaciones",
             items: [
                 { title: "Punta Cana", slug: "puntacana", img: "/images/locations/punta_cana.jpg" },
-                { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.jpg" },
+                { title: "Cap Cana", slug: "capcana", img: "/images/locations/cap_cana.webp" },
                 { title: "Bávaro", slug: "bavaro", img: "/images/locations/bavaro.jpg" },
                 { title: "La Romana", slug: "laromana", img: "/images/locations/la_romana.jpeg" },
                 { title: "Casa de Campo", slug: "casacampo", img: "/images/locations/casa_de_campo.jpg" },
@@ -203,7 +203,7 @@ export default {
                         {
                             title: "Visualización 3D Fotorrealista",
                             text: "Utilizamos tecnología de punta para crear renders y recorridos virtuales que le permiten 'vivir' el espacio antes de construirlo. Cada textura, material e iluminación se define con precisión.",
-                            image: "/images/og-home-luxury.jpg"
+                            image: "/images/og-home-luxury.webp"
                         },
                         {
                             title: "Planos Ejecutivos y Permisos",

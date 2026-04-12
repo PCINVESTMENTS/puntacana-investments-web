@@ -29,7 +29,7 @@ function mapSanityProperty(data: any): Property {
 
     return {
         ...data,
-        image: data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "/images/og-home-luxury.jpg"),
+        image: data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "/images/og-home-luxury.webp"),
         gallery: data.gallery
             ? data.gallery.map((img: any) => urlFor(img).url())
             : (data.galleryUrls || []),

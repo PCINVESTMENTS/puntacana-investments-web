@@ -60,7 +60,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "vacation-villas",
         title: { es: "Villas Premium Vacacionales", en: "Premium Vacation Villas" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/og-home-luxury.webp",
         description: {
             es: "El pináculo del lujo y la rentabilidad. Propiedades exclusivas diseñadas para el mercado de alquiler a corto plazo de alto nivel.",
             en: "The pinnacle of luxury and profitability. Exclusive properties designed for the high-end short-term rental market."
@@ -90,7 +90,7 @@ export const investmentModels: InvestmentModel[] = [
                     es: "Nuestras villas se seleccionan o construyen pensando en el huésped: habitaciones con baño privado (ensuite), áreas sociales abiertas y mantenimiento eficiente para maximizar las reseñas de 5 estrellas.",
                     en: "Our villas are selected or built with the guest in mind: ensuite bedrooms, open social areas, and efficient maintenance to maximize 5-star reviews."
                 },
-                image: "/images/og-home-luxury.jpg"
+                image: "/images/og-home-luxury.webp"
             }
         ]
     },
@@ -134,7 +134,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "development-participation",
         title: { es: "Participación en Desarrollos", en: "Development Participation" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/og-home-luxury.webp",
         description: {
             es: "Conviértase en socio, no solo en propietario. Invierta capital directamente en la empresa desarrolladora a cambio de acciones y altos rendimientos.",
             en: "Become a partner, not just an owner. Invest capital directly in the development company in exchange for shares and high returns."
@@ -162,7 +162,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "passive-investments",
         title: { es: "Inversiones Pasivas", en: "Passive Investments" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/og-home-luxury.webp",
         description: {
             es: "Instrumentos de deuda privada con retorno fijo garantizado, respaldados por garantías hipotecarias.",
             en: "Private debt instruments with guaranteed fixed returns, backed by mortgage collateral."
@@ -186,7 +186,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "strategic-buy-resale",
         title: { es: "Compra y Reventa Estratégica", en: "Strategic Buy & Resale" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/og-home-luxury.webp",
         description: {
             es: "Detectar valor oculto, renovar y vender (Flipping). O comprar en zonas emergentes antes del boom.",
             en: "Detect hidden value, renovate, and sell (Flipping). Or buy in emerging zones before the boom."
@@ -204,7 +204,7 @@ export const investmentModels: InvestmentModel[] = [
     {
         slug: "off-market",
         title: { es: "Oportunidades Off-Market", en: "Off-Market Opportunities" },
-        heroImage: "/images/og-home-luxury.jpg",
+        heroImage: "/images/og-home-luxury.webp",
         description: {
             es: "Acceso exclusivo a propiedades que nunca llegan a los portales públicos. El verdadero tesoro para inversionistas institucionales.",
             en: "Exclusive access to properties that never reach public portals. The true treasure for institutional investors."

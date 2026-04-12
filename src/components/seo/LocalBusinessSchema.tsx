@@ -19,8 +19,8 @@ export function LocalBusinessSchema({ lang }: { lang?: string }) {
         "@id": "https://www.puntacanainvestmentsrd.com/#organization",
         "name": "Punta Cana Investments",
         "url": "https://www.puntacanainvestmentsrd.com",
-        "logo": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.jpg",
-        "image": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.jpg",
+        "logo": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.webp",
+        "image": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.webp",
         "description": isEn 
           ? "Premium Real Estate Agency offering luxury villas, condos for sale, and off-market investment properties in Punta Cana, Cap Cana, and Bavaro, Dominican Republic." 
           : "Agencia de Bienes Raíces premium ofreciendo villas de lujo, apartamentos en venta, y propiedades de inversión off-market en Punta Cana, Cap Cana y Bávaro, República Dominicana.",
@@ -50,8 +50,8 @@ export function LocalBusinessSchema({ lang }: { lang?: string }) {
         "@id": "https://www.puntacanainvestmentsrd.com/#contractor",
         "name": "Punta Cana Investments - Constructora",
         "url": "https://www.puntacanainvestmentsrd.com/services",
-        "logo": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.jpg",
-        "image": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.jpg",
+        "logo": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.webp",
+        "image": "https://www.puntacanainvestmentsrd.com/images/og-home-luxury.webp",
         "description": isEn 
           ? "Premier Construction and Development Company in Punta Cana. We build luxury villas, manage residential developments, and offer civil engineering and architectural services." 
           : "Constructora y desarrolladora líder en Punta Cana. Especialistas en construcción de villas de lujo, desarrollo de proyectos, arquitectura e ingeniería civil.",

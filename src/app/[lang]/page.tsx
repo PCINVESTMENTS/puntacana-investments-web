@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       siteName: 'Punta Cana Investments',
       images: [
         {
-          url: `${baseUrl}/images/og-home-luxury.jpg`,
+          url: `${baseUrl}/images/og-home-luxury.webp`,
           width: 1200,
           height: 630,
           alt: 'Luxury Real Estate in Punta Cana - Night View',
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       card: 'summary_large_image',
       title,
       description,
-      images: [`${baseUrl}/images/og-home-luxury.jpg`],
+      images: [`${baseUrl}/images/og-home-luxury.webp`],
     },
     alternates: {
       canonical: `${baseUrl}/${lang}`,

@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     openGraph: {
       images: [
         {
-          url: `${baseUrl}/images/og-home-luxury.jpg`,
+          url: `${baseUrl}/images/og-home-luxury.webp`,
           width: 1200,
           height: 630,
           alt: 'Punta Cana Investments Luxury Real Estate',
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       card: 'summary_large_image',
       title: dict.meta.title,
       description: dict.meta.description,
-      images: [`${baseUrl}/images/og-home-luxury.jpg`],
+      images: [`${baseUrl}/images/og-home-luxury.webp`],
     },
   };
 }
