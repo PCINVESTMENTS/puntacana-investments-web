@@ -36,11 +36,47 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         };
     }
 
+    let customKeywords = '';
+    const isArchitecture = slug === 'architecture' || slug === 'arquitectura';
+    
+    if (isArchitecture) {
+        customKeywords = lang === 'en' 
+            ? 'Punta Cana Architecture, Luxury Villa Design Dominican Republic, Custom Home Builders Punta Cana, Construction & Architecture Services Bavaro, Coastal Design Specialists DR, Modern High-End Real Estate Developments, Buy Land and Build Villa Punta Cana, Architectural Planning Miches'
+            : 'Arquitectura en Punta Cana, Diseño de Villas de Lujo República Dominicana, Constructores de Casas Personalizadas, Firmas de Arquitectura Bávaro, Diseños Costeros DR, Modelos Arquitectónicos Modernos, Comprar Solar y Construir Villa en Cap Cana, Planificación y Construcción de Hoteles en Miches, Expertos en Arquitectura Tropical';
+    } else {
+        customKeywords = `${service.title} Punta Cana, ${service.title} Dominican Republic, Real Estate Services`;
+    }
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
+    const canonicalUrl = `${baseUrl}/${lang}/services/${slug}`;
+
     return {
         title: `${service.title} | Punta Cana Investments`,
         description: service.description,
+        keywords: customKeywords,
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+            },
+        },
         openGraph: {
-            images: [service.img],
+            title: `${service.title} | Punta Cana Investments`,
+            description: service.description,
+            url: canonicalUrl,
+            images: [
+                {
+                    url: `${baseUrl}${service.img}`,
+                    width: 1200,
+                    height: 630,
+                    alt: service.title,
+                }
+            ],
+            locale: lang === 'es' ? 'es_DO' : 'en_US',
+            siteName: 'Punta Cana Investments',
+            type: 'website',
         },
     };
 }

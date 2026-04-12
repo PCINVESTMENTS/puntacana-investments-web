@@ -192,7 +192,7 @@ export default {
                     slug: "architecture",
                     title: "Architecture",
                     description: "Avant-garde conceptual design and architectural planning for residential and commercial projects.",
-                    img: "/images/services/diseno-conceptual-y-anteproyecto.webp",
+                    img: "/images/services/arquitectura.webp?v=2",
                     longDescription: "We transform visions into tangible realities. Our architecture department fuses modern aesthetics with Caribbean functionality, creating spaces that are not only beautiful but also integrate harmoniously with the tropical environment.",
                     contentSections: [
                         {
