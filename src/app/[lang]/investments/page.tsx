@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             description: dict.sections.investments.description,
             images: [
                 {
-                    url: 'https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=5',
+                    url: 'https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=6',
                     width: 1200,
                     height: 630,
                     alt: dict.sections.investments.title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             card: 'summary_large_image',
             title: `${dict.nav.investments} | Punta Cana Investments`,
             description: dict.sections.investments.description,
-            images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=5'],
+            images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=6'],
         },
     };
 }
