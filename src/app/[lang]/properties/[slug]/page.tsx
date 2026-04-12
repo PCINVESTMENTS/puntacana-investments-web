@@ -95,22 +95,36 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     
     let keywordList = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
     if (!keywordList || keywordList.length === 0) {
+        const loc = property.locationLabel || 'Punta Cana';
+        
         if (lang === 'en') {
              keywordList = [
                  `Punta Cana ${property.type} for sale`,
                  `${property.title}`,
-                 `${property.type} in ${property.locationLabel}`,
+                 `${property.type} in ${loc}`,
                  `Dominican Republic Real Estate`,
                  `Buy property in Punta Cana`
              ];
+             if (property.type === 'land') keywordList.push(`Land for hotel development ${loc}`, `Beachfront land for sale`, `Plots in ${loc}`);
+             if (property.type === 'commercial') keywordList.push(`Commercial real estate ${loc}`, `Retail space Punta Cana`, `Invest in commercial properties DR`);
+             if (property.type === 'condohotel') keywordList.push(`Condo hotel for sale ${loc}`, `Hotel investment Punta Cana`, `Resort for sale Dominican Republic`, `High ROI condo hotel`);
+             if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hotels for sale Dominican Republic`, `Resorts for sale in Punta Cana`);
+             if (property.status === 'rent') keywordList.push(`Monthly rentals ${loc}`, `Long term rental Punta Cana`);
+             if (loc.toLowerCase().includes('miches')) keywordList.push(`Invest in Miches`, `Hotels for sale in Miches`, `Land for hotel development Miches`);
         } else {
              keywordList = [
-                 `${property.type === 'villa' ? 'Villa' : 'Apartamento'} en venta en Punta Cana`,
+                 `${property.type === 'villa' ? 'Villa' : (property.type === 'land' ? 'Terreno' : (property.type === 'commercial' ? 'Local Comercial' : 'Apartamento'))} en venta en Punta Cana`,
                  `${property.title}`,
-                 `${property.type === 'villa' ? 'Comprar Villa' : 'Comprar Apartamento'} en ${property.locationLabel}`,
+                 `${property.type === 'land' ? 'Comprar Terreno' : 'Comprar Propiedad'} en ${loc}`,
                  `Bienes Raíces República Dominicana`,
                  `Inversión en Punta Cana`
              ];
+             if (property.type === 'land') keywordList.push(`Terrenos para construir hoteles en las playas`, `Solares en venta en ${loc}`, `Especialista en terrenos República Dominicana`, `Terreno para desarrollar hoteles`);
+             if (property.type === 'commercial') keywordList.push(`Locales comerciales en ${loc}`, `Inversión comercial Punta Cana`);
+             if (property.type === 'condohotel') keywordList.push(`Condo hotel en venta`, `Inversión hotelera Punta Cana`, `Apartahotel en venta`);
+             if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hoteles en ventas`, `Resort en venta en Punta Cana`);
+             if (property.status === 'rent') keywordList.push(`Rentas mensual Punta Cana`, `Alquiler a largo plazo en ${loc}`);
+             if (loc.toLowerCase().includes('miches')) keywordList.push(`Inversiones en Miches`, `Hoteles en Miches en ventas`, `Terreno para desarrollar hoteles en Miches`);
         }
     }
     const keywords = keywordList.join(', ');
