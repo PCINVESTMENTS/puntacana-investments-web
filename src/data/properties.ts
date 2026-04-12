@@ -1431,12 +1431,15 @@ Soto Grande es una de las zonas más valoradas de Cap Cana por su ambiente resid
         status: "sale",
         price: 154000000,
         hideFromLabel: true,
-        image: "/images/playa-esmeralda-miches-terreno-hotelero.jpg",
+        image: "/images/miches-sunrise-main.webp?v=1",
         featured: false,
         beds: 0,
         baths: 0,
         area: 1185000,
         gallery: [
+            "/images/miches-sunrise-main.webp?v=1",
+            "/images/miches-sunrise-gallery-1.webp",
+            "/images/miches-sunrise-gallery-2.webp",
             "/images/playa-esmeralda-miches-terreno-hotelero.jpg",
             "/images/terreno-hotelero-miches-beachfront-aerial.png"
         ],
