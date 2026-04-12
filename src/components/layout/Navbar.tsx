@@ -125,12 +125,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-20 items-center">
-                    {/* Mobile Menu Button - Left aligned on mobile for balance or keep right? 
-                        User wants logo centered. Standard is often burger left or right. 
-                        Let's put burger right (standard) and logo center.
-                    */}
-
+                <div className="relative flex justify-between h-20 items-center">
                     {/* Unified Logo - Centered on Mobile, Left on Desktop */}
                     <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:static lg:transform-none">
                         <Link

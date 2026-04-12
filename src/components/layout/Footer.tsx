@@ -27,7 +27,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                 }
                             }}
-                            className="flex items-center w-full max-w-[240px] xl:max-w-[280px] mx-auto md:mx-0"
+                            className="flex justify-center md:justify-start items-center w-full max-w-[240px] xl:max-w-[280px] mx-auto md:mx-0"
                         >
                             <Image
                                 src="/images/logo-pci-investments-gold.webp"
