@@ -81,7 +81,7 @@ import dynamic from "next/dynamic";
 
 const PropertyComparator = dynamic(() => import("@/components/property/PropertyComparator"));
 
-import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from "next/script";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export default async function RootLayout({
@@ -106,7 +106,19 @@ export default async function RootLayout({
           {/* ChatBot temporarily removed */}
         </CompareProvider>
         <Analytics />
-        {gaId && <GoogleAnalytics gaId={gaId} />}
+        {gaId && (
+          <>
+            <Script strategy="lazyOnload" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+            <Script strategy="lazyOnload" id="google-analytics">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
