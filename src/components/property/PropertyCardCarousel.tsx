@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { sanityLoader } from "@/sanity/lib/image";
 
@@ -14,79 +13,46 @@ interface PropertyCardCarouselProps {
 
 export default function PropertyCardCarousel({ images, rawImages, title }: PropertyCardCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [direction, setDirection] = useState(0);
 
     if (!images || images.length === 0) return null;
-
-    const slideVariants = {
-        enter: (direction: number) => ({
-            x: direction > 0 ? "100%" : "-100%",
-            opacity: 0
-        }),
-        center: {
-            zIndex: 1,
-            x: 0,
-            opacity: 1
-        },
-        exit: (direction: number) => ({
-            zIndex: 0,
-            x: direction < 0 ? "100%" : "-100%",
-            opacity: 0
-        })
-    };
 
     const nextStep = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setDirection(1);
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     };
 
     const prevStep = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setDirection(-1);
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     };
 
     return (
         <div className="relative w-full h-full overflow-hidden group">
-            <AnimatePresence initial={false} custom={direction}>
-                <motion.div
-                    key={currentIndex}
-                    custom={direction}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                        x: { type: "spring", stiffness: 300, damping: 30 },
-                        opacity: { duration: 0.2 }
-                    }}
-                    className="absolute inset-0"
-                >
-                    {rawImages && rawImages[currentIndex] ? (
+            {images.map((img, idx) => {
+                const isActive = idx === currentIndex;
+                const srcImage = rawImages && rawImages[idx] ? rawImages[idx] : img;
+                const useSanity = !!(rawImages && rawImages[idx]);
+
+                return (
+                    <div
+                        key={idx}
+                        className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"}`}
+                    >
                         <Image
-                            loader={sanityLoader}
-                            src={rawImages[currentIndex]}
-                            alt={`${title} - Image ${currentIndex + 1}`}
+                            loader={useSanity ? sanityLoader : undefined}
+                            src={srcImage}
+                            alt={`${title} - Image ${idx + 1}`}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
                             quality={60}
+                            loading={idx === 0 ? "eager" : "lazy"}
                         />
-                    ) : (
-                        <Image
-                            src={images[currentIndex]}
-                            alt={`${title} - Image ${currentIndex + 1}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
-                            quality={60}
-                        />
-                    )}
-                </motion.div>
-            </AnimatePresence>
+                    </div>
+                );
+            })}
 
             {/* Navigation Arrows */}
             {images.length > 1 && (
@@ -124,7 +90,7 @@ export default function PropertyCardCarousel({ images, rawImages, title }: Prope
             )}
 
             {/* Gradient Overlay */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80 pointer-events-none z-20"></div>
         </div>
     );
 }

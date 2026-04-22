@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useInView, useAnimation, Variant } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
     children: React.ReactNode;
@@ -12,43 +11,58 @@ interface Props {
 }
 
 export const ScrollReveal = ({ children, width = "fit-content", delay = 0.25, direction = "up", style }: Props) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-50px" });
-    const mainControls = useAnimation();
+    const ref = useRef<HTMLDivElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        if (isInView) {
-            mainControls.start("visible");
-        }
-    }, [isInView, mainControls]);
+        const currentRef = ref.current;
+        if (!currentRef) return;
 
-    const getVariants = (): { hidden: Variant; visible: Variant } => {
-        const distance = 75;
-        let hidden: any = { opacity: 0 };
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.unobserve(currentRef);
+                }
+            },
+            {
+                rootMargin: "-50px 0px",
+                threshold: 0
+            }
+        );
 
-        switch (direction) {
-            case "up": hidden = { ...hidden, y: distance }; break;
-            case "down": hidden = { ...hidden, y: -distance }; break;
-            case "left": hidden = { ...hidden, x: distance }; break;
-            case "right": hidden = { ...hidden, x: -distance }; break;
-            case "none": hidden = { ...hidden, scale: 0.9 }; break;
-        }
+        observer.observe(currentRef);
 
-        return {
-            hidden,
-            visible: { opacity: 1, x: 0, y: 0, scale: 1, transition: { duration: 0.5, delay: delay } },
+        return () => {
+            if (currentRef) observer.unobserve(currentRef);
         };
+    }, []);
+
+    const getTransform = () => {
+        if (isVisible) return "translate(0, 0) scale(1)";
+        
+        const distance = "75px";
+        switch (direction) {
+            case "up": return `translateY(${distance})`;
+            case "down": return `translateY(-${distance})`;
+            case "left": return `translateX(${distance})`;
+            case "right": return `translateX(-${distance})`;
+            case "none": return "scale(0.9)";
+            default: return "translate(0, 0)";
+        }
     };
 
     return (
         <div ref={ref} className={`relative overflow-hidden ${width === "100%" ? "w-full" : "w-fit"}`} style={style}>
-            <motion.div
-                variants={getVariants()}
-                initial="hidden"
-                animate={mainControls}
+            <div
+                style={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: getTransform(),
+                    transition: `opacity 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${delay}s, transform 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${delay}s`
+                }}
             >
                 {children}
-            </motion.div>
+            </div>
         </div>
     );
 };
