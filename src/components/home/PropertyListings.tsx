@@ -344,7 +344,7 @@ function PropertyListingsContent({
                                             <div className="p-8 relative flex-grow flex flex-col">
                                                 {/* Pre-Construction / Pre-Sales / Resale Badge */}
                                                 {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
-                                                    <div className={`absolute -top-6 left-2 md:left-8 text-white font-bold px-2 md:px-4 py-2 shadow-lg text-[10px] md:text-sm z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-600' : 'bg-emerald-600'}`}>
+                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-2 md:px-3 py-2 shadow-lg text-[10px] md:text-xs z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-600' : 'bg-emerald-600'}`}>
                                                         {prop.isResale
                                                             ? (lang === 'en' ? 'Resale' : 'Reventa')
                                                             : (prop.preConstruction
@@ -355,7 +355,7 @@ function PropertyListingsContent({
                                                     </div>
                                                 )}
 
-                                                <div className="absolute -top-6 right-8 bg-luxury-gold text-black font-bold px-4 py-2 shadow-lg text-sm z-30">
+                                                <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-3 md:px-4 py-2 shadow-lg text-[10px] md:text-xs z-30">
                                                     {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
                                                         <>
                                                             {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
