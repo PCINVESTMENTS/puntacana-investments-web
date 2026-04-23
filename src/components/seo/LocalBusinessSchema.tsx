@@ -73,7 +73,8 @@ export function LocalBusinessSchema({ lang }: { lang?: string }) {
           "Cap Cana",
           "Bávaro",
           "República Dominicana"
-        ]
+        ],
+        "priceRange": "$$$"
       }
     ]
   };
