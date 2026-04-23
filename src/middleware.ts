@@ -44,6 +44,8 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     // --- SECURITY MODULE ---
     const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for') || 'Unknown';
     const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
+    const userAgent = request.headers.get('user-agent') || '';
+    const isBot = /googlebot|google-inspectiontool|bingbot|yandexbot|duckduckbot|slurp|baiduspider/i.test(userAgent);
 
     // 1. Drop bad bots immediately
     if (SUSPICIOUS_PATHS.some(susp => pathLower.includes(susp))) {
@@ -66,7 +68,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     }
 
     // 2. Kill Switch & Geo-Block via ISR Edge Cache
-    if (!pathname.startsWith('/api')) {
+    if (!pathname.startsWith('/api') && !isBot) {
         try {
             const configReq = await fetch(`${API_URL}/api/security/config/current/`, {
                 next: { revalidate: 30 },
