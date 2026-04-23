@@ -415,7 +415,7 @@ Ubicado en una zona residencial consolidada, Diana Tropical Village ofrece alto 
         locationLabel: "Punta Cana",
         type: "condohotel",
         status: "sale",
-        price: 71700,
+        price: 95700,
         image: "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
         beds: 1,
         baths: 1,
