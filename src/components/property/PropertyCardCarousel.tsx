@@ -48,7 +48,7 @@ export default function PropertyCardCarousel({ images, rawImages, title }: Prope
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
                             quality={60}
-                            loading={idx === 0 ? "eager" : "lazy"}
+                            loading="lazy"
                         />
                     </div>
                 );
