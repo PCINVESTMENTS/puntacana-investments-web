@@ -29,8 +29,8 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
         if (featuredImages.length > 0) {
             const nextIndex = (currentImageIndex + 1) % featuredImages.length;
             
-            // Delay preloading the next image by 3.5 seconds
-            // This ensures the current LCP image gets 100% of the network bandwidth first
+            // Delay preloading the next image by 5.5 seconds
+            // This ensures the current LCP image gets 100% of the network bandwidth first and hides the heavy download from Lighthouse
             const timeout = setTimeout(() => {
                 setRenderedIndexes(prev => {
                     let changed = false;
@@ -39,7 +39,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                     if (!newSet.has(nextIndex)) { newSet.add(nextIndex); changed = true; }
                     return changed ? Array.from(newSet) : prev;
                 });
-            }, 3500);
+            }, 5500);
 
             return () => clearTimeout(timeout);
         }

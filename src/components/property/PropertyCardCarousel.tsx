@@ -13,27 +13,42 @@ interface PropertyCardCarouselProps {
 
 export default function PropertyCardCarousel({ images, rawImages, title }: PropertyCardCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     if (!images || images.length === 0) return null;
+
+    const handleInteraction = () => {
+        if (!hasInteracted) setHasInteracted(true);
+    };
 
     const nextStep = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
+        handleInteraction();
         setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     };
 
     const prevStep = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
+        handleInteraction();
         setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     };
 
     return (
-        <div className="relative w-full h-full overflow-hidden group">
+        <div 
+            className="relative w-full h-full overflow-hidden group"
+            onMouseEnter={handleInteraction}
+            onTouchStart={handleInteraction}
+        >
             {images.map((img, idx) => {
                 const isActive = idx === currentIndex;
                 const srcImage = rawImages && rawImages[idx] ? rawImages[idx] : img;
                 const useSanity = !!(rawImages && rawImages[idx]);
+
+                // PERFORMANCE BOOST: Only render the first image initially to save massive DOM size & Hydration Time
+                // Render the rest only when the user interacts with the carousel
+                if (idx !== 0 && !hasInteracted && !isActive) return null;
 
                 return (
                     <div
