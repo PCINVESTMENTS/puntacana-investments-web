@@ -110,7 +110,8 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
                         );
                     }
                 }
-                // Rate Limiting (In-Memory Fast Check)
+                // Rate Limiting (In-Memory Fast Check) - TEMPORARY DISABLED TO PREVENT FALSE POSITIVES
+                /*
                 if (config.rate_limiting === true || config.rate_limiting === 'true' || config.rate_limiting === 'True') {
                     if (ip !== 'Unknown') {
                         const now = Date.now();
@@ -126,7 +127,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 
                         if (ipData.count > reqLimit) {
                             event.waitUntil(
-                                fetch(`${API_URL}/api/security/ingest-edge/`, {
+                                fetch(\`\${API_URL}/api/security/ingest-edge/\`, {
                                     method: 'POST',
                                     headers: { 
                                         'Content-Type': 'application/json', 
@@ -136,12 +137,13 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
                                 }).catch(() => {})
                             );
                             return new NextResponse(
-                                `<!DOCTYPE html><html><head><title>Too Many Requests</title></head><body style="background:#0a0a0a;color:#eab308;font-family:monospace;padding:40px;"><h1>429 Too Many Requests</h1><p>Edge Security WAF: Has excedido el l&iacute;mite de peticiones permitidas por minuto.</p></body></html>`,
+                                \`<!DOCTYPE html><html><head><title>Too Many Requests</title></head><body style="background:#0a0a0a;color:#eab308;font-family:monospace;padding:40px;"><h1>429 Too Many Requests</h1><p>Edge Security WAF: Has excedido el l&iacute;mite de peticiones permitidas por minuto.</p></body></html>\`,
                                 { status: 429, headers: { 'content-type': 'text/html', 'Retry-After': '60' } }
                             );
                         }
                     }
                 }
+                */
 
                 // JS-Challenge (Smart Captcha Invisible) - TEMPORARY DISABLED DUE TO MOBILE LOOPS
                 /* 
