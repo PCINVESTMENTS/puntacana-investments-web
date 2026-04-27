@@ -143,12 +143,13 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
                     }
                 }
 
-                // JS-Challenge (Smart Captcha Invisible)
+                // JS-Challenge (Smart Captcha Invisible) - TEMPORARY DISABLED DUE TO MOBILE LOOPS
+                /* 
                 if (config.smart_captcha === true || config.smart_captcha === 'true' || config.smart_captcha === 'True') {
                     const hasHumanCookie = request.cookies.get('x-human-verified');
                     if (!hasHumanCookie) {
                         event.waitUntil(
-                            fetch(`${API_URL}/api/security/ingest-edge/`, {
+                            fetch(\`\${API_URL}/api/security/ingest-edge/\`, {
                                 method: 'POST',
                                 headers: { 
                                     'Content-Type': 'application/json', 
@@ -158,7 +159,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
                             }).catch(() => {})
                         );
 
-                        const htmlCaptcha = `<!DOCTYPE html>
+                        const htmlCaptcha = \`<!DOCTYPE html>
 <html>
 <head>
     <title>Safe Connection Check</title>
@@ -177,10 +178,11 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
         }, 300);
     </script>
 </body>
-</html>`;
+</html>\`;
                         return new NextResponse(htmlCaptcha, { status: 200, headers: { 'content-type': 'text/html' } });
                     }
                 }
+                */
             }
         } catch (e) {
             // Fails open silently
