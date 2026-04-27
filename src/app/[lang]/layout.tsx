@@ -95,6 +95,7 @@ export default async function RootLayout({
   const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const hubspotId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
 
   return (
     <html lang={lang} className="scroll-smooth">
@@ -169,6 +170,15 @@ export default async function RootLayout({
               `}
             </Script>
           </>
+        )}
+
+        {/* HubSpot Tracking Code */}
+        {hubspotId && (
+          <Script
+            id="hs-script-loader"
+            strategy="afterInteractive"
+            src={`//js.hs-scripts.com/${hubspotId}.js`}
+          />
         )}
       </body>
     </html>
