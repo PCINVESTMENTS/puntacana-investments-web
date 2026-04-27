@@ -89,6 +89,7 @@ const PropertyComparator = dynamic(() => import("@/components/property/PropertyC
 
 import Script from "next/script";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
+import DelayedTracking from "@/components/seo/DelayedTracking";
 
 export default async function RootLayout({
   children,
@@ -106,36 +107,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} className="scroll-smooth">
       <head>
-        {/* Google Tag Manager - Head */}
-        {gtmId && (
-          <Script id="google-tag-manager" strategy="lazyOnload">
-            {`
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
-            `}
-          </Script>
-        )}
-        
-        {/* Meta Pixel Code - Head */}
-        {metaPixelId && (
-          <Script id="meta-pixel" strategy="lazyOnload">
-            {`
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${metaPixelId}');
-              fbq('track', 'PageView');
-            `}
-          </Script>
-        )}
+        {/* Scripts are now loaded dynamically via DelayedTracking to prevent TBT */}
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-primary-black text-white`}
@@ -164,28 +136,9 @@ export default async function RootLayout({
           {/* ChatBot temporarily removed */}
         </CompareProvider>
         <Analytics />
-        {gaId && (
-          <>
-            <Script strategy="lazyOnload" src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
-            <Script strategy="lazyOnload" id="google-analytics">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaId}');
-              `}
-            </Script>
-          </>
-        )}
 
-        {/* HubSpot Tracking Code */}
-        {hubspotId && (
-          <Script
-            id="hs-script-loader"
-            strategy="lazyOnload"
-            src={`//js.hs-scripts.com/${hubspotId}.js`}
-          />
-        )}
+        {/* Dynamic tracking scripts deferred until interaction for PageSpeed */}
+        <DelayedTracking gaId={gaId} gtmId={gtmId} metaPixelId={metaPixelId} hubspotId={hubspotId} />
       </body>
     </html>
   );

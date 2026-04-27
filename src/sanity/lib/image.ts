@@ -11,13 +11,28 @@ export const urlFor = (source: any) => {
 }
 
 export const sanityLoader = ({ src, width, quality }: { src: string, width: number, quality?: number }) => {
-    // If it's already an absolute URL or a local static path, bypass the sanity image builder
-    if (src.startsWith('http') || src.startsWith('/')) {
-        return src;
+    // If it's a raw sanity object or reference string
+    if (!src.startsWith('http') && !src.startsWith('/')) {
+        try {
+            return imageBuilder.image(src).width(width).auto('format').quality(quality || 75).url();
+        } catch (e) {
+            return src;
+        }
     }
-    try {
-        return imageBuilder.image(src).width(width).auto('format').quality(quality || 75).url();
-    } catch (e) {
-        return src; // Fallback to raw string if sanity builder fails
+
+    // If it's an already resolved Sanity URL, append responsive width parameters for Next.js Image Optimization
+    if (src.includes('cdn.sanity.io')) {
+        try {
+            const url = new URL(src);
+            url.searchParams.set('w', width.toString());
+            url.searchParams.set('auto', 'format');
+            url.searchParams.set('q', (quality || 75).toString());
+            return url.toString();
+        } catch (e) {
+            return src;
+        }
     }
+
+    // Otherwise, bypass (local files, unsplash, etc.)
+    return src;
 }
