@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useRef } from 'react';
+import { useActionState, useRef, useEffect } from 'react';
 import { submitContactForm } from '@/app/actions/contact';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
@@ -34,6 +34,26 @@ const initialState = {
 export default function ContactForm({ dict, subject, className, lang = 'en' }: ContactFormProps) {
     const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
     const formRef = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        if (state.success && typeof window !== 'undefined') {
+            try {
+                // Meta Pixel Conversion
+                if ((window as any).fbq) {
+                    (window as any).fbq('track', 'Lead');
+                }
+                // Google Ads / Analytics Conversion
+                if ((window as any).gtag) {
+                    (window as any).gtag('event', 'generate_lead', {
+                        currency: 'USD',
+                        value: 500
+                    });
+                }
+            } catch (e) {
+                console.error("Tracking error:", e);
+            }
+        }
+    }, [state.success]);
 
     // No client-side handleSubmit needed, formAction handles it
 

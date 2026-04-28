@@ -40,6 +40,26 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
         fetchProperties();
     }, []);
 
+    useEffect(() => {
+        if (state.success && typeof window !== 'undefined') {
+            try {
+                // Meta Pixel Conversion
+                if ((window as any).fbq) {
+                    (window as any).fbq('track', 'Lead');
+                }
+                // Google Ads / Analytics Conversion
+                if ((window as any).gtag) {
+                    (window as any).gtag('event', 'generate_lead', {
+                        currency: 'USD',
+                        value: 500
+                    });
+                }
+            } catch (e) {
+                console.error("Tracking error:", e);
+            }
+        }
+    }, [state.success]);
+
     const handleObjectiveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
         if (checked) {
