@@ -107,24 +107,43 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
 
             // Send Admin Notification Email via Resend
             try {
+                const adminHtmlTemplate = `
+                <html>
+                    <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                        <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                            <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                        </div>
+                        <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                            <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">NUEVO LEAD FLY & BUY</h2>
+                            <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                                Se ha registrado un nuevo lead VIP (Fly & Buy).
+                            </p>
+                            
+                            <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                                <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos del Cliente</p>
+                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Nombre:</strong> ${tripData.client_name}</p>
+                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Email:</strong> ${tripData.client_email}</p>
+                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Teléfono:</strong> ${tripData.client_phone}</p>
+                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Ciudad de Origen:</strong> ${tripData.origin_city}</p>
+                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Fechas Propuestas:</strong> ${tripData.proposed_dates}</p>
+                            </div>
+
+                            <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                                <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Notas y Respuestas del Cuestionario</p>
+                                <pre style="font-family: 'Helvetica Neue', Arial, sans-serif; white-space: pre-wrap; color: #e0e0e0; margin: 0;">${tripData.notes}</pre>
+                            </div>
+                            
+                            <p style="font-size: 12px; color: #888888; text-align: center; margin-top: 30px;">Este lead ya fue enviado a HubSpot de forma automática.</p>
+                        </div>
+                    </body>
+                </html>
+                `;
+
                 await resend.emails.send({
-                    from: 'Sistema Web <info@puntacanainvestmentsrd.com>',
+                    from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                     to: ['info@puntacanainvestmentsrd.com'],
                     subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
-                    html: `
-                        <div style="font-family: sans-serif; padding: 20px; color: #333;">
-                            <h2>Nueva Solicitud VIP (Fly & Buy)</h2>
-                            <p><strong>Nombre:</strong> ${tripData.client_name}</p>
-                            <p><strong>Email:</strong> ${tripData.client_email}</p>
-                            <p><strong>Teléfono:</strong> ${tripData.client_phone}</p>
-                            <p><strong>Ciudad de Origen:</strong> ${tripData.origin_city}</p>
-                            <p><strong>Fechas Propuestas:</strong> ${tripData.proposed_dates}</p>
-                            <p><strong>Notas y Respuestas del Cuestionario:</strong><br/>
-                            <pre style="font-family: sans-serif; white-space: pre-wrap;">${tripData.notes}</pre></p>
-                            <hr/>
-                            <p><small>Este lead ha sido enviado a HubSpot y al CRM Dashboard automáticamente.</small></p>
-                        </div>
-                    `
+                    html: adminHtmlTemplate
                 });
             } catch (adminEmailError) {
                 console.error("Admin Email Exception:", adminEmailError);

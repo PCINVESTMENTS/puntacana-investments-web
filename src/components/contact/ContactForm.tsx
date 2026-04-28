@@ -24,6 +24,7 @@ interface ContactFormProps {
     subject?: string;
     className?: string; // Allow custom styling
     lang?: string;
+    propertyData?: string;
 }
 
 const initialState = {
@@ -31,7 +32,7 @@ const initialState = {
     message: '',
 };
 
-export default function ContactForm({ dict, subject, className, lang = 'en' }: ContactFormProps) {
+export default function ContactForm({ dict, subject, className, lang = 'en', propertyData }: ContactFormProps) {
     const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -88,6 +89,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
         <form action={formAction} ref={formRef} className={`space-y-6 ${className || ''}`}>
             {subject && <input type="hidden" name="subject" value={subject} />}
             <input type="hidden" name="lang" value={lang} />
+            {propertyData && <input type="hidden" name="propertyData" value={propertyData} />}
 
             {state.message && !state.success && (
                 <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-sm">

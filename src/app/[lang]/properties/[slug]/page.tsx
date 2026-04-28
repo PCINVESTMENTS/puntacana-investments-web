@@ -433,6 +433,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 subject={`${lang === 'en' ? 'Inquiry about' : 'Consulta sobre'}: ${property.title}`}
                                 className="mt-4"
                                 lang={lang}
+                                propertyData={JSON.stringify({
+                                    title: property.title,
+                                    location: property.locationLabel,
+                                    price: property.price,
+                                    area: property.area,
+                                    type: property.type
+                                })}
                             />
 
                             <div className="mt-8 text-center pt-8 border-t border-white/10">

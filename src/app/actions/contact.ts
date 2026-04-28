@@ -173,22 +173,62 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
         // 4. Send Admin Notification Email via Resend
         try {
+            const propertyDataStr = formData.get('propertyData') as string;
+            let propertyDetailsHtml = '';
+            
+            if (propertyDataStr) {
+                try {
+                    const pd = JSON.parse(propertyDataStr);
+                    propertyDetailsHtml = `
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos de la Propiedad</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Nombre:</strong> ${pd.title}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Ubicación:</strong> ${pd.location || 'N/A'}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Precio:</strong> $${pd.price.toLocaleString()}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Área:</strong> ${pd.area ? pd.area + ' m²' : 'N/A'}</p>
+                        </div>
+                    `;
+                } catch(e) {}
+            }
+
+            const adminHtmlTemplate = `
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">NUEVO LEAD WEB</h2>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Se ha registrado un nuevo lead en el sistema web.
+                        </p>
+                        
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos del Cliente</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Nombre:</strong> ${name}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Email:</strong> ${email}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Teléfono:</strong> ${phone}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Interés:</strong> ${backendData.interest}</p>
+                        </div>
+
+                        ${propertyDetailsHtml}
+
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Mensaje del Cliente</p>
+                            <p style="margin: 5px 0; color: #e0e0e0; white-space: pre-wrap;">${message}</p>
+                        </div>
+                        
+                        <p style="font-size: 12px; color: #888888; text-align: center; margin-top: 30px;">Este lead ya fue enviado a HubSpot de forma automática.</p>
+                    </div>
+                </body>
+            </html>
+            `;
+
             await resend.emails.send({
-                from: 'Sistema Web <info@puntacanainvestmentsrd.com>',
+                from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `NUEVO LEAD WEB: ${name} - ${backendData.interest}`,
-                html: `
-                    <div style="font-family: sans-serif; padding: 20px; color: #333;">
-                        <h2>Nuevo Lead Registrado desde la Web</h2>
-                        <p><strong>Nombre:</strong> ${name}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Teléfono:</strong> ${phone}</p>
-                        <p><strong>Interés/Propiedad:</strong> ${backendData.interest}</p>
-                        <p><strong>Mensaje:</strong><br/>${message}</p>
-                        <hr/>
-                        <p><small>Este lead ya ha sido enviado a HubSpot y al CRM Dashboard automáticamente.</small></p>
-                    </div>
-                `
+                html: adminHtmlTemplate
             });
         } catch (adminEmailError) {
             console.error("Admin Email Exception:", adminEmailError);
