@@ -124,7 +124,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             <html>
                 <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
                     <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
-                        <img src="https://puntacanainvestmentsrd.com/images/pci-logo-gold.png" alt="Punta Cana Investments Logo" style="max-width: 180px; height: auto;" />
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
                     </div>
                     <div style="padding: 40px 30px; background-color: #0a0a0a;">
                         <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Confirmación de Contacto</h2>
