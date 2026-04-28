@@ -105,6 +105,31 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 // Do not block success
             }
 
+            // Send Admin Notification Email via Resend
+            try {
+                await resend.emails.send({
+                    from: 'Sistema Web <info@puntacanainvestmentsrd.com>',
+                    to: ['info@puntacanainvestmentsrd.com'],
+                    subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
+                    html: `
+                        <div style="font-family: sans-serif; padding: 20px; color: #333;">
+                            <h2>Nueva Solicitud VIP (Fly & Buy)</h2>
+                            <p><strong>Nombre:</strong> ${tripData.client_name}</p>
+                            <p><strong>Email:</strong> ${tripData.client_email}</p>
+                            <p><strong>Teléfono:</strong> ${tripData.client_phone}</p>
+                            <p><strong>Ciudad de Origen:</strong> ${tripData.origin_city}</p>
+                            <p><strong>Fechas Propuestas:</strong> ${tripData.proposed_dates}</p>
+                            <p><strong>Notas y Respuestas del Cuestionario:</strong><br/>
+                            <pre style="font-family: sans-serif; white-space: pre-wrap;">${tripData.notes}</pre></p>
+                            <hr/>
+                            <p><small>Este lead ha sido enviado a HubSpot y al CRM Dashboard automáticamente.</small></p>
+                        </div>
+                    `
+                });
+            } catch (adminEmailError) {
+                console.error("Admin Email Exception:", adminEmailError);
+            }
+
             return { success: true, message: 'Request sent successfully!' };
         }
 

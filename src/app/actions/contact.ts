@@ -171,6 +171,29 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             // return { success: false, message: `Request sent but inner autoresponder failed: ${autoResponderError.message}` };
         }
 
+        // 4. Send Admin Notification Email via Resend
+        try {
+            await resend.emails.send({
+                from: 'Sistema Web <info@puntacanainvestmentsrd.com>',
+                to: ['info@puntacanainvestmentsrd.com'],
+                subject: `NUEVO LEAD WEB: ${name} - ${backendData.interest}`,
+                html: `
+                    <div style="font-family: sans-serif; padding: 20px; color: #333;">
+                        <h2>Nuevo Lead Registrado desde la Web</h2>
+                        <p><strong>Nombre:</strong> ${name}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Teléfono:</strong> ${phone}</p>
+                        <p><strong>Interés/Propiedad:</strong> ${backendData.interest}</p>
+                        <p><strong>Mensaje:</strong><br/>${message}</p>
+                        <hr/>
+                        <p><small>Este lead ya ha sido enviado a HubSpot y al CRM Dashboard automáticamente.</small></p>
+                    </div>
+                `
+            });
+        } catch (adminEmailError) {
+            console.error("Admin Email Exception:", adminEmailError);
+        }
+
         return {
             success: true,
             message: 'Message sent successfully!'
