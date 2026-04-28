@@ -36,8 +36,8 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         client_email: email,
         client_phone: phone,
         origin_city: country,
-        proposed_dates: 'Por Definir', 
-        notes: `Comments: ${comments}\nObjectives: ${objectives}\nProperty Type: ${propertyTypes}\nInvestment Focus: ${investmentFocus}\nExperience: ${experience}\nHorizon: ${horizon}\nVisited DR: ${visited}\nMotivation: ${motivation}\nSpecific Property: ${specificProperty || 'None'}`
+        proposed_dates: 'Por Definir',
+        notes: `Comentarios: ${comments}\nObjetivos: ${objectives}\nTipo de Propiedad: ${propertyTypes}\nEnfoque de Inversión: ${investmentFocus}\nExperiencia: ${experience}\nHorizonte: ${horizon}\nHa visitado RD: ${visited}\nMotivación: ${motivation}\nPropiedad Específica: ${specificProperty || 'Ninguna'}`
     };
 
     const cleanedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
