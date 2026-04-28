@@ -164,11 +164,11 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             if (clientEmailRes.error) {
                 console.error("Resend Error (Client Autoresponder):", clientEmailRes.error);
                 // Si la Vercel Env no tiene el dominio verificado, esto fallará. Devolvemos el error visible en el form si queremos debugguear rápido.
-                return { success: false, message: `Request sent but autoresponder failed: ${clientEmailRes.error.message}` };
+                // return { success: false, message: `Request sent but autoresponder failed: ${clientEmailRes.error.message}` };
             }
         } catch (autoResponderError: any) {
             console.error("Client Autoresponder Exception:", autoResponderError);
-            return { success: false, message: `Request sent but inner autoresponder failed: ${autoResponderError.message}` };
+            // return { success: false, message: `Request sent but inner autoresponder failed: ${autoResponderError.message}` };
         }
 
         return {

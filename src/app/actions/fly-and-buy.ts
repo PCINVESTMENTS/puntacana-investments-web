@@ -98,11 +98,11 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 
                 if (error) {
                     console.error("Resend internal autoresponder failed:", error);
-                    return { success: false, message: `Request sent but email failed: ${error.message}` };
+                    // Do not block success if email fails, lead is already saved
                 }
             } catch (emailErr: any) {
                 console.error("Resend internal autoresponder exception exception:", emailErr);
-                return { success: false, message: `Request sent but email threw error: ${emailErr.message}` };
+                // Do not block success
             }
 
             return { success: true, message: 'Request sent successfully!' };
