@@ -69,6 +69,11 @@ export default function ContactForm({ dict, subject, className, lang = 'en' }: C
                 </div>
                 <h3 className="text-2xl font-playfair text-white mb-2">{dict.success}</h3>
                 <p className="text-gray-300">{dict.successText}</p>
+                <p className="text-sm text-gray-400 mt-4 italic">
+                    {lang === 'es' 
+                        ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                        : 'Please also check your junk or spam folder.'}
+                </p>
                 <button
                     onClick={() => window.location.reload()}
                     className="mt-6 px-6 py-2 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-colors rounded-full"
