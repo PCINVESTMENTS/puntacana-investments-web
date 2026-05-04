@@ -377,6 +377,9 @@ export function PersonaFisicaForm() {
                     Completar Otro Formulario
                 </Button>
             </div>
+        );
+    }
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8 print:space-y-4 border-2 border-luxury-gold/50 rounded-xl p-8 bg-black/40">
