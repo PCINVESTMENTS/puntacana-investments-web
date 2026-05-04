@@ -164,7 +164,12 @@ export default async function PropertiesPage({
         const local = localMap.get(p.id);
         if (local) {
             localMap.delete(p.id); // Remove from map so we know it's used
-            return { ...local, ...p }; // Sanity data (p) overrides local data
+            return { 
+                ...local, 
+                ...p,
+                image: p.image || local.image,
+                gallery: (p.gallery && p.gallery.length > 0) ? p.gallery : local.gallery
+            };
         }
         return p;
     });

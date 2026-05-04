@@ -95,7 +95,12 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   // Merge with local fallbacks, but Sanity data (p) takes precedence
   const mergedProperties = fetchedProperties.map(p => {
     const local = localProperties.find(lp => lp.id === p.id);
-    return local ? { ...local, ...p } : p;
+    return local ? { 
+      ...local, 
+      ...p,
+      image: p.image || local.image,
+      gallery: (p.gallery && p.gallery.length > 0) ? p.gallery : local.gallery
+    } : p;
   });
 
   // Add properties that exist locally but not in Sanity
