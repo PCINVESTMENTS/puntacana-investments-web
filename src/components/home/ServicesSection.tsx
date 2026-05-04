@@ -38,39 +38,47 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
     }
 
     return (
-        <section id="services" className={`py-12 bg-primary-black relative overflow-hidden ${heroImage ? 'pt-32 pb-24' : ''}`}>
-            {/* Background Pattern or Hero Image */}
-            {heroImage ? (
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src={heroImage}
-                        alt={dict.title}
-                        fill
-                        sizes="100vw"
-                        quality={90}
-                        className="object-cover object-[center_30%]"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-black/60"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-transparent to-black/80"></div>
-                </div>
-            ) : (
-                <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:20px_20px]"></div>
-            )}
+        <div id="services" className="bg-primary-black">
+            {/* Header Area */}
+            <section className={`relative overflow-hidden ${heroImage ? 'py-32' : 'pt-16 pb-8 bg-primary-black'}`}>
+                {/* Background Pattern or Hero Image */}
+                {heroImage ? (
+                    <div className="absolute inset-0 z-0">
+                        <Image
+                            src={heroImage}
+                            alt={dict.title}
+                            fill
+                            sizes="100vw"
+                            quality={90}
+                            className="object-cover object-[center_30%]"
+                            priority
+                        />
+                        <div className="absolute inset-0 bg-black/60"></div>
+                        <div className="absolute inset-0 bg-gradient-to-b from-primary-black/50 via-black/40 to-primary-black"></div>
+                    </div>
+                ) : (
+                    <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:20px_20px]"></div>
+                )}
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-16">
-                    <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
-                        {dict.subtitle}
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
-                        {dict.title}
-                    </h2>
-                    <div className="h-1 w-24 bg-luxury-gold mx-auto"></div>
-                    <p className="text-neutral-gray mt-6 max-w-2xl mx-auto">
-                        {dict.description}
-                    </p>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center">
+                        <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
+                            {dict.subtitle}
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                            {dict.title}
+                        </h2>
+                        <div className="h-1 w-24 bg-luxury-gold mx-auto"></div>
+                        <p className="text-neutral-gray mt-6 max-w-2xl mx-auto">
+                            {dict.description}
+                        </p>
+                    </div>
                 </div>
+            </section>
+
+            {/* Services Grid Area */}
+            <section className="pb-16 pt-8 bg-primary-black">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
                     {items.map((service, index) => (
@@ -122,7 +130,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                         </Link>
                     </div>
                 )}
-            </div>
-        </section>
+            </section>
+        </div>
     );
 }
