@@ -161,7 +161,7 @@ export default {
                     slug: "asesoria-legal",
                     title: "Asesoría Legal",
                     description: "Gestión completa de contratos, debida diligencia y asesoría fiscal para garantizar inversiones seguras.",
-                    img: "/images/services/asesoria-legal.webp",
+                    img: "/images/services/asesoria-legal-hero.jpg",
                     longDescription: "Nuestro equipo legal especializado en derecho inmobiliario brinda una cobertura total para asegurar que su inversión en República Dominicana sea sólida y libre de riesgos. Nos encargamos de cada detalle legal, desde la verificación de títulos hasta la optimización fiscal.",
                     contentSections: [
                         {

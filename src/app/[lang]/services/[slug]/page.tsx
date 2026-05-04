@@ -111,19 +111,22 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         src={service.img}
                         alt={service.title}
                         fill
-                        className="object-cover"
+                        sizes="100vw"
+                        quality={90}
+                        className="object-cover object-[center_30%]"
                         priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent"></div>
+                    <div className="absolute inset-0 bg-black/30"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-transparent to-transparent"></div>
                 </div>
                 <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-                    <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-4 block animate-fade-in-up">
+                    <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-4 block animate-fade-in-up drop-shadow-md">
                         {dict.sections.services.subtitle}
                     </span>
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 drop-shadow-lg shadow-black animate-fade-in-up animation-delay-200">
+                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 drop-shadow-xl animate-fade-in-up animation-delay-200">
                         {service.title}
                     </h1>
-                    <p className="max-w-2xl mx-auto text-xl text-gray-200 font-light leading-relaxed animate-fade-in-up animation-delay-400">
+                    <p className="max-w-2xl mx-auto text-xl text-gray-100 font-medium leading-relaxed drop-shadow-md animate-fade-in-up animation-delay-400">
                         {service.description}
                     </p>
                 </div>

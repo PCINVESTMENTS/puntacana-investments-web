@@ -161,7 +161,7 @@ export default {
                     slug: "legal-advice",
                     title: "Legal Advice",
                     description: "Complete contract management, due diligence, and tax advice to guarantee safe investments.",
-                    img: "/images/services/asesoria-legal.webp",
+                    img: "/images/services/asesoria-legal-hero.jpg",
                     longDescription: "Our legal team specialized in real estate law provides total coverage to ensure that your investment in the Dominican Republic is solid and risk-free. We handle every legal detail, from title verification to tax optimization.",
                     contentSections: [
                         {
