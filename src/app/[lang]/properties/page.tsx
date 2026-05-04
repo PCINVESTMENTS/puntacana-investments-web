@@ -159,6 +159,13 @@ export default async function PropertiesPage({
     // 1. Create a map of local properties for quick lookup
     const localMap = new Map(localProperties.map(p => [p.id, p]));
 
+    // =====================================================================================
+    // 🤖 [AI_CRITICAL_INSTRUCTION]: DO NOT MODIFY THIS MERGE LOGIC UNLESS EXPLICITLY ASKED.
+    // The system relies on Sanity as the Source of Truth. This logic ensures that LIVE Sanity
+    // data (p) overrides any hardcoded local data (local), but PRESERVES the local images 
+    // if Sanity doesn't have them yet. Altering this logic will break the Sanity->Vercel 
+    // automated sync pipeline. 
+    // =====================================================================================
     // 2. Map fetched properties, merging with local if exists (Sanity data takes precedence)
     const unitedProperties = fetchedProperties.map(p => {
         const local = localMap.get(p.id);

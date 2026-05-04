@@ -3,6 +3,34 @@ import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import ServicesSection from "@/components/home/ServicesSection";
 
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+    const { lang } = await params;
+    const dict = await getDictionary(lang);
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
+    const canonicalUrl = `${baseUrl}/${lang}/services`;
+
+    return {
+        title: `${dict.sections.services.title} | Punta Cana Investments`,
+        description: dict.sections.services.description,
+        openGraph: {
+            title: `${dict.sections.services.title} | Punta Cana Investments`,
+            description: dict.sections.services.description,
+            url: canonicalUrl,
+            images: [
+                {
+                    url: `${baseUrl}/images/services-team-horizontal.jpg`,
+                    width: 1200,
+                    height: 630,
+                    alt: dict.sections.services.title,
+                }
+            ],
+            locale: lang === 'es' ? 'es_DO' : 'en_US',
+            siteName: 'Punta Cana Investments',
+            type: 'website',
+        },
+    };
+}
+
 export default async function ServicesPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
@@ -18,7 +46,11 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
 
             <div className="pt-20">
                 {/* Reusing ServicesSection but without a limit to show all */}
-                <ServicesSection dict={dict.sections.services} lang={lang} />
+                <ServicesSection 
+                    dict={dict.sections.services} 
+                    lang={lang} 
+                    heroImage="/images/services-team-horizontal.jpg"
+                />
             </div>
 
             <Footer dict={dict} lang={lang} />

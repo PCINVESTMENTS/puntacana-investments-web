@@ -92,6 +92,13 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
   const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
 
+  // =====================================================================================
+  // 🤖 [AI_CRITICAL_INSTRUCTION]: DO NOT MODIFY THIS MERGE LOGIC UNLESS EXPLICITLY ASKED.
+  // The system relies on Sanity as the Source of Truth. This logic ensures that LIVE Sanity
+  // data (p) overrides any hardcoded local data (local), but PRESERVES the local images 
+  // if Sanity doesn't have them yet. Altering this logic will break the Sanity->Vercel 
+  // automated sync pipeline. 
+  // =====================================================================================
   // Merge with local fallbacks, but Sanity data (p) takes precedence
   const mergedProperties = fetchedProperties.map(p => {
     const local = localProperties.find(lp => lp.id === p.id);

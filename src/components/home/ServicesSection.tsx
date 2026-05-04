@@ -22,9 +22,10 @@ interface ServicesSectionProps {
     };
     lang: string;
     limit?: number;
+    heroImage?: string;
 }
 
-export default function ServicesSection({ dict, lang, limit }: ServicesSectionProps) {
+export default function ServicesSection({ dict, lang, limit, heroImage }: ServicesSectionProps) {
     let items = dict.items;
 
     // Safety check for items
@@ -37,9 +38,25 @@ export default function ServicesSection({ dict, lang, limit }: ServicesSectionPr
     }
 
     return (
-        <section id="services" className="py-12 bg-primary-black relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:20px_20px]"></div>
+        <section id="services" className={`py-12 bg-primary-black relative overflow-hidden ${heroImage ? 'pt-32 pb-24' : ''}`}>
+            {/* Background Pattern or Hero Image */}
+            {heroImage ? (
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src={heroImage}
+                        alt={dict.title}
+                        fill
+                        sizes="100vw"
+                        quality={90}
+                        className="object-cover object-[center_30%]"
+                        priority
+                    />
+                    <div className="absolute inset-0 bg-black/60"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-transparent to-black/80"></div>
+                </div>
+            ) : (
+                <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:20px_20px]"></div>
+            )}
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-16">
