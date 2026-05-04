@@ -151,7 +151,7 @@ export default {
             ]
         },
         services: {
-            title: "Nuestros Servicios",
+            title: "Nuestros Servicios de Real Estate",
             subtitle: "Experiencia Integral",
             description: "Soluciones profesionales de principio a fin para desarrollar, construir y proteger su inversión inmobiliaria.",
             cta: "Ver Detalles",

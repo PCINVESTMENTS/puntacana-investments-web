@@ -151,7 +151,7 @@ export default {
             ]
         },
         services: {
-            title: "Our Services",
+            title: "Our Real Estate Services",
             subtitle: "Comprehensive Experience",
             description: "Professional solutions from start to finish to develop, build, and protect your real estate investment.",
             cta: "View Details",
