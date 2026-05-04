@@ -614,7 +614,7 @@ export function PersonaFisicaForm() {
 
                 <Separator className="bg-white/10" />
 
-                <FormSection icon={<FileText size={20} />} title="Documentos Requeridos / Required Documents">
+                <div className="print:hidden"><FormSection icon={<FileText size={20} />} title="Documentos Requeridos / Required Documents">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <FileUpload name="idDocumentFile" label="Fotocopia de dos documentos de identidad / Copy of two ID documents" description="Formatos PDF o JPG (máx. 5MB) / PDF or JPG formats (max. 5MB)" />
                         <FileUpload name="proofOfFundsFile" label="Constancia de fondos / Proof of funds" description="Formatos PDF o JPG (máx. 5MB) / PDF or JPG formats (max. 5MB)" />
@@ -626,7 +626,8 @@ export function PersonaFisicaForm() {
                     </div>
                 </FormSection>
 
-                <Separator className="bg-white/10" />
+                </div>
+                <Separator className="print:hidden bg-white/10" />
 
                 <FormSection icon={<CheckCircle size={20} />} title="Declaraciones y Autorización / Declarations and Authorization">
                     <div className="space-y-4">

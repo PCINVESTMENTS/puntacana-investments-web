@@ -486,7 +486,7 @@ export function PersonaJuridicaForm() {
 
                 <Separator className="bg-white/10" />
 
-                <FormSection icon={<FileText size={20} />} title="Documentos Requeridos / Required Documents">
+                <div className="print:hidden"><FormSection icon={<FileText size={20} />} title="Documentos Requeridos / Required Documents">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <FileUpload name="commercialRegistryFile" label="Fotocopia del Registro Mercantil / Copy of Commercial Registry" description="PDF o JPG (máx. 5MB)" />
                         <FileUpload name="legalRepIdFile" label="Fotocopia de la cédula del representante legal / Copy of legal representative's ID" description="PDF o JPG (máx. 5MB)" />
@@ -497,7 +497,8 @@ export function PersonaJuridicaForm() {
                     </div>
                 </FormSection>
 
-                <Separator className="bg-white/10" />
+                </div>
+                <Separator className="print:hidden bg-white/10" />
 
                 <FormSection icon={<CheckCircle size={20} />} title="Declaraciones y Autorización / Declarations and Authorization">
                     <div className="space-y-4">
