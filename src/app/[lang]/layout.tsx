@@ -90,7 +90,7 @@ const PropertyComparator = dynamic(() => import("@/components/property/PropertyC
 import Script from "next/script";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 import DelayedTracking from "@/components/seo/DelayedTracking";
-import { GoogleTagManager } from '@next/third-parties/google';
+
 
 export default async function RootLayout({
   children,
@@ -113,7 +113,7 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-primary-black text-white`}
       >
-        <GoogleTagManager gtmId={gtmId} />
+        
 
         {/* Meta Pixel - Body (noscript) */}
         {metaPixelId && (
@@ -133,7 +133,7 @@ export default async function RootLayout({
         <Analytics />
 
         {/* Dynamic tracking scripts deferred until interaction for PageSpeed */}
-        <DelayedTracking gaId={gaId} metaPixelId={metaPixelId} hubspotId={hubspotId} />
+        <DelayedTracking gaId={gaId} metaPixelId={metaPixelId} hubspotId={hubspotId} gtmId={gtmId} />
       </body>
     </html>
   );
