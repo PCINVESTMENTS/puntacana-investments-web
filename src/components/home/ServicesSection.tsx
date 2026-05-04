@@ -53,8 +53,8 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                             className="object-cover object-[center_30%]"
                             priority
                         />
-                        <div className="absolute inset-0 bg-black/60"></div>
-                        <div className="absolute inset-0 bg-gradient-to-b from-primary-black/50 via-black/40 to-primary-black"></div>
+                        <div className="absolute inset-0 bg-black/20"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-transparent to-transparent"></div>
                     </div>
                 ) : (
                     <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:20px_20px]"></div>
@@ -62,14 +62,14 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center">
-                        <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
+                        <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold drop-shadow-md">
                             {dict.subtitle}
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif drop-shadow-lg">
                             {dict.title}
                         </h2>
-                        <div className="h-1 w-24 bg-luxury-gold mx-auto"></div>
-                        <p className="text-neutral-gray mt-6 max-w-2xl mx-auto">
+                        <div className="h-1 w-24 bg-luxury-gold mx-auto shadow-lg"></div>
+                        <p className="text-gray-100 mt-6 max-w-2xl mx-auto drop-shadow-md font-medium">
                             {dict.description}
                         </p>
                     </div>
