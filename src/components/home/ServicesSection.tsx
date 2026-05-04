@@ -130,6 +130,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                         </Link>
                     </div>
                 )}
+                </div>
             </section>
         </div>
     );
