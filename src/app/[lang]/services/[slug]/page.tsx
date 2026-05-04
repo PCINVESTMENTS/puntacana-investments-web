@@ -116,8 +116,8 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         className="object-cover object-[center_30%]"
                         priority
                     />
-                    <div className="absolute inset-0 bg-black/30"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-transparent to-transparent"></div>
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-black/80 via-transparent to-transparent"></div>
                 </div>
                 <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
                     <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-4 block animate-fade-in-up drop-shadow-md">
