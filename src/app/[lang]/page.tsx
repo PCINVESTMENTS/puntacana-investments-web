@@ -92,10 +92,10 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
   const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
 
-  // Merge with local overrides and include local-only properties
+  // Merge with local fallbacks, but Sanity data (p) takes precedence
   const mergedProperties = fetchedProperties.map(p => {
     const local = localProperties.find(lp => lp.id === p.id);
-    return local || p;
+    return local ? { ...local, ...p } : p;
   });
 
   // Add properties that exist locally but not in Sanity

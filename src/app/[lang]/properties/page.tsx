@@ -159,12 +159,12 @@ export default async function PropertiesPage({
     // 1. Create a map of local properties for quick lookup
     const localMap = new Map(localProperties.map(p => [p.id, p]));
 
-    // 2. Map fetched properties, overriding with local if exists
+    // 2. Map fetched properties, merging with local if exists (Sanity data takes precedence)
     const unitedProperties = fetchedProperties.map(p => {
         const local = localMap.get(p.id);
         if (local) {
             localMap.delete(p.id); // Remove from map so we know it's used
-            return local;
+            return { ...local, ...p }; // Sanity data (p) overrides local data
         }
         return p;
     });
