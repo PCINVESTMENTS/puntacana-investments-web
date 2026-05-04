@@ -5,13 +5,6 @@ import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChartLine, FaHandHoldingUsd, FaFileContract, FaArrowRight, FaCity, FaUmbrellaBeach, FaPlane, FaCheck } from "react-icons/fa";
-import PropertyListings from "@/components/home/PropertyListings";
-import { client } from "@/sanity/lib/client";
-import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
-import { mapSanityProperty } from "@/sanity/lib/mappers";
-import { Property } from "@/data/properties";
-
-
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
@@ -48,84 +41,6 @@ export const revalidate = 60;
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en");
-
-    // Fetch properties with Fallback Strategy
-    let rawProperties: any[] = [];
-    
-    try {
-        rawProperties = await client.fetch(PROPERTIES_QUERY);
-        
-        // Force fallback if Sanity returned properties but they have missing images
-        // This handles cases where the GROQ cache is stale on Vercel Edge
-        let hasImages = rawProperties.length > 0 && (rawProperties[0].mainImage || rawProperties[0].imageUrl);
-        
-        if (!rawProperties || rawProperties.length === 0 || !hasImages) {
-            console.warn("⚠️ Sanity empty or missing images. Switching to Django Web Fallback...");
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
-            const res = await fetch(`${apiUrl}/api/public/properties/`, { next: { revalidate: 60 } });
-
-            if (res.ok) {
-                const djangoData = await res.json();
-                rawProperties = djangoData.map((d: any) => ({
-                    _id: `django-${d.id}`,
-                    title: d.title,
-                    slug: d.slug,
-                    price: d.is_rental_active ? parseFloat(d.rental_price || 0) : parseFloat(d.price || 0),
-                    is_rental_active: d.is_rental_active,
-                    rental_price: parseFloat(d.rental_price || 0),
-                    beds: d.bedrooms,
-                    baths: d.bathrooms,
-                    area: parseFloat(d.area_sqm),
-                    locationLabel: d.location_label,
-                    status: d.is_rental_active ? 'rent' : (d.status === 'Disponible' ? 'sale' : 'sold'),
-                    descriptionEs: d.description,
-                    descriptionEn: d.description_en,
-                    featured: d.is_featured,
-                    mainImage: null,
-                    imageUrl: d.main_image || d.main_image_url,
-                    galleryUrls: d.gallery_urls || [],
-                    features: d.features || { en: [], es: [] },
-                    videoUrl: d.video_url,
-                    virtualTourUrl: d.virtual_tour_url,
-                    coordinates: { lat: parseFloat(d.latitude), lng: parseFloat(d.longitude) },
-                    constructionStages: d.construction_stages,
-                    completionPercent: d.completion_percent,
-                    preConstruction: d.status === 'En Construcción',
-                    preLaunch: d.status === 'Pre Venta',
-                    isResale: d.status === 'Revenda'
-                }));
-            }
-        }
-    } catch (error) {
-        console.error("Fetch error:", error);
-    }
-
-    const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
-
-    // Merge logic:
-    // 1. Create a map of local properties for quick lookup
-    const { properties: localProperties } = await import("@/data/properties");
-    const localMap = new Map(localProperties.map(p => [p.id, p]));
-
-    // 2. Map fetched properties, merging with local if exists (Sanity data takes precedence)
-    const unitedProperties = fetchedProperties.map(p => {
-        const local = localMap.get(p.id);
-        if (local) {
-            localMap.delete(p.id); // Remove from map so we know it's used
-            return { 
-                ...local, 
-                ...p,
-                image: p.image || local.image,
-                gallery: (p.gallery && p.gallery.length > 0) ? p.gallery : local.gallery
-            };
-        }
-        return p;
-    });
-
-    // 3. Add remaining local properties that weren't in fetched
-    const properties = [...unitedProperties, ...Array.from(localMap.values())].sort((a, b) => {
-        return a.id - b.id;
-    });
 
     const benefits = [
         {
@@ -393,21 +308,6 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                     </div>
                 </div>
             </section>
-
-            {/* Featured Investment Opportunities */}
-            <div className="bg-primary-black pt-24">
-                <PropertyListings
-                    dict={dict.properties}
-                    lang={lang}
-                    locations={dict.sections.locations.items}
-                    featured={true}
-                    featuredCategory="sale"
-                    featuredLimit={3}
-                    sectionId="investment-opportunities"
-                    sectionTitle={lang === 'en' ? 'Curated Investment Opportunities' : 'Oportunidades de Inversión Curadas'}
-                    initialData={properties}
-                />
-            </div>
 
             <Footer dict={dict} lang={lang as 'es' | 'en'} />
         </main>
