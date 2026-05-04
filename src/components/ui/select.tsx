@@ -44,7 +44,7 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttrib
             type="button"
             onClick={() => context?.setOpen(!context.open)}
             className={cn(
-                "flex h-10 w-full items-center justify-between rounded-md border border-white/20 bg-zinc-900/50 px-3 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-luxury-gold disabled:cursor-not-allowed disabled:opacity-50",
+                "flex h-10 w-full items-center justify-between rounded-md border border-luxury-gold/50 bg-zinc-900/50 px-3 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-luxury-gold disabled:cursor-not-allowed disabled:opacity-50",
                 className
             )}
             {...props}
@@ -71,7 +71,7 @@ const SelectContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
         <div
             ref={ref}
             className={cn(
-                "absolute z-50 min-w-[8rem] overflow-hidden rounded-md border border-white/20 bg-zinc-900 text-white shadow-xl animate-in fade-in-0 zoom-in-95 mt-1 w-full",
+                "absolute z-50 min-w-[8rem] overflow-hidden rounded-md border border-luxury-gold/50 bg-zinc-900 text-white shadow-xl animate-in fade-in-0 zoom-in-95 mt-1 w-full",
                 className
             )}
             {...props}

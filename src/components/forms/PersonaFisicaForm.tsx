@@ -377,12 +377,9 @@ export function PersonaFisicaForm() {
                     Completar Otro Formulario
                 </Button>
             </div>
-        );
-    }
-
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-4 p-6 md:p-8 bg-zinc-950 text-white rounded-lg border border-white/10 shadow-2xl">
+            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8 print:space-y-4 border-2 border-luxury-gold/50 rounded-xl p-8 bg-black/40">
                 <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-white/10 px-6 py-4 -mx-6 md:-mx-8 print:hidden">
                     <div className="flex justify-between items-center text-center text-xs font-medium text-gray-400">
                         {['Datos Generales', 'Cónyuge', 'Ocupación', 'Político', 'Ref. & Decl.'].map((step, i) => (
@@ -671,7 +668,8 @@ export function PersonaFisicaForm() {
                 </FormSection>
 
                 <div className="flex flex-col-reverse gap-4 pt-8 sm:flex-row sm:justify-end print:hidden">
-                    <Button type="button" variant="outline" onClick={handleSaveDraft} disabled={isSubmitting} className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black">Guardar Borrador / Save Draft</Button>
+                    <Button type="button" variant="outline" onClick={handleSaveDraft} disabled={isSubmitting} className="border-white/20 text-white hover:bg-white/10">Guardar Borrador / Save Draft</Button>
+                    <Button type="button" variant="outline" onClick={handleDownload} disabled={isSubmitting} className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black">Vista Previa / Preview</Button>
                     <Button type="button" variant="outline" onClick={handleDownload} disabled={isSubmitting} className="text-green-500 border-green-500 hover:bg-green-500/10">Descargar como PDF / Download as PDF</Button>
                     <Button type="submit" disabled={isSubmitting} className="bg-luxury-gold text-black hover:bg-white font-bold">
                         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

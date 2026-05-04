@@ -37,7 +37,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, any>(
         const currentYear = new Date().getFullYear();
         const years = Array.from({ length: 120 }, (_, i) => (currentYear - i).toString());
 
-        const selectClass = "flex h-10 w-full items-center justify-between rounded-md border border-white/20 bg-zinc-900/50 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-luxury-gold cursor-pointer";
+        const selectClass = "flex h-10 w-full items-center justify-between rounded-md border border-luxury-gold/50 bg-zinc-900/50 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-luxury-gold cursor-pointer";
 
         return (
             <div className={cn("flex gap-2 w-full", className)} ref={ref}>
