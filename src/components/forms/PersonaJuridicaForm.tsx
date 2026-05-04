@@ -348,7 +348,7 @@ export function PersonaJuridicaForm() {
                     <div className="flex justify-center mb-4">
                         <div className="relative w-48 h-24">
                             <Image
-                                src="/form-logo.png"
+                                src="/form-logo.jpg"
                                 alt="Punta Cana Investments"
                                 fill
                                 style={{ objectFit: 'contain' }}

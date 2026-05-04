@@ -35,7 +35,7 @@ export default function DueDiligenceContent() {
                     <div className="flex justify-center mb-6">
                         <div className="relative w-64 h-24">
                             <Image
-                                src="/form-logo.png"
+                                src="/form-logo.jpg"
                                 alt="Punta Cana Investments"
                                 fill
                                 className="object-contain"
