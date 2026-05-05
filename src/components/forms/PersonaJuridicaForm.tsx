@@ -223,12 +223,15 @@ export function PersonaJuridicaForm() {
             };
 
             for (const [djangoField, formField] of Object.entries(fileMappings)) {
-                const fileData = data[formField];
-                if (fileData instanceof File) {
+                const fileData = data[formField as keyof typeof data];
+                if (!fileData) continue;
+                
+                // Allow both File and Blob (image compression might return Blob in some browsers)
+                if (fileData instanceof Blob || fileData instanceof File) {
                     formData.append(djangoField, fileData);
-                } else if (fileData instanceof FileList && fileData.length > 0) {
+                } else if (typeof FileList !== 'undefined' && fileData instanceof FileList && fileData.length > 0) {
                     formData.append(djangoField, fileData[0]);
-                } else if (Array.isArray(fileData) && fileData.length > 0 && fileData[0] instanceof File) {
+                } else if (Array.isArray(fileData) && fileData.length > 0 && (fileData[0] instanceof Blob || fileData[0] instanceof File)) {
                     formData.append(djangoField, fileData[0]);
                 }
             }
