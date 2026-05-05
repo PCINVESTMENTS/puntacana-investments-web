@@ -7,6 +7,7 @@ import Image from "next/image";
 import { personaJuridicaSchema, type PersonaJuridicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { sendKYCEmailNotification } from "@/app/actions/kyc";
 import {
     Form,
     FormControl,
@@ -178,7 +179,10 @@ export function PersonaJuridicaForm() {
             };
 
             const booleanFieldsMap: Record<string, string> = {
-                declaration: 'declaracion_jurada'
+                declaration: 'declaracion_jurada',
+                declaration2: 'declaracion_licitud_fondos',
+                authorization: 'autorizacion_compartir_info',
+                declaration4: 'declaracion_veracidad'
             };
 
             textFields.forEach(field => {
@@ -209,12 +213,12 @@ export function PersonaJuridicaForm() {
 
             // Map Frontend File Names to Django Model Field Names
             const fileMappings: Record<string, keyof PersonaJuridicaData> = {
-                'doc_registro_mercantil': 'commercialRegistryFile',
-                'doc_rep_id': 'legalRepIdFile',
-                'doc_asamblea': 'shareholderAssemblyFile',
-                'doc_firmas': 'authorizedSignaturesFile',
-                'doc_nomina_socios': 'shareholderListFile',
-                'doc_estados_financieros': 'financialStatementsFile'
+                'doc_registro_mercantil_file': 'commercialRegistryFile',
+                'doc_rep_id_file': 'legalRepIdFile',
+                'doc_asamblea_file': 'shareholderAssemblyFile',
+                'doc_firmas_file': 'authorizedSignaturesFile',
+                'doc_nomina_socios_file': 'shareholderListFile',
+                'doc_estados_financieros_file': 'financialStatementsFile'
             };
 
             for (const [djangoField, formField] of Object.entries(fileMappings)) {
@@ -241,6 +245,17 @@ export function PersonaJuridicaForm() {
 
             // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
             if (res.ok || res.status === 201) {
+                // Send email notification safely AFTER Django success
+                try {
+                    await sendKYCEmailNotification({
+                        type: 'Persona Jurídica',
+                        clientEmail: data.legalRepEmail,
+                        subjectName: data.companyName.trim()
+                    });
+                } catch (emailError) {
+                    console.error("Failed to send KYC confirmation email", emailError);
+                }
+
                 toast({
                     title: "Formulario Enviado",
                     description: "Su formulario de Persona Jurídica ha sido enviado con éxito.",

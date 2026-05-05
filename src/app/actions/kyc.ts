@@ -218,3 +218,58 @@ export async function submitKYCFromClient(formData: FormData) {
         return { success: false, error: error.message || 'Unknown error' }
     }
 }
+
+export async function sendKYCEmailNotification(params: { type: string, clientEmail: string, subjectName: string }) {
+    try {
+        const { type, clientEmail, subjectName } = params;
+
+        // Admin Notification
+        try {
+            await resend.emails.send({
+                from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>', // MUST BE verified domain
+                to: ['info@puntacanainvestmentsrd.com'],
+                subject: `Nuevo KYC Recibido: ${subjectName}`,
+                html: `
+                    <h1>Formulario KYC - Debida Diligencia</h1>
+                    <p>Un nuevo formulario de <strong>${type}</strong> ha sido completado.</p>
+                    <p>Cliente/Entidad: <strong>${subjectName}</strong></p>
+                    <p>Ya puede revisarlo internamente a través de su Dashboard Administrativo en el Módulo Legal.</p>
+                `
+            })
+        } catch (e) {
+            console.error("Resend Admin notification failed:", e)
+        }
+
+        // Client Confirmation
+        if (clientEmail) {
+            try {
+                await resend.emails.send({
+                    from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+                    to: [clientEmail],
+                    subject: `Confirmación de Recepción - Formulario KYC (${type})`,
+                    html: `
+                        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
+                            <h1 style="color: #D4AF37; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Confirmación de Recepción KYC</h1>
+                            <p>Estimado/a <strong>${subjectName}</strong>,</p>
+                            <p>Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.</p>
+                            <p>Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad.</p>
+                            <p>Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.</p>
+                            <p style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
+                                Atentamente,<br>
+                                <strong>Departamento Legal y Cumplimiento</strong><br>
+                                Punta Cana Investments<br>
+                                <a href="https://puntacanainvestmentsrd.com">www.puntacanainvestmentsrd.com</a>
+                            </p>
+                        </div>
+                    `
+                })
+            } catch (e) {
+                console.error("Resend Client notification failed:", e)
+            }
+        }
+        return { success: true };
+    } catch (e) {
+        console.error("Error in sendKYCEmailNotification:", e);
+        return { success: false };
+    }
+}

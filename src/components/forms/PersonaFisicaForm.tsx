@@ -7,6 +7,7 @@ import Image from "next/image";
 import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { sendKYCEmailNotification } from "@/app/actions/kyc";
 import {
     Form,
     FormControl,
@@ -207,14 +208,31 @@ export function PersonaFisicaForm() {
                 incomeUSD: 'equivalente_usd',
                 isPEP: 'es_pep',
                 fundsOrigin: 'origen_fondos',
+                spouseFirstName: 'conyuge_nombres',
+                spouseLastName: 'conyuge_apellidos',
+                spouseIdDocument: 'conyuge_pasaporte_cedula',
+                spouseNationality: 'conyuge_nacionalidad',
+                spouseHomePhone: 'conyuge_tel_residencia',
+                spouseMobilePhone: 'conyuge_tel_celular',
+                spouseEmail: 'conyuge_email',
+                hasOtherIncome: 'tiene_otros_ingresos', // Note: mapped as string here, handle boolean below if needed, but it's radio in frontend ("si"/"no")
+                otherIncomeSource: 'fuente_otros_ingresos',
+                otherIncomeAmount: 'monto_otros_ingresos',
+                pepPosition: 'pep_cargo',
+                pepInstitution: 'pep_institucion',
+                pepCountry: 'pep_pais',
             };
 
             const dateFieldsMap: Record<string, string> = {
-                birthDate: 'fecha_nacimiento'
+                birthDate: 'fecha_nacimiento',
+                spouseBirthDate: 'conyuge_fecha_nacimiento'
             };
 
             const booleanFieldsMap: Record<string, string> = {
-                declaration1: 'declaracion_jurada'
+                declaration1: 'declaracion_jurada',
+                declarationLicitFunds: 'declaracion_licitud_fondos',
+                authorization: 'autorizacion_compartir_info',
+                declaration4: 'declaracion_veracidad'
             };
 
             const arrayFieldsMap: Record<string, string> = {
@@ -250,6 +268,8 @@ export function PersonaFisicaForm() {
 
             // Handle isPEP manually since it's "si" / "no" in the frontend
             formData.append('es_pep', data.isPEP === 'si' ? 'true' : 'false');
+            // Handle hasOtherIncome manually
+            formData.append('tiene_otros_ingresos', data.hasOtherIncome === 'si' ? 'true' : 'false');
 
             arrayFields.forEach(field => {
                 const val = data[field as keyof PersonaFisicaData];
@@ -260,11 +280,11 @@ export function PersonaFisicaForm() {
 
             // Map Frontend File Names to Django Model Field Names
             const fileMappings: Record<string, keyof PersonaFisicaData> = {
-                'doc_identidad': 'idDocumentFile',
-                'doc_estado_cuenta': 'proofOfFundsFile',
-                'doc_comprobante_domicilio': 'proofOfAddressFile',
-                'doc_certificado_laboral': 'workLetterFile',
-                'doc_bureau_credito': 'creditBureauFile'
+                'doc_identidad_file': 'idDocumentFile',
+                'doc_estado_cuenta_file': 'proofOfFundsFile',
+                'doc_comprobante_domicilio_file': 'proofOfAddressFile',
+                'doc_certificado_laboral_file': 'workLetterFile',
+                'doc_bureau_credito_file': 'creditBureauFile'
             };
 
             for (const [djangoField, formField] of Object.entries(fileMappings)) {
@@ -291,6 +311,17 @@ export function PersonaFisicaForm() {
 
             // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
             if (res.ok || res.status === 201) {
+                // Send email notification using Server Action safely AFTER Django success
+                try {
+                    await sendKYCEmailNotification({
+                        type: 'Persona Física',
+                        clientEmail: data.email,
+                        subjectName: `${data.firstName} ${data.lastName}`.trim()
+                    });
+                } catch (emailError) {
+                    console.error("Failed to send KYC confirmation email", emailError);
+                }
+
                 toast({
                     title: "Formulario Enviado",
                     description: "Su formulario de Persona Física ha sido enviado con éxito.",
