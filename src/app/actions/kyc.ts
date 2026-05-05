@@ -174,10 +174,28 @@ export async function submitKYCFromClient(formData: FormData) {
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `Nuevo KYC Recibido: ${subjectName}`,
                 html: `
-                    <h1>Formulario KYC - Debida Diligencia</h1>
-                    <p>Un nuevo formulario de <strong>${type}</strong> ha sido completado.</p>
-                    <p>Cliente/Entidad: <strong>${subjectName}</strong></p>
-                    <p>Ya puede revisarlo internamente a través de su Dashboard Administrativo en el Módulo Legal.</p>
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">NUEVO KYC RECIBIDO</h2>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Se ha completado un nuevo formulario de <strong>${type}</strong>.
+                        </p>
+                        
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos Iniciales</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Cliente/Entidad:</strong> ${subjectName}</p>
+                        </div>
+
+                        <p style="font-size: 14px; color: #e0e0e0; text-align: center; margin-top: 30px;">
+                            Ya puede revisarlo internamente a través de su Dashboard Administrativo en el Módulo Legal.
+                        </p>
+                    </div>
+                </body>
+            </html>
                 `
             })
         } catch (e) {
@@ -192,19 +210,29 @@ export async function submitKYCFromClient(formData: FormData) {
                     to: [clientEmail],
                     subject: `Confirmación de Recepción - Formulario KYC (${type})`,
                     html: `
-                        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
-                            <h1 style="color: #D4AF37; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Confirmación de Recepción KYC</h1>
-                            <p>Estimado/a <strong>${subjectName}</strong>,</p>
-                            <p>Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.</p>
-                            <p>Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad.</p>
-                            <p>Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.</p>
-                            <p style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
-                                Atentamente,<br>
-                                <strong>Departamento Legal y Cumplimiento</strong><br>
-                                Punta Cana Investments<br>
-                                <a href="https://puntacanainvestmentsrd.com">www.puntacanainvestmentsrd.com</a>
-                            </p>
-                        </div>
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Confirmación de Recepción KYC</h2>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Estimado/a <strong>${subjectName}</strong>,
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
+                            Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad. Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.
+                        </p>
+                    </div>
+                    <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
+                        <p style="margin: 0; font-size: 14px; color: #c9ae5d; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Punta Cana Investments</p>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">Departamento Legal y Cumplimiento</p>
+                    </div>
+                </body>
+            </html>
                     `
                 })
             } catch (e) {
@@ -230,10 +258,28 @@ export async function sendKYCEmailNotification(params: { type: string, clientEma
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `Nuevo KYC Recibido: ${subjectName}`,
                 html: `
-                    <h1>Formulario KYC - Debida Diligencia</h1>
-                    <p>Un nuevo formulario de <strong>${type}</strong> ha sido completado.</p>
-                    <p>Cliente/Entidad: <strong>${subjectName}</strong></p>
-                    <p>Ya puede revisarlo internamente a través de su Dashboard Administrativo en el Módulo Legal.</p>
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">NUEVO KYC RECIBIDO</h2>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Se ha completado un nuevo formulario de <strong>${type}</strong>.
+                        </p>
+                        
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos Iniciales</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Cliente/Entidad:</strong> ${subjectName}</p>
+                        </div>
+
+                        <p style="font-size: 14px; color: #e0e0e0; text-align: center; margin-top: 30px;">
+                            Ya puede revisarlo internamente a través de su Dashboard Administrativo en el Módulo Legal.
+                        </p>
+                    </div>
+                </body>
+            </html>
                 `
             })
         } catch (e) {
@@ -248,19 +294,29 @@ export async function sendKYCEmailNotification(params: { type: string, clientEma
                     to: [clientEmail],
                     subject: `Confirmación de Recepción - Formulario KYC (${type})`,
                     html: `
-                        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
-                            <h1 style="color: #D4AF37; border-bottom: 2px solid #D4AF37; padding-bottom: 10px;">Confirmación de Recepción KYC</h1>
-                            <p>Estimado/a <strong>${subjectName}</strong>,</p>
-                            <p>Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.</p>
-                            <p>Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad.</p>
-                            <p>Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.</p>
-                            <p style="margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
-                                Atentamente,<br>
-                                <strong>Departamento Legal y Cumplimiento</strong><br>
-                                Punta Cana Investments<br>
-                                <a href="https://puntacanainvestmentsrd.com">www.puntacanainvestmentsrd.com</a>
-                            </p>
-                        </div>
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Confirmación de Recepción KYC</h2>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Estimado/a <strong>${subjectName}</strong>,
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
+                            Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.
+                        </p>
+                        <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
+                            Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad. Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.
+                        </p>
+                    </div>
+                    <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
+                        <p style="margin: 0; font-size: 14px; color: #c9ae5d; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Punta Cana Investments</p>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">Departamento Legal y Cumplimiento</p>
+                    </div>
+                </body>
+            </html>
                     `
                 })
             } catch (e) {
