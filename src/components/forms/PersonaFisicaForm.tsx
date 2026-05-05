@@ -243,9 +243,9 @@ export function PersonaFisicaForm() {
                 const val = data[field as keyof PersonaFisicaData];
                 if (val !== undefined && val !== null && fieldMap[field]) {
                     const stringVal = String(val).trim();
-                    // Fallbck to "No especificado" if the field is empty, 
-                    // because some fields aren't required in React but are strictly required in Django.
-                    formData.append(fieldMap[field], stringVal !== '' ? stringVal : 'No especificado');
+                    if (stringVal !== '') {
+                        formData.append(fieldMap[field], stringVal);
+                    }
                 }
             });
 

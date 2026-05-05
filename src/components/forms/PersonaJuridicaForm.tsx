@@ -188,7 +188,9 @@ export function PersonaJuridicaForm() {
                 const val = data[field as keyof PersonaJuridicaData];
                 if (val !== undefined && val !== null && fieldMap[field]) {
                     const stringVal = String(val).trim();
-                    formData.append(fieldMap[field], stringVal !== '' ? stringVal : 'No especificado');
+                    if (stringVal !== '') {
+                        formData.append(fieldMap[field], stringVal);
+                    }
                 }
             });
 
