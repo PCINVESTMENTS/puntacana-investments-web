@@ -206,7 +206,6 @@ export function PersonaFisicaForm() {
                 position: 'posicion',
                 monthlyIncome: 'ingreso_promedio',
                 incomeUSD: 'equivalente_usd',
-                isPEP: 'es_pep',
                 fundsOrigin: 'origen_fondos',
                 spouseFirstName: 'conyuge_nombres',
                 spouseLastName: 'conyuge_apellidos',
@@ -215,7 +214,6 @@ export function PersonaFisicaForm() {
                 spouseHomePhone: 'conyuge_tel_residencia',
                 spouseMobilePhone: 'conyuge_tel_celular',
                 spouseEmail: 'conyuge_email',
-                hasOtherIncome: 'tiene_otros_ingresos', // Note: mapped as string here, handle boolean below if needed, but it's radio in frontend ("si"/"no")
                 otherIncomeSource: 'fuente_otros_ingresos',
                 otherIncomeAmount: 'monto_otros_ingresos',
                 pepPosition: 'pep_cargo',

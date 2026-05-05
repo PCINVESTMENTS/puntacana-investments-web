@@ -170,7 +170,6 @@ export function PersonaJuridicaForm() {
                 annualIncome: 'ingreso_anual',
                 incomeUSD: 'equivalente_usd',
                 fundsOrigin: 'origen_fondos',
-                isPEP: 'es_pep',
             };
 
             const dateFieldsMap: Record<string, string> = {
