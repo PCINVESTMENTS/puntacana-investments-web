@@ -58,6 +58,7 @@ export function mapSanityProperty(data: any): Property {
         tagline: data.tagline?.includes('Error generating content') 
             ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
             : data.tagline,
+        locationLabel: data.locationLabel || (data.title?.includes('Epic') ? 'Punta Cana City Place' : 'Punta Cana'),
         constructionStages: data.constructionStages?.map((stage: any) => ({
             date: stage.date,
             title: { en: stage.titleEn, es: stage.titleEs },

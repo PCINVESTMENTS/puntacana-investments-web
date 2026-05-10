@@ -113,7 +113,13 @@ export default async function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-primary-black text-white`}
       >
-        
+                {/* Google Tag Manager (noscript) */}
+        {gtmId && (
+          <noscript>
+            <iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
+          </noscript>
+        )}
 
         {/* Meta Pixel - Body (noscript) */}
         {metaPixelId && (
