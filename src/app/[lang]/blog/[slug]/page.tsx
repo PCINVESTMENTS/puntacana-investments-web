@@ -60,6 +60,11 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
             ],
             type: 'article',
         },
+        keywords: post.slug === 'guia-invertir-seguro-punta-cana-evitar-estafas' 
+            ? (lang === 'es' 
+                ? ['invertir en Punta Cana 2026', 'bienes raíces Punta Cana', 'evitar estafas inmobiliarias República Dominicana', 'cómo invertir seguro en Punta Cana', 'Ley de CONFOTUR beneficios', 'fideicomiso inmobiliario República Dominicana', 'diseño de lujo sostenible Punta Cana', 'minimalismo orgánico propiedades Caribe']
+                : ['invest in Punta Cana 2026', 'Punta Cana real estate for sale', 'avoid real estate scams Dominican Republic', 'how to invest safely in Punta Cana', 'CONFOTUR Law benefits foreign investors', 'Dominican Republic real estate trust fund', 'sustainable luxury design Punta Cana', 'organic minimalism Caribbean properties'])
+            : [],
         alternates: {
             canonical: canonicalUrl,
             languages: {
