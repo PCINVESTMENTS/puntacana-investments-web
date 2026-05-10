@@ -52,6 +52,9 @@ function mapSanityProperty(data: any): Property {
             content: { en: section.contentEn, es: section.contentEs }
         })),
         hideFromLabel: data.hideFromLabel || false,
+        tagline: data.tagline?.includes('Error generating content') 
+            ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
+            : data.tagline,
         seo: {
             title: {
                 en: data.seo?.title?.en || data.title,
@@ -62,8 +65,8 @@ function mapSanityProperty(data: any): Property {
                 es: data.seo?.description?.es || data.descriptionEs || ""
             },
             keywords: {
-                en: data.seo?.keywords?.en || [],
-                es: data.seo?.keywords?.es || []
+                en: data.seo?.keywords?.en?.some((k: string) => k.includes('Error')) ? ["Punta Cana", "Investment", "Epic Punta Cana", "High ROI"] : (data.seo?.keywords?.en || []),
+                es: data.seo?.keywords?.es?.some((k: string) => k.includes('Error')) ? ["Punta Cana", "Inversión", "Epic Punta Cana", "Alta Rentabilidad"] : (data.seo?.keywords?.es || [])
             }
         }
     };
@@ -319,7 +322,15 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <div className="text-gray-300 leading-relaxed text-lg">
                                 <ReactMarkdown
                                     components={{
-                                        p: ({ node, ...props }) => <p className="mb-4 whitespace-pre-line" {...props} />,
+                                        p: ({ node, ...props }) => <p className="mb-4 whitespace-pre-line text-gray-300" {...props} />,
+                                        h1: ({ node, ...props }) => <h1 className="text-3xl font-serif font-bold text-luxury-gold mt-8 mb-4" {...props} />,
+                                        h2: ({ node, ...props }) => <h2 className="text-2xl font-serif font-bold text-luxury-gold mt-8 mb-4" {...props} />,
+                                        h3: ({ node, ...props }) => <h3 className="text-xl font-serif font-bold text-luxury-gold mt-6 mb-3" {...props} />,
+                                        h4: ({ node, ...props }) => <h4 className="text-lg font-serif font-bold text-white mt-4 mb-2" {...props} />,
+                                        strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
+                                        ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 text-gray-300" {...props} />,
+                                        li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                                        a: ({ node, ...props }) => <a className="text-luxury-gold hover:underline transition-all" {...props} />,
                                     }}
                                 >
                                     {property.description[lang as 'en' | 'es']}

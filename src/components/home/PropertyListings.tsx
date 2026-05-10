@@ -313,7 +313,6 @@ function PropertyListingsContent({
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
                                                 images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
-                                                rawImages={prop.rawGallery && prop.rawGallery.length > 0 ? prop.rawGallery : (prop.mainImage ? [prop.mainImage] : [])}
                                                 title={prop.title}
                                             />
                                             <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 pointer-events-none">

@@ -55,6 +55,9 @@ export function mapSanityProperty(data: any): Property {
             en: data.descriptionEn || "",
             es: data.descriptionEs || ""
         },
+        tagline: data.tagline?.includes('Error generating content') 
+            ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
+            : data.tagline,
         constructionStages: data.constructionStages?.map((stage: any) => ({
             date: stage.date,
             title: { en: stage.titleEn, es: stage.titleEs },
@@ -71,8 +74,8 @@ export function mapSanityProperty(data: any): Property {
                 es: data.seo?.description?.es || data.descriptionEs || ""
             },
             keywords: {
-                en: data.seo?.keywords?.en || [],
-                es: data.seo?.keywords?.es || []
+                en: data.seo?.keywords?.en?.some((k: string) => k.includes('Error')) ? ["Punta Cana", "Investment", "Epic Punta Cana", "High ROI"] : (data.seo?.keywords?.en || []),
+                es: data.seo?.keywords?.es?.some((k: string) => k.includes('Error')) ? ["Punta Cana", "Inversión", "Epic Punta Cana", "Alta Rentabilidad"] : (data.seo?.keywords?.es || [])
             }
         }
     };

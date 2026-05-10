@@ -11,7 +11,7 @@ interface PropertyCardCarouselProps {
     title: string;
 }
 
-export default function PropertyCardCarousel({ images, rawImages, title }: PropertyCardCarouselProps) {
+export default function PropertyCardCarousel({ images, title }: PropertyCardCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [hasInteracted, setHasInteracted] = useState(false);
 
@@ -43,8 +43,8 @@ export default function PropertyCardCarousel({ images, rawImages, title }: Prope
         >
             {images.map((img, idx) => {
                 const isActive = idx === currentIndex;
-                const srcImage = rawImages && rawImages[idx] ? rawImages[idx] : img;
-                const useSanity = !!(rawImages && rawImages[idx]);
+                const srcImage = img;
+                const useSanity = srcImage && srcImage.includes('sanity.io');
 
                 // PERFORMANCE BOOST: Only render the first image initially to save massive DOM size & Hydration Time
                 // Render the rest only when the user interacts with the carousel
