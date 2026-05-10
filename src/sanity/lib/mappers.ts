@@ -41,6 +41,26 @@ export function mapSanityProperty(data: any): Property {
         ? data.gallery.map((img: any) => urlFor(img).url()) 
         : (data.galleryUrls || []);
 
+    const isEpic = data.title?.includes('Epic');
+
+    let descriptionEs = data.descriptionEs || "";
+    let descriptionEn = data.descriptionEn || "";
+
+    if (isEpic) {
+        descriptionEs = descriptionEs
+            .replace(/Amenidades del Proyecto Epic Punta Cana:/g, "## Amenidades del Proyecto Epic Punta Cana:")
+            .replace(/Distribución y Características Principales \(60 m2\):/g, "## Distribución y Características Principales (60 m2):")
+            .replace(/Potencial de Inversión y Rentabilidad:/g, "## Potencial de Inversión y Rentabilidad:");
+            
+        descriptionEn = descriptionEn
+            .replace(/Amenities of the Epic Punta Cana Project:/g, "## Amenities of the Epic Punta Cana Project:")
+            .replace(/Distribution and Main Features \(60 m2\):/g, "## Distribution and Main Features (60 m2):")
+            .replace(/Investment Potential and Profitability:/g, "## Investment Potential and Profitability:");
+    }
+
+    const epicFeaturesEs = ["Cancha de Tenis", "Cancha de Baloncesto", "Piscina Infinity", "Piscina", "Cocina Modular", "Seguridad 24/7", "Airbnb Friendly", "Restaurantes Exclusivos", "Shopping Mall", "Supermercado", "Centro de Diversión / Bares", "Hospital / Clínica", "Farmacia", "Colegios Internacionales", "Aeropuerto", "Club de Playa Privado"];
+    const epicFeaturesEn = ["Tennis Court", "Basketball Court", "Infinity Pool", "Swimming Pool", "Modular Kitchen", "24/7 Security", "Airbnb Friendly", "Exclusive Restaurants", "Shopping Mall", "Supermarket", "Entertainment Center / Bars", "Hospital / Clinic", "Pharmacy", "International Schools", "Airport", "Private Beach Club"];
+
     return {
         ...data,
         image: safeMainImage,
@@ -48,12 +68,12 @@ export function mapSanityProperty(data: any): Property {
         gallery: safeGalleryUrls,
         rawGallery: data.gallery,
         features: {
-            en: data.featuresEn || [],
-            es: data.featuresEs || []
+            en: isEpic ? epicFeaturesEn : (data.featuresEn || []),
+            es: isEpic ? epicFeaturesEs : (data.featuresEs || [])
         },
         description: {
-            en: data.descriptionEn || "",
-            es: data.descriptionEs || ""
+            en: descriptionEn,
+            es: descriptionEs
         },
         tagline: data.tagline?.includes('Error generating content') 
             ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
