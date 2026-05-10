@@ -75,8 +75,12 @@ export function mapSanityProperty(data: any): Property {
                 es: data.seo?.description?.es || data.descriptionEs || ""
             },
             keywords: {
-                en: data.seo?.keywords?.en?.some((k: string) => k.includes('Error')) ? ["Punta Cana", "Investment", "Epic Punta Cana", "High ROI"] : (data.seo?.keywords?.en || []),
-                es: data.seo?.keywords?.es?.some((k: string) => k.includes('Error')) ? ["Punta Cana", "Inversión", "Epic Punta Cana", "Alta Rentabilidad"] : (data.seo?.keywords?.es || [])
+                en: data.seo?.keywords?.en?.some((k: string) => k.includes('Error')) ? [
+                    "Real estate investment Punta Cana", "High ROI properties Punta Cana", "Airbnb investment properties Dominican Republic", "Buy condo for vacation rental Punta Cana", "Punta Cana luxury real estate", "Invest in Epic Residences Punta Cana", "Tax-free real estate Punta Cana (CONFOTUR)", "1 bedroom condo for sale Punta Cana", "Condos for sale Downtown Punta Cana", "Epic Residences Punta Cana project", "Affordable condos in Punta Cana", "Pre-construction condos Punta Cana City Place", "Condos near the beach Punta Cana", "Condos in Punta Cana City Place", "Downtown Punta Cana real estate", "Buy property in Punta Cana", "New construction condos Punta Cana", "Punta Cana real estate agent", "Best places to buy property in Punta Cana"
+                ] : (data.seo?.keywords?.en || []),
+                es: data.seo?.keywords?.es?.some((k: string) => k.includes('Error')) ? [
+                    "Inversión inmobiliaria en Punta Cana", "Apartamentos rentables en Punta Cana", "Alta rentabilidad ROI Punta Cana", "Apartamentos para Airbnb en Punta Cana", "Comprar apartamento para alquilar Punta Cana", "Bienes raíces de lujo República Dominicana", "Invertir en Epic Residences Punta Cana", "Apartamento de 1 habitación en Punta Cana", "Apartamentos en venta Downtown Punta Cana", "Proyecto Epic Residences Punta Cana", "Apartamentos económicos Punta Cana", "Apartamentos en planos Punta Cana City Place", "Inmuebles cerca de la playa Punta Cana", "Apartamentos en Punta Cana City Place", "Bienes raíces Downtown Punta Cana", "Comprar propiedad en Punta Cana", "Apartamentos nuevos Punta Cana", "Real Estate Punta Cana", "Mejores apartamentos para comprar en Punta Cana"
+                ] : (data.seo?.keywords?.es || [])
             }
         }
     };
