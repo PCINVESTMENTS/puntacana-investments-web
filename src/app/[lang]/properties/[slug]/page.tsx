@@ -52,7 +52,7 @@ function mapSanityProperty(data: any): Property {
             content: { en: section.contentEn, es: section.contentEs }
         })),
         hideFromLabel: data.hideFromLabel || false,
-        locationLabel: data.locationLabel || (data.title?.includes('Epic') ? 'Punta Cana City Place' : 'Punta Cana'),
+        locationLabel: data.locationLabel || (data.title?.includes('Epic') ? 'Epic Residences' : 'Punta Cana'),
         tagline: data.tagline?.includes('Error generating content') 
             ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
             : data.tagline,
