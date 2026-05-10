@@ -26,16 +26,46 @@ interface BlogPostPageProps {
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
     const { lang, slug } = await params;
+    let post: any = null;
+
     const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
-    const post = mapSanityPost(rawPost);
+    const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical', 'guia-invertir-seguro-punta-cana-evitar-estafas'];
+    const shouldForceLocal = FORCE_LOCAL_SLUGS.includes(slug);
+
+    if (rawPost && !shouldForceLocal) {
+        post = mapSanityPost(rawPost);
+    } else {
+        post = blogPosts.find(p => p.slug === slug);
+    }
 
     if (!post) return { title: 'Post not found' };
 
+    const siteUrl = 'https://www.puntacanainvestmentsrd.com';
+    const canonicalUrl = `${siteUrl}/${lang}/blog/${post.slug}`;
+
     return {
         title: `${post.title[lang]} | Punta Cana Investments`,
-        description: post.excerpt[lang],
+        description: typeof post.excerpt === 'string' ? post.excerpt : post.excerpt[lang],
         openGraph: {
-            images: [post.mainImage],
+            title: `${post.title[lang]} | Punta Cana Investments`,
+            description: typeof post.excerpt === 'string' ? post.excerpt : post.excerpt[lang],
+            url: canonicalUrl,
+            images: [
+                {
+                    url: post.mainImage,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title[lang],
+                }
+            ],
+            type: 'article',
+        },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                'es': `${siteUrl}/es/blog/${post.slug}`,
+                'en': `${siteUrl}/en/blog/${post.slug}`,
+            },
         },
     };
 }
@@ -153,6 +183,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                 src={urlFor(value).url()}
                                 alt={value.alt || 'Blog Image'}
                                 fill
+                                sizes="(max-width: 768px) 100vw, 800px"
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                         </div>
@@ -168,6 +199,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                 src={value.url}
                                 alt={value.caption || post.title[lang]}
                                 fill
+                                sizes="(max-width: 768px) 100vw, 800px"
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                         </div>
@@ -206,6 +238,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     src={post.mainImage}
                     alt={post.title[lang]}
                     fill
+                    sizes="100vw"
                     className="object-cover"
                     priority
                 />
