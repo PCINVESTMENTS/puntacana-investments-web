@@ -58,8 +58,8 @@ export const blogPosts: BlogPost[] = [
             {
                 subtitle: { es: "1. La Seguridad Jurídica: El Escudo de tu Inversión", en: "1. Legal Security: The Shield of Your Investment" },
                 text: {
-                    es: "En la República Dominicana, la seguridad jurídica se basa en el Sistema de Registro Inmobiliario. Para que tu inversión esté blindada, debes exigir la verificación de tres puntos innegociables:\n\n- **Certificado de Título:** Debe estar a nombre del vendedor o la desarrolladora, acompañado de una certificación de estado jurídico que compruebe que está libre de cargas o gravámenes.\n- **Ley de CONFOTUR:** Los proyectos certificados bajo esta ley no solo ofrecen beneficios fiscales inigualables (exención del 3% de transferencia y 15 años sin impuesto a la propiedad), sino que pasan por un riguroso filtro del Estado Dominicano.\n- **Permisos de Construcción:** Nunca inviertas en un proyecto que no tenga la licencia de construcción aprobada por el MIVHED (Ministerio de Vivienda) y Medio Ambiente.",
-                    en: "In the Dominican Republic, legal security is based on the Real Estate Registration System. For your investment to be shielded, you must demand the verification of three non-negotiable points:\n\n- **Certificate of Title:** Must be in the name of the seller or developer, accompanied by a legal status certification proving it is free of liens or encumbrances.\n- **CONFOTUR Law:** Projects certified under this law not only offer unparalleled tax benefits (exemption from the 3% transfer tax and 15 years without property tax) but also pass a rigorous filter by the Dominican State.\n- **Construction Permits:** Never invest in a project that does not have a construction license approved by the MIVHED (Ministry of Housing) and the Ministry of Environment."
+                    es: "En la República Dominicana, la seguridad jurídica se basa en el Sistema de Registro Inmobiliario. Para que tu inversión esté blindada, debes exigir la verificación de tres puntos innegociables:\n\n- **Certificado de Título:** Debe estar a nombre del vendedor o la desarrolladora, acompañado de una certificación de estado jurídico que compruebe que está libre de cargas o gravámenes.\n- **[Ley de CONFOTUR](https://confotur.mitur.gob.do):** Los proyectos certificados bajo esta ley no solo ofrecen beneficios fiscales inigualables (exención del 3% de transferencia y 15 años sin impuesto a la propiedad), sino que pasan por un riguroso filtro del Estado Dominicano.\n- **Permisos de Construcción:** Nunca inviertas en un proyecto que no tenga la licencia de construcción aprobada por el [MIVHED (Ministerio de Vivienda)](https://mived.gob.do) y Medio Ambiente.",
+                    en: "In the Dominican Republic, legal security is based on the Real Estate Registration System. For your investment to be shielded, you must demand the verification of three non-negotiable points:\n\n- **Certificate of Title:** Must be in the name of the seller or developer, accompanied by a legal status certification proving it is free of liens or encumbrances.\n- **[CONFOTUR Law](https://confotur.mitur.gob.do):** Projects certified under this law not only offer unparalleled tax benefits (exemption from the 3% transfer tax and 15 years without property tax) but also pass a rigorous filter by the Dominican State.\n- **Construction Permits:** Never invest in a project that does not have a construction license approved by the [MIVHED (Ministry of Housing)](https://mived.gob.do) and the Ministry of Environment."
                 },
                 image: "/images/blog/guia_inversion_2.png",
                 imageCaption: { 
@@ -67,13 +67,7 @@ export const blogPosts: BlogPost[] = [
                     en: "Your shielded investment: We only work with verified titles and projects with full permits and approved CONFOTUR." 
                 }
             },
-            {
-                subtitle: { es: "📥 [DESCARGA GRATUITA] - El Escudo de tu Patrimonio", en: "📥 [FREE DOWNLOAD] - The Shield of Your Wealth" },
-                text: {
-                    es: "No entregues ningún anticipo sin antes auditar tu proyecto. Descarga nuestra Checklist Definitiva de Seguridad Jurídica en PDF y marca las 14 casillas esenciales antes de firmar tu contrato.\n\n[**Descargar Checklist Ahora**](/#contact)",
-                    en: "Do not give any advance payment without first auditing your project. Download our Definitive Legal Security Checklist in PDF and check the 14 essential boxes before signing your contract.\n\n[**Download Checklist Now**](/#contact)"
-                }
-            },
+
             {
                 subtitle: { es: "2. Cómo Detectar (y Esquivar) las Estafas Inmobiliarias", en: "2. How to Detect (and Avoid) Real Estate Scams" },
                 text: {
@@ -131,7 +125,8 @@ export const blogPosts: BlogPost[] = [
                     en: "**Can a foreigner be an absolute owner of a property in the Dominican Republic?**\nYes, Dominican law allows foreigners to acquire properties with the same rights and duties as local citizens, obtaining their definitive property title in their name or their company's name.\n\n**What exactly is the CONFOTUR Law and how does it benefit me?**\nIt is the Tourism Development Incentive Law. If you invest in a project protected under CONFOTUR, you are exempt from paying the transfer tax (3% of the property value) and the Real Estate Property Tax (IPI of 1% annually) for up to 15 years.\n\n**Why is it important to buy off-plan (pre-construction)?**\nBuying off-plan with a reliable company allows you to secure the lowest possible price. As construction progresses, the property appreciates, generating automatic capital gain before the handover of keys."
                 }
             }
-        ]
+        ],
+        relatedProperties: [8, 11, 17]
     }
 ,
     {

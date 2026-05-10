@@ -79,9 +79,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         // Add text block
                         if (section.text?.[lang] || section.text) {
                             blocks.push({
-                                _type: 'block',
-                                style: 'normal',
-                                children: [{ _type: 'span', text: section.text[lang] || section.text }]
+                                _type: 'markdownText',
+                                text: section.text[lang] || section.text
                             });
                         }
 
@@ -126,6 +125,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     // Portable Text Components Definition
     const ptComponents: PortableTextComponents = {
         types: {
+            markdownText: ({ value }: any) => {
+                const ReactMarkdown = require('react-markdown').default || require('react-markdown');
+                return (
+                    <div className="text-gray-300 leading-8 text-lg text-justify mb-6 space-y-4">
+                        <ReactMarkdown
+                            components={{
+                                strong: ({node, ...props}: any) => <strong className="text-luxury-gold font-bold" {...props} />,
+                                a: ({node, ...props}: any) => <a className="text-luxury-gold underline hover:text-white transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                                ul: ({node, ...props}: any) => <ul className="list-disc pl-6 space-y-2" {...props} />,
+                                li: ({node, ...props}: any) => <li {...props} />
+                            }}
+                        >
+                            {value.text}
+                        </ReactMarkdown>
+                    </div>
+                );
+            },
             image: ({ value }: any) => {
                 if (!value?.asset?._ref) {
                     return null;
@@ -156,7 +172,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             />
                         </div>
                         {value.caption && (
-                            <figcaption className="text-center text-gray-500 text-sm italic mt-4">
+                            <figcaption className="mt-4 text-center text-sm text-gray-400 italic">
                                 {value.caption}
                             </figcaption>
                         )}
@@ -165,9 +181,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             }
         },
         block: {
-            h1: ({ children }) => <h1 className="text-4xl font-serif font-bold text-white pt-8 mb-4">{children}</h1>,
-            h2: ({ children }) => <h2 className="text-3xl font-serif font-bold text-white pt-8 mb-4">{children}</h2>,
-            h3: ({ children }) => <h3 className="text-2xl font-serif font-bold text-white pt-6 mb-3">{children}</h3>,
+            h1: ({ children }) => <h1 className="text-4xl font-serif font-bold text-luxury-gold pt-8 mb-4">{children}</h1>,
+            h2: ({ children }) => <h2 className="text-3xl font-serif font-bold text-luxury-gold pt-8 mb-4">{children}</h2>,
+            h3: ({ children }) => <h3 className="text-2xl font-serif font-bold text-luxury-gold pt-6 mb-3">{children}</h3>,
             normal: ({ children }) => <p className="text-gray-300 leading-8 text-lg text-justify whitespace-pre-line mb-6">{children}</p>,
             blockquote: ({ children }) => <blockquote className="border-l-4 border-luxury-gold pl-4 italic text-gray-400 my-6">{children}</blockquote>,
         },
@@ -190,10 +206,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     src={post.mainImage}
                     alt={post.title[lang]}
                     fill
-                    className="object-cover brightness-50"
+                    className="object-cover"
                     priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="max-w-4xl mx-auto px-4 text-center">
