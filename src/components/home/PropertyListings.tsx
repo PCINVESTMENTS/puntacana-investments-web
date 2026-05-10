@@ -358,7 +358,7 @@ function PropertyListingsContent({
                                                 <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-3 md:px-4 py-2 shadow-lg text-[10px] md:text-xs z-30">
                                                     {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
                                                         <>
-                                                            {(!prop.hideFromLabel && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
+                                                            {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
                                                             {prop.status === 'rent' && (lang === 'en' ? ' /mo' : ' /mes')}
                                                         </>
                                                     ) : (

@@ -276,7 +276,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    {(!property.hideFromLabel && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
+                                    {((property.hideFromLabel === false || (property.hideFromLabel !== true && (property.preConstruction || property.preLaunch))) && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
                                         <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : 'Desde'}</span>
                                     )} {formatPrice(property.price)}
                                 </p>
