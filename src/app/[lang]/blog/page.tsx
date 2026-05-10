@@ -1,7 +1,7 @@
 import { client } from "@/sanity/lib/client";
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityPost } from "@/sanity/lib/mappers";
-import { BlogPost } from "@/data/blog";
+import { BlogPost, blogPosts } from "@/data/blog";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -24,7 +24,11 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
     const dict = await getDictionary(lang);
 
     const rawPosts = await client.fetch(POSTS_QUERY);
-    const posts: BlogPost[] = rawPosts.map(mapSanityPost);
+    const sanityPosts: BlogPost[] = rawPosts.map(mapSanityPost);
+    
+    // Merge local posts that are not in Sanity
+    const localPosts = blogPosts.filter(localPost => !sanityPosts.some(p => p.slug === localPost.slug));
+    const posts = [...sanityPosts, ...localPosts];
 
     return (
         <main className="min-h-screen bg-black text-white">
