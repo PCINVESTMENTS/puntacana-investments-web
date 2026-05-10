@@ -273,7 +273,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
-                                    {property.type} • {property.status === 'sale' ? 'Venta' : 'Renta'}
+                                    {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? 'Venta' : 'Renta'}
                                 </span>
                                 <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-2 shadow-black drop-shadow-lg">
                                     {property.title}
@@ -284,7 +284,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    {((property.hideFromLabel === false || (property.hideFromLabel !== true && (property.preConstruction || property.preLaunch))) && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
+                                    {(!property.hideFromLabel && (property.preConstruction || property.preLaunch) && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
                                         <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : 'Desde'}</span>
                                     )} {formatPrice(property.price)}
                                 </p>
