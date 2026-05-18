@@ -186,7 +186,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             url: canonicalUrl,
             images: [
                 {
-                    url: property.image,
+                    url: property.image.includes('cdn.sanity.io') ? `${property.image}&w=1200&h=630&fit=crop` : property.image,
                     width: 1200,
                     height: 630,
                     alt: property.title,
@@ -200,7 +200,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             card: 'summary_large_image',
             title: title,
             description: description,
-            images: [property.image],
+            images: [property.image.includes('cdn.sanity.io') ? `${property.image}&w=1200&h=630&fit=crop` : property.image],
         },
         alternates: {
             canonical: canonicalUrl,
