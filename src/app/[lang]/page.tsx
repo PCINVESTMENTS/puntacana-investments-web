@@ -123,8 +123,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const posts: BlogPost[] = rawPosts.map(mapSanityPost);
 
   const heroProperties = properties.filter(p =>
-    // Hero Allowed: City Place (2), Diana (3), Kerry (7), Perla (8), Ocean Village (9), Soto Grande (12), Miches (13)
-    [2, 3, 7, 8, 9, 12, 13].includes(p.id)
+    // Hero Allowed: City Place (2), Diana (3), Kerry (7), Ocean Village (9), Soto Grande (12), Miches (13)
+    [2, 3, 7, 9, 12, 13].includes(p.id)
   ).map(p => ({
     id: p.id,
     mainImage: p.mainImage,
