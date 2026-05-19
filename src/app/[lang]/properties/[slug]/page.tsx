@@ -165,6 +165,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;
 
+    const formatPrice = (price: number) => {
+        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
+    };
+    const statusText = property.status === 'rent' ? (lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'es' ? 'VENTA' : 'SALE');
+    const socialTitle = `[${statusText} - ${formatPrice(property.price)}] ${title}`;
+
     return {
         title: title,
         description: description,
@@ -181,7 +187,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             },
         },
         openGraph: {
-            title: title,
+            title: socialTitle,
             description: description,
             url: canonicalUrl,
             images: [
@@ -198,7 +204,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
         twitter: {
             card: 'summary_large_image',
-            title: title,
+            title: socialTitle,
             description: description,
             images: [property.image.includes('cdn.sanity.io') ? `${property.image}&w=1200&h=630&fit=crop` : property.image],
         },
