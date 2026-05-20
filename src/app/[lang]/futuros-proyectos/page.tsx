@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaLeaf, FaSeedling, FaTree, FaSwimmer, FaGlassMartiniAlt, FaHome, FaWater } from "react-icons/fa";
+import { FaLeaf, FaSeedling, FaTree, FaSwimmer, FaGlassMartiniAlt, FaHome, FaWater, FaLock } from "react-icons/fa";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import ContactForm from "@/components/contact/ContactForm";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import type { Metadata } from "next";
 
@@ -282,17 +283,57 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         </div>
       </section>
 
-      {/* Final Full Width Image */}
-      <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center">
-         <Image src="/images/cruises-on-land-lake-aerial-overview-punta-cana.jpg" alt="The Future" fill className="object-cover" />
-         <div className="absolute inset-0 bg-black/60"></div>
-         <div className="relative z-10 text-center max-w-3xl px-4">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 uppercase tracking-widest">✨ COMING SOON</h2>
-            <p className="text-2xl text-luxury-gold italic mb-8">Un nuevo destino ecológico está naciendo en el Caribe.</p>
-            <Link href="/es/contact" className="inline-block border-2 border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-colors font-bold uppercase tracking-widest px-8 py-4">
-                Regístrate para Actualizaciones
-            </Link>
-         </div>
+      {/* Founder Access Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="bg-gradient-to-br from-zinc-900 to-black border border-luxury-gold/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+            
+            <div className="text-center mb-12 relative z-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-luxury-gold/10 text-luxury-gold mb-6 border border-luxury-gold/20 shadow-lg">
+                    <FaLock className="text-2xl" />
+                </div>
+                <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 uppercase tracking-wider">Acceso Exclusivo: <br/><span className="text-luxury-gold">Fase de Lanzamiento Cero</span></h2>
+                <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    El éxito de las inversiones inmobiliarias radica en entrar primero. Al registrarte hoy, obtienes prioridad absoluta antes de que el proyecto sea liberado al mercado internacional masivo.
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 relative z-10">
+                <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
+                    <div className="text-luxury-gold text-3xl mb-4">🏷️</div>
+                    <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Precio Cero</h3>
+                    <p className="text-gray-400 leading-relaxed">Descuento garantizado de "Lista de Precios de Fundador" (el valor por m² más bajo de todo el ciclo del proyecto).</p>
+                </div>
+                <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
+                    <div className="text-luxury-gold text-3xl mb-4">🗺️</div>
+                    <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Elección de Master Plan</h3>
+                    <p className="text-gray-400 leading-relaxed">Prioridad para elegir las mejores ubicaciones de cabañas (frente al río o cercanas a la Casa Club) antes que nadie.</p>
+                </div>
+                <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
+                    <div className="text-luxury-gold text-3xl mb-4">📄</div>
+                    <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Dossier Financiero</h3>
+                    <p className="text-gray-400 leading-relaxed">Envío inmediato de las proyecciones estimadas de ROI del Pool Hotelero exclusivo para inversionistas (USD).</p>
+                </div>
+            </div>
+
+            <div className="max-w-2xl mx-auto bg-black/60 p-8 md:p-10 rounded-2xl border border-luxury-gold/40 shadow-2xl relative z-10">
+                <div className="text-center mb-8">
+                    <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider mb-3">Quiero Ser Inversionista Fundador</h3>
+                    <div className="inline-block bg-red-900/40 border border-red-500/50 px-4 py-2 rounded-full">
+                        <p className="text-red-200 text-sm font-bold tracking-widest uppercase flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            Cupos prioritarios limitados a las primeras 15 unidades.
+                        </p>
+                    </div>
+                </div>
+                <ContactForm 
+                    dict={dict.contact.form} 
+                    lang={lang} 
+                    subject="VIP - Solicitud Inversionista Fundador Miches" 
+                />
+            </div>
+        </div>
       </section>
 
       <Footer dict={dict} lang={lang} />
