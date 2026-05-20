@@ -151,7 +151,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             </p>
           </div>
           <div className="w-full lg:w-1/2 relative h-[500px] rounded-sm overflow-hidden shadow-2xl">
-            <Image src="/images/luxury-villa-marina-cap-cana-piscina-agua-cristalina-jacuzzi.jpg" alt="Eco Pool" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+            <Image src="/images/miches-eco-resort-entorno.jpg" alt="Eco Pool" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
           </div>
         </div>
