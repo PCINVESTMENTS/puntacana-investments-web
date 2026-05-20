@@ -119,7 +119,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
 
       {/* Section 2: Full Width Image Divider */}
       <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center my-12">
-         <Image src="/images/miches-sunrise-gallery-1.webp" alt="Miches Nature" fill className="object-cover" />
+         <Image src="/images/miches-eco-resort-concepto.jpg" alt="Miches Nature" fill className="object-cover" />
          <div className="absolute inset-0 bg-black/60"></div>
          <div className="relative z-10 text-center max-w-4xl px-4">
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-luxury-gold mb-6">🌴 UN CONCEPTO ECOLÓGICO REAL</h2>
