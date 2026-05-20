@@ -91,13 +91,12 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
                             Hemos recibido tu aplicación para la fase exclusiva de lanzamiento del nuevo Eco-Resort en Miches bajo la modalidad: <strong>${modality === 'capital' ? 'Socio de Capital' : 'Inversor de Unidades'}</strong>.
                         </p>
                         
-                        <div style="background-color: #1a1a1a; padding: 25px; border-left: 4px solid #c9ae5d; margin: 30px 0; border-radius: 4px; text-align: center;">
-                            <p style="margin: 0 0 10px 0; color: #888; font-size: 13px; text-transform: uppercase;">Número Secuencial Asignado</p>
-                            <p style="margin: 0; color: #c9ae5d; font-size: 28px; font-weight: bold; letter-spacing: 2px;">${sequenceNumber}</p>
-                        </div>
-                        
                         <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
                             La dirección ejecutiva revisará tu perfil de inversión. Si eres aprobado, te enviaremos el Dossier Financiero Privado o el Acuerdo de Confidencialidad correspondiente a tu modalidad.
+                        </p>
+                        
+                        <p style="font-size: 14px; line-height: 1.6; color: #a0a0a0; margin-bottom: 20px; font-style: italic;">
+                            Nota: Por favor verifica tu bandeja de Spam o Correo no deseado para asegurar que recibes nuestras futuras comunicaciones.
                         </p>
                     </div>
                     <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
@@ -111,7 +110,7 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             await resend.emails.send({
                 from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: [email],
-                subject: `Tu número de acceso VIP: ${sequenceNumber}`,
+                subject: `Solicitud VIP Recibida - Punta Cana Investments`,
                 html: htmlTemplate
             });
 

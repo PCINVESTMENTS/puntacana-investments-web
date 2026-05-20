@@ -73,7 +73,8 @@ export default function FounderInvestmentForm({ dict, lang }: FounderInvestmentF
                         <FaCheckCircle aria-hidden="true" size={48} />
                     </div>
                     <h3 className="text-2xl font-playfair text-white mb-2">¡Solicitud VIP Recibida!</h3>
-                    <p className="text-gray-300 mb-4">Te hemos enviado un correo con tu Número Secuencial de Inversor Fundador.</p>
+                    <p className="text-gray-300 mb-2">Te hemos enviado un correo confirmando la recepción de tu solicitud.</p>
+                    <p className="text-luxury-gold text-sm font-medium mb-4 italic">Por favor, verifica tu bandeja de Spam o Correo no deseado.</p>
                     <button
                         onClick={() => {
                             setSelectedModality(null);
