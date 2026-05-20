@@ -187,8 +187,8 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-16 uppercase">🌊 AMENIDADES Y EXPERIENCIAS</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="flex flex-col items-center">
-                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30">
-                        <Image src="/images/luxury-villa-marina-cap-cana-ducha-exterior-jardin-coralina.jpg" alt="Cabañas" fill className="object-cover" />
+                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
+                        <Image src="/images/miches-eco-resort-cabana.jpg" alt="Cabañas" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
                     <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Cabañas Tropicales</p>
                 </div>
