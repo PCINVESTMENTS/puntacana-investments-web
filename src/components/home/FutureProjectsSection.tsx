@@ -8,7 +8,7 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/images/miches-sunrise-main-v2.webp"
+                    src="/images/miches-eco-resort-main.jpg"
                     alt="Coming Soon Miches"
                     fill
                     className="object-cover object-center"

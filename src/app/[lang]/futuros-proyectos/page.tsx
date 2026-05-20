@@ -26,7 +26,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="relative h-screen min-h-[700px] flex items-center justify-center pt-20">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/miches-sunrise-main-v2.webp"
+            src="/images/miches-eco-resort-main.jpg"
             alt="Miches Eco Luxury"
             fill
             className="object-cover object-center"
