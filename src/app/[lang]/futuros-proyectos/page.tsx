@@ -205,8 +205,8 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Piscinas Infinity</p>
                 </div>
                 <div className="flex flex-col items-center">
-                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30">
-                        <Image src="/images/the-beach-lagoon-beach-lounge-area-punta-cana.jpg" alt="Wellness" fill className="object-cover" />
+                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
+                        <Image src="/images/miches-eco-resort-spa.jpg" alt="Wellness" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
                     <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Área Wellness & Spa</p>
                 </div>
