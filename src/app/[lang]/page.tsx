@@ -14,7 +14,7 @@ const BlogSection = dynamic(() => import("@/components/home/BlogSection"));
 const InvestmentsSection = dynamic(() => import("@/components/home/InvestmentsSection"));
 const OffMarketClub = dynamic(() => import("@/components/home/OffMarketClub"));
 const FlyAndBuySection = dynamic(() => import("@/components/home/FlyAndBuySection"));
-
+const FutureProjectsSection = dynamic(() => import("@/components/home/FutureProjectsSection"));
 // Refactored components
 const LocationsSection = dynamic(() => import("@/components/home/LocationsSection").then(mod => mod.LocationsSection));
 const AboutSection = dynamic(() => import("@/components/home/AboutSection").then(mod => mod.AboutSection));
@@ -236,6 +236,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         sectionTitle={lang === 'en' ? 'Featured Properties' : 'Propiedades Destacadas'}
         initialData={featuredOnlyProperties}
       />
+      <FutureProjectsSection lang={lang} />
       <InvestmentsSection dict={dict.sections.investments} lang={lang} />
       <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
       <OffMarketClub lang={lang} />
