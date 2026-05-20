@@ -4,6 +4,8 @@ import { FaLeaf, FaSeedling, FaTree, FaSwimmer, FaGlassMartiniAlt, FaHome, FaWat
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import FounderInvestmentForm from "@/components/forms/FounderInvestmentForm";
+import ReadMore from "@/components/ui/ReadMore";
+import ReadMore from "@/components/ui/ReadMore";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import type { Metadata } from "next";
 
@@ -104,16 +106,28 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider">Un Desarrollo Ecológico de Nueva Generación</h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              Muy pronto llegará un proyecto concebido para transformar la manera de vivir, invertir y conectar con la naturaleza. Diseñado para integrar arquitectura moderna tropical, sostenibilidad, bienestar y experiencias hoteleras premium en un entorno natural verdaderamente extraordinario.
-            </p>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              Ubicado sobre una impresionante propiedad de aproximadamente 50,000 m² rodeada de exuberante vegetación y un río natural que recorre toda la parte posterior del proyecto, este concepto nace con una visión clara:
-            </p>
-            <blockquote className="border-l-4 border-luxury-gold pl-6 text-xl italic text-white font-serif">
-              "Crear un santuario tropical donde la naturaleza y el lujo convivan en perfecta armonía."
-            </blockquote>
+            <ReadMore 
+              preview={
+                <>
+                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-6">Un Desarrollo Ecológico de Nueva Generación</h2>
+                    <p className="text-gray-300 text-lg leading-relaxed mb-4">
+                      Muy pronto llegará un proyecto concebido para transformar la manera de vivir, invertir y conectar con la naturaleza.
+                    </p>
+                    <p className="text-gray-300 text-lg leading-relaxed">
+                      Diseñado para integrar arquitectura moderna tropical, sostenibilidad, bienestar y experiencias hoteleras premium en un entorno natural verdaderamente extraordinario.
+                    </p>
+                </>
+              }
+            >
+              <div className="space-y-4 text-gray-400 mt-4">
+                <p>
+                  Ubicado sobre una impresionante propiedad de aproximadamente 50,000 m² rodeada de exuberante vegetación y un río natural que recorre toda la parte posterior del proyecto, este concepto nace con una visión clara:
+                </p>
+                <blockquote className="border-l-4 border-luxury-gold pl-6 text-xl italic text-white font-serif mt-6">
+                  "Crear un santuario tropical donde la naturaleza y el lujo convivan en perfecta armonía."
+                </blockquote>
+              </div>
+            </ReadMore>
           </div>
         </div>
       </section>
@@ -133,23 +147,40 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         <div className="flex flex-col-reverse lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2 space-y-6">
             <h3 className="text-2xl font-serif font-bold text-white uppercase tracking-wider mb-6">Respeto por el Entorno</h3>
-            <ul className="space-y-4">
-                {[
-                    "La topografía natural del terreno",
-                    "La vegetación existente",
-                    "La integración visual con el río",
-                    "La circulación ecológica peatonal",
-                    "La armonía entre arquitectura y paisaje"
-                ].map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-4 text-gray-300 text-lg">
-                        <FaLeaf className="text-luxury-gold flex-shrink-0" />
-                        <span>{item}</span>
-                    </li>
-                ))}
-            </ul>
-            <p className="text-gray-300 text-lg leading-relaxed mt-6">
-              Cada espacio ha sido pensado para generar una conexión directa con la naturaleza: Senderos ecológicos, miradores frente al río, y espacios abiertos para relajación. Aquí, la naturaleza no será un complemento. Será el corazón del proyecto.
-            </p>
+            <ReadMore
+                preview={
+                    <>
+                        <ul className="space-y-4">
+                            {[
+                                "La topografía natural del terreno",
+                                "La vegetación existente",
+                                "La integración visual con el río",
+                                "La circulación ecológica peatonal",
+                                "La armonía entre arquitectura y paisaje"
+                            ].map((item, idx) => (
+                                <li key={idx} className="flex items-center gap-4 text-gray-300 text-lg">
+                                    <FaLeaf className="text-luxury-gold flex-shrink-0" />
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                }
+            >
+                <div className="space-y-4 text-gray-400 mt-6">
+                    <p>Cada espacio ha sido pensado para generar una conexión directa con la naturaleza:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                        <li>Senderos ecológicos entre árboles tropicales.</li>
+                        <li>Miradores y decks estratégicos frente al río.</li>
+                        <li>Espacios abiertos para relajación, meditación y bienestar.</li>
+                        <li>Áreas verdes preservadas y planes de reforestación nativa.</li>
+                        <li>Diseño sostenible y tropical contemporáneo con acabados minimalistas orgánicos.</li>
+                    </ul>
+                    <p className="font-bold text-luxury-gold italic mt-4 text-lg">
+                        Aquí, la naturaleza no será un complemento. Será el corazón del proyecto.
+                    </p>
+                </div>
+            </ReadMore>
           </div>
           <div className="w-full lg:w-1/2 relative h-[500px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-entorno.jpg" alt="Eco Pool" fill className="object-cover hover:scale-105 transition-transform duration-700" />
@@ -165,17 +196,79 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Sustainable Gardens" fill className="object-cover" />
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider">🌱 AGRICULTURA ECOLÓGICA Y CONSUMO SOSTENIBLE</h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              Como parte fundamental del concepto, el proyecto contará con áreas destinadas al cultivo de vegetales, frutas y hierbas que serán consumidos dentro del complejo. Un modelo de vida más saludable y conectado con la tierra (Farm-to-table).
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                <div className="bg-black/40 p-4 rounded-lg flex items-center gap-3 border border-white/10"><FaSeedling className="text-green-500 text-xl"/> <span className="text-gray-200 font-bold">Huertos Ecológicos</span></div>
-                <div className="bg-black/40 p-4 rounded-lg flex items-center gap-3 border border-white/10"><FaTree className="text-green-500 text-xl"/> <span className="text-gray-200 font-bold">Producción Selectiva</span></div>
-                <div className="bg-black/40 p-4 rounded-lg flex items-center gap-3 border border-white/10"><FaGlassMartiniAlt className="text-luxury-gold text-xl"/> <span className="text-gray-200 font-bold">Mixología Orgánica</span></div>
-                <div className="bg-black/40 p-4 rounded-lg flex items-center gap-3 border border-white/10"><FaHome className="text-luxury-gold text-xl"/> <span className="text-gray-200 font-bold">Consumo Interno</span></div>
-            </div>
+            <ReadMore
+                preview={
+                    <>
+                        <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-6">🌱 Agricultura Ecológica y Consumo Sostenible</h2>
+                        <p className="text-gray-300 text-lg leading-relaxed">
+                            Como parte fundamental del concepto ecológico del desarrollo, el proyecto contará con áreas especialmente destinadas al cultivo de vegetales, frutas, hierbas aromáticas y algunos de los alimentos que serán consumidos dentro del complejo.
+                        </p>
+                        <p className="text-gray-300 text-lg leading-relaxed mt-4">
+                            El objetivo es integrar un modelo de vida más saludable, sostenible y conectado con la tierra, permitiendo que parte de la experiencia gastronómica del proyecto provenga directamente de sus propios cultivos.
+                        </p>
+                    </>
+                }
+            >
+                <div className="space-y-6 text-gray-400 mt-4">
+                    <div>
+                        <p className="mb-3 text-white font-bold">Estas áreas incluirán:</p>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <li className="flex items-center gap-2"><FaSeedling className="text-green-500"/> Huertos ecológicos organizados.</li>
+                            <li className="flex items-center gap-2"><FaSeedling className="text-green-500"/> Cultivo de vegetales frescos.</li>
+                            <li className="flex items-center gap-2"><FaTree className="text-green-500"/> Jardines de hierbas y especias.</li>
+                            <li className="flex items-center gap-2"><FaTree className="text-green-500"/> Producción tropical selectiva.</li>
+                            <li className="flex items-center gap-2 sm:col-span-2"><FaHome className="text-luxury-gold"/> Espacios agrícolas para consumo interno.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <p className="mb-3 text-white font-bold">Parte de estos productos podrán ser utilizados en:</p>
+                        <ul className="list-disc pl-6 space-y-2">
+                            <li>El restaurante principal.</li>
+                            <li>La Sala de venta, bar y lounge del club de vacaciones, potenciando un concepto de mixología orgánica.</li>
+                            <li>Experiencias culinarias farm-to-table (de la tierra a la mesa).</li>
+                            <li>Actividades ecológicas y educativas para huéspedes y residentes.</li>
+                        </ul>
+                    </div>
+
+                    <p className="font-bold text-luxury-gold text-lg mt-6 border-l-2 border-luxury-gold pl-4">
+                        Este enfoque busca promover la alimentación saludable, la producción sostenible y experiencias ecológicas auténticas. Más que un proyecto turístico, será un estilo de vida enfocado en la sostenibilidad y el bienestar integral.
+                    </p>
+                </div>
+            </ReadMore>
           </div>
+        </div>
+      </section>
+
+      {/* Section 4.5: Un Nuevo Estilo de Vida */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+        <div className="text-center max-w-4xl mx-auto space-y-8">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white uppercase tracking-wider">🏡 Un Nuevo Estilo de Vida</h2>
+            <ReadMore
+                preview={
+                    <>
+                        <p className="text-xl text-gray-300 leading-relaxed mb-6">
+                            El proyecto combinará de forma magistral residencias vacacionales exclusivas, concepto hotelero boutique, espacios wellness de clase mundial, experiencias eco-luxury y amenidades premium integradas a la naturaleza.
+                        </p>
+                        <p className="text-xl text-gray-300 leading-relaxed">
+                            Las futuras unidades estarán conformadas por modernas cabañas tropicales de diseño arquitectónico único, rodeadas de jardines, senderos naturales y vistas privilegiadas hacia el río y las áreas verdes.
+                        </p>
+                    </>
+                }
+            >
+                <div className="bg-black/40 p-8 rounded-xl border border-white/10 mt-6 text-left">
+                    <p className="text-gray-400 leading-relaxed mb-6">
+                        Para garantizar un desarrollo ágil, eficiente y perfectamente integrado al entorno, la modulación estructural de las cabañas y villas está proyectada utilizando bloques de 6 pulgadas, logrando muros limpios, ligeros y de una estética minimalista orgánica impecable.
+                    </p>
+                    <p className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Cada detalle buscará ofrecer:</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Privacidad y Paz</div>
+                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Conexión Natural</div>
+                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Alta Rentabilidad</div>
+                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Experiencias</div>
+                    </div>
+                </div>
+            </ReadMore>
         </div>
       </section>
 
@@ -212,6 +305,34 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Área Wellness & Spa</p>
                 </div>
             </div>
+            </div>
+            <div className="mt-12 max-w-3xl mx-auto text-left">
+                <ReadMore
+                    preview={
+                        <p className="text-gray-300 text-lg text-center">
+                            El proyecto incluirá un portafolio de amenidades de primer nivel integrado en un ambiente tropical cuidadosamente diseñado.
+                        </p>
+                    }
+                    moreText="Ver todas las Amenidades"
+                >
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300 mt-6 bg-white/5 p-8 rounded-xl border border-white/10">
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Cabañas tropicales modernas de diseño minimalista</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Hotel boutique ecológico</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Casa Club panorámica</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Sala de venta, bar y lounge del club & Restaurante</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Piscinas infinity con vistas al entorno natural</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Senderos ecológicos junto al río</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Área wellness & spa al aire libre</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Amenidades deportivas integradas al paisaje</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Coworking ecológico para nómadas digitales</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Miradores naturales y áreas sociales integradas</li>
+                        <li className="flex items-center gap-3 md:col-span-2"><span className="text-luxury-gold">✓</span> Huertos y áreas de cultivo sostenible</li>
+                    </ul>
+                    <p className="text-center text-luxury-gold font-bold italic mt-6">
+                        Transmite exclusividad, tranquilidad y conexión con el entorno.
+                    </p>
+                </ReadMore>
+            </div>
         </div>
       </section>
 
@@ -219,28 +340,37 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2 space-y-8">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider">🏨 EXPERIENCIA HOTELERA + INVERSIÓN</h2>
-            <p className="text-gray-300 text-lg leading-relaxed">
-              Además de ser un destino para vivir y desconectarse, el proyecto ha sido concebido bajo un innovador modelo de inversión turística.
-            </p>
-            <div className="bg-dark-gray p-6 rounded-lg border-l-4 border-luxury-gold">
-                <h3 className="text-2xl font-bold text-white mb-4">🔑 Sistema Pool Hotelero</h3>
-                <p className="text-gray-300 mb-4">Las unidades podrán integrarse a un sistema de operación hotelera permitiendo a los propietarios:</p>
-                <ul className="space-y-2 text-gray-300">
-                    <li>✓ Generar ingresos constantes mediante rentas vacacionales.</li>
-                    <li>✓ Disfrutar de su propiedad vacacional mientras produce alta rentabilidad.</li>
-                    <li>✓ Acceder a una experiencia hotelera de estándar internacional.</li>
-                </ul>
-            </div>
-            
-            <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-lg mt-8">
-                <p className="text-white font-bold text-sm uppercase tracking-widest mb-2 flex items-center gap-2">
-                    <span>⚠️</span> Nota para Inversionistas
-                </p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                    Con el fin de garantizar la máxima estabilidad financiera, protección patrimonial y facilidad en las transacciones internacionales, los precios de preventa y proyecciones de retorno del Pool Hotelero se manejarán exclusivamente en Dólares Estadounidenses (USD).
-                </p>
-            </div>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider">🏨 Experiencia Hotelera + Inversión</h2>
+            <ReadMore
+                preview={
+                    <p className="text-gray-300 text-lg leading-relaxed">
+                        Además de ser un destino para vivir y desconectarse, el proyecto ha sido concebido bajo un innovador modelo de inversión turística.
+                    </p>
+                }
+            >
+                <div className="bg-dark-gray p-6 rounded-lg border-l-4 border-luxury-gold mt-6">
+                    <h3 className="text-2xl font-bold text-white mb-4">🔑 Sistema Pool Hotelero</h3>
+                    <p className="text-gray-300 mb-4">Las unidades podrán integrarse a un sistema de operación hotelera permitiendo a los propietarios:</p>
+                    <ul className="space-y-3 text-gray-300 pl-4 border-l border-white/10 ml-2">
+                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Generar ingresos constantes mediante rentas vacacionales.</li>
+                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Participar en un modelo administrado profesionalmente sin complicaciones operativas.</li>
+                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Disfrutar de su propiedad vacacional mientras produce alta rentabilidad.</li>
+                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Acceder a una experiencia hotelera organizada, premium y de estándar internacional.</li>
+                    </ul>
+                    <p className="text-gray-400 mt-6 italic">
+                        Este modelo combina el uso personal, la inversión inmobiliaria, la operación turística y la administración centralizada, creando una propuesta altamente atractiva y segura para inversionistas nacionales e internacionales.
+                    </p>
+                </div>
+                
+                <div className="bg-red-900/20 border border-red-500/30 p-6 rounded-lg mt-8">
+                    <p className="text-white font-bold text-sm uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <span>⚠️</span> Nota para Inversionistas
+                    </p>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                        Con el fin de garantizar la máxima estabilidad financiera, protección patrimonial y facilidad en las transacciones internacionales, los precios de preventa y proyecciones de retorno del Pool Hotelero se manejarán exclusivamente en Dólares Estadounidenses (USD).
+                    </p>
+                </div>
+            </ReadMore>
           </div>
           <div className="w-full lg:w-1/2 relative h-[600px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-inversion-interior.jpg" alt="Hotel Experience" fill className="object-cover hover:scale-105 transition-transform duration-700" />
@@ -259,26 +389,41 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     <div className="h-16 w-px bg-luxury-gold/30"></div>
                     <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={160} height={80} className="object-contain drop-shadow-md" />
                 </div>
-                <p className="text-gray-300 text-lg leading-relaxed">
-                    Este futuro proyecto será desarrollado conjuntamente por Punta Cana Investments y PCI CONSTRUCTION GROUP PUNTA CANA, empresas enfocadas en el desarrollo de proyectos modernos, sostenibles y de alto valor arquitectónico en la República Dominicana.
-                </p>
-                <ul className="space-y-3 mt-6">
-                    <li className="text-luxury-gold font-bold uppercase tracking-widest text-sm">✓ Diseño e Innovación</li>
-                    <li className="text-luxury-gold font-bold uppercase tracking-widest text-sm">✓ Calidad Constructiva Estricta</li>
-                    <li className="text-luxury-gold font-bold uppercase tracking-widest text-sm">✓ Respeto Absoluto a la Naturaleza</li>
-                </ul>
+                <ReadMore
+                    preview={
+                        <p className="text-gray-300 text-lg leading-relaxed">
+                            Este futuro proyecto será desarrollado conjuntamente por Punta Cana Investments y PCI CONSTRUCTION GROUP PUNTA CANA, empresas enfocadas en el desarrollo de proyectos modernos, sostenibles y de alto valor arquitectónico en la República Dominicana.
+                        </p>
+                    }
+                >
+                    <div className="mt-4">
+                        <p className="text-white font-bold mb-4">La visión corporativa es crear espacios que combinen a la perfección:</p>
+                        <ul className="space-y-3">
+                            <li className="flex items-center gap-3 text-gray-300"><span className="text-luxury-gold">✓</span> Diseño e Innovación</li>
+                            <li className="flex items-center gap-3 text-gray-300"><span className="text-luxury-gold">✓</span> Calidad Constructiva Estricta</li>
+                            <li className="flex items-center gap-3 text-gray-300"><span className="text-luxury-gold">✓</span> Respeto Absoluto a la Naturaleza</li>
+                            <li className="flex items-center gap-3 text-gray-300"><span className="text-luxury-gold">✓</span> Experiencia Turística Elevada</li>
+                            <li className="flex items-center gap-3 text-gray-300"><span className="text-luxury-gold">✓</span> Alto Valor de Inversión</li>
+                        </ul>
+                    </div>
+                </ReadMore>
             </div>
             <div className="bg-dark-gray p-10 rounded-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/10 rounded-full blur-3xl"></div>
                 <h2 className="text-3xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-8">🚧 Fase de Conceptualización</h2>
-                <p className="text-gray-300 mb-6">Actualmente nos encontramos trabajando activamente en:</p>
+                <p className="text-gray-300 mb-6 text-lg">Actualmente nos encontramos trabajando activamente en:</p>
                 <ul className="space-y-3 text-gray-200 mb-8 list-disc pl-5">
                     <li>Diseño maestro del proyecto (Master Plan)</li>
                     <li>Desarrollo arquitectónico e ingenierías sostenibles</li>
                     <li>Integración ecológica y mitigación ambiental</li>
                     <li>Conceptualización hotelera y de hospitalidad</li>
+                    <li>Estudios urbanísticos y de sostenibilidad del terreno</li>
+                    <li>Diseño de experiencias y amenidades exclusivas</li>
                 </ul>
-                <p className="text-white font-bold italic">Muy pronto estaremos revelando Renders oficiales, Listas de precios (USD) y Beneficios exclusivos para fundadores.</p>
+                <div className="bg-white/5 p-4 rounded-lg border border-luxury-gold/20">
+                    <p className="text-white font-bold italic mb-2 text-sm text-luxury-gold uppercase tracking-widest">Muy pronto estaremos revelando:</p>
+                    <p className="text-gray-300 text-sm">Renders oficiales y recorridos 3D, Diseño definitivo del Master Plan, Información financiera y listas de precios (USD), Etapas de lanzamiento y cronograma de obra, y Beneficios exclusivos de preventa para fundadores.</p>
+                </div>
             </div>
         </div>
       </section>
