@@ -105,7 +105,7 @@ export default function FounderInvestmentForm({ dict, lang }: FounderInvestmentF
                         </button>
                     </div>
                     
-                    <form action={formAction} ref={formRef} className="space-y-6">
+                    <form action={formAction} ref={formRef} className="space-y-6 hs-do-not-track" data-hs-cf-bound="true">
                         <input type="hidden" name="lang" value={lang} />
                         <input type="hidden" name="modality" value={selectedModality || ''} />
 
