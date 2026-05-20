@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaLeaf, FaSeedling, FaTree, FaSwimmer, FaGlassMartiniAlt, FaHome, FaWater, FaLock } from "react-icons/fa";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import ContactForm from "@/components/contact/ContactForm";
+import FounderInvestmentForm from "@/components/forms/FounderInvestmentForm";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import type { Metadata } from "next";
 
@@ -327,10 +327,9 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                         </p>
                     </div>
                 </div>
-                <ContactForm 
+                <FounderInvestmentForm 
                     dict={dict.contact.form} 
                     lang={lang} 
-                    subject="VIP - Solicitud Inversionista Fundador Miches" 
                 />
             </div>
         </div>
