@@ -1,10 +1,31 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaLeaf, FaArrowRight } from "react-icons/fa";
+import { ScrollReveal } from "../ui/ScrollReveal";
 
 export default function FutureProjectsSection({ lang }: { lang: string }) {
     return (
-        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black">
+        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black relative overflow-hidden text-white">
+            <div className="max-w-7xl mx-auto relative z-10">
+                {/* Header */}
+                <div className="text-center mb-12 md:mb-16">
+                    <ScrollReveal width="100%">
+                        <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
+                            {lang === 'en' ? 'Exclusive Opportunity for Investors' : 'Oportunidad Exclusiva para Inversores'}
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                            {lang === 'en' ? 'The Future of Ecological Investment' : 'El Futuro de la Inversión Ecológica'}
+                        </h2>
+                        <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
+                        <p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+                            {lang === 'en' 
+                                ? "Position yourself ahead of the market. Join our exclusive founders list and secure entry-level pricing in the Caribbean's most promising luxury and sustainability destination." 
+                                : "Posiciónese antes que el mercado. Únase a nuestra selecta lista de fundadores y asegure precios de entrada en el destino de lujo y sostenibilidad con mayor proyección del Caribe."}
+                        </p>
+                    </ScrollReveal>
+                </div>
+
+                {/* Main Card */}
             <Link href={`/${lang}/futuros-proyectos`} className="group block max-w-4xl mx-auto h-full">
                 <div className="bg-white/5 border border-white/10 rounded-sm overflow-hidden h-full hover:border-luxury-gold/50 transition-all duration-300 flex flex-col group-hover:-translate-y-2 group-hover:shadow-2xl">
                     {/* Image Area */}
@@ -47,6 +68,7 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                     </div>
                 </div>
             </Link>
+            </div>
         </section>
     );
 }
