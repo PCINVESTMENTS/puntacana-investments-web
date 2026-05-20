@@ -5,7 +5,7 @@ import ContactForm from '@/components/contact/ContactForm';
 import { FaHome, FaChartLine, FaCheckCircle } from 'react-icons/fa';
 
 interface FounderInvestmentFormProps {
-    dict: any;
+    dict: Record<string, any>;
     lang: string;
 }
 

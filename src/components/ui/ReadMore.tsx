@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 interface ReadMoreProps {
-    preview: React.ReactNode;
-    children: React.ReactNode;
+    preview: ReactNode;
+    children: ReactNode;
     moreText?: string;
     lessText?: string;
 }

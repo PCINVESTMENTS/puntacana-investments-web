@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
-import { FaLeaf, FaSeedling, FaTree, FaSwimmer, FaGlassMartiniAlt, FaHome, FaWater, FaLock } from "react-icons/fa";
+
+import { FaLeaf, FaSeedling, FaTree, FaGlassMartiniAlt, FaHome, FaLock } from "react-icons/fa";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import FounderInvestmentForm from "@/components/forms/FounderInvestmentForm";
@@ -301,7 +301,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
                         <Image src="/images/miches-eco-resort-spa.jpg" alt="Wellness" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Área Wellness & Spa</p>
+                    <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Área Wellness &amp; Spa</p>
                 </div>
             </div>
             </div>
@@ -318,10 +318,10 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Cabañas tropicales modernas de diseño minimalista</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Hotel boutique ecológico</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Casa Club panorámica</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Sala de venta, bar y lounge del club & Restaurante</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Sala de venta, bar y lounge del club &amp; Restaurante</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Piscinas infinity con vistas al entorno natural</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Senderos ecológicos junto al río</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Área wellness & spa al aire libre</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Área wellness &amp; spa al aire libre</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Amenidades deportivas integradas al paisaje</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Coworking ecológico para nómadas digitales</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Miradores naturales y áreas sociales integradas</li>
