@@ -123,6 +123,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
                         name="phone"
                         placeholder="+1 (555) 000-0000"
                         autoComplete="tel"
+                        required
                         className="w-full bg-zinc-900 border border-zinc-800 focus:border-luxury-gold rounded-lg px-4 py-3 text-white placeholder-zinc-600 outline-none transition-colors"
                     />
                 </div>

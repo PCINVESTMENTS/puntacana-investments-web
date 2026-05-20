@@ -37,7 +37,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     const dict = t[lang as keyof typeof t] || t.en;
 
     // Simple validation
-    if (!name || !email || !message) {
+    if (!name || !email || !phone || !message) {
         return {
             success: false,
             message: dict.error
