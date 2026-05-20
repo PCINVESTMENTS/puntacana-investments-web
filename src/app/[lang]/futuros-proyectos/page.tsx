@@ -14,16 +14,28 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   const url = `${baseUrl}/${lang}/futuros-proyectos`;
   
   const title = lang === 'en' 
-    ? "Miches Eco-Resort Project | Future Projects | Punta Cana Investments" 
-    : "Proyecto Eco-Resort en Miches | Futuros Proyectos | Punta Cana Investments";
+    ? "Miches Eco-Resort Project | High-Yield Capital Investments | Punta Cana" 
+    : "Proyecto Eco-Resort Miches | Inversión de Capital y Alta Rentabilidad | Punta Cana";
     
   const description = lang === 'en' 
-    ? "Coming Soon: A new ecological destination in Miches, Caribbean. Invest in eco-luxury villas, condo-hotels, and sustainable living in the Dominican Republic." 
-    : "Próximamente: Un nuevo destino ecológico en Miches, Caribe. Invierte en villas de eco-lujo, condo-hoteles y vida sostenible en la República Dominicana.";
+    ? "Exclusive pre-construction access: Eco-luxury villas & condo-hotels in Miches, Dominican Republic. SIMA Madrid 2026 featured project. Secure your investment." 
+    : "Acceso exclusivo en preventa: Villas de eco-lujo y condo-hoteles en Miches, República Dominicana. Proyecto destacado rumbo a SIMA Madrid 2026. Invierte ahora.";
 
   const keywords = lang === 'en' 
-    ? ["Miches real estate", "Eco-resort Punta Cana", "Sustainable living Dominican Republic", "Invest in Miches", "Hotel pool system investment", "Pre-construction Miches", "Eco-luxury villas Miches"] 
-    : ["Bienes raíces Miches", "Eco-resort Punta Cana", "Vida sostenible República Dominicana", "Invertir en Miches", "Inversión sistema pool hotelero", "Preventa Miches", "Villas eco-lujo Miches"];
+    ? [
+        "Miches real estate projects", "Capital investments Punta Cana", "Eco-resort Miches pre-construction", 
+        "Sustainable investment Caribbean", "Eco-friendly villas Miches", "Luxury real estate Dominican Republic", 
+        "Hotel pool system Miches", "Founder investors Miches", "Ecological development Punta Cana", 
+        "SIMA Madrid 2026 Dominican Republic", "Dominican Republic property investment", "High yield real estate Caribbean",
+        "Miches land for sale", "Punta Cana Investments", "PCI Construction Group", "Off-plan property Miches"
+      ] 
+    : [
+        "Proyectos inmobiliarios en Miches", "Inversiones de capital Punta Cana", "Eco-resort Miches preventa", 
+        "Inversión sostenible Caribe", "Villas ecológicas en Miches", "Bienes raíces de lujo República Dominicana", 
+        "Pool hotelero Miches", "Inversionistas fundadores Miches", "Desarrollo ecológico Punta Cana", 
+        "SIMA Madrid 2026 República Dominicana", "Invertir en bienes raíces República Dominicana", "Alta rentabilidad inmobiliaria Caribe",
+        "Terrenos en Miches", "Punta Cana Investments", "PCI Construction Group", "Proyectos sobre plano Miches"
+      ];
 
   return {
     title,
@@ -66,8 +78,35 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    "name": lang === 'en' ? "Miches Eco-Resort Project" : "Proyecto Eco-Resort en Miches",
+    "description": lang === 'en' 
+        ? "Pre-construction eco-luxury villas and condo-hotel pool system in Miches, Dominican Republic. Featured for SIMA Madrid 2026. Developed by Punta Cana Investments and PCI Construction Group."
+        : "Preventa de villas de eco-lujo y sistema de pool hotelero en Miches, República Dominicana. Destacado para SIMA Madrid 2026. Desarrollado por Punta Cana Investments y PCI Construction Group.",
+    "url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com'}/${lang}/futuros-proyectos`,
+    "image": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com'}/images/miches-eco-resort-main.jpg`,
+    "provider": {
+        "@type": "RealEstateAgent",
+        "name": "Punta Cana Investments",
+        "image": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com'}/images/logo-pci-investments-gold.webp`,
+        "url": "https://www.puntacanainvestmentsrd.com"
+    },
+    "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/PreOrder",
+        "itemCondition": "https://schema.org/NewCondition",
+        "priceCurrency": "USD"
+    }
+  };
+
   return (
     <main className="min-h-screen bg-primary-black text-white font-sans overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar dict={dict.nav} lang={lang} variant="solid" />
 
       {/* Hero Full Width */}
@@ -75,7 +114,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/miches-eco-resort-main.jpg"
-            alt="Miches Eco Luxury"
+            alt="Vista principal del Masterplan del Eco-Resort en Miches, Inversión de Capital en el Caribe"
             fill
             className="object-cover object-center"
             priority
@@ -101,7 +140,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-sm overflow-hidden shadow-2xl">
-            <Image src="/images/miches-eco-resort-main.jpg" alt="Miches Landscape" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+            <Image src="/images/miches-eco-resort-main.jpg" alt="Entorno natural ecológico del proyecto inmobiliario en Miches, República Dominicana" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 border-2 md:border-4 border-luxury-gold/20 m-2 md:m-4"></div>
           </div>
           <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
@@ -133,7 +172,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
 
       {/* Section 2: Full Width Image Divider */}
       <section className="relative h-[50vh] min-h-[350px] md:min-h-[400px] flex items-center justify-center my-8 md:my-12">
-         <Image src="/images/miches-eco-resort-concepto.jpg" alt="Miches Nature" fill className="object-cover" />
+         <Image src="/images/miches-eco-resort-concepto.jpg" alt="Concepto ecológico y preservación natural del terreno de inversión en Miches" fill className="object-cover" />
          <div className="absolute inset-0 bg-black/60"></div>
          <div className="relative z-10 text-center max-w-4xl px-4">
             <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-luxury-gold mb-4 md:mb-6 leading-tight">🌴 UN CONCEPTO ECOLÓGICO REAL</h2>
@@ -182,7 +221,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             </ReadMore>
           </div>
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-sm overflow-hidden shadow-2xl">
-            <Image src="/images/miches-eco-resort-entorno.jpg" alt="Eco Pool" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+            <Image src="/images/miches-eco-resort-entorno.jpg" alt="Diseño sostenible y senderos ecológicos del Eco-Resort en el Caribe" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 border-2 md:border-4 border-luxury-gold/20 m-2 md:m-4"></div>
           </div>
         </div>
@@ -192,7 +231,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-8 md:my-12">
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
-            <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Sustainable Gardens" fill className="object-cover" />
+            <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Agricultura ecológica y huertos sostenibles en el proyecto inmobiliario de Miches" fill className="object-cover" />
           </div>
           <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
             <ReadMore
@@ -274,32 +313,32 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       {/* Section 5: Full Width Grid - Amenities */}
       <section className="py-16 md:py-24 bg-black relative border-t border-b border-luxury-gold/20">
         <div className="absolute inset-0 opacity-20">
-             <Image src="/images/the-beach-wellness-yoga-deck-punta-cana.jpg" alt="Wellness Texture" fill className="object-cover" />
+             <Image src="/images/the-beach-wellness-yoga-deck-punta-cana.jpg" alt="Textura de bienestar y yoga representativa de la vida sustentable en Punta Cana" fill className="object-cover" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-white mb-10 md:mb-16 uppercase leading-tight">🌊 AMENIDADES Y EXPERIENCIAS</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                 <div className="flex flex-col items-center">
                     <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
-                        <Image src="/images/miches-eco-resort-cabana.jpg" alt="Cabañas" fill className="object-cover hover:scale-110 transition-transform duration-500" />
+                        <Image src="/images/miches-eco-resort-cabana.jpg" alt="Diseño arquitectónico de cabañas ecológicas tropicales de lujo" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
                     <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Cabañas Tropicales</p>
                 </div>
                 <div className="flex flex-col items-center">
                     <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
-                        <Image src="/images/miches-eco-resort-casaclub.jpg" alt="Casa Club" fill className="object-cover hover:scale-110 transition-transform duration-500" />
+                        <Image src="/images/miches-eco-resort-casaclub.jpg" alt="Casa Club panorámica con vistas al ecosistema natural en República Dominicana" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
                     <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Casa Club Panorámica</p>
                 </div>
                 <div className="flex flex-col items-center">
                     <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
-                        <Image src="/images/miches-eco-resort-piscina.jpg" alt="Piscinas" fill className="object-cover hover:scale-110 transition-transform duration-500" />
+                        <Image src="/images/miches-eco-resort-piscina.jpg" alt="Piscinas infinity integradas a la naturaleza para residentes e inversionistas" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
                     <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Piscinas Infinity</p>
                 </div>
                 <div className="flex flex-col items-center">
                     <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
-                        <Image src="/images/miches-eco-resort-spa.jpg" alt="Wellness" fill className="object-cover hover:scale-110 transition-transform duration-500" />
+                        <Image src="/images/miches-eco-resort-spa.jpg" alt="Área Wellness y Spa de lujo al aire libre en Miches" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
                     <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Área Wellness &amp; Spa</p>
                 </div>
@@ -371,7 +410,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             </ReadMore>
           </div>
           <div className="w-full lg:w-1/2 relative h-[350px] sm:h-[450px] lg:h-[600px] rounded-sm overflow-hidden shadow-2xl">
-            <Image src="/images/miches-eco-resort-inversion-interior.jpg" alt="Hotel Experience" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+            <Image src="/images/miches-eco-resort-inversion-interior.jpg" alt="Experiencia hotelera premium y alta rentabilidad por inversión en bienes raíces" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 border-2 md:border-4 border-luxury-gold/20 m-2 md:m-4"></div>
           </div>
         </div>
