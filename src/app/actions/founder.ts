@@ -118,6 +118,45 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             console.error("Client Founder Autoresponder Exception:", emailError);
         }
 
+        // Send Admin Notification Email via Resend
+        try {
+            const adminHtmlTemplate = `
+            <html>
+                <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
+                    <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
+                        <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
+                    </div>
+                    <div style="padding: 40px 30px; background-color: #0a0a0a;">
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">NUEVO LEAD VIP (FOUNDER)</h2>
+                        
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos del Inversor VIP</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Secuencia:</strong> ${sequenceNumber}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Nombre:</strong> ${name}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Email:</strong> ${email}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Teléfono:</strong> ${phone}</p>
+                            <p style="margin: 5px 0; color: #e0e0e0;"><strong>Modalidad:</strong> ${modality}</p>
+                        </div>
+
+                        <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
+                            <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Mensaje / Comentarios</p>
+                            <p style="margin: 5px 0; color: #e0e0e0; white-space: pre-wrap;">${message || 'Sin mensaje'}</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+            `;
+
+            await resend.emails.send({
+                from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+                to: ['info@puntacanainvestmentsrd.com'],
+                subject: `NUEVO LEAD VIP (Founder): ${name} [${sequenceNumber}]`,
+                html: adminHtmlTemplate
+            });
+        } catch (adminEmailError) {
+            console.error("Admin Email Exception (Founder):", adminEmailError);
+        }
+
         return {
             success: true,
             message: 'Application sent successfully!'
