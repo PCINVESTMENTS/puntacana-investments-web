@@ -1,52 +1,52 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaLeaf } from "react-icons/fa";
+import { FaLeaf, FaArrowRight } from "react-icons/fa";
 
 export default function FutureProjectsSection({ lang }: { lang: string }) {
     return (
         <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black">
-            <div className="relative w-full max-w-7xl mx-auto h-[70vh] min-h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 group flex items-center justify-center">
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/images/miches-eco-resort-main.jpg"
-                        alt="Coming Soon Miches"
-                        fill
-                        className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
-                        quality={90}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-1000"></div>
-                </div>
+            <Link href={`/${lang}/futuros-proyectos`} className="group block max-w-4xl mx-auto h-full">
+                <div className="bg-white/5 border border-white/10 rounded-sm overflow-hidden h-full hover:border-luxury-gold/50 transition-all duration-300 flex flex-col group-hover:-translate-y-2 group-hover:shadow-2xl">
+                    {/* Image Area */}
+                    <div className="relative h-64 md:h-96 overflow-hidden">
+                        <Image
+                            src="/images/miches-eco-resort-main.jpg"
+                            alt="Coming Soon Miches"
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            quality={90}
+                        />
+                        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
 
-                {/* Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center">
-                <div className="flex items-center gap-3 mb-6 bg-luxury-gold/20 backdrop-blur-sm px-6 py-2 rounded-full border border-luxury-gold/30">
-                    <FaLeaf className="text-luxury-gold" />
-                    <span className="uppercase tracking-[0.3em] text-sm font-bold text-luxury-gold">
-                        {lang === 'en' ? 'Eco-Luxury Development' : 'Desarrollo Eco-Luxury'}
-                    </span>
+                        {/* Top Right Badge */}
+                        <div className="absolute top-4 right-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest">
+                            COMING SOON
+                        </div>
+                        
+                        {/* Top Left Title Badge */}
+                        <div className="absolute top-4 left-4 bg-black/60 text-luxury-gold backdrop-blur-md border border-luxury-gold/30 text-xs font-bold px-3 py-1 uppercase tracking-widest flex items-center gap-2">
+                            <FaLeaf /> {lang === 'en' ? 'Eco-Luxury Development' : 'Desarrollo Eco-Luxury'}
+                        </div>
+                    </div>
+
+                    {/* Content Area */}
+                    <div className="p-8 md:p-12 flex flex-col flex-grow bg-[#0a0a0a]">
+                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4 group-hover:text-luxury-gold transition-colors">
+                            Miches Eco-Resort
+                        </h3>
+                        <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8 flex-grow">
+                            {lang === 'en' 
+                                ? 'A new ecological destination is being born in the Caribbean. A place designed to live, invest, and connect deeply with nature.' 
+                                : 'Un nuevo destino ecológico está naciendo en el Caribe. Un lugar diseñado para vivir, invertir y conectar profundamente con la naturaleza.'}
+                        </p>
+
+                        <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-luxury-gold text-sm font-bold uppercase tracking-wider">
+                            <span>{lang === 'en' ? 'Discover the Future' : 'Explorar el Futuro'}</span>
+                            <FaArrowRight aria-hidden="true" className="transform group-hover:translate-x-2 transition-transform" />
+                        </div>
+                    </div>
                 </div>
-                
-                <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 uppercase tracking-widest drop-shadow-2xl">
-                    Coming Soon <br />
-                    <span className="text-luxury-gold italic">Miches</span>
-                </h2>
-                
-                <p className="text-lg md:text-2xl text-gray-200 max-w-3xl mb-12 font-light leading-relaxed">
-                    {lang === 'en' 
-                        ? 'A new ecological destination is being born in the Caribbean. A place designed to live, invest, and connect deeply with nature.' 
-                        : 'Un nuevo destino ecológico está naciendo en el Caribe. Un lugar diseñado para vivir, invertir y conectar profundamente con la naturaleza.'}
-                </p>
-                
-                <Link 
-                    href={`/${lang}/futuros-proyectos`}
-                    className="inline-block bg-luxury-gold text-black font-bold text-sm md:text-base uppercase tracking-widest px-10 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl"
-                >
-                    {lang === 'en' ? 'Discover the Future' : 'Explorar el Futuro'}
-                </Link>
-            </div>
-            </div>
+            </Link>
         </section>
     );
 }
