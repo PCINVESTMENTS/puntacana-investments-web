@@ -351,10 +351,10 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     <h3 className="text-2xl font-bold text-white mb-4">🔑 Sistema Pool Hotelero</h3>
                     <p className="text-gray-300 mb-4">Las unidades podrán integrarse a un sistema de operación hotelera permitiendo a los propietarios:</p>
                     <ul className="space-y-3 text-gray-300 pl-4 border-l border-white/10 ml-2">
-                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Generar ingresos constantes mediante rentas vacacionales.</li>
-                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Participar en un modelo administrado profesionalmente sin complicaciones operativas.</li>
-                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Disfrutar de su propiedad vacacional mientras produce alta rentabilidad.</li>
-                        <li className="relative before:content-['✓'] before:absolute before:-left-6 before:text-luxury-gold">Acceder a una experiencia hotelera organizada, premium y de estándar internacional.</li>
+                        <li className="flex items-start gap-2"><span className="text-luxury-gold font-bold">✓</span> Generar ingresos constantes mediante rentas vacacionales.</li>
+                        <li className="flex items-start gap-2"><span className="text-luxury-gold font-bold">✓</span> Participar en un modelo administrado profesionalmente sin complicaciones operativas.</li>
+                        <li className="flex items-start gap-2"><span className="text-luxury-gold font-bold">✓</span> Disfrutar de su propiedad vacacional mientras produce alta rentabilidad.</li>
+                        <li className="flex items-start gap-2"><span className="text-luxury-gold font-bold">✓</span> Acceder a una experiencia hotelera organizada, premium y de estándar internacional.</li>
                     </ul>
                     <p className="text-gray-400 mt-6 italic">
                         Este modelo combina el uso personal, la inversión inmobiliaria, la operación turística y la administración centralizada, creando una propuesta altamente atractiva y segura para inversionistas nacionales e internacionales.
