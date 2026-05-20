@@ -243,7 +243,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             </div>
           </div>
           <div className="w-full lg:w-1/2 relative h-[600px] rounded-sm overflow-hidden shadow-2xl">
-            <Image src="/images/miches-eco-resort-inversion.jpg" alt="Hotel Experience" fill className="object-contain bg-black/20 p-2" />
+            <Image src="/images/miches-eco-resort-inversion-interior.jpg" alt="Hotel Experience" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
           </div>
         </div>
