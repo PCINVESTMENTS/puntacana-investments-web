@@ -332,7 +332,6 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     </p>
                 </ReadMore>
             </div>
-        </div>
       </section>
 
       {/* Section 6: Zig-Zag Right - Hotel & Investment */}
