@@ -71,7 +71,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <Navbar dict={dict.nav} lang={lang} variant="solid" />
 
       {/* Hero Full Width */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center pt-20">
+      <section className="relative h-[100svh] min-h-[500px] md:min-h-[700px] flex items-center justify-center pt-16 md:pt-20">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/miches-eco-resort-main.jpg"
@@ -83,32 +83,32 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
           <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/30 to-transparent"></div>
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
-        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-20">
-          <div className="inline-flex items-center gap-3 mb-6 bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-luxury-gold/50">
-            <FaLeaf className="text-luxury-gold" />
-            <span className="uppercase tracking-[0.3em] text-sm font-bold text-luxury-gold">🌿 Coming Soon</span>
+        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-16 md:mt-20">
+          <div className="inline-flex items-center gap-3 mb-4 md:mb-6 bg-white/10 backdrop-blur-md px-4 py-2 md:px-6 rounded-full border border-luxury-gold/50">
+            <FaLeaf className="text-luxury-gold text-sm md:text-base" />
+            <span className="uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm font-bold text-luxury-gold">🌿 Coming Soon</span>
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 uppercase tracking-widest drop-shadow-2xl leading-tight">
-            El Futuro de la <br/> <span className="text-luxury-gold italic">Vida Ecológica</span>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 md:mb-6 uppercase tracking-widest drop-shadow-2xl leading-tight">
+            El Futuro de la <br className="hidden sm:block" /> <span className="text-luxury-gold italic">Vida Ecológica</span>
           </h1>
-          <p className="text-xl md:text-3xl text-gray-200 font-light max-w-4xl mx-auto drop-shadow-md">
+          <p className="text-lg sm:text-xl md:text-3xl text-gray-200 font-light max-w-4xl mx-auto drop-shadow-md">
             y el Turismo de Experiencias en el Caribe
           </p>
         </div>
       </section>
 
       {/* Section 1: Intro (Zig-Zag Left) */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="w-full lg:w-1/2 relative h-[500px] rounded-sm overflow-hidden shadow-2xl">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
+          <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-main.jpg" alt="Miches Landscape" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
+            <div className="absolute inset-0 border-2 md:border-4 border-luxury-gold/20 m-2 md:m-4"></div>
           </div>
-          <div className="w-full lg:w-1/2 space-y-6">
+          <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
             <ReadMore 
               preview={
                 <>
-                    <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-6">Un Desarrollo Ecológico de Nueva Generación</h2>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-4 md:mb-6 leading-tight">Un Desarrollo Ecológico de Nueva Generación</h2>
                     <p className="text-gray-300 text-lg leading-relaxed mb-4">
                       Muy pronto llegará un proyecto concebido para transformar la manera de vivir, invertir y conectar con la naturaleza.
                     </p>
@@ -132,20 +132,20 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 2: Full Width Image Divider */}
-      <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center my-12">
+      <section className="relative h-[50vh] min-h-[350px] md:min-h-[400px] flex items-center justify-center my-8 md:my-12">
          <Image src="/images/miches-eco-resort-concepto.jpg" alt="Miches Nature" fill className="object-cover" />
          <div className="absolute inset-0 bg-black/60"></div>
          <div className="relative z-10 text-center max-w-4xl px-4">
-            <h2 className="text-4xl md:text-6xl font-serif font-bold text-luxury-gold mb-6">🌴 UN CONCEPTO ECOLÓGICO REAL</h2>
-            <p className="text-xl text-white font-light">Este no será un proyecto tradicional. La esencia del desarrollo está basada en la preservación del entorno natural y en una experiencia de vida ecológica auténtica.</p>
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-luxury-gold mb-4 md:mb-6 leading-tight">🌴 UN CONCEPTO ECOLÓGICO REAL</h2>
+            <p className="text-lg sm:text-xl text-white font-light">Este no será un proyecto tradicional. La esencia del desarrollo está basada en la preservación del entorno natural y en una experiencia de vida ecológica auténtica.</p>
          </div>
       </section>
 
       {/* Section 3: Zig-Zag Right */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-16">
-          <div className="w-full lg:w-1/2 space-y-6">
-            <h3 className="text-2xl font-serif font-bold text-white uppercase tracking-wider mb-6">Respeto por el Entorno</h3>
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-16">
+          <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
+            <h3 className="text-2xl md:text-3xl font-serif font-bold text-white uppercase tracking-wider mb-4 md:mb-6">Respeto por el Entorno</h3>
             <ReadMore
                 preview={
                     <>
@@ -181,24 +181,24 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                 </div>
             </ReadMore>
           </div>
-          <div className="w-full lg:w-1/2 relative h-[500px] rounded-sm overflow-hidden shadow-2xl">
+          <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-entorno.jpg" alt="Eco Pool" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
+            <div className="absolute inset-0 border-2 md:border-4 border-luxury-gold/20 m-2 md:m-4"></div>
           </div>
         </div>
       </section>
 
       {/* Section 4: Zig-Zag Left - Agriculture */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-12">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="w-full lg:w-1/2 relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-8 md:my-12">
+        <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
+          <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Sustainable Gardens" fill className="object-cover" />
           </div>
-          <div className="w-full lg:w-1/2 space-y-6">
+          <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
             <ReadMore
                 preview={
                     <>
-                        <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-6">🌱 Agricultura Ecológica y Consumo Sostenible</h2>
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-4 md:mb-6 leading-tight">🌱 Agricultura Ecológica y Consumo Sostenible</h2>
                         <p className="text-gray-300 text-lg leading-relaxed">
                             Como parte fundamental del concepto ecológico del desarrollo, el proyecto contará con áreas especialmente destinadas al cultivo de vegetales, frutas, hierbas aromáticas y algunos de los alimentos que serán consumidos dentro del complejo.
                         </p>
@@ -240,9 +240,9 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 4.5: Un Nuevo Estilo de Vida */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center max-w-4xl mx-auto space-y-8">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white uppercase tracking-wider">🏡 Un Nuevo Estilo de Vida</h2>
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+        <div className="text-center max-w-4xl mx-auto space-y-6 md:space-y-8">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white uppercase tracking-wider">🏡 Un Nuevo Estilo de Vida</h2>
             <ReadMore
                 preview={
                     <>
@@ -260,11 +260,11 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                         Para garantizar un desarrollo ágil, eficiente y perfectamente integrado al entorno, la modulación estructural de las cabañas y villas está proyectada utilizando bloques de 6 pulgadas, logrando muros limpios, ligeros y de una estética minimalista orgánica impecable.
                     </p>
                     <p className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Cada detalle buscará ofrecer:</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Privacidad y Paz</div>
-                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Conexión Natural</div>
-                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Alta Rentabilidad</div>
-                        <div className="bg-zinc-900 p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Experiencias</div>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 text-center text-sm md:text-base">
+                        <div className="bg-zinc-900 p-3 md:p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Privacidad y Paz</div>
+                        <div className="bg-zinc-900 p-3 md:p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Conexión Natural</div>
+                        <div className="bg-zinc-900 p-3 md:p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Alta Rentabilidad</div>
+                        <div className="bg-zinc-900 p-3 md:p-4 rounded-lg border border-luxury-gold/20 text-luxury-gold font-bold">Experiencias</div>
                     </div>
                 </div>
             </ReadMore>
@@ -272,40 +272,40 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 5: Full Width Grid - Amenities */}
-      <section className="py-24 bg-black relative border-t border-b border-luxury-gold/20">
+      <section className="py-16 md:py-24 bg-black relative border-t border-b border-luxury-gold/20">
         <div className="absolute inset-0 opacity-20">
              <Image src="/images/the-beach-wellness-yoga-deck-punta-cana.jpg" alt="Wellness Texture" fill className="object-cover" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-16 uppercase">🌊 AMENIDADES Y EXPERIENCIAS</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-white mb-10 md:mb-16 uppercase leading-tight">🌊 AMENIDADES Y EXPERIENCIAS</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                 <div className="flex flex-col items-center">
-                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
+                    <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
                         <Image src="/images/miches-eco-resort-cabana.jpg" alt="Cabañas" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Cabañas Tropicales</p>
+                    <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Cabañas Tropicales</p>
                 </div>
                 <div className="flex flex-col items-center">
-                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
+                    <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
                         <Image src="/images/miches-eco-resort-casaclub.jpg" alt="Casa Club" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Casa Club Panorámica</p>
+                    <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Casa Club Panorámica</p>
                 </div>
                 <div className="flex flex-col items-center">
-                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
+                    <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
                         <Image src="/images/miches-eco-resort-piscina.jpg" alt="Piscinas" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Piscinas Infinity</p>
+                    <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Piscinas Infinity</p>
                 </div>
                 <div className="flex flex-col items-center">
-                    <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
+                    <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
                         <Image src="/images/miches-eco-resort-spa.jpg" alt="Wellness" fill className="object-cover hover:scale-110 transition-transform duration-500" />
                     </div>
-                    <p className="font-bold text-gray-200 uppercase text-sm tracking-wider">Área Wellness &amp; Spa</p>
+                    <p className="font-bold text-gray-200 uppercase text-xs md:text-sm tracking-wider">Área Wellness &amp; Spa</p>
                 </div>
             </div>
             </div>
-            <div className="mt-12 max-w-3xl mx-auto text-left">
+            <div className="mt-8 md:mt-12 max-w-3xl mx-auto text-left px-4">
                 <ReadMore
                     preview={
                         <p className="text-gray-300 text-lg text-center">
@@ -314,20 +314,20 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     }
                     moreText="Ver todas las Amenidades"
                 >
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300 mt-6 bg-white/5 p-8 rounded-xl border border-white/10">
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Cabañas tropicales modernas de diseño minimalista</li>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-gray-300 mt-6 bg-white/5 p-4 sm:p-6 md:p-8 rounded-xl border border-white/10 text-sm md:text-base">
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Cabañas tropicales de diseño moderno</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Hotel boutique ecológico</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Casa Club panorámica</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Sala de venta, bar y lounge del club &amp; Restaurante</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Piscinas infinity con vistas al entorno natural</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Senderos ecológicos junto al río</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Sala de venta y Restaurante</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Piscinas infinity naturales</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Senderos ecológicos en el bosque</li>
                         <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Área wellness &amp; spa al aire libre</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Amenidades deportivas integradas al paisaje</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Coworking ecológico para nómadas digitales</li>
-                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Miradores naturales y áreas sociales integradas</li>
-                        <li className="flex items-center gap-3 md:col-span-2"><span className="text-luxury-gold">✓</span> Huertos y áreas de cultivo sostenible</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Amenidades deportivas y recreación</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Coworking para nómadas digitales</li>
+                        <li className="flex items-center gap-3"><span className="text-luxury-gold">✓</span> Miradores y áreas sociales</li>
+                        <li className="flex items-center gap-3 md:col-span-2"><span className="text-luxury-gold">✓</span> Huertos y áreas de cultivo orgánico</li>
                     </ul>
-                    <p className="text-center text-luxury-gold font-bold italic mt-6">
+                    <p className="text-center text-luxury-gold font-bold italic mt-6 text-sm md:text-base">
                         Transmite exclusividad, tranquilidad y conexión con el entorno.
                     </p>
                 </ReadMore>
@@ -335,10 +335,10 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 6: Zig-Zag Right - Hotel & Investment */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-16">
-          <div className="w-full lg:w-1/2 space-y-8">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider">🏨 Experiencia Hotelera + Inversión</h2>
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-16">
+          <div className="w-full lg:w-1/2 space-y-6 md:space-y-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider leading-tight">🏨 Experiencia Hotelera + Inversión</h2>
             <ReadMore
                 preview={
                     <p className="text-gray-300 text-lg leading-relaxed">
@@ -370,22 +370,22 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                 </div>
             </ReadMore>
           </div>
-          <div className="w-full lg:w-1/2 relative h-[600px] rounded-sm overflow-hidden shadow-2xl">
+          <div className="w-full lg:w-1/2 relative h-[350px] sm:h-[450px] lg:h-[600px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-inversion-interior.jpg" alt="Hotel Experience" fill className="object-cover hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
+            <div className="absolute inset-0 border-2 md:border-4 border-luxury-gold/20 m-2 md:m-4"></div>
           </div>
         </div>
       </section>
 
       {/* Section 7: Developer & Current Phase */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div className="space-y-6">
-                <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-wider">🏗️ Desarrollado Por:</h2>
-                <div className="flex items-center gap-8 mb-6 bg-white/5 p-4 rounded-xl w-fit">
-                    <Image src="/images/logo-pci-investments-gold.webp" alt="Punta Cana Investments" width={160} height={80} className="object-contain drop-shadow-md" />
-                    <div className="h-16 w-px bg-luxury-gold/30"></div>
-                    <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={160} height={80} className="object-contain drop-shadow-md" />
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+            <div className="space-y-4 md:space-y-6">
+                <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-wider text-center md:text-left">🏗️ Desarrollado Por:</h2>
+                <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6 sm:gap-8 mb-6 bg-white/5 p-6 sm:p-4 rounded-xl w-full sm:w-fit mx-auto md:mx-0">
+                    <Image src="/images/logo-pci-investments-gold.webp" alt="Punta Cana Investments" width={160} height={80} className="object-contain drop-shadow-md w-[120px] sm:w-[160px]" />
+                    <div className="h-px w-16 sm:w-px sm:h-16 bg-luxury-gold/30"></div>
+                    <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={160} height={80} className="object-contain drop-shadow-md w-[120px] sm:w-[160px]" />
                 </div>
                 <ReadMore
                     preview={
@@ -406,10 +406,10 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     </div>
                 </ReadMore>
             </div>
-            <div className="bg-dark-gray p-10 rounded-2xl relative overflow-hidden">
+            <div className="bg-dark-gray p-6 sm:p-8 md:p-10 rounded-2xl relative overflow-hidden mt-8 md:mt-0">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/10 rounded-full blur-3xl"></div>
-                <h2 className="text-3xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-8">🚧 Fase de Conceptualización</h2>
-                <p className="text-gray-300 mb-6 text-lg">Actualmente nos encontramos trabajando activamente en:</p>
+                <h2 className="text-2xl md:text-3xl font-serif font-bold text-luxury-gold uppercase tracking-wider mb-6 md:mb-8 text-center md:text-left">🚧 Fase de Conceptualización</h2>
+                <p className="text-gray-300 mb-4 md:mb-6 text-base md:text-lg text-center md:text-left">Actualmente nos encontramos trabajando activamente en:</p>
                 <ul className="space-y-3 text-gray-200 mb-8 list-disc pl-5">
                     <li>Diseño maestro del proyecto (Master Plan)</li>
                     <li>Desarrollo arquitectónico e ingenierías sostenibles</li>
@@ -427,41 +427,41 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Founder Access Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-        <div className="bg-gradient-to-br from-zinc-900 to-black border border-luxury-gold/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl"></div>
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="bg-gradient-to-br from-zinc-900 to-black border border-luxury-gold/30 rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl hidden md:block"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl hidden md:block"></div>
             
-            <div className="text-center mb-12 relative z-10">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-luxury-gold/10 text-luxury-gold mb-6 border border-luxury-gold/20 shadow-lg">
-                    <FaLock className="text-2xl" />
+            <div className="text-center mb-10 md:mb-12 relative z-10">
+                <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-luxury-gold/10 text-luxury-gold mb-6 border border-luxury-gold/20 shadow-lg">
+                    <FaLock className="text-xl md:text-2xl" />
                 </div>
-                <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-6 uppercase tracking-wider">Acceso Exclusivo: <br/><span className="text-luxury-gold">Fase de Lanzamiento Cero</span></h2>
-                <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-6 uppercase tracking-wider leading-tight">Acceso Exclusivo: <br className="hidden sm:block" /><span className="text-luxury-gold">Fase de Lanzamiento Cero</span></h2>
+                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                     El éxito de las inversiones inmobiliarias radica en entrar primero. Al registrarte hoy, obtienes prioridad absoluta antes de que el proyecto sea liberado al mercado internacional masivo.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 relative z-10">
-                <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16 relative z-10">
+                <div className="bg-black/40 p-6 md:p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
                     <div className="text-luxury-gold text-3xl mb-4">🏷️</div>
                     <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Precio Cero</h3>
                     <p className="text-gray-400 leading-relaxed">Descuento garantizado de &quot;Lista de Precios de Fundador&quot; (el valor por m² más bajo de todo el ciclo del proyecto).</p>
                 </div>
-                <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
+                <div className="bg-black/40 p-6 md:p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
                     <div className="text-luxury-gold text-3xl mb-4">🗺️</div>
                     <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Elección de Master Plan</h3>
                     <p className="text-gray-400 leading-relaxed">Prioridad para elegir las mejores ubicaciones de cabañas (frente al río o cercanas a la Casa Club) antes que nadie.</p>
                 </div>
-                <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
+                <div className="bg-black/40 p-6 md:p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
                     <div className="text-luxury-gold text-3xl mb-4">📄</div>
                     <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Dossier Financiero</h3>
                     <p className="text-gray-400 leading-relaxed">Envío inmediato de las proyecciones estimadas de ROI del Pool Hotelero exclusivo para inversionistas (USD).</p>
                 </div>
             </div>
 
-            <div className="max-w-2xl mx-auto bg-black/60 p-8 md:p-10 rounded-2xl border border-luxury-gold/40 shadow-2xl relative z-10">
-                <div className="text-center mb-8">
+            <div className="max-w-2xl mx-auto bg-black/60 p-4 sm:p-6 md:p-10 rounded-2xl border border-luxury-gold/40 shadow-2xl relative z-10">
+                <div className="text-center mb-6 md:mb-8">
                     <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider mb-3">Quiero Ser Inversionista Fundador</h3>
                     <div className="inline-block bg-red-900/40 border border-red-500/50 px-4 py-2 rounded-full">
                         <p className="text-red-200 text-sm font-bold tracking-widest uppercase flex items-center gap-2">
