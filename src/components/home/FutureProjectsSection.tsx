@@ -52,7 +52,7 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
 
                     {/* Content Area */}
                     <div className="p-8 md:p-12 flex flex-col flex-grow bg-[#0a0a0a]">
-                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4 group-hover:text-luxury-gold transition-colors">
+                        <h3 className="text-2xl sm:text-3xl md:text-5xl font-serif font-bold text-white mb-4 whitespace-nowrap sm:whitespace-normal tracking-tight sm:tracking-normal group-hover:text-luxury-gold transition-colors">
                             Miches Eco-Resort
                         </h3>
                         <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8 flex-grow">

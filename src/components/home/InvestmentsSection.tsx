@@ -37,7 +37,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.subtitle}
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal">
                             {dict.title}
                         </h2>
                         <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
@@ -72,7 +72,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
 
                                     {/* Content Area */}
                                     <div className="p-8 flex flex-col flex-grow">
-                                        <h3 className="text-2xl font-serif font-bold text-white mb-4 group-hover:text-luxury-gold transition-colors">
+                                        <h3 className="text-[1.1rem] sm:text-xl md:text-2xl font-serif font-bold text-white mb-4 whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal group-hover:text-luxury-gold transition-colors">
                                             {model.title[lang as 'es' | 'en']}
                                         </h3>
                                         <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">

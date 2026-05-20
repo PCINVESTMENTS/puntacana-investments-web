@@ -32,7 +32,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                                 {dict.subtitle}
                             </span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-serif">
+                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-6 font-serif whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal">
                             {dict.title}
                         </h2>
                         <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
@@ -68,7 +68,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
 
                                     {/* Content Area */}
                                     <div className="p-8 flex flex-col flex-grow">
-                                        <h3 className="text-2xl font-serif font-bold text-white mb-2 group-hover:text-luxury-gold transition-colors">
+                                        <h3 className="text-[1.1rem] sm:text-xl md:text-2xl font-serif font-bold text-white mb-2 whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal group-hover:text-luxury-gold transition-colors">
                                             {program.title[lang as 'es' | 'en']}
                                         </h3>
                                         <p className="text-luxury-gold text-sm font-semibold uppercase tracking-wider mb-4">

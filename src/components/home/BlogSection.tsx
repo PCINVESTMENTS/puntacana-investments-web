@@ -29,7 +29,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.title}
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 font-serif">
+                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mt-3 font-serif whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal">
                             {dict.latestNews}
                         </h2>
                     </div>
