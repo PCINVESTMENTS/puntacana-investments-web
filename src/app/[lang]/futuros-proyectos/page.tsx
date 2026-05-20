@@ -161,7 +161,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-12">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2 relative h-[500px] rounded-xl overflow-hidden shadow-2xl">
-            <Image src="/images/luxury-villa-marina-cap-cana-vista-aerea-yard.jpg" alt="Sustainable Gardens" fill className="object-cover" />
+            <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Sustainable Gardens" fill className="object-cover" />
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
             <h2 className="text-3xl md:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider">🌱 AGRICULTURA ECOLÓGICA Y CONSUMO SOSTENIBLE</h2>
