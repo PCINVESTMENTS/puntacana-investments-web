@@ -8,9 +8,55 @@ import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
   const { lang } = await params;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
+  const url = `${baseUrl}/${lang}/futuros-proyectos`;
+  
+  const title = lang === 'en' 
+    ? "Miches Eco-Resort Project | Future Projects | Punta Cana Investments" 
+    : "Proyecto Eco-Resort en Miches | Futuros Proyectos | Punta Cana Investments";
+    
+  const description = lang === 'en' 
+    ? "Coming Soon: A new ecological destination in Miches, Caribbean. Invest in eco-luxury villas, condo-hotels, and sustainable living in the Dominican Republic." 
+    : "Próximamente: Un nuevo destino ecológico en Miches, Caribe. Invierte en villas de eco-lujo, condo-hoteles y vida sostenible en la República Dominicana.";
+
+  const keywords = lang === 'en' 
+    ? ["Miches real estate", "Eco-resort Punta Cana", "Sustainable living Dominican Republic", "Invest in Miches", "Hotel pool system investment", "Pre-construction Miches", "Eco-luxury villas Miches"] 
+    : ["Bienes raíces Miches", "Eco-resort Punta Cana", "Vida sostenible República Dominicana", "Invertir en Miches", "Inversión sistema pool hotelero", "Preventa Miches", "Villas eco-lujo Miches"];
+
   return {
-    title: lang === 'en' ? "Future Projects | Punta Cana Investments" : "Futuros Proyectos | Punta Cana Investments",
-    description: lang === 'en' ? "Coming Soon Miches - The Future of Eco-Living in the Caribbean." : "Coming Soon Miches - El Futuro de la Vida Ecológica en el Caribe.",
+    title,
+    description,
+    keywords,
+    robots: {
+        index: true,
+        follow: true,
+    },
+    openGraph: {
+        title,
+        description,
+        url,
+        images: [{
+            url: `${baseUrl}/images/miches-eco-resort-main.jpg`,
+            width: 1200,
+            height: 630,
+            alt: "Miches Eco Resort Masterplan"
+        }],
+        locale: lang === 'es' ? 'es_DO' : 'en_US',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [`${baseUrl}/images/miches-eco-resort-main.jpg`],
+    },
+    alternates: {
+        canonical: url,
+        languages: {
+            'en': `${baseUrl}/en/futuros-proyectos`,
+            'es': `${baseUrl}/es/futuros-proyectos`,
+        },
+    }
   };
 }
 
@@ -32,8 +78,8 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
             className="object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-black/40 to-transparent"></div>
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/30 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/10"></div>
         </div>
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-20">
           <div className="inline-flex items-center gap-3 mb-6 bg-white/10 backdrop-blur-md px-6 py-2 rounded-full border border-luxury-gold/50">
@@ -53,7 +99,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2 relative h-[500px] rounded-sm overflow-hidden shadow-2xl">
-            <Image src="/images/terreno-hotelero-miches-beachfront-aerial.png" alt="Miches Landscape" fill className="object-cover hover:scale-105 transition-transform duration-700" />
+            <Image src="/images/miches-eco-resort-main.jpg" alt="Miches Landscape" fill className="object-cover hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 border-4 border-luxury-gold/20 m-4"></div>
           </div>
           <div className="w-full lg:w-1/2 space-y-6">
