@@ -253,11 +253,13 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <div className="space-y-6">
                 <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-wider">🏗️ Desarrollado Por:</h2>
-                <div className="mb-6">
-                    <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={200} height={100} className="object-contain" />
+                <div className="flex items-center gap-8 mb-6 bg-white/5 p-4 rounded-xl w-fit">
+                    <Image src="/images/logo-pci-investments-gold.webp" alt="Punta Cana Investments" width={160} height={80} className="object-contain drop-shadow-md" />
+                    <div className="h-16 w-px bg-luxury-gold/30"></div>
+                    <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={160} height={80} className="object-contain drop-shadow-md" />
                 </div>
                 <p className="text-gray-300 text-lg leading-relaxed">
-                    Este futuro proyecto será desarrollado por PCI CONSTRUCTION GROUP PUNTA CANA, una empresa enfocada en el desarrollo de proyectos modernos, sostenibles y de alto valor arquitectónico en la República Dominicana.
+                    Este futuro proyecto será desarrollado conjuntamente por Punta Cana Investments y PCI CONSTRUCTION GROUP PUNTA CANA, empresas enfocadas en el desarrollo de proyectos modernos, sostenibles y de alto valor arquitectónico en la República Dominicana.
                 </p>
                 <ul className="space-y-3 mt-6">
                     <li className="text-luxury-gold font-bold uppercase tracking-widest text-sm">✓ Diseño e Innovación</li>
