@@ -382,10 +382,10 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
             <div className="space-y-4 md:space-y-6">
                 <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-wider text-center md:text-left">🏗️ Desarrollado Por:</h2>
-                <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6 sm:gap-8 mb-6 bg-white/5 p-6 sm:p-4 rounded-xl w-full sm:w-fit mx-auto md:mx-0">
-                    <Image src="/images/logo-pci-investments-gold.webp" alt="Punta Cana Investments" width={160} height={80} className="object-contain drop-shadow-md w-[120px] sm:w-[160px]" />
-                    <div className="h-px w-16 sm:w-px sm:h-16 bg-luxury-gold/30"></div>
-                    <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={160} height={80} className="object-contain drop-shadow-md w-[120px] sm:w-[160px]" />
+                <div className="flex flex-row items-center justify-center md:justify-start gap-4 sm:gap-8 mb-6 bg-white/5 p-4 rounded-xl w-full sm:w-fit mx-auto md:mx-0">
+                    <Image src="/images/logo-pci-investments-gold.webp" alt="Punta Cana Investments" width={160} height={80} className="object-contain drop-shadow-md w-[110px] sm:w-[160px]" />
+                    <div className="h-10 sm:h-16 w-px bg-luxury-gold/30 shrink-0"></div>
+                    <Image src="/images/logo-pci-construction-gold.webp" alt="PCI Construction Group" width={160} height={80} className="object-contain drop-shadow-md w-[110px] sm:w-[160px]" />
                 </div>
                 <ReadMore
                     preview={
