@@ -5,7 +5,6 @@ import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import FounderInvestmentForm from "@/components/forms/FounderInvestmentForm";
 import ReadMore from "@/components/ui/ReadMore";
-import ReadMore from "@/components/ui/ReadMore";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import type { Metadata } from "next";
 
@@ -124,7 +123,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                   Ubicado sobre una impresionante propiedad de aproximadamente 50,000 m² rodeada de exuberante vegetación y un río natural que recorre toda la parte posterior del proyecto, este concepto nace con una visión clara:
                 </p>
                 <blockquote className="border-l-4 border-luxury-gold pl-6 text-xl italic text-white font-serif mt-6">
-                  "Crear un santuario tropical donde la naturaleza y el lujo convivan en perfecta armonía."
+                  &quot;Crear un santuario tropical donde la naturaleza y el lujo convivan en perfecta armonía.&quot;
                 </blockquote>
               </div>
             </ReadMore>
@@ -448,7 +447,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                 <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
                     <div className="text-luxury-gold text-3xl mb-4">🏷️</div>
                     <h3 className="text-white font-bold text-lg mb-3 uppercase tracking-wider">Precio Cero</h3>
-                    <p className="text-gray-400 leading-relaxed">Descuento garantizado de "Lista de Precios de Fundador" (el valor por m² más bajo de todo el ciclo del proyecto).</p>
+                    <p className="text-gray-400 leading-relaxed">Descuento garantizado de &quot;Lista de Precios de Fundador&quot; (el valor por m² más bajo de todo el ciclo del proyecto).</p>
                 </div>
                 <div className="bg-black/40 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300">
                     <div className="text-luxury-gold text-3xl mb-4">🗺️</div>
