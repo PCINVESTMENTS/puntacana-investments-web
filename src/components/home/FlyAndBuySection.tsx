@@ -18,13 +18,13 @@ interface FlyAndBuySectionProps {
 
 export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) {
     return (
-        <section id="fly-and-buy" className="py-20 bg-primary-black relative overflow-hidden">
+        <section id="fly-and-buy" className="py-10 md:py-20 bg-primary-black relative overflow-hidden">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-luxury-gold/5 blur-3xl rounded-full translate-x-1/2 pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 md:mb-16">
                     <ScrollReveal width="100%">
                         <div className="flex items-center justify-center gap-2 mb-4">
                             <FaPlane aria-hidden="true" className="text-luxury-gold text-2xl" />

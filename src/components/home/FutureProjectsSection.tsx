@@ -5,10 +5,10 @@ import { ScrollReveal } from "../ui/ScrollReveal";
 
 export default function FutureProjectsSection({ lang }: { lang: string }) {
     return (
-        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black relative overflow-hidden text-white">
+        <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black relative overflow-hidden text-white">
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
-                <div className="text-center mb-12 md:mb-16">
+                <div className="text-center mb-8 md:mb-16">
                     <ScrollReveal width="100%">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {lang === 'en' ? 'Exclusive Opportunity for Investors' : 'Oportunidad Exclusiva para Inversores'}

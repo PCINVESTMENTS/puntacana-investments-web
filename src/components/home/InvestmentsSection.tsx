@@ -26,13 +26,13 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
     const displayedModels = investmentModels.filter(m => featuredSlugs.includes(m.slug));
 
     return (
-        <section id="investments" className="py-16 bg-primary-black relative overflow-hidden text-white">
+        <section id="investments" className="py-8 md:py-16 bg-primary-black relative overflow-hidden text-white">
             {/* Background Decoration */}
             <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0.8),rgba(0,0,0,0.95))] opacity-10 pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 md:mb-16">
                     <ScrollReveal width="100%">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.subtitle}
@@ -91,7 +91,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
                 </div>
 
                 {/* View All Button */}
-                <div className="mt-16 text-center">
+                <div className="mt-10 md:mt-16 text-center">
                     <Link
                         href={`/${lang}/investments`}
                         className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-3 rounded-sm uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl"
