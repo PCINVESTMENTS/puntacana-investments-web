@@ -4,21 +4,22 @@ import { FaLeaf } from "react-icons/fa";
 
 export default function FutureProjectsSection({ lang }: { lang: string }) {
     return (
-        <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-                <Image
-                    src="/images/miches-eco-resort-main.jpg"
-                    alt="Coming Soon Miches"
-                    fill
-                    className="object-cover object-center"
-                    quality={90}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-black/50 to-black/30"></div>
-                <div className="absolute inset-0 bg-black/40"></div>
-            </div>
+        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black">
+            <div className="relative w-full max-w-7xl mx-auto h-[70vh] min-h-[500px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 group flex items-center justify-center">
+                {/* Background Image */}
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="/images/miches-eco-resort-main.jpg"
+                        alt="Coming Soon Miches"
+                        fill
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                        quality={90}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-1000"></div>
+                </div>
 
-            {/* Content */}
+                {/* Content */}
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center">
                 <div className="flex items-center gap-3 mb-6 bg-luxury-gold/20 backdrop-blur-sm px-6 py-2 rounded-full border border-luxury-gold/30">
                     <FaLeaf className="text-luxury-gold" />
@@ -40,10 +41,11 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                 
                 <Link 
                     href={`/${lang}/futuros-proyectos`}
-                    className="inline-block bg-luxury-gold text-black font-bold text-sm md:text-base uppercase tracking-widest px-10 py-4 hover:bg-white transition-colors duration-300 shadow-xl"
+                    className="inline-block bg-luxury-gold text-black font-bold text-sm md:text-base uppercase tracking-widest px-10 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl"
                 >
                     {lang === 'en' ? 'Discover the Future' : 'Explorar el Futuro'}
                 </Link>
+            </div>
             </div>
         </section>
     );
