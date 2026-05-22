@@ -90,7 +90,9 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
   // Fetch data from Sanity
   const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
-  const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+  const fetchedProperties: Property[] = rawProperties
+    .map(mapSanityProperty)
+    .filter((p): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
 
   // =====================================================================================
   // 🤖 [AI_CRITICAL_INSTRUCTION]: DO NOT MODIFY THIS MERGE LOGIC UNLESS EXPLICITLY ASKED.

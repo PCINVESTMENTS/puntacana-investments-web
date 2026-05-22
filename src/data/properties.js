@@ -952,30 +952,6 @@ exports.properties = [
         }
     },
     {
-        id: 15,
-        slug: "villa-lujo-cap-cana-punta-espada",
-        title: "Villa | Luxury Villa Cap Cana Punta Espada",
-        location: "capcana",
-        locationLabel: "Cap Cana",
-        type: "villa",
-        status: "rent",
-        price: 8000,
-        hideFromLabel: true,
-        image: "/images/og-home-luxury.webp",
-        beds: 4,
-        baths: 4.5,
-        area: 500,
-        features: {
-            en: ["Private Pool", "Chef", "Golf Cart", "Marina View", "Eden Roc Beach Club Access", "Punta Espada Golf", "Private Dock Access"],
-            es: ["Piscina Privada", "Chef", "Carrito de Golf", "Vista Marina", "Acceso Eden Roc Beach Club", "Golf Punta Espada", "Acceso Muelle Privado"]
-        },
-        description: {
-            en: "Luxury Villa Cap Cana \u2013 Exclusive Vacation Rental\n\nLuxury experience in Cap Cana. Villa available for vacation rental with chef and cleaning service included. Experience the ultimate Caribbean getaway in this masterpiece of design.\n\nLocated in the heart of Cap Cana, offering privacy and exclusivity.\n\n## Property Features\n- **Type:** Luxury Villa\n- **Beds:** 4 Spacious Suites\n- **Baths:** 4.5\n- **Staff:** Chef and Maid included\n- **Exterior:** Private Pool and Marina View\n\n## Rental Experience\n- **Exclusive Access:** Access to Eden Roc Beach Club.\n- **Golf:** Minutes from Punta Espada Golf Course.\n- **Lifestyle:** Enjoy the luxury life of Cap Cana with a golf cart included.\n\n## Ideal For\n- Luxury vacationers\n- Families or groups seeking exclusivity\n- Golf enthusiasts\n\n*Guests have access to private dock and all Cap Cana amenities.*",
-            es: "Villa de Lujo Cap Cana \u2013 Renta Vacacional Exclusiva\n\nExperiencia de lujo en Cap Cana. Villa disponible para renta vacacional con servicio de chef y limpieza incluido. Viva la escapada caribe\u00F1a definitiva en esta obra maestra del dise\u00F1o.\n\nUbicada en el coraz\u00F3n de Cap Cana, ofreciendo privacidad y exclusividad.\n\n## Caracter\u00EDsticas de la Propiedad\n- **Tipo:** Villa de Lujo\n- **Habitaciones:** 4 Suites Espaciosas\n- **Ba\u00F1os:** 4.5\n- **Personal:** Chef y Camarera incluidos\n- **Exterior:** Piscina Privada y Vista a la Marina\n\n## Experiencia de Alquiler\n- **Acceso Exclusivo:** Acceso al Eden Roc Beach Club.\n- **Golf:** A minutos del Campo de Golf Punta Espada.\n- **Estilo de Vida:** Disfrute la vida de lujo de Cap Cana con carrito de golf incluido.\n\n## Ideal Para\n- Vacacionistas de lujo\n- Familias o grupos que buscan exclusividad\n- Entusiastas del golf\n\n*Los hu\u00E9spedes tienen acceso a muelle privado y todas las amenidades de Cap Cana.*"
-        },
-        featured: true
-    },
-    {
         id: 16,
         slug: "villa-en-venta-en-white-sands-punta-cana",
         title: "Villa en Venta en White Sands Punta Cana",
@@ -1103,55 +1079,7 @@ exports.properties = [
             }
         }
     },
-    {
-        id: 18,
-        slug: "sede-corporativa-lorenzo-despradel",
-        title: "Sede Corporativa Premium de 3 Niveles en Lorenzo Despradel | Santo Domingo",
-        location: "santodomingo",
-        locationLabel: "Lorenzo Despradel, Santo Domingo",
-        type: "commercial",
-        status: "sale",
-        price: 850000,
-        hideFromLabel: true,
-        image: "/images/properties/lorenzo-despradel/corporate-hq-main-facade.jpg",
-        beds: 0,
-        baths: 4,
-        area: 505,
-        featured: true,
-        features: {
-            en: ["Corporate HQ", "3 Levels", "Showroom", "Event Hall", "Private Offices", "10 Parking Spots", "Cafeteria", "Solid Construction", "Meeting Rooms", "Training Area"],
-            es: ["Sede Corporativa", "3 Niveles", "Showroom", "Salón de Eventos", "Oficinas Privadas", "10 Parqueos", "Cafetería", "Construcción Sólida", "Salas de Reuniones", "Área de Capacitación"]
-        },
-        description: {
-            en: "Exclusive 3-Level Corporate Headquarters in Lorenzo Despradel, Santo Domingo.\n\n**Elevate your company's prestige in an unbeatable location.** We present an extraordinary opportunity to establish your corporate headquarters or expand your investment portfolio. This imposing property of **505.13 m\u00B2 of construction** is located on the strategic **Lorenzo Despradel street**, guaranteeing high visibility and connectivity for your business in Santo Domingo.\n\n![Modern Corporate Meeting Room](/images/properties/lorenzo-despradel/meeting-room-large.jpg)\n\nConceived under the highest standards of versatility, the property is distributed over **3 functional levels** that perfectly integrate commercial and administrative areas. From a showroom on the ground floor ideal for receiving clients, to a large event hall on the third level and multiple private offices.\n\n## Featured Characteristics\n\n### Operational Autonomy\nThe property has dining areas, an annexed kitchen, independent warehouse, and **up to 10 private parking spaces**, guaranteeing the comfort of your staff and visitors.\n\n### Solid Construction\nMain base in reinforced concrete with modern improvements in sheetrock and lightweight structures on the top level.\n\n![Spacious Training and Event Hall](/images/properties/lorenzo-despradel/training-room-wide.jpg)\n\n### Secured Investment\nPropiedad lista para operar de inmediato como centro de negocios, academia, tienda especializada o corporativo.\n\n## Property Details and Distribution\n\n*   **Terreno:** 410.45 m\u00B2\n*   **Construcci\u00F3n:** 505.13 m\u00B2\n*   **Parqueos:** 8 a 10 unidades.\n\n![Elegant Staircase and Interior Design](/images/properties/lorenzo-despradel/staircase-decorated.jpg)\n\n## Ideal for Multipurpose Use\nDesigned to adapt to various business models, including:\n*   Corporate Headquarters\n*   Specialized Training Center\n*   Administrative Offices with Showroom\n\n[Contact Us for a Private Viewing](#contact-form)",
-            es: "Exclusiva Sede Corporativa de 3 Niveles en Lorenzo Despradel, Santo Domingo.\n\n**Eleve el prestigio de su empresa en una ubicaci\u00F3n inmejorable.** Presentamos una extraordinaria oportunidad para establecer su sede corporativa o expandir su portafolio de inversiones. Este imponente inmueble de **505.13 m\u00B2 de construcci\u00F3n** se ubica en la estrat\u00E9gica **calle Lorenzo Despradel**, garantizando a su negocio alta visibilidad y conectividad en Santo Domingo.\n\n![Sala de Reuniones Ejecutiva Corporativa](/images/properties/lorenzo-despradel/meeting-room-large.jpg)\n\nConcebido bajo los m\u00E1s altos est\u00E1ndares de versatilidad, la propiedad se distribuye en **3 niveles funcionales** que integran a la perfecci\u00F3n \u00E1reas comerciales y administrativas. Desde un showroom en planta baja ideal para la recepci\u00F3n de clientes, hasta un gran sal\u00F3n de eventos en el tercer nivel y m\u00FAltiples oficinas privadas.\n\n## Caracter\u00EDsticas Destacadas y Distribuci\u00F3n\n\n### Autonom\u00EDa Operativa Total\nEl inmueble cuenta con \u00E1reas de comedor, cocina anexa, almac\u00E9n independiente y **hasta 10 estacionamientos privados**, garantizando la comodidad de su personal y visitantes.\n\n### Construcci\u00F3n S\u00F3lida y Moderna\nBase principal en hormig\u00F3n armado con mejoras modernas en sheetrock y estructuras ligeras en el \u00FAltimo nivel, ofreciendo flexibilidad para remodelaciones.\n\n![Amplio Sal\u00F3n de Capacitaci\u00F3n y Eventos](/images/properties/lorenzo-despradel/training-room-wide.jpg)\n\n### Inversi\u00F3n Asegurada\nPropiedad lista para operar de inmediato como centro de negocios, academia, tienda especializada o corporativo.\n\n## Ficha T\u00E9cnica del Inmueble\n\n*   **Terreno:** 410.45 m\u00B2\n*   **Construcci\u00F3n:** 505.13 m\u00B2\n*   **Parqueos:** 8 a 10 unidades privados.\n\n![Escalera Principal y Dise\u00F1o Interior](/images/properties/lorenzo-despradel/staircase-decorated.jpg)\n\n**\u00BFListo para dar el siguiente paso?**\nEsta propiedad representa una oportunidad \u00FAnica en la zona.\n\n[SOLICITAR VISITA O M\u00C1S INFORMACI\u00D3N](#contact-form)"
-        },
-        gallery: [
-            "/images/properties/lorenzo-despradel/corporate-hq-main-facade.jpg",
-            "/images/properties/lorenzo-despradel/meeting-room-large.jpg",
-            "/images/properties/lorenzo-despradel/training-room-wide.jpg",
-            "/images/properties/lorenzo-despradel/corporate-hq-showroom-interior.jpg",
-            "/images/properties/lorenzo-despradel/corporate-hq-lobby-area.jpg",
-            "/images/properties/lorenzo-despradel/staircase-decorated.jpg",
-            "/images/properties/lorenzo-despradel/meeting-room-glass.jpg",
-            "/images/properties/lorenzo-despradel/training-room-setup.jpg",
-            "/images/properties/lorenzo-despradel/corporate-hq-interior-detail.jpg"
-        ],
-        seo: {
-            title: {
-                en: "Premium Corporate HQ Lorenzo Despradel | Santo Domingo Commercial Real Estate",
-                es: "Sede Corporativa Premium Lorenzo Despradel | Inversión Santo Domingo"
-            },
-            description: {
-                en: "For Sale: 3-Level Corporate Building in Lorenzo Despradel, Santo Domingo. 505m2, 10 parking spots, showroom, and offices. Prime commercial location.",
-                es: "Venta Edificio Corporativo 3 Niveles en Lorenzo Despradel. 505m2, 10 parqueos, showroom y oficinas. Ubicación estratégica en Santo Domingo."
-            },
-            keywords: {
-                en: ["Corporate HQ Santo Domingo", "Lorenzo Despradel Commercial", "Santo Domingo Office Building", "Business Center for Sale"],
-                es: ["Sede Corporativa Santo Domingo", "Edificio Lorenzo Despradel", "Venta Local Comercial Santo Domingo", "Oficinas Corporativas"]
-            }
-        }
-    },
+
     {
         id: 998,
         slug: "villa-lujo-cap-cana-exclusividad-privacidad",

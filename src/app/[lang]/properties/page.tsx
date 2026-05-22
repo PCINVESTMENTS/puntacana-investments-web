@@ -152,7 +152,9 @@ export default async function PropertiesPage({
         }
     }
 
-    const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+    const fetchedProperties: Property[] = rawProperties
+        .map(mapSanityProperty)
+        .filter((p): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
 
 
     // Merge logic:

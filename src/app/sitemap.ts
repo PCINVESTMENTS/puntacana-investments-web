@@ -27,7 +27,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // 2. Fetch Properies from Sanity & Local
     const rawProperties = await client.fetch(PROPERTIES_QUERY);
-    const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
+    const fetchedProperties: Property[] = rawProperties
+        .map(mapSanityProperty)
+        .filter((p): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
 
     // Merge logic
     const localMap = new Map(localProperties.map(p => [p.id, p]));
