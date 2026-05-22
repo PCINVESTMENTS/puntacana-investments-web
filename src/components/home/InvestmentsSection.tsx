@@ -26,7 +26,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
     const displayedModels = investmentModels.filter(m => featuredSlugs.includes(m.slug));
 
     return (
-        <section id="investments" className="py-8 md:py-16 bg-primary-black relative overflow-hidden text-white">
+        <section id="investments" className="py-6 md:py-16 bg-primary-black relative overflow-hidden text-white">
             {/* Background Decoration */}
             <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0.8),rgba(0,0,0,0.95))] opacity-10 pointer-events-none"></div>
 

@@ -5,7 +5,7 @@ import { ScrollReveal } from "../ui/ScrollReveal";
 
 export default function FutureProjectsSection({ lang }: { lang: string }) {
     return (
-        <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black relative overflow-hidden text-white">
+        <section className="py-6 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black relative overflow-hidden text-white">
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
                 <div className="text-center mb-8 md:mb-16">

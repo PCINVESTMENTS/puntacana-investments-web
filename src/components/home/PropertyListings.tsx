@@ -250,7 +250,7 @@ function PropertyListingsContent({
             )}
 
             {/* PROPERTIES GRID */}
-            <section id={sectionId} className={`bg-primary-black ${featured ? 'py-12' : 'py-16'}`}>
+            <section id={sectionId} className={`bg-primary-black ${featured ? 'py-6 md:py-12' : 'py-8 md:py-16'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal width="100%">
                         <div className="text-center mb-16">

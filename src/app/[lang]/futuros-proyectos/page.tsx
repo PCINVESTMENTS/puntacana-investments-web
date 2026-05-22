@@ -137,7 +137,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 1: Intro (Zig-Zag Left) */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-main.jpg" alt="Entorno natural ecológico del proyecto inmobiliario en Miches, República Dominicana" fill className="object-cover hover:scale-105 transition-transform duration-700" />
@@ -171,7 +171,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 2: Full Width Image Divider */}
-      <section className="relative h-[50vh] min-h-[350px] md:min-h-[400px] flex items-center justify-center my-8 md:my-12">
+      <section className="relative h-[50vh] min-h-[350px] md:min-h-[400px] flex items-center justify-center my-4 md:my-12">
          <Image src="/images/miches-eco-resort-concepto.jpg" alt="Concepto ecológico y preservación natural del terreno de inversión en Miches" fill className="object-cover" />
          <div className="absolute inset-0 bg-black/60"></div>
          <div className="relative z-10 text-center max-w-4xl px-4">
@@ -181,7 +181,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 3: Zig-Zag Right */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
             <h3 className="text-2xl md:text-3xl font-serif font-bold text-white uppercase tracking-wider mb-4 md:mb-6">Respeto por el Entorno</h3>
@@ -228,7 +228,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 4: Zig-Zag Left - Agriculture */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-8 md:my-12">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-4 md:my-12">
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Agricultura ecológica y huertos sostenibles en el proyecto inmobiliario de Miches" fill className="object-cover" />
@@ -279,7 +279,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 4.5: Un Nuevo Estilo de Vida */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
         <div className="text-center max-w-4xl mx-auto space-y-6 md:space-y-8">
             <h2 className="text-3xl md:text-5xl font-serif font-bold text-white uppercase tracking-wider">🏡 Un Nuevo Estilo de Vida</h2>
             <ReadMore
@@ -311,7 +311,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 5: Full Width Grid - Amenities */}
-      <section className="py-16 md:py-24 bg-black relative border-t border-b border-luxury-gold/20">
+      <section className="py-8 md:py-24 bg-black relative border-t border-b border-luxury-gold/20">
         <div className="absolute inset-0 opacity-20">
              <Image src="/images/the-beach-wellness-yoga-deck-punta-cana.jpg" alt="Textura de bienestar y yoga representativa de la vida sustentable en Punta Cana" fill className="object-cover" />
         </div>
@@ -374,7 +374,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 6: Zig-Zag Right - Hotel & Investment */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 space-y-6 md:space-y-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider leading-tight">🏨 Experiencia Hotelera + Inversión</h2>
@@ -417,7 +417,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 7: Developer & Current Phase */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
             <div className="space-y-4 md:space-y-6">
                 <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-wider text-center md:text-left">🏗️ Desarrollado Por:</h2>
@@ -466,7 +466,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Founder Access Section */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <div className="bg-gradient-to-br from-zinc-900 to-black border border-luxury-gold/30 rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl hidden md:block"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl hidden md:block"></div>
