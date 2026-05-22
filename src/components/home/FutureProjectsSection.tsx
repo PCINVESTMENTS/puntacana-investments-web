@@ -39,8 +39,8 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
 
-                        {/* Top Right Badge */}
-                        <div className="absolute top-4 right-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest">
+                        {/* Bottom Right Badge */}
+                        <div className="absolute bottom-4 right-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest z-10">
                             COMING SOON
                         </div>
                         
