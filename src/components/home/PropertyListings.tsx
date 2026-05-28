@@ -62,6 +62,24 @@ interface PropertyListingsProps {
 
 const translatePropertyTitle = (title: string, lang: string) => {
     if (lang !== 'en' || !title) return title;
+    
+    // Exact translations for Sanity long properties
+    const exactMatches: Record<string, string> = {
+        "Espectacular Villa de Doble Altura Totalmente Amueblada con Piscina Privada en White Sands, Bávaro": "Spectacular Double-Height Fully Furnished Villa with Private Pool in White Sands, Bavaro",
+        "Alquiler | Villa de Lujo Amueblada con Piscina en White Sands": "Rent | Furnished Luxury Villa with Pool in White Sands",
+        "Luxury Villa Frame en Cap Cana | Arquitectura, Exclusividad y Estilo de Vida Premium": "Luxury Villa Frame in Cap Cana | Architecture, Exclusivity, and Premium Lifestyle",
+        "Proyecto Villas Perla | Modernidad, Ubicación Estratégica y Alta Rentabilidad en Bávaro – Punta Cana": "Villas Perla Project | Modernity, Strategic Location, and High Profitability in Bavaro – Punta Cana",
+        "Villa de Lujo en Cap Cana | Exclusividad, Privacidad y Estilo de Vida Elite": "Luxury Villa in Cap Cana | Exclusivity, Privacy, and Elite Lifestyle",
+        "Villa en Renta Ocean 21 Marina Cap Cana": "Villa for Rent Ocean 21 Marina Cap Cana",
+        "Villa en Renta Amueblada en White Sands Punta Cana": "Furnished Villa for Rent in White Sands Punta Cana",
+        "Villa en Venta en White Sands Punta Cana": "Villa for Sale in White Sands Punta Cana",
+        "Terrenos | Terreno Hotelero Miches": "Land | Hotel Land in Miches"
+    };
+
+    if (exactMatches[title]) {
+        return exactMatches[title];
+    }
+
     let translatedTitle = title;
     translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
     translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
