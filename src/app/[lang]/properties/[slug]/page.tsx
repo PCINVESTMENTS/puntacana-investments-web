@@ -24,6 +24,16 @@ import { PROPERTY_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import { Property, properties } from "@/data/properties";
 
 // Helper to map Sanity data to our app's Property interface
+function translatePropertyTitle(title: string, lang: string) {
+    if (lang !== 'en' || !title) return title;
+    let translatedTitle = title;
+    translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
+    translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
+    translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Commercial Properties | ');
+    translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Buildings | ');
+    translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projects | ');
+    return translatedTitle;
+}
 function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
@@ -123,7 +133,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     }
 
     const seo = property.seo;
-    const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${property.title} | Punta Cana Investments`;
+    const translatedTitleText = translatePropertyTitle(property.title, lang);
+    const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${translatedTitleText} | Punta Cana Investments`;
     const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
     
     let keywordList = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
@@ -274,6 +285,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     };
 
     const galleryImages = property.gallery && property.gallery.length > 0 ? property.gallery : [property.image];
+    const translatedTitle = translatePropertyTitle(property.title, lang);
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
@@ -288,7 +300,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                 <div className="absolute inset-0">
                     <Image
                         src={property.image}
-                        alt={property.title}
+                        alt={translatedTitle}
                         fill
                         priority
                         className="object-cover"
@@ -304,10 +316,10 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
-                                    {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? 'Venta' : 'Renta'}
+                                    {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : 'Venta') : (lang === 'en' ? 'Rent' : 'Renta')}
                                 </span>
                                 <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-2 shadow-black drop-shadow-lg">
-                                    {property.title}
+                                    {translatedTitle}
                                 </h1>
                                 <p className="text-xl md:text-2xl text-gray-200 font-light">
                                     {property.locationLabel}
@@ -346,7 +358,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <div className="flex flex-col items-center">
                                 <FaRulerCombined className="text-4xl text-luxury-gold mb-3" />
                                 <span className="text-2xl font-bold">{property.area} m² / {Math.round(property.area * 10.764).toLocaleString()} ft²</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">Área</span>
+                                <span className="text-gray-400 text-xs uppercase tracking-wider">{lang === 'en' ? 'Area' : 'Área'}</span>
                             </div>
                         </div>
 
@@ -394,7 +406,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         {galleryImages.length > 0 && (
                             <div>
                                 <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                    Galería
+                                    {lang === 'en' ? 'Gallery' : 'Galería'}
                                 </h2>
                                 <PropertyGallery images={galleryImages} />
                             </div>
@@ -452,7 +464,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         {/* Features */}
                         <div>
                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                Amenidades
+                                {lang === 'en' ? 'Amenities' : 'Amenidades'}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {property.features[lang as 'en' | 'es'].map((feat, idx) => (
@@ -477,11 +489,11 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                             <ContactForm
                                 dict={dict.contact.form}
-                                subject={`${lang === 'en' ? 'Inquiry about' : 'Consulta sobre'}: ${property.title}`}
+                                subject={`${lang === 'en' ? 'Inquiry about' : 'Consulta sobre'}: ${translatedTitle}`}
                                 className="mt-4"
                                 lang={lang}
                                 propertyData={JSON.stringify({
-                                    title: property.title,
+                                    title: translatedTitle,
                                     location: property.locationLabel,
                                     price: property.price,
                                     area: property.area,
@@ -492,13 +504,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <div className="mt-8 text-center pt-8 border-t border-white/10">
                                 <p className="text-sm text-gray-500 mb-4">WhatsApp:</p>
                                 <a href="https://wa.me/18294084322" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-500 hover:text-green-400 font-bold text-lg transition-colors min-h-[48px]">
-                                    <FaWhatsapp aria-hidden="true" className="text-2xl" /> Chat Directo
+                                    <FaWhatsapp aria-hidden="true" className="text-2xl" /> {lang === 'en' ? 'Direct Chat' : 'Chat Directo'}
                                 </a>
                             </div>
 
                             {/* Social Share Buttons */}
                             <ShareButtons
-                                title={`Mira esta propiedad: ${property.title}`}
+                                title={`${lang === 'en' ? 'Check out this property:' : 'Mira esta propiedad:'} ${translatedTitle}`}
                                 url={`https://puntacanainvesment.com/${lang}/properties/${property.slug}`}
                             />
 

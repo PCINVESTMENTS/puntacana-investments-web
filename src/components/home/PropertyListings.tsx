@@ -60,6 +60,18 @@ interface PropertyListingsProps {
     initialData: Property[];
 }
 
+const translatePropertyTitle = (title: string, lang: string) => {
+    if (lang !== 'en' || !title) return title;
+    let translatedTitle = title;
+    translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
+    translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
+    translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Commercial Properties | ');
+    translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Buildings | ');
+    translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projects | ');
+    // Villas, Penthouses, Condos are mostly the same in English
+    return translatedTitle;
+};
+
 function CompareToggle({ property, lang }: { property: Property, lang: string }) {
     const { addToCompare, removeFromCompare, isComparing } = useCompare();
     const active = isComparing(property.id);
@@ -315,7 +327,7 @@ function PropertyListingsContent({
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
                                                 images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
-                                                title={prop.title}
+                                                title={translatePropertyTitle(prop.title, lang)}
                                             />
                                             <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 pointer-events-none">
                                                 <div className="bg-black/80 text-white px-4 py-1 text-xs uppercase tracking-wider border-l-2 border-luxury-gold">
@@ -368,7 +380,7 @@ function PropertyListingsContent({
                                                 </div>
 
                                                 <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
-                                                    {prop.title}
+                                                    {translatePropertyTitle(prop.title, lang)}
                                                 </h3>
                                                 <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
                                                     {prop.description[lang as 'en' | 'es']}
