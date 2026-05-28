@@ -60,7 +60,7 @@ interface PropertyListingsProps {
     initialData: Property[];
 }
 
-function CompareToggle({ property }: { property: Property }) {
+function CompareToggle({ property, lang }: { property: Property, lang: string }) {
     const { addToCompare, removeFromCompare, isComparing } = useCompare();
     const active = isComparing(property.id);
 
@@ -75,8 +75,8 @@ function CompareToggle({ property }: { property: Property }) {
                 ? "bg-luxury-gold text-black scale-110"
                 : "bg-black/60 text-white hover:bg-luxury-gold/80 hover:text-black"
                 }`}
-            title={active ? "Quitar de comparación" : "Añadir a comparación"}
-            aria-label={active ? "Quitar de comparación" : "Añadir a comparación"}
+            title={active ? (lang === 'en' ? "Remove from comparison" : "Quitar de comparación") : (lang === 'en' ? "Add to comparison" : "Añadir a comparación")}
+            aria-label={active ? (lang === 'en' ? "Remove from comparison" : "Quitar de comparación") : (lang === 'en' ? "Add to comparison" : "Añadir a comparación")}
         >
             <FaExchangeAlt aria-hidden="true" className={active ? "rotate-180 transition-transform" : ""} />
         </button>
@@ -263,7 +263,7 @@ function PropertyListingsContent({
                             <div className="h-1 w-24 bg-luxury-gold mx-auto"></div>
                             {!featured && (
                                 <p className="text-neutral-gray mt-6 max-w-2xl mx-auto">
-                                    Mostrando {filteredProperties.length} propiedades
+                                    {lang === 'en' ? `Showing ${filteredProperties.length} properties` : `Mostrando ${filteredProperties.length} propiedades`}
                                 </p>
                             )}
                         </div>
@@ -273,7 +273,7 @@ function PropertyListingsContent({
                     {!featured && (
                         <div className="flex flex-wrap justify-center gap-4 mb-12">
                             {[
-                                { id: "all", label: "Todos" },
+                                { id: "all", label: lang === 'en' ? "All" : "Todos" },
                                 { id: "puntacana", label: "Punta Cana" },
                                 { id: "capcana", label: "Cap Cana" },
                                 { id: "bavaro", label: "Bávaro" },
@@ -296,13 +296,15 @@ function PropertyListingsContent({
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {filteredProperties.length === 0 ? (
                             <div className="col-span-full text-center py-20">
-                                <h3 className="text-2xl text-white font-serif">No se encontraron propiedades</h3>
+                                <h3 className="text-2xl text-white font-serif">
+                                    {lang === 'en' ? 'No properties found' : 'No se encontraron propiedades'}
+                                </h3>
                                 {!featured && (
                                     <button
                                         onClick={() => { setSelectedLocation("all"); setSelectedType("all"); setMaxPrice("any"); }}
                                         className="mt-4 text-luxury-gold hover:underline"
                                     >
-                                        Resetear filtros
+                                        {lang === 'en' ? 'Reset filters' : 'Resetear filtros'}
                                     </button>
                                 )}
                             </div>
@@ -332,7 +334,7 @@ function PropertyListingsContent({
                                                 }
                                             </div>
 
-                                            <CompareToggle property={prop} />
+                                            <CompareToggle property={prop} lang={lang} />
                                             <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80 pointer-events-none"></div>
                                         </div>
 
