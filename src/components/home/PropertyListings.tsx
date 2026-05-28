@@ -90,6 +90,12 @@ const translatePropertyTitle = (title: string, lang: string) => {
     return translatedTitle;
 };
 
+const getLocalizedTitle = (prop: Property, lang: string) => {
+    if (lang === 'en' && prop.titleEn) return prop.titleEn;
+    if (lang === 'es' && prop.titleEs) return prop.titleEs;
+    return translatePropertyTitle(prop.title, lang);
+};
+
 function CompareToggle({ property, lang }: { property: Property, lang: string }) {
     const { addToCompare, removeFromCompare, isComparing } = useCompare();
     const active = isComparing(property.id);
@@ -345,7 +351,7 @@ function PropertyListingsContent({
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
                                                 images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
-                                                title={translatePropertyTitle(prop.title, lang)}
+                                                title={getLocalizedTitle(prop, lang)}
                                             />
                                             <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 pointer-events-none">
                                                 <div className="bg-black/80 text-white px-4 py-1 text-xs uppercase tracking-wider border-l-2 border-luxury-gold">
@@ -398,7 +404,7 @@ function PropertyListingsContent({
                                                 </div>
 
                                                 <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
-                                                    {translatePropertyTitle(prop.title, lang)}
+                                                    {getLocalizedTitle(prop, lang)}
                                                 </h3>
                                                 <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
                                                     {prop.description[lang as 'en' | 'es']}

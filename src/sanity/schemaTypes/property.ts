@@ -12,6 +12,16 @@ export const property = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: 'titleEn',
+            title: 'Title (English)',
+            type: 'string',
+        }),
+        defineField({
+            name: 'titleEs',
+            title: 'Title (Spanish)',
+            type: 'string',
+        }),
+        defineField({
             name: 'id',
             title: 'Legacy ID (Optional)',
             type: 'number',

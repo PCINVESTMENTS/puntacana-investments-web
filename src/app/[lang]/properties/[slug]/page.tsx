@@ -51,6 +51,13 @@ function translatePropertyTitle(title: string, lang: string) {
     translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projects | ');
     return translatedTitle;
 }
+
+function getLocalizedTitle(property: Property, lang: string) {
+    if (lang === 'en' && property.titleEn) return property.titleEn;
+    if (lang === 'es' && property.titleEs) return property.titleEs;
+    return translatePropertyTitle(property.title, lang);
+}
+
 function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
@@ -150,7 +157,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     }
 
     const seo = property.seo;
-    const translatedTitleText = translatePropertyTitle(property.title, lang);
+    const translatedTitleText = getLocalizedTitle(property, lang);
     const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${translatedTitleText} | Punta Cana Investments`;
     const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
     
@@ -302,7 +309,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     };
 
     const galleryImages = property.gallery && property.gallery.length > 0 ? property.gallery : [property.image];
-    const translatedTitle = translatePropertyTitle(property.title, lang);
+    const translatedTitle = getLocalizedTitle(property, lang);
 
     return (
         <main className="min-h-screen bg-primary-black text-white">

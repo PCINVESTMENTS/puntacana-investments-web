@@ -2,6 +2,8 @@ export interface Property {
     id: number;
     slug: string;
     title: string;
+    titleEn?: string;
+    titleEs?: string;
     location: string;
     locationLabel: string;
     type: string;
