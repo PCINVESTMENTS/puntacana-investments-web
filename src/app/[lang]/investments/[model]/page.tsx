@@ -31,12 +31,47 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         return obj[key] || obj['en'] || obj['es'] || "";
     };
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
+    const canonicalUrl = `${baseUrl}/${lang}/investments/${model}`;
+
+    const titleText = getVal(modelData.title, lang);
+    const descText = getVal(modelData.description, lang);
+
+    const keywordList = lang === 'en'
+        ? [`Punta Cana ${modelData.slug} investments`, `${titleText}`, 'Dominican Republic real estate investments', 'High ROI condo hotel', 'Beachfront properties Cap Cana']
+        : lang === 'fr'
+        ? [`Investissements ${modelData.slug} Punta Cana`, `${titleText}`, 'Investissement immobilier République Dominicaine', 'Condo-hôtel rentabilité élevée', 'Propriétés en bord de mer Cap Cana']
+        : [`Inversiones ${modelData.slug} Punta Cana`, `${titleText}`, 'Inversiones inmobiliarias República Dominicana', 'Condo hotel alta rentabilidad', 'Propiedades frente al mar Cap Cana'];
+
     return {
-        title: `${getVal(modelData.title, lang)} | Punta Cana Investments`,
-        description: getVal(modelData.description, lang),
+        title: `${titleText} | Punta Cana Investments`,
+        description: descText,
+        keywords: keywordList.join(', '),
         openGraph: {
-            images: [modelData.heroImage],
+            title: `${titleText} | Punta Cana Investments`,
+            description: descText,
+            url: canonicalUrl,
+            images: [
+                {
+                    url: modelData.heroImage.startsWith('http') ? modelData.heroImage : `${baseUrl}${modelData.heroImage}`,
+                    width: 1200,
+                    height: 630,
+                    alt: titleText,
+                }
+            ],
+            locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
+            siteName: 'Punta Cana Investments',
+            type: 'website',
         },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                en: `${baseUrl}/en/investments/${model}`,
+                es: `${baseUrl}/es/investments/${model}`,
+                fr: `${baseUrl}/fr/investments/${model}`,
+                'x-default': `${baseUrl}/en/investments/${model}`
+            }
+        }
     };
 }
 

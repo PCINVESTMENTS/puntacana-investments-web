@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaCalendarAlt, FaArrowRight, FaSearch } from "react-icons/fa";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import type { Metadata } from "next";
 
 interface BlogListingPageProps {
     params: Promise<{
@@ -18,6 +19,54 @@ interface BlogListingPageProps {
 
 // Restoring ISR
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: BlogListingPageProps): Promise<Metadata> {
+    const { lang } = await params;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
+    const canonicalUrl = `${baseUrl}/${lang}/blog`;
+
+    const title = lang === 'en'
+        ? "Blog & Real Estate Guides | Punta Cana Investments"
+        : lang === 'fr'
+        ? "Blog & Guides Immobiliers | Punta Cana Investments"
+        : "Blog y Guías Inmobiliarias | Punta Cana Investments";
+
+    const description = lang === 'en'
+        ? "Insights, guides, and news about the luxury real estate market in Punta Cana."
+        : lang === 'fr'
+        ? "Analyses, guides et actualités sur le marché immobilier de luxe à Punta Cana."
+        : "Análisis, guías y noticias sobre el mercado inmobiliario de lujo en Punta Cana.";
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            url: canonicalUrl,
+            images: [
+                {
+                    url: `${baseUrl}/images/og-home-luxury.webp`,
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                }
+            ],
+            locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
+            siteName: 'Punta Cana Investments',
+            type: 'website',
+        },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                en: `${baseUrl}/en/blog`,
+                es: `${baseUrl}/es/blog`,
+                fr: `${baseUrl}/fr/blog`,
+                'x-default': `${baseUrl}/en/blog`
+            }
+        }
+    };
+}
 
 export default async function BlogListingPage({ params }: BlogListingPageProps) {
     const { lang } = await params;

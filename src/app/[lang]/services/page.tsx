@@ -28,6 +28,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
             siteName: 'Punta Cana Investments',
             type: 'website',
         },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                en: `${baseUrl}/en/services`,
+                es: `${baseUrl}/es/services`,
+                fr: `${baseUrl}/fr/services`,
+                'x-default': `${baseUrl}/en/services`
+            }
+        }
     };
 }
 

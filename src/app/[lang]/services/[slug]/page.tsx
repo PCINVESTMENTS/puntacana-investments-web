@@ -43,9 +43,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     if (isArchitecture) {
         customKeywords = lang === 'en' 
             ? 'Punta Cana Architecture, Luxury Villa Design Dominican Republic, Custom Home Builders Punta Cana, Construction & Architecture Services Bavaro, Coastal Design Specialists DR, Modern High-End Real Estate Developments, Buy Land and Build Villa Punta Cana, Architectural Planning Miches'
+            : lang === 'fr'
+            ? 'Architecture à Punta Cana, Design de Villas de Luxe République Dominicaine, Constructeurs de Maisons sur Mesure, Cabinets d\'Architecture Bavaro, Designs Côtiers RD, Modèles Architecturaux Modernos, Acheter un Terrain et Construire une Villa à Cap Cana, Planification et Construction d\'Hôtels à Miches, Experts en Architecture Tropicale'
             : 'Arquitectura en Punta Cana, Diseño de Villas de Lujo República Dominicana, Constructores de Casas Personalizadas, Firmas de Arquitectura Bávaro, Diseños Costeros DR, Modelos Arquitectónicos Modernos, Comprar Solar y Construir Villa en Cap Cana, Planificación y Construcción de Hoteles en Miches, Expertos en Arquitectura Tropical';
     } else {
-        customKeywords = `${service.title} Punta Cana, ${service.title} Dominican Republic, Real Estate Services`;
+        customKeywords = lang === 'fr'
+            ? `${service.title} Punta Cana, ${service.title} République Dominicaine, Services Immobiliers`
+            : `${service.title} Punta Cana, ${service.title} Dominican Republic, Real Estate Services`;
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
@@ -75,10 +79,19 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                     alt: service.title,
                 }
             ],
-            locale: lang === 'es' ? 'es_DO' : 'en_US',
+            locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
             siteName: 'Punta Cana Investments',
             type: 'website',
         },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                en: `${baseUrl}/en/services/${slug}`,
+                es: `${baseUrl}/es/services/${slug}`,
+                fr: `${baseUrl}/fr/services/${slug}`,
+                'x-default': `${baseUrl}/en/services/${slug}`
+            }
+        }
     };
 }
 

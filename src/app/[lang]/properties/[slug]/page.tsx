@@ -223,6 +223,20 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
              if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hotels for sale Dominican Republic`, `Resorts for sale in Punta Cana`);
              if (property.status === 'rent') keywordList.push(`Monthly rentals ${loc}`, `Long term rental Punta Cana`);
              if (loc.toLowerCase().includes('miches')) keywordList.push(`Invest in Miches`, `Hotels for sale in Miches`, `Land for hotel development Miches`);
+        } else if (lang === 'fr') {
+             keywordList = [
+                 `Achat ${property.type === 'villa' ? 'villa' : (property.type === 'land' ? 'terrain' : (property.type === 'commercial' ? 'local commercial' : 'appartement'))} Punta Cana`,
+                 `${property.title}`,
+                 `${property.type === 'land' ? 'acheter un terrain' : 'acheter une propriété'} à ${loc}`,
+                 `Immobilier République Dominicaine`,
+                 `Investissement à Punta Cana`
+             ];
+             if (property.type === 'land') keywordList.push(`Terrains de développement hôtelier ${loc}`, `Terrain en bord de mer à vendre`, `Terrains à vendre à ${loc}`);
+             if (property.type === 'commercial') keywordList.push(`Immobilier commercial ${loc}`, `Local commercial Punta Cana`, `Investir dans l'immobilier commercial République Dominicaine`);
+             if (property.type === 'condohotel') keywordList.push(`Condo-hôtel à vendre ${loc}`, `Investissement hôtelier Punta Cana`, `Hôtel à vendre République Dominicaine`, `Condo-hôtel haut rendement`);
+             if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hôtels à vendre République Dominicaine`, `Resorts à vendre à Punta Cana`);
+             if (property.status === 'rent') keywordList.push(`Location mensuelle ${loc}`, `Location longue durée Punta Cana`);
+             if (loc.toLowerCase().includes('miches')) keywordList.push(`Investir à Miches`, `Hôtels à vendre à Miches`, `Terrain pour développement hôtelier Miches`);
         } else {
              keywordList = [
                  `${property.type === 'villa' ? 'Villa' : (property.type === 'land' ? 'Terreno' : (property.type === 'commercial' ? 'Local Comercial' : 'Apartamento'))} en venta en Punta Cana`,
@@ -247,7 +261,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
     };
-    const statusText = property.status === 'rent' ? (lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'es' ? 'VENTA' : 'SALE');
+    const statusText = property.status === 'rent' ? (lang === 'fr' ? 'LOCATION' : lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'fr' ? 'VENTE' : lang === 'es' ? 'VENTA' : 'SALE');
     const socialTitle = `[${statusText} - ${formatPrice(property.price)}] ${title}`;
 
     return {
@@ -277,7 +291,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                     alt: property.title,
                 }
             ],
-            locale: lang === 'es' ? 'es_DO' : 'en_US',
+            locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
             type: 'website',
             siteName: 'Punta Cana Investments',
         },
@@ -292,6 +306,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             languages: {
                 en: `${baseUrl}/en/properties/${slug}`,
                 es: `${baseUrl}/es/properties/${slug}`,
+                fr: `${baseUrl}/fr/properties/${slug}`,
                 'x-default': `${baseUrl}/en/properties/${slug}`
             }
         }
