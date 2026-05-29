@@ -11,15 +11,17 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                 <div className="text-center mb-8 md:mb-16">
                     <ScrollReveal width="100%">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
-                            {lang === 'en' ? 'Exclusive Opportunity for Investors' : 'Oportunidad Exclusiva para Inversores'}
+                            {lang === 'en' ? 'Exclusive Opportunity for Investors' : lang === 'fr' ? 'Opportunité Exclusive pour Investisseurs' : 'Oportunidad Exclusiva para Inversores'}
                         </span>
                         <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
-                            {lang === 'en' ? 'The Future of Ecological Investment' : 'El Futuro de la Inversión Ecológica'}
+                            {lang === 'en' ? 'The Future of Ecological Investment' : lang === 'fr' ? "L'Avenir de l'Investissement Écologique" : 'El Futuro de la Inversión Ecológica'}
                         </h2>
                         <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
                         <p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
                             {lang === 'en' 
                                 ? "Position yourself ahead of the market. Join our exclusive founders list and secure entry-level pricing in the Caribbean's most promising luxury and sustainability destination." 
+                                : lang === 'fr' 
+                                ? "Positionnez-vous avant le marché. Rejoignez notre liste exclusive de fondateurs et obtenez des prix de lancement dans la destination de luxe et de durabilité la plus prometteuse des Caraïbes." 
                                 : "Posiciónese antes que el mercado. Únase a nuestra selecta lista de fundadores y asegure precios de entrada en el destino de lujo y sostenibilidad con mayor proyección del Caribe."}
                         </p>
                     </ScrollReveal>
@@ -46,7 +48,7 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                         
                         {/* Top Left Title Badge */}
                         <div className="absolute top-4 left-4 bg-black/60 text-luxury-gold backdrop-blur-md border border-luxury-gold/30 text-xs font-bold px-3 py-1 uppercase tracking-widest flex items-center gap-2">
-                            <FaLeaf /> {lang === 'en' ? 'Eco-Luxury Development' : 'Desarrollo Eco-Luxury'}
+                            <FaLeaf /> {lang === 'en' ? 'Eco-Luxury Development' : lang === 'fr' ? 'Développement Éco-Luxe' : 'Desarrollo Eco-Luxury'}
                         </div>
                     </div>
 
@@ -58,11 +60,13 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                         <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8 flex-grow">
                             {lang === 'en' 
                                 ? 'A new ecological destination is being born in the Caribbean. A place designed to live, invest, and connect deeply with nature.' 
+                                : lang === 'fr'
+                                ? 'Une nouvelle destination écologique naît dans les Caraïbes. Un lieu conçu pour vivre, investir et se connecter profondément avec la nature.'
                                 : 'Un nuevo destino ecológico está naciendo en el Caribe. Un lugar diseñado para vivir, invertir y conectar profundamente con la naturaleza.'}
                         </p>
 
                         <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-luxury-gold text-sm font-bold uppercase tracking-wider">
-                            <span>{lang === 'en' ? 'Discover the Future' : 'Explorar el Futuro'}</span>
+                            <span>{lang === 'en' ? 'Discover the Future' : lang === 'fr' ? 'Découvrir le Futur' : 'Explorar el Futuro'}</span>
                             <FaArrowRight aria-hidden="true" className="transform group-hover:translate-x-2 transition-transform" />
                         </div>
                     </div>

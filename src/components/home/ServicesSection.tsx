@@ -126,7 +126,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                             href={`/${lang}/services`}
                             className="inline-block bg-luxury-gold text-black font-bold py-4 px-10 rounded-sm hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-lg hover:shadow-xl"
                         >
-                            {lang === 'en' ? 'Explore All Services' : 'Explorar Todos los Servicios'}
+                            {lang === 'en' ? 'Explore All Services' : lang === 'fr' ? 'Explorer Tous les Services' : 'Explorar Todos los Servicios'}
                         </Link>
                     </div>
                 )}

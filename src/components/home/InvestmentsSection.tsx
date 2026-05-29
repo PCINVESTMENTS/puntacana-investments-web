@@ -96,7 +96,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
                         href={`/${lang}/investments`}
                         className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-3 rounded-sm uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl"
                     >
-                        {lang === 'en' ? 'View All Opportunities' : 'Ver Todas las Oportunidades'}
+                        {lang === 'en' ? 'View All Opportunities' : lang === 'fr' ? 'Voir Toutes les Opportunités' : 'Ver Todas las Oportunidades'}
                     </Link>
                 </div>
             </div>
