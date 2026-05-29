@@ -11,7 +11,8 @@ import { FaCheck, FaArrowRight, FaChartPie, FaRegCheckCircle } from "react-icons
 export async function generateStaticParams() {
     return investmentModels.flatMap((model) => [
         { lang: 'es', model: model.slug },
-        { lang: 'en', model: model.slug }
+        { lang: 'en', model: model.slug },
+        { lang: 'fr', model: model.slug }
     ]);
 }
 
@@ -25,9 +26,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     if (!modelData) return { title: 'Not Found' };
 
+    const getVal = (obj: any, key: string) => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
+
     return {
-        title: `${modelData.title[lang as 'es' | 'en']} | Punta Cana Investments`,
-        description: modelData.description[lang as 'es' | 'en'],
+        title: `${getVal(modelData.title, lang)} | Punta Cana Investments`,
+        description: getVal(modelData.description, lang),
         openGraph: {
             images: [modelData.heroImage],
         },
@@ -36,17 +42,21 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export default async function InvestmentModelPage({ params }: { params: Promise<{ lang: string, model: string }> }) {
     const { lang, model } = await params;
-    const dict = await getDictionary(lang as "es" | "en");
+    const dict = await getDictionary(lang as "es" | "en" | "fr");
     const data = investmentModels.find(m => m.slug === model);
-    const l = lang as 'es' | 'en';
 
     if (!data) return notFound();
+
+    const getVal = (obj: any, key: string) => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
             <Navbar
                 dict={dict.nav}
-                lang={lang as 'es' | 'en'}
+                lang={lang}
                 servicesList={dict.sections.services.items}
                 propertyTypes={dict.properties.types}
             />
@@ -56,7 +66,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 <div className="absolute inset-0">
                     <Image
                         src={data.heroImage}
-                        alt={data.title[l]}
+                        alt={getVal(data.title, lang)}
                         fill
                         className="object-cover opacity-60"
                         priority
@@ -65,13 +75,13 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 </div>
                 <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
                     <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-6 block animate-fade-in-up">
-                        {lang === 'en' ? "Investment Strategy" : "Estrategia de Inversión"}
+                        {lang === 'en' ? "Investment Strategy" : lang === 'fr' ? "Stratégie d'Investissement" : "Estrategia de Inversión"}
                     </span>
                     <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-8 drop-shadow-2xl animate-fade-in-up animation-delay-200">
-                        {data.title[l]}
+                        {getVal(data.title, lang)}
                     </h1>
                     <p className="max-w-3xl mx-auto text-xl md:text-2xl text-gray-200 font-light leading-relaxed animate-fade-in-up animation-delay-400">
-                        {data.description[l]}
+                        {getVal(data.description, lang)}
                     </p>
                 </div>
             </div>
@@ -83,7 +93,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                         {data.roiStats.map((stat, idx) => (
                             <div key={idx} className="p-4">
                                 <div className="text-4xl md:text-5xl font-bold mb-2">{stat.value}</div>
-                                <div className="uppercase tracking-widest text-xs font-semibold opacity-80">{stat.label[l]}</div>
+                                <div className="uppercase tracking-widest text-xs font-semibold opacity-80">{getVal(stat.label, lang)}</div>
                             </div>
                         ))}
                     </div>
@@ -95,10 +105,10 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                     <div>
                         <h2 className="text-3xl font-serif font-bold text-white mb-8 border-l-4 border-luxury-gold pl-6">
-                            {lang === 'en' ? "Understanding the Model" : "Entendiendo el Modelo"}
+                            {lang === 'en' ? "Understanding the Model" : lang === 'fr' ? "Comprendre le Modèle" : "Entendiendo el Modelo"}
                         </h2>
                         <p className="text-gray-300 text-lg leading-relaxed mb-8 whitespace-pre-line">
-                            {data.longDescription[l]}
+                            {getVal(data.longDescription, lang)}
                         </p>
 
                         <div className="space-y-6">
@@ -108,8 +118,8 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                                         <FaRegCheckCircle size={20} />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-white text-lg mb-1">{benefit.title[l]}</h4>
-                                        <p className="text-sm text-gray-400">{benefit.text[l]}</p>
+                                        <h4 className="font-bold text-white text-lg mb-1">{getVal(benefit.title, lang)}</h4>
+                                        <p className="text-sm text-gray-400">{getVal(benefit.text, lang)}</p>
                                     </div>
                                 </div>
                             ))}
@@ -126,10 +136,10 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                         {/* Overlay Card */}
                         <div className="absolute bottom-8 right-8 bg-black/90 p-8 rounded backdrop-blur-md max-w-sm border border-white/10">
                             <h3 className="text-xl font-bold text-luxury-gold mb-4 font-serif">
-                                {lang === 'en' ? "Why this works?" : "¿Por qué funciona esto?"}
+                                {lang === 'en' ? "Why this works?" : lang === 'fr' ? "Pourquoi cela fonctionne ?" : "¿Por qué funciona esto?"}
                             </h3>
                             <p className="text-gray-300 text-sm">
-                                {data.contentSections?.[0]?.text?.[l] || data.description[l]}
+                                {getVal(data.contentSections?.[0]?.text, lang) || getVal(data.description, lang)}
                             </p>
                         </div>
                     </div>
@@ -137,7 +147,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
 
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
                     <ShareButtons
-                        title={data.title[l]}
+                        title={getVal(data.title, lang)}
                         url={`https://www.puntacanainvestmentsrd.com/${lang}/investments/${model}`}
                     />
                 </div>
@@ -147,11 +157,13 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
             <section className="py-24 bg-gradient-to-r from-dark-gray to-black border-t border-white/5">
                 <div className="max-w-4xl mx-auto px-4 text-center">
                     <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6 text-white">
-                        {lang === 'en' ? "Explore Opportunities in this Model" : "Explore Oportunidades en este Modelo"}
+                        {lang === 'en' ? "Explore Opportunities in this Model" : lang === 'fr' ? "Explorer les Opportunités de ce Modèle" : "Explore Oportunidades en este Modelo"}
                     </h2>
                     <p className="text-xl mb-10 text-gray-400 font-light">
                         {lang === 'en'
                             ? "Our team has a curated list of properties that fit this exact investment profile."
+                            : lang === 'fr'
+                            ? "Notre équipe dispose d'une liste sélectionnée de propriétés qui correspondent exactement à ce profil d'investissement."
                             : "Nuestro equipo tiene una lista curada de propiedades que encajan exactamente en este perfil de inversión."}
                     </p>
                     <div className="flex flex-col md:flex-row gap-6 justify-center">
@@ -159,19 +171,19 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                             href={`/${lang}#contact`}
                             className="bg-luxury-gold text-black px-10 py-4 rounded uppercase tracking-widest font-bold hover:bg-white transition-all shadow-xl inline-flex items-center gap-3"
                         >
-                            {lang === 'en' ? "Schedule Consultation" : "Agendar Consulta"} <FaArrowRight />
+                            {lang === 'en' ? "Schedule Consultation" : lang === 'fr' ? "Planifier un Rendez-vous" : "Agendar Consulta"} <FaArrowRight />
                         </Link>
                         <Link
                             href={`/${lang}/investments`}
                             className="px-10 py-4 rounded uppercase tracking-widest font-bold border border-white text-white hover:bg-white hover:text-black transition-all"
                         >
-                            {lang === 'en' ? "View All Models" : "Ver Todos los Modelos"}
+                            {lang === 'en' ? "View All Models" : lang === 'fr' ? "Voir Tous les Modèles" : "Ver Tous los Modèles"}
                         </Link>
                     </div>
                 </div>
             </section>
 
-            <Footer dict={dict} lang={lang as 'es' | 'en'} />
+            <Footer dict={dict} lang={lang} />
         </main>
     );
 }

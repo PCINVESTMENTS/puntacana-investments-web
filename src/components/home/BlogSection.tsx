@@ -19,7 +19,12 @@ interface BlogSectionProps {
 export default function BlogSection({ dict, lang, initialPosts }: BlogSectionProps) {
     const recentPosts = initialPosts.slice(0, 3);
 
-    const l = lang as 'es' | 'en';
+    const l = lang as 'es' | 'en' | 'fr';
+
+    const getVal = (obj: any, key: 'es' | 'en' | 'fr') => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
 
     return (
         <section id="blog" className="py-8 lg:py-16 bg-primary-black border-t border-white/5">
@@ -47,26 +52,26 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                             <Link href={`/${lang}/blog/${post.slug}`} className="block h-64 overflow-hidden relative">
                                 <Image
                                     src={post.mainImage}
-                                    alt={post.title[l]}
+                                    alt={getVal(post.title, l)}
                                     fill
                                     sizes="(max-width: 768px) 100vw, 33vw"
                                     className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                 />
                                 <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                                    {post.category[l]}
+                                    {getVal(post.category, l)}
                                 </div>
                             </Link>
                             <div className="p-8">
                                 <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
-                                    <FaCalendarAlt aria-hidden="true" /> {post.date[l]}
+                                    <FaCalendarAlt aria-hidden="true" /> {getVal(post.date, l)}
                                 </div>
                                 <h3 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
                                     <Link href={`/${lang}/blog/${post.slug}`}>
-                                        {post.title[l]}
+                                        {getVal(post.title, l)}
                                     </Link>
                                 </h3>
                                 <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
-                                    {post.excerpt[l]}
+                                    {getVal(post.excerpt, l)}
                                 </p>
                                 <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
                                     {dict.readMore} <FaArrowRight aria-hidden="true" className="text-[10px]" />

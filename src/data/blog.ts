@@ -7,16 +7,16 @@ export interface BlogSection {
 
 export interface BlogPost {
     slug: string;
-    title: { es: string; en: string };
-    date: { es: string; en: string };
-    category: { es: string; en: string };
+    title: { es: string; en: string; fr?: string };
+    date: { es: string; en: string; fr?: string };
+    category: { es: string; en: string; fr?: string };
     mainImage: string;
-    excerpt: { es: string; en: string };
+    excerpt: { es: string; en: string; fr?: string };
     author: string;
-    authorRole: { es: string; en: string };
-    authorBio: { es: string; en: string };
+    authorRole: { es: string; en: string; fr?: string };
+    authorBio: { es: string; en: string; fr?: string };
     authorImage: string;
-    content: BlogSection[] | { es: any; en: any }; // Support both legacy and Sanity PortableText
+    content: BlogSection[] | { es: any; en: any; fr?: any }; // Support both legacy and Sanity PortableText
     relatedProperties?: number[]; // IDs of related properties
 }
 

@@ -26,25 +26,30 @@ const getIcon = (iconName: string) => {
     }
 };
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
     const { lang } = await params;
     const isEs = lang === 'es';
+    const isFr = lang === 'fr';
 
     return {
         title: `Fly & Buy | Punta Cana Investments`,
-        description: isEs
-            ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
-            : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments.",
+        description: isFr
+            ? "Fly & Buy n'est pas juste un voyage, c'est une décision intelligente. Venez, confirmez et achetez avec Punta Cana Investments."
+            : isEs
+                ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
+                : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments.",
         openGraph: {
             images: ['/images/fly-and-buy/premium.jpg'],
         }
     };
 }
 
-export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const isEs = lang === 'es';
+    const isFr = lang === 'fr';
     const dict = await getDictionary(lang);
+    const l = (isFr ? 'fr' : isEs ? 'es' : 'en') as 'es' | 'en' | 'fr';
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
@@ -56,22 +61,24 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                     src="/images/fly-and-buy/premium.jpg" // Using Premium image as main hero or a general one
                     alt="Fly & Buy Punta Cana"
                     fill
-                    className="object-cover opacity-80"
+                    className="object-cover opacity-60"
                     priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/50 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
                     <ScrollReveal>
                         <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm md:text-base mb-4 block">
-                            {isEs ? "Modalidades Oficiales" : "Official Modalities"}
+                            {isFr ? "Modalités Officielles" : isEs ? "Modalidades Oficiales" : "Official Modalities"}
                         </span>
                         <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">
                             Fly & Buy
                         </h1>
                         <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto font-light">
-                            {isEs
-                                ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
-                                : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments."}
+                            {isFr
+                                ? "Fly & Buy n'est pas juste un voyage, c'est une décision intelligente. Venez, confirmez et achetez avec Punta Cana Investments."
+                                : isEs
+                                    ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
+                                    : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments."}
                         </p>
                     </ScrollReveal>
                 </div>
@@ -90,7 +97,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                     <div className="sticky top-32 h-full max-h-[80vh] w-full rounded-sm overflow-hidden border border-white/10 shadow-2xl group">
                                         <Image
                                             src={program.heroImage}
-                                            alt={program.title[isEs ? 'es' : 'en']}
+                                            alt={program.title[l]}
                                             fill
                                             className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                         />
@@ -98,7 +105,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
 
                                         {/* Floating Badge */}
                                         <div className="absolute top-6 left-6 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 uppercase tracking-widest text-sm font-bold">
-                                            {program.duration[isEs ? 'es' : 'en']}
+                                            {program.duration[l]}
                                         </div>
                                     </div>
                                 </div>
@@ -107,13 +114,13 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                 <div className="lg:w-1/2 flex flex-col justify-center">
                                     <ScrollReveal>
                                         <h2 className="text-4xl md:text-5xl font-serif font-bold text-luxury-gold mb-1 md:mb-2">
-                                            {program.title[isEs ? 'es' : 'en']}
+                                            {program.title[l]}
                                         </h2>
                                         <h3 className="text-xl text-white/90 font-medium mb-4 uppercase tracking-wide">
-                                            {program.subtitle[isEs ? 'es' : 'en']}
+                                            {program.subtitle[l]}
                                         </h3>
                                         <p className="text-gray-300 text-lg leading-relaxed mb-6 border-l-2 border-luxury-gold/50 pl-6">
-                                            {program.description[isEs ? 'es' : 'en']}
+                                            {program.description[l]}
                                         </p>
 
                                         {/* Includes Grid */}
@@ -123,14 +130,14 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                                     <div className="flex items-center gap-3 mb-4 text-luxury-gold">
                                                         <span className="text-xl">{getIcon(section.icon || 'check')}</span>
                                                         <h4 className="font-bold uppercase tracking-wider text-sm">
-                                                            {section.title[isEs ? 'es' : 'en']}
+                                                            {section.title[l]}
                                                         </h4>
                                                     </div>
                                                     <ul className="space-y-2">
                                                         {section.items.map((item, i) => (
                                                             <li key={i} className="flex items-start gap-3 text-gray-400 text-sm">
                                                                 <FaCheck className="mt-1 flex-shrink-0 text-luxury-gold/50 text-xs" />
-                                                                <span>{item[isEs ? 'es' : 'en']}</span>
+                                                                <span>{item[l]}</span>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -141,31 +148,31 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                         {/* Conditions & Pricing */}
                                         <div className="bg-luxury-gold/10 border border-luxury-gold/20 p-6 lg:p-8 rounded-sm">
                                             <h4 className="text-luxury-gold font-bold uppercase tracking-wider text-sm mb-4">
-                                                {isEs ? "Condiciones Económicas" : "Economic Conditions"}
+                                                {isFr ? "Conditions Économiques" : isEs ? "Condiciones Económicas" : "Economic Conditions"}
                                             </h4>
                                             <ul className="space-y-3 text-gray-300 text-sm mb-6">
                                                 <li className="flex gap-2">
-                                                    <span className="font-semibold text-white">{isEs ? "Cliente Cubre:" : "Client Covers:"}</span>
-                                                    {program.conditions.clientCovers.map(c => c[isEs ? 'es' : 'en']).join(", ")}
+                                                    <span className="font-semibold text-white">{isFr ? "Le client couvre:" : isEs ? "Cliente Cubre:" : "Client Covers:"}</span>
+                                                    {program.conditions.clientCovers.map(c => c[l]).join(", ")}
                                                 </li>
                                                 <li className="flex gap-2">
-                                                    <span className="font-semibold text-white">{isEs ? "Beneficio Compra:" : "Purchase Benefit:"}</span>
-                                                    {program.conditions.purchaseBenefit[isEs ? 'es' : 'en']}
+                                                    <span className="font-semibold text-white">{isFr ? "Avantage d'achat:" : isEs ? "Beneficio Compra:" : "Purchase Benefit:"}</span>
+                                                    {program.conditions.purchaseBenefit[l]}
                                                 </li>
                                                 <li className="flex gap-2">
-                                                    <span className="font-semibold text-white">{isEs ? "Política:" : "Policy:"}</span>
-                                                    {program.conditions.refundPolicy[isEs ? 'es' : 'en']}
+                                                    <span className="font-semibold text-white">{isFr ? "Politique:" : isEs ? "Política:" : "Policy:"}</span>
+                                                    {program.conditions.refundPolicy[l]}
                                                 </li>
                                             </ul>
 
                                             <div className="pt-6 border-t border-luxury-gold/20">
                                                 <h5 className="text-white font-bold mb-2 text-sm uppercase">
-                                                    {isEs ? "Ideal Para:" : "Ideal For:"}
+                                                    {isFr ? "Idéal Pour:" : isEs ? "Ideal Para:" : "Ideal For:"}
                                                 </h5>
                                                 <div className="flex flex-wrap gap-2">
                                                     {program.idealFor.map((ideal, i) => (
                                                         <span key={i} className="bg-black/40 text-gray-300 px-3 py-1 text-xs rounded-full border border-white/10">
-                                                            {ideal[isEs ? 'es' : 'en']}
+                                                            {ideal[l]}
                                                         </span>
                                                     ))}
                                                 </div>
@@ -177,7 +184,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                                 href={`/${lang}/fly-and-buy/form`}
                                                 className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl w-full text-center md:w-auto"
                                             >
-                                                {isEs ? "Consultar sobre el programa" : "Inquire about program"}
+                                                {isFr ? "S'informer sur le programme" : isEs ? "Consultar sobre el programa" : "Inquire about program"}
                                             </Link>
                                         </div>
                                     </ScrollReveal>
@@ -193,10 +200,10 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                 <div className="max-w-5xl mx-auto px-4">
                     <div className="text-center mb-8 lg:mb-12">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
-                            {isEs ? "Comparativa de Programas" : "Program Comparison"}
+                            {isFr ? "Comparatif des Programmes" : isEs ? "Comparativa de Programas" : "Program Comparison"}
                         </h2>
                         <p className="text-gray-400">
-                            {isEs ? "Encuentre la modalidad que mejor se adapta a su perfil de inversión" : "Find the modality that best suits your investment profile"}
+                            {isFr ? "Trouvez la modalité la mieux adaptée à votre profil d'investissement" : isEs ? "Encuentre la modalidad que mejor se adapta a su perfil de inversión" : "Find the modality that best suits your investment profile"}
                         </p>
                     </div>
 
@@ -205,13 +212,13 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                             <thead>
                                 <tr>
                                     <th className="p-4 text-left text-gray-500 font-medium uppercase tracking-wider text-sm border-b border-white/10 w-1/3">
-                                        {flyAndBuyComparison.headers.feature[isEs ? 'es' : 'en']}
+                                        {flyAndBuyComparison.headers.feature[l]}
                                     </th>
                                     <th className="p-4 text-center text-white font-bold uppercase tracking-wider text-sm border-b border-white/10 w-1/3 bg-white/5">
-                                        {flyAndBuyComparison.headers.basic[isEs ? 'es' : 'en']}
+                                        {flyAndBuyComparison.headers.basic[l]}
                                     </th>
                                     <th className="p-4 text-center text-luxury-gold font-bold uppercase tracking-wider text-sm border-b border-white/10 w-1/3 bg-luxury-gold/10">
-                                        {flyAndBuyComparison.headers.premium[isEs ? 'es' : 'en']}
+                                        {flyAndBuyComparison.headers.premium[l]}
                                     </th>
                                 </tr>
                             </thead>
@@ -219,13 +226,13 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                 {flyAndBuyComparison.rows.map((row, idx) => (
                                     <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                         <td className="p-4 text-gray-300 font-medium">
-                                            {row.feature[isEs ? 'es' : 'en']}
+                                            {row.feature[l]}
                                         </td>
                                         <td className="p-4 text-center text-gray-400">
-                                            {row.basic[isEs ? 'es' : 'en']}
+                                            {row.basic[l]}
                                         </td>
                                         <td className="p-4 text-center text-luxury-gold font-semibold bg-luxury-gold/5">
-                                            {row.premium[isEs ? 'es' : 'en']}
+                                            {row.premium[l]}
                                         </td>
                                     </tr>
                                 ))}
@@ -241,20 +248,24 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
                     <FaPlane className="text-5xl text-luxury-gold mx-auto mb-4 lg:mb-8 animate-pulse" />
                     <h2 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4 lg:mb-8 leading-tight">
-                        &quot;{isEs
-                            ? "Fly & Buy no es un viaje, es una decisión inteligente."
-                            : "Fly & Buy is not just a trip, it's a smart decision."}&quot;
+                        &quot;{isFr
+                            ? "Fly & Buy n'est pas juste un voyage, c'est une décision intelligente."
+                            : isEs
+                                ? "Fly & Buy no es un viaje, es una decisión inteligente."
+                                : "Fly & Buy is not just a trip, it's a smart decision."}&quot;
                     </h2>
                     <p className="text-xl text-gray-300 mb-8 lg:mb-12">
-                        {isEs
-                            ? "Venga, confirme y compre con Punta Cana Investments."
-                            : "Come, confirm, and buy with Punta Cana Investments."}
+                        {isFr
+                            ? "Venez, confirmez et achetez avec Punta Cana Investments."
+                            : isEs
+                                ? "Venga, confirme y compre con Punta Cana Investments."
+                                : "Come, confirm, and buy with Punta Cana Investments."}
                     </p>
                     <Link
                         href={`/${lang}/fly-and-buy/form`}
                         className="inline-block bg-white text-black hover:bg-luxury-gold px-10 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-xl hover:scale-105"
                     >
-                        {isEs ? "Agendar Mi Visita Ahora" : "Schedule My Visit Now"}
+                        {isFr ? "Planifier Ma Visite Maintenant" : isEs ? "Agendar Mi Visita Ahora" : "Schedule My Visit Now"}
                     </Link>
                 </div>
             </section>

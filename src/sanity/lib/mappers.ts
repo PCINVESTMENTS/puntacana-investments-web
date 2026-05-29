@@ -5,27 +5,57 @@ export function mapSanityPost(data: any): BlogPost {
     if (!data) return null as any;
 
     let safeImageUrl = data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "");
+    const slug = data.slug?.current || data.slug || "";
+
+    const exactTitlesFr: Record<string, string> = {
+        "5-razones-invertir-punta-cana-2026": "5 Raisons Irréfutables d'Investir à Punta Cana en 2026",
+        "guia-comprar-planos": "Guide pour Acheter des Propriétés sur Plan",
+        "tendencias-diseno-tropical": "Tendances de Design d'Intérieur Tropical"
+    };
+
+    const exactExcerptsFr: Record<string, string> = {
+        "5-razones-invertir-punta-cana-2026": "Découvrez pourquoi Punta Cana est devenue la destination numéro un pour les investisseurs intelligents. Des incitations fiscales uniques à une rentabilité supérieure à la moyenne mondiale.",
+        "guia-comprar-planos": "Maximisez votre retour sur investissement en profitant des prix de pré-vente grâce à notre guide expert.",
+        "tendencias-diseno-tropical": "Matériaux naturels, espaces ouverts et luxe durable : ce qui se fait dans les villas modernes."
+    };
+
+    const exactCategoriesFr: Record<string, string> = {
+        "5-razones-invertir-punta-cana-2026": "Investissement Stratégique",
+        "guia-comprar-planos": "Conseils",
+        "tendencias-diseno-tropical": "Style de Vie"
+    };
+
+    const titleEn = data.titleEn || data.title || "";
+    const titleEs = data.titleEs || data.title || "";
+    const titleFr = exactTitlesFr[slug] || titleEn;
+
+    const excerptEn = data.excerptEn || "";
+    const excerptEs = data.excerptEs || "";
+    const excerptFr = exactExcerptsFr[slug] || excerptEn;
+
+    const categoryEs = data.category?.es || "General";
+    const categoryEn = data.category?.en || "General";
+    const categoryFr = exactCategoriesFr[slug] || "Général";
 
     return {
-        slug: data.slug?.current || data.slug || "",
-        title: { en: data.title, es: data.title }, // Fallback mainly, or fetch both if defined
+        slug: slug,
+        title: { en: titleEn, es: titleEs, fr: titleFr },
         date: {
             en: new Date(data.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-            es: new Date(data.publishedAt).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
+            es: new Date(data.publishedAt).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }),
+            fr: new Date(data.publishedAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
         },
-        category: data.category || { es: "General", en: "General" },
+        category: { es: categoryEs, en: categoryEn, fr: categoryFr },
         mainImage: safeImageUrl,
-        excerpt: {
-            en: data.excerptEn || "",
-            es: data.excerptEs || ""
-        },
+        excerpt: { en: excerptEn, es: excerptEs, fr: excerptFr },
         author: data.author || "Admin",
-        authorRole: data.authorRole || { es: "Autor", en: "Author" },
-        authorBio: data.authorBio || { es: "", en: "" },
+        authorRole: data.authorRole || { es: "Autor", en: "Author", fr: "Auteur" },
+        authorBio: data.authorBio || { es: "", en: "", fr: "" },
         authorImage: data.authorImage ? urlFor(data.authorImage).url() : "/images/logo-footer-v2.png",
         content: {
             en: data.contentEn || [],
-            es: data.contentEs || []
+            es: data.contentEs || [],
+            fr: data.contentEn || [] // Fallback to English content for French
         },
         relatedProperties: []
     };

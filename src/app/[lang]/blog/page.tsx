@@ -12,7 +12,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 interface BlogListingPageProps {
     params: Promise<{
-        lang: 'es' | 'en';
+        lang: 'es' | 'en' | 'fr';
     }>;
 }
 
@@ -29,6 +29,11 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
     // Merge local posts that are not in Sanity
     const localPosts = blogPosts.filter(localPost => !sanityPosts.some(p => p.slug === localPost.slug));
     const posts = [...sanityPosts, ...localPosts];
+
+    const getVal = (obj: any, key: 'es' | 'en' | 'fr') => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
 
     return (
         <main className="min-h-screen bg-black text-white">
@@ -49,6 +54,8 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                             <p className="text-gray-400 text-lg leading-relaxed">
                                 {lang === 'en'
                                     ? 'Insights, guides, and news about the luxury real estate market in Punta Cana.'
+                                    : lang === 'fr'
+                                    ? 'Analyses, guides et actualités sur le marché immobilier de luxe à Punta Cana.'
                                     : 'Análisis, guías y noticias sobre el mercado inmobiliario de lujo en Punta Cana.'}
                             </p>
                         </div>
@@ -68,25 +75,25 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                     <Link href={`/${lang}/blog/${post.slug}`} className="block aspect-[4/3] overflow-hidden relative">
                                         <Image
                                             src={post.mainImage}
-                                            alt={post.title[lang]}
+                                            alt={getVal(post.title, lang)}
                                             fill
                                             className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                         />
                                         <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                                            {post.category[lang]}
+                                            {getVal(post.category, lang)}
                                         </div>
                                     </Link>
                                     <div className="p-8 flex flex-col flex-grow">
                                         <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
-                                            <FaCalendarAlt /> {post.date[lang]}
+                                            <FaCalendarAlt /> {getVal(post.date, lang)}
                                         </div>
                                         <h3 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
                                             <Link href={`/${lang}/blog/${post.slug}`}>
-                                                {post.title[lang]}
+                                                {getVal(post.title, lang)}
                                             </Link>
                                         </h3>
                                         <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
-                                            {post.excerpt[lang]}
+                                            {getVal(post.excerpt, lang)}
                                         </p>
                                         <div className="mt-auto">
                                             <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">

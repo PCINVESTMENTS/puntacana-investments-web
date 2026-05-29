@@ -22,7 +22,7 @@ const playfair = Playfair_Display({
   display: 'swap',
 });
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
@@ -41,6 +41,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     description: dict.meta.description,
     keywords: lang === 'en' 
       ? ["Punta Cana Real Estate", "Luxury Villas Punta Cana", "Property Investment Dominican Republic", "Cap Cana Properties", "Off-market real estate", "Condos for sale Dominican Republic", "Bavaro Real Estate", "Retire in Punta Cana", "Expat living Dominican Republic", "Tax-free real estate Punta Cana", "Beachfront villas for sale", "Pre-construction condos Punta Cana"] 
+      : lang === 'fr'
+      ? ["Immobilier Punta Cana", "Villas de luxe Punta Cana", "Investissement immobilier République Dominicaine", "Propriétés Cap Cana", "Immobilier hors marché", "Appartements à vendre République Dominicaine", "Immobilier Bavaro", "Retraite à Punta Cana", "Vie expatriée République Dominicaine", "Loi CONFOTUR immobilier Punta Cana", "Villas front de mer à vendre", "Appartements sur plan Punta Cana"]
       : ["Bienes Raíces Punta Cana", "Villas de Lujo Punta Cana", "Inversión Inmobiliaria República Dominicana", "Propiedades Cap Cana", "Bienes Raíces Off-market", "Apartamentos en venta Punta Cana", "Bávaro Inmobiliaria", "Jubilarse en Punta Cana", "Comunidades de expatriados", "Bienes raíces libres de impuestos CONFOTUR", "Villas frente al mar en venta", "Proyectos en planos Punta Cana"],
     metadataBase: new URL(baseUrl),
     robots: {
@@ -66,7 +68,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       title: dict.meta.title,
       description: dict.meta.description,
       type: 'website',
-      locale: lang === 'es' ? 'es_DO' : 'en_US',
+      locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
       siteName: 'Punta Cana Investments',
     },
     twitter: {
@@ -79,7 +81,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 }
 
 export async function generateStaticParams() {
-  return [{ lang: 'es' }, { lang: 'en' }]
+  return [{ lang: 'es' }, { lang: 'en' }, { lang: 'fr' }]
 }
 
 import { CompareProvider } from "@/components/property/CompareContext";

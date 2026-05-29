@@ -52,7 +52,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                                     <div className="relative h-64 overflow-hidden">
                                         <Image
                                             src={program.heroImage}
-                                            alt={program.title[lang as 'es' | 'en']}
+                                            alt={program.title[lang as 'es' | 'en' | 'fr']}
                                             fill
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             quality={60}
@@ -62,21 +62,21 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
 
                                         {/* Duration Badge */}
                                         <div className="absolute bottom-4 left-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest shadow-lg">
-                                            {program.duration[lang as 'es' | 'en']}
+                                            {program.duration[lang as 'es' | 'en' | 'fr']}
                                         </div>
                                     </div>
 
                                     {/* Content Area */}
                                     <div className="p-8 flex flex-col flex-grow">
                                         <h3 className="text-[1.1rem] sm:text-xl md:text-2xl font-serif font-bold text-white mb-2 whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal group-hover:text-luxury-gold transition-colors">
-                                            {program.title[lang as 'es' | 'en']}
+                                            {program.title[lang as 'es' | 'en' | 'fr']}
                                         </h3>
                                         <p className="text-luxury-gold text-sm font-semibold uppercase tracking-wider mb-4">
-                                            {program.subtitle[lang as 'es' | 'en']}
+                                            {program.subtitle[lang as 'es' | 'en' | 'fr']}
                                         </p>
 
                                         <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow border-b border-white/10 pb-6">
-                                            {program.description[lang as 'es' | 'en']}
+                                            {program.description[lang as 'es' | 'en' | 'fr']}
                                         </p>
 
                                         {/* Features Preview */}
@@ -84,7 +84,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                                             {program.includes.slice(0, 3).map((section, idx) => (
                                                 <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
                                                     <FaCheck aria-hidden="true" className="text-luxury-gold mt-1 flex-shrink-0 text-xs" />
-                                                    <span>{section.title[lang as 'es' | 'en']}</span>
+                                                    <span>{section.title[lang as 'es' | 'en' | 'fr']}</span>
                                                 </li>
                                             ))}
                                         </ul>

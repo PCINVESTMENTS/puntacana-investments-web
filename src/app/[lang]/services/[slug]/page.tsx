@@ -21,13 +21,14 @@ const VALID_SLUGS = [
 export async function generateStaticParams() {
     return VALID_SLUGS.flatMap((slug) => [
         { lang: 'es', slug },
-        { lang: 'en', slug }
+        { lang: 'en', slug },
+        { lang: 'fr', slug }
     ]);
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
-    const dict = await getDictionary(lang as "es" | "en");
+    const dict = await getDictionary(lang as "es" | "en" | "fr");
     const service = dict.sections.services.items.find((s: any) => s.slug === slug);
 
     if (!service) {
@@ -83,7 +84,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export default async function ServicePage({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
-    const dict = await getDictionary(lang as "es" | "en");
+    const dict = await getDictionary(lang as "es" | "en" | "fr");
 
     // Find service by slug
     const service = dict.sections.services.items.find((s: any) => s.slug === slug);

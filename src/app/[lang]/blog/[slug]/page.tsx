@@ -19,7 +19,7 @@ import { urlFor } from "@/sanity/lib/image";
 
 interface BlogPostPageProps {
     params: Promise<{
-        lang: 'es' | 'en';
+        lang: 'es' | 'en' | 'fr';
         slug: string;
     }>;
 }
@@ -43,19 +43,24 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     const siteUrl = 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${siteUrl}/${lang}/blog/${post.slug}`;
 
+    const getVal = (obj: any, key: 'es' | 'en' | 'fr') => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
+
     return {
-        title: `${post.title[lang]} | Punta Cana Investments`,
-        description: typeof post.excerpt === 'string' ? post.excerpt : post.excerpt[lang],
+        title: `${getVal(post.title, lang)} | Punta Cana Investments`,
+        description: typeof post.excerpt === 'string' ? post.excerpt : getVal(post.excerpt, lang),
         openGraph: {
-            title: `${post.title[lang]} | Punta Cana Investments`,
-            description: typeof post.excerpt === 'string' ? post.excerpt : post.excerpt[lang],
+            title: `${getVal(post.title, lang)} | Punta Cana Investments`,
+            description: typeof post.excerpt === 'string' ? post.excerpt : getVal(post.excerpt, lang),
             url: canonicalUrl,
             images: [
                 {
                     url: post.mainImage,
                     width: 1200,
                     height: 630,
-                    alt: post.title[lang],
+                    alt: getVal(post.title, lang),
                 }
             ],
             type: 'article',
@@ -63,6 +68,8 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
         keywords: post.slug === 'guia-invertir-seguro-punta-cana-evitar-estafas' 
             ? (lang === 'es' 
                 ? ['invertir en Punta Cana 2026', 'bienes raíces Punta Cana', 'evitar estafas inmobiliarias República Dominicana', 'cómo invertir seguro en Punta Cana', 'Ley de CONFOTUR beneficios', 'fideicomiso inmobiliario República Dominicana', 'diseño de lujo sostenible Punta Cana', 'minimalismo orgánico propiedades Caribe']
+                : lang === 'fr'
+                ? ['investir à Punta Cana 2026', 'immobilier de luxe Punta Cana', 'éviter les arnaques immobilières République Dominicaine', 'comment investir en toute sécurité à Punta Cana', 'avantages de la loi CONFOTUR pour les investisseurs étrangers', 'fiducie immobilière République Dominicaine', 'design de luxe durable Punta Cana', 'minimalisme organique propriétés Caraïbes']
                 : ['invest in Punta Cana 2026', 'Punta Cana real estate for sale', 'avoid real estate scams Dominican Republic', 'how to invest safely in Punta Cana', 'CONFOTUR Law benefits foreign investors', 'Dominican Republic real estate trust fund', 'sustainable luxury design Punta Cana', 'organic minimalism Caribbean properties'])
             : [],
         alternates: {
@@ -70,6 +77,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
             languages: {
                 'es': `${siteUrl}/es/blog/${post.slug}`,
                 'en': `${siteUrl}/en/blog/${post.slug}`,
+                'fr': `${siteUrl}/fr/blog/${post.slug}`,
             },
         },
     };
@@ -99,6 +107,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical', 'guia-invertir-seguro-punta-cana-evitar-estafas'];
     const shouldForceLocal = FORCE_LOCAL_SLUGS.includes(slug);
 
+    const getVal = (obj: any, key: 'es' | 'en' | 'fr') => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
+
     if (rawPost && !shouldForceLocal) {
         post = mapSanityPost(rawPost);
     } else {
@@ -106,25 +119,28 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         const localPost = blogPosts.find(p => p.slug === slug);
         if (localPost) {
             // Transform local content to simulate PortableText structure
-            const transformContent = (lang: 'es' | 'en') => {
+            const transformContent = (l: 'es' | 'en' | 'fr') => {
+                const targetLang = (l === 'fr' && !localPost.content[l]) ? 'en' : l;
                 if (Array.isArray(localPost.content)) {
                     return localPost.content.flatMap((section: any) => {
                         const blocks = [];
 
                         // Add text block
-                        if (section.text?.[lang] || section.text) {
+                        const textVal = section.text?.[targetLang] || (typeof section.text === 'string' ? section.text : '');
+                        if (textVal) {
                             blocks.push({
                                 _type: 'markdownText',
-                                text: section.text[lang] || section.text
+                                text: textVal
                             });
                         }
 
                         // Add subtitle as h2 if exists
-                        if (section.subtitle?.[lang]) {
+                        const subtitleVal = section.subtitle?.[targetLang];
+                        if (subtitleVal) {
                             blocks.unshift({
                                 _type: 'block',
                                 style: 'h2',
-                                children: [{ _type: 'span', text: section.subtitle[lang] }]
+                                children: [{ _type: 'span', text: subtitleVal }]
                             });
                         }
 
@@ -133,21 +149,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             blocks.push({
                                 _type: 'legacyImage',
                                 url: section.image,
-                                caption: section.imageCaption?.[lang]
+                                caption: section.imageCaption?.[targetLang]
                             });
                         }
 
                         return blocks;
                     });
                 }
-                return (localPost.content as any)[lang];
+                const contentObj = localPost.content as any;
+                return contentObj[targetLang] || contentObj['en'] || contentObj['es'] || [];
             };
 
             post = {
                 ...localPost,
                 content: {
                     es: transformContent('es'),
-                    en: transformContent('en')
+                    en: transformContent('en'),
+                    fr: transformContent('fr')
                 }
             };
         }
@@ -202,7 +220,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <div className="relative aspect-video w-full overflow-hidden rounded-sm shadow-2xl border border-white/10 group">
                             <Image
                                 src={value.url}
-                                alt={value.caption || post.title[lang]}
+                                alt={value.caption || getVal(post.title, lang)}
                                 fill
                                 sizes="(max-width: 768px) 100vw, 800px"
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
@@ -231,7 +249,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     };
 
     // Cast content to any to avoid strict type issues with mapped interface
-    const content = (post.content as any)[lang];
+    const content = (post.content as any)[lang] || (post.content as any)['en'] || (post.content as any)['es'] || [];
 
     return (
         <main className="min-h-screen bg-black text-white selection:bg-luxury-gold selection:text-black">
@@ -241,7 +259,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="relative h-[60vh] w-full mt-20">
                 <Image
                     src={post.mainImage}
-                    alt={post.title[lang]}
+                    alt={getVal(post.title, lang)}
                     fill
                     sizes="100vw"
                     className="object-cover"
@@ -254,13 +272,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <ScrollReveal>
                             <div className="inline-flex items-center gap-2 bg-luxury-gold/90 text-black px-4 py-1.5 rounded-sm text-xs font-bold uppercase tracking-widest mb-6">
                                 <FaTag size={10} />
-                                {post.category[lang]}
+                                {getVal(post.category, lang)}
                             </div>
                         </ScrollReveal>
 
                         <ScrollReveal delay={0.2} direction="up">
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight">
-                                {post.title[lang]}
+                                {getVal(post.title, lang)}
                             </h1>
                         </ScrollReveal>
 
@@ -268,7 +286,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <div className="flex flex-wrap items-center justify-center gap-6 text-gray-300 text-sm font-medium tracking-wide">
                                 <span className="flex items-center gap-2">
                                     <FaCalendarAlt className="text-luxury-gold" />
-                                    {post.date[lang]}
+                                    {getVal(post.date, lang)}
                                 </span>
                                 <span className="flex items-center gap-2">
                                     <FaUser className="text-luxury-gold" />
@@ -297,7 +315,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <article className="lg:col-span-8">
                         {/* Excerpt */}
                         <div className="text-xl md:text-2xl text-white font-serif italic mb-12 leading-relaxed opacity-90 border-l-4 border-luxury-gold pl-6">
-                            "{post.excerpt[lang]}"
+                            "{getVal(post.excerpt, lang)}"
                         </div>
 
                         <div className="blog-content">
@@ -310,7 +328,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                 {dict.blog.share}
                             </h3>
                             <ShareButtons
-                                title={post.title[lang]}
+                                title={getVal(post.title, lang)}
                                 url={`https://www.puntacanainvestmentsrd.com/${lang}/blog/${post.slug}`}
                             />
                         </div>
@@ -391,9 +409,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                     </div>
                                 </div>
                                 <h4 className="text-white font-serif font-bold text-xl mb-1">{post.author}</h4>
-                                <p className="text-luxury-gold text-xs font-bold uppercase tracking-widest mb-6">{post.authorRole[lang]}</p>
+                                <p className="text-luxury-gold text-xs font-bold uppercase tracking-widest mb-6">{getVal(post.authorRole, lang)}</p>
                                 <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                    {post.authorBio[lang]}
+                                    {getVal(post.authorBio, lang)}
                                 </p>
                                 <Link
                                     href={`/${lang}#contact`}
