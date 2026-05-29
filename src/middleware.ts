@@ -3,7 +3,7 @@ import type { NextRequest, NextFetchEvent } from "next/server";
 import Negotiator from 'negotiator';
 import { match } from '@formatjs/intl-localematcher';
 
-const locales = ['en', 'es'];
+const locales = ['en', 'es', 'fr'];
 const defaultLocale = 'en';
 
 // Safely parse API_URL to prevent double-slash errors (e.g. https://...//api/)

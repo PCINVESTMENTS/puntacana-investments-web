@@ -22,6 +22,11 @@ export const property = defineType({
             type: 'string',
         }),
         defineField({
+            name: 'titleFr',
+            title: 'Title (French)',
+            type: 'string',
+        }),
+        defineField({
             name: 'id',
             title: 'Legacy ID (Optional)',
             type: 'number',
@@ -136,6 +141,12 @@ export const property = defineType({
             of: [{ type: 'string' }]
         }),
         defineField({
+            name: 'featuresFr',
+            title: 'Features (French)',
+            type: 'array',
+            of: [{ type: 'string' }]
+        }),
+        defineField({
             name: 'descriptionEn',
             title: 'Description (English)',
             type: 'text',
@@ -144,6 +155,12 @@ export const property = defineType({
         defineField({
             name: 'descriptionEs',
             title: 'Description (Spanish)',
+            type: 'text',
+            rows: 4
+        }),
+        defineField({
+            name: 'descriptionFr',
+            title: 'Description (French)',
             type: 'text',
             rows: 4
         }),
@@ -176,8 +193,10 @@ export const property = defineType({
                     defineField({ name: 'date', title: 'Date', type: 'string' }),
                     defineField({ name: 'titleEn', title: 'Title (EN)', type: 'string' }),
                     defineField({ name: 'titleEs', title: 'Title (ES)', type: 'string' }),
+                    defineField({ name: 'titleFr', title: 'Title (FR)', type: 'string' }),
                     defineField({ name: 'descriptionEn', title: 'Description (EN)', type: 'string' }),
                     defineField({ name: 'descriptionEs', title: 'Description (ES)', type: 'string' }),
+                    defineField({ name: 'descriptionFr', title: 'Description (FR)', type: 'string' }),
                     defineField({ name: 'status', title: 'Status', type: 'string', options: { list: ['completed', 'in-progress', 'pending'] } }),
                 ]
             }]

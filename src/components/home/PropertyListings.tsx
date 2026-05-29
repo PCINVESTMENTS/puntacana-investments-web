@@ -81,19 +81,32 @@ const translatePropertyTitle = (title: string, lang: string) => {
     }
 
     let translatedTitle = title;
-    translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
-    translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
-    translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Commercial Properties | ');
-    translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Buildings | ');
-    translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projects | ');
+    
+    if (lang === 'fr') {
+        translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Appartements | ');
+        translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Terrains | ');
+        translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Locaux Commerciaux | ');
+        translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Bâtiments | ');
+        translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projets | ');
+        return translatedTitle;
+    }
+
+    if (lang === 'en') {
+        translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
+        translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
+        translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Commercial Properties | ');
+        translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Buildings | ');
+        translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projects | ');
+    }
     // Villas, Penthouses, Condos are mostly the same in English
     return translatedTitle;
 };
 
-const getLocalizedTitle = (prop: Property, lang: string) => {
-    if (lang === 'en' && prop.titleEn) return prop.titleEn;
-    if (lang === 'es' && prop.titleEs) return prop.titleEs;
-    return translatePropertyTitle(prop.title, lang);
+const getLocalizedTitle = (property: Property, lang: string) => {
+    if (lang === 'en' && property.titleEn) return property.titleEn;
+    if (lang === 'es' && property.titleEs) return property.titleEs;
+    if (lang === 'fr' && property.titleFr) return property.titleFr;
+    return translatePropertyTitle(property.title, lang);
 };
 
 function CompareToggle({ property, lang }: { property: Property, lang: string }) {

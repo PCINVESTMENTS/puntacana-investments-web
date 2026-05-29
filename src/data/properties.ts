@@ -4,6 +4,7 @@ export interface Property {
     title: string;
     titleEn?: string;
     titleEs?: string;
+    titleFr?: string;
     location: string;
     locationLabel: string;
     type: string;
@@ -20,6 +21,7 @@ export interface Property {
     features: {
         en: string[];
         es: string[];
+        fr?: string[];
     };
     specs?: {
         en: string[];
@@ -32,6 +34,7 @@ export interface Property {
     description: {
         en: string;
         es: string;
+        fr?: string;
     };
     gallery?: string[];
     rawGallery?: any[];

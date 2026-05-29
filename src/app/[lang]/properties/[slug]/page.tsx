@@ -44,6 +44,15 @@ function translatePropertyTitle(title: string, lang: string) {
     }
 
     let translatedTitle = title;
+    if (lang === 'fr') {
+        translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Appartements | ');
+        translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Terrains | ');
+        translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Locaux Commerciaux | ');
+        translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Bâtiments | ');
+        translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projets | ');
+        return translatedTitle;
+    }
+    
     translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
     translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
     translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Commercial Properties | ');
@@ -55,6 +64,7 @@ function translatePropertyTitle(title: string, lang: string) {
 function getLocalizedTitle(property: Property, lang: string) {
     if (lang === 'en' && property.titleEn) return property.titleEn;
     if (lang === 'es' && property.titleEs) return property.titleEs;
+    if (lang === 'fr' && property.titleFr) return property.titleFr;
     return translatePropertyTitle(property.title, lang);
 }
 
@@ -118,11 +128,13 @@ function mapSanityProperty(data: any): Property {
         seo: {
             title: {
                 en: data.seo?.title?.en || data.title,
-                es: data.seo?.title?.es || data.title
+                es: data.seo?.title?.es || data.title,
+                fr: data.seo?.title?.fr || data.title
             },
             description: {
                 en: data.seo?.description?.en || data.descriptionEn || "",
-                es: data.seo?.description?.es || data.descriptionEs || ""
+                es: data.seo?.description?.es || data.descriptionEs || "",
+                fr: data.seo?.description?.fr || data.descriptionFr || ""
             },
             keywords: {
                 en: data.seo?.keywords?.en?.some((k: string) => k.includes('Error')) ? [
@@ -130,7 +142,8 @@ function mapSanityProperty(data: any): Property {
                 ] : (data.seo?.keywords?.en || []),
                 es: data.seo?.keywords?.es?.some((k: string) => k.includes('Error')) ? [
                     "Inversión inmobiliaria en Punta Cana", "Apartamentos rentables en Punta Cana", "Alta rentabilidad ROI Punta Cana", "Apartamentos para Airbnb en Punta Cana", "Comprar apartamento para alquilar Punta Cana", "Bienes raíces de lujo República Dominicana", "Invertir en Epic Residences Punta Cana", "Apartamento de 1 habitación en Punta Cana", "Apartamentos en venta Downtown Punta Cana", "Proyecto Epic Residences Punta Cana", "Apartamentos económicos Punta Cana", "Apartamentos en planos Punta Cana City Place", "Inmuebles cerca de la playa Punta Cana", "Apartamentos en Punta Cana City Place", "Bienes raíces Downtown Punta Cana", "Comprar propiedad en Punta Cana", "Apartamentos nuevos Punta Cana", "Real Estate Punta Cana", "Mejores apartamentos para comprar en Punta Cana"
-                ] : (data.seo?.keywords?.es || [])
+                ] : (data.seo?.keywords?.es || []),
+                fr: data.seo?.keywords?.fr || []
             }
         }
     };
@@ -158,10 +171,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     const seo = property.seo;
     const translatedTitleText = getLocalizedTitle(property, lang);
-    const title = seo?.title ? seo.title[lang as 'en' | 'es'] : `${translatedTitleText} | Punta Cana Investments`;
-    const description = seo?.description ? seo.description[lang as 'en' | 'es'] : property.description[lang as 'en' | 'es'].substring(0, 160);
+    const title = seo?.title ? seo.title[lang as 'en' | 'es' | 'fr'] : `${translatedTitleText} | Punta Cana Investments`;
+    const description = seo?.description ? seo.description[lang as 'en' | 'es' | 'fr'] : property.description[lang as 'en' | 'es' | 'fr']?.substring(0, 160);
     
-    let keywordList = seo?.keywords ? seo.keywords[lang as 'en' | 'es'] : [];
+    let keywordList = seo?.keywords ? seo.keywords[lang as 'en' | 'es' | 'fr'] : [];
     if (!keywordList || keywordList.length === 0) {
         const loc = property.locationLabel || 'Punta Cana';
         
@@ -259,8 +272,8 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     return {
         '@context': 'https://schema.org',
         '@type': ['Product', 'RealEstateListing'],
-        name: property.title,
-        description: property.description?.[lang as 'en' | 'es']?.substring(0, 160) || '',
+        name: getLocalizedTitle(property, lang),
+        description: property.description?.[lang as 'en' | 'es' | 'fr']?.substring(0, 160) || '',
         image: property.image ? [property.image, ...(property.gallery || [])] : [],
         url: `${baseUrl}/${lang}/properties/${property.slug}`,
         datePosted: new Date().toISOString(), // Ideal if we had createdAt
@@ -284,7 +297,7 @@ export const revalidate = 60;
 
 export default async function PropertyPage({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
-    const dict = await getDictionary(lang as "es" | "en");
+    const dict = await getDictionary(lang as "es" | "en" | "fr");
 
     // Check local data first
     const localProperty = properties.find(p => p.slug === slug);
@@ -405,7 +418,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                         a: ({ node, ...props }) => <a className="text-luxury-gold hover:underline transition-all" {...props} />,
                                     }}
                                 >
-                                    {property.description[lang as 'en' | 'es']}
+                                    {property.description[lang as 'en' | 'es' | 'fr'] || property.description['en']}
                                 </ReactMarkdown>
                             </div>
                         </div>
@@ -416,10 +429,10 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 {property.detailedSections.map((section, idx) => (
                                     <div key={idx} className="bg-white/5 p-8 rounded border border-luxury-gold/20">
                                         <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-4 uppercase tracking-wider">
-                                            {section.title[lang as 'en' | 'es']}
+                                            {section.title[lang as 'en' | 'es' | 'fr'] || section.title['en']}
                                         </h2>
                                         <p className="text-gray-300 leading-relaxed text-lg">
-                                            {section.content[lang as 'en' | 'es']}
+                                            {section.content[lang as 'en' | 'es' | 'fr'] || section.content['en']}
                                         </p>
                                     </div>
                                 ))}
@@ -491,7 +504,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 {lang === 'en' ? 'Amenities' : 'Amenidades'}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {property.features[lang as 'en' | 'es'].map((feat, idx) => (
+                                {(property.features[lang as 'en' | 'es' | 'fr'] || []).map((feat, idx) => (
                                     <div key={idx} className="flex items-center gap-3 bg-white/5 p-4 rounded hover:bg-white/10 transition-colors">
                                         <div className="bg-luxury-gold/20 p-2 rounded-full">
                                             <FaCheck aria-hidden="true" className="text-luxury-gold" />
