@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import ServicesSection from "@/components/home/ServicesSection";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
@@ -24,14 +24,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
                     alt: dict.sections.services.title,
                 }
             ],
-            locale: lang === 'es' ? 'es_DO' : 'en_US',
+            locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
             siteName: 'Punta Cana Investments',
             type: 'website',
         },
     };
 }
 
-export default async function ServicesPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function ServicesPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
 

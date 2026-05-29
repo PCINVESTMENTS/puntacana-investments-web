@@ -5,10 +5,11 @@ import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChartLine, FaHandHoldingUsd, FaFileContract, FaArrowRight, FaCity, FaUmbrellaBeach, FaPlane, FaCheck } from "react-icons/fa";
+import { investmentModels } from "@/data/investment-models";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
-    const dict = await getDictionary(lang as "es" | "en");
+    const dict = await getDictionary(lang as "es" | "en" | "fr");
 
     return {
         title: `${dict.nav.investments} | Punta Cana Investments`,
@@ -40,21 +41,25 @@ export const revalidate = 60;
 
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
-    const dict = await getDictionary(lang as "es" | "en");
+    const dict = await getDictionary(lang as "es" | "en" | "fr");
 
     const benefits = [
         {
             icon: <FaChartLine className="text-4xl text-luxury-gold" />,
-            title: lang === 'en' ? "High Appreciation" : "Alta Plusvalía",
+            title: lang === 'en' ? "High Appreciation" : lang === 'fr' ? "Forte Plus-value" : "Alta Plusvalía",
             text: lang === 'en'
                 ? "Punta Cana property values have consistently risen by 5-8% annually over the last decade."
+                : lang === 'fr'
+                ? "La valeur des propriétés à Punta Cana a augmenté régulièrement de 5 à 8 % par an au cours de la dernière décennie."
                 : "El valor de las propiedades en Punta Cana ha aumentado constantemente un 5-8% anual en la última década."
         },
         {
             icon: <FaHandHoldingUsd className="text-4xl text-luxury-gold" />,
-            title: lang === 'en' ? "Dollarized Income" : "Ingresos en Dólares",
+            title: lang === 'en' ? "Dollarized Income" : lang === 'fr' ? "Revenus Dollarisés" : "Ingresos en Dólares",
             text: lang === 'en'
                 ? "Generate stable income in USD through vacation rentals with high occupancy rates year-round."
+                : lang === 'fr'
+                ? "Générez des revenus stables en USD grâce aux locations saisonnières avec un taux d'occupation élevé toute l'année."
                 : "Genere ingresos estables en USD a través de alquileres vacacionales con alta ocupación todo el año."
         },
         {
@@ -62,13 +67,17 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
             title: "CONFOTUR",
             text: lang === 'en'
                 ? "Tax exemptions for 15 years on property tax (1% annual) and transfer tax (3%)."
+                : lang === 'fr'
+                ? "Exonérations fiscales pendant 15 ans sur la taxe foncière (1 % annuel) et les droits de mutation (3 %)."
                 : "Exenciones fiscales por 15 años sobre el IPI (1% anual) y el impuesto de transferencia (3%)."
         },
         {
             icon: <FaPlane className="text-4xl text-luxury-gold" />,
-            title: lang === 'en' ? "Connectivity" : "Conectividad",
+            title: lang === 'en' ? "Connectivity" : lang === 'fr' ? "Connectivité" : "Conectividad",
             text: lang === 'en'
                 ? "The busiest airport in the Caribbean (PUJ) with direct flights from over 26 countries."
+                : lang === 'fr'
+                ? "L'aéroport le plus fréquenté des Caraïbes (PUJ) avec des vols directs depuis plus de 26 pays."
                 : "El aeropuerto más transitado del Caribe (PUJ) con vuelos directos desde más de 26 países."
         }
     ];
@@ -120,11 +129,13 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-serif font-bold text-white mb-3">
-                                        {lang === 'en' ? "Transparency & Security" : "Transparencia y Seguridad"}
+                                        {lang === 'en' ? "Transparency & Security" : lang === 'fr' ? "Transparence & Sécurité" : "Transparencia y Seguridad"}
                                     </h3>
                                     <p className="text-gray-400 leading-relaxed">
                                         {lang === 'en'
                                             ? "We ensure clear processes, well-structured contracts, and complete legal accompaniment. We guarantee that every transaction complies with Dominican Republic legal standards, protecting our investors' interests."
+                                            : lang === 'fr'
+                                            ? "Nous assurons des processus clairs, des contrats bien structurés et un accompagnement juridique complet. Nous garantissons que chaque transaction est conforme aux normes légales de la République Dominicaine, protégeant ainsi les intérêts de nos investisseurs."
                                             : "Velamos por procesos claros, contratos bien estructurados y un acompañamiento legal completo. Garantizamos que cada transacción cumpla con los estándares legales de la República Dominicana, protegiendo los intereses de nuestros inversionistas."}
                                     </p>
                                 </div>
@@ -137,11 +148,13 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-serif font-bold text-white mb-3">
-                                        {lang === 'en' ? "Innovation & Profitability" : "Innovación y Rentabilidad"}
+                                        {lang === 'en' ? "Innovation & Profitability" : lang === 'fr' ? "Innovation & Rentabilité" : "Innovación y Rentabilidad"}
                                     </h3>
                                     <p className="text-gray-400 leading-relaxed">
                                         {lang === 'en'
                                             ? "We integrate modern tools, data analysis, and advanced financial models to offer strategic investments with superior returns. We create innovative proposals that allow our investors to diversify and maximize their returns."
+                                            : lang === 'fr'
+                                            ? "Nous intégrons des outils modernes, des analyses de données et des modèles financiers avancés pour proposer des investissements stratégiques aux rendements supérieurs. Nous créons des propositions innovantes qui permettent à nos investisseurs de se diversifier et de maximiser leurs gains."
                                             : "Integramos herramientas modernas, análisis de datos y modelos financieros avanzados para ofrecer inversiones estratégicas con rendimientos superiores. Creamos propuestas innovadoras que permiten a nuestros inversionistas diversificar y maximizar sus retornos."}
                                     </p>
                                 </div>
@@ -160,7 +173,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                             <div className="absolute bottom-8 left-8 z-20 bg-black/80 p-6 border-l-4 border-luxury-gold backdrop-blur-sm max-w-xs">
                                 <div className="text-3xl font-bold text-white mb-1">+12%</div>
                                 <div className="text-xs uppercase tracking-widest text-gray-300">
-                                    {lang === 'en' ? "Avg. Annual Return" : "Retorno Anual Prom."}
+                                    {lang === 'en' ? "Avg. Annual Return" : lang === 'fr' ? "Rendement Annuel Moyen" : "Retorno Anual Prom."}
                                 </div>
                             </div>
                         </div>
@@ -174,89 +187,53 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-20">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm">
-                            {lang === 'en' ? "Our Focus" : "Nuestro Enfoque"}
+                            {lang === 'en' ? "Our Focus" : lang === 'fr' ? "Notre Approche" : "Nuestro Enfoque"}
                         </span>
                         <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mt-3 mb-6">
-                            {lang === 'en' ? "Investment Models" : "Modelos de Inversión"}
+                            {lang === 'en' ? "Investment Models" : lang === 'fr' ? "Modèles d'Investissement" : "Modelos de Inversión"}
                         </h2>
                         <p className="max-w-3xl mx-auto text-gray-400 text-lg">
                             {lang === 'en'
                                 ? "We focus on attracting capital towards real and carefully evaluated opportunities."
+                                : lang === 'fr'
+                                ? "Nous nous efforçons d'orienter les capitaux vers des opportunités réelles et rigoureusement évaluées."
                                 : "Nos enfocamos en atraer capital hacia oportunidades reales y cuidadosamente evaluadas."}
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: <FaCity />,
-                                title: lang === 'en' ? "Pre-construction Projects" : "Proyectos en Pre-construcción",
-                                desc: lang === 'en' ? "High appreciation potential entering at early stages." : "Alta plusvalía entrando en etapas iniciales."
-                            },
-                            {
-                                icon: <FaUmbrellaBeach />,
-                                title: lang === 'en' ? "Premium Vacation Villas" : "Villas Premium Vacacionales",
-                                desc: lang === 'en' ? "High-end properties for short-term rental income." : "Propiedades de alto nivel para renta vacacional."
-                            },
-                            {
-                                icon: <FaHandHoldingUsd />,
-                                title: "Rent Pool / Condo-Hotel",
-                                desc: lang === 'en' ? "Hassle-free management models optimized for occupancy." : "Modelos de gestión sin complicaciones optimizados para ocupación."
-                            },
-                            {
-                                icon: <FaChartLine />,
-                                title: lang === 'en' ? "Development Participation" : "Participación en Desarrollos",
-                                desc: lang === 'en' ? "Equity sharing with corporate backing." : "Equity sharing con acciones y respaldo corporativo."
-                            },
-                            {
-                                icon: <FaFileContract />,
-                                title: lang === 'en' ? "Passive Investments" : "Inversiones Pasivas",
-                                desc: lang === 'en' ? "Fixed guaranteed returns." : "Retorno garantizado sin gestión activa."
-                            },
-                            {
-                                icon: <FaArrowRight />,
-                                title: lang === 'en' ? "Strategic Buy & Resale" : "Compra y Reventa Estratégica",
-                                desc: lang === 'en' ? "Capitalizing on high-growth zones." : "En zonas de crecimiento acelerado."
-                            },
-                            {
-                                icon: <FaCheck />,
-                                title: lang === 'en' ? "Off-Market Opportunities" : "Oportunidades Off-Market",
-                                desc: lang === 'en' ? "Exclusive properties not listed publicly." : "Propiedades exclusivas no listadas públicamente."
-                            }
-                        ].map((model, idx) => {
-                            // Map titles to slugs properly matching the data file
-                            const slugMap: Record<string, string> = {
-                                "Proyectos en Pre-construcción": "pre-construction",
-                                "Pre-construction Projects": "pre-construction",
-                                "Villas Premium Vacacionales": "vacation-villas",
-                                "Premium Vacation Villas": "vacation-villas",
-                                "Rent Pool / Condo-Hotel": "rent-pool",
-                                "Participación en Desarrollos": "development-participation",
-                                "Development Participation": "development-participation",
-                                "Inversiones Pasivas": "passive-investments",
-                                "Passive Investments": "passive-investments",
-                                "Compra y Reventa Estratégica": "strategic-buy-resale",
-                                "Strategic Buy & Resale": "strategic-buy-resale",
-                                "Oportunidades Off-Market": "off-market",
-                                "Off-Market Opportunities": "off-market"
+                        {investmentModels.map((model, idx) => {
+                            const getVal = (obj: any, key: string) => {
+                                if (!obj) return "";
+                                return obj[key] || obj['en'] || obj['es'] || "";
                             };
 
-                            const slug = slugMap[model.title] || "#";
+                            const iconMap: Record<string, React.ReactNode> = {
+                                "pre-construction": <FaCity />,
+                                "vacation-villas": <FaUmbrellaBeach />,
+                                "rent-pool": <FaHandHoldingUsd />,
+                                "development-participation": <FaChartLine />,
+                                "passive-investments": <FaFileContract />,
+                                "strategic-buy-resale": <FaArrowRight />,
+                                "off-market": <FaCheck />
+                            };
+
+                            const icon = iconMap[model.slug] || <FaCheck />;
 
                             return (
                                 <Link
-                                    href={`/${lang}/investments/${slug}`}
+                                    href={`/${lang}/investments/${model.slug}`}
                                     key={idx}
                                     className="bg-white/5 p-8 rounded-xl border border-white/5 hover:border-luxury-gold/50 transition-all group hover:-translate-y-2 block"
                                 >
                                     <div className="text-4xl text-luxury-gold mb-6 group-hover:scale-110 transition-transform">
-                                        {model.icon}
+                                        {icon}
                                     </div>
                                     <h3 className="text-xl font-bold text-white mb-3 font-serif flex justify-between items-center">
-                                        {model.title}
+                                        {getVal(model.title, lang)}
                                         <FaArrowRight className="opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all text-sm" />
                                     </h3>
-                                    <p className="text-gray-400 text-sm">{model.desc}</p>
+                                    <p className="text-gray-400 text-sm">{getVal(model.description, lang)}</p>
                                 </Link>
                             );
                         })}
@@ -309,7 +286,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                 </div>
             </section>
 
-            <Footer dict={dict} lang={lang as 'es' | 'en'} />
+            <Footer dict={dict} lang={lang} />
         </main>
     );
 }

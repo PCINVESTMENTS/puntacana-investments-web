@@ -73,13 +73,15 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
                 <p className="text-sm text-gray-400 mt-4 italic">
                     {lang === 'es' 
                         ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                        : lang === 'fr'
+                        ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
                         : 'Please also check your junk or spam folder.'}
                 </p>
                 <button
                     onClick={() => window.location.reload()}
                     className="mt-6 px-6 py-2 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-colors rounded-full"
                 >
-                    Send another message
+                    {lang === 'es' ? 'Enviar otro mensaje' : lang === 'fr' ? 'Envoyer un autre message' : 'Send another message'}
                 </button>
             </motion.div>
         );

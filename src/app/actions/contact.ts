@@ -31,6 +31,15 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             messageLabel: "Mensaje",
             footer: "Enviado desde Web Punta Cana Investments",
             error: "Por favor complete todos los campos requeridos."
+        },
+        fr: {
+            title: "Nouvelle Soumission du Formulaire de Contact",
+            name: "Nom",
+            email: "E-mail",
+            phone: "Téléphone",
+            messageLabel: "Message",
+            footer: "Envoyé depuis le site Web de Punta Cana Investments",
+            error: "Veuillez remplir tous les champs obligatoires."
         }
     };
 
@@ -113,11 +122,49 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
         // 3. Send Auto-Responder to the CLIENT
         try {
-            const firstName = name.split(' ')[0] || 'Cliente';
+            const firstName = name.split(' ')[0] || (lang === 'en' ? 'Client' : lang === 'fr' ? 'Client' : 'Cliente');
+            
+            // Localization variables
+            let subject = 'Hemos recibido tu solicitud - Punta Cana Investments';
+            let title = 'Confirmación de Contacto';
+            let greeting = `Hola <strong>${firstName}</strong>,`;
+            let body = 'Un asesor de nuestro equipo está revisando tu solicitud y se comunicará contigo a la mayor brevedad posible para brindarte la atención premium que mereces.';
+            let speedUpTitle = '¿Deseas agilizar el proceso?';
+            let speedUpText = 'Puedes agendar una videollamada personalizada con nuestros expertos inmediatamente:';
+            let buttonText = 'Agendar Videollamada';
+            let slogan = 'Construyendo tu patrimonio en el paraíso';
+            
             // Custom message depending on if it's a property inquiry or general
+            let cleanSubject = subjectInput ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '') : "";
             let contextualMessage = `Hemos recibido tu mensaje exitosamente.`;
-            if (subjectInput) {
-                 contextualMessage = `Hemos recibido tu solicitud de información relacionada con: <strong>${subjectInput.replace(/^(Inquiry about|Consulta sobre):\s*/, '')}</strong>.`;
+            if (cleanSubject) {
+                 contextualMessage = `Hemos recibido tu solicitud de información relacionada con: <strong>${cleanSubject}</strong>.`;
+            }
+
+            if (lang === 'en') {
+                subject = 'We have received your request - Punta Cana Investments';
+                title = 'Contact Confirmation';
+                greeting = `Hello <strong>${firstName}</strong>,`;
+                body = 'An advisor from our team is reviewing your request and will contact you as soon as possible to provide the premium attention you deserve.';
+                speedUpTitle = 'Want to speed up the process?';
+                speedUpText = 'You can schedule a personalized video call with our experts immediately:';
+                buttonText = 'Schedule Video Call';
+                slogan = 'Building your wealth in paradise';
+                contextualMessage = cleanSubject 
+                    ? `We have successfully received your information request regarding: <strong>${cleanSubject}</strong>.`
+                    : `We have successfully received your message.`;
+            } else if (lang === 'fr') {
+                subject = 'Nous avons reçu votre demande - Punta Cana Investments';
+                title = 'Confirmation de Contact';
+                greeting = `Bonjour <strong>${firstName}</strong>,`;
+                body = 'Un conseiller de notre équipe examine votre demande et vous contactera dans les plus brefs délais pour vous offrir le service premium que vous méritez.';
+                speedUpTitle = 'Vous souhaitez accélérer le processus ?';
+                speedUpText = 'Vous pouvez planifier un appel vidéo personnalisé avec nos experts dès maintenant :';
+                buttonText = "Planifier l'Appel Vidéo";
+                slogan = 'Construire votre patrimoine au paradis';
+                contextualMessage = cleanSubject 
+                    ? `Nous avons bien reçu votre demande d'informations concernant : <strong>${cleanSubject}</strong>.`
+                    : `Nous avons bien reçu votre message.`;
             }
 
             const htmlTemplate = `
@@ -127,28 +174,28 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                         <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
                     </div>
                     <div style="padding: 40px 30px; background-color: #0a0a0a;">
-                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Confirmación de Contacto</h2>
+                        <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">${title}</h2>
                         <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
-                            Hola <strong>${firstName}</strong>,
+                            ${greeting}
                         </p>
                         <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
                             ${contextualMessage}
                         </p>
                         <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
-                            Un asesor de nuestro equipo está revisando tu solicitud y se comunicará contigo a la mayor brevedad posible para brindarte la atención premium que mereces.
+                            ${body}
                         </p>
                         
                         <div style="background-color: #1a1a1a; padding: 25px; border-left: 4px solid #c9ae5d; margin: 30px 0; border-radius: 4px;">
-                            <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 15px;"><strong>¿Deseas agilizar el proceso?</strong><br>
-                            Puedes agendar una videollamada personalizada con nuestros expertos inmediatamente:</p>
+                            <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 15px;"><strong>${speedUpTitle}</strong><br>
+                            ${speedUpText}</p>
                             <p style="margin: 0;">
-                                <a href="https://calendly.com/" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Agendar Videollamada</a>
+                                <a href="https://calendly.com/" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">${buttonText}</a>
                             </p>
                         </div>
                     </div>
                     <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
                         <p style="margin: 0; font-size: 14px; color: #c9ae5d; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Punta Cana Investments</p>
-                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">Construyendo tu patrimonio en el paraíso</p>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">${slogan}</p>
                     </div>
                 </body>
             </html>
@@ -157,7 +204,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             const clientEmailRes = await resend.emails.send({
                 from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: [email],
-                subject: 'Hemos recibido tu solicitud - Punta Cana Investments',
+                subject: subject,
                 html: htmlTemplate
             });
 

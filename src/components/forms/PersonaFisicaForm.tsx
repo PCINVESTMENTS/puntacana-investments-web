@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
@@ -124,6 +125,70 @@ const dataURLtoFile = (dataurl: string, filename: string) => {
 
 export function PersonaFisicaForm() {
     const { toast } = useToast();
+    const params = useParams();
+    const lang = params.lang as string || 'es';
+    
+    const t = {
+        en: {
+            submitSuccessTitle: "Form Submitted Successfully",
+            submitSuccessDesc: "Your KYC dossier has been encrypted and securely saved in our Fortress Vault. Our team will review your data shortly.",
+            submitSuccessImportant: "We have sent you a confirmation email. Please check your SPAM or Junk folder if you do not see it in your inbox.",
+            completeAnother: "Complete Another Form",
+            notifyWhatsapp: "Notify via WhatsApp",
+            toastSuccessTitle: "Form Submitted",
+            toastSuccessDesc: "Your Individual due diligence form has been successfully sent.",
+            toastValErrorTitle: "Validation Error",
+            toastValErrorDesc: "An error occurred while saving the form or uploading documents.",
+            toastConnErrorTitle: "Connection Error",
+            toastConnErrorDesc: "Could not connect to the server to process the request.",
+            toastMissingFieldsTitle: "Attention, missing fields",
+            toastMissingFieldsDesc: "Please complete the fields highlighted in red to continue.",
+            toastDraftSavedTitle: "Draft Saved",
+            toastDraftSavedDesc: "Your progress has been saved locally.",
+            toastPdfPrepTitle: "Preparing download...",
+            toastPdfPrepDesc: "Your browser will open a print dialog. Please select 'Save as PDF'."
+        },
+        es: {
+            submitSuccessTitle: "Formulario Registrado con Éxito",
+            submitSuccessDesc: "Su expediente KYC ha sido encriptado y guardado de manera segura en nuestra Bóveda de Fortress. Nuestro equipo evaluará sus datos próximamente.",
+            submitSuccessImportant: "Le hemos enviado un correo de confirmación. Por favor, verifique su bandeja de SPAM o Correo no Deseado si no lo ve en su bandeja principal.",
+            completeAnother: "Completar Otro Formulario",
+            notifyWhatsapp: "Notificar por WhatsApp",
+            toastSuccessTitle: "Formulario Enviado",
+            toastSuccessDesc: "Su formulario de Persona Física ha sido enviado con éxito.",
+            toastValErrorTitle: "Error de Validación",
+            toastValErrorDesc: "Ocurrió un error guardando el formulario o subiendo documentos.",
+            toastConnErrorTitle: "Error de Conexión",
+            toastConnErrorDesc: "No se pudo conectar con el servidor para procesar la petición.",
+            toastMissingFieldsTitle: "Cuidado, faltan campos",
+            toastMissingFieldsDesc: "Por favor, complete los campos remarcados en rojo para continuar.",
+            toastDraftSavedTitle: "Borrador Guardado",
+            toastDraftSavedDesc: "Su progreso ha sido guardado localmente.",
+            toastPdfPrepTitle: "Preparando descarga...",
+            toastPdfPrepDesc: "Su navegador abrirá un diálogo de impresión. Por favor, seleccione 'Guardar como PDF'."
+        },
+        fr: {
+            submitSuccessTitle: "Formulaire Enregistré avec Succès",
+            submitSuccessDesc: "Votre dossier KYC a été crypté et enregistré en toute sécurité dans notre coffre Fortress. Notre équipe évaluera vos données très prochainement.",
+            submitSuccessImportant: "Nous vous avons envoyé un e-mail de confirmation. Veuillez vérifier votre dossier SPAM ou Courrier Indésirable si vous ne le voyez pas dans votre boîte de réception.",
+            completeAnother: "Remplir un Autre Formulaire",
+            notifyWhatsapp: "Notifier par WhatsApp",
+            toastSuccessTitle: "Formulaire Envoyé",
+            toastSuccessDesc: "Votre formulaire de Personne Physique a été envoyé avec succès.",
+            toastValErrorTitle: "Erreur de Validation",
+            toastValErrorDesc: "Une erreur est survenue lors de l'enregistrement du formulaire ou du téléchargement des documents.",
+            toastConnErrorTitle: "Erreur de Connexion",
+            toastConnErrorDesc: "Impossible de se connecter au serveur pour traiter la demande.",
+            toastMissingFieldsTitle: "Attention, champs manquants",
+            toastMissingFieldsDesc: "Veuillez remplir les champs surbrillants en rouge pour continuer.",
+            toastDraftSavedTitle: "Brouillon Enregistré",
+            toastDraftSavedDesc: "Votre progression a été enregistrée localement.",
+            toastPdfPrepTitle: "Préparation du téléchargement...",
+            toastPdfPrepDesc: "Votre navigateur va ouvrir une boîte de dialogue d'impression. Veuillez sélectionner 'Enregistrer au format PDF'."
+        }
+    };
+    const d = t[lang as 'en' | 'es' | 'fr'] || t.es;
+
     const [draft, setDraft] = useLocalStorage<Partial<PersonaFisicaData> | null>('persona-fisica-draft', null);
 
     const form = useForm<PersonaFisicaData>({
@@ -324,8 +389,8 @@ export function PersonaFisicaForm() {
                 }
 
                 toast({
-                    title: "Formulario Enviado",
-                    description: "Su formulario de Persona Física ha sido enviado con éxito.",
+                    title: d.toastSuccessTitle,
+                    description: d.toastSuccessDesc,
                 });
                 setDraft(null);
                 form.reset(defaultValues);
@@ -349,14 +414,14 @@ export function PersonaFisicaForm() {
             
             // Llegamos aquí solo si res.ok es FALSE
             toast({
-                title: "Error de Validación",
-                description: typeof result?.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
+                title: d.toastValErrorTitle,
+                description: typeof result?.error === 'string' ? result.error : d.toastValErrorDesc,
             });
             console.error("KYC Submission Error:", result);
         } catch (error) {
             toast({
-                title: "Error de Conexión",
-                description: "No se pudo conectar con el servidor para procesar la petición.",
+                title: d.toastConnErrorTitle,
+                description: d.toastConnErrorDesc,
             });
             console.error("Critical submission failed", error);
         }
@@ -367,8 +432,8 @@ export function PersonaFisicaForm() {
         const errorElement = document.querySelector(`[name="${firstErrorKey}"]`);
         
         toast({
-            title: "Cuidado, faltan campos",
-            description: "Por favor, complete los campos remarcados en rojo para continuar.",
+            title: d.toastMissingFieldsTitle,
+            description: d.toastMissingFieldsDesc,
         });
 
         if (errorElement) {
@@ -381,15 +446,15 @@ export function PersonaFisicaForm() {
         const values = form.getValues();
         setDraft(values);
         toast({
-            title: "Borrador Guardado",
-            description: "Su progreso ha sido guardado localmente.",
+            title: d.toastDraftSavedTitle,
+            description: d.toastDraftSavedDesc,
         });
     };
 
     const handleDownload = () => {
         toast({
-            title: "Preparando descarga...",
-            description: "Su navegador abrirá un diálogo de impresión. Por favor, seleccione 'Guardar como PDF'.",
+            title: d.toastPdfPrepTitle,
+            description: d.toastPdfPrepDesc,
         });
         setTimeout(() => window.print(), 500);
     };
@@ -397,29 +462,34 @@ export function PersonaFisicaForm() {
     const { isSubmitting } = form.formState;
 
     if (isSuccess) {
+        const waMsg = lang === 'es'
+            ? "Hola, acabo de enviar mi expediente KYC (Debida Diligencia) a través del portal de Punta Cana Investments. Quedo atento/a a su revisión."
+            : lang === 'fr'
+            ? "Bonjour, je viens d'envoyer mon dossier KYC (Diligence Raisonnable) via le portail de Punta Cana Investments. Je reste en attente de votre examen."
+            : "Hello, I have just submitted my KYC (Due Diligence) dossier through the Punta Cana Investments portal. I look forward to your review.";
+
         return (
             <div className="flex flex-col items-center justify-center p-12 text-center bg-zinc-950 rounded-lg border border-luxury-gold/50 shadow-2xl min-h-[50vh] animate-in fade-in zoom-in duration-500">
                 <CheckCircle className="w-24 h-24 text-green-500 mb-6" />
-                <h2 className="text-3xl font-bold text-white mb-4">Formulario Registrado con Éxito</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">{d.submitSuccessTitle}</h2>
                 <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                    Su expediente KYC ha sido encriptado y guardado de manera segura en nuestra Bóveda de Fortress. 
-                    Nuestro equipo evaluará sus datos próximamente.
+                    {d.submitSuccessDesc}
                 </p>
                 
                 <div className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 p-4 rounded-lg max-w-md mx-auto mb-8 text-sm">
-                    <strong>Importante:</strong> Le hemos enviado un correo de confirmación. Por favor, <strong>verifique su bandeja de SPAM o Correo no Deseado</strong> si no lo ve en su bandeja principal.
+                    <strong>{lang === 'es' ? 'Importante:' : lang === 'fr' ? 'Important :' : 'Important:'}</strong> {d.submitSuccessImportant}
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Button onClick={() => setIsSuccess(false)} className="bg-luxury-gold text-black hover:bg-white font-bold px-8">
-                        Completar Otro Formulario
+                        {d.completeAnother}
                     </Button>
-                    <a href="https://api.whatsapp.com/send?text=Hola,%20acabo%20de%20enviar%20mi%20expediente%20KYC%20(Debida%20Diligencia)%20a%20través%20del%20portal%20de%20Punta%20Cana%20Investments.%20Quedo%20atento/a%20a%20su%20revisión." target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-8 py-2 bg-[#25D366] text-white hover:bg-[#20bd5a]">
+                    <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(waMsg)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-8 py-2 bg-[#25D366] text-white hover:bg-[#20bd5a]">
                         <svg viewBox="0 0 24 24" className="w-5 h-5 mr-2" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-                        Notificar por WhatsApp
-                    </a>
-                </div>
-            </div>
+                        {d.notifyWhatsapp}
+                    </a >
+                </div >
+            </div >
         );
     }
 

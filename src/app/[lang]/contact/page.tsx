@@ -9,7 +9,7 @@ export default async function ContactPage({
     params,
     searchParams
 }: {
-    params: Promise<{ lang: 'es' | 'en' }>,
+    params: Promise<{ lang: 'es' | 'en' | 'fr' }>,
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
     const { lang } = await params;
@@ -102,7 +102,9 @@ export default async function ContactPage({
                                 className="inline-flex items-center gap-3 bg-green-600/10 text-green-500 px-6 py-3 rounded-full border border-green-500/20 hover:bg-green-600 hover:text-white transition-all"
                             >
                                 <FaWhatsapp aria-hidden="true" size={20} />
-                                <span className="font-semibold">Chat en WhatsApp</span>
+                                <span className="font-semibold">
+                                    {lang === 'en' ? 'Chat on WhatsApp' : lang === 'fr' ? 'Discuter sur WhatsApp' : 'Chat en WhatsApp'}
+                                </span>
                             </a>
                             <a
                                 href="https://www.instagram.com/puntacanainvestmentsrd/"
@@ -127,7 +129,9 @@ export default async function ContactPage({
 
                     {/* Form */}
                     <div className="bg-zinc-950 p-8 md:p-10 rounded-2xl border border-zinc-800 shadow-2xl">
-                        <h3 className="text-2xl font-playfair text-white mb-6">Envia un mensaje</h3>
+                        <h3 className="text-2xl font-playfair text-white mb-6">
+                            {lang === 'en' ? 'Send a message' : lang === 'fr' ? 'Envoyer un message' : 'Enviar un mensaje'}
+                        </h3>
                         <ContactForm dict={dict.contact.form} subject={typeof subject === 'string' ? subject : undefined} lang={lang} />
                     </div>
 

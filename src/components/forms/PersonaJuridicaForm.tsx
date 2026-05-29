@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { personaJuridicaSchema, type PersonaJuridicaData } from "@/lib/schemas";
@@ -97,6 +98,70 @@ const dataURLtoFile = (dataurl: string, filename: string) => {
 
 export function PersonaJuridicaForm() {
     const { toast } = useToast();
+    const params = useParams();
+    const lang = params.lang as string || 'es';
+
+    const t = {
+        en: {
+            submitSuccessTitle: "Form Submitted Successfully",
+            submitSuccessDesc: "Your corporate KYC dossier has been encrypted and securely saved in our Fortress Vault. Our team will review the Legal Entity's data shortly.",
+            submitSuccessImportant: "We have sent you a confirmation email. Please check your SPAM or Junk folder if you do not see it in your inbox.",
+            completeAnother: "Complete Another Form",
+            notifyWhatsapp: "Notify via WhatsApp",
+            toastSuccessTitle: "Form Submitted",
+            toastSuccessDesc: "Your Legal Entity due diligence form has been successfully sent.",
+            toastValErrorTitle: "Validation Error",
+            toastValErrorDesc: "An error occurred while saving the form or uploading documents.",
+            toastConnErrorTitle: "Connection Error",
+            toastConnErrorDesc: "Could not connect to the server to process the request.",
+            toastMissingFieldsTitle: "Attention, missing fields",
+            toastMissingFieldsDesc: "Please complete the fields highlighted in red to continue.",
+            toastDraftSavedTitle: "Draft Saved",
+            toastDraftSavedDesc: "Your progress has been saved locally.",
+            toastPdfPrepTitle: "Preparing download...",
+            toastPdfPrepDesc: "Your browser will open a print dialog. Please select 'Save as PDF'."
+        },
+        es: {
+            submitSuccessTitle: "Formulario Registrado con Éxito",
+            submitSuccessDesc: "Su expediente KYC ha sido encriptado y guardado de manera segura en nuestra Bóveda de Fortress. Nuestro equipo evaluará los datos de la Persona Jurídica próximamente.",
+            submitSuccessImportant: "Le hemos enviado un correo de confirmación. Por favor, verifique su bandeja de SPAM o Correo no Deseado si no lo ve en su bandeja principal.",
+            completeAnother: "Completar Otro Formulario",
+            notifyWhatsapp: "Notificar por WhatsApp",
+            toastSuccessTitle: "Formulario Enviado",
+            toastSuccessDesc: "Su formulario de Persona Jurídica ha sido enviado con éxito.",
+            toastValErrorTitle: "Error de Validación",
+            toastValErrorDesc: "Ocurrió un error guardando el formulario o subiendo documentos.",
+            toastConnErrorTitle: "Error de Conexión",
+            toastConnErrorDesc: "No se pudo conectar con el servidor para procesar la petición.",
+            toastMissingFieldsTitle: "Cuidado, faltan campos",
+            toastMissingFieldsDesc: "Por favor, complete los campos remarcados en rojo para continuar.",
+            toastDraftSavedTitle: "Borrador Guardado",
+            toastDraftSavedDesc: "Su progreso ha sido guardado localmente.",
+            toastPdfPrepTitle: "Preparando descarga...",
+            toastPdfPrepDesc: "Su navegador abrirá un diálogo de impresión. Por favor, seleccione 'Guardar como PDF'."
+        },
+        fr: {
+            submitSuccessTitle: "Formulaire Enregistré avec Succès",
+            submitSuccessDesc: "Votre dossier KYC d'entreprise a été crypté et enregistré en toute sécurité dans notre coffre Fortress. Notre équipe évaluera les données de la personne morale très prochainement.",
+            submitSuccessImportant: "Nous vous avons envoyé un e-mail de confirmation. Veuillez vérifier votre dossier SPAM ou Courrier Indésirable si vous ne le voyez pas dans votre boîte de réception.",
+            completeAnother: "Remplir un Autre Formulaire",
+            notifyWhatsapp: "Notifier par WhatsApp",
+            toastSuccessTitle: "Formulaire Envoyé",
+            toastSuccessDesc: "Votre formulaire de Personne Morale a été envoyé avec succès.",
+            toastValErrorTitle: "Erreur de Validation",
+            toastValErrorDesc: "Une erreur est survenue lors de l'enregistrement du formulaire ou du téléchargement des documents.",
+            toastConnErrorTitle: "Erreur de Connexion",
+            toastConnErrorDesc: "Impossible de se connecter au serveur pour traiter la demande.",
+            toastMissingFieldsTitle: "Attention, champs manquants",
+            toastMissingFieldsDesc: "Veuillez remplir les champs surbrillants en rouge pour continuer.",
+            toastDraftSavedTitle: "Brouillon Enregistré",
+            toastDraftSavedDesc: "Votre progression a été enregistrée localement.",
+            toastPdfPrepTitle: "Préparation du téléchargement...",
+            toastPdfPrepDesc: "Votre navigateur va ouvrir une boîte de dialogue d'impression. Veuillez sélectionner 'Enregistrer au format PDF'."
+        }
+    };
+    const d = t[lang as 'en' | 'es' | 'fr'] || t.es;
+
     const [draft, setDraft] = useLocalStorage<Partial<PersonaJuridicaData> | null>('persona-juridica-draft', null);
 
     const form = useForm<PersonaJuridicaData>({
@@ -261,8 +326,8 @@ export function PersonaJuridicaForm() {
                 }
 
                 toast({
-                    title: "Formulario Enviado",
-                    description: "Su formulario de Persona Jurídica ha sido enviado con éxito.",
+                    title: d.toastSuccessTitle,
+                    description: d.toastSuccessDesc,
                 });
                 setDraft(null);
                 form.reset(defaultValues);
@@ -286,14 +351,14 @@ export function PersonaJuridicaForm() {
             
             // Llegamos aquí solo si res.ok es FALSE
             toast({
-                title: "Error de Validación",
-                description: typeof result?.error === 'string' ? result.error : "Ocurrió un error guardando el formulario o subiendo documentos.",
+                title: d.toastValErrorTitle,
+                description: typeof result?.error === 'string' ? result.error : d.toastValErrorDesc,
             });
             console.error("KYC Submission Error:", result);
         } catch (error) {
             toast({
-                title: "Error de Conexión",
-                description: "No se pudo conectar con el servidor para procesar la petición.",
+                title: d.toastConnErrorTitle,
+                description: d.toastConnErrorDesc,
             });
             console.error("Critical submission failed", error);
         }
@@ -304,8 +369,8 @@ export function PersonaJuridicaForm() {
         const errorElement = document.querySelector(`[name="${firstErrorKey}"]`);
         
         toast({
-            title: "Cuidado, faltan campos",
-            description: "Por favor, complete los campos remarcados en rojo para continuar.",
+            title: d.toastMissingFieldsTitle,
+            description: d.toastMissingFieldsDesc,
         });
 
         if (errorElement) {
@@ -318,8 +383,8 @@ export function PersonaJuridicaForm() {
         const values = form.getValues();
         setDraft(values);
         toast({
-            title: "Borrador Guardado",
-            description: "Su progreso ha sido guardado localmente.",
+            title: d.toastDraftSavedTitle,
+            description: d.toastDraftSavedDesc,
         });
     };
 

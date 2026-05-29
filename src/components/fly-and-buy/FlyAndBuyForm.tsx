@@ -92,13 +92,15 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                 <p className="text-sm text-gray-400 mt-4 italic">
                     {lang === 'es' 
                         ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                        : lang === 'fr'
+                        ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
                         : 'Please also check your junk or spam folder.'}
                 </p>
                 <button
                     onClick={() => window.location.reload()}
                     className="mt-8 px-8 py-3 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-all rounded-full uppercase tracking-widest text-sm font-bold"
                 >
-                    {dict.success.title === "Request Sent!" ? "Send Another" : "Enviar Otro"}
+                    {lang === 'en' ? "Send Another" : lang === 'fr' ? "Envoyer un Autre" : "Enviar Otro"}
                 </button>
             </motion.div>
         );

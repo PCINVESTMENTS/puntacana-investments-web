@@ -14,7 +14,7 @@ export const revalidate = 60;
 export async function generateMetadata({
     params
 }: {
-    params: Promise<{ lang: 'es' | 'en' }>;
+    params: Promise<{ lang: 'es' | 'en' | 'fr' }>;
 }): Promise<Metadata> {
     const { lang } = await params;
     // searchParams removed to ensure static stability during build
@@ -35,6 +35,7 @@ export async function generateMetadata({
             languages: {
                 es: `${baseUrl}/es/properties`,
                 en: `${baseUrl}/en/properties`,
+                fr: `${baseUrl}/fr/properties`,
                 'x-default': `${baseUrl}/en/properties`
             }
         }
@@ -46,7 +47,7 @@ export default async function PropertiesPage({
     params,
     searchParams
 }: {
-    params: Promise<{ lang: 'es' | 'en' }>;
+    params: Promise<{ lang: 'es' | 'en' | 'fr' }>;
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const { lang } = await params;

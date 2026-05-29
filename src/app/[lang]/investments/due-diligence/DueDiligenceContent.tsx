@@ -26,7 +26,9 @@ export default function DueDiligenceContent() {
                         className="flex items-center gap-2 text-luxury-gold hover:text-white transition-colors group"
                     >
                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                        <span className="text-lg font-medium">Volver a Inversiones / Back to Investments</span>
+                        <span className="text-lg font-medium">
+                            {lang === 'es' ? 'Volver a Inversiones' : lang === 'fr' ? 'Retour aux Investissements' : 'Back to Investments'}
+                        </span>
                     </Link>
                 </div>
 
@@ -44,11 +46,14 @@ export default function DueDiligenceContent() {
                         </div>
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent">
-                        Debida Diligencia
+                        {lang === 'es' ? 'Debida Diligencia' : lang === 'fr' ? 'Diligence Raisonnable' : 'Due Diligence'}
                     </h1>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                        Complete el formulario correspondiente para iniciar su proceso de inversión.
-                        Seleccione el tipo de persona para continuar.
+                        {lang === 'es'
+                            ? 'Complete el formulario correspondiente para iniciar su proceso de inversión. Seleccione el tipo de persona para continuar.'
+                            : lang === 'fr'
+                            ? 'Veuillez remplir le formulaire correspondant pour initier votre processus d\'investissement. Sélectionnez le type de personne pour continuer.'
+                            : 'Please complete the corresponding form to initiate your investment process. Select the type of entity to continue.'}
                     </p>
                     <div className="h-1 w-24 bg-luxury-gold mx-auto rounded-full mt-6 mb-8" />
                 </div>
@@ -67,7 +72,7 @@ export default function DueDiligenceContent() {
             `}
                     >
                         <User className="w-6 h-6" />
-                        Persona Física
+                        {lang === 'es' ? 'Persona Física' : lang === 'fr' ? 'Personne Physique' : 'Individual'}
                     </Button>
 
                     <Button
@@ -82,7 +87,7 @@ export default function DueDiligenceContent() {
             `}
                     >
                         <Building2 className="w-6 h-6" />
-                        Persona Jurídica
+                        {lang === 'es' ? 'Persona Jurídica' : lang === 'fr' ? 'Personne Morale' : 'Legal Entity'}
                     </Button>
                 </div>
 

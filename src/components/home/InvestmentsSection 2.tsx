@@ -49,45 +49,52 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
 
                 {/* Investment Models Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {displayedModels.map((model, index) => (
-                        <ScrollReveal key={model.slug} delay={index * 0.1}>
-                            <Link href={`/${lang}/investments/${model.slug}`} className="group block h-full">
-                                <div className="bg-white/5 border border-white/10 rounded-sm overflow-hidden h-full hover:border-luxury-gold/50 transition-all duration-300 flex flex-col group-hover:-translate-y-2 group-hover:shadow-2xl">
-                                    {/* Image Area */}
-                                    <div className="relative h-56 overflow-hidden">
-                                        <Image
-                                            src={model.heroImage}
-                                            alt={model.title[lang as 'es' | 'en']}
-                                            fill
-                                            sizes="(max-width: 768px) 100vw, 33vw"
-                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                        />
-                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                    {displayedModels.map((model, index) => {
+                        const getVal = (obj: any, key: string) => {
+                            if (!obj) return "";
+                            return obj[key] || obj['en'] || obj['es'] || "";
+                        };
 
-                                        {/* Badge */}
-                                        <div className="absolute top-4 right-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest">
-                                            ROI: {model.roiStats?.[0]?.value || "High"}
+                        return (
+                            <ScrollReveal key={model.slug} delay={index * 0.1}>
+                                <Link href={`/${lang}/investments/${model.slug}`} className="group block h-full">
+                                    <div className="bg-white/5 border border-white/10 rounded-sm overflow-hidden h-full hover:border-luxury-gold/50 transition-all duration-300 flex flex-col group-hover:-translate-y-2 group-hover:shadow-2xl">
+                                        {/* Image Area */}
+                                        <div className="relative h-56 overflow-hidden">
+                                            <Image
+                                                src={model.heroImage}
+                                                alt={getVal(model.title, lang)}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            />
+                                            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+
+                                            {/* Badge */}
+                                            <div className="absolute top-4 right-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest">
+                                                ROI: {model.roiStats?.[0]?.value || "High"}
+                                            </div>
+                                        </div>
+
+                                        {/* Content Area */}
+                                        <div className="p-8 flex flex-col flex-grow">
+                                            <h3 className="text-[1.1rem] sm:text-xl md:text-2xl font-serif font-bold text-white mb-4 whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal group-hover:text-luxury-gold transition-colors">
+                                                {getVal(model.title, lang)}
+                                            </h3>
+                                            <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
+                                                {getVal(model.description, lang)}
+                                            </p>
+
+                                            <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-luxury-gold text-sm font-bold uppercase tracking-wider">
+                                                <span>{dict.exploreModel}</span>
+                                                <FaArrowRight aria-hidden="true" className="transform group-hover:translate-x-2 transition-transform" />
+                                            </div>
                                         </div>
                                     </div>
-
-                                    {/* Content Area */}
-                                    <div className="p-8 flex flex-col flex-grow">
-                                        <h3 className="text-[1.1rem] sm:text-xl md:text-2xl font-serif font-bold text-white mb-4 whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal group-hover:text-luxury-gold transition-colors">
-                                            {model.title[lang as 'es' | 'en']}
-                                        </h3>
-                                        <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
-                                            {model.description[lang as 'es' | 'en']}
-                                        </p>
-
-                                        <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-luxury-gold text-sm font-bold uppercase tracking-wider">
-                                            <span>{dict.exploreModel}</span>
-                                            <FaArrowRight aria-hidden="true" className="transform group-hover:translate-x-2 transition-transform" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        </ScrollReveal>
-                    ))}
+                                </Link>
+                            </ScrollReveal>
+                        );
+                    })}
                 </div>
 
                 {/* View All Button */}
@@ -96,7 +103,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
                         href={`/${lang}/investments`}
                         className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-3 rounded-sm uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl"
                     >
-                        {lang === 'en' ? 'View All Opportunities' : 'Ver Todas las Oportunidades'}
+                        {lang === 'en' ? 'View All Opportunities' : lang === 'fr' ? 'Voir Toutes les Opportunités' : 'Ver Todas las Oportunidades'}
                     </Link>
                 </div>
             </div>

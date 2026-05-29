@@ -8,17 +8,21 @@ import ReadMore from "@/components/ui/ReadMore";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
   const { lang } = await params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
   const url = `${baseUrl}/${lang}/futuros-proyectos`;
   
   const title = lang === 'en' 
     ? "Miches Eco-Resort Project | High-Yield Capital Investments | Punta Cana" 
+    : lang === 'fr'
+    ? "Projet Eco-Resort Miches | Investissement de Capital & Haute Rentabilité | Punta Cana"
     : "Proyecto Eco-Resort Miches | Inversión de Capital y Alta Rentabilidad | Punta Cana";
     
   const description = lang === 'en' 
     ? "Exclusive pre-construction access: Eco-luxury villas & condo-hotels in Miches, Dominican Republic. SIMA Madrid 2026 featured project. Secure your investment." 
+    : lang === 'fr'
+    ? "Accès exclusif en pré-construction : Villas d'éco-luxe et condo-hôtels à Miches, République Dominicaine. Projet vedette pour SIMA Madrid 2026."
     : "Acceso exclusivo en preventa: Villas de eco-lujo y condo-hoteles en Miches, República Dominicana. Proyecto destacado rumbo a SIMA Madrid 2026. Invierte ahora.";
 
   const keywords = lang === 'en' 
@@ -74,7 +78,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   };
 }
 
-export default async function FuturosProyectosPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function FuturosProyectosPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 

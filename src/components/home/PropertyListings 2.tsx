@@ -327,8 +327,8 @@ function PropertyListingsContent({
                                                 : 'bg-white text-black'
                                                 }`}>
                                                 {prop.status === 'sale'
-                                                    ? (lang === 'en' ? 'For Sale' : 'Venta')
-                                                    : (lang === 'en' ? 'Monthly Rent' : 'Renta Mensual')
+                                                    ? (lang === 'en' ? 'For Sale' : lang === 'fr' ? 'À Vendre' : 'Venta')
+                                                    : (lang === 'en' ? 'Monthly Rent' : lang === 'fr' ? 'Loyer Mensuel' : 'Renta Mensual')
                                                 }
                                             </div>
 
@@ -345,10 +345,10 @@ function PropertyListingsContent({
                                                 {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
                                                     <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-2 md:px-3 py-2 shadow-lg text-[10px] md:text-xs z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-600' : 'bg-emerald-600'}`}>
                                                         {prop.isResale
-                                                            ? (lang === 'en' ? 'Resale' : 'Reventa')
+                                                            ? (lang === 'en' ? 'Resale' : lang === 'fr' ? 'Revente' : 'Reventa')
                                                             : (prop.preConstruction
-                                                                ? (lang === 'en' ? 'Pre-Construction' : 'Pre-Construcción')
-                                                                : (lang === 'en' ? 'Pre-Sales' : 'Pre-Ventas')
+                                                                ? (lang === 'en' ? 'Pre-Construction' : lang === 'fr' ? 'Pré-Construction' : 'Pre-Construcción')
+                                                                : (lang === 'en' ? 'Pre-Sales' : lang === 'fr' ? 'Pré-Ventes' : 'Pre-Ventas')
                                                             )
                                                         }
                                                     </div>
@@ -357,11 +357,11 @@ function PropertyListingsContent({
                                                 <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-3 md:px-4 py-2 shadow-lg text-[10px] md:text-xs z-30">
                                                     {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
                                                         <>
-                                                            {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
-                                                            {prop.status === 'rent' && (lang === 'en' ? ' /mo' : ' /mes')}
+                                                            {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : lang === 'fr' ? 'À partir de ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
+                                                            {prop.status === 'rent' && (lang === 'en' ? ' /mo' : lang === 'fr' ? ' /mois' : ' /mes')}
                                                         </>
                                                     ) : (
-                                                        lang === 'en' ? 'Price on Request' : 'Precio a Consultar'
+                                                        lang === 'en' ? 'Price on Request' : lang === 'fr' ? 'Prix sur Demande' : 'Precio a Consultar'
                                                     )}
                                                 </div>
 
@@ -369,7 +369,7 @@ function PropertyListingsContent({
                                                     {prop.title}
                                                 </h3>
                                                 <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
-                                                    {prop.description[lang as 'en' | 'es']}
+                                                    {prop.description[lang as 'en' | 'es' | 'fr'] || prop.description['en'] || prop.description['es']}
                                                 </p>
 
                                                 <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto">

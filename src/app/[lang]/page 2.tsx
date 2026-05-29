@@ -33,16 +33,20 @@ import type { Metadata } from "next";
 // Restoring ISR
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
   const { lang } = await params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
   const title = lang === 'en'
     ? "Punta Cana Investments | Luxury Real Estate & Exclusive Properties"
+    : lang === 'fr'
+    ? "Punta Cana Investments | Immobilier de Luxe & Propriétés Exclusives"
     : "Punta Cana Investments | Inmobiliaria de Lujo y Bienes Raíces";
 
   const description = lang === 'en'
     ? "Discover exclusive luxury villas, condos for sale, and real estate investment opportunities in Punta Cana, Bavaro, and Cap Cana, Dominican Republic."
+    : lang === 'fr'
+    ? "Découvrez des villas de luxe exclusives, des appartements à vendre et des opportunités d'investissement immobilier à Punta Cana, Bavaro et Cap Cana, en République Dominicaine."
     : "Descubre exclusivas villas de lujo, apartamentos en venta, y oportunidades de inversión en bienes raíces en Punta Cana, Bávaro, y Cap Cana, República Dominicana.";
 
   return {
@@ -50,6 +54,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     description,
     keywords: lang === 'en'
       ? ['Punta Cana Investments', 'Punta Cana Real Estate', 'Luxury Villas for sale Dominican Republic', 'Condos for sale Punta Cana', 'Cap Cana Real Estate', 'Invest in Bavaro properties', 'Dominican Republic real estate', 'Fly and Buy', 'Punta Cana homes for sale', 'Dominican Republic investment properties', 'Construction Punta Cana', 'Real Estate Developer Dominican Republic', 'Building contractors Punta Cana', 'Custom luxury villas construction', 'Retire in Punta Cana', 'Expat communities Dominican Republic', 'Beachfront villas for sale Punta Cana', 'Ocean view condos Bavaro', 'Airbnb investment Punta Cana', 'CONFOTUR law properties Dominican Republic', 'Tax-free real estate Punta Cana', 'Pre-construction condos Punta Cana', 'Vista Cana real estate', 'Punta Cana Resort and Club properties', 'Hotels for sale Dominican Republic', 'Beachfront land for hotel development', 'Resorts for sale Punta Cana', 'Commercial real estate Dominican Republic', 'Land for sale Punta Cana', 'Long terms rentals Punta Cana', 'Monthly rentals', 'Condo hotels for sale', 'Investments in Punta Cana', 'Bavaro investments', 'Invest in Miches', 'Hotels for sale in Miches', 'Land for hotel development Miches', 'Land real estate specialist Dominican Republic']
+      : lang === 'fr'
+      ? ['Punta Cana Investments', 'Immobilier Punta Cana', 'Villas de luxe à vendre République Dominicaine', 'Appartements à vendre Punta Cana', 'Immobilier Cap Cana', 'Investir dans des propriétés à Bavaro', 'Immobilier République Dominicaine', 'Fly and Buy', 'Maisons à vendre Punta Cana', 'Propriétés d\'investissement République Dominicaine', 'Construction Punta Cana', 'Promoteur Immobilier République Dominicaine', 'Entreprises de construction Punta Cana', 'Construction de villas de luxe sur mesure', 'Retraite à Punta Cana', 'Villas de luxe en bord de mer à vendre Punta Cana', 'Appartements avec vue sur mer Bavaro', 'Investissement Airbnb Punta Cana', 'Loi CONFOTUR propriétés République Dominicaine', 'Immobilier sans taxes Punta Cana', 'Appartements en pré-construction Punta Cana', 'Immobilier Vista Cana', 'Propriétés Punta Cana Resort and Club', 'Hôtels à vendre République Dominicaine', 'Terrain en bord de mer pour développement hôtelier', 'Resorts à vendre Punta Cana', 'Immobilier commercial République Dominicaine', 'Terrain à vendre Punta Cana', 'Locations à long terme Punta Cana', 'Locations mensuelles', 'Condo-hôtels à vendre', 'Investissements à Punta Cana', 'Investissements à Bavaro', 'Investir à Miches', 'Hôtels à vendre à Miches', 'Terrain pour développement hôtelier Miches', 'Spécialiste de l\'immobilier de terrain République Dominicaine']
       : ['Punta Cana Investments', 'Real Estate Punta Cana', 'Apartamentos en venta Punta Cana', 'Villas de lujo Republica Dominicana', 'Bienes raices Cap Cana', 'Invertir en Bavaro', 'Casas en venta Punta Cana', 'Proyectos inmobiliarios Punta Cana', 'Fly and Buy RD', 'Inmobiliaria Punta Cana', 'Constructora en Punta Cana', 'Construcción de villas', 'Desarrolladores de proyectos inmobiliarios RD', 'Ingeniería civil y arquitectura Punta Cana', 'Jubilarse en Punta Cana', 'Comprar casa en República Dominicana siendo extranjero', 'Villas frente al mar en Punta Cana', 'Casas cerca de la playa Punta Cana', 'Propiedades de alta rentabilidad para Airbnb', 'Proyectos en Planos Punta Cana', 'Casas en Vista Cana', 'Apartamentos en Los Corales Bavaro', 'Hoteles en ventas', 'Terrenos para construir hoteles en las playas', 'Resort en venta en Punta Cana', 'Locales comerciales Punta Cana', 'Solares en venta', 'Rentas mensual Punta Cana', 'Condo hotel en venta', 'Inversiones en Punta Cana', 'Inversiones en Bavaro', 'Inversiones en Miches', 'Hoteles en Miches en ventas', 'Terreno para desarrollar hoteles en Miches', 'Especialista en terrenos República Dominicana'],
     openGraph: {
       title,
@@ -64,7 +70,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
           alt: 'Luxury Real Estate in Punta Cana - Night View',
         },
       ],
-      locale: lang === 'en' ? 'en_US' : 'es_DO',
+      locale: lang === 'fr' ? 'fr_FR' : lang === 'en' ? 'en_US' : 'es_DO',
       type: 'website',
     },
     twitter: {
@@ -78,13 +84,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       languages: {
         'en': `${baseUrl}/en`,
         'es': `${baseUrl}/es`,
+        'fr': `${baseUrl}/fr`,
         'x-default': `${baseUrl}/en`,
       },
     }
   }
 }
 
-export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 

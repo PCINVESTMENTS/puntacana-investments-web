@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import FlyAndBuyForm from "@/components/fly-and-buy/FlyAndBuyForm";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
     const { lang } = await params;
     const dict = await getDictionary(lang);
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     };
 }
 
-export default async function FlyAndBuyFormPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function FlyAndBuyFormPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
 

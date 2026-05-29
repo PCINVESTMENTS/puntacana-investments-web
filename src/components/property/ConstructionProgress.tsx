@@ -19,13 +19,44 @@ interface ConstructionProgressProps {
 export default function ConstructionProgress({ lang, stages, completionPercent }: ConstructionProgressProps) {
     if (!stages || stages.length === 0) return null;
 
+    const t = {
+        en: {
+            title: "Construction Progress",
+            subtitle: "Live status of the development.",
+            completion: "Completion",
+            reportLabel: "Want a photo update of this property?",
+            reportButton: "Request Monthly Report"
+        },
+        es: {
+            title: "Progreso de Obra",
+            subtitle: "Estado en vivo del desarrollo.",
+            completion: "Completado",
+            reportLabel: "¿Quieres una actualización fotográfica de esta propiedad?",
+            reportButton: "Solicitar Reporte Mensual"
+        },
+        fr: {
+            title: "Progression du Chantier",
+            subtitle: "État d'avancement en temps réel du projet.",
+            completion: "Avancement",
+            reportLabel: "Vous souhaitez une mise à jour photo de cette propriété ?",
+            reportButton: "Demander le Rapport Mensuel"
+        }
+    };
+
+    const d = t[lang as 'en' | 'es' | 'fr'] || t.en;
+
+    const getVal = (obj: any, key: string) => {
+        if (!obj) return "";
+        return obj[key] || obj['en'] || obj['es'] || "";
+    };
+
     const getIcon = (title: string) => {
-        const t = title.toLowerCase();
-        if (t.includes("launch") || t.includes("lanzamiento") || t.includes("disen")) return <FaDraftingCompass />;
-        if (t.includes("ground") || t.includes("excava") || t.includes("cimientos")) return <FaHammer />;
-        if (t.includes("structural") || t.includes("obra gris") || t.includes("estructura")) return <FaHardHat />;
-        if (t.includes("finish") || t.includes("acabado") || t.includes("interiores")) return <FaHome />;
-        if (t.includes("delivery") || t.includes("entrega")) return <FaCheckCircle />;
+        const tVal = title.toLowerCase();
+        if (tVal.includes("launch") || tVal.includes("lanzamiento") || tVal.includes("disen")) return <FaDraftingCompass />;
+        if (tVal.includes("ground") || tVal.includes("excava") || tVal.includes("cimientos")) return <FaHammer />;
+        if (tVal.includes("structural") || tVal.includes("obra gris") || tVal.includes("estructura")) return <FaHardHat />;
+        if (tVal.includes("finish") || tVal.includes("acabado") || tVal.includes("interiores")) return <FaHome />;
+        if (tVal.includes("delivery") || tVal.includes("entrega")) return <FaCheckCircle />;
         return <FaClock />;
     };
 
@@ -34,16 +65,16 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
             <div className="flex justify-between items-end mb-8">
                 <div>
                     <h3 className="text-2xl font-serif font-bold text-luxury-gold mb-2 uppercase tracking-wider flex items-center gap-3">
-                        {lang === "en" ? "Construction Progress" : "Progreso de Obra"}
+                        {d.title}
                     </h3>
                     <p className="text-gray-400 text-sm font-light">
-                        {lang === "en" ? "Live status of the development." : "Estado en vivo del desarrollo."}
+                        {d.subtitle}
                     </p>
                 </div>
                 {completionPercent !== undefined && (
                     <div className="text-right">
                         <span className="text-4xl font-bold text-white font-serif">{completionPercent}%</span>
-                        <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Completion</div>
+                        <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{d.completion}</div>
                     </div>
                 )}
             </div>
@@ -77,18 +108,18 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
                                 stage.status === "in-progress" ? "bg-black border-luxury-gold text-luxury-gold animate-pulse" :
                                     "bg-black border-white/10 text-gray-600"
                             }`}>
-                            {getIcon(stage.title.en)}
+                            {getIcon(getVal(stage.title, 'en'))}
                         </div>
 
                         <div className="flex-1">
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-1">
                                 <h4 className={`text-lg font-bold ${stage.status === "pending" ? "text-gray-500" : "text-white"}`}>
-                                    {stage.title[lang as "es" | "en"]}
+                                    {getVal(stage.title, lang)}
                                 </h4>
                                 <span className="text-xs font-bold text-luxury-gold/60 uppercase tracking-widest">{stage.date}</span>
                             </div>
                             <p className="text-gray-400 text-sm font-light">
-                                {stage.description[lang as "es" | "en"]}
+                                {getVal(stage.description, lang)}
                             </p>
                         </div>
                     </motion.div>
@@ -97,10 +128,10 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
 
             <div className="mt-12 pt-8 border-t border-white/5 text-center">
                 <p className="text-[10px] text-gray-600 uppercase tracking-[0.2em] mb-4">
-                    {lang === "en" ? "Want a photo update of this property?" : "¿Quieres una actualización fotográfica de esta propiedad?"}
+                    {d.reportLabel}
                 </p>
                 <button className="text-luxury-gold text-xs font-bold uppercase tracking-widest hover:text-white transition-colors border border-luxury-gold/20 px-6 py-3 rounded hover:border-luxury-gold">
-                    {lang === "en" ? "Request Monthly Report" : "Solicitar Reporte Mensual"}
+                    {d.reportButton}
                 </button>
             </div>
         </div>

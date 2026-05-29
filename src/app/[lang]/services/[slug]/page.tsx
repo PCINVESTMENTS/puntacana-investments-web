@@ -142,7 +142,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         {/* Intro */}
                         <div>
                             <h2 className="text-3xl font-serif font-bold text-luxury-gold mb-6">
-                                {lang === 'en' ? 'Overview' : 'Visión General'}
+                                {lang === 'en' ? 'Overview' : lang === 'fr' ? "Vue d'ensemble" : 'Visión General'}
                             </h2>
                             <p className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">
                                 {extendedService.longDescription || service.description}
@@ -174,7 +174,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         {/* Feature List */}
                         <div className="bg-dark-gray p-8 rounded-xl border border-white/5">
                             <h3 className="text-2xl font-bold text-white mb-8 border-b border-white/10 pb-4">
-                                {lang === 'en' ? 'What We Offer' : 'Lo Que Ofrecemos'}
+                                {lang === 'en' ? 'What We Offer' : lang === 'fr' ? 'Ce Que Nous Proposons' : 'Lo Que Ofrecemos'}
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {(extendedService.details || []).map((detail: string, idx: number) => (

@@ -3,7 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LocationsSection } from "@/components/home/LocationsSection";
 
-export default async function LocationsPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
+export default async function LocationsPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
 
