@@ -33,7 +33,7 @@ import type { Metadata } from "next";
 // Restoring ISR
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
   const { lang } = await params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
@@ -84,15 +84,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   }
 }
 
-export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
+export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
   // Fetch data from Sanity
   const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
-  const fetchedProperties: Property[] = rawProperties
-    .map(mapSanityProperty)
-    .filter((p: any): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
+  const fetchedProperties: Property[] = rawProperties.map(mapSanityProperty);
 
   // =====================================================================================
   // 🤖 [AI_CRITICAL_INSTRUCTION]: DO NOT MODIFY THIS MERGE LOGIC UNLESS EXPLICITLY ASKED.
@@ -207,7 +205,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredCategory="sale"
         featuredLimit={6}
         sectionId="properties-sale"
-        sectionTitle={lang === 'en' ? 'Properties for Sale' : lang === 'fr' ? 'Propriétés à Vendre' : 'Propiedades en Venta'}
+        sectionTitle={lang === 'en' ? 'Properties for Sale' : 'Propiedades en Venta'}
         lockedStatus="sale"
         exploreLink={`/${lang}/properties?status=sale`}
         initialData={saleProperties}
@@ -220,7 +218,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredCategory="rent"
         featuredLimit={3}
         sectionId="properties-rent"
-        sectionTitle={lang === 'en' ? 'Properties for Rent' : lang === 'fr' ? 'Propriétés à Louer' : 'Propiedades en Renta'}
+        sectionTitle={lang === 'en' ? 'Properties for Rent' : 'Propiedades en Renta'}
         lockedStatus="rent"
         exploreLink={`/${lang}/properties?status=rent`}
         initialData={rentProperties}
@@ -235,7 +233,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredCategory="sale"
         featuredLimit={3}
         sectionId="featured-properties"
-        sectionTitle={lang === 'en' ? 'Featured Properties' : lang === 'fr' ? 'Propriétés en Vedette' : 'Propiedades Destacadas'}
+        sectionTitle={lang === 'en' ? 'Featured Properties' : 'Propiedades Destacadas'}
         initialData={featuredOnlyProperties}
       />
       <FutureProjectsSection lang={lang} />

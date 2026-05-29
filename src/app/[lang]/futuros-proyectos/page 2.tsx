@@ -8,7 +8,7 @@ import ReadMore from "@/components/ui/ReadMore";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' }> }): Promise<Metadata> {
   const { lang } = await params;
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
   const url = `${baseUrl}/${lang}/futuros-proyectos`;
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   };
 }
 
-export default async function FuturosProyectosPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
+export default async function FuturosProyectosPage({ params }: { params: Promise<{ lang: 'es' | 'en' }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
@@ -125,19 +125,19 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-16 md:mt-20">
           <div className="inline-flex items-center gap-3 mb-4 md:mb-6 bg-white/10 backdrop-blur-md px-4 py-2 md:px-6 rounded-full border border-luxury-gold/50">
             <FaLeaf className="text-luxury-gold text-sm md:text-base" />
-            <span className="uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm font-bold text-luxury-gold">{lang === 'en' ? '🌿 Coming Soon' : lang === 'fr' ? '🌿 Bientôt' : '🌿 Próximamente'}</span>
+            <span className="uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm font-bold text-luxury-gold">🌿 Coming Soon</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 md:mb-6 uppercase tracking-widest drop-shadow-2xl leading-tight">
-            {lang === 'en' ? 'The Future of' : lang === 'fr' ? "L'Avenir de la" : 'El Futuro de la'} <br className="hidden sm:block" /> <span className="text-luxury-gold italic">{lang === 'en' ? 'Ecological Life' : lang === 'fr' ? 'Vie Écologique' : 'Vida Ecológica'}</span>
+            El Futuro de la <br className="hidden sm:block" /> <span className="text-luxury-gold italic">Vida Ecológica</span>
           </h1>
           <p className="text-lg sm:text-xl md:text-3xl text-gray-200 font-light max-w-4xl mx-auto drop-shadow-md">
-            {lang === 'en' ? 'and Experience Tourism in the Caribbean' : lang === 'fr' ? "et du Tourisme d'Expérience dans les Caraïbes" : 'y el Turismo de Experiencias en el Caribe'}
+            y el Turismo de Experiencias en el Caribe
           </p>
         </div>
       </section>
 
       {/* Section 1: Intro (Zig-Zag Left) */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-sm overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-main.jpg" alt="Entorno natural ecológico del proyecto inmobiliario en Miches, República Dominicana" fill className="object-cover hover:scale-105 transition-transform duration-700" />
@@ -171,21 +171,17 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 2: Full Width Image Divider */}
-      <section className="relative h-[50vh] min-h-[350px] md:min-h-[400px] flex items-center justify-center my-4 md:my-12">
+      <section className="relative h-[50vh] min-h-[350px] md:min-h-[400px] flex items-center justify-center my-8 md:my-12">
          <Image src="/images/miches-eco-resort-concepto.jpg" alt="Concepto ecológico y preservación natural del terreno de inversión en Miches" fill className="object-cover" />
-         <div className="absolute inset-0 bg-black/60"></div>
+         <div className="absolute inset-0 bg-black/35"></div>
          <div className="relative z-10 text-center max-w-4xl px-4">
-            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-luxury-gold mb-4 md:mb-6 leading-tight">
-                {lang === 'en' ? '🌴 A REAL ECOLOGICAL CONCEPT' : lang === 'fr' ? '🌴 UN CONCEPT ÉCOLOGIQUE RÉEL' : '🌴 UN CONCEPTO ECOLÓGICO REAL'}
-            </h2>
-            <p className="text-lg sm:text-xl text-white font-light">
-                {lang === 'en' ? 'This will not be a traditional project. The essence of the development is based on the preservation of the natural environment and an authentic ecological living experience.' : lang === 'fr' ? "Ce ne sera pas un projet traditionnel. L'essence du développement est basée sur la préservation de l'environnement naturel et une expérience de vie écologique authentique." : 'Este no será un proyecto tradicional. La esencia del desarrollo está basada en la preservación del entorno natural y en una experiencia de vida ecológica auténtica.'}
-            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-luxury-gold mb-4 md:mb-6 leading-tight">🌴 UN CONCEPTO ECOLÓGICO REAL</h2>
+            <p className="text-lg sm:text-xl text-white font-light">Este no será un proyecto tradicional. La esencia del desarrollo está basada en la preservación del entorno natural y en una experiencia de vida ecológica auténtica.</p>
          </div>
       </section>
 
       {/* Section 3: Zig-Zag Right */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
             <h3 className="text-2xl md:text-3xl font-serif font-bold text-white uppercase tracking-wider mb-4 md:mb-6">Respeto por el Entorno</h3>
@@ -232,7 +228,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 4: Zig-Zag Left - Agriculture */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-4 md:my-12">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-dark-gray/30 rounded-3xl border border-white/5 my-8 md:my-12">
         <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 relative h-[300px] sm:h-[400px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl">
             <Image src="/images/miches-eco-resort-agricultura.jpg" alt="Agricultura ecológica y huertos sostenibles en el proyecto inmobiliario de Miches" fill className="object-cover" />
@@ -283,11 +279,9 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 4.5: Un Nuevo Estilo de Vida */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/5">
         <div className="text-center max-w-4xl mx-auto space-y-6 md:space-y-8">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white uppercase tracking-wider">
-                {lang === 'en' ? '🏡 A New Lifestyle' : lang === 'fr' ? '🏡 Un Nouveau Style de Vie' : '🏡 Un Nuevo Estilo de Vida'}
-            </h2>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white uppercase tracking-wider">🏡 Un Nuevo Estilo de Vida</h2>
             <ReadMore
                 preview={
                     <>
@@ -317,14 +311,12 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 5: Full Width Grid - Amenities */}
-      <section className="py-8 md:py-24 bg-black relative border-t border-b border-luxury-gold/20">
+      <section className="py-16 md:py-24 bg-black relative border-t border-b border-luxury-gold/20">
         <div className="absolute inset-0 opacity-20">
              <Image src="/images/the-beach-wellness-yoga-deck-punta-cana.jpg" alt="Textura de bienestar y yoga representativa de la vida sustentable en Punta Cana" fill className="object-cover" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-white mb-10 md:mb-16 uppercase leading-tight">
-                {lang === 'en' ? '🌊 AMENITIES AND EXPERIENCES' : lang === 'fr' ? '🌊 COMMODITÉS ET EXPÉRIENCES' : '🌊 AMENIDADES Y EXPERIENCIAS'}
-            </h2>
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-serif font-bold text-white mb-10 md:mb-16 uppercase leading-tight">🌊 AMENIDADES Y EXPERIENCIAS</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                 <div className="flex flex-col items-center">
                     <div className="w-full h-32 sm:h-40 md:h-48 relative mb-3 md:mb-4 rounded-lg overflow-hidden border-2 border-luxury-gold/30 shadow-xl">
@@ -382,12 +374,10 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 6: Zig-Zag Right - Hotel & Investment */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-16">
           <div className="w-full lg:w-1/2 space-y-6 md:space-y-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider leading-tight">
-                {lang === 'en' ? '🏨 Hotel Experience + Investment' : lang === 'fr' ? '🏨 Expérience Hôtelière + Investissement' : '🏨 Experiencia Hotelera + Inversión'}
-            </h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-luxury-gold uppercase tracking-wider leading-tight">🏨 Experiencia Hotelera + Inversión</h2>
             <ReadMore
                 preview={
                     <p className="text-gray-300 text-lg leading-relaxed">
@@ -427,7 +417,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Section 7: Developer & Current Phase */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
             <div className="space-y-4 md:space-y-6">
                 <h2 className="text-3xl font-serif font-bold text-white uppercase tracking-wider text-center md:text-left">🏗️ Desarrollado Por:</h2>
@@ -476,7 +466,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       </section>
 
       {/* Founder Access Section */}
-      <section className="py-8 md:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <div className="bg-gradient-to-br from-zinc-900 to-black border border-luxury-gold/30 rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl hidden md:block"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-luxury-gold/5 rounded-full blur-3xl hidden md:block"></div>

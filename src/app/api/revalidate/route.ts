@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
         // Also try tag revalidation if tags are provided
         if (body.tags && Array.isArray(body.tags)) {
             for (const tag of body.tags) {
+                // @ts-ignore
                 revalidateTag(tag);
             }
         }

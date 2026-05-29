@@ -28,8 +28,8 @@ export interface Property {
         es: string[];
     };
     detailedSections?: {
-        title: { en: string; es: string };
-        content: { en: string; es: string };
+        title: { en: string; es: string; fr?: string };
+        content: { en: string; es: string; fr?: string };
     }[];
     description: {
         en: string;
@@ -50,15 +50,15 @@ export interface Property {
     };
     constructionStages?: {
         date: string;
-        title: { es: string; en: string };
-        description: { es: string; en: string };
+        title: { es: string; en: string; fr?: string };
+        description: { es: string; en: string; fr?: string };
         status: "completed" | "in-progress" | "pending";
     }[];
     completionPercent?: number;
     seo?: {
-        title: { en: string; es: string };
-        description: { en: string; es: string };
-        keywords: { en: string[]; es: string[] };
+        title: { en: string; es: string; fr?: string };
+        description: { en: string; es: string; fr?: string };
+        keywords: { en: string[]; es: string[]; fr?: string[] };
     };
     hideFromLabel?: boolean;
 }

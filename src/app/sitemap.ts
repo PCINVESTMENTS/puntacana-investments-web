@@ -29,7 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const rawProperties = await client.fetch(PROPERTIES_QUERY);
     const fetchedProperties: Property[] = rawProperties
         .map(mapSanityProperty)
-        .filter((p): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
+        .filter((p: any): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
 
     // Merge logic
     const localMap = new Map(localProperties.map(p => [p.id, p]));
@@ -43,8 +43,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
     const allProperties = [...unitedProperties, ...Array.from(localMap.values())];
 
-    // 3. Generate Entries for Languages (ES / EN)
-    const languages = ['es', 'en'];
+    // 3. Generate Entries for Languages (ES / EN / FR)
+    const languages = ['es', 'en', 'fr'];
 
     const sitemapEntries: MetadataRoute.Sitemap = [];
 

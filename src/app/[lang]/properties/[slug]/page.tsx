@@ -165,21 +165,29 @@ function mapSanityProperty(data: any): Property {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
 
-    // Check local data first for SEO consistency
     const localProperty = properties.find(p => p.slug === slug);
+    const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
+    
     let property: Property;
 
-    if (localProperty) {
+    if (propertyData) {
+        const mappedSanity = mapSanityProperty(propertyData);
+        if (localProperty) {
+            property = {
+                ...localProperty,
+                ...mappedSanity,
+                image: mappedSanity.image || localProperty.image,
+                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery
+            };
+        } else {
+            property = mappedSanity;
+        }
+    } else if (localProperty) {
         property = localProperty;
     } else {
-        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-
-        if (!propertyData) {
-            return {
-                title: 'Propiedad no encontrada',
-            };
-        }
-        property = mapSanityProperty(propertyData);
+        return {
+            title: 'Propiedad no encontrada',
+        };
     }
 
     const seo = property.seo;
@@ -312,16 +320,27 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     const { lang, slug } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
 
-    // Check local data first
     const localProperty = properties.find(p => p.slug === slug);
+    const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
+    
     let property: Property;
 
-    if (localProperty) {
+    if (propertyData) {
+        const mappedSanity = mapSanityProperty(propertyData);
+        if (localProperty) {
+            property = {
+                ...localProperty,
+                ...mappedSanity,
+                image: mappedSanity.image || localProperty.image,
+                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery
+            };
+        } else {
+            property = mappedSanity;
+        }
+    } else if (localProperty) {
         property = localProperty;
     } else {
-        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-        if (!propertyData) notFound();
-        property = mapSanityProperty(propertyData);
+        notFound();
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
