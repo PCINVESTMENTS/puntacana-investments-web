@@ -45,6 +45,34 @@ export function mapSanityProperty(data: any): Property {
 
     let descriptionEs = data.descriptionEs || "";
     let descriptionEn = data.descriptionEn || "";
+    let descriptionFr = data.descriptionFr || "";
+
+    if (data.slug?.current === "alquiler-villa-lujo-amueblada-piscina-white-sands" || data.title?.includes("Sands")) {
+        if (!descriptionFr) {
+            descriptionFr = `Découvrez votre nouvelle oasis à Punta Cana. Cette spectaculaire villa entièrement meublée est située dans la communauté résidentielle exclusive de White Sands à Bávaro, alliant une architecture moderne à **double hauteur** au confort d'un complexe de classe mondiale. Conçue avec une attention aux moindres détails, cette propriété est prête à être habitée ou à générer un retour sur investissement immédiat.
+
+## Caractéristiques de la Propriété
+
+### Design et Espace
+Structure moderne sur deux niveaux avec d'impressionnants plafonds à double hauteur dans le salon principal, maximisant la lumière naturelle et la ventilation. Elle dispose de **135 m²** d'aménagement intelligent et fonctionnel.
+
+### Chambres et Salles de Bain
+Elle dispose de **3 chambres spacieuses** (la principale avec balcon privé et dressing) et **3 salles de bain complètes**.
+
+### Intérieur et Extérieur
+Magnifiquement meublée avec des pièces haut de gamme. Elle comprend une grande cuisine moderne équipée d'un élégant îlot central. À l'extérieur, profitez de votre propre **piscine privée** et d'un parking pouvant accueillir deux véhicules, ainsi que d'une buanderie dédiée.
+
+## L'expérience White Sands
+Vivre à White Sands, c'est profiter d'un style de vie caribéen d'élite avec accès à des commodités de premier ordre :
+- **Accès Privé à la Plage :** Entrée exclusive pour les résidents.
+- **Golf :** Parcours de golf au sein de la communauté.
+- **Sécurité :** Sécurité privée et contrôle d'accès 24/7.
+- **Club-house :** Excellentes installations de loisirs.
+
+## Conditions de Location
+Avec un loyer mensuel de **1 800 $ USD**, cette villa représente une excellente opportunité pour les résidents à long terme. Profitez de la tranquillité et du luxe de White Sands avec toutes les commodités prêtes à l'emploi.`;
+        }
+    }
 
     if (isEpic) {
         descriptionEs = descriptionEs
@@ -75,7 +103,7 @@ export function mapSanityProperty(data: any): Property {
         description: {
             en: descriptionEn,
             es: descriptionEs,
-            fr: data.descriptionFr || ""
+            fr: descriptionFr
         },
         tagline: data.tagline?.includes('Error generating content') 
             ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
