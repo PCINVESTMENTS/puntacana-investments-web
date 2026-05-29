@@ -204,6 +204,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         <div className="flex gap-2 text-xs font-bold text-white border-l border-white/20 pl-4 ml-2">
                             <Link href="/es" className={`hover:text-luxury-gold ${lang === 'es' ? 'text-luxury-gold' : ''}`}>ES</Link>
                             <Link href="/en" className={`hover:text-luxury-gold ${lang === 'en' ? 'text-luxury-gold' : ''}`}>EN</Link>
+                            <Link href="/fr" className={`hover:text-luxury-gold ${lang === 'fr' ? 'text-luxury-gold' : ''}`}>FR</Link>
                         </div>
                     </div>
 
@@ -261,6 +262,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     <div className="p-4 flex gap-8 justify-center mt-6">
                         <Link href="/es" className={`text-lg font-bold p-4 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
                         <Link href="/en" className={`text-lg font-bold p-4 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
+                        <Link href="/fr" className={`text-lg font-bold p-4 ${lang === 'fr' ? 'text-luxury-gold' : 'text-white'}`}>FRANÇAIS</Link>
                     </div>
                 </div>
             </div>
