@@ -35,10 +35,10 @@ import { urlFor } from "@/sanity/lib/image";
 export function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
-    let safeMainImage = data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "");
+    let safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || ""))) : (data.imageUrl || "");
     
     const safeGalleryUrls = data.gallery 
-        ? data.gallery.map((img: any) => urlFor(img).url()) 
+        ? data.gallery.map((img: any) => typeof img === 'string' ? img : (img.asset?._ref ? urlFor(img).url() : img)) 
         : (data.galleryUrls || []);
 
     const isEpic = data.title?.includes('Epic');

@@ -82,9 +82,9 @@ function getLocalizedTitle(property: Property, lang: string) {
 function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
-    const safeMainImage = data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "/images/og-home-luxury.webp");
+    const safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || "/images/og-home-luxury.webp"))) : (data.imageUrl || "/images/og-home-luxury.webp");
     const safeGalleryUrls = data.gallery
-        ? data.gallery.map((img: any) => urlFor(img).url())
+        ? data.gallery.map((img: any) => typeof img === 'string' ? img : (img.asset?._ref ? urlFor(img).url() : img))
         : (data.galleryUrls || []);
 
     const isEpic = data.title?.includes('Epic');
@@ -177,7 +177,17 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                 ...localProperty,
                 ...mappedSanity,
                 image: mappedSanity.image || localProperty.image,
-                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery
+                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
+                description: {
+                    en: mappedSanity.description?.en || localProperty.description?.en || "",
+                    es: mappedSanity.description?.es || localProperty.description?.es || "",
+                    fr: mappedSanity.description?.fr || localProperty.description?.fr || mappedSanity.description?.en || localProperty.description?.en || ""
+                },
+                features: {
+                    en: (mappedSanity.features?.en && mappedSanity.features.en.length > 0) ? mappedSanity.features.en : (localProperty.features?.en || []),
+                    es: (mappedSanity.features?.es && mappedSanity.features.es.length > 0) ? mappedSanity.features.es : (localProperty.features?.es || []),
+                    fr: (mappedSanity.features?.fr && mappedSanity.features.fr.length > 0) ? mappedSanity.features.fr : (localProperty.features?.fr || [])
+                }
             };
         } else {
             property = mappedSanity;
@@ -332,7 +342,17 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                 ...localProperty,
                 ...mappedSanity,
                 image: mappedSanity.image || localProperty.image,
-                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery
+                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
+                description: {
+                    en: mappedSanity.description?.en || localProperty.description?.en || "",
+                    es: mappedSanity.description?.es || localProperty.description?.es || "",
+                    fr: mappedSanity.description?.fr || localProperty.description?.fr || mappedSanity.description?.en || localProperty.description?.en || ""
+                },
+                features: {
+                    en: (mappedSanity.features?.en && mappedSanity.features.en.length > 0) ? mappedSanity.features.en : (localProperty.features?.en || []),
+                    es: (mappedSanity.features?.es && mappedSanity.features.es.length > 0) ? mappedSanity.features.es : (localProperty.features?.es || []),
+                    fr: (mappedSanity.features?.fr && mappedSanity.features.fr.length > 0) ? mappedSanity.features.fr : (localProperty.features?.fr || [])
+                }
             };
         } else {
             property = mappedSanity;
