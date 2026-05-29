@@ -139,11 +139,12 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     ...p,
     description: {
        es: p.description?.es?.substring(0, 200) || "",
-       en: p.description?.en?.substring(0, 200) || ""
+       en: p.description?.en?.substring(0, 200) || "",
+       fr: p.description?.fr?.substring(0, 200) || ""
     },
     gallery: p.gallery?.slice(0, 4) || [],
     rawGallery: p.rawGallery?.slice(0, 4) || [],
-    features: { es: [], en: [] },
+    features: { es: [], en: [], fr: [] },
     constructionStages: [],
     seo: null
   } as unknown as Property));
