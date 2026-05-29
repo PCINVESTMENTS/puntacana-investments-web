@@ -25,9 +25,9 @@ import { Property, properties } from "@/data/properties";
 
 // Helper to map Sanity data to our app's Property interface
 function translatePropertyTitle(title: string, lang: string) {
-    if (lang !== 'en' || !title) return title;
+    if (!title || lang === 'es') return title;
     
-    const exactMatches: Record<string, string> = {
+    const exactMatchesEn: Record<string, string> = {
         "Espectacular Villa de Doble Altura Totalmente Amueblada con Piscina Privada en White Sands, Bávaro": "Spectacular Double-Height Fully Furnished Villa with Private Pool in White Sands, Bavaro",
         "Alquiler | Villa de Lujo Amueblada con Piscina en White Sands": "Rent | Furnished Luxury Villa with Pool in White Sands",
         "Luxury Villa Frame en Cap Cana | Arquitectura, Exclusividad y Estilo de Vida Premium": "Luxury Villa Frame in Cap Cana | Architecture, Exclusivity, and Premium Lifestyle",
@@ -39,9 +39,20 @@ function translatePropertyTitle(title: string, lang: string) {
         "Terrenos | Terreno Hotelero Miches": "Land | Hotel Land in Miches"
     };
 
-    if (exactMatches[title]) {
-        return exactMatches[title];
-    }
+    const exactMatchesFr: Record<string, string> = {
+        "Espectacular Villa de Doble Altura Totalmente Amueblada con Piscina Privada en White Sands, Bávaro": "Spectaculaire Villa à Double Hauteur Entièrement Meublée avec Piscine Privée à White Sands, Bávaro",
+        "Alquiler | Villa de Lujo Amueblada con Piscina en White Sands": "Location | Villa de Luxe Meublée avec Piscine à White Sands",
+        "Luxury Villa Frame en Cap Cana | Arquitectura, Exclusividad y Estilo de Vida Premium": "Luxury Villa Frame à Cap Cana | Architecture, Exclusivité et Style de Vie Premium",
+        "Proyecto Villas Perla | Modernidad, Ubicación Estratégica y Alta Rentabilidad en Bávaro – Punta Cana": "Projet Villas Perla | Modernité, Emplacement Stratégique et Haute Rentabilité à Bávaro – Punta Cana",
+        "Villa de Lujo en Cap Cana | Exclusividad, Privacidad y Estilo de Vida Elite": "Villa de Luxe à Cap Cana | Exclusivité, Intimité et Style de Vie d'Élite",
+        "Villa en Renta Ocean 21 Marina Cap Cana": "Villa à Louer Ocean 21 Marina Cap Cana",
+        "Villa en Renta Amueblada en White Sands Punta Cana": "Villa Meublée à Louer à White Sands Punta Cana",
+        "Villa en Venta en White Sands Punta Cana": "Villa à Vendre à White Sands Punta Cana",
+        "Terrenos | Terreno Hotelero Miches": "Terrains | Terrain Hôtelier Miches"
+    };
+
+    if (lang === 'en' && exactMatchesEn[title]) return exactMatchesEn[title];
+    if (lang === 'fr' && exactMatchesFr[title]) return exactMatchesFr[title];
 
     let translatedTitle = title;
     if (lang === 'fr') {

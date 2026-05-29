@@ -207,7 +207,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredCategory="sale"
         featuredLimit={6}
         sectionId="properties-sale"
-        sectionTitle={lang === 'en' ? 'Properties for Sale' : 'Propiedades en Venta'}
+        sectionTitle={lang === 'en' ? 'Properties for Sale' : lang === 'fr' ? 'Propriétés à Vendre' : 'Propiedades en Venta'}
         lockedStatus="sale"
         exploreLink={`/${lang}/properties?status=sale`}
         initialData={saleProperties}
@@ -220,7 +220,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredCategory="rent"
         featuredLimit={3}
         sectionId="properties-rent"
-        sectionTitle={lang === 'en' ? 'Properties for Rent' : 'Propiedades en Renta'}
+        sectionTitle={lang === 'en' ? 'Properties for Rent' : lang === 'fr' ? 'Propriétés à Louer' : 'Propiedades en Renta'}
         lockedStatus="rent"
         exploreLink={`/${lang}/properties?status=rent`}
         initialData={rentProperties}
@@ -235,7 +235,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         featuredCategory="sale"
         featuredLimit={3}
         sectionId="featured-properties"
-        sectionTitle={lang === 'en' ? 'Featured Properties' : 'Propiedades Destacadas'}
+        sectionTitle={lang === 'en' ? 'Featured Properties' : lang === 'fr' ? 'Propriétés en Vedette' : 'Propiedades Destacadas'}
         initialData={featuredOnlyProperties}
       />
       <FutureProjectsSection lang={lang} />
