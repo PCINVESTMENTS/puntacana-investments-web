@@ -353,7 +353,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
-                                    {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : 'Venta') : (lang === 'en' ? 'Rent' : 'Renta')}
+                                    {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : lang === 'fr' ? 'Vente' : 'Venta') : (lang === 'en' ? 'Rent' : lang === 'fr' ? 'Location' : 'Renta')}
                                 </span>
                                 <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-2 shadow-black drop-shadow-lg">
                                     {translatedTitle}
@@ -365,7 +365,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
                                     {(!property.hideFromLabel && (property.preConstruction || property.preLaunch) && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
-                                        <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : 'Desde'}</span>
+                                        <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : lang === 'fr' ? 'À partir de' : 'Desde'}</span>
                                     )} {formatPrice(property.price)}
                                 </p>
                             </div>
@@ -395,14 +395,14 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <div className="flex flex-col items-center">
                                 <FaRulerCombined className="text-4xl text-luxury-gold mb-3" />
                                 <span className="text-2xl font-bold">{property.area} m² / {Math.round(property.area * 10.764).toLocaleString()} ft²</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">{lang === 'en' ? 'Area' : 'Área'}</span>
+                                <span className="text-gray-400 text-xs uppercase tracking-wider">{lang === 'en' ? 'Area' : lang === 'fr' ? 'Surface' : 'Área'}</span>
                             </div>
                         </div>
 
                         {/* Description Intro */}
                         <div>
                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                {lang === 'en' ? 'Description' : 'Descripción'}
+                                {lang === 'en' ? 'Description' : lang === 'fr' ? 'Description' : 'Descripción'}
                             </h2>
                             <div className="text-gray-300 leading-relaxed text-lg">
                                 <ReactMarkdown
@@ -443,7 +443,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         {galleryImages.length > 0 && (
                             <div>
                                 <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                    {lang === 'en' ? 'Gallery' : 'Galería'}
+                                    {lang === 'en' ? 'Gallery' : lang === 'fr' ? 'Galerie' : 'Galería'}
                                 </h2>
                                 <PropertyGallery images={galleryImages} />
                             </div>
@@ -501,7 +501,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         {/* Features */}
                         <div>
                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                {lang === 'en' ? 'Amenities' : 'Amenidades'}
+                                {lang === 'en' ? 'Amenities' : lang === 'fr' ? 'Commodités' : 'Amenidades'}
                             </h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {(property.features[lang as 'en' | 'es' | 'fr'] || []).map((feat, idx) => (
@@ -526,7 +526,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                             <ContactForm
                                 dict={dict.contact.form}
-                                subject={`${lang === 'en' ? 'Inquiry about' : 'Consulta sobre'}: ${translatedTitle}`}
+                                subject={`${lang === 'en' ? 'Inquiry about' : lang === 'fr' ? 'Demande concernant' : 'Consulta sobre'}: ${translatedTitle}`}
                                 className="mt-4"
                                 lang={lang}
                                 propertyData={JSON.stringify({
@@ -541,13 +541,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <div className="mt-8 text-center pt-8 border-t border-white/10">
                                 <p className="text-sm text-gray-500 mb-4">WhatsApp:</p>
                                 <a href="https://wa.me/18294084322" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-500 hover:text-green-400 font-bold text-lg transition-colors min-h-[48px]">
-                                    <FaWhatsapp aria-hidden="true" className="text-2xl" /> {lang === 'en' ? 'Direct Chat' : 'Chat Directo'}
+                                    <FaWhatsapp aria-hidden="true" className="text-2xl" /> {lang === 'en' ? 'Direct Chat' : lang === 'fr' ? 'Chat Direct' : 'Chat Directo'}
                                 </a>
                             </div>
 
                             {/* Social Share Buttons */}
                             <ShareButtons
-                                title={`${lang === 'en' ? 'Check out this property:' : 'Mira esta propiedad:'} ${translatedTitle}`}
+                                title={`${lang === 'en' ? 'Check out this property:' : lang === 'fr' ? 'Découvrez cette propriété :' : 'Mira esta propiedad:'} ${translatedTitle}`}
                                 url={`https://puntacanainvesment.com/${lang}/properties/${property.slug}`}
                             />
 
