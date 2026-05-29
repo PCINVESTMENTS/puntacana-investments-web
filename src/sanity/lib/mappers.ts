@@ -69,11 +69,13 @@ export function mapSanityProperty(data: any): Property {
         rawGallery: data.gallery,
         features: {
             en: isEpic ? epicFeaturesEn : (data.featuresEn || []),
-            es: isEpic ? epicFeaturesEs : (data.featuresEs || [])
+            es: isEpic ? epicFeaturesEs : (data.featuresEs || []),
+            fr: data.featuresFr || []
         },
         description: {
             en: descriptionEn,
-            es: descriptionEs
+            es: descriptionEs,
+            fr: data.descriptionFr || ""
         },
         tagline: data.tagline?.includes('Error generating content') 
             ? "Exclusivo Apartamento de Lujo, Ideal para Inversión y Alta Rentabilidad (ROI)" 
@@ -81,18 +83,20 @@ export function mapSanityProperty(data: any): Property {
         locationLabel: data.locationLabel || (data.title?.includes('Epic') ? 'Epic Residences' : 'Punta Cana'),
         constructionStages: data.constructionStages?.map((stage: any) => ({
             date: stage.date,
-            title: { en: stage.titleEn, es: stage.titleEs },
-            description: { en: stage.descriptionEn, es: stage.descriptionEs },
+            title: { en: stage.titleEn, es: stage.titleEs, fr: stage.titleFr || stage.titleEs },
+            description: { en: stage.descriptionEn, es: stage.descriptionEs, fr: stage.descriptionFr || stage.descriptionEs },
             status: stage.status
         })),
         seo: {
             title: {
-                en: data.seo?.title?.en || data.title,
-                es: data.seo?.title?.es || data.title
+                en: data.seo?.title?.en || data.titleEn || data.title,
+                es: data.seo?.title?.es || data.titleEs || data.title,
+                fr: data.seo?.title?.fr || data.titleFr || data.title
             },
             description: {
                 en: data.seo?.description?.en || data.descriptionEn || "",
-                es: data.seo?.description?.es || data.descriptionEs || ""
+                es: data.seo?.description?.es || data.descriptionEs || "",
+                fr: data.seo?.description?.fr || data.descriptionFr || ""
             },
             keywords: {
                 en: data.seo?.keywords?.en?.some((k: string) => k.includes('Error')) ? [
@@ -100,7 +104,8 @@ export function mapSanityProperty(data: any): Property {
                 ] : (data.seo?.keywords?.en || []),
                 es: data.seo?.keywords?.es?.some((k: string) => k.includes('Error')) ? [
                     "Inversión inmobiliaria en Punta Cana", "Apartamentos rentables en Punta Cana", "Alta rentabilidad ROI Punta Cana", "Apartamentos para Airbnb en Punta Cana", "Comprar apartamento para alquilar Punta Cana", "Bienes raíces de lujo República Dominicana", "Invertir en Epic Residences Punta Cana", "Apartamento de 1 habitación en Punta Cana", "Apartamentos en venta Downtown Punta Cana", "Proyecto Epic Residences Punta Cana", "Apartamentos económicos Punta Cana", "Apartamentos en planos Punta Cana City Place", "Inmuebles cerca de la playa Punta Cana", "Apartamentos en Punta Cana City Place", "Bienes raíces Downtown Punta Cana", "Comprar propiedad en Punta Cana", "Apartamentos nuevos Punta Cana", "Real Estate Punta Cana", "Mejores apartamentos para comprar en Punta Cana"
-                ] : (data.seo?.keywords?.es || [])
+                ] : (data.seo?.keywords?.es || []),
+                fr: data.seo?.keywords?.fr || []
             }
         }
     };

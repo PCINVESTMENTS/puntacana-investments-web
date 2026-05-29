@@ -115,11 +115,13 @@ function mapSanityProperty(data: any): Property {
         rawGallery: data.gallery,
         features: {
             en: isEpic ? epicFeaturesEn : (data.featuresEn || []),
-            es: isEpic ? epicFeaturesEs : (data.featuresEs || [])
+            es: isEpic ? epicFeaturesEs : (data.featuresEs || []),
+            fr: data.featuresFr || []
         },
         description: {
             en: descriptionEn,
-            es: descriptionEs
+            es: descriptionEs,
+            fr: data.descriptionFr || ""
         },
         constructionStages: data.constructionStages?.map((stage: any) => ({
             date: stage.date,
@@ -128,8 +130,8 @@ function mapSanityProperty(data: any): Property {
             status: stage.status
         })),
         detailedSections: data.detailedSections?.map((section: any) => ({
-            title: { en: section.titleEn, es: section.titleEs },
-            content: { en: section.contentEn, es: section.contentEs }
+            title: { en: section.titleEn, es: section.titleEs, fr: section.titleFr || section.titleEs },
+            content: { en: section.contentEn, es: section.contentEs, fr: section.contentFr || section.contentEs }
         })),
         hideFromLabel: data.hideFromLabel || false,
         locationLabel: data.locationLabel || (data.title?.includes('Epic') ? 'Epic Residences' : 'Punta Cana'),
