@@ -95,7 +95,7 @@ const translatePropertyTitle = (title: string, lang: string) => {
     
     if (lang === 'fr') {
         translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Appartements | ');
-        translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Terrains | ');
+        translatedTitle = translatedTitle.replace(/^(Solares|Terrenos)\s*\|\s*/i, 'Terrains | ');
         translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Locaux Commerciaux | ');
         translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Bâtiments | ');
         translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projets | ');
@@ -104,7 +104,7 @@ const translatePropertyTitle = (title: string, lang: string) => {
 
     if (lang === 'en') {
         translatedTitle = translatedTitle.replace(/^Apartamentos\s*\|\s*/i, 'Apartments | ');
-        translatedTitle = translatedTitle.replace(/^Solares\s*\|\s*/i, 'Land | ');
+        translatedTitle = translatedTitle.replace(/^(Solares|Terrenos)\s*\|\s*/i, 'Land | ');
         translatedTitle = translatedTitle.replace(/^Locales Comerciales\s*\|\s*/i, 'Commercial Properties | ');
         translatedTitle = translatedTitle.replace(/^Edificios\s*\|\s*/i, 'Buildings | ');
         translatedTitle = translatedTitle.replace(/^Proyectos\s*\|\s*/i, 'Projects | ');
@@ -118,6 +118,34 @@ const getLocalizedTitle = (property: Property, lang: string) => {
     if (lang === 'es' && property.titleEs) return property.titleEs;
     if (lang === 'fr' && property.titleFr) return property.titleFr;
     return translatePropertyTitle(property.title, lang);
+};
+
+const isBeachfrontLand = (p: Property): boolean => {
+    const titleLower = (p.title || "").toLowerCase();
+    const slugLower = (p.slug || "").toLowerCase();
+    const descLower = ((p.description?.es || "") + " " + (p.description?.en || "")).toLowerCase();
+    
+    // Check title/slug
+    if (titleLower.includes('playa') || titleLower.includes('beach') || titleLower.includes('mar') || titleLower.includes('ocean')) return true;
+    if (slugLower.includes('playa') || slugLower.includes('beach') || slugLower.includes('mar') || slugLower.includes('ocean')) return true;
+    
+    // Check description
+    if (descLower.includes('frente de playa') || descLower.includes('frente al mar') || descLower.includes('beachfront') || descLower.includes('oceanfront')) return true;
+    
+    // Check features
+    const featuresList = [
+        ...(p.features?.es || []),
+        ...(p.features?.en || []),
+        ...(p.features?.fr || [])
+    ].map(f => f.toLowerCase());
+    
+    return featuresList.some(f => 
+        f.includes('playa') || 
+        f.includes('beach') || 
+        f.includes('mar') || 
+        f.includes('ocean') || 
+        f.includes('frente')
+    );
 };
 
 function CompareToggle({ property, lang }: { property: Property, lang: string }) {
@@ -182,6 +210,9 @@ function PropertyListingsContent({
             if (!lockedStatus && status) setSelectedStatus(status);
             if (price) setMaxPrice(price);
             setIsProject(project);
+
+            // Scroll to top of the page smoothly when filters change via URL
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }, [searchParams, featured, lockedStatus]);
 
@@ -191,7 +222,9 @@ function PropertyListingsContent({
             const matchLoc = selectedLocation === "all" ||
                 p.location === selectedLocation ||
                 (selectedLocation === 'bavaro' && ['vistacana', 'whitesands'].includes(p.location));
-            const matchType = selectedType === "all" || p.type === selectedType;
+            const matchType = selectedType === "all" || 
+                              p.type === selectedType ||
+                              (selectedType === "land-beach" && p.type === "land" && isBeachfrontLand(p));
             const matchStatus = selectedStatus === "all" || p.status === selectedStatus;
             const matchPrice = maxPrice === "any" || p.price <= parseInt(maxPrice);
 
@@ -268,6 +301,7 @@ function PropertyListingsContent({
                                     <option value="villa">{dict.types.villa}</option>
                                     <option value="resorts">{dict.types.resorts}</option>
                                     <option value="penthouse">{dict.types.penthouse}</option>
+                                    <option value="land-beach">{(dict.types as any).land_beach || (lang === 'en' ? "Beachfront Land" : lang === 'fr' ? "Terrains avec Plage" : "Terrenos con Playa")}</option>
                                     <option value="land">{dict.types.land}</option>
                                     <option value="commercial">{dict.types.commercial}</option>
                                 </select>

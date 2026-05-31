@@ -376,13 +376,14 @@ export default {
             condo: "Apartamentos",
             villa: "Villas",
             penthouse: "Penthouses",
-            land: "Solares",
+            land: "Terrenos",
+            land_beach: "Terrenos con Playa",
             commercial: "Locales Comerciales",
             condohotel: "Condo-Hotel",
             resorts: "Hoteles y Resorts",
             projects_villas: "Proyectos de Villas",
             projects_apartments: "Proyectos de Apartamentos",
-            projects_land: "Proyectos de Solares"
+            projects_land: "Proyectos de Terrenos"
         },
         priceRanges: {
             any: "Cualquier Precio",

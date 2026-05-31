@@ -119,8 +119,32 @@ Avec un loyer mensuel de **1 800 $ USD**, cette villa représente une excellente
     const epicFeaturesEs = ["Cancha de Tenis", "Cancha de Baloncesto", "Piscina Infinity", "Piscina", "Cocina Modular", "Seguridad 24/7", "Airbnb Friendly", "Restaurantes Exclusivos", "Shopping Mall", "Supermercado", "Centro de Diversión / Bares", "Hospital / Clínica", "Farmacia", "Colegios Internacionales", "Aeropuerto", "Club de Playa Privado"];
     const epicFeaturesEn = ["Tennis Court", "Basketball Court", "Infinity Pool", "Swimming Pool", "Modular Kitchen", "24/7 Security", "Airbnb Friendly", "Exclusive Restaurants", "Shopping Mall", "Supermarket", "Entertainment Center / Bars", "Hospital / Clinic", "Pharmacy", "International Schools", "Airport", "Private Beach Club"];
 
+    let inferredType = data.type;
+    if (!inferredType) {
+        const titleLower = (data.title || "").toLowerCase();
+        const slugLower = (data.slug?.current || data.slug || "").toLowerCase();
+        if (/\b(villas?)\b/i.test(titleLower) || /\b(villas?)\b/i.test(slugLower)) {
+            inferredType = "villa";
+        } else if (/\b(apartamentos?|condos?|lofts?)\b/i.test(titleLower) || /\b(apartamentos?|condos?|lofts?)\b/i.test(slugLower)) {
+            inferredType = "condo";
+        } else if (/\b(terrenos?|solares?|lotes?)\b/i.test(titleLower) || /\b(terrenos?|solares?|lotes?)\b/i.test(slugLower)) {
+            inferredType = "land";
+        } else if (/\b(locales?|comerciales?)\b/i.test(titleLower) || /\b(locales?|comerciales?)\b/i.test(slugLower)) {
+            inferredType = "commercial";
+        } else if (/\b(resorts?|hoteles?)\b/i.test(titleLower) || /\b(resorts?|hoteles?)\b/i.test(slugLower)) {
+            inferredType = "resorts";
+        }
+    }
+
+    let resolvedId = data.id;
+    if (data._id && data._id.startsWith('django_')) {
+        resolvedId = (data.id || 0) + 10000;
+    }
+
     return {
         ...data,
+        id: resolvedId,
+        type: inferredType,
         image: safeMainImage,
         mainImage: data.mainImage,
         gallery: safeGalleryUrls,

@@ -377,6 +377,7 @@ export default {
             villa: "Villas",
             penthouse: "Penthouses",
             land: "Land",
+            land_beach: "Beachfront Land",
             commercial: "Commercial Premises",
             condohotel: "Condo-Hotel",
             resorts: "Hotels & Resorts",
