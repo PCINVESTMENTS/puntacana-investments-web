@@ -254,11 +254,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         }
     }
     const keywords = keywordList.join(', ');
-
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;
 
     const formatPrice = (price: number) => {
+        if (price === 0) {
+            return lang === 'en' ? 'Price on Request' : lang === 'fr' ? 'Prix sur Demande' : 'Precio a Consultar';
+        }
         return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
     };
     const statusText = property.status === 'rent' ? (lang === 'fr' ? 'LOCATION' : lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'fr' ? 'VENTE' : lang === 'es' ? 'VENTA' : 'SALE');
@@ -381,6 +383,9 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const jsonLd = generateJsonLd(property, lang, baseUrl);
     const formatPrice = (price: number) => {
+        if (price === 0) {
+            return lang === 'en' ? 'Price on Request' : lang === 'fr' ? 'Prix sur Demande' : 'Precio a Consultar';
+        }
         return new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
@@ -540,12 +545,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                         {/* Calculations Section */}
                         <div className="space-y-8">
-                            {property.status === 'sale' && (
+                            {property.status === 'sale' && property.price > 0 && (
                                 <MortgageCalculator price={property.price} />
                             )}
 
                             {/* ROI Calculator only for sale properties */}
-                            {property.status === 'sale' && (
+                            {property.status === 'sale' && property.price > 0 && (
                                 <ROICalculator
                                     price={property.price}
                                     dict={dict.calculator}
