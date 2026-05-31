@@ -62,6 +62,75 @@ export function mapSanityPost(data: any): BlogPost {
 }
 import { urlFor } from "@/sanity/lib/image";
 
+export function normalizeLocation(locationVal: any, locationLabel?: string, title?: string, slug?: string): string {
+    let rawStr = "";
+
+    if (locationVal) {
+        if (typeof locationVal === 'string') {
+            rawStr = locationVal;
+        } else if (typeof locationVal === 'object' && locationVal.current) {
+            rawStr = locationVal.current;
+        }
+    }
+
+    if (!rawStr && locationLabel) {
+        rawStr = locationLabel;
+    }
+    if (!rawStr && title) {
+        rawStr = title;
+    }
+    if (!rawStr && slug) {
+        rawStr = slug;
+    }
+
+    const clean = rawStr.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    if (clean.includes("cap cana") || clean.includes("capcana")) {
+        return "capcana";
+    }
+    if (clean.includes("vista cana") || clean.includes("vistacana")) {
+        return "vistacana";
+    }
+    if (clean.includes("white sands") || clean.includes("whitesands")) {
+        return "whitesands";
+    }
+    if (clean.includes("punta cana") || clean.includes("puntacana")) {
+        return "puntacana";
+    }
+    if (clean.includes("bavaro")) {
+        return "bavaro";
+    }
+    if (clean.includes("miches")) {
+        return "miches";
+    }
+    if (clean.includes("la romana") || clean.includes("laromana")) {
+        return "laromana";
+    }
+    if (clean.includes("casa de campo") || clean.includes("casacampo")) {
+        return "casacampo";
+    }
+    if (clean.includes("juan dolio") || clean.includes("juandolio")) {
+        return "juandolio";
+    }
+    if (clean.includes("bayahibe")) {
+        return "bayahibe";
+    }
+    if (clean.includes("santiago")) {
+        return "santiago";
+    }
+    if (clean.includes("samana")) {
+        return "samana";
+    }
+    if (clean.includes("las terrenas") || clean.includes("lasterrenas")) {
+        return "lasterrenas";
+    }
+    if (clean.includes("puerto plata") || clean.includes("puertoplata")) {
+        return "puertoplata";
+    }
+
+    return "puntacana"; // default fallback
+}
+
 export function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
@@ -72,6 +141,7 @@ export function mapSanityProperty(data: any): Property {
         : (data.galleryUrls || []);
 
     const isEpic = data.title?.includes('Epic');
+
 
     let descriptionEs = data.descriptionEs || "";
     let descriptionEn = data.descriptionEn || "";
@@ -141,12 +211,16 @@ Avec un loyer mensuel de **1 800 $ USD**, cette villa représente une excellente
         resolvedId = (data.id || 0) + 10000;
     }
 
+    const resolvedLocation = normalizeLocation(data.location, data.locationLabel, data.title, data.slug?.current || data.slug);
+
     return {
         ...data,
         id: resolvedId,
         type: inferredType,
+        location: resolvedLocation,
         image: safeMainImage,
         mainImage: data.mainImage,
+
         gallery: safeGalleryUrls,
         rawGallery: data.gallery,
         features: {

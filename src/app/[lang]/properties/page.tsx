@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import PropertyListings from "@/components/home/PropertyListings";
 import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
-import { mapSanityProperty } from "@/sanity/lib/mappers";
+import { mapSanityProperty, normalizeLocation } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import type { Metadata } from "next";
 
@@ -81,6 +81,7 @@ export default async function PropertiesPage({
                     beds: d.bedrooms,
                     baths: d.bathrooms,
                     area: parseFloat(d.area_sqm),
+                    location: normalizeLocation(null, d.location_label, d.title, d.slug),
                     locationLabel: d.location_label,
                     status: d.is_rental_active ? 'rent' : (d.status === 'Disponible' ? 'sale' : 'sold'), // Rental aware mapping
                     descriptionEs: d.description,
@@ -126,6 +127,7 @@ export default async function PropertiesPage({
                     beds: d.bedrooms,
                     baths: d.bathrooms,
                     area: parseFloat(d.area_sqm),
+                    location: normalizeLocation(null, d.location_label, d.title, d.slug),
                     locationLabel: d.location_label,
                     status: d.is_rental_active ? 'rent' : (d.status === 'Disponible' ? 'sale' : 'sold'),
                     descriptionEs: d.description,
