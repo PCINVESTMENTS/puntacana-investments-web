@@ -63,7 +63,17 @@ export function mapSanityPost(data: any): BlogPost {
 import { urlFor } from "@/sanity/lib/image";
 
 export function normalizeLocation(locationVal: any, locationLabel?: string, title?: string, slug?: string): string {
+    // Prioritize Miches categorization if "miches" is present in any field
+    const cleanLabel = (locationLabel || "").toLowerCase();
+    const cleanTitle = (title || "").toLowerCase();
+    const cleanSlug = (slug || "").toLowerCase();
+    const cleanVal = (typeof locationVal === 'string' ? locationVal : (locationVal?.current || "")).toLowerCase();
+    if (cleanLabel.includes("miches") || cleanTitle.includes("miches") || cleanSlug.includes("miches") || cleanVal.includes("miches")) {
+        return "miches";
+    }
+
     let rawStr = "";
+
 
     if (locationVal) {
         if (typeof locationVal === 'string') {
