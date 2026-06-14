@@ -157,7 +157,7 @@ export function mapSanityProperty(data: any): Property {
     let descriptionEn = data.descriptionEn || "";
     let descriptionFr = data.descriptionFr || "";
 
-    if (data.slug?.current === "villa-en-venta-en-white-sands-punta-cana") {
+    if ((data.slug?.current || data.slug) === "villa-en-venta-en-white-sands-punta-cana") {
         data.price = 369900;
     }
 
