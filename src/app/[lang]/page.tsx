@@ -155,9 +155,11 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     seo: null
   } as unknown as Property));
 
-  const saleProperties = stripPayload(properties.filter(p => p.status === "sale").slice(0, 6));
-  const rentProperties = stripPayload(properties.filter(p => p.status === "rent").slice(0, 3));
-  const featuredOnlyProperties = stripPayload(properties.filter(p => p.featured === true).slice(0, 3));
+  const nonLandProperties = properties.filter(p => p.type !== "land");
+
+  const saleProperties = stripPayload(nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
+  const rentProperties = stripPayload(nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
+  const featuredOnlyProperties = stripPayload(nonLandProperties.filter(p => p.featured === true).slice(0, 3));
 
   const faqSchema = {
     "@context": "https://schema.org",
