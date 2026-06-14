@@ -1624,7 +1624,7 @@ Vivir en White Sands significa disfrutar de una vida estilo resort todos los dí
         locationLabel: "White Sands, Bávaro",
         type: "villa",
         status: "sale",
-        price: 365900,
+        price: 369900,
         hideFromLabel: true,
         image: "/images/villa-white-sands-modern-exterior.jpg",
         beds: 3,
