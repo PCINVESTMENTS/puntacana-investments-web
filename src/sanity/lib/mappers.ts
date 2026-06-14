@@ -157,10 +157,6 @@ export function mapSanityProperty(data: any): Property {
     let descriptionEn = data.descriptionEn || "";
     let descriptionFr = data.descriptionFr || "";
 
-    if ((data.slug?.current || data.slug) === "villa-en-venta-en-white-sands-punta-cana") {
-        data.price = 369900;
-    }
-
     if (data.slug?.current === "alquiler-villa-lujo-amueblada-piscina-white-sands" || data.title?.includes("Sands")) {
         if (!descriptionFr) {
             descriptionFr = `Découvrez votre nouvelle oasis à Punta Cana. Cette spectaculaire villa entièrement meublée est située dans la communauté résidentielle exclusive de White Sands à Bávaro, alliant une architecture moderne à **double hauteur** au confort d'un complexe de classe mondiale. Conçue avec une attention aux moindres détails, cette propriété est prête à être habitée ou à générer un retour sur investissement immédiat.
