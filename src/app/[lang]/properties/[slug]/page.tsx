@@ -319,7 +319,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     return {
         '@context': 'https://schema.org',
-        '@type': ['Product', 'RealEstateListing'],
+        '@type': ['RealEstateListing', 'SingleFamilyResidence'],
         name: getLocalizedTitle(property, lang),
         description: property.description?.[lang as 'en' | 'es' | 'fr']?.substring(0, 160) || '',
         image: property.image ? [property.image, ...(property.gallery || [])] : [],
