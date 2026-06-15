@@ -45,6 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
       ? ["Immobilier Punta Cana", "Villas de luxe Punta Cana", "Investissement immobilier République Dominicaine", "Propriétés Cap Cana", "Immobilier hors marché", "Appartements à vendre République Dominicaine", "Immobilier Bavaro", "Retraite à Punta Cana", "Vie expatriée République Dominicaine", "Loi CONFOTUR immobilier Punta Cana", "Villas front de mer à vendre", "Appartements sur plan Punta Cana"]
       : ["Bienes Raíces Punta Cana", "Villas de Lujo Punta Cana", "Inversión Inmobiliaria República Dominicana", "Propiedades Cap Cana", "Bienes Raíces Off-market", "Apartamentos en venta Punta Cana", "Bávaro Inmobiliaria", "Jubilarse en Punta Cana", "Comunidades de expatriados", "Bienes raíces libres de impuestos CONFOTUR", "Villas frente al mar en venta", "Proyectos en planos Punta Cana"],
     metadataBase: new URL(baseUrl),
+    verification: {
+      google: 'KHgQqFznNs3are8uaBvKLSxkYcqx5cdaGj6Qcbyr-wg',
+    },
     robots: {
       index: true,
       follow: true,
