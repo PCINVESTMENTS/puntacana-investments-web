@@ -36,8 +36,9 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                             src="/images/miches-eco-resort-main.jpg"
                             alt="Coming Soon Miches"
                             fill
+                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-110"
-                            quality={90}
+                            quality={85}
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
 
