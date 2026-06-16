@@ -113,6 +113,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} className="scroll-smooth">
       <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
         {/* Scripts are now loaded dynamically via DelayedTracking to prevent TBT */}
       </head>
       <body
