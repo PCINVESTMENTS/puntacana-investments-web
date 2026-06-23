@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaShieldAlt, FaArrowRight } from "react-icons/fa";
 import InteractiveBlocks from "./InteractiveBlocks";
+import MonitoringForm from "@/components/forms/MonitoringForm";
+import PropertyListings from "@/components/home/PropertyListings";
+import { properties as localProperties } from "@/data/properties";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
@@ -275,47 +278,33 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                             </p>
                         </div>
                         
-                        <form className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formName}</label>
-                                    <input type="text" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formEmail}</label>
-                                    <input type="email" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formPhone}</label>
-                                    <input type="tel" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formCountry}</label>
-                                    <input type="text" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formProject}</label>
-                                    <input type="text" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formLocation}</label>
-                                    <input type="text" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formInvestment}</label>
-                                    <input type="text" placeholder="Ej: $150,000 USD" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formDate}</label>
-                                    <input type="text" placeholder="Ej: Marzo 2025" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
-                                </div>
-                            </div>
-                            <button type="button" className="w-full bg-luxury-gold text-black font-bold uppercase tracking-widest py-5 mt-6 hover:bg-white transition-colors">
-                                {t.formButton}
-                            </button>
-                        </form>
+                        <MonitoringForm t={{
+                            formName: t.formName,
+                            formEmail: t.formEmail,
+                            formPhone: t.formPhone,
+                            formCountry: t.formCountry,
+                            formProject: t.formProject,
+                            formLocation: t.formLocation,
+                            formInvestment: t.formInvestment,
+                            formDate: t.formDate,
+                            formButton: t.formButton
+                        }} lang={lang} />
                     </div>
                 </div>
+            </section>
+
+            {/* BLOCK 7.5: Featured Properties (Upsell) */}
+            <section className="bg-[#111111]">
+                <PropertyListings
+                    dict={dict.properties}
+                    lang={lang}
+                    locations={dict.sections.locations.items}
+                    featured={true}
+                    showFeaturedOnly={true}
+                    sectionId="monitoring-featured-properties"
+                    sectionTitle={lang === 'en' ? 'Exclusive Properties for You' : lang === 'fr' ? 'Propriétés Exclusives pour Vous' : 'Propiedades Exclusivas para Ti'}
+                    initialData={localProperties.filter(p => ["villas-perla-del-mar-white-sands", "condos-cruise-on-land-resort-punta-cana", "villa-de-lujo-cap-cana-exclusividad"].includes(p.slug))}
+                />
             </section>
 
             {/* BLOCK 8: Aviso Legal */}
