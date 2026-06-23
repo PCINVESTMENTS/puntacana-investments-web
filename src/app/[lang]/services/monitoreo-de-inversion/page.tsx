@@ -133,10 +133,10 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                 <div className="space-y-4">
                     <p>
                         {lang === 'en'
-                            ? "¿Are you paying monthly quotas during construction? Don't pay blindly. If you are sending money month after month from abroad, our program acts as your progress control tool and absolute peace of mind, ensuring everything progresses strictly according to your signed contract and its established phases:"
+                            ? "¿Are you paying monthly quotas during construction, but you are not physically here to verify that they are actually meeting the real progress? If you are sending money month after month from abroad, our program acts as your progress control tool and absolute peace of mind, ensuring everything progresses strictly according to your signed contract and its established phases:"
                             : lang === 'fr'
-                            ? "Payez-vous des mensualités pendant la construction ? Ne payez pas à l'aveugle. Si vous envoyez de l'argent mois après mois depuis l'étranger, notre programme agit comme votre outil de contrôle de l'avancement et vous offre une tranquillité d'esprit absolue, garantissant que tout avance strictement selon votre contrat signé et ses phases établies :"
-                            : "¿Estás pagando cuotas mensuales durante la construcción? No pagues a ciegas. Si estás enviando dinero mes a mes desde el extranjero, nuestro programa actúa como tu herramienta de control de avance y absoluta tranquilidad, garantizando que todo avance estrictamente acorde a tu contrato firmado y sus fases establecidas:"}
+                            ? "Payez-vous des mensualités pendant la construction, mais vous n'êtes pas physiquement présent pour vérifier s'ils respectent réellement les avancées ? Si vous envoyez de l'argent mois après mois depuis l'étranger, notre programme agit comme votre outil de contrôle de l'avancement et vous offre une tranquillité d'esprit absolue, garantissant que tout avance strictement selon votre contrat signé et ses phases établies :"
+                            : "¿Estás pagando cuotas mensuales durante la construcción, pero no estás aquí físicamente para comprobar que sí están cumpliendo con los avances reales? Si estás enviando dinero mes a mes desde el extranjero, nuestro programa actúa como tu herramienta de control de avance y absoluta tranquilidad, garantizando que todo avance estrictamente acorde a tu contrato firmado y sus fases establecidas:"}
                     </p>
                     <ul className="space-y-3 mt-4 list-disc pl-5">
                         {lang === 'en' ? (
@@ -144,24 +144,24 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                                 <li><strong>Invested Money, Built Money:</strong> Visually confirm that each monthly transfer translates into real progress on the ground.</li>
                                 <li><strong>Milestone Validation:</strong> We confirm every month how the process is advancing and that the construction phases are met before you send your funds as requested by the developer.</li>
                                 <li><strong>Risk Mitigation:</strong> Eliminate the anxiety and uncertainty caused by geographical distance.</li>
-                                <li><strong>Early Correction:</strong> We detect visual anomalies in finishes before closing to claim in time.</li>
-                                <li><strong>Final Handover Inspection:</strong> Technical review of installations, floors, and details before signing the official key handover.</li>
+                                <li><strong>Early Reporting:</strong> If we detect any visual anomaly or deviation in the finishes, we report it to you immediately with photographic evidence. This empowers you with the necessary information to contact the builder and demand corrections in time.</li>
+                                <li><strong>Pre-Delivery Survey:</strong> We conduct a detailed walk-through supported by images and videos, providing you with our objective and expert opinion on the status of the installations and finishes. This gives you a clear and professional criterion before signing the official key handover.</li>
                             </>
                         ) : lang === 'fr' ? (
                             <>
                                 <li><strong>Argent Investi, Argent Construit :</strong> Confirmez visuellement que chaque transfert mensuel se traduit par un avancement réel sur le terrain.</li>
                                 <li><strong>Validation des Étapes :</strong> Nous confirmons chaque mois l'avancement du processus et que les phases de construction sont respectées avant que vous n'envoyiez vos fonds à la demande du promoteur.</li>
                                 <li><strong>Atténuation des Risques :</strong> Éliminez l'anxiété et l'incertitude causées par la distance géographique.</li>
-                                <li><strong>Correction Précoce :</strong> Nous détectons les anomalies visuelles dans les finitions avant la clôture pour réclamer à temps.</li>
-                                <li><strong>Inspection de Livraison Finale :</strong> Examen technique des installations, des sols et des détails avant de signer la remise officielle des clés.</li>
+                                <li><strong>Signalement Rapide :</strong> Si nous détectons une anomalie visuelle ou une déviation dans les finitions, nous vous la signalons immédiatement avec des preuves photographiques. Cela vous donne les informations nécessaires pour contacter le constructeur et exiger des corrections à temps.</li>
+                                <li><strong>État des Lieux Pré-Livraison :</strong> Nous effectuons une visite détaillée appuyée par des images et des vidéos, en vous donnant notre avis objectif et expert sur l'état des installations et des finitions. Cela vous offre un critère clair et professionnel avant de signer la remise officielle des clés.</li>
                             </>
                         ) : (
                             <>
                                 <li><strong>Dinero Invertido, Dinero Construido:</strong> Confirma visualmente que cada transferencia mensual se traduce en avance real en el terreno.</li>
                                 <li><strong>Validación de Hitos:</strong> Confirmamos cada mes cómo va el proceso y el avance de las fases de la obra antes de que envíes tus fondos por requerimiento de la constructora.</li>
                                 <li><strong>Mitigación del Riesgo:</strong> Elimina la ansiedad y la incertidumbre que genera la distancia geográfica.</li>
-                                <li><strong>Corrección Temprana:</strong> Detectamos anomalías visuales en acabados antes del cierre para reclamar a tiempo.</li>
-                                <li><strong>Inspección de Entrega Final:</strong> Revisión técnica de instalaciones, pisos y detalles antes de firmar la recepción oficial de llaves.</li>
+                                <li><strong>Reporte Temprano de Anomalías:</strong> Si detectamos alguna anomalía visual o desviación en los acabados, te lo reportamos de inmediato con evidencia gráfica. De esta forma, estarás empoderado con la información necesaria para comunicarte con la constructora y exigir las correcciones a tiempo.</li>
+                                <li><strong>Levantamiento Previo a la Entrega Final:</strong> Realizamos un recorrido detallado respaldado por imágenes y videos, brindándote nuestra opinión objetiva y experta sobre el estado de las instalaciones y terminaciones. Así contarás con un criterio claro y profesional antes de firmar la recepción oficial de llaves.</li>
                             </>
                         )}
                     </ul>
@@ -178,10 +178,10 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                     </h4>
                     <p>
                         {lang === 'en' 
-                            ? "You will receive a monthly executive report in PDF format that will include the premium photographic record (HD photos/video), aerial drone shots, and a professional contrast of the current progress versus the construction schedule." 
+                            ? "You will receive a periodic executive report (monthly or quarterly) in PDF format that will include the premium photographic record (HD photos/video), aerial drone shots, and a professional contrast of the current progress versus the construction schedule." 
                             : lang === 'fr' 
-                            ? "Vous recevrez un rapport exécutif mensuel au format PDF qui comprendra le dossier photographique premium (photos/vidéos HD), des prises de vue aériennes par drone et une mise en contraste professionnelle de l'avancement actuel par rapport au calendrier de construction."
-                            : "Recibirá un informe ejecutivo mensual en formato PDF que incluirá el registro fotográfico premium (fotos/video HD), tomas aéreas con dron y un contraste profesional del progreso actual versus el cronograma de obra."}
+                            ? "Vous recevrez un rapport exécutif périodique (mensuel ou trimestriel) au format PDF qui comprendra le dossier photographique premium (photos/vidéos HD), des prises de vue aériennes par drone et une mise en contraste professionnelle de l'avancement actuel par rapport au calendrier de construction."
+                            : "Recibirá un informe ejecutivo periódico (mensual o trimestral) en formato PDF que incluirá el registro fotográfico premium (fotos/video HD), tomas aéreas con dron y un contraste profesional del progreso actual versus el cronograma de obra."}
                     </p>
                 </div>
             )
