@@ -47,7 +47,7 @@ exports.properties = [
             "/images/the-beach-kitchen-island-view-punta-cana.jpg",
             "/images/the-beach-modern-living-room-interior-punta-cana.jpg"
         ],
-        videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Placeholder
+        videoUrl: "",
         virtualTourUrl: "https://my.matterport.com/show/?m=aRGoTozjtCa",
         featured: false,
         preConstruction: true,
