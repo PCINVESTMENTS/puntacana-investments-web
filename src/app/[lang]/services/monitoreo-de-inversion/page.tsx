@@ -83,6 +83,8 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
         formPhone: lang === 'en' ? "Phone/WhatsApp (with country code)" : lang === 'fr' ? "Téléphone/WhatsApp (avec indicatif)" : "Teléfono/WhatsApp (con código de país)",
         formCountry: lang === 'en' ? "Country of Residence" : lang === 'fr' ? "Pays de Résidence" : "País de Residencia",
         formProject: lang === 'en' ? "Project and Developer Name" : lang === 'fr' ? "Nom du Projet et Promoteur" : "Nombre del Proyecto y Constructora",
+        formLocation: lang === 'en' ? "Location / Zone" : lang === 'fr' ? "Emplacement / Zone" : "Ubicación de la Propiedad",
+        formInvestment: lang === 'en' ? "Investment Amount (USD)" : lang === 'fr' ? "Montant de l'Investissement (USD)" : "Monto de Inversión (USD)",
         formDate: lang === 'en' ? "Estimated Delivery Date" : lang === 'fr' ? "Date de Livraison Estimée" : "Fecha Estimada de Entrega",
         formButton: lang === 'en' ? "REQUEST MONITORING PLAN" : lang === 'fr' ? "DEMANDER LE PLAN DE SUIVI" : "SOLICITAR PLAN DE MONITOREO",
 
@@ -131,10 +133,10 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                 <div className="space-y-4">
                     <p>
                         {lang === 'en'
-                            ? "¿Are you paying monthly quotas during construction? Don't pay blindly. If you are sending money month after month from abroad, our program acts as your progress control tool and absolute peace of mind:"
+                            ? "¿Are you paying monthly quotas during construction? Don't pay blindly. If you are sending money month after month from abroad, our program acts as your progress control tool and absolute peace of mind, ensuring everything progresses strictly according to your signed contract and its established phases:"
                             : lang === 'fr'
-                            ? "Payez-vous des mensualités pendant la construction ? Ne payez pas à l'aveugle. Si vous envoyez de l'argent mois après mois depuis l'étranger, notre programme agit comme votre outil de contrôle de l'avancement et vous offre une tranquillité d'esprit absolue :"
-                            : "¿Estás pagando cuotas mensuales durante la construcción? No pagues a ciegas. Si estás enviando dinero mes a mes desde el extranjero, nuestro programa actúa como tu herramienta de control de avance y absoluta tranquilidad:"}
+                            ? "Payez-vous des mensualités pendant la construction ? Ne payez pas à l'aveugle. Si vous envoyez de l'argent mois après mois depuis l'étranger, notre programme agit comme votre outil de contrôle de l'avancement et vous offre une tranquillité d'esprit absolue, garantissant que tout avance strictement selon votre contrat signé et ses phases établies :"
+                            : "¿Estás pagando cuotas mensuales durante la construcción? No pagues a ciegas. Si estás enviando dinero mes a mes desde el extranjero, nuestro programa actúa como tu herramienta de control de avance y absoluta tranquilidad, garantizando que todo avance estrictamente acorde a tu contrato firmado y sus fases establecidas:"}
                     </p>
                     <ul className="space-y-3 mt-4 list-disc pl-5">
                         {lang === 'en' ? (
@@ -185,7 +187,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
             )
         },
         {
-            title: lang === 'en' ? "An Exclusive Benefit" : lang === 'fr' ? "Un Avantage Exclusif" : "Sección Cerradora",
+            title: lang === 'en' ? "An Exclusive Benefit" : lang === 'fr' ? "Un Avantage Exclusif" : "Un Beneficio Exclusivo",
             image: "/images/monitoring-closing.png",
             content: (
                 <div className="space-y-4">
@@ -294,6 +296,14 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                                 <div>
                                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formProject}</label>
                                     <input type="text" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formLocation}</label>
+                                    <input type="text" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formInvestment}</label>
+                                    <input type="text" placeholder="Ej: $150,000 USD" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formDate}</label>
