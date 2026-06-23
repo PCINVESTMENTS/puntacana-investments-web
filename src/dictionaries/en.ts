@@ -358,6 +358,15 @@ export default {
                         "Marketing and sales strategies.",
                         "Public-private strategic alliances."
                     ]
+                },
+                {
+                    slug: "monitoreo-de-inversion",
+                    title: "Investment Monitoring",
+                    description: "Independent technical auditing, premium reports, and construction control for foreign investors in pre-construction.",
+                    img: "/images/monitoring-hero.png",
+                    longDescription: "Exclusive service to give you peace of mind. We are your eyes on the site, technically and legally auditing each phase of your remote investment.",
+                    contentSections: [],
+                    details: []
                 }
             ]
         },

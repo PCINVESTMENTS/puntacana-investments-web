@@ -358,6 +358,15 @@ export default {
                         "Stratégies de marketing et de vente.",
                         "Alliances stratégiques public-privé."
                     ]
+                },
+                {
+                    slug: "monitoreo-de-inversion",
+                    title: "Suivi des Investissements",
+                    description: "Audit technique indépendant, rapports premium et contrôle de la construction pour les investisseurs étrangers en pré-construction.",
+                    img: "/images/monitoring-hero.png",
+                    longDescription: "Service exclusif pour vous offrir la tranquillité d'esprit. Nous sommes vos yeux sur le chantier, en auditant techniquement et légalement chaque phase de votre investissement à distance.",
+                    contentSections: [],
+                    details: []
                 }
             ]
         },

@@ -358,6 +358,15 @@ export default {
                         "Estrategias de comercialización y ventas.",
                         "Alianzas estratégicas público-privadas."
                     ]
+                },
+                {
+                    slug: "monitoreo-de-inversion",
+                    title: "Monitoreo de Inversión",
+                    description: "Auditoría técnica independiente, reportes premium y control de obra para inversionistas extranjeros en pre-construcción.",
+                    img: "/images/monitoring-hero.png",
+                    longDescription: "Servicio exclusivo para brindarle paz mental. Somos sus ojos en la obra, auditando técnica y legalmente cada fase de su inversión a distancia.",
+                    contentSections: [],
+                    details: []
                 }
             ]
         },
