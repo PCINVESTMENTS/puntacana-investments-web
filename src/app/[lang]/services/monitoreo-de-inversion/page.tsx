@@ -62,10 +62,10 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
         heroSubtitle: lang === 'en' ? "Did you buy a pre-construction property in the Dominican Republic through another company and live abroad? Protect your assets and supervise the real progress of your construction with our expert team." : lang === 'fr' ? "Avez-vous acheté une propriété sur plan en République Dominicaine via une autre agence et vivez à l'étranger ? Protégez votre patrimoine et supervisez l'avancement réel de votre construction avec notre équipe d'experts." : "¿Compraste una propiedad en planos en República Dominicana a través de otra empresa y vives en el extranjero? Protege tu patrimonio y supervisa el avance real de tu construcción con nuestro equipo experto.",
         
         promiseText: lang === 'en'
-            ? "Investing from afar is an excellent financial decision, but the lack of constant information and uncertainty about actual delivery times can cause concern. At Punta Cana Real Estate & Investments, we combine our solid track record in real estate brokerage with the technical and engineering expertise of our development arm, PCI CONSTRUCTION GROUP PUNTA CANA."
+            ? "Investing from afar is an excellent financial decision, but the lack of constant information and uncertainty about actual delivery times can cause concern. At Punta Cana Investments, we combine our solid track record in real estate brokerage with the technical and engineering expertise of our development arm, PCI CONSTRUCTION GROUP PUNTA CANA."
             : lang === 'fr'
-            ? "Investir à distance est une excellente décision financière, mais le manque d'informations constantes et l'incertitude quant aux délais de livraison réels peuvent susciter des inquiétudes. Chez Punta Cana Real Estate & Investments, nous combinons notre solide expérience dans le courtage immobilier avec l'expertise technique et d'ingénierie de notre branche de développement, PCI CONSTRUCTION GROUP PUNTA CANA."
-            : "Invertir a distancia es una excelente decisión financiera, pero la falta de información constante y la incertidumbre sobre los plazos de entrega reales pueden generar preocupación. En Punta Cana Real Estate & Investments, combinamos nuestra sólida trayectoria en la intermediación inmobiliaria con la experiencia técnica y de ingeniería de nuestro brazo desarrollador, PCI CONSTRUCTION GROUP PUNTA CANA.",
+            ? "Investir à distance est une excellente décision financière, mais le manque d'informations constantes et l'incertitude quant aux délais de livraison réels peuvent susciter des inquiétudes. Chez Punta Cana Investments, nous combinons notre solide expérience dans le courtage immobilier avec l'expertise technique et d'ingénierie de notre branche de développement, PCI CONSTRUCTION GROUP PUNTA CANA."
+            : "Invertir a distancia es una excelente decisión financiera, pero la falta de información constante y la incertidumbre sobre los plazos de entrega reales pueden generar preocupación. En Punta Cana Investments, combinamos nuestra sólida trayectoria en la intermediación inmobiliaria con la experiencia técnica y de ingeniería de nuestro brazo desarrollador, PCI CONSTRUCTION GROUP PUNTA CANA.",
 
         highlightBox: lang === 'en'
             ? "This is a fully independent consulting, visual inspection, and reporting service. It is available to any international investor, regardless of which real estate agency or developer they originally purchased through."
@@ -142,7 +142,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                         {lang === 'en' ? (
                             <>
                                 <li><strong>Invested Money, Built Money:</strong> Visually confirm that each monthly transfer translates into real progress on the ground.</li>
-                                <li><strong>Milestone Validation:</strong> We physically audit that construction phases are met before you send your funds as requested by the developer.</li>
+                                <li><strong>Milestone Validation:</strong> We confirm every month how the process is advancing and that the construction phases are met before you send your funds as requested by the developer.</li>
                                 <li><strong>Risk Mitigation:</strong> Eliminate the anxiety and uncertainty caused by geographical distance.</li>
                                 <li><strong>Early Correction:</strong> We detect visual anomalies in finishes before closing to claim in time.</li>
                                 <li><strong>Final Handover Inspection:</strong> Technical review of installations, floors, and details before signing the official key handover.</li>
@@ -150,7 +150,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                         ) : lang === 'fr' ? (
                             <>
                                 <li><strong>Argent Investi, Argent Construit :</strong> Confirmez visuellement que chaque transfert mensuel se traduit par un avancement réel sur le terrain.</li>
-                                <li><strong>Validation des Étapes :</strong> Nous auditons physiquement que les phases de construction sont respectées avant que vous n'envoyiez vos fonds à la demande du promoteur.</li>
+                                <li><strong>Validation des Étapes :</strong> Nous confirmons chaque mois l'avancement du processus et que les phases de construction sont respectées avant que vous n'envoyiez vos fonds à la demande du promoteur.</li>
                                 <li><strong>Atténuation des Risques :</strong> Éliminez l'anxiété et l'incertitude causées par la distance géographique.</li>
                                 <li><strong>Correction Précoce :</strong> Nous détectons les anomalies visuelles dans les finitions avant la clôture pour réclamer à temps.</li>
                                 <li><strong>Inspection de Livraison Finale :</strong> Examen technique des installations, des sols et des détails avant de signer la remise officielle des clés.</li>
@@ -158,7 +158,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                         ) : (
                             <>
                                 <li><strong>Dinero Invertido, Dinero Construido:</strong> Confirma visualmente que cada transferencia mensual se traduce en avance real en el terreno.</li>
-                                <li><strong>Validación de Hitos:</strong> Auditamos físicamente que se cumplan las fases de la obra antes de que envíes tus fondos por requerimiento de la constructora.</li>
+                                <li><strong>Validación de Hitos:</strong> Confirmamos cada mes cómo va el proceso y el avance de las fases de la obra antes de que envíes tus fondos por requerimiento de la constructora.</li>
                                 <li><strong>Mitigación del Riesgo:</strong> Elimina la ansiedad y la incertidumbre que genera la distancia geográfica.</li>
                                 <li><strong>Corrección Temprana:</strong> Detectamos anomalías visuales en acabados antes del cierre para reclamar a tiempo.</li>
                                 <li><strong>Inspección de Entrega Final:</strong> Revisión técnica de instalaciones, pisos y detalles antes de firmar la recepción oficial de llaves.</li>
@@ -178,10 +178,10 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                     </h4>
                     <p>
                         {lang === 'en' 
-                            ? "Premium graphic reports (HD photos/video), aerial drone shots, and professional contrast of the construction schedule." 
+                            ? "You will receive a monthly executive report in PDF format that will include the premium photographic record (HD photos/video), aerial drone shots, and a professional contrast of the current progress versus the construction schedule." 
                             : lang === 'fr' 
-                            ? "Rapports graphiques premium (photos/vidéos HD), prises de vue aériennes par drone et mise en contraste professionnelle du calendrier de construction."
-                            : "Reportes gráficos premium (fotos/video HD), tomas aéreas con dron y contraste profesional del cronograma de obra."}
+                            ? "Vous recevrez un rapport exécutif mensuel au format PDF qui comprendra le dossier photographique premium (photos/vidéos HD), des prises de vue aériennes par drone et une mise en contraste professionnelle de l'avancement actuel par rapport au calendrier de construction."
+                            : "Recibirá un informe ejecutivo mensual en formato PDF que incluirá el registro fotográfico premium (fotos/video HD), tomas aéreas con dron y un contraste profesional del progreso actual versus el cronograma de obra."}
                     </p>
                 </div>
             )
@@ -196,10 +196,10 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                     </h4>
                     <p>
                         {lang === 'en'
-                            ? "¿Haven't purchased yet or thinking about your next investment? At Punta Cana Real Estate & Investments, we take care of our own. For all investors who acquire their off-plan or pre-construction properties directly through our firm, this technical monitoring, periodic reporting, and final delivery inspection service is COMPLETELY INCLUDED within our management, at no additional cost."
+                            ? "¿Haven't purchased yet or thinking about your next investment? At Punta Cana Investments, we take care of our own. For all investors who acquire their off-plan or pre-construction properties directly through our firm, this technical monitoring, periodic reporting, and final delivery inspection service is COMPLETELY INCLUDED within our management, at no additional cost."
                             : lang === 'fr'
-                            ? "Vous n'avez pas encore acheté ou vous pensez à votre prochain investissement ? Chez Punta Cana Real Estate & Investments, nous prenons soin des nôtres. Pour tous les investisseurs qui acquièrent leurs propriétés sur plan ou en pré-construction directement par l'intermédiaire de notre cabinet, ce service de suivi technique, de rapports périodiques et d'inspection de livraison finale est ENTIÈREMENT INCLUS dans notre gestion, sans aucun coût supplémentaire."
-                            : "¿Aún no has comprado o estás pensando en tu próxima inversión? En Punta Cana Real Estate & Investments cuidamos a los nuestros. Para todos los inversionistas que adquieren sus propiedades en planos o pre-construcción directamente a través de nuestra firma, este servicio de monitoreo técnico, reportes periódicos e inspección final de entrega está COMPLETAMENTE INCLUIDO dentro de nuestra gestión, sin ningún costo adicional."}
+                            ? "Vous n'avez pas encore acheté ou vous pensez à votre prochain investissement ? Chez Punta Cana Investments, nous prenons soin des nôtres. Pour tous les investisseurs qui acquièrent leurs propriétés sur plan ou en pré-construction directement par l'intermédiaire de notre cabinet, ce service de suivi technique, de rapports périodiques et d'inspection de livraison finale est ENTIÈREMENT INCLUS dans notre gestion, sans aucun coût supplémentaire."
+                            : "¿Aún no has comprado o estás pensando en tu próxima inversión? En Punta Cana Investments cuidamos a los nuestros. Para todos los inversionistas que adquieren sus propiedades en planos o pre-construcción directamente a través de nuestra firma, este servicio de monitoreo técnico, reportes periódicos e inspección final de entrega está COMPLETAMENTE INCLUIDO dentro de nuestra gestión, sin ningún costo adicional."}
                     </p>
                 </div>
             )
