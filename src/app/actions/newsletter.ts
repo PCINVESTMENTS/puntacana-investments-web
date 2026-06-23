@@ -77,7 +77,7 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
                     <div style="background-color: #1a1a1a; padding: 25px; border-left: 4px solid #c9ae5d; margin: 30px 0; border-radius: 4px;">
                         <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 15px;"><strong>Agende su sesión confidencial:</strong></p>
                         <p style="margin: 0;">
-                            <a href="https://calendly.com/" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Programar Videollamada VIP</a>
+                            <a href="https://calendly.com/ulisespp9/30min" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Programar Videollamada VIP</a>
                         </p>
                     </div>
                 </div>
