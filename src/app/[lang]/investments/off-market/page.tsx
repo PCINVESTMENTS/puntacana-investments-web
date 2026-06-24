@@ -56,28 +56,28 @@ export default async function OffMarketPage({
             <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden border-b border-luxury-gold/20">
                 {/* Background Image Setup */}
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40 z-10"></div>
+                    <div className="absolute inset-0 bg-black/40 z-10"></div>
                     <Image 
                         src="/images/og-home-luxury.webp" 
                         alt="Portafolio Privado Punta Cana Investments" 
                         fill
-                        className="object-cover object-right opacity-40 grayscale"
+                        className="object-cover object-center"
                         priority
                     />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full text-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full flex justify-center text-center">
                     <ScrollReveal>
-                        <div className="max-w-3xl mx-auto flex flex-col items-center">
-                            <span className="text-luxury-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
+                        <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
+                            <span className="text-luxury-gold uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block text-center">
                                 Private Placement Memorandum
                             </span>
-                            <h1 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-6 uppercase tracking-tight leading-tight">
+                            <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-white mb-4 uppercase tracking-tight leading-tight text-center">
                                 Portafolio Inmobiliario Privado: <br className="hidden md:block"/>
                                 <span className="text-luxury-gold">Operaciones Off-Market</span>
                             </h1>
-                            <div className="h-1 w-16 bg-luxury-gold mb-8"></div>
-                            <p className="text-gray-300 text-base md:text-lg leading-relaxed font-light">
+                            <div className="h-0.5 w-16 bg-luxury-gold mb-6 mx-auto"></div>
+                            <p className="text-gray-200 text-sm md:text-base leading-relaxed font-light text-center max-w-2xl mx-auto drop-shadow-md">
                                 Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.
                             </p>
                         </div>
