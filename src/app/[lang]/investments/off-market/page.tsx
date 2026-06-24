@@ -58,7 +58,7 @@ export default async function OffMarketPage({
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
                     <Image 
-                        src="/images/og-home-luxury.webp" 
+                        src="/images/off-market-hero.png" 
                         alt="Portafolio Privado Punta Cana Investments" 
                         fill
                         className="object-cover object-center"
@@ -120,10 +120,10 @@ export default async function OffMarketPage({
                         <ScrollReveal direction="left">
                             <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
                                 <Image 
-                                    src="/images/og-home-luxury.webp" 
+                                    src="/images/off-market-auction.jpg" 
                                     alt="Market Value vs Auction Price Analysis" 
                                     fill
-                                    className="object-cover grayscale"
+                                    className="object-cover"
                                 />
                                 <div className="absolute inset-0 bg-black/20"></div>
                             </div>
