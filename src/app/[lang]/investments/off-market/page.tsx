@@ -61,6 +61,7 @@ export default async function OffMarketPage({
                         src="/images/off-market-hero-v2.jpg" 
                         alt="Portafolio Privado Punta Cana Investments" 
                         className="absolute inset-0 w-full h-full object-cover object-center"
+                        fetchPriority="high"
                     />
                 </div>
 
@@ -84,7 +85,7 @@ export default async function OffMarketPage({
             </section>
 
             {/* 2. SECTION: HOTELES, RESORTS Y MACRO-LOTES */}
-            <section className="py-24 bg-black relative">
+            <section className="py-16 md:py-24 bg-black relative">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal>
                         <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 uppercase tracking-wide border-l-4 border-luxury-gold pl-6">
@@ -112,7 +113,7 @@ export default async function OffMarketPage({
             </section>
 
             {/* 3. SECTION: PROPIEDADES EN REMATE (DISTRESSED ASSETS) */}
-            <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+            <section className="py-16 md:py-24 bg-[#0a0a0a] relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
@@ -120,6 +121,7 @@ export default async function OffMarketPage({
                                 src="/images/off-market-auction-v4.jpg" 
                                 alt="Market Value vs Auction Price Analysis" 
                                 className="absolute inset-0 w-full h-full object-cover"
+                                loading="lazy"
                             />
                             <div className="absolute inset-0 bg-black/20"></div>
                         </div>
@@ -146,7 +148,7 @@ export default async function OffMarketPage({
             </section>
 
             {/* 4. SECTION: EL PROTOCOLO DE FILTRADO Y COMPLIANCE */}
-            <section className="py-24 bg-black">
+            <section className="py-16 md:py-24 bg-black">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal>
                         <div className="border border-luxury-gold p-8 md:p-14 relative bg-[#050505]">
@@ -171,19 +173,19 @@ export default async function OffMarketPage({
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">1. Acuerdo de Confidencialidad y No Divulgación (NDA)</h4>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">1. Acuerdo de Confidencialidad y No Divulgación (NDA)</h3>
                                     <p className="text-gray-400 font-light text-sm">Firma obligatoria de un acuerdo legal que penaliza el uso indebido o la filtración a terceros de la información suministrada sobre el activo.</p>
                                 </div>
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">2. Prueba de Fondos (Proof of Funds - POF)</h4>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">2. Prueba de Fondos (Proof of Funds - POF)</h3>
                                     <p className="text-gray-400 font-light text-sm">Certificación bancaria oficial o carta de líneas de crédito que demuestre la capacidad de liquidez inmediata para ejecutar la operación.</p>
                                 </div>
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">3. Documentación de Identidad y Registro Corporativo</h4>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">3. Documentación de Identidad y Registro Corporativo</h3>
                                     <p className="text-gray-400 font-light text-sm">Copias de identificaciones oficiales de los beneficiarios finales, o el Registro Mercantil y actas corporativas vigentes si la adquisición se realiza a través de una empresa.</p>
                                 </div>
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">4. Formulario KYC (Know Your Customer)</h4>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">4. Formulario KYC (Know Your Customer)</h3>
                                     <p className="text-gray-400 font-light text-sm">Cumplimentación de nuestro registro de transparencia, previniendo el lavado de activos y blindando la operación bajo los marcos regulatorios internacionales.</p>
                                 </div>
                             </div>
@@ -193,7 +195,7 @@ export default async function OffMarketPage({
             </section>
 
             {/* 5. SECTION: FORMULARIO DE APLICACIÓN PRIVADA */}
-            <section className="py-24 bg-black relative" id="application-form">
+            <section className="py-16 md:py-24 bg-black relative" id="application-form">
                 {/* Subtle Grid Background */}
                 <div className="absolute inset-0 bg-transparent opacity-[0.03] pointer-events-none mix-blend-screen"></div>
                 
