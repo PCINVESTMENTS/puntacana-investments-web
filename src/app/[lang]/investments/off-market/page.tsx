@@ -58,12 +58,11 @@ export default async function OffMarketPage({
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
                     <Image 
-                        src="/images/off-market-hero.png" 
+                        src="/images/off-market-hero.jpg" 
                         alt="Portafolio Privado Punta Cana Investments" 
                         fill
                         className="object-cover object-center"
                         priority
-                        unoptimized={true}
                     />
                 </div>
 
@@ -125,7 +124,6 @@ export default async function OffMarketPage({
                                     alt="Market Value vs Auction Price Analysis" 
                                     fill
                                     className="object-cover"
-                                    unoptimized={true}
                                 />
                                 <div className="absolute inset-0 bg-black/20"></div>
                             </div>
