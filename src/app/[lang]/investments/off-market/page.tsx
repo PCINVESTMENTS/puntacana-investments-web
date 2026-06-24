@@ -63,6 +63,7 @@ export default async function OffMarketPage({
                         fill
                         className="object-cover object-center"
                         priority
+                        unoptimized={true}
                     />
                 </div>
 
@@ -124,6 +125,7 @@ export default async function OffMarketPage({
                                     alt="Market Value vs Auction Price Analysis" 
                                     fill
                                     className="object-cover"
+                                    unoptimized={true}
                                 />
                                 <div className="absolute inset-0 bg-black/20"></div>
                             </div>
