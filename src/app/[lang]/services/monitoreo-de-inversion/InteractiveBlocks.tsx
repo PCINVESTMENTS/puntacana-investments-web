@@ -34,7 +34,7 @@ export default function InteractiveBlocks({ blocks, translations }: any) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent group-hover:from-black/80 transition-all duration-500"></div>
                         <div className="absolute inset-x-0 bottom-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-2 leading-tight">{block.title}</h3>
+                            <h2 className="text-xl md:text-2xl font-serif font-bold text-white mb-2 leading-tight">{block.title}</h2>
                             <p className="text-luxury-gold text-xs uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 flex items-center gap-2">
                                 <span className="w-4 h-px bg-luxury-gold"></span> {translations.clickToExpand}
                             </p>

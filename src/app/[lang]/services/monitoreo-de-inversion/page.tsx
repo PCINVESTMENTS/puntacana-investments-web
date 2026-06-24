@@ -238,7 +238,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
             </section>
 
             {/* BLOCK 2: Respaldo y Cláusula Independiente */}
-            <section className="py-20 relative overflow-hidden bg-[#0A0A0A] border-y border-white/5">
+            <section className="py-16 md:py-20 relative overflow-hidden bg-[#0A0A0A] border-y border-white/5">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                     <p className="text-xl text-gray-300 font-light leading-relaxed mb-10">
                         {t.promiseText}
@@ -256,14 +256,14 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
             </section>
 
             {/* BLOCK 3 - 6: Interactive Modals */}
-            <section className="py-12 bg-[#111111] relative">
+            <section className="py-16 md:py-20 bg-[#111111] relative">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <InteractiveBlocks blocks={blocks} translations={{clickToExpand: t.clickToExpand}} />
                 </div>
             </section>
 
             {/* BLOCK 7: Formulario de Captación */}
-            <section id="contact-monitoring" className="py-24 relative bg-[#0A0A0A]">
+            <section id="contact-monitoring" className="py-16 md:py-24 relative bg-[#0A0A0A]">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-[#111111] p-8 md:p-12 border border-white/10 shadow-2xl relative">
                         {/* Gold accent line */}
@@ -308,7 +308,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
             </section>
 
             {/* BLOCK 8: Aviso Legal */}
-            <section className="py-16 bg-black border-t border-white/5">
+            <section className="py-12 md:py-16 bg-black border-t border-white/5">
                 <div className="max-w-5xl mx-auto px-6 text-center">
                     <p className="text-[11px] md:text-xs text-gray-600 uppercase tracking-wider max-w-4xl mx-auto leading-relaxed">
                         {t.disclaimer}
