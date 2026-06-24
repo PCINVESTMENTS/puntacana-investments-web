@@ -66,18 +66,18 @@ export default async function OffMarketPage({
                     />
                 </div>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full text-center">
                     <ScrollReveal>
-                        <div className="max-w-3xl">
+                        <div className="max-w-4xl mx-auto">
                             <span className="text-luxury-gold uppercase tracking-[0.3em] text-sm md:text-base font-bold mb-4 block">
                                 Private Placement Memorandum
                             </span>
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white mb-6 uppercase tracking-tight leading-tight">
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white mb-6 uppercase tracking-tight leading-tight">
                                 Portafolio Inmobiliario Privado: <br className="hidden md:block"/>
                                 <span className="text-luxury-gold">Operaciones Off-Market</span>
                             </h1>
-                            <div className="h-1 w-24 bg-luxury-gold mb-8"></div>
-                            <p className="text-gray-300 text-lg md:text-xl leading-relaxed font-light max-w-2xl">
+                            <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
+                            <p className="text-gray-300 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto">
                                 Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.
                             </p>
                         </div>

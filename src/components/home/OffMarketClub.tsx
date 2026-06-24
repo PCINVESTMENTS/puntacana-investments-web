@@ -1,14 +1,11 @@
 "use client";
 
-import { useActionState, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaLock, FaUserSecret, FaGem, FaArrowRight, FaCheckCircle, FaSpinner } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaLock, FaUserSecret, FaGem } from "react-icons/fa";
 import Image from "next/image";
-import { submitNewsletter } from "@/app/actions/newsletter";
+import Link from "next/link";
 
 export default function OffMarketClub({ lang }: { lang: string }) {
-    const [state, formAction, isPending] = useActionState(submitNewsletter, { success: false, message: '' });
-
     return (
         <section className="py-10 lg:py-24 bg-black relative overflow-hidden">
             {/* Background elements */}
@@ -56,85 +53,37 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                         </div>
                     </div>
 
-                    {/* Form Side */}
-                    <div className="lg:w-1/2 p-6 lg:p-12 bg-black/70 flex flex-col justify-center">
-                        <AnimatePresence mode="wait">
-                            {!state.success ? (
-                                <motion.div
-                                    key="form"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                >
-                                    <div className="mb-8">
-                                        <div className="w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center text-luxury-gold text-xl mb-4">
-                                            <FaUserSecret aria-hidden="true" />
-                                        </div>
-                                        <h3 className="text-2xl font-bold text-white mb-2">
-                                            {lang === "en" ? "Unlock the Secret Portfolio" : "Desbloquea el Portafolio Secreto"}
-                                        </h3>
-                                        <p className="text-gray-400 text-sm italic">
-                                            {lang === "en"
-                                                ? "Join our elite circle of investors in the Dominican Republic."
-                                                : "Únete a nuestro círculo élite de inversores en República Dominicana."}
-                                        </p>
-                                    </div>
+                    {/* Action Side */}
+                    <div className="lg:w-1/2 p-6 lg:p-12 bg-black/70 flex flex-col justify-center items-center text-center">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            className="w-full max-w-sm mx-auto"
+                        >
+                            <div className="mb-8">
+                                <div className="w-16 h-16 bg-luxury-gold/10 rounded-full flex items-center justify-center text-luxury-gold text-2xl mx-auto mb-6">
+                                    <FaUserSecret aria-hidden="true" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-4">
+                                    {lang === "en" ? "Unlock the Secret Portfolio" : "Desbloquea el Portafolio Secreto"}
+                                </h3>
+                                <p className="text-gray-400 text-sm italic mb-10 leading-relaxed">
+                                    {lang === "en"
+                                        ? "Join our elite circle of investors in the Dominican Republic and gain access to high-value distressed assets and private hotel acquisitions."
+                                        : "Únete a nuestro círculo élite de inversores en República Dominicana y accede a activos de gran valor y liquidaciones patrimoniales."}
+                                </p>
+                            </div>
 
-                                    <form action={formAction} className="space-y-4">
-                                        <input type="hidden" name="source" value="Off Market Club" />
-                                        <div>
-                                            <label htmlFor="email-offmarket" className="block text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-2">
-                                                {lang === "en" ? "Professional Email" : "Email Profesional"}
-                                            </label>
-                                            <input
-                                                id="email-offmarket"
-                                                type="email"
-                                                name="email"
-                                                required
-                                                autoComplete="email"
-                                                placeholder="investor@domain.com"
-                                                className="w-full bg-black border border-white/10 rounded p-4 text-white focus:border-luxury-gold outline-none transition-all placeholder:text-gray-500"
-                                            />
-                                        </div>
-                                        <button
-                                            type="submit"
-                                            disabled={isPending}
-                                            className="w-full bg-luxury-gold text-black font-bold py-4 uppercase tracking-[0.2em] text-sm hover:bg-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg disabled:opacity-50"
-                                        >
-                                            {isPending ? <FaSpinner aria-hidden="true" className="animate-spin mx-auto" /> : (lang === "en" ? "Get Instant Access" : "Obtener Acceso Instantáneo")}
-                                        </button>
-                                        <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest">
-                                            {lang === "en" ? "No commitment required. 100% Confidential." : "Sin compromiso. 100% Confidencial."}
-                                        </p>
-                                    </form>
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="success"
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="text-center"
-                                >
-                                    <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-                                        <FaCheckCircle aria-hidden="true" />
-                                    </div>
-                                    <h3 className="text-3xl font-bold text-white mb-4">
-                                        {lang === "en" ? "Welcome to the Club" : "Bienvenido al Club"}
-                                    </h3>
-                                    <p className="text-gray-400 mb-8 max-w-sm mx-auto">
-                                        {lang === "en"
-                                            ? "We've sent the current off-market catalog to your email. An investment advisor will reach out shortly."
-                                            : "Hemos enviado el catálogo off-market actual a tu email. Un asesor de inversión se pondrá en contacto pronto."}
-                                    </p>
-                                    <button
-                                        onClick={() => window.location.reload()}
-                                        className="text-luxury-gold uppercase tracking-widest text-xs font-bold hover:text-white transition-colors"
-                                    >
-                                        {lang === "en" ? "Return to Home" : "Volver al Inicio"}
-                                    </button>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                            <Link
+                                href={`/${lang}/investments/off-market`}
+                                className="block w-full bg-luxury-gold text-black font-bold py-5 px-6 uppercase tracking-[0.2em] text-sm hover:bg-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                            >
+                                {lang === "en" ? "Access Private Portfolio" : "Acceder al Portafolio Privado"}
+                            </Link>
+                            <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest mt-6">
+                                {lang === "en" ? "Institutional Verification Required. 100% Confidential." : "Verificación Institucional Requerida. 100% Confidencial."}
+                            </p>
+                        </motion.div>
                     </div>
 
                 </div>
