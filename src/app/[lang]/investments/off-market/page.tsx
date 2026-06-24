@@ -2,8 +2,8 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { FaLock, FaEnvelope, FaShieldAlt, FaKey } from "react-icons/fa";
-import Link from "next/link";
+import OffMarketForm from "@/components/investments/OffMarketForm";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -12,16 +12,12 @@ export async function generateMetadata({
     params: Promise<{ lang: 'es' | 'en' | 'fr' }>;
 }): Promise<Metadata> {
     const { lang } = await params;
-    const dict = await getDictionary(lang);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
     return {
-        title: (lang === 'en' ? 'Off-Market Opportunities' : lang === 'fr' ? 'Opportunités Hors Marché' : 'Oportunidades Off-Market') + ' | Punta Cana Investments',
-        description: lang === 'en'
-            ? 'Exclusive access to private real estate listings in Punta Cana. High-value off-market investments for sophisticated buyers.'
-            : lang === 'fr'
-            ? 'Accès exclusif à des annonces immobilières privées à Punta Cana. Investissements hors marché de grande valeur.'
-            : 'Acceso exclusivo a listados privados en Punta Cana. Inversiones off-market de alto valor para compradores sofisticados.',
+        title: 'Off-Market: Portafolio de Inversión Privado | Punta Cana Investments',
+        description: 'Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.',
+        keywords: 'Hoteles en venta en República Dominicana, Remates bancarios Punta Cana, Inversiones inmobiliarias Off-Market RD, Adquisición de resorts en el Caribe, Terrenos de macro-desarrollo en Miches, Distressed assets real estate Punta Cana',
         alternates: {
             canonical: `${baseUrl}/${lang}/investments/off-market`,
             languages: {
@@ -31,9 +27,9 @@ export async function generateMetadata({
             }
         },
         openGraph: {
-            title: lang === 'en' ? 'Private Off-Market Listings' : lang === 'fr' ? 'Annonces Privées Hors Marché' : 'Listados Privados Off-Market',
-            description: lang === 'en' ? 'Request access to our exclusive private portfolio.' : lang === 'fr' ? 'Demandez l\'accès à notre portefeuille privé exclusif.' : 'Solicite acceso a nuestro portafolio privado exclusivo.',
-            images: ['/images/og-offmarket.jpg']
+            title: 'Off-Market: Portafolio Inmobiliario Privado',
+            description: 'Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial.',
+            images: ['/images/off-market-hero.jpg']
         }
     };
 }
@@ -47,102 +43,169 @@ export default async function OffMarketPage({
     const dict = await getDictionary(lang);
 
     return (
-        <main className="min-h-screen bg-primary-black">
+        <main className="min-h-screen bg-[#050505]">
             <Navbar
                 dict={dict.nav}
                 lang={lang}
                 servicesList={dict.sections.services.items}
                 propertyTypes={dict.properties.types}
+                variant="solid"
             />
 
-            {/* Hero Section */}
-            <section className="relative pt-32 pb-20 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-luxury-gold/10 to-transparent"></div>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* 1. HERO SECTION */}
+            <section className="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden border-b border-luxury-gold/20">
+                {/* Background Image Setup */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40 z-10"></div>
+                    <Image 
+                        src="/images/off-market-hero.jpg" 
+                        alt="Portafolio Privado Punta Cana Investments" 
+                        fill
+                        className="object-cover object-right opacity-60"
+                        priority
+                    />
+                </div>
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
                     <ScrollReveal>
-                        <div className="text-center">
-                            <span className="text-luxury-gold uppercase tracking-[0.3em] text-sm font-bold mb-4 block">
-                                {lang === 'en' ? 'Private Collections' : lang === 'fr' ? 'Collections Privées' : 'Colecciones Privadas'}
+                        <div className="max-w-3xl">
+                            <span className="text-luxury-gold uppercase tracking-[0.3em] text-sm md:text-base font-bold mb-4 block">
+                                Private Placement Memorandum
                             </span>
-                            <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 uppercase tracking-tight">
-                                Off-Market <span className="text-luxury-gold">Opportunities</span>
+                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-white mb-6 uppercase tracking-tight leading-tight">
+                                Portafolio Inmobiliario Privado: <br className="hidden md:block"/>
+                                <span className="text-luxury-gold">Operaciones Off-Market</span>
                             </h1>
-                            <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
-                            <p className="text-neutral-gray text-xl max-w-3xl mx-auto leading-relaxed">
-                                {lang === 'en'
-                                    ? 'Exclusive access to properties and land developments that are not listed on the public market. High-privacy transactions for sophisticated investors.'
-                                    : lang === 'fr'
-                                    ? 'Accès exclusif à des propriétés et des développements fonciers qui ne sont pas répertoriés sur le marché public. Transactions hautement confidentielles pour les investisseurs sophistiqués.'
-                                    : 'Acceso exclusivo a propiedades y desarrollos de terrenos que no figuran en el mercado público. Transacciones de alta privacidad para inversores sofisticados.'}
+                            <div className="h-1 w-24 bg-luxury-gold mb-8"></div>
+                            <p className="text-gray-300 text-lg md:text-xl leading-relaxed font-light max-w-2xl">
+                                Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.
                             </p>
                         </div>
                     </ScrollReveal>
                 </div>
             </section>
 
-            {/* Content Section */}
-            <section className="py-20 bg-dark-gray/30">
+            {/* 2. SECTION: HOTELES, RESORTS Y MACRO-LOTES */}
+            <section className="py-24 bg-black relative">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <ScrollReveal>
+                        <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 uppercase tracking-wide border-l-4 border-luxury-gold pl-6">
+                            Adquisición de Activos Hoteleros y Tierras de Macro-Desarrollo
+                        </h2>
+                        
+                        <div className="space-y-6 text-gray-300 text-lg font-light leading-relaxed mb-12">
+                            <p>
+                                El acceso a complejos hoteleros operativos, resorts en fase de reconversión y terrenos de escala macro en ubicaciones de altísimo interés exige un ecosistema de absoluta reserva. Por políticas de confidencialidad institucional y protección de las marcas operadoras, estos activos de gran envergadura jamás se exponen al escrutinio público ni a portales masivos.
+                            </p>
+                            <p>
+                                <strong className="text-white font-medium">Punta Cana Investments</strong> actúa como el nexo estratégico en el terreno. Centralizamos un portafolio privado de propiedades comerciales premium y activos bajo radar, gestionando las transacciones bajo los más estrictos estándares globales de confidencialidad, análisis de factibilidad y rigor de ingeniería en conjunto con nuestro brazo técnico, <strong className="text-luxury-gold font-medium">PCI CONSTRUCTION GROUP PUNTA CANA</strong>.
+                            </p>
+                        </div>
+
+                        <div className="bg-[#0a0a0a] border border-white/10 p-8 md:p-10 relative">
+                            <h3 className="text-luxury-gold text-sm font-bold uppercase tracking-[0.2em] mb-4">Mandato de Gestión Exclusiva</h3>
+                            <h4 className="text-xl text-white font-serif mb-4">Búsqueda y Negociación Bajo Encargo Corporativo:</h4>
+                            <p className="text-gray-400 font-light leading-relaxed">
+                                Para el segmento de hospitalidad, el inversor o la corporación interesada debe formalizar una <strong className="text-white">Carta Mandato de Gestión de Búsqueda</strong>. Este instrumento legal autoriza formalmente a nuestra firma a iniciar la prospección, análisis técnico de permisología y debida diligencia de activos que se ajusten con precisión quirúrgica a los requerimientos de ubicación, número de llaves, rentabilidad y especificaciones de su fondo de inversión.
+                            </p>
+                        </div>
+                    </ScrollReveal>
+                </div>
+            </section>
+
+            {/* 3. SECTION: PROPIEDADES EN REMATE (DISTRESSED ASSETS) */}
+            <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <ScrollReveal direction="left">
-                            <div className="relative">
-                                <div className="absolute -inset-4 bg-luxury-gold/5 blur-2xl rounded-full"></div>
-                                <FaLock aria-hidden="true" className="text-[12rem] text-luxury-gold/20 mx-auto" />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <FaKey aria-hidden="true" className="text-5xl text-luxury-gold" />
-                                </div>
+                            <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
+                                <Image 
+                                    src="/images/off-market-auction.jpg" 
+                                    alt="Market Value vs Auction Price Analysis" 
+                                    fill
+                                    className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/20"></div>
                             </div>
                         </ScrollReveal>
 
                         <ScrollReveal direction="right">
-                            <div className="space-y-8">
-                                <div className="flex gap-4">
-                                    <div className="h-12 w-12 rounded-full bg-luxury-gold/10 flex items-center justify-center flex-shrink-0">
-                                        <FaShieldAlt aria-hidden="true" className="text-luxury-gold" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white mb-2">
-                                            {lang === 'en' ? 'Confidentiality' : lang === 'fr' ? 'Confidentialité' : 'Confidencialidad'}
-                                        </h3>
-                                        <p className="text-neutral-gray">
-                                            {lang === 'en'
-                                                ? 'We handle every transaction with absolute discretion, protecting the privacy of both buyers and sellers.'
-                                                : lang === 'fr'
-                                                ? 'Nous traitons chaque transaction avec une discrétion absolue, protégeant la vie privée des acheteurs et des vendeurs.'
-                                                : 'Manejamos cada transacción con absoluta discreción, protegiendo la privacidad tanto de compradores como de vendedores.'}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-4">
-                                    <div className="h-12 w-12 rounded-full bg-luxury-gold/10 flex items-center justify-center flex-shrink-0">
-                                        <FaEnvelope aria-hidden="true" className="text-luxury-gold" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white mb-2">
-                                            {lang === 'en' ? 'Private Invitations' : lang === 'fr' ? 'Invitations Privées' : 'Invitaciones Privadas'}
-                                        </h3>
-                                        <p className="text-neutral-gray">
-                                            {lang === 'en'
-                                                ? 'Our off-market portfolio is shared only with registered clients who match specific investment profiles.'
-                                                : lang === 'fr'
-                                                ? 'Notre portefeuille hors marché n’est partagé qu’avec des clients enregistrés correspondant à des profils d’investissement spécifiques.'
-                                                : 'Nuestro portafolio off-market se comparte solo con clientes registrados que coinciden con perfiles de inversión específicos.'}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="pt-8">
-                                    <Link
-                                        href={`/${lang}/contact?reason=off-market`}
-                                        className="inline-block bg-luxury-gold text-black font-bold py-5 px-10 rounded-sm hover:bg-white transition-all duration-300 uppercase tracking-[0.2em] text-sm shadow-2xl hover:scale-105"
-                                    >
-                                        {lang === 'en' ? 'Request Private Access' : lang === 'fr' ? 'Demander un Accès Privé' : 'Solicitar Acceso Privado'}
-                                    </Link>
-                                </div>
+                            <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 uppercase tracking-wide">
+                                Adquisición Estratégica de Activos en Liquidación, Adjudicados y Remates Bancarios <span className="text-luxury-gold block mt-2 text-2xl">(Distressed Assets)</span>
+                            </h2>
+                            
+                            <div className="space-y-6 text-gray-300 text-lg font-light leading-relaxed">
+                                <p>
+                                    El mercado inmobiliario premium genera, en coyunturas específicas, oportunidades líquidas donde el factor tiempo prevalece sobre el valor comercial del activo. Centralizamos de forma estrictamente privada el acceso a propiedades de alta gama bajo condiciones de ejecución rápida: remates por urgencia económica de propietarios privados y carteras de activos adjudicados o en procesos de remate bancario.
+                                </p>
+                                <p>
+                                    Estas propiedades —villas de lujo, estructuras residenciales inconclusas y parcelas preferenciales— son filtradas bajo un criterio riguroso: deben presentar un <strong className="text-luxury-gold">descuento sustancial respecto a su valor de tasación real en el mercado</strong>.
+                                </p>
+                                <p>
+                                    Debido a la naturaleza legal y de velocidad de capital que exigen estas transacciones, estos activos se gestionan bajo estricto radar, protegiendo la identidad de las instituciones financieras involucradas.
+                                </p>
                             </div>
                         </ScrollReveal>
                     </div>
+                </div>
+            </section>
+
+            {/* 4. SECTION: EL PROTOCOLO DE FILTRADO Y COMPLIANCE */}
+            <section className="py-24 bg-black">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <ScrollReveal>
+                        <div className="border border-luxury-gold p-8 md:p-14 relative bg-[#050505]">
+                            {/* Accent Corners */}
+                            <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-luxury-gold"></div>
+                            <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-luxury-gold"></div>
+                            <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-luxury-gold"></div>
+                            <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-luxury-gold"></div>
+
+                            <div className="text-center mb-12">
+                                <h2 className="text-2xl md:text-3xl font-serif text-white uppercase tracking-widest mb-4">
+                                    Protocolo Obligatorio de Seguridad y Acceso a la Información
+                                </h2>
+                                <div className="h-0.5 w-24 bg-luxury-gold mx-auto"></div>
+                            </div>
+
+                            <p className="text-gray-300 text-center text-lg font-light leading-relaxed mb-12 max-w-4xl mx-auto">
+                                Para salvaguardar la integridad de las operaciones bancarias, la privacidad de los desarrolladores y la seguridad jurídica de las transacciones, <strong className="text-white">Punta Cana Investments</strong> no proporciona dosieres financieros, ubicaciones exactas ni documentos técnicos a solicitantes no depurados.
+                                <br/><br/>
+                                El acceso a cualquier activo de nuestro portafolio Off-Market requiere el estricto cumplimiento del siguiente protocolo de cumplimiento legal y financiero:
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
+                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">1. Acuerdo de Confidencialidad y No Divulgación (NDA)</h4>
+                                    <p className="text-gray-400 font-light text-sm">Firma obligatoria de un acuerdo legal que penaliza el uso indebido o la filtración a terceros de la información suministrada sobre el activo.</p>
+                                </div>
+                                <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
+                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">2. Prueba de Fondos (Proof of Funds - POF)</h4>
+                                    <p className="text-gray-400 font-light text-sm">Certificación bancaria oficial o carta de líneas de crédito que demuestre la capacidad de liquidez inmediata para ejecutar la operación.</p>
+                                </div>
+                                <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
+                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">3. Documentación de Identidad y Registro Corporativo</h4>
+                                    <p className="text-gray-400 font-light text-sm">Copias de identificaciones oficiales de los beneficiarios finales, o el Registro Mercantil y actas corporativas vigentes si la adquisición se realiza a través de una empresa.</p>
+                                </div>
+                                <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
+                                    <h4 className="text-luxury-gold font-bold uppercase text-sm mb-3">4. Formulario KYC (Know Your Customer)</h4>
+                                    <p className="text-gray-400 font-light text-sm">Cumplimentación de nuestro registro de transparencia, previniendo el lavado de activos y blindando la operación bajo los marcos regulatorios internacionales.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ScrollReveal>
+                </div>
+            </section>
+
+            {/* 5. SECTION: FORMULARIO DE APLICACIÓN PRIVADA */}
+            <section className="py-24 bg-black relative" id="application-form">
+                {/* Subtle Grid Background */}
+                <div className="absolute inset-0 bg-[url('/images/grid-pattern.png')] opacity-[0.03] pointer-events-none mix-blend-screen"></div>
+                
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <ScrollReveal>
+                        <OffMarketForm lang={lang} />
+                    </ScrollReveal>
                 </div>
             </section>
 
