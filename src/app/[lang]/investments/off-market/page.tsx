@@ -58,26 +58,26 @@ export default async function OffMarketPage({
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40 z-10"></div>
                     <Image 
-                        src="/images/off-market-hero.jpg" 
+                        src="/images/og-home-luxury.webp" 
                         alt="Portafolio Privado Punta Cana Investments" 
                         fill
-                        className="object-cover object-right opacity-60"
+                        className="object-cover object-right opacity-40 grayscale"
                         priority
                     />
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full text-center">
                     <ScrollReveal>
-                        <div className="max-w-4xl mx-auto">
-                            <span className="text-luxury-gold uppercase tracking-[0.3em] text-sm md:text-base font-bold mb-4 block">
+                        <div className="max-w-3xl mx-auto flex flex-col items-center">
+                            <span className="text-luxury-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
                                 Private Placement Memorandum
                             </span>
-                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif text-white mb-6 uppercase tracking-tight leading-tight">
+                            <h1 className="text-2xl md:text-4xl lg:text-5xl font-serif text-white mb-6 uppercase tracking-tight leading-tight">
                                 Portafolio Inmobiliario Privado: <br className="hidden md:block"/>
                                 <span className="text-luxury-gold">Operaciones Off-Market</span>
                             </h1>
-                            <div className="h-1 w-24 bg-luxury-gold mx-auto mb-8"></div>
-                            <p className="text-gray-300 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto">
+                            <div className="h-1 w-16 bg-luxury-gold mb-8"></div>
+                            <p className="text-gray-300 text-base md:text-lg leading-relaxed font-light">
                                 Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.
                             </p>
                         </div>
@@ -120,10 +120,10 @@ export default async function OffMarketPage({
                         <ScrollReveal direction="left">
                             <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
                                 <Image 
-                                    src="/images/off-market-auction.jpg" 
+                                    src="/images/og-home-luxury.webp" 
                                     alt="Market Value vs Auction Price Analysis" 
                                     fill
-                                    className="object-cover"
+                                    className="object-cover grayscale"
                                 />
                                 <div className="absolute inset-0 bg-black/20"></div>
                             </div>
