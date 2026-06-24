@@ -13,11 +13,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { lang } = await params;
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
+    const keywordsEs = "Hoteles en venta en República Dominicana, Venta de resorts operativos Punta Cana, Comprar hotel en Miches, Inversión hotelera en planos República Dominicana, Terrenos para desarrollo turístico Punta Cana, Macro lotes en venta Miches, Proyectos hoteleros Off Market Caribe, Adquisición de activos hoteleros RD, Inversiones inmobiliarias institucionales Punta Cana, Propiedades comerciales de lujo Off Market RD, Remates bancarios en Punta Cana, Propiedades adjudicadas por bancos República Dominicana, Villas de lujo en remate económico Punta Cana, Propiedades en liquidación urgente RD, Distressed assets real estate Punta Cana, Remates inmobiliarios de lujo República Dominicana, Venta de villas por urgencia económica Cap Cana, Penthouses en liquidación por reestructuración patrimonial RD, Oportunidades de inversión pre market Punta Cana, Cartera de activos adjudicados bancos RD, Propiedades Off Market Punta Cana, Inversiones inmobiliarias privadas República Dominicana, Portafolio inmobiliario confidencial RD, Mandato de gestión de búsqueda inmobiliaria Punta Cana, Acuerdo de confidencialidad inversión inmobiliaria RD, Auditoría privada de proyectos de inversión Punta Cana, Debida diligencia KYC inversiones inmobiliarias RD, Búsqueda de activos inmobiliarios bajo radar Caribe, Terrenos de macro desarrollo en Miches, Oportunidades Off Market en Cap Cana, Villas en liquidación Punta Espada Cap Cana, Remates inmobiliarios en Cocotal Golf Club, Proyectos comerciales en Playa Juanillo, Venta confidencial de propiedades en Uvero Alto, Inversiones en lotes hoteleros Vista Cana";
+    const keywordsEn = "Hotels for sale in Dominican Republic, Boutique resorts for sale Punta Cana, Off market commercial real estate Dominican Republic, Macro land lots for hospitality development Miches, Hotel acquisition portfolio Punta Cana, Hotel mandate search services Dominican Republic, Bank foreclosures in Punta Cana, Bank owned luxury properties Dominican Republic, Distressed luxury real estate Punta Cana, Urgent property liquidation Cap Cana, Pre market luxury villas sale Punta Cana, Off market real estate investments Punta Cana, Private placement memorandum real estate DR, NDA protected property listings Punta Cana, Proof of funds requirement luxury real estate DR, Confidential real estate auditing Dominican Republic";
+    
+    const keywords = lang === 'en' ? keywordsEn : lang === 'fr' ? `${keywordsEn}, ${keywordsEs}` : keywordsEs;
 
     return {
         title: 'Off-Market: Portafolio de Inversión Privado | Punta Cana Investments',
         description: 'Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.',
-        keywords: 'Hoteles en venta en República Dominicana, Remates bancarios Punta Cana, Inversiones inmobiliarias Off-Market RD, Adquisición de resorts en el Caribe, Terrenos de macro-desarrollo en Miches, Distressed assets real estate Punta Cana',
+        keywords: keywords,
         alternates: {
             canonical: `${baseUrl}/${lang}/investments/off-market`,
             languages: {
