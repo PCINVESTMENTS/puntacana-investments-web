@@ -117,11 +117,11 @@ export default async function OffMarketPage({
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <ScrollReveal direction="left">
                             <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
-                                {/* <img 
-                                    src="/images/off-market-auction-v2.jpg" 
+                                <img 
+                                    src="/images/off-market-auction-v3.jpg" 
                                     alt="Market Value vs Auction Price Analysis" 
                                     className="absolute inset-0 w-full h-full object-cover"
-                                /> */}
+                                />
                                 <div className="absolute inset-0 bg-black/20"></div>
                             </div>
                         </ScrollReveal>
