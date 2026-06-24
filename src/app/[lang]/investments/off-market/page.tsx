@@ -115,16 +115,14 @@ export default async function OffMarketPage({
             <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <ScrollReveal direction="left">
-                            <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
-                                <img 
-                                    src="/images/off-market-auction-v4.jpg" 
-                                    alt="Market Value vs Auction Price Analysis" 
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-black/20"></div>
-                            </div>
-                        </ScrollReveal>
+                        <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
+                            <img 
+                                src="/images/off-market-auction-v4.jpg" 
+                                alt="Market Value vs Auction Price Analysis" 
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/20"></div>
+                        </div>
 
                         <ScrollReveal direction="right">
                             <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 uppercase tracking-wide">
@@ -197,7 +195,7 @@ export default async function OffMarketPage({
             {/* 5. SECTION: FORMULARIO DE APLICACIÓN PRIVADA */}
             <section className="py-24 bg-black relative" id="application-form">
                 {/* Subtle Grid Background */}
-                <div className="absolute inset-0 bg-[url('/images/grid-pattern.png')] opacity-[0.03] pointer-events-none mix-blend-screen"></div>
+                <div className="absolute inset-0 bg-transparent opacity-[0.03] pointer-events-none mix-blend-screen"></div>
                 
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <ScrollReveal>
