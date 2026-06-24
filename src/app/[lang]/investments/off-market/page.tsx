@@ -57,12 +57,10 @@ export default async function OffMarketPage({
                 {/* Background Image Setup */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
-                    <Image 
+                    <img 
                         src="/images/off-market-hero-v2.jpg" 
                         alt="Portafolio Privado Punta Cana Investments" 
-                        fill
-                        className="object-cover object-center"
-                        priority
+                        className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                 </div>
 
@@ -119,11 +117,10 @@ export default async function OffMarketPage({
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <ScrollReveal direction="left">
                             <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
-                                <Image 
+                                <img 
                                     src="/images/off-market-auction-v2.jpg" 
                                     alt="Market Value vs Auction Price Analysis" 
-                                    fill
-                                    className="object-cover"
+                                    className="absolute inset-0 w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-black/20"></div>
                             </div>
