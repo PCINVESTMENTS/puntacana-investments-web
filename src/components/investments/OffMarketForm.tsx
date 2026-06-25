@@ -164,7 +164,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         onClick={() => window.location.reload()}
                         className="px-8 py-3 bg-transparent border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black transition-colors rounded-full font-semibold uppercase tracking-wider text-sm"
                     >
-                        Enviar otro requerimiento
+                        {t.sendAnother}
                     </button>
                 </div>
             )}
@@ -174,11 +174,11 @@ export default function OffMarketForm({ lang }: { lang: string }) {
 
             <div className="text-center mb-10">
                 <h3 className="text-2xl md:text-3xl font-serif text-white uppercase tracking-widest mb-3">
-                    Formulario Técnico de Búsqueda Off-Market
+                    {t.title}
                 </h3>
                 <div className="h-0.5 w-16 bg-[#d4af37] mx-auto mb-4"></div>
                 <p className="text-sm text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                    Complete el siguiente requerimiento confidencial. Esto nos permitirá depurar y enviar los activos exactos que encajan en su tesis de inversión.
+                    {t.subtitle}
                 </p>
             </div>
 
@@ -198,7 +198,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                             : "bg-[#000000] text-[#d4af37] border-[#d4af37]/30 hover:border-[#d4af37]"
                     }`}
                 >
-                    Propiedades de Oportunidad y Remates
+                    {t.tabs.opportunities}
                 </button>
                 <button
                     type="button"
@@ -209,18 +209,18 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                             : "bg-[#000000] text-[#d4af37] border-[#d4af37]/30 hover:border-[#d4af37]"
                     }`}
                 >
-                    Hoteles, Resorts y Terrenos
+                    {t.tabs.hotels}
                 </button>
             </div>
 
             <div className="space-y-8 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className={labelClassName}>Nombre Completo / Representante Legal *</label>
+                        <label className={labelClassName}>{t.fields.name}</label>
                         <input type="text" name="fullName" required className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors" placeholder="Ej. Juan Pérez" />
                     </div>
                     <div>
-                        <label className={labelClassName}>Nombre de la Empresa o Fondo (Si aplica)</label>
+                        <label className={labelClassName}>{t.fields.company}</label>
                         <input type="text" name="companyName" className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors" placeholder="Ej. Global Holdings LLC" />
                     </div>
                     <div>
@@ -228,7 +228,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         <input type="email" name="email" required className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors" placeholder="contacto@empresa.com" />
                     </div>
                     <div>
-                        <label className={labelClassName}>Teléfono / WhatsApp Directo *</label>
+                        <label className={labelClassName}>{t.fields.phone}</label>
                         <input type="tel" name="phone" required className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors" placeholder="+1 (555) 000-0000" />
                     </div>
                 </div>
@@ -237,16 +237,16 @@ export default function OffMarketForm({ lang }: { lang: string }) {
 
                 <div className={`space-y-8 ${activeTab === "oportunidad" ? "block" : "hidden"}`}>
                     <div>
-                        <label className={labelClassName}>¿Cuál es el presupuesto asignado para la adquisición? *</label>
+                        <label className={labelClassName}>{t.fields.budget.label}</label>
                         <select name="opp_budget" required={activeTab === "oportunidad"} className={selectClassName}>
-                            <option value="">Seleccione un presupuesto...</option>
+                            <option value="">Seleccione / Select</option>
                             {budgets.map((b, i) => <option key={i} value={b}>{b}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Qué tipo de propiedad busca? *</label>
+                        <label className={labelClassName}>{t.fields.opportunityType.label}</label>
                         <select name="opp_type" required={activeTab === "oportunidad"} className={selectClassName}>
-                            <option value="">Seleccione un tipo de propiedad...</option>
+                            <option value="">Seleccione / Select</option>
                             {oppPropertyTypes.map((t, i) => <option key={i} value={t}>{t}</option>)}
                         </select>
                     </div>
@@ -277,7 +277,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                     <div>
                         <label className={labelClassName}>¿Cuál es el presupuesto o monto de inversión destinado al activo hotelero? *</label>
                         <select name="hotel_budget" required={activeTab === "hoteles"} className={selectClassName}>
-                            <option value="">Seleccione un presupuesto...</option>
+                            <option value="">Seleccione / Select</option>
                             {budgets.map((b, i) => <option key={i} value={b}>{b}</option>)}
                         </select>
                     </div>

@@ -91,15 +91,15 @@ export default async function OffMarketPage({
                     <ScrollReveal>
                         <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
                             <span className="text-luxury-gold uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block text-center">
-                                Private Placement Memorandum
+                                {t.hero.tag}
                             </span>
                             <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-white mb-4 uppercase tracking-tight leading-tight text-center">
-                                Portafolio Inmobiliario Privado: <br className="hidden md:block"/>
+                                {t.hero.title1} <br className="hidden md:block"/>
                                 <span className="text-luxury-gold">{t.hero.title2}</span>
                             </h1>
                             <div className="h-0.5 w-16 bg-luxury-gold mb-6 mx-auto"></div>
                             <p className="text-gray-200 text-sm md:text-base leading-relaxed font-light text-center max-w-2xl mx-auto drop-shadow-md">
-                                Bienvenido a nuestra división privada. Si busca adquirir un complejo hotelero, desarrollar un macro-proyecto, o capitalizar sobre propiedades de oportunidad y remates bancarios, ha llegado al ecosistema correcto.
+                                {t.hero.desc}
                             </p>
                         </div>
                     </ScrollReveal>
@@ -111,12 +111,12 @@ export default async function OffMarketPage({
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal>
                         <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 uppercase tracking-wide border-l-4 border-luxury-gold pl-6">
-                            Adquisición de Activos Hoteleros y Tierras de Macro-Desarrollo
+                            {t.hotels.title}
                         </h2>
                         
                         <div className="space-y-6 text-gray-300 text-lg font-light leading-relaxed mb-12">
                             <p>
-                                El acceso a complejos hoteleros operativos, resorts en fase de reconversión y terrenos de escala macro en ubicaciones de altísimo interés exige un ecosistema de absoluta reserva. Por políticas de confidencialidad institucional y protección de las marcas operadoras, estos activos de gran envergadura jamás se exponen al escrutinio público ni a portales masivos.
+                                {t.hotels.p1}
                             </p>
                             <p>
                                 <strong className="text-white font-medium">{lang === "en" ? "Punta Cana Investments" : "Punta Cana Investments"}</strong> {t.hotels.p2.split("Punta Cana Investments")[1].split("PCI CONSTRUCTION GROUP PUNTA CANA")[0]} <strong className="text-luxury-gold font-medium">PCI CONSTRUCTION GROUP PUNTA CANA</strong>.
@@ -127,7 +127,7 @@ export default async function OffMarketPage({
                             <h3 className="text-luxury-gold text-sm font-bold uppercase tracking-[0.2em] mb-4">{t.hotels.boxTitle}</h3>
                             <h4 className="text-xl text-white font-serif mb-4">{t.hotels.boxSubtitle}</h4>
                             <p className="text-gray-400 font-light leading-relaxed">
-                                Para el segmento de hospitalidad, el inversor o la corporación interesada debe formalizar una <strong className="text-white">{lang === "en" ? "Search Management Mandate Letter" : lang === "fr" ? "Lettre de Mandat de Recherche" : "Carta Mandato de Gestión de Búsqueda"}</strong>. Este instrumento legal autoriza formalmente a nuestra firma a iniciar la prospección, análisis técnico de permisología y debida diligencia de activos que se ajusten con precisión quirúrgica a los requerimientos de ubicación, número de llaves, rentabilidad y especificaciones de su fondo de inversión.
+                                {t.hotels.boxText}
                             </p>
                         </div>
                     </ScrollReveal>
@@ -155,13 +155,13 @@ export default async function OffMarketPage({
                             
                             <div className="space-y-6 text-gray-300 text-lg font-light leading-relaxed">
                                 <p>
-                                    El mercado inmobiliario premium genera, en coyunturas específicas, oportunidades líquidas donde el factor tiempo prevalece sobre el valor comercial del activo. Centralizamos de forma estrictamente privada el acceso a propiedades de alta gama bajo condiciones de ejecución rápida: remates por urgencia económica de propietarios privados y carteras de activos adjudicados o en procesos de remate bancario.
+                                    {t.distressed.p1}
                                 </p>
                                 <p>
-                                    Estas propiedades —villas de lujo, estructuras residenciales inconclusas y parcelas preferenciales— son filtradas bajo un criterio riguroso: deben presentar un <strong className="text-luxury-gold">{lang === "en" ? "substantial discount compared to their actual market appraisal value" : lang === "fr" ? "remise substantielle par rapport à leur valeur d'évaluation réelle sur le marché" : "descuento sustancial respecto a su valor de tasación real en el mercado"}</strong>.
+                                    {t.distressed.p2}
                                 </p>
                                 <p>
-                                    Debido a la naturaleza legal y de velocidad de capital que exigen estas transacciones, estos activos se gestionan bajo estricto radar, protegiendo la identidad de las instituciones financieras involucradas.
+                                    {t.distressed.p3}
                                 </p>
                             </div>
                         </ScrollReveal>
@@ -190,7 +190,7 @@ export default async function OffMarketPage({
                             <p className="text-gray-300 text-center text-lg font-light leading-relaxed mb-12 max-w-4xl mx-auto">
                                 Para salvaguardar la integridad de las operaciones bancarias, la privacidad de los desarrolladores y la seguridad jurídica de las transacciones, <strong className="text-white">{lang === "en" ? "Punta Cana Investments" : "Punta Cana Investments"}</strong> no proporciona dosieres financieros, ubicaciones exactas ni documentos técnicos a solicitantes no depurados.
                                 <br/><br/>
-                                El acceso a cualquier activo de nuestro portafolio Off-Market requiere el estricto cumplimiento del siguiente protocolo de cumplimiento legal y financiero:
+                                {t.kyc.desc}
                             </p>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
