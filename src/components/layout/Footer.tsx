@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaCheckCircle, FaSpinner, FaArrowRight } from "react-icons/fa";
 import { submitNewsletter } from "@/app/actions/newsletter";
-import { useActionState } from "react";
+import { useActionState, startTransition } from "react";
 
 interface FooterProps {
     dict: any;
@@ -13,6 +13,14 @@ interface FooterProps {
 
 export function Footer({ dict, lang }: FooterProps) {
     const [state, formAction, isPending] = useActionState(submitNewsletter, { success: false, message: '' });
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        startTransition(() => {
+            formAction(formData);
+        });
+    };
 
     return (
         <footer className="bg-black text-white pt-10 lg:pt-20 pb-10 border-t border-white/10">
@@ -106,7 +114,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                 <FaCheckCircle /> Subscribed!
                             </div>
                         ) : (
-                            <form action={formAction} className="flex border border-white/20 p-1">
+                            <form onSubmit={handleSubmit} className="flex border border-white/20 p-1">
                                 <input
                                     type="email"
                                     name="email"

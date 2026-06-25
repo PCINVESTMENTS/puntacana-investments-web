@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useRef, useEffect } from 'react';
+import { useActionState, useRef, useEffect, startTransition } from 'react';
 import { submitMonitoringForm } from '@/app/actions/monitoring';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
@@ -79,8 +79,16 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
         );
     }
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        startTransition(() => {
+            formAction(formData);
+        });
+    };
+
     return (
-        <form action={formAction} ref={formRef} className="space-y-6">
+        <form onSubmit={handleSubmit} ref={formRef} className="space-y-6 lg:space-y-8">
             <input type="hidden" name="lang" value={lang} />
 
             {state.message && !state.success && (

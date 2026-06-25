@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useActionState, useRef } from 'react';
+import { useState, useActionState, useRef, startTransition } from 'react';
 import { submitFounderForm } from '@/app/actions/founder';
 import { FaHome, FaChartLine, FaCheckCircle, FaSpinner, FaPaperPlane } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -19,6 +19,14 @@ export default function FounderInvestmentForm({ dict, lang }: FounderInvestmentF
     const [selectedModality, setSelectedModality] = useState<'unidades' | 'capital' | null>(null);
     const [state, formAction, isPending] = useActionState(submitFounderForm, initialState);
     const formRef = useRef<HTMLFormElement>(null);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        startTransition(() => {
+            formAction(formData);
+        });
+    };
 
     return (
         <div className="space-y-8">
@@ -105,7 +113,7 @@ export default function FounderInvestmentForm({ dict, lang }: FounderInvestmentF
                         </button>
                     </div>
                     
-                    <form action={formAction} ref={formRef} className="space-y-6 hs-do-not-track" data-hs-cf-bound="true">
+                    <form onSubmit={handleSubmit} ref={formRef} className="space-y-6 hs-do-not-track" data-hs-cf-bound="true">
                         <input type="hidden" name="lang" value={lang} />
                         <input type="hidden" name="modality" value={selectedModality || ''} />
 

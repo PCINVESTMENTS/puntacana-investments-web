@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useRef, useEffect } from 'react';
+import { useActionState, useRef, useEffect, startTransition } from 'react';
 import { submitContactForm } from '@/app/actions/contact';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
@@ -87,8 +87,16 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
         );
     }
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        startTransition(() => {
+            formAction(formData);
+        });
+    };
+
     return (
-        <form action={formAction} ref={formRef} className={`space-y-6 ${className || ''}`}>
+        <form onSubmit={handleSubmit} ref={formRef} className={`space-y-6 ${className || ''}`}>
             {subject && <input type="hidden" name="subject" value={subject} />}
             <input type="hidden" name="lang" value={lang} />
             {propertyData && <input type="hidden" name="propertyData" value={propertyData} />}
