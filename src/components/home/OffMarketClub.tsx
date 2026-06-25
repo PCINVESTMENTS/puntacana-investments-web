@@ -69,8 +69,8 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                 </h3>
                                 <p className="text-gray-400 text-sm italic mb-10 leading-relaxed">
                                     {lang === "en"
-                                        ? "Join our elite circle of investors in the Dominican Republic and gain access to high-value distressed assets and private hotel acquisitions."
-                                        : "Únete a nuestro círculo élite de inversores en República Dominicana y accede a activos de gran valor y liquidaciones patrimoniales."}
+                                        ? "Looking to acquire an operational hotel, develop a macro-project, or capitalize on foreclosures and opportunity properties? You are in the right ecosystem."
+                                        : "¿Busca adquirir un complejo hotelero, desarrollar un macro-proyecto, o capitalizar sobre propiedades de oportunidad y remates bancarios? Está en el ecosistema correcto."}
                                 </p>
                             </div>
 

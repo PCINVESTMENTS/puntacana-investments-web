@@ -85,7 +85,7 @@ export default async function OffMarketPage({
                             </h1>
                             <div className="h-0.5 w-16 bg-luxury-gold mb-6 mx-auto"></div>
                             <p className="text-gray-200 text-sm md:text-base leading-relaxed font-light text-center max-w-2xl mx-auto drop-shadow-md">
-                                Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.
+                                Bienvenido a nuestra división privada. Si busca adquirir un complejo hotelero, desarrollar un macro-proyecto, o capitalizar sobre propiedades de oportunidad y remates bancarios, ha llegado al ecosistema correcto.
                             </p>
                         </div>
                     </ScrollReveal>
