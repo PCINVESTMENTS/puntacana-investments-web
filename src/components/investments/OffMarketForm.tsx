@@ -4,7 +4,10 @@ import { useState } from "react";
 import { submitContactForm } from "@/app/actions/contact";
 import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 
+import { offMarketDict } from "@/dictionaries/offMarket";
+
 export default function OffMarketForm({ lang }: { lang: string }) {
+    const t = offMarketDict[lang as "es" | "en" | "fr"].form;
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [message, setMessage] = useState("");
     const [activeTab, setActiveTab] = useState<"oportunidad" | "hoteles">("oportunidad");
@@ -133,7 +136,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
             const result = await submitContactForm(null, finalFormData);
             if (result?.success) {
                 setStatus("success");
-                setMessage("Su requerimiento de búsqueda ha sido enviado con éxito. Le hemos enviado un correo electrónico de confirmación. Por favor, asegúrese de revisar su bandeja de Spam o Correo no deseado.");
+                setMessage(t.successMsg);
                 (e.target as HTMLFormElement).reset();
             } else {
                 setStatus("error");
@@ -155,7 +158,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                     <div className="flex justify-center mb-6 text-[#d4af37]">
                         <FaCheckCircle aria-hidden="true" size={56} />
                     </div>
-                    <h3 className="text-2xl font-serif text-white mb-4 uppercase tracking-widest">Requerimiento Recibido</h3>
+                    <h3 className="text-2xl font-serif text-white mb-4 uppercase tracking-widest">{t.received}</h3>
                     <p className="text-gray-300 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">{message}</p>
                     <button
                         onClick={() => window.location.reload()}
@@ -221,7 +224,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         <input type="text" name="companyName" className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors" placeholder="Ej. Global Holdings LLC" />
                     </div>
                     <div>
-                        <label className={labelClassName}>Correo Electrónico Corporativo *</label>
+                        <label className={labelClassName}>{t.fields.email}</label>
                         <input type="email" name="email" required className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors" placeholder="contacto@empresa.com" />
                     </div>
                     <div>
