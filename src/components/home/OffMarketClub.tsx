@@ -34,11 +34,13 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                 <span className="text-luxury-gold uppercase tracking-[0.3em] text-xs font-bold leading-none">VIP Access</span>
                             </motion.div>
                             <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
-                                {lang === "en" ? "Off-Market Investment Club" : "Club de Inversores Off-Market"}
+                                {lang === "en" ? "Off-Market Investment Club" : lang === "fr" ? "Club d'Investisseurs Off-Market" : "Club de Inversores Off-Market"}
                             </h2>
                             <p className="text-gray-300 text-lg font-light max-w-md">
                                 {lang === "en"
                                     ? "Access exclusive properties and pre-construction deals that never hit the public market."
+                                    : lang === "fr"
+                                    ? "Accédez à des propriétés exclusives et à des opportunités de pré-construction qui n'atteignent jamais le marché public."
                                     : "Accede a propiedades exclusivas y oportunidades de preventa que nunca llegan al mercado público."}
                             </p>
 
