@@ -217,7 +217,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
             <section className="relative h-[80vh] flex items-center justify-center overflow-hidden pt-20">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/images/monitoring-hero.png"
+                        src="/images/monitoring-hero.jpg"
                         alt={t.heroTitle}
                         fill
                         sizes="100vw"

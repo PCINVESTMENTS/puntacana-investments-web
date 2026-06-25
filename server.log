@@ -1,0 +1,16 @@
+
+> web@0.1.0 start
+> next start
+
+▲ Next.js 16.1.1
+- Local:         http://localhost:3005
+- Network:       http://192.168.1.119:3005
+
+✓ Starting...
+⚠ `eslint` configuration in next.config.ts is no longer supported. See more info here: https://nextjs.org/docs/app/api-reference/cli/next#next-lint-options
+⚠ Invalid next.config.ts options detected: 
+⚠     Unrecognized key(s) in object: 'eslint'
+⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+✓ Ready in 219ms
+FINAL PRICE IS: 365900
+FINAL PRICE IS: 365900

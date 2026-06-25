@@ -62,11 +62,14 @@ export default async function OffMarketPage({
                 {/* Background Image Setup */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
-                    <img 
-                        src="/images/off-market-hero-v2.jpg" 
+                    <Image 
+                        src="/images/off-market-hero-v3.jpg" 
                         alt="Portafolio Privado Punta Cana Investments" 
-                        className="absolute inset-0 w-full h-full object-cover object-center"
-                        fetchPriority="high"
+                        fill
+                        sizes="100vw"
+                        priority
+                        quality={90}
+                        className="object-cover object-center"
                     />
                 </div>
 
