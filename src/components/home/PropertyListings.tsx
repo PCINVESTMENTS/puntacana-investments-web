@@ -411,21 +411,21 @@ function PropertyListingsContent({
                                                 images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
                                                 title={getLocalizedTitle(prop, lang)}
                                             />
-                                            <div className="absolute top-4 left-4 flex flex-col gap-2 z-10 pointer-events-none">
-                                                <div className="bg-black/80 text-white px-4 py-1 text-xs uppercase tracking-wider border-l-2 border-luxury-gold">
+                                            <div className="absolute top-4 left-2 right-2 md:left-4 md:right-4 flex justify-between items-start gap-2 z-10 pointer-events-none">
+                                                <div className="bg-black/80 text-white px-2 md:px-4 py-1 text-[10px] md:text-xs uppercase tracking-wider border-l-2 border-luxury-gold truncate min-w-0">
                                                     {prop.locationLabel}
                                                 </div>
-                                            </div>
 
-                                            {/* Status Badge */}
-                                            <div className={`absolute top-4 right-4 px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-lg z-10 ${prop.status === 'sale'
-                                                ? 'bg-luxury-gold text-black'
-                                                : 'bg-white text-black'
-                                                }`}>
-                                                {prop.status === 'sale'
-                                                    ? (lang === 'en' ? 'For Sale' : lang === 'fr' ? 'À Vendre' : 'Venta')
-                                                    : (lang === 'en' ? 'Monthly Rent' : lang === 'fr' ? 'Loyer Mensuel' : 'Renta Mensual')
-                                                }
+                                                {/* Status Badge */}
+                                                <div className={`px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-widest shadow-lg shrink-0 pointer-events-auto ${prop.status === 'sale'
+                                                    ? 'bg-luxury-gold text-black'
+                                                    : 'bg-white text-black'
+                                                    }`}>
+                                                    {prop.status === 'sale'
+                                                        ? (lang === 'en' ? 'For Sale' : lang === 'fr' ? 'À Vendre' : 'Venta')
+                                                        : (lang === 'en' ? 'Monthly Rent' : lang === 'fr' ? 'Loyer Mensuel' : 'Renta Mensual')
+                                                    }
+                                                </div>
                                             </div>
 
                                             <CompareToggle property={prop} lang={lang} />
