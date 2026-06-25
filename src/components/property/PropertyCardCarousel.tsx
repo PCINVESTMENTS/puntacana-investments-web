@@ -62,7 +62,7 @@ export default function PropertyCardCarousel({ images, title }: PropertyCardCaro
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
-                            quality={60}
+                            quality={50}
                             loading="lazy"
                         />
                     </div>

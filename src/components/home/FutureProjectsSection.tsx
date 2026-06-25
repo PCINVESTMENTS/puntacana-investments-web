@@ -38,7 +38,7 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
                             fill
                             sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-110"
-                            quality={85}
+                            quality={60}
                         />
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
 
