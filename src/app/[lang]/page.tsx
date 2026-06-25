@@ -9,16 +9,16 @@ import dynamic from 'next/dynamic';
 const PropertyListings = dynamic(() => import("@/components/home/PropertyListings"), { ssr: true });
 
 const ServicesSection = dynamic(() => import("@/components/home/ServicesSection"));
-const TestimonialsSection = dynamic(() => import("@/components/home/TestimonialsSection"), { ssr: false });
+const TestimonialsSection = dynamic(() => import("@/components/home/TestimonialsSection"));
 const BlogSection = dynamic(() => import("@/components/home/BlogSection"));
 const InvestmentsSection = dynamic(() => import("@/components/home/InvestmentsSection"));
-const OffMarketClub = dynamic(() => import("@/components/home/OffMarketClub"), { ssr: false });
-const FlyAndBuySection = dynamic(() => import("@/components/home/FlyAndBuySection"), { ssr: false });
+const OffMarketClub = dynamic(() => import("@/components/home/OffMarketClub"));
+const FlyAndBuySection = dynamic(() => import("@/components/home/FlyAndBuySection"));
 const FutureProjectsSection = dynamic(() => import("@/components/home/FutureProjectsSection"));
 // Refactored components
 const LocationsSection = dynamic(() => import("@/components/home/LocationsSection").then(mod => mod.LocationsSection));
 const AboutSection = dynamic(() => import("@/components/home/AboutSection").then(mod => mod.AboutSection));
-const ContactSection = dynamic(() => import("@/components/home/ContactSection").then(mod => mod.ContactSection), { ssr: false });
+const ContactSection = dynamic(() => import("@/components/home/ContactSection").then(mod => mod.ContactSection));
 const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer));
 
 // Sanity
