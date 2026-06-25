@@ -130,6 +130,13 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const rawPosts = await client.fetch(POSTS_QUERY);
   const posts: BlogPost[] = rawPosts.map(mapSanityPost);
 
+  // Strip massive blog post content payload for the home page to drastically reduce HTML size (improves LCP)
+  const strippedPosts = posts.slice(0, 3).map(post => ({
+    ...post,
+    content: { es: "", en: "", fr: "" },
+    rawContent: null
+  } as unknown as BlogPost));
+
   const heroProperties = properties.filter(p =>
     // Hero Allowed: City Place (2), Diana (3), Kerry (7), Ocean Village (9), Soto Grande (12), Miches (13)
     [2, 3, 7, 9, 12, 13].includes(p.id)
@@ -152,6 +159,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     rawGallery: p.rawGallery?.slice(0, 4) || [],
     features: { es: [], en: [], fr: [] },
     constructionStages: [],
+    detailedSections: [],
     seo: null
   } as unknown as Property));
 
@@ -251,7 +259,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       <InvestmentsSection dict={dict.sections.investments} lang={lang} />
       <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
       <OffMarketClub lang={lang} />
-      <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={posts} />
+      <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={strippedPosts} />
       <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />
       <TestimonialsSection dict={dict.sections.testimonials} />
       <AboutSection dict={dict.sections.about} />
