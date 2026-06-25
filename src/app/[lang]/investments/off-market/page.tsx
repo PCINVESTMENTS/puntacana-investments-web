@@ -20,9 +20,21 @@ export async function generateMetadata({
     
     const keywords = lang === 'en' ? keywordsEn : lang === 'fr' ? keywordsFr : keywordsEs;
 
+    const title = lang === 'en' 
+        ? 'Off-Market: Private Investment Portfolio | Punta Cana Investments'
+        : lang === 'fr' 
+        ? 'Off-Market: Portefeuille d\'Investissement Privé | Punta Cana Investments'
+        : 'Off-Market: Portafolio de Inversión Privado | Punta Cana Investments';
+
+    const description = lang === 'en'
+        ? 'Exclusive access to large-scale assets, hotel complexes, and distressed property opportunities under strict commercial reserve in the Dominican Republic.'
+        : lang === 'fr'
+        ? 'Accès exclusif à des actifs de grande envergure, des complexes hôteliers et des opportunités de propriétés en difficulté sous stricte réserve commerciale en République Dominicaine.'
+        : 'Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.';
+
     return {
-        title: 'Off-Market: Portafolio de Inversión Privado | Punta Cana Investments',
-        description: 'Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.',
+        title: title,
+        description: description,
         keywords: keywords,
         alternates: {
             canonical: `${baseUrl}/${lang}/investments/off-market`,
@@ -33,8 +45,8 @@ export async function generateMetadata({
             }
         },
         openGraph: {
-            title: 'Off-Market: Portafolio Inmobiliario Privado',
-            description: 'Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial.',
+            title: title,
+            description: description,
             images: ['/images/off-market-hero.jpg']
         }
     };
