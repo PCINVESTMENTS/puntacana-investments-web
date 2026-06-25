@@ -1,3 +1,4 @@
+import React from 'react';
 
 export const offMarketDict = {
   es: {
@@ -198,7 +199,8 @@ export const offMarketDict = {
         regionLabel: "¿En qué región estratégica debe estar ubicado el activo? (Seleccione todas las que apliquen) *",
         hotelBudgetLabel: "¿Cuál es el presupuesto o monto de inversión destinado al activo hotelero? *",
 
-        submit: "Enviar Requerimiento Institucional",
+        submit: "Enviar requerimiento de búsqueda privada",
+        disclaimer: <>Al enviar este requerimiento, recibirá una respuesta confidencial. <strong className="text-white">Revise su carpeta de Spam o Correo no deseado</strong> para asegurar la recepción de nuestra respuesta.</>,
         sending: "Procesando..."
       }
     }
@@ -401,7 +403,8 @@ export const offMarketDict = {
         regionLabel: "In which strategic region should the asset be located? (Select all that apply) *",
         hotelBudgetLabel: "What is the budget or investment amount intended for the hotel asset? *",
 
-        submit: "Submit Institutional Requirement",
+        submit: "Submit private search requirement",
+        disclaimer: <>By submitting this requirement, you will receive a confidential response. <strong className="text-white">Check your Spam or Junk folder</strong> to ensure receipt of our response.</>,
         sending: "Processing..."
       }
     }
@@ -604,7 +607,8 @@ export const offMarketDict = {
         regionLabel: "Dans quelle région stratégique l'actif doit-il être situé ? (Sélectionnez tout ce qui s'applique) *",
         hotelBudgetLabel: "Quel est le budget ou le montant d'investissement prévu pour l'actif hôtelier ? *",
 
-        submit: "Soumettre la Demande Institutionnelle",
+        submit: "Soumettre la demande de recherche privée",
+        disclaimer: <>En soumettant cette demande, vous recevrez une réponse confidentielle. <strong className="text-white">Vérifiez votre dossier Spam ou Courrier indésirable</strong> pour vous assurer de la réception de notre réponse.</>,
         sending: "Traitement en cours..."
       }
     }

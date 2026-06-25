@@ -44,10 +44,10 @@ export default function OffMarketClub({ lang }: { lang: string }) {
 
                             <div className="mt-8 grid grid-cols-2 gap-6">
                                 <div className="flex items-center gap-2 text-gray-400 text-sm">
-                                    <FaLock aria-hidden="true" className="text-luxury-gold" /> {lang === "en" ? "Private Listings" : "Listados Privados"}
+                                    <FaLock aria-hidden="true" className="text-luxury-gold" /> {lang === "en" ? "Private Listings" : lang === "fr" ? "Annonces Privées" : "Listados Privados"}
                                 </div>
                                 <div className="flex items-center gap-2 text-gray-400 text-sm">
-                                    <FaGem aria-hidden="true" className="text-luxury-gold" /> {lang === "en" ? "Priority Alerts" : "Alertas Prioritarias"}
+                                    <FaGem aria-hidden="true" className="text-luxury-gold" /> {lang === "en" ? "Priority Alerts" : lang === "fr" ? "Alertes Prioritaires" : "Alertas Prioritarias"}
                                 </div>
                             </div>
                         </div>
@@ -65,12 +65,10 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                     <FaUserSecret aria-hidden="true" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-white mb-4">
-                                    {lang === "en" ? "Unlock the Secret Portfolio" : "Desbloquea el Portafolio Secreto"}
+                                    {lang === "en" ? "Unlock the Secret Portfolio" : lang === "fr" ? "Déverrouillez le Portefeuille Secret" : "Desbloquea el Portafolio Secreto"}
                                 </h3>
                                 <p className="text-gray-400 text-sm italic mb-10 leading-relaxed">
-                                    {lang === "en"
-                                        ? "Looking to acquire an operational hotel, develop a macro-project, or capitalize on foreclosures and opportunity properties? You are in the right ecosystem."
-                                        : "¿Busca adquirir un complejo hotelero, desarrollar un macro-proyecto, o capitalizar sobre propiedades de oportunidad y remates bancarios? Está en el ecosistema correcto."}
+                                    {lang === "en" ? "Looking to acquire an operational hotel, develop a macro-project, or capitalize on foreclosures and opportunity properties? You are in the right ecosystem." : lang === "fr" ? "Cherchez-vous à acquérir un complexe hôtelier, à développer un macro-projet ou à capitaliser sur des saisies et des propriétés d'opportunité ? Vous êtes dans le bon écosystème." : "¿Busca adquirir un complejo hotelero, desarrollar un macro-proyecto, o capitalizar sobre propiedades de oportunidad y remates bancarios? Está en el ecosistema correcto."}
                                 </p>
                             </div>
 
@@ -78,10 +76,10 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                                 href={`/${lang}/investments/off-market`}
                                 className="block w-full bg-luxury-gold text-black font-bold py-5 px-6 uppercase tracking-[0.2em] text-sm hover:bg-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
                             >
-                                {lang === "en" ? "Access Private Portfolio" : "Acceder al Portafolio Privado"}
+                                {lang === "en" ? "Access Private Portfolio" : lang === "fr" ? "Accéder au Portefeuille Privé" : "Acceder al Portafolio Privado"}
                             </Link>
                             <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest mt-6">
-                                {lang === "en" ? "Institutional Verification Required. 100% Confidential." : "Verificación Institucional Requerida. 100% Confidencial."}
+                                {lang === "en" ? "Institutional Verification Required. 100% Confidential." : lang === "fr" ? "Vérification Institutionnelle Requise. 100% Confidentiel." : "Verificación Institucional Requerida. 100% Confidencial."}
                             </p>
                         </motion.div>
                     </div>

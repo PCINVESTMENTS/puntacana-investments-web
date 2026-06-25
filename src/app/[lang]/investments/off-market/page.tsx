@@ -150,7 +150,7 @@ export default async function OffMarketPage({
 
                         <ScrollReveal direction="right">
                             <h2 className="text-3xl md:text-4xl font-serif text-white mb-8 uppercase tracking-wide">
-                                Adquisición Estratégica de Activos en Liquidación, Adjudicados y Remates Bancarios <span className="text-luxury-gold block mt-2 text-2xl">{t.distressed.title2}</span>
+                                {t.distressed.title1} <span className="text-luxury-gold block mt-2 text-2xl">{t.distressed.title2}</span>
                             </h2>
                             
                             <div className="space-y-6 text-gray-300 text-lg font-light leading-relaxed">
