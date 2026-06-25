@@ -149,16 +149,24 @@ export default function OffMarketForm({ lang }: { lang: string }) {
     const labelClassName = "block text-xs font-bold text-[#d4af37] uppercase tracking-wider mb-2";
 
     return (
-        <div className="relative">
+        <div className="w-full">
             {status === "success" && (
-                <div className="absolute inset-0 z-20 bg-[#000000] border border-[#d4af37] p-10 text-center rounded-sm flex flex-col justify-center items-center shadow-2xl">
-                    <FaCheckCircle className="text-[#d4af37] text-6xl mx-auto mb-6" />
+                <div className="bg-zinc-900 border border-[#d4af37]/30 p-8 md:p-12 rounded-xl text-center shadow-2xl">
+                    <div className="flex justify-center mb-6 text-[#d4af37]">
+                        <FaCheckCircle aria-hidden="true" size={56} />
+                    </div>
                     <h3 className="text-2xl font-serif text-white mb-4 uppercase tracking-widest">Requerimiento Recibido</h3>
-                    <p className="text-gray-300 text-lg">{message}</p>
+                    <p className="text-gray-300 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">{message}</p>
+                    <button
+                        onClick={() => window.location.reload()}
+                        className="px-8 py-3 bg-transparent border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black transition-colors rounded-full font-semibold uppercase tracking-wider text-sm"
+                    >
+                        Enviar otro requerimiento
+                    </button>
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className={`bg-[#000000] border border-[#d4af37]/30 p-8 md:p-12 shadow-2xl relative overflow-hidden ${status === 'success' ? 'opacity-0 pointer-events-none' : ''}`}>
+            <form onSubmit={handleSubmit} className={status === 'success' ? 'absolute opacity-0 h-0 w-0 overflow-hidden pointer-events-none' : 'bg-[#000000] border border-[#d4af37]/30 p-8 md:p-12 shadow-2xl relative overflow-hidden'}>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/10 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none"></div>
 
             <div className="text-center mb-10">
