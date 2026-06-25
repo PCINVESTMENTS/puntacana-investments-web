@@ -88,9 +88,7 @@ export async function generateStaticParams() {
 }
 
 import { CompareProvider } from "@/components/property/CompareContext";
-import dynamic from "next/dynamic";
-
-const PropertyComparator = dynamic(() => import("@/components/property/PropertyComparator"));
+import PropertyComparatorWrapper from "@/components/property/PropertyComparatorWrapper";
 
 import Script from "next/script";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
@@ -139,7 +137,7 @@ export default async function RootLayout({
         <CompareProvider>
           <LocalBusinessSchema lang={lang} />
           {children}
-          <PropertyComparator lang={lang} />
+          <PropertyComparatorWrapper lang={lang} />
           {/* ChatBot temporarily removed */}
         </CompareProvider>
         <Analytics />
