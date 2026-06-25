@@ -145,21 +145,20 @@ export default function OffMarketForm({ lang }: { lang: string }) {
         }
     };
 
-    if (status === "success") {
-        return (
-            <div className="bg-[#000000] border border-[#d4af37] p-10 text-center rounded-sm">
-                <FaCheckCircle className="text-[#d4af37] text-6xl mx-auto mb-6" />
-                <h3 className="text-2xl font-serif text-white mb-4 uppercase tracking-widest">Requerimiento Recibido</h3>
-                <p className="text-gray-300 text-lg">{message}</p>
-            </div>
-        );
-    }
-
     const selectClassName = "w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors appearance-none cursor-pointer";
     const labelClassName = "block text-xs font-bold text-[#d4af37] uppercase tracking-wider mb-2";
 
     return (
-        <form onSubmit={handleSubmit} className="bg-[#000000] border border-[#d4af37]/30 p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="relative">
+            {status === "success" && (
+                <div className="absolute inset-0 z-20 bg-[#000000] border border-[#d4af37] p-10 text-center rounded-sm flex flex-col justify-center items-center shadow-2xl">
+                    <FaCheckCircle className="text-[#d4af37] text-6xl mx-auto mb-6" />
+                    <h3 className="text-2xl font-serif text-white mb-4 uppercase tracking-widest">Requerimiento Recibido</h3>
+                    <p className="text-gray-300 text-lg">{message}</p>
+                </div>
+            )}
+
+            <form onSubmit={handleSubmit} className={`bg-[#000000] border border-[#d4af37]/30 p-8 md:p-12 shadow-2xl relative overflow-hidden ${status === 'success' ? 'opacity-0 pointer-events-none' : ''}`}>
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/10 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none"></div>
 
             <div className="text-center mb-10">
@@ -349,5 +348,6 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                 </div>
             </div>
         </form>
+    </div>
     );
 }
