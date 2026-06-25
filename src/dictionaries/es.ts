@@ -32,6 +32,8 @@ export default {
         scroll: "Explorar Inversiones"
     },
     footer: {
+        explore: "Explorar",
+        company: "Empresa",
         newsletter: "Boletín",
         emailPlaceholder: "Correo electrónico",
         rights: "Todos los derechos reservados.",

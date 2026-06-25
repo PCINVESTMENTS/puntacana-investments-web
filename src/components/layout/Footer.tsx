@@ -57,7 +57,7 @@ export function Footer({ dict, lang }: FooterProps) {
                     {/* Navigation - Column 1 */}
                     <div>
                         <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
-                            Explorar
+                            {dict.footer.explore}
                         </h4>
                         <ul className="space-y-1 text-sm text-gray-400">
                             <li><Link href={`/${lang}/properties`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.properties}</Link></li>
@@ -70,7 +70,7 @@ export function Footer({ dict, lang }: FooterProps) {
                     {/* Navigation - Column 2 */}
                     <div>
                         <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
-                            Empresa
+                            {dict.footer.company}
                         </h4>
                         <ul className="space-y-1 text-sm text-gray-400">
                             <li><Link href={`/${lang}/services`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.services}</Link></li>
