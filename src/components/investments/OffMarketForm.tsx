@@ -133,7 +133,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
             const result = await submitContactForm(null, finalFormData);
             if (result?.success) {
                 setStatus("success");
-                setMessage("Su requerimiento de búsqueda ha sido enviado con éxito. Por favor, asegúrese de revisar su carpeta de Spam o Correo no deseado en las próximas horas para recibir nuestra respuesta.");
+                setMessage("Su requerimiento de búsqueda ha sido enviado con éxito. Le hemos enviado un correo electrónico de confirmación. Por favor, asegúrese de revisar su bandeja de Spam o Correo no deseado.");
                 (e.target as HTMLFormElement).reset();
             } else {
                 setStatus("error");
