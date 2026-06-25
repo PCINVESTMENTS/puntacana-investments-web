@@ -23,23 +23,28 @@ export const offMarketDict = {
       p3: "Debido a la naturaleza legal y de velocidad de capital que exigen estas transacciones, estos activos se gestionan bajo estricto radar, protegiendo la identidad de las instituciones financieras involucradas."
     },
     kyc: {
-      title: "Protocolo KYC y Prueba de Fondos (POF)",
+      title: "Protocolo Obligatorio de Seguridad y Acceso a la Información",
+      p1: "Para salvaguardar la integridad de las operaciones bancarias, la privacidad de los desarrolladores y la seguridad jurídica de las transacciones, ",
+      p2: " no proporciona dosieres financieros, ubicaciones exactas ni documentos técnicos a solicitantes no depurados.",
       desc: "El acceso a cualquier activo de nuestro portafolio Off-Market requiere el estricto cumplimiento del siguiente protocolo de cumplimiento legal y financiero:",
       items: [
         {
-          title: "Firma de NDA (Non-Disclosure Agreement)",
-          desc: "Acuerdo de confidencialidad inquebrantable que protege tanto la identidad del vendedor/institución bancaria como la del inversor o fondo adquiriente."
+          title: "1. Acuerdo de Confidencialidad y No Divulgación (NDA)",
+          desc: "Firma obligatoria de un acuerdo legal que penaliza el uso indebido o la filtración a terceros de la información suministrada sobre el activo."
         },
         {
-          title: "Proof of Funds (POF)",
-          desc: "Verificación de capacidad financiera líquida. Nuestro comité requiere evidencia bancaria certificada reciente que avale la capacidad de compra del activo objetivo."
+          title: "2. Prueba de Fondos (Proof of Funds - POF)",
+          desc: "Certificación bancaria oficial o carta de líneas de crédito que demuestre la capacidad de liquidez inmediata para ejecutar la operación."
         },
         {
-          title: "Debida Diligencia Corporativa (KYC)",
-          desc: "Identificación del beneficiario final (UBO), origen de los fondos y perfilamiento corporativo para cumplir con las normativas locales e internacionales de prevención de lavado de activos."
+          title: "3. Documentación de Identidad y Registro Corporativo",
+          desc: "Copias de identificaciones oficiales de los beneficiarios finales, o el Registro Mercantil y actas corporativas vigentes si la adquisición se realiza a través de una empresa."
+        },
+        {
+          title: "4. Formulario KYC (Know Your Customer)",
+          desc: "Cumplimentación de nuestro registro de transparencia, previniendo el lavado de activos y blindando la operación bajo los marcos regulatorios internacionales."
         }
-      ],
-      closing: "Solo tras la validación de estos requisitos por nuestro departamento legal, se otorgará acceso al cuarto de datos (Data Room) del activo, incluyendo métricas financieras, planos, permisologías y tasaciones oficiales."
+      ]
     },
     form: {
       received: "Requerimiento Recibido",
@@ -124,6 +129,75 @@ export const offMarketDict = {
           ]
         },
         description: "Especificaciones Adicionales / Criterios de Retorno (ROI) *",
+
+        oppPhysicalState: {
+          label: "¿En qué estado físico prefiere la propiedad? *",
+          options: [
+            "Seleccione un estado físico...",
+            "Terminada / Llave en mano (Para uso o explotación inmediata)",
+            "Terminada / Requiere remodelación o mejoras estéticas",
+            "En fase de construcción gris / Ejecución pendiente"
+          ]
+        },
+        oppDiscount: {
+          label: "¿Qué margen de descuento mínimo exige respecto al valor real de mercado? *",
+          options: [
+            "Seleccione margen de descuento...",
+            "Entre un 20% y un 30% por debajo del mercado",
+            "Entre un 30% y un 50% por debajo del mercado (Remates agresivos)"
+          ]
+        },
+        oppStrategy: {
+          label: "¿Cuál es su estrategia con esta propiedad? *",
+          options: [
+            "Seleccione su estrategia...",
+            "Flipping Inmobiliario (Remodelación y reventa rápida)",
+            "Explotación de rentas vacacionales (Flujo de caja)",
+            "Retención del activo a largo plazo (Plusvalía / Land Banking)"
+          ]
+        },
+        hotelEnvironment: {
+          label: "¿Cuál es el entorno o naturaleza del hotel/terreno que busca? *",
+          options: [
+            "Seleccione el entorno...",
+            "Hotel / Resort con línea de playa directa (Beachfront)",
+            "Hotel de Ciudad / Corporativo / Urbano",
+            "Eco-Resort / Desarrollo de Montaña o Río",
+            "Macro-Lote virgen para desarrollo turístico desde cero"
+          ]
+        },
+        hotelRooms: {
+          label: "¿Qué cantidad de habitaciones / llaves requiere? *",
+          options: [
+            "Seleccione cantidad de habitaciones...",
+            "De 50 a 100 habitaciones",
+            "De 100 a 200 habitaciones",
+            "De 200 a 300 habitaciones",
+            "De 300 a 400 habitaciones",
+            "De 400 a 500 habitaciones",
+            "500 habitaciones o más"
+          ]
+        },
+        hotelOperator: {
+          label: "¿Cuál es su preferencia respecto a la operadora del hotel? *",
+          options: [
+            "Seleccione preferencia de operadora...",
+            "Con operadora internacional vigente (Asset con contrato de bandera)",
+            "Sin operadora / Libre de bandera (Listo para marca propia o reconversión)"
+          ]
+        },
+        hotelObjective: {
+          label: "¿Cuál es el objetivo principal de la transacción? *",
+          options: [
+            "Seleccione objetivo de la transacción...",
+            "Compra del activo inmobiliario (Adquisición total de la propiedad)",
+            "Solo gestionar y administrar (Operación hotelera / Management)",
+            "Joint Venture (Inyección de capital y desarrollo conjunto)"
+          ]
+        },
+        regionLabel: "¿En qué región estratégica debe estar ubicado el activo? (Seleccione todas las que apliquen) *",
+        hotelBudgetLabel: "¿Cuál es el presupuesto o monto de inversión destinado al activo hotelero? *",
+
         submit: "Enviar Requerimiento Institucional",
         sending: "Procesando..."
       }
@@ -152,23 +226,28 @@ export const offMarketDict = {
       p3: "Due to the legal nature and capital speed demanded by these transactions, these assets are managed strictly under the radar, protecting the identity of the financial institutions involved."
     },
     kyc: {
-      title: "KYC Protocol and Proof of Funds (POF)",
+      title: "Mandatory Security and Information Access Protocol",
+      p1: "To safeguard the integrity of banking operations, developer privacy, and the legal security of transactions, ",
+      p2: " does not provide financial dossiers, exact locations, or technical documents to unvetted applicants.",
       desc: "Access to any asset in our Off-Market portfolio requires strict compliance with the following legal and financial protocol:",
       items: [
         {
-          title: "NDA Signature (Non-Disclosure Agreement)",
-          desc: "An unbreakable confidentiality agreement that protects both the identity of the seller/banking institution and the acquiring investor or fund."
+          title: "1. Non-Disclosure Agreement (NDA)",
+          desc: "Mandatory signature of a legal agreement that penalizes the misuse or leakage to third parties of the information provided about the asset."
         },
         {
-          title: "Proof of Funds (POF)",
-          desc: "Verification of liquid financial capacity. Our committee requires recent certified banking evidence that backs the purchasing capacity for the target asset."
+          title: "2. Proof of Funds (POF)",
+          desc: "Official bank certification or letter of credit lines demonstrating the immediate liquidity capacity to execute the operation."
         },
         {
-          title: "Corporate Due Diligence (KYC)",
-          desc: "Identification of the Ultimate Beneficial Owner (UBO), source of funds, and corporate profiling to comply with local and international anti-money laundering regulations."
+          title: "3. Identity and Corporate Registration Documentation",
+          desc: "Copies of official IDs of the ultimate beneficial owners, or the Commercial Registry and current corporate minutes if the acquisition is made through a company."
+        },
+        {
+          title: "4. KYC Form (Know Your Customer)",
+          desc: "Completion of our transparency registry, preventing money laundering and shielding the operation under international regulatory frameworks."
         }
-      ],
-      closing: "Only after validation of these requirements by our legal department will access be granted to the asset's Data Room, including financial metrics, blueprints, permits, and official appraisals."
+      ]
     },
     form: {
       received: "Requirement Received",
@@ -253,6 +332,75 @@ export const offMarketDict = {
           ]
         },
         description: "Additional Specifications / ROI Criteria *",
+
+        oppPhysicalState: {
+          label: "In what physical condition do you prefer the property? *",
+          options: [
+            "Select physical condition...",
+            "Finished / Turnkey (For immediate use or exploitation)",
+            "Finished / Requires remodeling or cosmetic upgrades",
+            "Grey shell construction / Pending execution"
+          ]
+        },
+        oppDiscount: {
+          label: "What minimum discount margin do you demand relative to real market value? *",
+          options: [
+            "Select discount margin...",
+            "Between 20% and 30% below market",
+            "Between 30% and 50% below market (Aggressive foreclosures)"
+          ]
+        },
+        oppStrategy: {
+          label: "What is your strategy for this property? *",
+          options: [
+            "Select your strategy...",
+            "Real Estate Flipping (Quick remodel and resale)",
+            "Vacation rental exploitation (Cash flow)",
+            "Long-term asset retention (Capital appreciation / Land Banking)"
+          ]
+        },
+        hotelEnvironment: {
+          label: "What is the environment or nature of the hotel/land you are looking for? *",
+          options: [
+            "Select environment...",
+            "Hotel / Resort with direct beach access (Beachfront)",
+            "City Hotel / Corporate / Urban",
+            "Eco-Resort / Mountain or River Development",
+            "Virgin Macro-Lot for tourism development from scratch"
+          ]
+        },
+        hotelRooms: {
+          label: "How many rooms / keys do you require? *",
+          options: [
+            "Select number of rooms...",
+            "From 50 to 100 rooms",
+            "From 100 to 200 rooms",
+            "From 200 to 300 rooms",
+            "From 300 to 400 rooms",
+            "From 400 to 500 rooms",
+            "500 rooms or more"
+          ]
+        },
+        hotelOperator: {
+          label: "What is your preference regarding the hotel operator? *",
+          options: [
+            "Select operator preference...",
+            "With active international operator (Flagged asset)",
+            "No operator / Flag-free (Ready for own brand or conversion)"
+          ]
+        },
+        hotelObjective: {
+          label: "What is the primary objective of the transaction? *",
+          options: [
+            "Select transaction objective...",
+            "Purchase of the real estate asset (Full acquisition of property)",
+            "Only manage and administer (Hotel Operation / Management)",
+            "Joint Venture (Capital injection and joint development)"
+          ]
+        },
+        regionLabel: "In which strategic region should the asset be located? (Select all that apply) *",
+        hotelBudgetLabel: "What is the budget or investment amount intended for the hotel asset? *",
+
         submit: "Submit Institutional Requirement",
         sending: "Processing..."
       }
@@ -281,23 +429,28 @@ export const offMarketDict = {
       p3: "En raison de la nature juridique et de la vitesse du capital exigée par ces transactions, ces actifs sont gérés strictement sous le radar, protégeant l'identité des institutions financières impliquées."
     },
     kyc: {
-      title: "Protocole KYC et Preuve de Fonds (POF)",
+      title: "Protocole Obligatoire de Sécurité et d'Accès à l'Information",
+      p1: "Pour sauvegarder l'intégrité des opérations bancaires, la vie privée des développeurs et la sécurité juridique des transactions, ",
+      p2: " ne fournit pas de dossiers financiers, d'emplacements exacts ou de documents techniques aux candidats non vérifiés.",
       desc: "L'accès à tout actif de notre portefeuille Off-Market exige le strict respect du protocole légal et financier suivant :",
       items: [
         {
-          title: "Signature de NDA (Accord de Non-Divulgation)",
-          desc: "Un accord de confidentialité incassable qui protège à la fois l'identité du vendeur/institution bancaire et celle de l'investisseur ou du fonds acquéreur."
+          title: "1. Accord de Non-Divulgation (NDA)",
+          desc: "Signature obligatoire d'un accord légal qui pénalise la mauvaise utilisation ou la fuite à des tiers des informations fournies sur l'actif."
         },
         {
-          title: "Preuve de Fonds (POF)",
-          desc: "Vérification de la capacité financière liquide. Notre comité exige des preuves bancaires certifiées récentes attestant de la capacité d'achat pour l'actif cible."
+          title: "2. Preuve de Fonds (POF)",
+          desc: "Certification bancaire officielle ou lettre de lignes de crédit démontrant la capacité de liquidité immédiate pour exécuter l'opération."
         },
         {
-          title: "Diligence Raisonnable Corporative (KYC)",
-          desc: "Identification du bénéficiaire effectif ultime (UBO), de l'origine des fonds et du profilage corporatif pour se conformer aux réglementations locales et internationales de lutte contre le blanchiment d'argent."
+          title: "3. Documents d'Identité et d'Enregistrement Corporatif",
+          desc: "Copies des pièces d'identité officielles des bénéficiaires effectifs ultimes, ou du Registre du Commerce et des procès-verbaux de l'entreprise si l'acquisition est réalisée par une société."
+        },
+        {
+          title: "4. Formulaire KYC (Know Your Customer)",
+          desc: "Complétion de notre registre de transparence, prévenant le blanchiment d'argent et protégeant l'opération en vertu des cadres réglementaires internationaux."
         }
-      ],
-      closing: "Ce n'est qu'après validation de ces exigences par notre service juridique que l'accès à la Data Room de l'actif sera accordé, comprenant les mesures financières, les plans, les permis et les évaluations officielles."
+      ]
     },
     form: {
       received: "Demande Reçue",
@@ -382,6 +535,75 @@ export const offMarketDict = {
           ]
         },
         description: "Spécifications Supplémentaires / Critères de ROI *",
+
+        oppPhysicalState: {
+          label: "Dans quel état physique préférez-vous la propriété ? *",
+          options: [
+            "Sélectionner l'état physique...",
+            "Achevée / Clé en main (Pour utilisation ou exploitation immédiate)",
+            "Achevée / Nécessite des rénovations ou améliorations esthétiques",
+            "Construction en gros œuvre / Exécution en attente"
+          ]
+        },
+        oppDiscount: {
+          label: "Quelle marge de réduction minimale exigez-vous par rapport à la valeur réelle du marché ? *",
+          options: [
+            "Sélectionner la marge de réduction...",
+            "Entre 20% et 30% en dessous du marché",
+            "Entre 30% et 50% en dessous du marché (Saisies agressives)"
+          ]
+        },
+        oppStrategy: {
+          label: "Quelle est votre stratégie pour cette propriété ? *",
+          options: [
+            "Sélectionnez votre stratégie...",
+            "Flipping Immobilier (Rénovation et revente rapide)",
+            "Exploitation de location de vacances (Flux de trésorerie)",
+            "Rétention d'actifs à long terme (Plus-value / Land Banking)"
+          ]
+        },
+        hotelEnvironment: {
+          label: "Quel est l'environnement ou la nature de l'hôtel/terrain que vous recherchez ? *",
+          options: [
+            "Sélectionner l'environnement...",
+            "Hôtel / Complexe avec accès direct à la plage (Beachfront)",
+            "Hôtel de Ville / Corporatif / Urbain",
+            "Éco-Complexe / Développement en Montagne ou Rivière",
+            "Macro-Lot vierge pour développement touristique à partir de zéro"
+          ]
+        },
+        hotelRooms: {
+          label: "Combien de chambres / clés nécessitez-vous ? *",
+          options: [
+            "Sélectionner le nombre de chambres...",
+            "De 50 à 100 chambres",
+            "De 100 à 200 chambres",
+            "De 200 à 300 chambres",
+            "De 300 à 400 chambres",
+            "De 400 à 500 chambres",
+            "500 chambres ou plus"
+          ]
+        },
+        hotelOperator: {
+          label: "Quelle est votre préférence concernant l'opérateur hôtelier ? *",
+          options: [
+            "Sélectionner la préférence d'opérateur...",
+            "Avec un opérateur international actif (Actif sous enseigne)",
+            "Sans opérateur / Sans enseigne (Prêt pour marque propre ou conversion)"
+          ]
+        },
+        hotelObjective: {
+          label: "Quel est l'objectif principal de la transaction ? *",
+          options: [
+            "Sélectionner l'objectif de la transaction...",
+            "Achat de l'actif immobilier (Acquisition totale de la propriété)",
+            "Seulement gérer et administrer (Opération hôtelière / Management)",
+            "Joint Venture (Injection de capitaux et développement conjoint)"
+          ]
+        },
+        regionLabel: "Dans quelle région stratégique l'actif doit-il être situé ? (Sélectionnez tout ce qui s'applique) *",
+        hotelBudgetLabel: "Quel est le budget ou le montant d'investissement prévu pour l'actif hôtelier ? *",
+
         submit: "Soumettre la Demande Institutionnelle",
         sending: "Traitement en cours..."
       }

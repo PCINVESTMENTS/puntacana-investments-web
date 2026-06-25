@@ -31,58 +31,22 @@ export default function OffMarketForm({ lang }: { lang: string }) {
     ];
 
     // Oportunidad options
-    const oppPropertyTypes = [
-        "Remates Bancarios / Activos Adjudicados",
-        "Villas y Propiedades por Urgencia Económica",
-        "Estructuras Residenciales Inconclusas / Proyectos Paralizados",
-        "Parcelas / Lotes Preferenciales (Frente al Mar o Campo de Golf)",
-        "Penthouses Privados y Unidades Singulares"
-    ];
+    // oppPropertyTypes is now pulled dynamically
 
-    const oppPhysicalStates = [
-        "Terminada / Llave en mano (Para uso o explotación inmediata)",
-        "Terminada / Requiere remodelación o mejoras estéticas",
-        "En fase de construcción gris / Ejecución pendiente"
-    ];
+    // oppPhysicalStates is now pulled dynamically below
 
-    const oppDiscounts = [
-        "Entre un 20% y un 30% por debajo del mercado",
-        "Entre un 30% y un 50% por debajo del mercado (Remates agresivos)"
-    ];
+    // oppDiscounts is now pulled dynamically below
 
-    const oppStrategies = [
-        "Flipping Inmobiliario (Remodelación y reventa rápida)",
-        "Explotación de rentas vacacionales (Flujo de caja)",
-        "Retención del activo a largo plazo (Plusvalía / Land Banking)"
-    ];
+    // oppStrategies is now pulled dynamically below
 
     // Hoteles options
-    const hotelEnvironments = [
-        "Hotel / Resort con línea de playa directa (Beachfront)",
-        "Hotel de Ciudad / Corporativo / Urbano",
-        "Eco-Resort / Desarrollo de Montaña o Río",
-        "Macro-Lote virgen para desarrollo turístico desde cero"
-    ];
+    // hotelEnvironments is now pulled dynamically below
 
-    const hotelRooms = [
-        "De 50 a 100 habitaciones",
-        "De 100 a 200 habitaciones",
-        "De 200 a 300 habitaciones",
-        "De 300 a 400 habitaciones",
-        "De 400 a 500 habitaciones",
-        "500 habitaciones o más"
-    ];
+    // hotelRooms is now pulled dynamically below
 
-    const hotelOperators = [
-        "Con operadora internacional vigente (Asset con contrato de bandera)",
-        "Sin operadora / Libre de bandera (Listo para marca propia o reconversión)"
-    ];
+    // hotelOperators is now pulled dynamically below
 
-    const hotelObjectives = [
-        "Compra del activo inmobiliario (Adquisición total de la propiedad)",
-        "Solo gestionar y administrar (Operación hotelera / Management)",
-        "Joint Venture (Inyección de capital y desarrollo conjunto)"
-    ];
+    // hotelObjectives is now pulled dynamically below
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -247,66 +211,59 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         <label className={labelClassName}>{t.fields.opportunityType.label}</label>
                         <select name="opp_type" required={activeTab === "oportunidad"} className={selectClassName}>
                             <option value="">Seleccione / Select</option>
-                            {oppPropertyTypes.map((t, i) => <option key={i} value={t}>{t}</option>)}
+                            {t.fields.opportunityType.options.map((opt: string, i: number) => <option key={i} value={i === 0 ? "" : opt}>{opt}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿En qué estado físico prefiere la propiedad? *</label>
+                        <label className={labelClassName}>{t.fields.oppPhysicalState.label}</label>
                         <select name="opp_state" required={activeTab === "oportunidad"} className={selectClassName}>
-                            <option value="">Seleccione un estado físico...</option>
-                            {oppPhysicalStates.map((s, i) => <option key={i} value={s}>{s}</option>)}
+                            {t.fields.oppPhysicalState.options.map((s: string, i: number) => <option key={i} value={i === 0 ? "" : s}>{s}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Qué margen de descuento mínimo exige respecto al valor real de mercado? *</label>
+                        <label className={labelClassName}>{t.fields.oppDiscount.label}</label>
                         <select name="opp_discount" required={activeTab === "oportunidad"} className={selectClassName}>
-                            <option value="">Seleccione margen de descuento...</option>
-                            {oppDiscounts.map((d, i) => <option key={i} value={d}>{d}</option>)}
+                            {t.fields.oppDiscount.options.map((d: string, i: number) => <option key={i} value={i === 0 ? "" : d}>{d}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Cuál es su estrategia con esta propiedad? *</label>
+                        <label className={labelClassName}>{t.fields.oppStrategy.label}</label>
                         <select name="opp_strategy" required={activeTab === "oportunidad"} className={selectClassName}>
-                            <option value="">Seleccione su estrategia...</option>
-                            {oppStrategies.map((s, i) => <option key={i} value={s}>{s}</option>)}
+                            {t.fields.oppStrategy.options.map((s: string, i: number) => <option key={i} value={i === 0 ? "" : s}>{s}</option>)}
                         </select>
                     </div>
                 </div>
 
                 <div className={`space-y-8 ${activeTab === "hoteles" ? "block" : "hidden"}`}>
                     <div>
-                        <label className={labelClassName}>¿Cuál es el presupuesto o monto de inversión destinado al activo hotelero? *</label>
+                        <label className={labelClassName}>{t.fields.hotelBudgetLabel}</label>
                         <select name="hotel_budget" required={activeTab === "hoteles"} className={selectClassName}>
                             <option value="">Seleccione / Select</option>
                             {budgets.map((b, i) => <option key={i} value={b}>{b}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Cuál es el entorno o naturaleza del hotel/terreno que busca? *</label>
+                        <label className={labelClassName}>{t.fields.hotelEnvironment.label}</label>
                         <select name="hotel_environment" required={activeTab === "hoteles"} className={selectClassName}>
-                            <option value="">Seleccione el entorno...</option>
-                            {hotelEnvironments.map((e, i) => <option key={i} value={e}>{e}</option>)}
+                            {t.fields.hotelEnvironment.options.map((e: string, i: number) => <option key={i} value={i === 0 ? "" : e}>{e}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Qué cantidad de habitaciones / llaves requiere? *</label>
+                        <label className={labelClassName}>{t.fields.hotelRooms.label}</label>
                         <select name="hotel_rooms" required={activeTab === "hoteles"} className={selectClassName}>
-                            <option value="">Seleccione cantidad de habitaciones...</option>
-                            {hotelRooms.map((r, i) => <option key={i} value={r}>{r}</option>)}
+                            {t.fields.hotelRooms.options.map((r: string, i: number) => <option key={i} value={i === 0 ? "" : r}>{r}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Cuál es su preferencia respecto a la operadora del hotel? *</label>
+                        <label className={labelClassName}>{t.fields.hotelOperator.label}</label>
                         <select name="hotel_operator" required={activeTab === "hoteles"} className={selectClassName}>
-                            <option value="">Seleccione preferencia de operadora...</option>
-                            {hotelOperators.map((o, i) => <option key={i} value={o}>{o}</option>)}
+                            {t.fields.hotelOperator.options.map((o: string, i: number) => <option key={i} value={i === 0 ? "" : o}>{o}</option>)}
                         </select>
                     </div>
                     <div>
-                        <label className={labelClassName}>¿Cuál es el objetivo principal de la transacción? *</label>
+                        <label className={labelClassName}>{t.fields.hotelObjective.label}</label>
                         <select name="hotel_objective" required={activeTab === "hoteles"} className={selectClassName}>
-                            <option value="">Seleccione objetivo de la transacción...</option>
-                            {hotelObjectives.map((o, i) => <option key={i} value={o}>{o}</option>)}
+                            {t.fields.hotelObjective.options.map((o: string, i: number) => <option key={i} value={i === 0 ? "" : o}>{o}</option>)}
                         </select>
                     </div>
                 </div>
@@ -314,7 +271,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                 <hr className="border-[#d4af37]/20" />
 
                 <div>
-                    <label className={labelClassName}>¿En qué región estratégica debe estar ubicado el activo? (Seleccione todas las que apliquen) *</label>
+                    <label className={labelClassName}>{t.fields.regionLabel}</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                         {regions.map((region, idx) => (
                             <label key={idx} className="flex items-center gap-3 cursor-pointer group">

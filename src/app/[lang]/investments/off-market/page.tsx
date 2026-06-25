@@ -181,34 +181,32 @@ export default async function OffMarketPage({
                             <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-luxury-gold"></div>
 
                             <div className="text-center mb-12">
-                                <h2 className="text-2xl md:text-3xl font-serif text-white uppercase tracking-widest mb-4">
-                                    Protocolo Obligatorio de Seguridad y Acceso a la Información
-                                </h2>
+                                <h2 className="text-2xl md:text-3xl font-serif text-white uppercase tracking-widest mb-4">{t.kyc.title}</h2>
                                 <div className="h-0.5 w-24 bg-luxury-gold mx-auto"></div>
                             </div>
 
                             <p className="text-gray-300 text-center text-lg font-light leading-relaxed mb-12 max-w-4xl mx-auto">
-                                Para salvaguardar la integridad de las operaciones bancarias, la privacidad de los desarrolladores y la seguridad jurídica de las transacciones, <strong className="text-white">{lang === "en" ? "Punta Cana Investments" : "Punta Cana Investments"}</strong> no proporciona dosieres financieros, ubicaciones exactas ni documentos técnicos a solicitantes no depurados.
+                                {t.kyc.p1} <strong className="text-white">{lang === "en" ? "Punta Cana Investments" : "Punta Cana Investments"}</strong> {t.kyc.p2}
                                 <br/><br/>
                                 {t.kyc.desc}
                             </p>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">1. Acuerdo de Confidencialidad y No Divulgación (NDA)</h3>
-                                    <p className="text-gray-400 font-light text-sm">Firma obligatoria de un acuerdo legal que penaliza el uso indebido o la filtración a terceros de la información suministrada sobre el activo.</p>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">{t.kyc.items[0].title}</h3>
+                                    <p className="text-gray-400 font-light text-sm">{t.kyc.items[0].desc}</p>
                                 </div>
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">2. Prueba de Fondos (Proof of Funds - POF)</h3>
-                                    <p className="text-gray-400 font-light text-sm">Certificación bancaria oficial o carta de líneas de crédito que demuestre la capacidad de liquidez inmediata para ejecutar la operación.</p>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">{t.kyc.items[1].title}</h3>
+                                    <p className="text-gray-400 font-light text-sm">{t.kyc.items[1].desc}</p>
                                 </div>
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">3. Documentación de Identidad y Registro Corporativo</h3>
-                                    <p className="text-gray-400 font-light text-sm">Copias de identificaciones oficiales de los beneficiarios finales, o el Registro Mercantil y actas corporativas vigentes si la adquisición se realiza a través de una empresa.</p>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">{t.kyc.items[2].title}</h3>
+                                    <p className="text-gray-400 font-light text-sm">{t.kyc.items[2].desc}</p>
                                 </div>
                                 <div className="bg-[#0a0a0a] p-6 border border-white/5 hover:border-luxury-gold/50 transition-colors">
-                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">4. Formulario KYC (Know Your Customer)</h3>
-                                    <p className="text-gray-400 font-light text-sm">Cumplimentación de nuestro registro de transparencia, previniendo el lavado de activos y blindando la operación bajo los marcos regulatorios internacionales.</p>
+                                    <h3 className="text-luxury-gold font-bold uppercase text-sm mb-3">{t.kyc.items[3].title}</h3>
+                                    <p className="text-gray-400 font-light text-sm">{t.kyc.items[3].desc}</p>
                                 </div>
                             </div>
                         </div>
