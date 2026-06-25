@@ -307,11 +307,11 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         {status === "loading" ? (
                             <FaSpinner className="animate-spin text-xl" />
                         ) : (
-                            "ENVIAR REQUERIMIENTO DE BÚSQUEDA PRIVADA"
+                            t.fields.submit
                         )}
                     </button>
                     <p className="text-center text-xs text-gray-400 mt-6">
-                        Al enviar este requerimiento, recibirá una respuesta confidencial. <strong>Revise su carpeta de Spam o Correo no deseado</strong> para asegurar la recepción de nuestra respuesta.
+                        {t.fields.disclaimer}
                     </p>
                 </div>
             </div>
