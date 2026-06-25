@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useRef, useEffect, startTransition } from 'react';
+import { useActionState, useRef, useEffect } from 'react';
 import { submitContactForm } from '@/app/actions/contact';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
@@ -58,51 +58,38 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
 
     // No client-side handleSubmit needed, formAction handles it
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        // We DO NOT call e.preventDefault() here.
-        // We let the event bubble up so HubSpot can catch the standard submit event.
-        // But we also programmatically trigger the Next.js Server Action
-        const formData = new FormData(e.currentTarget);
-        startTransition(() => {
-            formAction(formData);
-        });
-    };
+    if (state.success) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-zinc-900 border border-luxury-gold/30 p-8 rounded-xl text-center shadow-2xl"
+            >
+                <div className="flex justify-center mb-4 text-luxury-gold">
+                    <FaCheckCircle aria-hidden="true" size={48} />
+                </div>
+                <h3 className="text-2xl font-playfair text-white mb-2">{dict.success}</h3>
+                <p className="text-gray-300">{dict.successText}</p>
+                <p className="text-sm text-gray-400 mt-4 italic">
+                    {lang === 'es' 
+                        ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                        : lang === 'fr'
+                        ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
+                        : 'Please also check your junk or spam folder.'}
+                </p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="mt-6 px-6 py-2 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-colors rounded-full"
+                >
+                    {lang === 'es' ? 'Enviar otro mensaje' : lang === 'fr' ? 'Envoyer un autre message' : 'Send another message'}
+                </button>
+            </motion.div>
+        );
+    }
 
     return (
-        <div className={`relative ${className || ''}`}>
-            {state.success && (
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute inset-0 z-20 bg-zinc-900 border border-luxury-gold/30 p-8 rounded-xl text-center shadow-2xl flex flex-col justify-center items-center"
-                >
-                    <div className="flex justify-center mb-4 text-luxury-gold">
-                        <FaCheckCircle aria-hidden="true" size={48} />
-                    </div>
-                    <h3 className="text-2xl font-playfair text-white mb-2">{dict.success}</h3>
-                    <p className="text-gray-300">{dict.successText}</p>
-                    <p className="text-sm text-gray-400 mt-4 italic">
-                        {lang === 'es' 
-                            ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
-                            : lang === 'fr'
-                            ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
-                            : 'Please also check your junk or spam folder.'}
-                    </p>
-                    <button
-                        onClick={() => window.location.reload()}
-                        className="mt-6 px-6 py-2 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-colors rounded-full relative z-30"
-                    >
-                        {lang === 'es' ? 'Enviar otro mensaje' : lang === 'fr' ? 'Envoyer un autre message' : 'Send another message'}
-                    </button>
-                </motion.div>
-            )}
-
-            <form 
-                onSubmit={handleSubmit} 
-                ref={formRef} 
-                className={`space-y-6 ${state.success ? 'opacity-0 pointer-events-none' : ''}`}
-            >
-                {subject && <input type="hidden" name="subject" value={subject} />}
+        <form action={formAction} ref={formRef} className={`space-y-6 ${className || ''}`}>
+            {subject && <input type="hidden" name="subject" value={subject} />}
             <input type="hidden" name="lang" value={lang} />
             {propertyData && <input type="hidden" name="propertyData" value={propertyData} />}
 
@@ -191,6 +178,5 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
                 )}
             </button>
         </form>
-        </div>
     );
 }
