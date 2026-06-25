@@ -89,8 +89,10 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                                     alt={dict.title}
                                     fill
                                     priority={isPriority}
+                                    {...(isPriority ? { fetchPriority: "high" } : {})}
                                     sizes="100vw"
                                     className="object-cover"
+                                    quality={60}
                                 />
                             )}
                         </div>
