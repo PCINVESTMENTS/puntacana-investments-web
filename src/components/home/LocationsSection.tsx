@@ -105,7 +105,8 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
                             <div className="absolute inset-0 bg-gray-200" />
                             <Image
                                 src={loc.img}
-                                alt={loc.title}
+                                alt=""
+                                aria-hidden="true"
                                 fill
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="object-cover transition-transform duration-700 group-hover:scale-110 relative z-10"
