@@ -1,16 +1,20 @@
 
-> web@0.1.0 start
-> next start
+> web@0.1.0 dev
+> next dev
 
-▲ Next.js 16.1.1
-- Local:         http://localhost:3006
-- Network:       http://192.168.1.119:3006
-
-✓ Starting...
+⚠ Port 3000 is in use by process 7204, using available port 3001 instead.
 ⚠ `eslint` configuration in next.config.ts is no longer supported. See more info here: https://nextjs.org/docs/app/api-reference/cli/next#next-lint-options
 ⚠ Invalid next.config.ts options detected: 
 ⚠     Unrecognized key(s) in object: 'eslint'
 ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
-✓ Ready in 268ms
-FINAL PRICE IS: 369900
-FINAL PRICE IS: 369900
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.119:3001
+- Environments: .env.local
+- Experiments (use with caution):
+  · serverActions
+
+✓ Starting...
+⨯ Unable to acquire lock at /Users/puntacanainvestments/Desktop/punta cana sistem/puntacana-investments-web/.next/dev/lock, is another instance of next dev running?
+  Suggestion: If you intended to restart next dev, terminate the other process, and then try again.
+[?25h

@@ -101,11 +101,11 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
             </div>
 
             {/* Overlay */}
-            <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/20 via-transparent to-primary-black/50"></div>
+            <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-transparent to-primary-black/60 md:from-black/20 md:to-primary-black/50"></div>
 
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
-                <div className="bg-black/20 backdrop-blur-[2px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto min-h-[400px] md:min-h-[300px] flex flex-col justify-center">
+                <div className="bg-black/40 md:bg-black/20 md:backdrop-blur-[2px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto min-h-[400px] md:min-h-[300px] flex flex-col justify-center">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-md">
                         {dict.title}
                     </h1>

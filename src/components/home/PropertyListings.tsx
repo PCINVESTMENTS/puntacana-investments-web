@@ -404,12 +404,13 @@ function PropertyListingsContent({
                             </div>
                         ) : (
                             filteredProperties.map((prop, index) => (
-                                <ScrollReveal key={prop.id} delay={index * 0.1}>
+                                <ScrollReveal key={prop.id} delay={index * 0.1} priority={index < 2}>
                                     <div className="group bg-dark-gray border border-white/5 hover:border-luxury-gold/50 transition-all duration-500 overflow-hidden relative flex flex-col h-full shadow-xl">
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
                                                 images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
                                                 title={getLocalizedTitle(prop, lang)}
+                                                priority={index < 2}
                                             />
                                             <div className="absolute top-4 left-2 right-2 md:left-4 md:right-4 flex justify-between items-start gap-2 z-10 pointer-events-none">
                                                 <div className="bg-black/80 text-white px-2 md:px-4 py-1 text-[10px] md:text-xs uppercase tracking-wider border-l-2 border-luxury-gold truncate min-w-0">

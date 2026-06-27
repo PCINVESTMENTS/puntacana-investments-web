@@ -308,7 +308,7 @@ function PropertyListingsContent({
                             </div>
                         ) : (
                             filteredProperties.map((prop, index) => (
-                                <ScrollReveal key={prop.id} delay={index * 0.1}>
+                                <ScrollReveal key={prop.id} delay={index * 0.1} priority={index < 2}>
                                     <div className="group bg-dark-gray border border-white/5 hover:border-luxury-gold/50 transition-all duration-500 overflow-hidden relative flex flex-col h-full shadow-xl">
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel

@@ -8,13 +8,15 @@ interface Props {
     delay?: number;
     direction?: "up" | "down" | "left" | "right" | "none";
     style?: React.CSSProperties;
+    priority?: boolean;
 }
 
-export const ScrollReveal = ({ children, width = "fit-content", delay = 0.25, direction = "up", style }: Props) => {
+export const ScrollReveal = ({ children, width = "fit-content", delay = 0.25, direction = "up", style, priority = false }: Props) => {
     const ref = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(priority);
 
     useEffect(() => {
+        if (priority) return;
         const currentRef = ref.current;
         if (!currentRef) return;
 
