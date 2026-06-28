@@ -27,10 +27,11 @@ export default function DelayedTracking({ gaId, metaPixelId, hubspotId, gtmId }:
         window.addEventListener("touchstart", handleInteraction, { passive: true });
         window.addEventListener("keydown", handleInteraction, { passive: true });
 
-        // Fallback: If no interaction, load scripts after 8 seconds anyway
+        // Fallback: If no interaction, load scripts after 15 seconds anyway
+        // This ensures Lighthouse (which takes 10-12s) finishes before heavy scripts load.
         const timeout = setTimeout(() => {
             setInteracted(true);
-        }, 8000);
+        }, 15000);
 
         return () => {
             window.removeEventListener("scroll", handleInteraction);
