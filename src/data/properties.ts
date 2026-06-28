@@ -2399,3 +2399,4 @@ Villas Perla representa una oportunidad sólida para:
 // Trigger rebuild for Epic Punta Cana SEO and description format fix
 // Trigger rebuild for Epic missed images
 // Trigger rebuild for Epic ReactMarkdown headers fix
+// Trigger rebuild for Epic SEO supercharge
