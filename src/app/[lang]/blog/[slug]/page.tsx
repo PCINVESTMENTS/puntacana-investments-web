@@ -236,9 +236,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             }
         },
         block: {
-            h1: ({ children }) => <h1 className="text-4xl font-serif font-bold text-luxury-gold pt-8 mb-4">{children}</h1>,
-            h2: ({ children }) => <h2 className="text-3xl font-serif font-bold text-luxury-gold pt-8 mb-4">{children}</h2>,
-            h3: ({ children }) => <h3 className="text-2xl font-serif font-bold text-luxury-gold pt-6 mb-3">{children}</h3>,
+            h1: ({ children }) => <h1 className="text-4xl md:text-5xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent pt-8 mb-4">{children}</h1>,
+            h2: ({ children }) => <h2 className="text-3xl md:text-4xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent pt-8 mb-4">{children}</h2>,
+            h3: ({ children }) => <h3 className="text-2xl md:text-3xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent pt-6 mb-3">{children}</h3>,
+            h4: ({ children }) => <h4 className="text-xl md:text-2xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent pt-4 mb-2">{children}</h4>,
             normal: ({ children }) => <p className="text-gray-300 leading-8 text-lg text-justify whitespace-pre-line mb-6">{children}</p>,
             blockquote: ({ children }) => <blockquote className="border-l-4 border-luxury-gold pl-4 italic text-gray-400 my-6">{children}</blockquote>,
         },

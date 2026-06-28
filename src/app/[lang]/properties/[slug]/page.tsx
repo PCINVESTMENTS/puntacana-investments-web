@@ -480,10 +480,10 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 <ReactMarkdown
                                     components={{
                                         p: ({ node, ...props }) => <p className="mb-4 whitespace-pre-line text-gray-300" {...props} />,
-                                        h1: ({ node, ...props }) => <h1 className="text-3xl font-serif font-bold text-luxury-gold mt-8 mb-4" {...props} />,
-                                        h2: ({ node, ...props }) => <h2 className="text-2xl font-serif font-bold text-luxury-gold mt-8 mb-4" {...props} />,
-                                        h3: ({ node, ...props }) => <h3 className="text-xl font-serif font-bold text-luxury-gold mt-6 mb-3" {...props} />,
-                                        h4: ({ node, ...props }) => <h4 className="text-lg font-serif font-bold text-white mt-4 mb-2" {...props} />,
+                                        h1: ({ node, ...props }) => <h1 className="text-3xl md:text-4xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-8 mb-4" {...props} />,
+                                        h2: ({ node, ...props }) => <h2 className="text-2xl md:text-3xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-8 mb-4" {...props} />,
+                                        h3: ({ node, ...props }) => <h3 className="text-xl md:text-2xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-6 mb-3" {...props} />,
+                                        h4: ({ node, ...props }) => <h4 className="text-lg md:text-xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-4 mb-2" {...props} />,
                                         strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
                                         ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 text-gray-300" {...props} />,
                                         li: ({ node, ...props }) => <li className="mb-1" {...props} />,
