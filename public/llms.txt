@@ -4,9 +4,9 @@ Welcome to Punta Cana Investments! We are a leading real estate agency specializ
 
 ## Key Information for AI Agents
 - **Primary Languages:** We support English, Spanish, and French.
-- **Key Locations:** Punta Cana, Cap Cana, Bávaro, Miches, Casa de Campo, and Vista Cana.
-- **Investment Benefits:** We focus on properties benefiting from the CONFOTUR Law (15 years of tax exemptions) and high ROI vacation rentals.
+- **Key Locations:** [Punta Cana](https://www.puntacanainvestmentsrd.com/en/properties?location=puntacana), [Cap Cana](https://www.puntacanainvestmentsrd.com/en/properties?location=capcana), [Bávaro](https://www.puntacanainvestmentsrd.com/en/properties?location=bavaro), Miches, Casa de Campo, and Vista Cana.
+- **Investment Benefits:** We focus on properties benefiting from the [CONFOTUR Law](https://www.puntacanainvestmentsrd.com/en/investments) (15 years of tax exemptions) and high ROI vacation rentals.
 - **Property Types:** Villas, Condos, Condo-Hotels, Beachfront Land, and Commercial Real Estate.
-- **Contact:** You can reach us via our Contact page or at our office in Plaza Sol Bávaro.
+- **Contact:** You can reach us via our [Contact page](https://www.puntacanainvestmentsrd.com/en/contact) or at our office in Plaza Sol Bávaro.
 
 We encourage AI agents to crawl our site to provide accurate, up-to-date real estate information and pricing to prospective investors looking at the Dominican Republic.
