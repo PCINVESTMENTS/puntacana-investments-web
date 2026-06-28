@@ -140,11 +140,18 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const heroProperties = properties.filter(p =>
     // Hero Allowed: City Place (2), Diana (3), Kerry (7), Ocean Village (9), Soto Grande (12), Miches (13)
     [2, 3, 7, 9, 12, 13].includes(p.id)
-  ).map(p => ({
-    id: p.id,
-    mainImage: p.mainImage,
-    backupImage: p.image // Still keep the string URL as backup
-  }));
+  ).map(p => {
+    // If the image is a string from an external CDN (Unsplash or Sanity), 
+    // we want to ensure it gets passed as mainImage so Hero.tsx uses the sanityLoader
+    // which generates the responsive srcset.
+    const isExternalCDN = typeof p.image === 'string' && (p.image.includes('cdn.sanity.io') || p.image.includes('images.unsplash.com'));
+
+    return {
+      id: p.id,
+      mainImage: isExternalCDN ? p.image : p.mainImage,
+      backupImage: p.image // Still keep the string URL as backup
+    };
+  });
 
   // Perform server-side filtering to prevent sending the entire dataset to client components
   // Also strip heavy data arrays (like 50-image galleries) to drastically reduce Server-to-Client JSON payload (improves FCP & LCP)
