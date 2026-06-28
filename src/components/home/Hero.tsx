@@ -81,6 +81,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                                     sizes="100vw"
                                     className="object-cover"
                                     quality={75}
+                                    unoptimized={true}
                                 />
                             ) : (
                                 <Image
