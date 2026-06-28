@@ -408,7 +408,11 @@ function PropertyListingsContent({
                                     <div className="group bg-dark-gray border border-white/5 hover:border-luxury-gold/50 transition-all duration-500 overflow-hidden relative flex flex-col h-full shadow-xl">
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
-                                                images={prop.gallery && prop.gallery.length > 0 ? prop.gallery : [prop.image]}
+                                                images={
+                                                    prop.gallery && prop.gallery.length > 0 
+                                                        ? (prop.gallery[0] === prop.image ? prop.gallery : [prop.image, ...prop.gallery]) 
+                                                        : [prop.image]
+                                                }
                                                 title={getLocalizedTitle(prop, lang)}
                                                 priority={index < 2}
                                             />
