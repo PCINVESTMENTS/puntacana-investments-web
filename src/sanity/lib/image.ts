@@ -20,8 +20,8 @@ export const sanityLoader = ({ src, width, quality }: { src: string, width: numb
         }
     }
 
-    // If it's an already resolved Sanity URL, append responsive width parameters for Next.js Image Optimization
-    if (src.includes('cdn.sanity.io')) {
+    // If it's an already resolved Sanity URL or Unsplash URL, append responsive width parameters natively
+    if (src.includes('cdn.sanity.io') || src.includes('images.unsplash.com')) {
         try {
             const url = new URL(src);
             url.searchParams.set('w', width.toString());
@@ -33,6 +33,6 @@ export const sanityLoader = ({ src, width, quality }: { src: string, width: numb
         }
     }
 
-    // Otherwise, bypass (local files, unsplash, etc.)
+    // Otherwise, bypass (local files, etc.)
     return src;
 }
