@@ -18,7 +18,7 @@ export default async function LocationsPage({ params }: { params: Promise<{ lang
 
             <div className="pt-20">
                 {/* Reusing LocationsSection but without a limit to show all */}
-                <LocationsSection dict={dict.sections.locations} lang={lang} />
+                <LocationsSection dict={dict.sections.locations} lang={lang} prioritizeImages={true} />
             </div>
 
             <Footer dict={dict} lang={lang} />

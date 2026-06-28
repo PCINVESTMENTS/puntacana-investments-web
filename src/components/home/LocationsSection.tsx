@@ -17,13 +17,14 @@ interface LocationsSectionProps {
     };
     limit?: number;
     lang?: string;
+    prioritizeImages?: boolean;
 }
 
 import { useState, useEffect } from 'react';
 
 // ... interface ...
 
-export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionProps) {
+export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = false }: LocationsSectionProps) {
     const [apiLocations, setApiLocations] = useState<any[]>([]);
 
     useEffect(() => {
@@ -96,21 +97,25 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
                     </div>
                 </ScrollReveal>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {locations.map((loc, idx) => (
-                        <Link
-                            key={idx}
-                            href={`/${lang}/properties?location=${loc.slug}`}
-                            className="group relative h-64 overflow-hidden cursor-pointer rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 block"
-                        >
-                            <div className="absolute inset-0 bg-gray-200" />
-                            <Image
-                                src={loc.img}
-                                alt=""
-                                aria-hidden="true"
-                                fill
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                className="object-cover transition-transform duration-700 group-hover:scale-110 relative z-10"
-                            />
+                    {locations.map((loc, idx) => {
+                        const isPriority = prioritizeImages && idx < 4;
+                        return (
+                            <Link
+                                key={idx}
+                                href={`/${lang}/properties?location=${loc.slug}`}
+                                className="group relative h-64 overflow-hidden cursor-pointer rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 block"
+                            >
+                                <div className="absolute inset-0 z-0">
+                                    <Image
+                                        src={loc.img}
+                                        alt={loc.title}
+                                        fill
+                                        priority={isPriority}
+                                        {...(isPriority ? { fetchPriority: "high" } : {})}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                </div>
                             <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-colors duration-300 z-20"></div>
 
                             <div className="absolute inset-0 flex items-center justify-center z-30">
@@ -118,8 +123,9 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
                                     {loc.title}
                                 </h3>
                             </div>
-                        </Link>
-                    ))}
+                            </Link>
+                        );
+                    })}
                 </div>
 
                 {/* Explore More Button */}
