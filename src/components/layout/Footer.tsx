@@ -119,6 +119,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                     type="email"
                                     name="email"
                                     required
+                                    aria-label={dict.footer.emailPlaceholder || "Email address"}
                                     placeholder={dict.footer.emailPlaceholder}
                                     className="bg-transparent text-white px-4 py-2 w-full focus:outline-none placeholder-gray-400 text-sm"
                                 />

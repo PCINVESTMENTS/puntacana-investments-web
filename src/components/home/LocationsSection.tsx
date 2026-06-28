@@ -111,10 +111,10 @@ export function LocationsSection({ dict, limit, lang = 'es' }: LocationsSectionP
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="object-cover transition-transform duration-700 group-hover:scale-110 relative z-10"
                             />
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 z-20"></div>
+                            <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-colors duration-300 z-20"></div>
 
                             <div className="absolute inset-0 flex items-center justify-center z-30">
-                                <h3 className="text-3xl font-bold text-luxury-gold drop-shadow-md text-center px-4" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
+                                <h3 className="text-3xl font-bold text-luxury-gold text-center px-4" style={{ textShadow: '0 4px 6px rgba(0,0,0,0.9)' }}>
                                     {loc.title}
                                 </h3>
                             </div>
