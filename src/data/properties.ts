@@ -913,48 +913,46 @@ Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un e
         description: {
             en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
 
-Perla del Mar is an exclusive residential villa project located within the renowned White Sands in Punta Cana. Conceived for those seeking privacy, comfort, and a solid real estate investment, the project offers a highly attractive product for Airbnb-style vacation rentals and residential use.
+Perla del Mar is an exclusive residential villa project located within the prestigious White Sands golf community in Punta Cana. Conceived for those seeking privacy, absolute comfort, and a highly profitable real estate investment, this project offers a turnkey solution for both vacation rentals and idyllic Caribbean living.
 
-Its modern design and strategic location within a golf community with beach access make it a premium asset with high appreciation potential.
+Set against the lush tropical backdrop of White Sands, residents enjoy a privileged lifestyle with direct access to a private pristine beach, an 18-hole golf course, and an exclusive clubhouse. Its strategic location guarantees high demand year-round.
 
 ## Property Features
-- **Type:** Single-family Villas (3 Bedrooms, 2 Levels)
-- **Size:** From 155 m² up to 250 m² (including rooftop)
-- **Social Areas:** Integrated living room, dining room, and kitchen
-- **Exterior:** Private Pool, Outdoor Terrace, BBQ Area
-- **Premium Units:** 3 villas with private rooftop and Jacuzzi
-- **Convenience:** Double Parking, Appliances Included
+- **Type:** Modern Single-family Villas (3 Bedrooms, 3 Bathrooms)
+- **Size:** 155 m² of intelligent architectural design
+- **Interior Layout:** Breathtaking open-concept living and dining area with double-height ceilings
+- **Gourmet Kitchen:** State-of-the-art kitchen featuring a central island, premium finishes, and appliances included
+- **Outdoor Oasis:** Private backyard patio featuring a stunning swimming pool with a modern waterfall design
+- **Convenience:** Double parking space and secure gated entry
 
 ## Investment Profile & Lifestyle
 Designed to maximize returns in the short and medium term.
-- **High Performance:** Excellent potential for dollar-based passive income via Airbnb.
-- **Premium Rates:** Villas with rooftop command superior nightly rates.
-- **Strategic Location:** Inside White Sands, ensuring high demand and occupancy.
-- **Target Audience:** Vacation rental investors and buyers seeking a consolidated real estate heritage.
+- **High Performance:** Excellent potential for dollar-based passive income via Airbnb and luxury rentals.
+- **Prime Location:** Inside White Sands, ensuring continuous high occupancy and property appreciation.
+- **Target Audience:** Visionary investors and families seeking a consolidated real estate heritage in the Dominican Republic.
 
-*Residents enjoy full access to White Sands amenities including the private beach, golf course, and clubhouse.*`,
+*Residents enjoy full access to White Sands amenities, including the world-class private beach, golf course, and exclusive clubhouse.*`,
             es: `Perla del Mar – Villas Exclusivas en White Sands, Punta Cana
 
-Perla del Mar es un proyecto residencial exclusivo de villas ubicado dentro del reconocido White Sands, en Punta Cana. Concebido para quienes buscan privacidad, confort y una inversión inmobiliaria sólida, el proyecto ofrece un producto altamente atractivo para renta vacacional tipo Airbnb y uso residencial.
+Perla del Mar es un proyecto residencial exclusivo de villas ubicado dentro de la prestigiosa comunidad de golf de White Sands en Punta Cana. Concebido para quienes buscan privacidad, confort absoluto y una inversión inmobiliaria altamente rentable, este proyecto ofrece una solución llave en mano tanto para rentas vacacionales como para una vida idílica en el Caribe.
 
-Su diseño moderno y ubicación estratégica dentro de una comunidad de golf con acceso a playa lo convierten en un activo premium con alta plusvalía.
+Con el exuberante entorno tropical de White Sands como telón de fondo, los residentes disfrutan de un estilo de vida privilegiado con acceso directo a una prístina playa privada, un campo de golf de 18 hoyos y una casa club exclusiva. Su ubicación estratégica garantiza una alta demanda durante todo el año.
 
 ## Características de la Propiedad
-- **Tipo:** Villas unifamiliares (3 Habitaciones, 2 Niveles)
-- **Tamaño:** Desde 155 m² hasta 250 m² (incluyendo rooftop)
-- **Áreas Sociales:** Sala, comedor y cocina integrados
-- **Exterior:** Piscina privada, Terraza exterior, Área de BBQ
-- **Unidades Premium:** 3 villas cuentan con rooftop privado y jacuzzi
-- **Comodidad:** Parqueo doble, Línea blanca incluida
+- **Tipo:** Modernas villas unifamiliares (3 Habitaciones, 3 Baños)
+- **Tamaño:** 155 m² de diseño arquitectónico inteligente
+- **Distribución Interior:** Impresionante diseño de concepto abierto en sala y comedor con techos de doble altura
+- **Cocina Gourmet:** Cocina de vanguardia con isla central, acabados premium y línea blanca incluida
+- **Oasis Exterior:** Patio trasero privado que incluye una espectacular piscina con diseño de cascada moderna
+- **Comodidad:** Doble espacio de estacionamiento y seguridad en residencial cerrado
 
 ## Perfil de Inversión y Estilo de Vida
 Diseñado para maximizar el retorno a corto y mediano plazo.
-- **Alto Desempeño:** Excelente potencial de ingresos pasivos en dólares vía Airbnb.
-- **Tarifas Premium:** Las villas con rooftop permiten precios superiores por noche.
-- **Ubicación Estratégica:** Dentro de White Sands, garantizando alta demanda.
-- **Público Objetivo:** Inversionistas de renta vacacional y compradores finales.
+- **Alto Desempeño:** Excelente potencial de ingresos pasivos en dólares vía Airbnb y rentas de lujo.
+- **Ubicación Estratégica:** Dentro de White Sands, garantizando alta ocupación continua y plusvalía del inmueble.
+- **Público Objetivo:** Inversionistas visionarios y familias que buscan un patrimonio consolidado en la República Dominicana.
 
-*Los propietarios disfrutan de acceso total a las amenidades de White Sands, incluyendo playa privada, campo de golf y casa club.*`
+*Los propietarios disfrutan de acceso total a las amenidades de White Sands, incluyendo la playa privada de clase mundial, el campo de golf y la exclusiva casa club.*`
         },
         featured: true,
         preConstruction: true,
@@ -964,8 +962,8 @@ Diseñado para maximizar el retorno a corto y mediano plazo.
                 es: "Perla del Mar | Villas de Lujo White Sands Punta Cana"
             },
             description: {
-                en: "Luxury villas for sale in White Sands, Punta Cana. Perla del Mar features private pools, rooftop terraces, and beach access. Pre-construction investment.",
-                es: "Villas de lujo en venta en White Sands, Punta Cana. Perla del Mar cuenta con piscinas privadas, terrazas en rooftop y acceso a playa. Inversión en pre-construcción."
+                en: "Luxury villas for sale in White Sands, Punta Cana. Perla del Mar features private pools, modern open-concept designs, and exclusive private beach access. Pre-construction investment.",
+                es: "Villas de lujo en venta en White Sands, Punta Cana. Perla del Mar cuenta con piscinas privadas, diseños modernos de concepto abierto y acceso exclusivo a playa privada. Inversión en pre-construcción."
             },
             keywords: {
                 en: ["Perla del Mar White Sands", "White Sands Villas", "Luxury Real Estate Punta Cana", "Villas with Private Pool", "Pre-construction luxury"],
