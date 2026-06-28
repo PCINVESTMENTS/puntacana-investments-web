@@ -444,7 +444,7 @@ function PropertyListingsContent({
                                             <div className="p-8 relative flex-grow flex flex-col">
                                                 {/* Pre-Construction / Pre-Sales / Resale Badge */}
                                                 {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
-                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-2 md:px-3 py-2 shadow-lg text-[10px] md:text-xs z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-600' : 'bg-emerald-600'}`}>
+                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-2 md:px-3 py-2 shadow-lg text-[10px] md:text-xs z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-700' : 'bg-emerald-700'}`}>
                                                         {prop.isResale
                                                             ? (lang === 'en' ? 'Resale' : lang === 'fr' ? 'Revente' : 'Reventa')
                                                             : (prop.preConstruction
