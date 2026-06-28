@@ -144,7 +144,7 @@ export function normalizeLocation(locationVal: any, locationLabel?: string, titl
 export function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
-    let safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || ""))) : (data.imageUrl || "");
+    let safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || data.image || ""))) : (data.imageUrl || data.image || "");
     
     // HOTFIX: Fix 404 typo in Sanity for Tropical Breeze image
     if (data.slug?.current === "apartamentos-tropical-breeze-brisas-punta-cana" || data.id === 6) {
