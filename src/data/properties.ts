@@ -647,7 +647,7 @@ Con un enfoque en el confort y la conveniencia, los residentes disfrutan de fác
         type: "condo",
         status: "sale",
         price: 128500,
-        image: "/images/tropical-breeze-brisas-punta-cana-pool-area.jpg",
+        image: "/images/tropical-breezes-main-facade-punta-cana.jpg",
         beds: 2,
         baths: 2,
         area: 85,

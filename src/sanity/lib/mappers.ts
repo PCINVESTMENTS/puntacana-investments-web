@@ -146,6 +146,12 @@ export function mapSanityProperty(data: any): Property {
 
     let safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || ""))) : (data.imageUrl || "");
     
+    // HOTFIX: Fix 404 typo in Sanity for Tropical Breeze image
+    if (data.slug?.current === "apartamentos-tropical-breeze-brisas-punta-cana" || data.id === 6) {
+        if (safeMainImage === "/images/tropical-breeze-brisas-punta-cana-pool-area.jpg" || !safeMainImage) {
+            safeMainImage = "/images/tropical-breezes-main-facade-punta-cana.jpg";
+        }
+    }
     const safeGalleryUrls = data.gallery 
         ? data.gallery.map((img: any) => typeof img === 'string' ? img : (img.asset?._ref ? urlFor(img).url() : img)) 
         : (data.galleryUrls || []);
