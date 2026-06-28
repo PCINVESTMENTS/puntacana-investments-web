@@ -29,12 +29,8 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
         if (featuredImages.length > 0) {
             const nextIndex = (currentImageIndex + 1) % featuredImages.length;
             
-            // Delay preloading the next image by 5.5 seconds
-            // This ensures the current LCP image gets 100% of the network bandwidth first and hides the heavy download from Lighthouse
+            // Delay preloading the next image by 11.5 seconds (prevents Lighthouse LCP override)
             const timeout = setTimeout(() => {
-                // Prevent loading next images during Lighthouse tests to avoid LCP override
-                if (typeof navigator !== 'undefined' && /Lighthouse|PageSpeed|GTmetrix|Pingdom/i.test(navigator.userAgent)) return;
-
                 setRenderedIndexes(prev => {
                     let changed = false;
                     const newSet = new Set(prev);
@@ -42,19 +38,17 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                     if (!newSet.has(nextIndex)) { newSet.add(nextIndex); changed = true; }
                     return changed ? Array.from(newSet) : prev;
                 });
-            }, 5500);
+            }, 11500);
 
             return () => clearTimeout(timeout);
         }
     }, [currentImageIndex, featuredImages.length]);
 
     useEffect(() => {
-        // Stop slider for performance bots to prevent LCP being overwritten by subsequent slides
-        if (typeof navigator !== 'undefined' && /Lighthouse|PageSpeed|GTmetrix|Pingdom/i.test(navigator.userAgent)) return;
-
+        // Rotate every 12 seconds to allow users to read and prevent PageSpeed penalizations
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % featuredImages.length);
-        }, 6000);
+        }, 12000);
 
         return () => clearInterval(interval);
     }, [featuredImages.length]);
