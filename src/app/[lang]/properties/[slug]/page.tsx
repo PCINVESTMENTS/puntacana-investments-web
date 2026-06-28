@@ -82,7 +82,7 @@ function getLocalizedTitle(property: Property, lang: string) {
 function mapSanityProperty(data: any): Property {
     if (!data) return null as any;
 
-    const safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || ""))) : (data.imageUrl || "");
+    const safeMainImage = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || data.image || ""))) : (data.imageUrl || data.image || "");
     const safeGalleryUrls = data.gallery
         ? data.gallery.map((img: any) => typeof img === 'string' ? img : (img.asset?._ref ? urlFor(img).url() : img))
         : (data.galleryUrls || []);
