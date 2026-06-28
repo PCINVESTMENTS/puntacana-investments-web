@@ -2395,3 +2395,4 @@ Villas Perla representa una oportunidad sólida para:
 // Trigger build for Epic Punta Cana
 // Trigger build for Epic Punta Cana additional images
 // Force Vercel rebuild for headers
+// Trigger rebuild for Epic Punta Cana amenities update
