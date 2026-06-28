@@ -907,8 +907,8 @@ Su diseño prioriza los espacios abiertos, la conexión con áreas verdes y un e
             "/images/perla-del-mar-rooftop-aerial-sunset.jpg"
         ],
         features: {
-            en: ["Private Beach Access", "Golf Course Access", "Clubhouse", "Gated Community", "Private Pool", "Rooftop Terrace", "Picuzzi", "24/7 Security", "Airbnb Friendly"],
-            es: ["Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Residencial Cerrado", "Piscina Privada", "Terraza Rooftop", "Picuzzi", "Seguridad 24/7", "Airbnb Amigable"]
+            en: ["Private Beach Access", "Golf Course Access", "Clubhouse", "Gated Community", "Private Pool", "24/7 Security", "Airbnb Friendly"],
+            es: ["Acceso Playa Privada", "Acceso Campo Golf", "Casa Club", "Residencial Cerrado", "Piscina Privada", "Seguridad 24/7", "Airbnb Amigable"]
         },
         description: {
             en: `Perla del Mar – Exclusive Villas in White Sands, Punta Cana
