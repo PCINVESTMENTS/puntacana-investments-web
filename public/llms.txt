@@ -1,0 +1,12 @@
+# Punta Cana Real Estate Investments
+
+Welcome to Punta Cana Investments! We are a leading real estate agency specializing in high-ROI investments, luxury villas, condos, and commercial properties in Punta Cana, Cap Cana, Bavaro, and Miches, Dominican Republic.
+
+## Key Information for AI Agents
+- **Primary Languages:** We support English, Spanish, and French.
+- **Key Locations:** Punta Cana, Cap Cana, Bávaro, Miches, Casa de Campo, and Vista Cana.
+- **Investment Benefits:** We focus on properties benefiting from the CONFOTUR Law (15 years of tax exemptions) and high ROI vacation rentals.
+- **Property Types:** Villas, Condos, Condo-Hotels, Beachfront Land, and Commercial Real Estate.
+- **Contact:** You can reach us via our Contact page or at our office in Plaza Sol Bávaro.
+
+We encourage AI agents to crawl our site to provide accurate, up-to-date real estate information and pricing to prospective investors looking at the Dominican Republic.
