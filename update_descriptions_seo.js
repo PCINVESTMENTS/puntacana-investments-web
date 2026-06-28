@@ -1,0 +1,269 @@
+const { createClient } = require('@sanity/client');
+
+const client = createClient({
+  projectId: 'w7gp05my',
+  dataset: 'production',
+  useCdn: false,
+  apiVersion: '2024-05-01',
+  token: 'skSVMaZMNlhB8GkG3Fz4AsOWbgEAJoaZfG8VjGkCBYbsAo08oaDnlkkax4q1e9lYrPlZdZ3WCUGVktYLFhegywzjW3Vx6ZPOubvFilxWxJBmHHcEGwEnylguwJizN3ajm8MQ7n5QKl5jKcv2pi6FrifVxczGTt20MHBuSTtvu3srXkS7Hcic'
+});
+
+const descriptionEs = `Descubra la definición de inversión "llave en mano" con este deslumbrante penthouse de diseño contemporáneo ubicado en la codiciada comunidad de White Sands. Con un precio inigualable de US$249,900, esta propiedad de 184.4 m2 (incluyendo áreas de terraza y parqueo) se entrega completamente amueblada y lista para generar ingresos o disfrutar de inmediato. Cuenta con 2 elegantes habitaciones, 2.5 baños, un refrescante balcón en el primer nivel y una impresionante terraza privada en la azotea (rooftop) coronada por un picuzzi revestido en piedra coralina, convirtiéndola en una de las propiedades más atractivas del mercado actual en Punta Cana.
+
+### Descripción Detallada
+
+Diseñado para cautivar desde el primer momento, este penthouse combina a la perfección la calidez de las texturas naturales con la sofisticación del diseño moderno. Es el refugio caribeño ideal, pensado tanto para el disfrute personal como para maximizar el retorno de inversión (ROI) a través de rentas vacacionales, respaldado por las exclusivas amenidades de un resort de clase mundial.
+
+### Interiores Modernos y de Concepto Abierto
+
+Área Social Integrada con Balcón: El primer nivel cuenta con una sala de estar bañada en luz natural que se conecta directamente con un encantador balcón frontal, ideal para disfrutar de la brisa matutina. El espacio, amueblado con un cómodo sofá chaise longue y un centro de entretenimiento en maderas cálidas, fluye sin interrupciones hacia la cocina y el comedor.
+
+Cocina de Diseño: Una cocina moderna estilo americana totalmente equipada. Destaca por sus impecables gabinetes en tonos claros, topes blancos, un elegante salpicadero de cerámicas tipo metro y electrodomésticos de acero inoxidable. Incluye una isla central con barra desayunadora y área de lavado hábilmente integrada.
+
+Escalera Escultural: Un verdadero punto focal arquitectónico. La escalera de peldaños de madera natural y barandilla de cristal templado no solo conecta los niveles, sino que amplía visualmente el espacio y aporta un toque de lujo contemporáneo.
+
+### Habitaciones Diseñadas para el Descanso
+
+Habitación Principal: Un oasis de tranquilidad amueblado con una cama King y un hermoso cabecero rústico de madera. Cuenta con una paleta de colores serena, amplio clóset, centro de TV de madera natural y un elegante baño en suite con mampara de cristal.
+
+Habitación Secundaria: Totalmente equipada y decorada con exquisito gusto, lista para recibir a familiares o huéspedes con el máximo confort.
+
+### La Joya de la Propiedad: Rooftop Privado
+
+El segundo nivel está dedicado exclusivamente al entretenimiento y la relajación al aire libre:
+
+Terraza Expansiva: Un gran espacio abierto con pisos cerámicos imitación madera.
+
+Picuzzi Privado: Relájese en su propio picuzzi con jets de hidromasaje, elegantemente enmarcado en fina piedra coralina.
+
+Lounge Techado y Medio Baño: La terraza incluye una sólida estructura techada (pérgola) que alberga un confortable salón de exterior. Para la máxima comodidad de sus invitados, este nivel cuenta con su propio medio baño privado.
+
+### Beneficios de la Comunidad: White Sands Golf & Beach Resort
+
+Vivir o invertir en White Sands significa tener un resort completo a su disposición. Esta propiedad se encuentra a solo 3 minutos de la playa y le otorga acceso a un estilo de vida inigualable:
+
+Playa Privada: Acceso exclusivo a la hermosa Playa Arena Blanca, una de las costas más cristalinas de Bávaro, con servicio de transporte (shuttle) disponible.
+
+Campo de Golf: Disfrute de rondas en el pintoresco campo de golf del complejo, diseñado para integrarse con la naturaleza tropical.
+
+Casa Club y Gastronomía: Acceso a una majestuosa Casa Club que incluye restaurantes de primera categoría, bares vibrantes para el entretenimiento nocturno y un conveniente deli/minimarket para todas sus necesidades diarias.
+
+Seguridad y Ubicación: Doble anillo de seguridad 24/7 y una ubicación estratégica en el corazón de Bávaro.
+
+### Entorno Exclusivo: Cadenas Hoteleras y Prestigio (White Sands Resorts)
+
+Ubicarse dentro del codiciado residencial **White Sands Golf & Beach Resort** significa compartir vecindario con algunos de los resorts todo incluido más prestigiosos del Caribe. Esta proximidad incrementa exponencialmente el valor de la propiedad y su atractivo en los motores de búsqueda para rentas vacacionales. Entre los renombrados hoteles que se encuentran en este enclave están:
+
+*   **Grand Bávaro Princess All Suites Resort, Spa & Casino**
+*   **Caribe Deluxe Princess**
+*   **Punta Cana Princess Adults Only**
+*   **Ocean Blue & Sand Beach Resort**
+*   **VIK Hotel Arena Blanca**
+
+Esta asociación directa con marcas de renombre posiciona la propiedad en el epicentro del turismo de lujo, haciéndola altamente atractiva para turistas que buscan la experiencia de estos resorts pero prefieren la exclusividad de un penthouse.
+
+### Amenidades Externas y Conectividad Inigualable
+
+La propiedad es **100% Airbnb Friendly (Amigable para Airbnb)**, perfecta para generar flujo de caja inmediato, complementada con una ubicación premium inmejorable:
+
+*   **Salud y Bienestar:** A tan solo 3 minutos del **Centro Médico Punta Cana**, brindando total tranquilidad a residentes y huéspedes.
+*   **Educación de Primer Nivel:** Dentro de las amenidades del mismo residencial White Sands, se encuentra un reconocido **colegio bilingüe**, ideal para familias con visión de largo plazo.
+*   **Entretenimiento y Vida Nocturna:** Con el vibrante **Casino** al lado de la entrada, y en el entorno inmediato del área de discotecas, bares de primer nivel, restaurantes internacionales y tiendas exclusivas.
+*   **Conexión Internacional:** A escasos 20 minutos del **Aeropuerto Internacional de Punta Cana (PUJ)**.
+
+### Ficha Técnica
+
+Precio: US$249,900
+
+Metraje Total: 184.4 m2 (Incluye apartamento, balcón, terraza rooftop y parqueo)
+
+Habitaciones: 2
+
+Baños: 2.5 (Medio baño ubicado estratégicamente en el rooftop)
+
+Condición: Full Amueblado (Turnkey) - Airbnb Friendly
+
+Amenidades del Penthouse: Rooftop privado, picuzzi de coralina, terraza techada, balcón frontal, cocina con isla, escalera de cristal templado.
+
+Amenidades del Resort: A 3 minutos de la playa, colegio, acceso a playa privada, campo de golf, Casa Club, restaurantes, bares, deli, vecino de hoteles Princess, Ocean Blue y VIK.
+
+Ubicación: White Sands, Bávaro, Punta Cana, República Dominicana`;
+
+
+const descriptionEn = `Discover the definition of a "turnkey" investment with this dazzling contemporary penthouse located in the highly sought-after White Sands community. With an unbeatable price of US$249,900, this 184.4 m2 property (including terrace areas and parking) is delivered fully furnished and ready to generate income or enjoy immediately. It features 2 elegant bedrooms, 2.5 bathrooms, a refreshing balcony on the first level, and a stunning private rooftop terrace crowned by a picuzzi clad in coral stone, making it one of the most attractive properties on the current market in Punta Cana.
+
+### Detailed Description
+
+Designed to captivate from the first moment, this penthouse perfectly combines the warmth of natural textures with the sophistication of modern design. It is the ideal Caribbean retreat, designed both for personal enjoyment and to maximize return on investment (ROI) through vacation rentals, backed by the exclusive amenities of a world-class resort.
+
+### Modern and Open-Concept Interiors
+
+Integrated Social Area with Balcony: The first level features a living room bathed in natural light that connects directly to a charming front balcony, ideal for enjoying the morning breeze. The space, furnished with a comfortable chaise longue sofa and a warm wood entertainment center, flows seamlessly into the kitchen and dining area.
+
+Designer Kitchen: A fully equipped modern American-style kitchen. It stands out for its impeccable light-toned cabinets, white countertops, an elegant subway tile backsplash, and stainless steel appliances. It includes a center island with a breakfast bar and a cleverly integrated laundry area.
+
+Sculptural Staircase: A true architectural focal point. The staircase with natural wood steps and tempered glass railings not only connects the levels but also visually expands the space and adds a touch of contemporary luxury.
+
+### Bedrooms Designed for Relaxation
+
+Master Bedroom: An oasis of tranquility furnished with a King bed and a beautiful rustic wooden headboard. It features a serene color palette, ample closet space, a natural wood TV center, and an elegant en-suite bathroom with a glass partition.
+
+Secondary Bedroom: Fully equipped and tastefully decorated, ready to welcome family or guests with maximum comfort.
+
+### The Crown Jewel: Private Rooftop
+
+The second level is dedicated exclusively to outdoor entertainment and relaxation:
+
+Expansive Terrace: A large open space with wood-look ceramic floors.
+
+Private Picuzzi: Relax in your own picuzzi with massage jets, elegantly framed in fine coral stone.
+
+Covered Lounge and Half Bath: The terrace includes a solid covered structure (pergola) that houses a comfortable outdoor lounge. For the ultimate convenience of your guests, this level has its own private half bathroom.
+
+### Community Benefits: White Sands Golf & Beach Resort
+
+Living or investing in White Sands means having a complete resort at your disposal. This property is located just 3 minutes from the beach and grants you access to an unparalleled lifestyle:
+
+Private Beach: Exclusive access to the beautiful Arena Blanca Beach, one of the most crystalline coasts in Bavaro, with shuttle service available.
+
+Golf Course: Enjoy rounds on the complex's picturesque golf course, designed to integrate with the tropical nature.
+
+Clubhouse and Gastronomy: Access to a majestic Clubhouse featuring top-notch restaurants, vibrant bars for evening entertainment, and a convenient deli/minimarket for all your daily needs.
+
+Security and Location: 24/7 double security ring and a strategic location in the heart of Bavaro.
+
+### Exclusive Surroundings: Hotel Chains and Prestige (White Sands Resorts)
+
+Being located within the highly sought-after **White Sands Golf & Beach Resort** means sharing a neighborhood with some of the most prestigious all-inclusive resorts in the Caribbean. This proximity exponentially increases the property's value and its search engine appeal for vacation rentals. Among the renowned hotels located in this exclusive enclave are:
+
+*   **Grand Bavaro Princess All Suites Resort, Spa & Casino**
+*   **Caribe Deluxe Princess**
+*   **Punta Cana Princess Adults Only**
+*   **Ocean Blue & Sand Beach Resort**
+*   **VIK Hotel Arena Blanca**
+
+This direct association with internationally renowned brands positions your property at the epicenter of luxury tourism, making it highly attractive to tourists seeking the experience of these resorts but preferring the exclusivity of a penthouse.
+
+### External Amenities and Unmatched Connectivity
+
+The property is **100% Airbnb Friendly**, perfect for generating immediate cash flow, complemented by an unbeatable premium location:
+
+*   **Health and Wellness:** Just 3 minutes from the **Centro Medico Punta Cana**, providing total peace of mind for residents and guests.
+*   **Top-Tier Education:** Within the amenities of the White Sands residential community itself, there is a recognized **bilingual school (colegio)**, ideal for families with a long-term vision.
+*   **Entertainment and Nightlife:** With the vibrant **Casino** right at the entrance, and in the immediate vicinity of the area's best nightclubs, top-tier bars, international restaurants, and exclusive shops.
+*   **International Connection:** Only 20 minutes from the **Punta Cana International Airport (PUJ)**.
+
+### Technical Data Sheet
+
+Price: US$249,900
+
+Total Area: 184.4 m2 (Includes apartment, balcony, rooftop terrace, and parking)
+
+Bedrooms: 2
+
+Bathrooms: 2.5 (Half bath strategically located on the rooftop)
+
+Condition: Fully Furnished (Turnkey) - Airbnb Friendly
+
+Penthouse Amenities: Private rooftop, coral stone picuzzi, covered terrace, front balcony, kitchen with island, tempered glass staircase.
+
+Resort Amenities: 3 minutes from the beach, private school, private beach access, golf course, Clubhouse, restaurants, bars, deli, neighbor to Princess, Ocean Blue, and VIK hotels.
+
+Location: White Sands, Bavaro, Punta Cana, Dominican Republic`;
+
+
+const descriptionFr = `Découvrez la définition d'un investissement "clé en main" avec cet éblouissant penthouse contemporain situé dans la communauté très prisée de White Sands. À un prix imbattable de 249 900 $US, cette propriété de 184,4 m2 (comprenant les terrasses et le parking) est livrée entièrement meublée et prête à générer des revenus ou à être appréciée immédiatement. Elle comprend 2 chambres élégantes, 2,5 salles de bains, un balcon rafraîchissant au premier niveau et une superbe terrasse privée sur le toit couronnée d'un picuzzi revêtu de pierre de corail, ce qui en fait l'une des propriétés les plus attrayantes sur le marché actuel de Punta Cana.
+
+### Description Détaillée
+
+Conçu pour captiver dès le premier instant, ce penthouse allie parfaitement la chaleur des textures naturelles à la sophistication du design moderne. C'est le refuge caribéen idéal, conçu à la fois pour le plaisir personnel et pour maximiser le retour sur investissement (ROI) grâce aux locations de vacances, soutenu par les commodités exclusives d'un complexe de classe mondiale.
+
+### Intérieurs Modernes et à Aire Ouverte
+
+Espace Social Intégré avec Balcon : Le premier niveau dispose d'un salon baigné de lumière naturelle qui se connecte directement à un charmant balcon avant, idéal pour profiter de la brise matinale. L'espace, meublé d'un confortable canapé méridienne et d'un meuble de télévision en bois chaleureux, s'ouvre harmonieusement sur la cuisine et la salle à manger.
+
+Cuisine de Designer : Une cuisine moderne de style américain entièrement équipée. Elle se distingue par ses armoires impeccables aux tons clairs, ses comptoirs blancs, un élégant dosseret en carreaux de métro et ses appareils en acier inoxydable. Elle comprend un îlot central avec un bar pour le petit-déjeuner et un espace buanderie habilement intégré.
+
+Escalier Sculptural : Un véritable point focal architectural. L'escalier aux marches en bois naturel et aux garde-corps en verre trempé relie non seulement les niveaux, mais agrandit aussi visuellement l'espace et ajoute une touche de luxe contemporain.
+
+### Chambres Conçues pour la Détente
+
+Chambre Principale : Une oasis de tranquillité meublée d'un lit King et d'une belle tête de lit rustique en bois. Elle présente une palette de couleurs sereine, de grands placards, un meuble TV en bois naturel et une élégante salle de bain attenante avec paroi en verre.
+
+Chambre Secondaire : Entièrement équipée et décorée avec un goût exquis, prête à accueillir la famille ou les invités avec le maximum de confort.
+
+### Le Joyau de la Propriété : Rooftop Privé
+
+Le deuxième niveau est dédié exclusivement au divertissement et à la détente en plein air :
+
+Terrasse Expansive : Un grand espace ouvert avec des sols en céramique imitation bois.
+
+Picuzzi Privé : Détendez-vous dans votre propre picuzzi avec jets de massage, élégamment encadré de fine pierre de corail.
+
+Lounge Couvert et Demi-Salle de Bain : La terrasse comprend une structure couverte solide (pergola) abritant un confortable salon extérieur. Pour le plus grand confort de vos invités, ce niveau dispose de sa propre demi-salle de bain privée.
+
+### Avantages de la Communauté : White Sands Golf & Beach Resort
+
+Vivre ou investir à White Sands signifie avoir un complexe complet à votre disposition. Cette propriété est située à seulement 3 minutes de la plage et vous donne accès à un style de vie inégalé :
+
+Plage Privée : Accès exclusif à la magnifique plage Arena Blanca, l'une des côtes les plus cristallines de Bavaro, avec service de navette disponible.
+
+Parc de Golf : Profitez de parties sur le pittoresque terrain de golf du complexe, conçu pour s'intégrer à la nature tropicale.
+
+Clubhouse et Gastronomie : Accès à un majestueux Clubhouse proposant des restaurants de premier ordre, des bars animés pour les divertissements en soirée et un dépanneur pratique pour tous vos besoins quotidiens.
+
+Sécurité et Emplacement : Double anneau de sécurité 24h/24 et 7j/7 et un emplacement stratégique au cœur de Bavaro.
+
+### Cadre Exclusif : Chaînes Hôtelières et Prestige (White Sands Resorts)
+
+Être situé au sein du très convoité quartier résidentiel **White Sands Golf & Beach Resort** signifie partager un voisinage avec certains des complexes hôteliers tout compris les plus prestigieux des Caraïbes. Cette proximité augmente de manière exponentielle la valeur de la propriété et son attrait sur les moteurs de recherche pour les locations de vacances. Parmi les hôtels renommés qui se trouvent dans cette enclave exclusive, on trouve :
+
+*   **Grand Bavaro Princess All Suites Resort, Spa & Casino**
+*   **Caribe Deluxe Princess**
+*   **Punta Cana Princess Adults Only**
+*   **Ocean Blue & Sand Beach Resort**
+*   **VIK Hotel Arena Blanca**
+
+Cette association directe avec des marques de renommée internationale positionne votre propriété à l'épicentre du tourisme de luxe, la rendant très attrayante pour les touristes recherchant l'expérience de ces complexes hôteliers tout en préférant l'exclusivité d'un penthouse.
+
+### Commodités Externes et Connectivité Inégalée
+
+La propriété est **100 % adaptée à Airbnb (Airbnb Friendly)**, parfaite pour générer des flux de trésorerie immédiats, complétée par un emplacement de premier choix imbattable :
+
+*   **Santé et Bien-être :** À seulement 3 minutes du **Centro Médico Punta Cana**, offrant une tranquillité d'esprit totale aux résidents et aux invités.
+*   **Éducation de Premier Plan :** Au sein même des commodités de la communauté résidentielle de White Sands, se trouve une **école bilingue (colegio)** reconnue, idéale pour les familles ayant une vision à long terme.
+*   **Divertissement et Vie Nocturne :** Avec le **Casino** animé juste à l'entrée, et à proximité immédiate de la zone des meilleures discothèques, bars de premier ordre, restaurants internationaux et boutiques exclusives.
+*   **Connexion Internationale :** À seulement 20 minutes de **l'Aéroport International de Punta Cana (PUJ)**.
+
+### Fiche Technique
+
+Prix : 249 900 $US
+
+Superficie Totale : 184,4 m2 (Comprend appartement, balcon, terrasse sur le toit et parking)
+
+Chambres : 2
+
+Salles de Bains : 2,5 (Demi-salle de bain stratégiquement située sur le toit)
+
+Condition : Entièrement Meublé (Clé en main) - Airbnb Friendly
+
+Commodités du Penthouse : Rooftop privé, picuzzi en pierre de corail, terrasse couverte, balcon avant, cuisine avec îlot, escalier en verre trempé.
+
+Commodités du Complexe : À 3 minutes de la plage, école privée, accès privé à la plage, terrain de golf, Clubhouse, restaurants, bars, épicerie fine, voisin des hôtels Princess, Ocean Blue et VIK.
+
+Emplacement : White Sands, Bavaro, Punta Cana, République Dominicaine`;
+
+async function updateDescriptions() {
+  const propertyId = 'FAM7sl14R2NFN68aBZ6IGJ';
+  console.log('Updating SEO rich descriptions for property...');
+  await client.patch(propertyId)
+    .set({
+      descriptionEs: descriptionEs,
+      descriptionEn: descriptionEn,
+      descriptionFr: descriptionFr
+    })
+    .commit();
+  console.log('Descriptions updated successfully!');
+}
+
+updateDescriptions().catch(console.error);

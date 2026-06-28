@@ -1,0 +1,49 @@
+
+> web@0.1.0 dev
+> next dev
+
+⚠ `eslint` configuration in next.config.ts is no longer supported. See more info here: https://nextjs.org/docs/app/api-reference/cli/next#next-lint-options
+⚠ Invalid next.config.ts options detected: 
+⚠     Unrecognized key(s) in object: 'eslint'
+⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.200:3000
+- Environments: .env.local
+- Experiments (use with caution):
+  · serverActions
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 667ms
+Image with src "/images/miches-sunrise-main-v3.webp" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/images/miches-eco-resort-main.jpg" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/images/fly-and-buy/basic.jpg" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/images/fly-and-buy/premium.jpg" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+ GET /es 200 in 2.1s (compile: 609ms, proxy.ts: 355ms, generate-params: 210ms, render: 1136ms)
+Image with src "/images/miches-sunrise-main-v3.webp" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/images/miches-eco-resort-main.jpg" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/images/fly-and-buy/basic.jpg" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/images/fly-and-buy/premium.jpg" is using quality "60" which is not configured in images.qualities [50, 75, 90, 100]. Please update your config to [100, 50, 60, 75, 90].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+ GET /es 200 in 1435ms (compile: 102ms, proxy.ts: 344ms, generate-params: 1516µs, render: 989ms)
+✓ Compiled in 66ms
+✓ Compiled in 38ms
+✓ Compiled in 52ms
+✓ Compiled in 62ms
+✓ Compiled in 35ms
+✓ Compiled in 36ms
+✓ Compiled in 50ms
+✓ Compiled in 40ms
+✓ Compiled in 25ms
+✓ Compiled in 53ms
+✓ Compiled in 34ms
+✓ Compiled in 38ms
+✓ Compiled in 49ms
