@@ -81,7 +81,6 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                                     sizes="100vw"
                                     className="object-cover"
                                     quality={75}
-                                    unoptimized={true}
                                 />
                             ) : (
                                 <Image
@@ -105,8 +104,8 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
 
             {/* Content */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
-                <div className="bg-black/40 md:bg-black/20 md:backdrop-blur-[2px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto min-h-[400px] md:min-h-[300px] flex flex-col justify-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-md">
+                <div className="bg-black/70 md:bg-black/60 md:backdrop-blur-[4px] border border-white/10 rounded-sm p-6 md:p-10 shadow-2xl max-w-3xl mx-auto min-h-[400px] md:min-h-[300px] flex flex-col justify-center">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-luxury-gold leading-tight font-serif uppercase tracking-widest drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">
                         {dict.title}
                     </h1>
                     <div className="h-1 w-24 bg-luxury-gold mx-auto my-6 shadow-sm"></div>
