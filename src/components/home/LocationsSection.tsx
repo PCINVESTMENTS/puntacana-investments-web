@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { ScrollReveal } from "../ui/ScrollReveal";
@@ -18,66 +16,10 @@ interface LocationsSectionProps {
     limit?: number;
     lang?: string;
     prioritizeImages?: boolean;
+    apiLocations?: any[];
 }
 
-import { useState, useEffect } from 'react';
-
-// ... interface ...
-
-export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = false }: LocationsSectionProps) {
-    const [apiLocations, setApiLocations] = useState<any[]>([]);
-
-    useEffect(() => {
-        // FORCE PRODUCTION URL: Vercel is injecting the wrong environment variable (dashboard...)
-        // We hardcode the Railway backend here temporarily to bypass the cache/env bug.
-        const API_BASE = 'https://puntacana-fortress-production.up.railway.app';
-
-        // Correct Route: /api/cms/locations/ (With Trailing Slash)
-        // Note: We fixed the Backend SSL Proxy Header to prevent 308 Loops.
-        const endpoint = `${API_BASE}/api/cms/locations/`;
-
-        console.log("Fetching locations from:", endpoint);
-
-        fetch(endpoint)
-            .then(res => {
-                if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-                return res.json();
-            })
-            .then(data => {
-                if (!Array.isArray(data)) throw new Error("API response is not an array");
-
-                // Map API response to Component format
-                const mapped = data
-                    .filter((item: any) => item.is_active)
-                    .map((item: any) => {
-                        const imgUrl = item.image_url || '/images/locations/bavaro.jpg';
-                        
-                        if (imgUrl.includes('unsplash.com') || imgUrl.includes('via.placeholder.com')) {
-                            console.warn(`[DATA CLEANUP REQUIRED] Location '${item.title}' (ID/Slug: ${item.slug}) is using a broken or deprecated external image URL: ${imgUrl}. Please update this record in the backend database.`);
-                        }
-
-                        return {
-                            title: item.title,
-                            slug: item.slug,
-                            img: imgUrl
-                        };
-                    });
-
-                if (mapped.length > 0) {
-                    setApiLocations(mapped);
-                }
-            })
-            .catch(err => {
-                console.error("FAILED to load locations from Backend:", err);
-                // We do NOT set apiLocations here, so it falls back to static content
-            });
-    }, []);
-
-    // Fallback list REMOVED to force API usage as per user request
-    // const defaultLocations = [ ... ];
-
-    // Priority: API Only. If API fails, show nothing (or empty).
-    // This ensures we never show stale/hardcoded data.
+export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = false, apiLocations = [] }: LocationsSectionProps) {
     let locations = apiLocations.length > 0 ? apiLocations : (dict.items || []);
 
     if (limit) {

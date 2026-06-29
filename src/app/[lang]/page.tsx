@@ -137,6 +137,28 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     rawContent: null
   } as unknown as BlogPost));
 
+  // Fetch locations from Railway API securely on the server-side to prevent Layout Shifts and Client Fetching overhead
+  let apiLocations = [];
+  try {
+      const API_BASE = 'https://puntacana-fortress-production.up.railway.app';
+      const endpoint = `${API_BASE}/api/cms/locations/`;
+      const res = await fetch(endpoint, { next: { revalidate: 60 } });
+      if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+              apiLocations = data
+                  .filter((item: any) => item.is_active)
+                  .map((item: any) => ({
+                      title: item.title,
+                      slug: item.slug,
+                      img: item.image_url || '/images/locations/bavaro.jpg'
+                  }));
+          }
+      }
+  } catch (err) {
+      console.error("FAILED to load locations from Backend in page.tsx:", err);
+  }
+
   const heroProperties = properties.filter(p =>
     // Hero Allowed: City Place (2), Diana (3), Kerry (7), Ocean Village (9), Soto Grande (12), Miches (13)
     [2, 3, 7, 9, 12, 13].includes(p.id)
@@ -249,7 +271,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
         exploreLink={`/${lang}/properties?status=rent`}
         initialData={rentProperties}
       />
-      <LocationsSection dict={dict.sections.locations} limit={3} lang={lang} />
+      <LocationsSection dict={dict.sections.locations} limit={3} lang={lang} apiLocations={apiLocations} />
       <PropertyListings
         dict={dict.properties}
         lang={lang}
