@@ -254,7 +254,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
-      <Hero dict={dict.hero} featuredImages={heroProperties} />
+      <Hero dict={dict.hero} featuredImages={featuredImages} />
       <PropertyFilterBar dict={dict.properties} locations={dict.sections.locations.items} lang={lang} />
 
       <PropertyListings
