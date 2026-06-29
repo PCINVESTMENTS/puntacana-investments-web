@@ -414,7 +414,7 @@ function PropertyListingsContent({
                                                         : [prop.image]
                                                 }
                                                 title={getLocalizedTitle(prop, lang)}
-                                                priority={index < 2}
+                                                priority={false}
                                             />
                                             <div className="absolute top-4 left-2 right-2 md:left-4 md:right-4 flex justify-between items-start gap-2 z-10 pointer-events-none">
                                                 <div className="bg-black/80 text-white px-2 md:px-4 py-1 text-[10px] md:text-xs uppercase tracking-wider border-l-2 border-luxury-gold truncate min-w-0">
