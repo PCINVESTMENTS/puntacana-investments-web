@@ -138,7 +138,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   } as unknown as BlogPost));
 
   // Fetch locations from Railway API securely on the server-side to prevent Layout Shifts and Client Fetching overhead
-  let apiLocations = [];
+  let apiLocations: any[] = [];
   try {
       const API_BASE = 'https://puntacana-fortress-production.up.railway.app';
       const endpoint = `${API_BASE}/api/cms/locations/`;
@@ -170,10 +170,22 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
     return {
       id: p.id,
-      mainImage: isExternalCDN ? p.image : p.mainImage,
-      backupImage: p.image // Still keep the string URL as backup
+      mainImage: isExternalCDN ? p.image : null,
+      backupImage: typeof p.image === 'string' && !isExternalCDN ? p.image : (p.gallery && p.gallery.length > 0 ? p.gallery[0] : '/images/luxury-villa-frame-hero.webp')
     };
   });
+
+  // PERFORMANCE OPTIMIZATION: Inject a highly-optimized, local WebP image as the VERY FIRST image in the array.
+  // This forces the Hero LCP (Largest Contentful Paint) to load instantly from Vercel's Edge Network, 
+  // bypassing the DNS lookup, TCP handshake, and latency of external CDNs (Sanity/Unsplash).
+  const featuredImages = [
+    {
+        id: 99999, // Fake ID
+        mainImage: null,
+        backupImage: '/images/luxury-villa-frame-hero.webp'
+    },
+    ...heroProperties
+  ];
 
   // Perform server-side filtering to prevent sending the entire dataset to client components
   // Also strip heavy data arrays (like 50-image galleries) to drastically reduce Server-to-Client JSON payload (improves FCP & LCP)
