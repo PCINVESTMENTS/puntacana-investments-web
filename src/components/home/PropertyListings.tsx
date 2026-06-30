@@ -468,7 +468,7 @@ function PropertyListingsContent({
                                                     )}
                                                 </div>
 
-                                                <h3 className="text-2xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
+                                                <h3 className="text-lg md:text-xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
                                                     {getLocalizedTitle(prop, lang)}
                                                 </h3>
                                                 <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
