@@ -69,11 +69,11 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
             hasDropdown: true,
             href: `/${lang}/properties`,
             subItems: [
-                { label: types.villa, href: `/${lang}/properties?type=villa&project=false` },
-                { label: types.condo, href: `/${lang}/properties?type=condo&project=false` },
-                { label: types.land_beach || (lang === 'en' ? "Beachfront Land" : lang === 'fr' ? "Terrains avec Plage" : "Terrenos con Playa"), href: `/${lang}/properties?type=land-beach&project=false` },
-                { label: types.land, href: `/${lang}/properties?type=land&project=false` },
-                { label: types.commercial, href: `/${lang}/properties?type=commercial&project=false` },
+                { label: types.villa, href: `/${lang}/properties?type=villa` },
+                { label: types.condo, href: `/${lang}/properties?type=condo` },
+                { label: types.land_beach || (lang === 'en' ? "Beachfront Land" : lang === 'fr' ? "Terrains avec Plage" : "Terrenos con Playa"), href: `/${lang}/properties?type=land-beach` },
+                { label: types.land, href: `/${lang}/properties?type=land` },
+                { label: types.commercial, href: `/${lang}/properties?type=commercial` },
                 { label: dict.rent, href: `/${lang}/properties?status=rent` },
             ]
         },
