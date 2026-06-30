@@ -181,7 +181,7 @@ export default async function PropertiesPage({
                 ...p,
                 image: p.image || local.image,
                 gallery: (p.gallery && p.gallery.length > 0) ? p.gallery : local.gallery,
-                price: p.id === 999 ? local.price : (p.price || local.price)
+                price: (p.id === 999 || p.id === 998) ? local.price : (p.price || local.price)
             };
         }
         return p;

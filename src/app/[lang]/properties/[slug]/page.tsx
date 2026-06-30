@@ -160,7 +160,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                 ...mappedSanity,
                 image: mappedSanity.image || localProperty.image,
                 gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
-                price: mappedSanity.id === 999 ? localProperty.price : (mappedSanity.price || localProperty.price),
+                price: (mappedSanity.id === 999 || mappedSanity.id === 998) ? localProperty.price : (mappedSanity.price || localProperty.price),
                 description: {
                     en: mappedSanity.description?.en || localProperty.description?.en || "",
                     es: mappedSanity.description?.es || localProperty.description?.es || "",
@@ -343,7 +343,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                 ...mappedSanity,
                 image: mappedSanity.image || localProperty.image,
                 gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
-                price: mappedSanity.id === 999 ? localProperty.price : (mappedSanity.price || localProperty.price),
+                price: (mappedSanity.id === 999 || mappedSanity.id === 998) ? localProperty.price : (mappedSanity.price || localProperty.price),
                 description: {
                     en: mappedSanity.description?.en || localProperty.description?.en || "",
                     es: mappedSanity.description?.es || localProperty.description?.es || "",

@@ -1088,7 +1088,7 @@ exports.properties = [
         locationLabel: "Cap Cana",
         type: "villa",
         status: "sale",
-        price: 1490000,
+        price: 1645000,
         image: "/images/cap-cana-luxury-villa-facade.webp",
         beds: 4,
         baths: 5,
