@@ -2060,8 +2060,8 @@ Cap Cana is a world-class urban, tourist, and hotel enclave, recognized as one o
 
 ## Villa Technical Specifications
 **Dimensions**
-- **Construction Area:** 450 m² – 500 m²
-- **Lot Area:** 927.22 m², plus integrated social area
+- **Construction Area:** 450 m² – 500 m², plus integrated social area
+- **Lot Area:** 927.22 m²
 
 A residence designed to offer spaciousness, functionality, and a high-level residential experience.
 
@@ -2133,8 +2133,8 @@ Cap Cana es un enclave urbano, turístico y hotelero de clase mundial, reconocid
 
 ## Especificaciones Técnicas de la Villa
 **Dimensiones**
-- **Área de construcción:** 450 m² – 500 m²
-- **Área de solar:** 927.22 m², más área social integrada
+- **Área de construcción:** 450 m² – 500 m², más área social integrada
+- **Área de solar:** 927.22 m²
 
 Una residencia diseñada para ofrecer amplitud, funcionalidad y una experiencia residencial de alto nivel.
 
