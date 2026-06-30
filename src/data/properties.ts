@@ -2025,7 +2025,7 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
         image: "/images/luxury-villa-frame-hero.webp",
         beds: 3,
         baths: 4,
-        area: 927,
+        area: 475,
         gallery: [
             "/images/luxury-villa-frame-hero.webp",
             "/images/luxury-villa-frame-bedroom.jpg",
@@ -2035,8 +2035,8 @@ Cap Cana es uno de los desarrollos turísticos y residenciales más exclusivos d
             "/images/luxury-villa-frame-facade-angle.jpg",
         ],
         features: {
-            en: ["Construction: 927.22 m²", "Lot: 450-500 m²", "3 Bedrooms with ensuite", "Convertible Studio", "Family Room", "Private Pool", "BBQ Area", "Parking for 2-4 vehicles", "Maid's Quarters", "Eden Roc Beach Club Access", "Punta Espada Golf Access"],
-            es: ["Construcción: 927.22 m²", "Solar: 450-500 m²", "3 Dormitorios con baño", "Estudio convertible", "Family Room", "Piscina Privada", "Área de BBQ", "Marquesina 2-4 vehículos", "Cuarto de Servicio", "Acceso Eden Roc Beach Club", "Acceso Punta Espada Golf"]
+            en: ["Construction: 450-500 m²", "Lot: 927.22 m²", "3 Bedrooms with ensuite", "Convertible Studio", "Family Room", "Private Pool", "BBQ Area", "Parking for 2-4 vehicles", "Maid's Quarters", "Eden Roc Beach Club Access", "Punta Espada Golf Access"],
+            es: ["Construcción: 450-500 m²", "Solar: 927.22 m²", "3 Dormitorios con baño", "Estudio convertible", "Family Room", "Piscina Privada", "Área de BBQ", "Marquesina 2-4 vehículos", "Cuarto de Servicio", "Acceso Eden Roc Beach Club", "Acceso Punta Espada Golf"]
         },
         description: {
             en: `Luxury Villa Frame: Contemporary Design in the Soul of Cap Cana
@@ -2060,8 +2060,8 @@ Cap Cana is a world-class urban, tourist, and hotel enclave, recognized as one o
 
 ## Villa Technical Specifications
 **Dimensions**
-- **Construction Area:** 927.22 m²
-- **Lot Area:** 450 m² – 500 m², plus integrated social area
+- **Construction Area:** 450 m² – 500 m²
+- **Lot Area:** 927.22 m², plus integrated social area
 
 A residence designed to offer spaciousness, functionality, and a high-level residential experience.
 
@@ -2133,8 +2133,8 @@ Cap Cana es un enclave urbano, turístico y hotelero de clase mundial, reconocid
 
 ## Especificaciones Técnicas de la Villa
 **Dimensiones**
-- **Área de construcción:** 927.22 m²
-- **Área de solar:** 450 m² – 500 m², más área social integrada
+- **Área de construcción:** 450 m² – 500 m²
+- **Área de solar:** 927.22 m², más área social integrada
 
 Una residencia diseñada para ofrecer amplitud, funcionalidad y una experiencia residencial de alto nivel.
 
