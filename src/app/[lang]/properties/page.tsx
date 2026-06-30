@@ -197,6 +197,7 @@ export default async function PropertiesPage({
     const statusParam = typeof resolvedSearchParams?.status === 'string' ? resolvedSearchParams.status : undefined;
     const locationParam = typeof resolvedSearchParams?.location === 'string' ? resolvedSearchParams.location : undefined;
     const typeParam = typeof resolvedSearchParams?.type === 'string' ? resolvedSearchParams.type : undefined;
+    const maxPriceParam = typeof resolvedSearchParams?.maxPrice === 'string' ? resolvedSearchParams.maxPrice : undefined;
 
     return (
         <main className="min-h-screen bg-primary-black">
@@ -215,7 +216,8 @@ export default async function PropertiesPage({
                     initialFilters={{
                         status: statusParam,
                         location: locationParam,
-                        type: typeParam
+                        type: typeParam,
+                        maxPrice: maxPriceParam
                     }}
                     initialData={properties}
                 />

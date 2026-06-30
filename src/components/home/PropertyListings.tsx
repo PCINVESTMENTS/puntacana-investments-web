@@ -226,7 +226,11 @@ function PropertyListingsContent({
                               p.type === selectedType ||
                               (selectedType === "land-beach" && p.type === "land" && isBeachfrontLand(p));
             const matchStatus = selectedStatus === "all" || p.status === selectedStatus;
-            const matchPrice = maxPrice === "any" || p.price <= parseInt(maxPrice);
+            const matchPrice = maxPrice === "any" 
+                ? true 
+                : maxPrice === "999999999" 
+                    ? p.price >= 1000000 || p.price === 0
+                    : p.price > 0 && p.price <= parseInt(maxPrice);
 
             // Project logic: preConstruction/preLaunch define a "project"
             const isP = p.preConstruction || p.preLaunch;
