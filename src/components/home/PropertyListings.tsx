@@ -444,14 +444,16 @@ function PropertyListingsContent({
                                             <div className="p-8 relative flex-grow flex flex-col">
                                                 {/* Pre-Construction / Pre-Sales / Resale Badge */}
                                                 {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
-                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-2 md:px-3 py-2 shadow-lg text-[10px] md:text-xs z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-700' : 'bg-emerald-700'}`}>
-                                                        {prop.isResale
-                                                            ? (lang === 'en' ? 'Resale' : lang === 'fr' ? 'Revente' : 'Reventa')
-                                                            : (prop.preConstruction
-                                                                ? (lang === 'en' ? 'Pre-Construction' : lang === 'fr' ? 'Pré-Construction' : 'Pre-Construcción')
-                                                                : (lang === 'en' ? 'Pre-Sales' : lang === 'fr' ? 'Pré-Ventes' : 'Pre-Ventas')
-                                                            )
-                                                        }
+                                                    <div className="mb-3">
+                                                        <span className={`inline-block text-white font-bold px-2 md:px-3 py-1 shadow-lg text-[10px] md:text-xs uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-700' : 'bg-emerald-700'}`}>
+                                                            {prop.isResale
+                                                                ? (lang === 'en' ? 'Resale' : lang === 'fr' ? 'Revente' : 'Reventa')
+                                                                : (prop.preConstruction
+                                                                    ? (lang === 'en' ? 'Pre-Construction' : lang === 'fr' ? 'Pré-Construction' : 'Pre-Construcción')
+                                                                    : (lang === 'en' ? 'Pre-Sales' : lang === 'fr' ? 'Pré-Ventes' : 'Pre-Ventas')
+                                                                )
+                                                            }
+                                                        </span>
                                                     </div>
                                                 )}
 
