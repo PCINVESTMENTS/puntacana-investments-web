@@ -444,7 +444,7 @@ function PropertyListingsContent({
                                             <div className="p-8 relative flex-grow flex flex-col">
                                                 {/* Pre-Construction / Pre-Sales / Resale Badge */}
                                                 {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
-                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-1.5 md:px-3 py-1.5 md:py-2 shadow-lg text-[9px] md:text-xs z-30 uppercase tracking-tight md:tracking-wider ${prop.isResale ? 'bg-indigo-700' : 'bg-emerald-700'}`}>
+                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-1.5 md:px-2 py-1.5 md:py-1.5 shadow-lg text-[9px] md:text-[10px] z-30 uppercase tracking-tight md:tracking-normal ${prop.isResale ? 'bg-indigo-700' : 'bg-emerald-700'}`}>
                                                         {prop.isResale
                                                             ? (lang === 'en' ? 'Resale' : lang === 'fr' ? 'Revente' : 'Reventa')
                                                             : (prop.preConstruction
@@ -455,7 +455,7 @@ function PropertyListingsContent({
                                                     </div>
                                                 )}
 
-                                                <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-2 md:px-4 py-1.5 md:py-2 shadow-lg text-[9px] md:text-xs z-30">
+                                                <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-2 md:px-3 py-1.5 md:py-1.5 shadow-lg text-[9px] md:text-[10px] z-30">
                                                     {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
                                                         <>
                                                             {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : lang === 'fr' ? 'À partir de ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
