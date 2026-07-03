@@ -95,7 +95,9 @@ export const properties: Property[] = [
             "/images/properties/villa-canoa-cap-cana/2.jpg",
             "/images/properties/villa-canoa-cap-cana/3.jpg",
             "/images/properties/villa-canoa-cap-cana/6.jpg",
-            "/images/properties/villa-canoa-cap-cana/7.png"
+            "/images/properties/villa-canoa-cap-cana/7.png",
+            "/images/properties/villa-canoa-cap-cana/8.png",
+            "/images/properties/villa-canoa-cap-cana/9.png"
         ],
         features: {
             en: ["Lake View", "Infinity Pool", "Sunken Seating", "Double Height Ceilings", "Cold & Hot Kitchens", "Guest Room on 1st Floor", "Home Office", "Private Spa Bathrooms", "Maid's Quarters", "Access to 45 Holes of Golf", "Private Beach Access"],
