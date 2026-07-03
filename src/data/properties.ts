@@ -83,8 +83,8 @@ export const properties: Property[] = [
         type: "villa",
         beds: 6,
         baths: 8,
-        area: 0,
-        lotSize: 0,
+        area: 903,
+        lotSize: 2979,
         image: "/images/properties/gran-villa-canoa/1.jpg",
         gallery: [
             "/images/properties/gran-villa-canoa/1.jpg",
