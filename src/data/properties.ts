@@ -18,6 +18,12 @@ export interface Property {
     beds: number;
     baths: number;
     area: number;
+    lotSize?: number;
+    amenities?: {
+        en: string[];
+        es: string[];
+        fr?: string[];
+    };
     features: {
         en: string[];
         es: string[];
