@@ -78,7 +78,7 @@ export const properties: Property[] = [
         titleFr: "Gran Villa Canoa | Manoir de 6 Chambres à Los Lagos, Punta Cana",
         location: "Sector Los Lagos (Laguna Honda), Puntacana Resort & Club, La Altagracia, Rep. Dom.",
         locationLabel: "Punta Cana Resort & Club",
-        price: 0,
+        price: 3825000,
         status: "sale",
         type: "villa",
         beds: 6,
@@ -91,7 +91,12 @@ export const properties: Property[] = [
             "/images/properties/gran-villa-canoa/2.jpg",
             "/images/properties/gran-villa-canoa/3.jpg",
             "/images/properties/gran-villa-canoa/4.jpg",
-            "/images/properties/gran-villa-canoa/5.jpg"
+            "/images/properties/gran-villa-canoa/5.jpg",
+            "/images/properties/gran-villa-canoa/6.png",
+            "/images/properties/gran-villa-canoa/7.png",
+            "/images/properties/gran-villa-canoa/8.jpg",
+            "/images/properties/gran-villa-canoa/9.png",
+            "/images/properties/gran-villa-canoa/10.jpg"
         ],
         features: {
             en: ["Lake View", "Infinity Pool", "Sunken Seating", "Double Height Ceilings", "Cold & Hot Kitchens", "Guest Room on 1st Floor", "Home Office / Gym", "Private Spa Bathrooms", "Maid's Quarters", "Access to 45 Holes of Golf", "Private Beach Access", "Gazebo with BBQ", "Covered Garage for 2 Vehicles", "Open Parking for 6 Vehicles"],
