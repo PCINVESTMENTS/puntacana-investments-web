@@ -10,6 +10,7 @@ exports.properties = [
         locationLabel: "Punta Cana Resort & Club",
         type: "villa",
         status: "sale",
+        featured: true,
         price: 3099000,
         preConstruction: true,
         image: "/images/properties/villa-canoa-cap-cana/4.jpg",
