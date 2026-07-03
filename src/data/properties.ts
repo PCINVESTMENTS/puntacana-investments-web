@@ -71,7 +71,7 @@ export interface Property {
 
 export const properties: Property[] = [
     {
-        id: 1005,
+        id: 522951,
         slug: "villa-canoa-lujo-frente-al-lago-puntacana-resort",
         title: "Villa Canoa | Lujo Frente al Lago en Puntacana Resort & Club",
         location: "puntacana",
