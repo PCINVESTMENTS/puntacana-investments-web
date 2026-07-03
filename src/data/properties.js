@@ -1,5 +1,7 @@
 "use strict";
-Object.defin
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.properties = void 0;
+exports.properties = [
     {
         id: 1000,
         slug: "villa-canoa-lujo-frente-al-lago-puntacana-resort",
