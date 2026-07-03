@@ -6,6 +6,8 @@ exports.properties = [
         id: 522951,
         slug: "villa-canoa-lujo-frente-al-lago-puntacana-resort",
         title: "Villa Canoa | Lujo Frente al Lago en Puntacana Resort & Club",
+        titleEn: "Villa Canoa | Lakefront Luxury in Puntacana Resort & Club",
+        titleFr: "Villa Canoa | Luxe au Bord du Lac à Puntacana Resort & Club",
         location: "puntacana",
         locationLabel: "Punta Cana Resort & Club",
         type: "villa",
@@ -23,7 +25,9 @@ exports.properties = [
             "/images/properties/villa-canoa-cap-cana/5.png",
             "/images/properties/villa-canoa-cap-cana/1.jpg",
             "/images/properties/villa-canoa-cap-cana/2.jpg",
-            "/images/properties/villa-canoa-cap-cana/3.jpg"
+            "/images/properties/villa-canoa-cap-cana/3.jpg",
+            "/images/properties/villa-canoa-cap-cana/6.jpg",
+            "/images/properties/villa-canoa-cap-cana/7.png"
         ],
         features: {
             en: ["Lake View", "Infinity Pool", "Sunken Seating", "Double Height Ceilings", "Cold & Hot Kitchens", "Guest Room on 1st Floor", "Home Office", "Private Spa Bathrooms", "Maid's Quarters", "Access to 45 Holes of Golf", "Private Beach Access"],
@@ -91,14 +95,14 @@ Diseñados como spas privados, revestidos completamente en Coralina con cálidos
 ### Comunidad Lagos y Amenidades del Resort
 
 
-Villa Canoa se encuentra en **Lagos**, la comunidad residencial más nueva y excepcional dentro de Puntacana Resort & Club, diseñada alrededor de extensos cuerpos de agua dulce. A minutos del Aeropuerto Internacional de Punta Cana, los residentes disfrutan de un estilo de vida de clase mundial:
+Villa Canoa se encuentra en **Lagos**, la comunidad residencial más nueva y excepcional dentro de Puntacana Resort & Club, diseñada alrededor de extensos cuerpos de agua dulce. A minutos del [Aeropuerto Internacional de Punta Cana](https://www.puntacanainternationalairport.com/), los residentes disfrutan de un estilo de vida de clase mundial:
 
 
 
 - Lago recreacional para deportes acuáticos no motorizados.
 - 5 millas de playas de arena blanca prístina.
-- 13 manantiales naturales de agua dulce (Reserva Ecológica Ojos Indígenas).
-- 45 hoyos de golf de campeonato (Corales y La Cana).
+- 13 manantiales naturales de agua dulce ([Reserva Ecológica Ojos Indígenas](https://www.puntacana.com/es/things-to-do/ecological-reserve)).
+- 45 hoyos de golf de campeonato ([Corales](https://www.puntacana.com/es/golf/corales-golf-course) y La Cana).
 - 8 restaurantes de clase mundial, marina y centro ecuestre.
 
 
@@ -158,14 +162,14 @@ Designed as private spas, completely clad in Coral stone with warm touches of wo
 ### Lagos Community & Resort Amenities
 
 
-Villa Canoa is located in **Lagos**, the newest and most exceptional residential community within Puntacana Resort & Club, designed around extensive bodies of freshwater. Minutes from Punta Cana International Airport, residents enjoy a world-class lifestyle:
+Villa Canoa is located in **Lagos**, the newest and most exceptional residential community within Puntacana Resort & Club, designed around extensive bodies of freshwater. Minutes from [Punta Cana International Airport](https://www.puntacanainternationalairport.com/), residents enjoy a world-class lifestyle:
 
 
 
 - Recreational lake for non-motorized water sports.
 - 5 miles of pristine white sand beaches.
-- 13 natural freshwater springs (Ojos Indígenas Ecological Reserve).
-- 45 holes of championship golf (Corales and La Cana).
+- 13 natural freshwater springs ([Ojos Indigenas Ecological Reserve](https://www.puntacana.com/things-to-do/ecological-reserve)).
+- 45 holes of championship golf ([Corales](https://www.puntacana.com/golf/corales-golf-course) and La Cana).
 - 8 world-class restaurants, a marina, and an equestrian center.
 
 
@@ -225,14 +229,14 @@ Conçues comme des spas privés, entièrement revêtues de pierre de corail avec
 ### Communauté Lagos et Commodités du Complexe
 
 
-La Villa Canoa est située à **Lagos**, la communauté résidentielle la plus récente et la plus exceptionnelle du Puntacana Resort & Club, conçue autour de vastes étendues d'eau douce. À quelques minutes de l'aéroport international de Punta Cana, les résidents profitent d'un style de vie de classe mondiale:
+La Villa Canoa est située à **Lagos**, la communauté résidentielle la plus récente et la plus exceptionnelle du Puntacana Resort & Club, conçue autour de vastes étendues d'eau douce. À quelques minutes de l'[Aéroport International de Punta Cana](https://www.puntacanainternationalairport.com/), les résidents profitent d'un style de vie de classe mondiale:
 
 
 
 - Lac récréatif pour les sports nautiques non motorisés.
 - 5 miles de plages de sable blanc immaculées.
-- 13 sources naturelles d'eau douce (Réserve écologique Ojos Indígenas).
-- 45 trous de golf de championnat (Corales et La Cana).
+- 13 sources naturelles d'eau douce ([Réserve écologique Ojos Indígenas](https://www.puntacana.com/things-to-do/ecological-reserve)).
+- 45 trous de golf de championnat ([Corales](https://www.puntacana.com/golf/corales-golf-course) et La Cana).
 - 8 restaurants de classe mondiale, une marina et un centre équestre.
 
 
@@ -250,9 +254,9 @@ La Villa Canoa est située à **Lagos**, la communauté résidentielle la plus r
                 fr: "Villa de luxe exclusive de 5 chambres au bord du lac à Lagos, Puntacana Resort. Architecture Japandi, piscine à débordement et accès aux plages privées et au golf."
             },
             keywords: {
-                en: ["Villa Canoa", "Puntacana Resort and Club", "Lagos Community Punta Cana", "Lakefront Villa Punta Cana", "Luxury Real Estate Dominican Republic", "Buy Villa in Punta Cana", "5 Bedroom Villa Punta Cana", "Golf Resort Property"],
-                es: ["Villa Canoa", "Puntacana Resort and Club", "Comunidad Lagos Punta Cana", "Villa Frente al Lago Punta Cana", "Bienes Raíces de Lujo República Dominicana", "Comprar Villa en Punta Cana", "Villa 5 Habitaciones Punta Cana"],
-                fr: ["Villa Canoa", "Puntacana Resort and Club", "Communauté Lagos Punta Cana", "Villa Bord de Lac Punta Cana", "Immobilier de Luxe République Dominicaine", "Acheter Villa Punta Cana"]
+                en: ["Villa Canoa", "Puntacana Resort and Club", "Lagos Community Punta Cana", "Lakefront Villa Punta Cana", "Luxury Real Estate Dominican Republic", "Buy Villa in Punta Cana", "5 Bedroom Villa Punta Cana", "Golf Resort Property", "Punta Cana International Airport", "Corales Golf Course", "Ojos Indigenas Ecological Reserve", "Luxury Pre-construction Punta Cana", "Invest in Punta Cana", "Caribbean Luxury Homes", "Puntacana Resort Real Estate", "Villas for sale Punta Cana"],
+                es: ["Villa Canoa", "Puntacana Resort and Club", "Comunidad Lagos Punta Cana", "Villa Frente al Lago Punta Cana", "Bienes Raíces de Lujo República Dominicana", "Comprar Villa en Punta Cana", "Villa 5 Habitaciones Punta Cana", "Propiedades cerca del Aeropuerto Punta Cana", "Campo de Golf Corales", "Reserva Ojos Indígenas", "Villas en Pre-construcción Punta Cana", "Invertir en Punta Cana", "Casas de Lujo en el Caribe", "Villas en Venta Punta Cana Resort", "Bienes Raíces Punta Cana"],
+                fr: ["Villa Canoa", "Puntacana Resort and Club", "Communauté Lagos Punta Cana", "Villa Bord de Lac Punta Cana", "Immobilier de Luxe République Dominicaine", "Acheter Villa Punta Cana", "Villa 5 Chambres Punta Cana", "Propriété Golf Punta Cana", "Aéroport Punta Cana", "Golf Corales", "Investissement Immobilier Punta Cana", "Maisons de Luxe Caraïbes", "Villas à Vendre Puntacana Resort"]
             }
         }
     },
