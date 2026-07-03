@@ -17,9 +17,6 @@ interface HeroProps {
 export default function Hero({ dict, featuredImages }: HeroProps) {
     return (
         <section className="relative h-screen flex items-center justify-center overflow-hidden bg-primary-black">
-            {/* Background Slider - Fully Client Side */}
-            <HeroCarousel featuredImages={featuredImages} altText={dict.title} />
-
             {/* Overlay */}
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-transparent to-primary-black/60 md:from-black/20 md:to-primary-black/50 pointer-events-none"></div>
 
@@ -35,6 +32,9 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                     </p>
                 </div>
             </div>
+
+            {/* Background Slider - Fully Client Side - Moved down to prioritize text LCP */}
+            <HeroCarousel featuredImages={featuredImages} altText={dict.title} />
         </section>
     );
 }

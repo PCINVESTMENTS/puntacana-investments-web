@@ -17,6 +17,12 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [renderedIndexes, setRenderedIndexes] = useState<number[]>([0]);
 
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+    useEffect(() => {
+        setIsInitialLoad(false);
+    }, []);
+
     useEffect(() => {
         if (featuredImages.length > 0) {
             const nextIndex = (currentImageIndex + 1) % featuredImages.length;
@@ -53,11 +59,13 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
                 // Defer rendering of images until they are the current or next slide
                 if (!renderedIndexes.includes(index)) return null;
 
+                const isActive = index === currentImageIndex;
+                const transitionClass = (isPriority && isInitialLoad) ? "" : "transition-opacity duration-1500 ease-in-out";
+
                 return (
                     <div
                         key={img.id}
-                        className={`absolute inset-0 transition-opacity duration-1500 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
-                            }`}
+                        className={`absolute inset-0 ${transitionClass} ${isActive ? "opacity-100" : "opacity-0"}`}
                     >
                         {img.mainImage ? (
                             <Image
