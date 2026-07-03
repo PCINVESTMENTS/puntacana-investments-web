@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.properties = void 0;
 exports.properties = [
     {
-        id: 1000,
+        id: 1005,
         slug: "villa-canoa-lujo-frente-al-lago-puntacana-resort",
         title: "Villa Canoa | Lujo Frente al Lago en Puntacana Resort & Club",
         location: "puntacana",
