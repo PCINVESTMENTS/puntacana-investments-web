@@ -116,9 +116,9 @@ Su arquitectura es una magistral mezcla de lo contemporáneo y tropical, con det
 
 
 
-    - Pisos de piedra Coralina de la más alta calidad.
-    - Barandas de vidrio templado en escaleras y balcones.
-    - Puertas y ebanistería en madera preciosa.
+- Pisos de piedra Coralina de la más alta calidad.
+- Barandas de vidrio templado en escaleras y balcones.
+- Puertas y ebanistería en madera preciosa.
 
 
 
@@ -127,13 +127,13 @@ Su arquitectura es una magistral mezcla de lo contemporáneo y tropical, con det
 
 
 
-    - **Imponente Entrada:** Elegante recibidor (Hall) de doble altura y medio baño de visitas que dan paso a la majestuosidad del interior.
-    - **Área Social:** Salón principal y comedor en concepto abierto con doble altura, rodeados de amplios ventanales de vidrio y aluminio negro que conectan fluidamente con la terraza y la piscina.
-    - **Cocinas de Chef:** Dispone de cocina fría y cocina caliente, diseño moderno y funcional ideal para personalizar. Incluye isla central con topes de madera laminada y cuarzo.
-    - **Estudio (TV Room):** Ambiente cálido climatizado con bar integrado.
-    - **Exteriores de Ensueño:** Amplia terraza con piscina infinity, sala hundida (sunken seating), gazebo y BBQ, rodeados de un jardín tropical con vista espectacular al lago.
-    - **Habitación de Huéspedes:** Ubicada en planta baja con baño privado y clóset.
-    - **Área de Servicio:** Área de lavado, comedor para empleados y 2 habitaciones de servicio con baño. Garaje techado y estacionamientos adicionales.
+- **Imponente Entrada:** Elegante recibidor (Hall) de doble altura y medio baño de visitas que dan paso a la majestuosidad del interior.
+- **Área Social:** Salón principal y comedor en concepto abierto con doble altura, rodeados de amplios ventanales de vidrio y aluminio negro que conectan fluidamente con la terraza y la piscina.
+- **Cocinas de Chef:** Dispone de cocina fría y cocina caliente, diseño moderno y funcional ideal para personalizar. Incluye isla central con topes de madera laminada y cuarzo.
+- **Estudio (TV Room):** Ambiente cálido climatizado con bar integrado.
+- **Exteriores de Ensueño:** Amplia terraza con piscina infinity, sala hundida (sunken seating), gazebo y BBQ, rodeados de un jardín tropical con vista espectacular al lago.
+- **Habitación de Huéspedes:** Ubicada en planta baja con baño privado y clóset.
+- **Área de Servicio:** Área de lavado, comedor para empleados y 2 habitaciones de servicio con baño. Garaje techado y estacionamientos adicionales.
 
 
 
@@ -142,9 +142,9 @@ Su arquitectura es una magistral mezcla de lo contemporáneo y tropical, con det
 
 
 
-    - Cuatro (4) lujosas habitaciones, cada una con su propio baño privado y walk-in clóset.
-    - Espacio dedicado para oficina en casa (Home Office).
-    - Amplios balcones con vistas panorámicas al lago y los jardines.
+- Cuatro (4) lujosas habitaciones, cada una con su propio baño privado y walk-in clóset.
+- Espacio dedicado para oficina en casa (Home Office).
+- Amplios balcones con vistas panorámicas al lago y los jardines.
 
 
 
@@ -163,11 +163,11 @@ Villa Canoa se encuentra en **Lagos**, la comunidad residencial más nueva y exc
 
 
 
-    - Lago recreacional para deportes acuáticos no motorizados.
-    - 5 millas de playas de arena blanca prístina.
-    - 13 manantiales naturales de agua dulce (Reserva Ecológica Ojos Indígenas).
-    - 45 hoyos de golf de campeonato (Corales y La Cana).
-    - 8 restaurantes de clase mundial, marina y centro ecuestre.
+- Lago recreacional para deportes acuáticos no motorizados.
+- 5 millas de playas de arena blanca prístina.
+- 13 manantiales naturales de agua dulce (Reserva Ecológica Ojos Indígenas).
+- 45 hoyos de golf de campeonato (Corales y La Cana).
+- 8 restaurantes de clase mundial, marina y centro ecuestre.
 
 
 `,
@@ -183,9 +183,9 @@ Its architecture is a masterful blend of contemporary and tropical, with *Japand
 
 
 
-    - Highest quality Coral stone floors.
-    - Tempered glass railings on stairs and balconies.
-    - Precious wood doors and cabinetry.
+- Highest quality Coral stone floors.
+- Tempered glass railings on stairs and balconies.
+- Precious wood doors and cabinetry.
 
 
 
@@ -194,13 +194,13 @@ Its architecture is a masterful blend of contemporary and tropical, with *Japand
 
 
 
-    - **Imposing Entrance:** Elegant double-height lobby (Hall) and a guest half-bath that lead to the majesty of the interior.
-    - **Social Area:** Main living and dining rooms in an open concept with double height ceilings, surrounded by large glass and black aluminum windows that connect fluidly with the terrace and pool.
-    - **Chef's Kitchens:** Features both cold and hot kitchens, with a modern and functional design ideal for customization. Includes a central island with laminated wood and quartz countertops.
-    - **Study (TV Room):** Warm air-conditioned environment with an integrated bar.
-    - **Dream Exteriors:** Large terrace with an infinity pool, sunken seating, gazebo, and BBQ, surrounded by a tropical garden with spectacular lake views.
-    - **Guest Bedroom:** Located on the ground floor with a private bathroom and closet.
-    - **Service Area:** Laundry area, employee dining room, and 2 service bedrooms with a bathroom. Covered garage and additional parking.
+- **Imposing Entrance:** Elegant double-height lobby (Hall) and a guest half-bath that lead to the majesty of the interior.
+- **Social Area:** Main living and dining rooms in an open concept with double height ceilings, surrounded by large glass and black aluminum windows that connect fluidly with the terrace and pool.
+- **Chef's Kitchens:** Features both cold and hot kitchens, with a modern and functional design ideal for customization. Includes a central island with laminated wood and quartz countertops.
+- **Study (TV Room):** Warm air-conditioned environment with an integrated bar.
+- **Dream Exteriors:** Large terrace with an infinity pool, sunken seating, gazebo, and BBQ, surrounded by a tropical garden with spectacular lake views.
+- **Guest Bedroom:** Located on the ground floor with a private bathroom and closet.
+- **Service Area:** Laundry area, employee dining room, and 2 service bedrooms with a bathroom. Covered garage and additional parking.
 
 
 
@@ -209,9 +209,9 @@ Its architecture is a masterful blend of contemporary and tropical, with *Japand
 
 
 
-    - Four (4) luxurious bedrooms, each with its own private bathroom and walk-in closet.
-    - Dedicated space for a Home Office.
-    - Spacious balconies with panoramic views of the lake and gardens.
+- Four (4) luxurious bedrooms, each with its own private bathroom and walk-in closet.
+- Dedicated space for a Home Office.
+- Spacious balconies with panoramic views of the lake and gardens.
 
 
 
@@ -230,11 +230,11 @@ Villa Canoa is located in **Lagos**, the newest and most exceptional residential
 
 
 
-    - Recreational lake for non-motorized water sports.
-    - 5 miles of pristine white sand beaches.
-    - 13 natural freshwater springs (Ojos Indígenas Ecological Reserve).
-    - 45 holes of championship golf (Corales and La Cana).
-    - 8 world-class restaurants, a marina, and an equestrian center.
+- Recreational lake for non-motorized water sports.
+- 5 miles of pristine white sand beaches.
+- 13 natural freshwater springs (Ojos Indígenas Ecological Reserve).
+- 45 holes of championship golf (Corales and La Cana).
+- 8 world-class restaurants, a marina, and an equestrian center.
 
 
 `,
@@ -250,9 +250,9 @@ Son architecture est un mélange magistral de contemporain et de tropical, avec 
 
 
 
-    - Sols en pierre de corail de la plus haute qualité.
-    - Garde-corps en verre trempé sur les escaliers et les balcons.
-    - Portes et boiseries en bois précieux.
+- Sols en pierre de corail de la plus haute qualité.
+- Garde-corps en verre trempé sur les escaliers et les balcons.
+- Portes et boiseries en bois précieux.
 
 
 
@@ -261,13 +261,13 @@ Son architecture est un mélange magistral de contemporain et de tropical, avec 
 
 
 
-    - **Entrée Imposante:** Élégant hall à double hauteur et une demi-salle de bain pour invités qui mènent à la majesté de l'intérieur.
-    - **Espace Social:** Salon et salle à manger principaux à aire ouverte avec des plafonds à double hauteur, entourés de grandes fenêtres en verre et en aluminium noir qui se connectent de manière fluide avec la terrasse et la piscine.
-    - **Cuisines de Chef:** Comprend des cuisines froides et chaudes, avec un design moderne et fonctionnel idéal pour la personnalisation. Comprend un îlot central avec des plans de travail en bois stratifié et en quartz.
-    - **Bureau (Salle TV):** Environnement chaleureux et climatisé avec un bar intégré.
-    - **Extérieurs de Rêve:** Grande terrasse avec piscine à débordement, salon encaissé (sunken seating), gazebo et barbecue, entourée d'un jardin tropical avec des vues spectaculaires sur le lac.
-    - **Chambre d'Amis:** Située au rez-de-chaussée avec salle de bain privée et placard.
-    - **Espace de Service:** Buanderie, salle à manger pour le personnel et 2 chambres de service avec salle de bain. Garage couvert et parking supplémentaire.
+- **Entrée Imposante:** Élégant hall à double hauteur et une demi-salle de bain pour invités qui mènent à la majesté de l'intérieur.
+- **Espace Social:** Salon et salle à manger principaux à aire ouverte avec des plafonds à double hauteur, entourés de grandes fenêtres en verre et en aluminium noir qui se connectent de manière fluide avec la terrasse et la piscine.
+- **Cuisines de Chef:** Comprend des cuisines froides et chaudes, avec un design moderne et fonctionnel idéal pour la personnalisation. Comprend un îlot central avec des plans de travail en bois stratifié et en quartz.
+- **Bureau (Salle TV):** Environnement chaleureux et climatisé avec un bar intégré.
+- **Extérieurs de Rêve:** Grande terrasse avec piscine à débordement, salon encaissé (sunken seating), gazebo et barbecue, entourée d'un jardin tropical avec des vues spectaculaires sur le lac.
+- **Chambre d'Amis:** Située au rez-de-chaussée avec salle de bain privée et placard.
+- **Espace de Service:** Buanderie, salle à manger pour le personnel et 2 chambres de service avec salle de bain. Garage couvert et parking supplémentaire.
 
 
 
@@ -276,9 +276,9 @@ Son architecture est un mélange magistral de contemporain et de tropical, avec 
 
 
 
-    - Quatre (4) chambres luxueuses, chacune avec sa propre salle de bain privée et son dressing.
-    - Espace dédié pour un bureau à domicile (Home Office).
-    - Balcons spacieux avec vue panoramique sur le lac et les jardins.
+- Quatre (4) chambres luxueuses, chacune avec sa propre salle de bain privée et son dressing.
+- Espace dédié pour un bureau à domicile (Home Office).
+- Balcons spacieux avec vue panoramique sur le lac et les jardins.
 
 
 
@@ -297,11 +297,11 @@ La Villa Canoa est située à **Lagos**, la communauté résidentielle la plus r
 
 
 
-    - Lac récréatif pour les sports nautiques non motorisés.
-    - 5 miles de plages de sable blanc immaculées.
-    - 13 sources naturelles d'eau douce (Réserve écologique Ojos Indígenas).
-    - 45 trous de golf de championnat (Corales et La Cana).
-    - 8 restaurants de classe mondiale, une marina et un centre équestre.
+- Lac récréatif pour les sports nautiques non motorisés.
+- 5 miles de plages de sable blanc immaculées.
+- 13 sources naturelles d'eau douce (Réserve écologique Ojos Indígenas).
+- 45 trous de golf de championnat (Corales et La Cana).
+- 8 restaurants de classe mondiale, une marina et un centre équestre.
 
 
 `
@@ -2538,9 +2538,9 @@ A location that guarantees high rental demand, ease of resale, and sustained val
 - Contemporary, elegant, and functional design
 - Large windows with natural lighting and cross ventilation
 - Villas prepared for:
-  - Split type air conditioners
-  - Solar panel installation
-  - Private terrace and green patio
+- Split type air conditioners
+- Solar panel installation
+- Private terrace and green patio
 
 *The project is currently in the development stage, allowing access to preferential prices and staggered payment plans.*
 
@@ -2591,9 +2591,9 @@ Una ubicación que garantiza alta demanda de alquiler, facilidad de reventa y cr
 - Diseño contemporáneo, elegante y funcional
 - Amplios ventanales con iluminación natural y ventilación cruzada
 - Villas preparadas para:
-  - Aires acondicionados tipo split
-  - Instalación de paneles solares
-  - Terraza privada y patio verde
+- Aires acondicionados tipo split
+- Instalación de paneles solares
+- Terraza privada y patio verde
 
 *El proyecto se encuentra actualmente en etapa de desarrollo, lo que permite acceder a precios preferenciales y planes de pago escalonados.*
 
