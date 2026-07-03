@@ -260,9 +260,27 @@ Les résidents ont un accès exclusif à un club de golf et de plage, en plus d'
                 fr: "Découvrez Gran Villa Canoa à Los Lagos. Imposant manoir de 6 chambres, design unique, piscine à débordement, vue sur le lac, accès à la plage et au golf."
             },
             keywords: {
-                en: ["Gran Villa Canoa Punta Cana", "Los Lagos Puntacana Resort", "Laguna Honda", "6-bedroom mansion Punta Cana", "luxury lake view homes", "Punta Cana Investments", "Caribbean ultra-luxury real estate"],
-                es: ["Gran Villa Canoa Punta Cana", "Los Lagos Puntacana Resort", "Laguna Honda", "mansión 6 habitaciones Punta Cana", "casas de lujo con vista al lago", "Punta Cana Investments", "bienes raíces ultra lujo Caribe"],
-                fr: ["Gran Villa Canoa Punta Cana", "Los Lagos Puntacana Resort", "Laguna Honda", "manoir 6 chambres Punta Cana", "maisons de luxe avec vue sur le lac", "Punta Cana Investments", "immobilier ultra-luxe Caraïbes"]
+                en: [
+                    "Gran Villa Canoa Punta Cana", "Los Lagos Puntacana Resort", "Laguna Honda Punta Cana", 
+                    "6-bedroom mansion Punta Cana", "luxury lake view homes", "Punta Cana Investments", 
+                    "Caribbean ultra-luxury real estate", "buy villa in Punta Cana", "exclusive villas Punta Cana", 
+                    "real estate investment Dominican Republic", "homes for sale Punta Cana Resort & Club", 
+                    "luxury real estate Punta Cana", "Punta Cana luxury properties", "lakefront mansion Punta Cana"
+                ],
+                es: [
+                    "Gran Villa Canoa Punta Cana", "Los Lagos Puntacana Resort", "Laguna Honda Punta Cana", 
+                    "mansión 6 habitaciones Punta Cana", "casas de lujo con vista al lago", "Punta Cana Investments", 
+                    "bienes raíces ultra lujo Caribe", "comprar villa en Punta Cana", "villas exclusivas Punta Cana", 
+                    "inversión inmobiliaria República Dominicana", "casas en venta Punta Cana Resort & Club", 
+                    "real estate Punta Cana", "luxury homes for sale Punta Cana", "mansión frente al lago Punta Cana"
+                ],
+                fr: [
+                    "Gran Villa Canoa Punta Cana", "Los Lagos Puntacana Resort", "Laguna Honda Punta Cana", 
+                    "manoir 6 chambres Punta Cana", "maisons de luxe avec vue sur le lac", "Punta Cana Investments", 
+                    "immobilier ultra-luxe Caraïbes", "acheter villa à Punta Cana", "villas exclusives Punta Cana", 
+                    "investissement immobilier République Dominicaine", "maisons à vendre Punta Cana Resort & Club", 
+                    "immobilier de luxe Punta Cana", "propriétés de luxe Punta Cana", "manoir bord de lac Punta Cana"
+                ]
             }
         }
     },
