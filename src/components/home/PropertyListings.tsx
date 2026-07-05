@@ -221,7 +221,8 @@ function PropertyListingsContent({
         let filtered = initialData.filter((p) => {
             const matchLoc = selectedLocation === "all" ||
                 p.location === selectedLocation ||
-                (selectedLocation === 'bavaro' && ['vistacana', 'whitesands'].includes(p.location));
+                (selectedLocation === 'bavaro' && ['vistacana', 'whitesands'].includes(p.location)) ||
+                (selectedLocation === 'puntacana' && p.location.toLowerCase().includes('puntacana'));
             const matchType = selectedType === "all" || 
                               p.type === selectedType ||
                               (selectedType === "land-beach" && p.type === "land" && isBeachfrontLand(p));
