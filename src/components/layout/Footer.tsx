@@ -23,7 +23,7 @@ export function Footer({ dict, lang }: FooterProps) {
     };
 
     return (
-        <footer className="bg-black text-white pt-10 lg:pt-20 pb-10 border-t border-white/10">
+        <footer className="bg-black text-white pt-10 lg:pt-20 pb-10 border-t border-white/10 min-h-[500px]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-8 lg:mb-16">
                     {/* Brand & Address */}
@@ -43,6 +43,9 @@ export function Footer({ dict, lang }: FooterProps) {
                                 width={140}
                                 height={140}
                                 className="w-1/2 h-auto object-contain"
+                                priority={true}
+                                fetchPriority="high"
+                                sizes="140px"
                             />
                             <Image
                                 src="/images/logo-pci-construction-gold.webp"
@@ -50,6 +53,9 @@ export function Footer({ dict, lang }: FooterProps) {
                                 width={140}
                                 height={140}
                                 className="w-1/2 h-auto object-contain"
+                                priority={true}
+                                fetchPriority="high"
+                                sizes="140px"
                             />
                         </Link>
                     </div>
