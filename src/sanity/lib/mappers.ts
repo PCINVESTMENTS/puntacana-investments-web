@@ -1,10 +1,11 @@
 import { BlogPost } from "@/data/blog";
 import { Property } from "@/data/properties";
+import { urlFor } from "@/sanity/lib/image";
 
 export function mapSanityPost(data: any): BlogPost {
     if (!data) return null as any;
 
-    let safeImageUrl = data.mainImage ? urlFor(data.mainImage).url() : (data.imageUrl || "");
+    let safeImageUrl = data.mainImage ? (typeof data.mainImage === 'string' ? data.mainImage : (data.mainImage.asset?._ref ? urlFor(data.mainImage).url() : (data.imageUrl || ""))) : (data.imageUrl || "");
     const slug = data.slug?.current || data.slug || "";
 
     const exactTitlesFr: Record<string, string> = {
@@ -68,7 +69,6 @@ export function mapSanityPost(data: any): BlogPost {
         relatedProperties: []
     };
 }
-import { urlFor } from "@/sanity/lib/image";
 
 export function normalizeLocation(locationVal: any, locationLabel?: string, title?: string, slug?: string): string {
     // Prioritize Miches categorization if "miches" is present in any field
