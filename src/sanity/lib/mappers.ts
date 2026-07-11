@@ -9,8 +9,14 @@ export function mapSanityPost(data: any): BlogPost {
 
     const exactTitlesFr: Record<string, string> = {
         "5-razones-invertir-punta-cana-2026": "5 Raisons Irréfutables d'Investir à Punta Cana en 2026",
-        "guia-comprar-planos": "Guide pour Acheter des Propriétés sur Plan",
+        "guia-comprar-planos": "Guide pour Acheter des Propriétés sur Plan à Punta Cana",
         "tendencias-diseno-tropical": "Tendances de Design d'Intérieur Tropical"
+    };
+
+    const exactTitlesEs: Record<string, string> = {
+        "5-razones-invertir-punta-cana-2026": "5 Razones Irrefutables para Invertir en Punta Cana en 2026",
+        "guia-comprar-planos": "Guía para Comprar Propiedades en Planos en Punta Cana",
+        "tendencias-diseno-tropical": "Tendencias de Diseño de Interiores Tropicales"
     };
 
     const exactExcerptsFr: Record<string, string> = {
@@ -26,7 +32,7 @@ export function mapSanityPost(data: any): BlogPost {
     };
 
     const titleEn = data.titleEn || data.title || "";
-    const titleEs = data.titleEs || data.title || "";
+    const titleEs = exactTitlesEs[slug] || data.titleEs || data.title || "";
     const titleFr = exactTitlesFr[slug] || titleEn;
 
     const excerptEn = data.excerptEn || "";
