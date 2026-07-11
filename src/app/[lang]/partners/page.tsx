@@ -67,7 +67,13 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
 
     return (
         <main className="min-h-screen bg-primary-black text-white selection:bg-luxury-gold selection:text-black">
-            <Navbar dict={dict} lang={lang} variant="solid" />
+            <Navbar 
+                dict={dict.nav} 
+                lang={lang} 
+                variant="solid" 
+                servicesList={dict.sections?.services?.items || []} 
+                propertyTypes={dict.properties?.types || {}} 
+            />
 
             {/* Hero Section */}
             <section className="relative pt-40 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black">
