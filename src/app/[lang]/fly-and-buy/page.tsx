@@ -38,6 +38,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
             : isEs
                 ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
                 : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments.",
+        keywords: isEs
+            ? ['Viajes de inversión Punta Cana', 'Tour inmobiliario Punta Cana', 'Asesoría personalizada propiedades República Dominicana']
+            : isFr
+            ? ["Voyage d'investissement Punta Cana", 'Tour immobilier République Dominicaine']
+            : ['Fly and buy property Punta Cana', 'Real estate investment tours Punta Cana', 'VIP property viewing Dominican Republic'],
         openGraph: {
             images: ['/images/fly-and-buy/premium.jpg'],
         }

@@ -12,6 +12,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     return {
         title: `${dict.sections.services.title} | Punta Cana Investments`,
         description: dict.sections.services.description,
+        keywords: lang === 'es'
+            ? ['Administración de propiedades Punta Cana', 'Asesoría legal inmobiliaria República Dominicana', 'Abogados inmobiliarios Punta Cana']
+            : lang === 'fr'
+            ? ['Gestion immobilière Punta Cana', 'Avocat immobilier Punta Cana', 'Conseil juridique immobilier République Dominicaine']
+            : ['Punta Cana property management', 'Punta Cana real estate lawyer', 'Dominican Republic real estate legal advice'],
         openGraph: {
             title: `${dict.sections.services.title} | Punta Cana Investments`,
             description: dict.sections.services.description,

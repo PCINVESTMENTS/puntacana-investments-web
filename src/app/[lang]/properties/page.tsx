@@ -25,6 +25,11 @@ export async function generateMetadata({
     return {
         title: dict.properties.title + ' | Punta Cana Investments',
         description: dict.properties.subtitle,
+        keywords: lang === 'es'
+            ? ['Propiedades en venta Punta Cana', 'Villas de lujo frente al mar Punta Cana', 'Apartamentos en Cap Cana', 'invertir en Cap Cana', 'Bávaro real estate', 'proyectos inmobiliarios en Macao', 'Casas en Cocotal', 'Apartamentos céntricos Punta Cana']
+            : lang === 'fr'
+            ? ['Appartements à vendre Punta Cana', 'Projets immobiliers Cap Cana', 'Acheter une villa à Punta Cana']
+            : ['Luxury villas for sale in Cap Cana', 'Beachfront condos for sale Punta Cana', 'Cap Cana real estate', 'luxury homes Cap Cana', 'Macao beach properties', 'Cocotal Golf & Country Club real estate', 'Downtown Punta Cana real estate', 'Properties for sale Punta Cana'],
         // Default robots allow index/follow
         robots: {
             index: true,

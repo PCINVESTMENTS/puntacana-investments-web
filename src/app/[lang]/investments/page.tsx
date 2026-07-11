@@ -14,6 +14,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     return {
         title: `${dict.nav.investments} | Punta Cana Investments`,
         description: dict.sections.investments.description,
+        keywords: lang === 'es'
+            ? ['Invertir en bienes raíces en República Dominicana', 'Proyectos rentables en Punta Cana', 'Comprar apartamento para Airbnb en Punta Cana', 'Proyectos en plano Punta Cana', 'Nuevos desarrollos inmobiliarios Punta Cana']
+            : lang === 'fr'
+            ? ['Projets immobiliers rentables', 'Acheter sur plan Punta Cana', 'Investissement locatif Punta Cana', 'Investir à Punta Cana']
+            : ['High ROI properties Punta Cana', 'Punta Cana Airbnb investment properties', 'Pre-construction condos Punta Cana', 'Off-plan properties for sale Punta Cana', 'New real estate developments Punta Cana'],
         openGraph: {
             title: `${dict.nav.investments} | Punta Cana Investments`,
             description: dict.sections.investments.description,
