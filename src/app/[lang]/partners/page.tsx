@@ -81,9 +81,16 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                 <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-luxury-gold rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
                 
                 <div className="relative z-10 max-w-7xl mx-auto text-center">
-                    <div className="inline-flex items-center justify-center space-x-2 mb-6 animate-fade-in-up">
-                        <FaGlobe className="text-luxury-gold text-2xl" />
-                        <span className="text-luxury-gold font-serif uppercase tracking-widest text-sm font-bold">Punta Cana Investments</span>
+                    <div className="flex justify-center mb-8 animate-fade-in-up">
+                        <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border border-luxury-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.15)]">
+                            <Image 
+                                src="/images/pci-golden-logo.jpg" 
+                                alt="Punta Cana Investments Global Network" 
+                                fill 
+                                className="object-cover" 
+                                priority
+                            />
+                        </div>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 tracking-wide animate-fade-in-up" style={{ animationDelay: '100ms' }}>
                         {t.heroTitle}
