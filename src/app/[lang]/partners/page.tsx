@@ -26,10 +26,49 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     return {
         title: titles[lang] || titles.en,
         description: descriptions[lang] || descriptions.en,
+        keywords: [
+            "Punta Cana real estate partners",
+            "global real estate alliances",
+            "inversiones inmobiliarias Punta Cana",
+            "asociados internacionales bienes raices",
+            "luxury real estate network"
+        ],
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+            },
+        },
+        alternates: {
+            canonical: `https://www.puntacanainvestmentsrd.com/${lang}/partners`,
+            languages: {
+                'es': 'https://www.puntacanainvestmentsrd.com/es/partners',
+                'en': 'https://www.puntacanainvestmentsrd.com/en/partners',
+                'fr': 'https://www.puntacanainvestmentsrd.com/fr/partners',
+            },
+        },
         openGraph: {
             title: titles[lang] || titles.en,
             description: descriptions[lang] || descriptions.en,
+            url: `https://www.puntacanainvestmentsrd.com/${lang}/partners`,
+            siteName: 'Punta Cana Investments',
+            images: [
+                {
+                    url: '/images/pci-golden-logo.jpg',
+                    width: 800,
+                    height: 800,
+                    alt: 'Punta Cana Investments Global Partners',
+                },
+            ],
             type: 'website',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: titles[lang] || titles.en,
+            description: descriptions[lang] || descriptions.en,
+            images: ['/images/pci-golden-logo.jpg'],
         },
     };
 }
@@ -76,13 +115,13 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
             />
 
             {/* Hero Section */}
-            <section className="relative pt-40 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black">
+            <section className="relative pt-32 pb-8 md:pt-40 md:pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-black">
                 <div className="absolute inset-0 bg-gradient-to-b from-primary-black via-zinc-900 to-primary-black opacity-90 z-0"></div>
                 <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-luxury-gold rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
                 
                 <div className="relative z-10 max-w-7xl mx-auto text-center">
-                    <div className="flex justify-center mb-8 animate-fade-in-up">
-                        <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border border-luxury-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.15)]">
+                    <div className="flex justify-center mb-4 md:mb-8 animate-fade-in-up">
+                        <div className="relative w-40 h-40 md:w-64 md:h-64 rounded-full overflow-hidden border border-luxury-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.15)]">
                             <Image 
                                 src="/images/pci-golden-logo.jpg" 
                                 alt="Punta Cana Investments Global Network" 
@@ -105,7 +144,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
             </section>
 
             {/* Partners Grid */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-950">
+            <section className="pt-8 pb-20 md:pt-12 px-4 sm:px-6 lg:px-8 bg-zinc-950">
                 <div className="max-w-7xl mx-auto">
                     {partners.length === 0 ? (
                         <div className="text-center py-20 border border-luxury-gold/20 rounded-xl bg-zinc-900/50">
