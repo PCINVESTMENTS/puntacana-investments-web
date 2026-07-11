@@ -35,6 +35,7 @@ const RadioGroupItem = React.forwardRef<HTMLInputElement, React.InputHTMLAttribu
                         className
                     )}
                     ref={ref}
+                    aria-label={props['aria-label'] || value}
                     {...props}
                 />
             </div>

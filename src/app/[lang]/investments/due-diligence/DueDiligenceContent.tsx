@@ -1,13 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { PersonaFisicaForm } from "@/components/forms/PersonaFisicaForm";
-import { PersonaJuridicaForm } from "@/components/forms/PersonaJuridicaForm";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { User, Building2, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+
+// Dynamically import heavy form components to reduce initial JS payload and CPU time
+const PersonaFisicaForm = dynamic(() => import("@/components/forms/PersonaFisicaForm").then(mod => mod.PersonaFisicaForm), {
+    loading: () => <div className="min-h-[500px] flex items-center justify-center text-luxury-gold"><div className="animate-pulse">Cargando formulario... / Loading form...</div></div>
+});
+
+const PersonaJuridicaForm = dynamic(() => import("@/components/forms/PersonaJuridicaForm").then(mod => mod.PersonaJuridicaForm), {
+    loading: () => <div className="min-h-[500px] flex items-center justify-center text-luxury-gold"><div className="animate-pulse">Cargando formulario... / Loading form...</div></div>
+});
 import { useParams } from "next/navigation";
 
 export default function DueDiligenceContent() {
@@ -40,8 +48,10 @@ export default function DueDiligenceContent() {
                                 src="/form-logo.jpg"
                                 alt="Punta Cana Investments"
                                 fill
+                                sizes="256px"
                                 className="object-contain"
                                 priority
+                                fetchPriority="high"
                             />
                         </div>
                     </div>
