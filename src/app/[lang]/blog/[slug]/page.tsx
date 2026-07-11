@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     let post: any = null;
 
     const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
-    const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical', 'guia-invertir-seguro-punta-cana-evitar-estafas'];
+    const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical'];
     const shouldForceLocal = FORCE_LOCAL_SLUGS.includes(slug);
 
     if (rawPost && !shouldForceLocal) {
@@ -104,7 +104,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
 
     // FIX: Force local override for specific posts with issues or manual updates that are not in Sanity yet
-    const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical', 'guia-invertir-seguro-punta-cana-evitar-estafas'];
+    const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical'];
     const shouldForceLocal = FORCE_LOCAL_SLUGS.includes(slug);
 
     const getVal = (obj: any, key: 'es' | 'en' | 'fr') => {
