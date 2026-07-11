@@ -116,7 +116,9 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                         alt="Investments in Punta Cana"
                         fill
                         className="object-cover"
-                        priority
+                        priority={true}
+                        fetchPriority="high"
+                        sizes="100vw"
                     />
                     {/* Subtle overlay for text readability only at the bottom */}
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-black/80 via-transparent to-transparent"></div>
@@ -185,6 +187,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                 src="/images/og-home-luxury.webp"
                                 alt="Financial Growth"
                                 fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
                                 className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute bottom-8 left-8 z-20 bg-black/80 p-6 border-l-4 border-luxury-gold backdrop-blur-sm max-w-xs">
