@@ -1,6 +1,19 @@
 /** Revision: 2024-02-17-02 */
 import { defineQuery } from "next-sanity";
 
+export const PARTNERS_QUERY = defineQuery(`
+  *[_type == "partner" && !(_id in path("drafts.**"))] | order(order asc) {
+    _id,
+    name,
+    "logoUrl": logo.asset->url,
+    description_es,
+    description_en,
+    description_fr,
+    website_url,
+    order
+  }
+`);
+
 export const PROPERTIES_QUERY = defineQuery(`
   *[_type == "property" && !(_id in path("drafts.**")) && status != "draft"] {
     _id,

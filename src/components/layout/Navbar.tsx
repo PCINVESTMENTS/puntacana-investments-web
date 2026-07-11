@@ -114,7 +114,15 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 href: `/${lang}/services/${s.slug}`
             })) : []
         },
-        { name: dict.about, hasDropdown: false, href: `/${lang}#about` },
+        {
+            name: dict.about,
+            hasDropdown: true,
+            href: `/${lang}#about`,
+            subItems: [
+                { label: lang === 'es' ? 'Nuestra Empresa' : lang === 'fr' ? 'Notre Entreprise' : 'Our Company', href: `/${lang}#about` },
+                { label: lang === 'es' ? 'Asociados y Partners' : lang === 'fr' ? 'Partenaires Associés' : 'Partners & Associates', href: `/${lang}/partners` }
+            ]
+        },
         { name: dict.contact, hasDropdown: false, href: `/${lang}/contact` },
         { name: dict.blog, hasDropdown: false, href: `/${lang}/blog` },
     ];
