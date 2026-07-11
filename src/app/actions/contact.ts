@@ -1,6 +1,7 @@
 'use server'
 
 import { Resend } from 'resend';
+import { createHubspotContact } from '@/lib/hubspot';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -87,6 +88,21 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
             }
             console.log("Lead saved to Backend successfully");
+
+            // HubSpot API Integration (Background sync)
+            try {
+                await createHubspotContact({
+                    email: email,
+                    firstname: name.split(' ')[0],
+                    lastname: name.split(' ').slice(1).join(' '),
+                    phone: phone,
+                    message: message,
+                    form_source: "Website Contact Form"
+                });
+            } catch (hsError) {
+                console.error("HubSpot sync failed in contact form:", hsError);
+            }
+            
         } catch (backendError) {
             console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
             // We forcefully return the error to the frontend so it DOES NOT show a green checkmark

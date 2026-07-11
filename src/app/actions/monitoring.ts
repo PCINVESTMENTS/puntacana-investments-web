@@ -1,6 +1,7 @@
 'use server'
 
 import { Resend } from 'resend';
+import { createHubspotContact } from '@/lib/hubspot';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -77,6 +78,22 @@ Fecha Entrega: ${date || 'N/A'}`;
                 console.error("CRITICAL: Backend rejected the Lead payload:", errText);
                 throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
             }
+
+            // HubSpot API Integration (Background sync)
+            try {
+                await createHubspotContact({
+                    email: email,
+                    firstname: name.split(' ')[0],
+                    lastname: name.split(' ').slice(1).join(' '),
+                    phone: phone,
+                    message: combinedMessage,
+                    budget: investment,
+                    form_source: "Website Monitoring Form"
+                });
+            } catch (hsError) {
+                console.error("HubSpot sync failed in monitoring form:", hsError);
+            }
+
         } catch (backendError) {
             console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
             return {

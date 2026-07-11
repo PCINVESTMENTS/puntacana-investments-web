@@ -1,6 +1,7 @@
 'use server'
 
 import { Resend } from 'resend';
+import { createHubspotContact } from '@/lib/hubspot';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -65,6 +66,21 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             const data = await res.json();
             sequenceNumber = data.sequence_number || sequenceNumber;
             console.log(`Founder Lead saved successfully: ${sequenceNumber}`);
+
+            // HubSpot API Integration (Background sync)
+            try {
+                await createHubspotContact({
+                    email: email,
+                    firstname: name.split(' ')[0],
+                    lastname: name.split(' ').slice(1).join(' '),
+                    phone: phone,
+                    message: `Modalidad: ${modality} | ${message}`,
+                    form_source: "Founder Investor Form"
+                });
+            } catch (hsError) {
+                console.error("HubSpot sync failed in founder form:", hsError);
+            }
+
         } catch (backendError) {
             console.error("Cannot reach Founder Lead API:", backendError);
             return {

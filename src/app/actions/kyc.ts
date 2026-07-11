@@ -3,6 +3,7 @@
 import { client } from '@/sanity/lib/client'
 import { v4 as uuidv4 } from 'uuid'
 import { Resend } from 'resend'
+import { createHubspotContact } from '@/lib/hubspot'
 
 // We need a client with a write token
 const writeClient = client.withConfig({
@@ -238,6 +239,20 @@ export async function submitKYCFromClient(formData: FormData) {
             } catch (e) {
                 console.error("Resend Client notification failed:", e)
             }
+        }
+
+        // HubSpot API Integration (Background sync)
+        try {
+            await createHubspotContact({
+                email: clientEmail || '',
+                firstname: isFisica ? (payload.nombres || '').split(' ')[0] : (payload.rep_nombres || '').split(' ')[0],
+                lastname: isFisica ? payload.apellidos || '' : payload.rep_apellidos || '',
+                phone: isFisica ? payload.tel_celular || payload.tel_residencia : payload.rep_telefono,
+                message: `KYC Enviado: ${type}`,
+                form_source: "KYC Form"
+            });
+        } catch (hsError) {
+            console.error("HubSpot sync failed in KYC form:", hsError);
         }
 
         return { success: true }

@@ -1,6 +1,7 @@
 'use server'
 
 import { Resend } from 'resend';
+import { createHubspotContact } from '@/lib/hubspot';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -52,6 +53,20 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         // Cortocircuito de éxito inmediato si el servidor responde 200 o 201
         if (res.ok || res.status === 201 || res.status === 200) {
             
+            // HubSpot API Integration (Background sync)
+            try {
+                await createHubspotContact({
+                    email: email,
+                    firstname: name.split(' ')[0],
+                    lastname: name.split(' ').slice(1).join(' '),
+                    phone: phone,
+                    message: tripData.notes,
+                    form_source: "Fly & Buy Form"
+                });
+            } catch (hsError) {
+                console.error("HubSpot sync failed in Fly&Buy form:", hsError);
+            }
+
             // Send the exact same Auto-Responder via Resend instead of Django SMTP
             try {
                 const firstName = name.split(' ')[0] || 'Cliente';
