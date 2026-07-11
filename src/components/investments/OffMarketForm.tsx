@@ -202,33 +202,33 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                 <div className={`space-y-8 ${activeTab === "oportunidad" ? "block" : "hidden"}`}>
                     <div>
                         <label className={labelClassName}>{t.fields.budget.label}</label>
-                        <select name="opp_budget" required={activeTab === "oportunidad"} className={selectClassName}>
+                        <select aria-label={t.fields.budget.label} name="opp_budget" required={activeTab === "oportunidad"} className={selectClassName}>
                             <option value="">Seleccione / Select</option>
                             {budgets.map((b, i) => <option key={i} value={b}>{b}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.opportunityType.label}</label>
-                        <select name="opp_type" required={activeTab === "oportunidad"} className={selectClassName}>
+                        <select aria-label={t.fields.opportunityType.label} name="opp_type" required={activeTab === "oportunidad"} className={selectClassName}>
                             <option value="">Seleccione / Select</option>
                             {t.fields.opportunityType.options.map((opt: string, i: number) => <option key={i} value={i === 0 ? "" : opt}>{opt}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.oppPhysicalState.label}</label>
-                        <select name="opp_state" required={activeTab === "oportunidad"} className={selectClassName}>
+                        <select aria-label={t.fields.oppPhysicalState.label} name="opp_state" required={activeTab === "oportunidad"} className={selectClassName}>
                             {t.fields.oppPhysicalState.options.map((s: string, i: number) => <option key={i} value={i === 0 ? "" : s}>{s}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.oppDiscount.label}</label>
-                        <select name="opp_discount" required={activeTab === "oportunidad"} className={selectClassName}>
+                        <select aria-label={t.fields.oppDiscount.label} name="opp_discount" required={activeTab === "oportunidad"} className={selectClassName}>
                             {t.fields.oppDiscount.options.map((d: string, i: number) => <option key={i} value={i === 0 ? "" : d}>{d}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.oppStrategy.label}</label>
-                        <select name="opp_strategy" required={activeTab === "oportunidad"} className={selectClassName}>
+                        <select aria-label={t.fields.oppStrategy.label} name="opp_strategy" required={activeTab === "oportunidad"} className={selectClassName}>
                             {t.fields.oppStrategy.options.map((s: string, i: number) => <option key={i} value={i === 0 ? "" : s}>{s}</option>)}
                         </select>
                     </div>
@@ -237,32 +237,32 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                 <div className={`space-y-8 ${activeTab === "hoteles" ? "block" : "hidden"}`}>
                     <div>
                         <label className={labelClassName}>{t.fields.hotelBudgetLabel}</label>
-                        <select name="hotel_budget" required={activeTab === "hoteles"} className={selectClassName}>
+                        <select aria-label={t.fields.hotelBudgetLabel} name="hotel_budget" required={activeTab === "hoteles"} className={selectClassName}>
                             <option value="">Seleccione / Select</option>
                             {budgets.map((b, i) => <option key={i} value={b}>{b}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.hotelEnvironment.label}</label>
-                        <select name="hotel_environment" required={activeTab === "hoteles"} className={selectClassName}>
+                        <select aria-label={t.fields.hotelEnvironment.label} name="hotel_environment" required={activeTab === "hoteles"} className={selectClassName}>
                             {t.fields.hotelEnvironment.options.map((e: string, i: number) => <option key={i} value={i === 0 ? "" : e}>{e}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.hotelRooms.label}</label>
-                        <select name="hotel_rooms" required={activeTab === "hoteles"} className={selectClassName}>
+                        <select aria-label={t.fields.hotelRooms.label} name="hotel_rooms" required={activeTab === "hoteles"} className={selectClassName}>
                             {t.fields.hotelRooms.options.map((r: string, i: number) => <option key={i} value={i === 0 ? "" : r}>{r}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.hotelOperator.label}</label>
-                        <select name="hotel_operator" required={activeTab === "hoteles"} className={selectClassName}>
+                        <select aria-label={t.fields.hotelOperator.label} name="hotel_operator" required={activeTab === "hoteles"} className={selectClassName}>
                             {t.fields.hotelOperator.options.map((o: string, i: number) => <option key={i} value={i === 0 ? "" : o}>{o}</option>)}
                         </select>
                     </div>
                     <div>
                         <label className={labelClassName}>{t.fields.hotelObjective.label}</label>
-                        <select name="hotel_objective" required={activeTab === "hoteles"} className={selectClassName}>
+                        <select aria-label={t.fields.hotelObjective.label} name="hotel_objective" required={activeTab === "hoteles"} className={selectClassName}>
                             {t.fields.hotelObjective.options.map((o: string, i: number) => <option key={i} value={i === 0 ? "" : o}>{o}</option>)}
                         </select>
                     </div>

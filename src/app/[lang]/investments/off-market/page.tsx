@@ -82,7 +82,7 @@ export default async function OffMarketPage({
                         fill
                         sizes="100vw"
                         priority
-                        quality={90}
+                        fetchPriority="high"
                         className="object-cover object-center"
                     />
                 </div>
@@ -139,11 +139,12 @@ export default async function OffMarketPage({
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
-                            <img 
+                            <Image 
                                 src="/images/off-market-auction-v4.jpg" 
                                 alt="Market Value vs Auction Price Analysis" 
-                                className="absolute inset-0 w-full h-full object-cover"
-                                loading="lazy"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="object-cover"
                             />
                             <div className="absolute inset-0 bg-black/20"></div>
                         </div>
