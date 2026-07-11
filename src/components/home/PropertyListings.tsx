@@ -527,7 +527,7 @@ function PropertyListingsContent({
 
 export default function PropertyListings(props: PropertyListingsProps) {
     return (
-        <Suspense fallback={<div className="text-white text-center py-20">Loading...</div>}>
+        <Suspense fallback={<div className="w-full min-h-[150vh] bg-primary-black flex items-center justify-center text-luxury-gold/50 font-serif text-xl">Cargando propiedades...</div>}>
             <PropertyListingsContent {...props} />
         </Suspense>
     );
