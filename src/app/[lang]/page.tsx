@@ -38,16 +38,16 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
   const title = lang === 'en'
-    ? "Punta Cana Investments | Luxury Real Estate & Exclusive Properties"
+    ? "Punta Cana Investments | Punta Cana Real Estate & Luxury Investments"
     : lang === 'fr'
-    ? "Punta Cana Investments | Immobilier de Luxe & Propriétés Exclusives"
-    : "Punta Cana Investments | Inmobiliaria de Lujo y Bienes Raíces";
+    ? "Punta Cana Investments | Immobilier de Luxe et Investissement à Punta Cana"
+    : "Punta Cana Investments | Inversiones Inmobiliarias Punta Cana y Bienes Raíces";
 
   const description = lang === 'en'
-    ? "Discover exclusive luxury villas, condos for sale, and real estate investment opportunities in Punta Cana, Bavaro, and Cap Cana, Dominican Republic."
+    ? "Discover exclusive luxury villas, condos for sale, and high ROI real estate investment opportunities in Punta Cana, Bavaro, and Cap Cana, Dominican Republic."
     : lang === 'fr'
-    ? "Découvrez des villas de luxe exclusives, des appartements à vendre et des opportunités d'investissement immobilier à Punta Cana, Bavaro et Cap Cana, en République Dominicaine."
-    : "Descubre exclusivas villas de lujo, apartamentos en venta, y oportunidades de inversión en bienes raíces en Punta Cana, Bávaro, y Cap Cana, República Dominicana.";
+    ? "Découvrez des villas de luxe exclusives, des appartements à vendre et des opportunités d'investissement immobilier à fort retour sur investissement à Punta Cana, Bavaro et Cap Cana."
+    : "Descubre exclusivas villas de lujo, apartamentos en venta, y oportunidades de inversión en bienes raíces con alto ROI en Punta Cana, Bávaro, y Cap Cana, República Dominicana.";
 
   return {
     title,

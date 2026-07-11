@@ -11,17 +11,29 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
 
+    const title = lang === 'en'
+        ? "Invest in Punta Cana Real Estate | High ROI & Pre-Construction"
+        : lang === 'fr'
+        ? "Investir dans l'Immobilier à Punta Cana | Fort ROI et Sur Plan"
+        : "Invertir en Bienes Raíces en República Dominicana | Alto ROI";
+
+    const description = lang === 'en'
+        ? "Discover the best real estate investment opportunities in Punta Cana. High ROI properties, pre-construction condos, and Airbnb investment models."
+        : lang === 'fr'
+        ? "Découvrez les meilleures opportunités d'investissement immobilier à Punta Cana. Propriétés à fort retour sur investissement, appartements sur plan et modèles d'investissement Airbnb."
+        : "Descubre las mejores oportunidades de inversión en bienes raíces en Punta Cana. Propiedades de alto ROI, proyectos en plano y modelos de inversión para Airbnb.";
+
     return {
-        title: `${dict.nav.investments} | Punta Cana Investments`,
-        description: dict.sections.investments.description,
+        title: `${title} | Punta Cana Investments`,
+        description,
         keywords: lang === 'es'
             ? ['Invertir en bienes raíces en República Dominicana', 'Proyectos rentables en Punta Cana', 'Comprar apartamento para Airbnb en Punta Cana', 'Proyectos en plano Punta Cana', 'Nuevos desarrollos inmobiliarios Punta Cana']
             : lang === 'fr'
             ? ['Projets immobiliers rentables', 'Acheter sur plan Punta Cana', 'Investissement locatif Punta Cana', 'Investir à Punta Cana']
             : ['High ROI properties Punta Cana', 'Punta Cana Airbnb investment properties', 'Pre-construction condos Punta Cana', 'Off-plan properties for sale Punta Cana', 'New real estate developments Punta Cana'],
         openGraph: {
-            title: `${dict.nav.investments} | Punta Cana Investments`,
-            description: dict.sections.investments.description,
+            title: `${title} | Punta Cana Investments`,
+            description,
             images: [
                 {
                     url: 'https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=6',
@@ -34,8 +46,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         },
         twitter: {
             card: 'summary_large_image',
-            title: `${dict.nav.investments} | Punta Cana Investments`,
-            description: dict.sections.investments.description,
+            title: `${title} | Punta Cana Investments`,
+            description,
             images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=6'],
         },
     };

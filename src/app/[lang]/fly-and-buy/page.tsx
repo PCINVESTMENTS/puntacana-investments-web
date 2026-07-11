@@ -31,19 +31,29 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     const isEs = lang === 'es';
     const isFr = lang === 'fr';
 
+    const title = isFr 
+        ? "Fly & Buy: Tour Immobilier et Voyage d'Investissement à Punta Cana"
+        : isEs 
+        ? "Fly & Buy: Tour Inmobiliario y Viajes de Inversión en Punta Cana"
+        : "Fly & Buy: Real Estate Investment Tours in Punta Cana";
+
+    const description = isFr
+        ? "Réservez votre voyage d'investissement immobilier à Punta Cana. Visitez les meilleures propriétés avec notre service VIP Fly & Buy. Votre billet d'avion peut être remboursé!"
+        : isEs
+        ? "Reserva tu viaje de inversión inmobiliaria en Punta Cana. Visita las mejores propiedades con nuestro servicio VIP Fly & Buy. ¡Tu boleto aéreo puede ser reembolsado!"
+        : "Book your real estate investment trip to Punta Cana. Visit the best properties with our VIP Fly & Buy service. Your flight ticket can be reimbursed!";
+
     return {
-        title: `Fly & Buy | Punta Cana Investments`,
-        description: isFr
-            ? "Fly & Buy n'est pas juste un voyage, c'est une décision intelligente. Venez, confirmez et achetez avec Punta Cana Investments."
-            : isEs
-                ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
-                : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments.",
+        title: `${title} | Punta Cana Investments`,
+        description,
         keywords: isEs
             ? ['Viajes de inversión Punta Cana', 'Tour inmobiliario Punta Cana', 'Asesoría personalizada propiedades República Dominicana']
             : isFr
             ? ["Voyage d'investissement Punta Cana", 'Tour immobilier République Dominicaine']
             : ['Fly and buy property Punta Cana', 'Real estate investment tours Punta Cana', 'VIP property viewing Dominican Republic'],
         openGraph: {
+            title: `${title} | Punta Cana Investments`,
+            description,
             images: ['/images/fly-and-buy/premium.jpg'],
         }
     };

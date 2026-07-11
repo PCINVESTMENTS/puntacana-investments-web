@@ -22,9 +22,21 @@ export async function generateMetadata({
     const dict = await getDictionary(lang);
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
 
+    const title = lang === 'en'
+        ? "Properties for Sale in Punta Cana | Luxury Villas & Condos"
+        : lang === 'fr'
+        ? "Propriétés à Vendre à Punta Cana | Villas de Luxe et Appartements"
+        : "Propiedades en Venta en Punta Cana | Villas y Apartamentos de Lujo";
+
+    const description = lang === 'en'
+        ? "Explore exclusive properties for sale in Punta Cana, including luxury beachfront villas in Cap Cana, modern condos in Bavaro, and Macao beach real estate."
+        : lang === 'fr'
+        ? "Explorez des propriétés exclusives à vendre à Punta Cana, y compris des villas de luxe en bord de mer à Cap Cana, des appartements modernes à Bavaro et l'immobilier à Macao."
+        : "Explora propiedades exclusivas en venta en Punta Cana, incluyendo villas de lujo frente al mar en Cap Cana, apartamentos modernos en Bávaro y bienes raíces en Macao.";
+
     return {
-        title: dict.properties.title + ' | Punta Cana Investments',
-        description: dict.properties.subtitle,
+        title: `${title} | Punta Cana Investments`,
+        description,
         keywords: lang === 'es'
             ? ['Propiedades en venta Punta Cana', 'Villas de lujo frente al mar Punta Cana', 'Apartamentos en Cap Cana', 'invertir en Cap Cana', 'Bávaro real estate', 'proyectos inmobiliarios en Macao', 'Casas en Cocotal', 'Apartamentos céntricos Punta Cana']
             : lang === 'fr'

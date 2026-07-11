@@ -9,17 +9,29 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/services`;
 
+    const title = lang === 'en'
+        ? "Real Estate Legal Advice & Property Management in Punta Cana"
+        : lang === 'fr'
+        ? "Conseil Juridique Immobilier et Gestion de Propriétés à Punta Cana"
+        : "Asesoría Legal Inmobiliaria y Administración de Propiedades en Punta Cana";
+
+    const description = lang === 'en'
+        ? "Comprehensive real estate services in Punta Cana. Expert property management, real estate lawyers, and legal advice for a secure investment in the Dominican Republic."
+        : lang === 'fr'
+        ? "Services immobiliers complets à Punta Cana. Gestion de propriétés, avocats spécialisés en immobilier et conseils juridiques pour un investissement sûr."
+        : "Servicios inmobiliarios integrales en Punta Cana. Administración de propiedades, abogados inmobiliarios y asesoría legal para asegurar tu inversión en la República Dominicana.";
+
     return {
-        title: `${dict.sections.services.title} | Punta Cana Investments`,
-        description: dict.sections.services.description,
+        title: `${title} | Punta Cana Investments`,
+        description,
         keywords: lang === 'es'
             ? ['Administración de propiedades Punta Cana', 'Asesoría legal inmobiliaria República Dominicana', 'Abogados inmobiliarios Punta Cana']
             : lang === 'fr'
             ? ['Gestion immobilière Punta Cana', 'Avocat immobilier Punta Cana', 'Conseil juridique immobilier République Dominicaine']
             : ['Punta Cana property management', 'Punta Cana real estate lawyer', 'Dominican Republic real estate legal advice'],
         openGraph: {
-            title: `${dict.sections.services.title} | Punta Cana Investments`,
-            description: dict.sections.services.description,
+            title: `${title} | Punta Cana Investments`,
+            description,
             url: canonicalUrl,
             images: [
                 {
