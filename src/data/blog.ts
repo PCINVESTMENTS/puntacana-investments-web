@@ -17,7 +17,10 @@ export interface BlogPost {
     authorBio: { es: string; en: string; fr?: string };
     authorImage: string;
     content: BlogSection[] | { es: any; en: any; fr?: any }; // Support both legacy and Sanity PortableText
+    rawContent?: any;
     relatedProperties?: number[]; // IDs of related properties
+    publishedAt?: string;
+    seoKeywords?: { es: string; en: string; fr: string; } | null;
 }
 
 export const blogPosts: BlogPost[] = [

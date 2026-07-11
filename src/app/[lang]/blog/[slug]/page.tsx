@@ -122,7 +122,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         if (localPost) {
             // Transform local content to simulate PortableText structure
             const transformContent = (l: 'es' | 'en' | 'fr') => {
-                const targetLang = (l === 'fr' && !localPost.content[l]) ? 'en' : l;
+                const targetLang = (l === 'fr' && !(localPost.content as any)[l]) ? 'en' : l;
                 if (Array.isArray(localPost.content)) {
                     return localPost.content.flatMap((section: any) => {
                         const blocks = [];
@@ -429,6 +429,36 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             <Footer dict={dict} lang={lang} />
+            
+            {/* Structured Data (JSON-LD) for SEO */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Article",
+                        "headline": getVal(post.title, lang),
+                        "image": [
+                            post.mainImage || `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com'}/images/og-home-luxury.webp`
+                        ],
+                        "datePublished": post.publishedAt || new Date().toISOString(),
+                        "author": [{
+                            "@type": "Person",
+                            "name": post.author,
+                            "url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com'}/${lang}#about`
+                        }],
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "Punta Cana Investments",
+                            "logo": {
+                                "@type": "ImageObject",
+                                "url": `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com'}/images/og-home-luxury.webp`
+                            }
+                        },
+                        "description": getVal(post.excerpt, lang)
+                    })
+                }}
+            />
         </main>
     );
 }

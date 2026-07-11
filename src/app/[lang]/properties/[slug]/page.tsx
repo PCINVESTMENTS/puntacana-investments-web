@@ -614,6 +614,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
             </div>
 
             <Footer dict={dict} lang={lang} />
+            
+            {/* Structured Data (JSON-LD) for SEO */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
         </main>
     );
 }

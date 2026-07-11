@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { client } from "@/sanity/lib/client";
-import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
-import { mapSanityProperty } from "@/sanity/lib/mappers";
+import { PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
+import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
+import { BlogPost, blogPosts as localPosts } from "@/data/blog";
 
 // In ISR mode, this will run at build time and revalidate every hour
 export const revalidate = 3600;
@@ -42,6 +43,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         return p;
     });
     const allProperties = [...unitedProperties, ...Array.from(localMap.values())];
+
+    // 2.5. Fetch Blog Posts from Sanity & Local
+    const rawPosts = await client.fetch(POSTS_QUERY);
+    const fetchedPosts: BlogPost[] = rawPosts.map(mapSanityPost);
+
+    // Merge logic for posts
+    const localPostMap = new Map(localPosts.map(p => [p.slug, p]));
+    const unitedPosts = fetchedPosts.map(p => {
+        const local = localPostMap.get(p.slug);
+        if (local) {
+            localPostMap.delete(p.slug);
+            return { ...local, ...p }; // Sanity takes precedence
+        }
+        return p;
+    });
+    const allPosts = [...unitedPosts, ...Array.from(localPostMap.values())];
 
     // 3. Generate Entries for Languages (ES / EN / FR)
     const languages = ['es', 'en', 'fr'];
@@ -85,6 +102,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 lastModified: new Date(), // Ideal if we had updatedAt from Sanity
                 changeFrequency: 'daily',
                 priority: 0.8,
+                alternates: {
+                    languages: alternateLanguages
+                }
+            });
+        });
+    });
+
+    // Blog Post Pages
+    allPosts.forEach(post => {
+        languages.forEach(lang => {
+            const alternateLanguages: Record<string, string> = {
+                'x-default': `${baseUrl}/en/blog/${post.slug}`,
+            };
+            languages.forEach(l => {
+                alternateLanguages[l] = `${baseUrl}/${l}/blog/${post.slug}`;
+            });
+
+            sitemapEntries.push({
+                url: `${baseUrl}/${lang}/blog/${post.slug}`,
+                lastModified: new Date(post.publishedAt || new Date()),
+                changeFrequency: 'weekly',
+                priority: 0.7,
                 alternates: {
                     languages: alternateLanguages
                 }
