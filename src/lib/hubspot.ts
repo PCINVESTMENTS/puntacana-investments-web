@@ -48,20 +48,78 @@ export async function createHubspotContact(data: {
             body: JSON.stringify({ properties }),
         });
 
+        let contactId = null;
+
         if (response.status === 409) {
-            console.log(`HubSpot: Contact with email ${data.email} already exists (409).`);
-            return { success: true, existing: true };
-        }
-
-        if (!response.ok) {
             const errorData = await response.json().catch(() => null);
-            console.error('HubSpot API Error:', response.status, errorData);
+            console.log(`HubSpot: Contact with email ${data.email} already exists (409).`);
+            
+            // Extract existing ID from message "Contact already exists. Existing ID: 12345"
+            if (errorData && errorData.message) {
+                const match = errorData.message.match(/Existing ID: (\d+)/);
+                if (match && match[1]) {
+                    contactId = match[1];
+                }
+            }
+        } else if (!response.ok) {
+            const errorData = await response.json().catch(() => null);
+            console.error('HubSpot API Error (Contact):', response.status, errorData);
             return { success: false, status: response.status, error: errorData };
+        } else {
+            const json = await response.json();
+            contactId = json.id;
+            console.log(`HubSpot: Successfully created contact ${contactId}`);
         }
 
-        const json = await response.json();
-        console.log(`HubSpot: Successfully created contact ${json.id}`);
-        return { success: true, data: json };
+        // 2. Create Deal and associate with Contact if we have the Contact ID
+        if (contactId) {
+            const dealUrl = 'https://api.hubapi.com/crm/v3/objects/deals';
+            
+            // Clean budget string to get numbers only for the amount, or default to 0
+            const cleanAmount = data.budget ? data.budget.replace(/[^0-9]/g, '') : "0";
+
+            const dealPayload = {
+                properties: {
+                    dealname: `Oportunidad: ${data.firstname} ${data.lastname || ''}`.trim(),
+                    pipeline: "default", // Pipeline Inmobiliario PCI
+                    dealstage: "1349257301", // "1. Lead Nuevo"
+                    amount: cleanAmount
+                },
+                associations: [
+                    {
+                        to: { id: contactId },
+                        types: [
+                            {
+                                associationCategory: "HUBSPOT_DEFINED",
+                                associationTypeId: 3 // Deal-to-Contact
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            const dealRes = await fetch(dealUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(dealPayload),
+            });
+
+            if (!dealRes.ok) {
+                const dealErr = await dealRes.json().catch(() => null);
+                console.error('HubSpot API Error (Deal):', dealRes.status, dealErr);
+                // We still return true because contact was handled, but deal failed
+                return { success: true, contactId, dealCreated: false, dealError: dealErr };
+            }
+
+            const dealJson = await dealRes.json();
+            console.log(`HubSpot: Successfully created Deal ${dealJson.id}`);
+            return { success: true, contactId, dealId: dealJson.id };
+        }
+
+        return { success: true, contactId };
     } catch (error) {
         console.error('Failed to send to HubSpot:', error);
         return { success: false, error };
