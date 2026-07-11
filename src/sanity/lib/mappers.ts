@@ -60,7 +60,7 @@ export function mapSanityPost(data: any): BlogPost {
         author: data.author || "Admin",
         authorRole: data.authorRole || { es: "Autor", en: "Author", fr: "Auteur" },
         authorBio: data.authorBio || { es: "", en: "", fr: "" },
-        authorImage: data.authorImage ? urlFor(data.authorImage).url() : "/images/logo-footer-v2.png",
+        authorImage: data.authorImage ? (typeof data.authorImage === 'string' ? data.authorImage : (data.authorImage.asset?._ref ? urlFor(data.authorImage).url() : "/images/logo-footer-v2.png")) : "/images/logo-footer-v2.png",
         content: {
             en: data.contentEn || [],
             es: data.contentEs || [],
