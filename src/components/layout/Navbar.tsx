@@ -97,13 +97,9 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
             subItems: [
                 { label: dict.investments, href: `/${lang}/investments` },
                 { label: dict.offMarket || "Off-Market", href: `/${lang}/investments/off-market` },
-                { label: dict.dueDiligence, href: `/${lang}/investments/due-diligence` }
+                { label: dict.dueDiligence, href: `/${lang}/investments/due-diligence` },
+                { label: dict.flyAndBuy, href: `/${lang}/fly-and-buy` }
             ]
-        },
-        {
-            name: dict.flyAndBuy,
-            hasDropdown: false,
-            href: `/${lang}/fly-and-buy`
         },
         {
             name: dict.services,
@@ -114,14 +110,15 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 href: `/${lang}/services/${s.slug}`
             })) : []
         },
+        { 
+            name: dict.about, 
+            hasDropdown: false, 
+            href: `/${lang}#about` 
+        },
         {
-            name: dict.about,
-            hasDropdown: true,
-            href: `/${lang}#about`,
-            subItems: [
-                { label: lang === 'es' ? 'Nuestra Empresa' : lang === 'fr' ? 'Notre Entreprise' : 'Our Company', href: `/${lang}#about` },
-                { label: lang === 'es' ? 'Asociados y Partners' : lang === 'fr' ? 'Partenaires Associés' : 'Partners & Associates', href: `/${lang}/partners` }
-            ]
+            name: lang === 'es' ? 'Partners' : 'Partners',
+            hasDropdown: false,
+            href: `/${lang}/partners`
         },
         { name: dict.contact, hasDropdown: false, href: `/${lang}/contact` },
         { name: dict.blog, hasDropdown: false, href: `/${lang}/blog` },
