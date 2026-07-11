@@ -147,9 +147,9 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                     <FaFileContract className="text-3xl text-luxury-gold" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-serif font-bold text-white mb-3">
+                                    <h2 className="text-2xl font-serif font-bold text-white mb-3">
                                         {lang === 'en' ? "Transparency & Security" : lang === 'fr' ? "Transparence & Sécurité" : "Transparencia y Seguridad"}
-                                    </h3>
+                                    </h2>
                                     <p className="text-gray-400 leading-relaxed">
                                         {lang === 'en'
                                             ? "We ensure clear processes, well-structured contracts, and complete legal accompaniment. We guarantee that every transaction complies with Dominican Republic legal standards, protecting our investors' interests."
@@ -166,9 +166,9 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                     <FaChartLine className="text-3xl text-luxury-gold" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-serif font-bold text-white mb-3">
+                                    <h2 className="text-2xl font-serif font-bold text-white mb-3">
                                         {lang === 'en' ? "Innovation & Profitability" : lang === 'fr' ? "Innovation & Rentabilité" : "Innovación y Rentabilidad"}
-                                    </h3>
+                                    </h2>
                                     <p className="text-gray-400 leading-relaxed">
                                         {lang === 'en'
                                             ? "We integrate modern tools, data analysis, and advanced financial models to offer strategic investments with superior returns. We create innovative proposals that allow our investors to diversify and maximize their returns."
