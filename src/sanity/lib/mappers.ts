@@ -10,13 +10,15 @@ export function mapSanityPost(data: any): BlogPost {
     const exactTitlesFr: Record<string, string> = {
         "5-razones-invertir-punta-cana-2026": "5 Raisons Irréfutables d'Investir à Punta Cana en 2026",
         "guia-comprar-planos": "Guide pour Acheter des Propriétés sur Plan à Punta Cana",
-        "tendencias-diseno-tropical": "Tendances de Design d'Intérieur Tropical"
+        "tendencias-diseno-tropical": "Tendances de Design d'Intérieur Tropical",
+        "guia-invertir-seguro-punta-cana-evitar-estafas": "Guide de Maître pour Investir à Punta Cana: Comment Protéger votre Capital et Éviter les Arnaques"
     };
 
     const exactTitlesEs: Record<string, string> = {
         "5-razones-invertir-punta-cana-2026": "5 Razones Irrefutables para Invertir en Punta Cana en 2026",
         "guia-comprar-planos": "Guía para Comprar Propiedades en Planos en Punta Cana",
-        "tendencias-diseno-tropical": "Tendencias de Diseño de Interiores Tropicales"
+        "tendencias-diseno-tropical": "Tendencias de Diseño de Interiores Tropicales",
+        "guia-invertir-seguro-punta-cana-evitar-estafas": "Guía Maestra para Invertir en Punta Cana: Cómo Blindar tu Capital y Evitar las Estafas Inmobiliarias"
     };
 
     const exactExcerptsFr: Record<string, string> = {
