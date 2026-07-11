@@ -65,13 +65,15 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
             ],
             type: 'article',
         },
-        keywords: post.slug === 'guia-invertir-seguro-punta-cana-evitar-estafas' 
-            ? (lang === 'es' 
-                ? ['invertir en Punta Cana 2026', 'bienes raíces Punta Cana', 'evitar estafas inmobiliarias República Dominicana', 'cómo invertir seguro en Punta Cana', 'Ley de CONFOTUR beneficios', 'fideicomiso inmobiliario República Dominicana', 'diseño de lujo sostenible Punta Cana', 'minimalismo orgánico propiedades Caribe']
-                : lang === 'fr'
-                ? ['investir à Punta Cana 2026', 'immobilier de luxe Punta Cana', 'éviter les arnaques immobilières République Dominicaine', 'comment investir en toute sécurité à Punta Cana', 'avantages de la loi CONFOTUR pour les investisseurs étrangers', 'fiducie immobilière République Dominicaine', 'design de luxe durable Punta Cana', 'minimalisme organique propriétés Caraïbes']
-                : ['invest in Punta Cana 2026', 'Punta Cana real estate for sale', 'avoid real estate scams Dominican Republic', 'how to invest safely in Punta Cana', 'CONFOTUR Law benefits foreign investors', 'Dominican Republic real estate trust fund', 'sustainable luxury design Punta Cana', 'organic minimalism Caribbean properties'])
-            : [],
+        keywords: post.seoKeywords && typeof post.seoKeywords === 'object' && getVal(post.seoKeywords, lang)
+            ? getVal(post.seoKeywords, lang).split(',').map((k: string) => k.trim())
+            : post.slug === 'guia-invertir-seguro-punta-cana-evitar-estafas' 
+                ? (lang === 'es' 
+                    ? ['invertir en Punta Cana 2026', 'bienes raíces Punta Cana', 'evitar estafas inmobiliarias República Dominicana', 'cómo invertir seguro en Punta Cana', 'Ley de CONFOTUR beneficios', 'fideicomiso inmobiliario República Dominicana', 'diseño de lujo sostenible Punta Cana', 'minimalismo orgánico propiedades Caribe']
+                    : lang === 'fr'
+                    ? ['investir à Punta Cana 2026', 'immobilier de luxe Punta Cana', 'éviter les arnaques immobilières République Dominicaine', 'comment investir en toute sécurité à Punta Cana', 'avantages de la loi CONFOTUR pour les investisseurs étrangers', 'fiducie immobilière République Dominicaine', 'design de luxe durable Punta Cana', 'minimalisme organique propriétés Caraïbes']
+                    : ['invest in Punta Cana 2026', 'Punta Cana real estate for sale', 'avoid real estate scams Dominican Republic', 'how to invest safely in Punta Cana', 'CONFOTUR Law benefits foreign investors', 'Dominican Republic real estate trust fund', 'sustainable luxury design Punta Cana', 'organic minimalism Caribbean properties'])
+                : [],
         alternates: {
             canonical: canonicalUrl,
             languages: {

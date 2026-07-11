@@ -66,6 +66,11 @@ export function mapSanityPost(data: any): BlogPost {
             es: data.contentEs || [],
             fr: data.contentEn || [] // Fallback to English content for French
         },
+        seoKeywords: {
+            en: data.seoKeywordsEn || "",
+            es: data.seoKeywordsEs || "",
+            fr: data.seoKeywordsFr || ""
+        },
         relatedProperties: []
     };
 }

@@ -197,6 +197,9 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
     authorBio,
     authorImage,
     category,
+    seoKeywordsEs,
+    seoKeywordsEn,
+    seoKeywordsFr,
     seo
   }
 `);

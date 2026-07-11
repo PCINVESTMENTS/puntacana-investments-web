@@ -96,6 +96,24 @@ export const post = defineType({
             name: 'readTime',
             title: 'Read Time (e.g. 5 min)',
             type: 'string'
+        }),
+        defineField({
+            name: 'seoKeywordsEs',
+            title: 'SEO Keywords (Spanish)',
+            description: 'Palabras clave separadas por comas. Ej: invertir punta cana, bienes raíces, villas',
+            type: 'string',
+        }),
+        defineField({
+            name: 'seoKeywordsEn',
+            title: 'SEO Keywords (English)',
+            description: 'Comma separated keywords. E.g: invest punta cana, real estate, villas',
+            type: 'string',
+        }),
+        defineField({
+            name: 'seoKeywordsFr',
+            title: 'SEO Keywords (French)',
+            description: 'Mots-clés séparés par des virgules. Ex: investir punta cana, immobilier, villas',
+            type: 'string',
         })
     ]
 })
