@@ -63,10 +63,10 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
                 </h3>
                 <p className="text-gray-300">
                     {lang === 'es' 
-                        ? 'Un consultor experto se pondrá en contacto contigo en breve para presentarte una propuesta a la medida.' 
+                        ? 'Un consultor experto se pondrá en contacto contigo dentro de las próximas 24 horas para presentarte una propuesta a la medida.' 
                         : lang === 'fr' 
-                        ? 'Un consultant expert vous contactera sous peu pour vous présenter une proposition sur mesure.' 
-                        : 'An expert consultant will contact you shortly to present a customized proposal.'}
+                        ? 'Un consultant expert vous contactera dans les prochaines 24 heures pour vous présenter une proposition sur mesure.' 
+                        : 'An expert consultant will contact you within the next 24 hours to present a customized proposal.'}
                 </p>
                 <p className="text-sm text-gray-400 mt-4 italic">
                     {lang === 'es' 
