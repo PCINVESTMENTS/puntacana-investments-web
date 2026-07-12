@@ -8,18 +8,17 @@ import dynamic from 'next/dynamic';
 
 const PropertyListings = dynamic(() => import("@/components/home/PropertyListings"), { ssr: true });
 
-const ServicesSection = dynamic(() => import("@/components/home/ServicesSection"));
-const TestimonialsSection = dynamic(() => import("@/components/home/TestimonialsSection"));
-const BlogSection = dynamic(() => import("@/components/home/BlogSection"));
-const InvestmentsSection = dynamic(() => import("@/components/home/InvestmentsSection"));
-const OffMarketClub = dynamic(() => import("@/components/home/OffMarketClub"));
-const FlyAndBuySection = dynamic(() => import("@/components/home/FlyAndBuySection"));
-const FutureProjectsSection = dynamic(() => import("@/components/home/FutureProjectsSection"));
-// Refactored components
-const LocationsSection = dynamic(() => import("@/components/home/LocationsSection").then(mod => mod.LocationsSection));
+import ServicesSection from "@/components/home/ServicesSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
+import BlogSection from "@/components/home/BlogSection";
+import InvestmentsSection from "@/components/home/InvestmentsSection";
+import OffMarketClub from "@/components/home/OffMarketClub";
+import FlyAndBuySection from "@/components/home/FlyAndBuySection";
+import FutureProjectsSection from "@/components/home/FutureProjectsSection";
+import { LocationsSection } from "@/components/home/LocationsSection";
 import { AboutSection } from "@/components/home/AboutSection";
-const ContactSection = dynamic(() => import("@/components/home/ContactSection").then(mod => mod.ContactSection));
-const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer));
+import { ContactSection } from "@/components/home/ContactSection";
+import { Footer } from "@/components/layout/Footer";
 
 // Sanity
 import { client } from "@/sanity/lib/client";

@@ -16,13 +16,11 @@ export default function DelayedTracking({ gaId, metaPixelId, hubspotId, gtmId }:
     useEffect(() => {
         const handleInteraction = () => {
             setInteracted(true);
-            window.removeEventListener("scroll", handleInteraction);
             window.removeEventListener("mousemove", handleInteraction);
             window.removeEventListener("touchstart", handleInteraction);
             window.removeEventListener("keydown", handleInteraction);
         };
 
-        window.addEventListener("scroll", handleInteraction, { passive: true });
         window.addEventListener("mousemove", handleInteraction, { passive: true });
         window.addEventListener("touchstart", handleInteraction, { passive: true });
         window.addEventListener("keydown", handleInteraction, { passive: true });
@@ -34,7 +32,6 @@ export default function DelayedTracking({ gaId, metaPixelId, hubspotId, gtmId }:
         }, 15000);
 
         return () => {
-            window.removeEventListener("scroll", handleInteraction);
             window.removeEventListener("mousemove", handleInteraction);
             window.removeEventListener("touchstart", handleInteraction);
             window.removeEventListener("keydown", handleInteraction);
