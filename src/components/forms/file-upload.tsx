@@ -115,7 +115,7 @@ export function FileUpload({ name, label, description }: FileUploadProps) {
                                 <UploadCloud size={24} />
                             </div>
                             <div className="text-sm font-medium text-gray-400 group-hover:text-luxury-gold">Click para subir / Click to add</div>
-                            <div className="text-xs text-gray-500">{description}</div>
+                            <div className="text-xs text-gray-400">{description}</div>
                         </>
                     )}
                 </div>

@@ -73,7 +73,7 @@ const FormSection = ({ icon, title, children }: { icon: React.ReactNode, title: 
     <div className="py-6">
         <div className="flex items-center gap-3 mb-4">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-luxury-gold/10 text-luxury-gold">{icon}</div>
-            <h3 className="text-xl font-semibold text-white">{title}</h3>
+            <h2 className="text-xl font-semibold text-white">{title}</h2>
         </div>
         <div className="space-y-6">{children}</div>
     </div>

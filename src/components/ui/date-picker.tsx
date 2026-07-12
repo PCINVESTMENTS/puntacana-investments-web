@@ -45,6 +45,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, any>(
                     value={day} 
                     onChange={(e) => setDay(e.target.value)}
                     className={selectClass}
+                    aria-label="Día"
                 >
                     <option value="" disabled>Día</option>
                     {days.map(d => <option key={d} value={d}>{d}</option>)}
@@ -53,6 +54,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, any>(
                     value={month} 
                     onChange={(e) => setMonth(e.target.value)}
                     className={selectClass}
+                    aria-label="Mes"
                 >
                     <option value="" disabled>Mes</option>
                     {months.map((m, i) => <option key={m} value={(i + 1).toString()}>{m}</option>)}
@@ -61,6 +63,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, any>(
                     value={year} 
                     onChange={(e) => setYear(e.target.value)}
                     className={selectClass}
+                    aria-label="Año"
                 >
                     <option value="" disabled>Año</option>
                     {years.map(y => <option key={y} value={y}>{y}</option>)}
