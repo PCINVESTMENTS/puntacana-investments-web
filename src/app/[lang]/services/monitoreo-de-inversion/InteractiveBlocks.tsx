@@ -30,6 +30,8 @@ export default function InteractiveBlocks({ blocks, translations }: any) {
                             src={block.image} 
                             alt={block.title} 
                             fill 
+                            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                            quality={60}
                             className="object-cover transform group-hover:scale-110 transition-transform duration-1000"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent group-hover:from-black/80 transition-all duration-500"></div>
@@ -63,6 +65,8 @@ export default function InteractiveBlocks({ blocks, translations }: any) {
                                 src={blocks[activeBlock].image} 
                                 alt={blocks[activeBlock].title} 
                                 fill 
+                                sizes="(max-width: 1024px) 100vw, 40vw"
+                                quality={60}
                                 className="object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent lg:hidden"></div>
