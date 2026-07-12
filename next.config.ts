@@ -7,9 +7,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '10mb',
     },
   },
-  compiler: {
-    styledComponents: true,
-  },
+
   typescript: {
     ignoreBuildErrors: true,
   },
