@@ -126,6 +126,8 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                             src={post.mainImage}
                                             alt={getVal(post.title, lang)}
                                             fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            priority={index <= 2}
                                             className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                         />
                                         <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
@@ -136,11 +138,11 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                         <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
                                             <FaCalendarAlt /> {getVal(post.date, lang)}
                                         </div>
-                                        <h3 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
+                                        <h2 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
                                             <Link href={`/${lang}/blog/${post.slug}`}>
                                                 {getVal(post.title, lang)}
                                             </Link>
-                                        </h3>
+                                        </h2>
                                         <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
                                             {getVal(post.excerpt, lang)}
                                         </p>
