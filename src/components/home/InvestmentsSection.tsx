@@ -33,7 +33,7 @@ export default function InvestmentsSection({ dict, lang }: InvestmentsSectionPro
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-8 md:mb-16">
-                    <ScrollReveal width="100%">
+                    <ScrollReveal width="100%" priority={true}>
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.subtitle}
                         </span>

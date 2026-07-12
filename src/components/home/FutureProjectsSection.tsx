@@ -9,7 +9,7 @@ export default function FutureProjectsSection({ lang }: { lang: string }) {
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
                 <div className="text-center mb-8 md:mb-16">
-                    <ScrollReveal width="100%">
+                    <ScrollReveal width="100%" priority={true}>
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {lang === 'en' ? 'Exclusive Opportunity for Investors' : lang === 'fr' ? 'Opportunité Exclusive pour Investisseurs' : 'Oportunidad Exclusiva para Inversores'}
                         </span>
