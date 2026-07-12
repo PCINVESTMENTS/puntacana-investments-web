@@ -64,9 +64,9 @@ export function Footer({ dict, lang }: FooterProps) {
 
                     {/* Navigation - Column 1 */}
                     <div>
-                        <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
+                        <h3 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
                             {dict.footer.explore}
-                        </h4>
+                        </h3>
                         <ul className="space-y-1 text-sm text-gray-400">
                             <li><Link href={`/${lang}/properties`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.properties}</Link></li>
                             <li><Link prefetch={false} href={`/${lang}/projects`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.projects}</Link></li>
@@ -77,9 +77,9 @@ export function Footer({ dict, lang }: FooterProps) {
 
                     {/* Navigation - Column 2 */}
                     <div>
-                        <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
+                        <h3 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
                             {dict.footer.company}
-                        </h4>
+                        </h3>
                         <ul className="space-y-1 text-sm text-gray-400">
                             <li><Link href={`/${lang}/services`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.services}</Link></li>
                             <li><Link prefetch={false} href={`/${lang}/about`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.about}</Link></li>
@@ -90,9 +90,9 @@ export function Footer({ dict, lang }: FooterProps) {
 
                     {/* Socials & Newsletter */}
                     <div>
-                        <h4 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
+                        <h3 className="text-white font-bold uppercase tracking-widest mb-6 text-sm border-b border-white/10 pb-2 inline-block">
                             {dict.footer.socials}
-                        </h4>
+                        </h3>
                         <div className="flex gap-4 mb-8">
                             {[
                                 { Icon: FaInstagram, url: "https://www.instagram.com/puntacanainvestmentsrd/", label: "Instagram" },
@@ -113,9 +113,9 @@ export function Footer({ dict, lang }: FooterProps) {
                             ))}
                         </div>
 
-                        <h4 className="text-white font-bold uppercase tracking-widest mb-4 text-sm">
+                        <h3 className="text-white font-bold uppercase tracking-widest mb-4 text-sm">
                             {dict.footer.newsletter}
-                        </h4>
+                        </h3>
 
                         {state.success ? (
                             <div className="text-green-400 text-sm animate-fade-in flex items-center gap-2">

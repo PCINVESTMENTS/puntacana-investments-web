@@ -78,6 +78,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                     fill
                     className="object-cover opacity-60"
                     priority
+                    fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/50 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
@@ -226,7 +227,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="p-4 text-left text-gray-500 font-medium uppercase tracking-wider text-sm border-b border-white/10 w-1/3">
+                                    <th className="p-4 text-left text-gray-400 font-medium uppercase tracking-wider text-sm border-b border-white/10 w-1/3">
                                         {flyAndBuyComparison.headers.feature[l]}
                                     </th>
                                     <th className="p-4 text-center text-white font-bold uppercase tracking-wider text-sm border-b border-white/10 w-1/3 bg-white/5">
