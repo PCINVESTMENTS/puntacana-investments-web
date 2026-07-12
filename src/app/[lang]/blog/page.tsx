@@ -92,7 +92,7 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
             <div className="pt-32 pb-16 bg-primary-black relative">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-luxury-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <ScrollReveal>
+                    <ScrollReveal priority={true}>
                         <div className="text-center max-w-3xl mx-auto">
                             <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold mb-4 block">
                                 {dict.sections.blog.title}
@@ -128,6 +128,7 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                             fill
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             priority={index <= 2}
+                                            quality={60}
                                             className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                         />
                                         <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
