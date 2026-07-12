@@ -30,8 +30,10 @@ export function Footer({ dict, lang }: FooterProps) {
                     <div className="space-y-6">
                         <Link
                             href={`/${lang}`}
-                            onClick={() => {
-                                if (window.location.pathname === `/${lang}`) {
+                            prefetch={false}
+                            onClick={(e) => {
+                                if (window.location.pathname === `/${lang}` || window.location.pathname === `/${lang}/`) {
+                                    e.preventDefault();
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                 }
                             }}

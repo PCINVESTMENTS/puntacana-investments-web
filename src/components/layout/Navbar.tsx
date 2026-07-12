@@ -137,8 +137,10 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     <div className="flex items-center flex-shrink-0">
                         <Link
                             href={`/${lang}`}
-                            onClick={() => {
-                                if (window.location.pathname === `/${lang}`) {
+                            prefetch={false}
+                            onClick={(e) => {
+                                if (window.location.pathname === `/${lang}` || window.location.pathname === `/${lang}/`) {
+                                    e.preventDefault();
                                     window.scrollTo({ top: 0, behavior: "smooth" });
                                 }
                                 setIsOpen(false);
