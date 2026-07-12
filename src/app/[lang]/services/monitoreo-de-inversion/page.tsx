@@ -221,8 +221,9 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
                         alt={t.heroTitle}
                         fill
                         sizes="100vw"
-                        quality={90}
+                        quality={75}
                         priority
+                        fetchPriority="high"
                         className="object-cover object-center opacity-60"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]"></div>
@@ -310,7 +311,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
             {/* BLOCK 8: Aviso Legal */}
             <section className="py-12 md:py-16 bg-black border-t border-white/5">
                 <div className="max-w-5xl mx-auto px-6 text-center">
-                    <p className="text-[11px] md:text-xs text-gray-600 uppercase tracking-wider max-w-4xl mx-auto leading-relaxed">
+                    <p className="text-[11px] md:text-xs text-gray-400 uppercase tracking-wider max-w-4xl mx-auto leading-relaxed">
                         {t.disclaimer}
                     </p>
                 </div>

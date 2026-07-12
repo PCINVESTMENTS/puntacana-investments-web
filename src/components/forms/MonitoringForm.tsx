@@ -99,36 +99,36 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formName}</label>
-                    <input type="text" name="name" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="name" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formName}</label>
+                    <input id="name" type="text" name="name" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formEmail}</label>
-                    <input type="email" name="email" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="email" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formEmail}</label>
+                    <input id="email" type="email" name="email" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formPhone}</label>
-                    <input type="tel" name="phone" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="phone" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formPhone}</label>
+                    <input id="phone" type="tel" name="phone" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formCountry}</label>
-                    <input type="text" name="country" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="country" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formCountry}</label>
+                    <input id="country" type="text" name="country" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formProject}</label>
-                    <input type="text" name="project" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="project" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formProject}</label>
+                    <input id="project" type="text" name="project" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formLocation}</label>
-                    <input type="text" name="location" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="location" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formLocation}</label>
+                    <input id="location" type="text" name="location" className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formInvestment}</label>
-                    <input type="text" name="investment" placeholder={lang === 'en' ? 'Ex: $150,000 USD' : 'Ej: $150,000 USD'} className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="investment" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formInvestment}</label>
+                    <input id="investment" type="text" name="investment" placeholder={lang === 'en' ? 'Ex: $150,000 USD' : 'Ej: $150,000 USD'} className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
                 <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formDate}</label>
-                    <input type="text" name="date" placeholder={lang === 'en' ? 'Ex: March 2025' : 'Ej: Marzo 2025'} className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
+                    <label htmlFor="date" className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{t.formDate}</label>
+                    <input id="date" type="text" name="date" placeholder={lang === 'en' ? 'Ex: March 2025' : 'Ej: Marzo 2025'} className="w-full bg-black border border-white/20 text-white px-4 py-3 focus:outline-none focus:border-luxury-gold transition-colors" required />
                 </div>
             </div>
             
