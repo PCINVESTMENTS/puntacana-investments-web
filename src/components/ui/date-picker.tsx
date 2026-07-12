@@ -21,10 +21,13 @@ const DatePicker = React.forwardRef<HTMLInputElement, any>(
                 const newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
                 // Only trigger if valid date
                 if (!isNaN(newDate.getTime())) {
-                    field?.onChange?.(newDate);
+                    const currentDate = field?.value instanceof Date ? field.value : field?.value ? new Date(field.value) : null;
+                    if (!currentDate || currentDate.getTime() !== newDate.getTime()) {
+                        field?.onChange?.(newDate);
+                    }
                 }
             }
-        }, [day, month, year, field]);
+        }, [day, month, year, field?.value, field?.onChange]);
 
         // Generate options
         const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
