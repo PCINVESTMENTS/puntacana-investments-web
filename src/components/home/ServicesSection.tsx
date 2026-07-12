@@ -49,7 +49,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                             alt={dict.title}
                             fill
                             sizes="100vw"
-                            quality={90}
+                            quality={75}
                             className="object-cover object-[center_30%]"
                             priority
                             fetchPriority="high"
