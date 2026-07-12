@@ -126,9 +126,10 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         alt={service.title}
                         fill
                         sizes="100vw"
-                        quality={90}
+                        quality={75}
                         className="object-cover object-[center_30%]"
                         priority
+                        fetchPriority="high"
                     />
                     <div className="absolute inset-0 bg-black/10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-black/80 via-transparent to-transparent"></div>
@@ -227,7 +228,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
 
                             {/* Navigation */}
                             <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-                                <h4 className="text-sm uppercase tracking-widest text-gray-500 font-bold mb-4">
+                                <h4 className="text-sm uppercase tracking-widest text-gray-400 font-bold mb-4">
                                     {lang === 'en' ? 'Other Services' : 'Otros Servicios'}
                                 </h4>
                                 <nav className="space-y-2">
