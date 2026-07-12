@@ -269,6 +269,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     className="object-cover"
                     priority={true}
                     fetchPriority="high"
+                    decoding="sync"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
