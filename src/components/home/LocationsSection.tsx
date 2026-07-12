@@ -52,6 +52,7 @@ export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = 
                                         src={loc.img}
                                         alt={loc.title}
                                         fill
+                                        quality={60}
                                         priority={isPriority}
                                         {...(isPriority ? { fetchPriority: "high" } : {})}
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

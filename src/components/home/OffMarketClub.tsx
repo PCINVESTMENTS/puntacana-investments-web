@@ -21,6 +21,7 @@ export default function OffMarketClub({ lang }: { lang: string }) {
                             src="/images/og-home-luxury.webp"
                             alt="Luxury Interior"
                             fill
+                            quality={50}
                             className="object-cover opacity-60 grayscale-[40%]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-dark-gray/90 to-transparent"></div>

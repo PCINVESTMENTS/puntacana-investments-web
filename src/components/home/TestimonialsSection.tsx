@@ -67,6 +67,7 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                                             src={images[index % images.length]}
                                             alt={testim.name}
                                             fill
+                                            sizes="96px"
                                             className="object-cover"
                                         />
                                     </div>

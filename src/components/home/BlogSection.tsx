@@ -54,6 +54,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                                     src={post.mainImage}
                                     alt={getVal(post.title, l)}
                                     fill
+                                    quality={60}
                                     sizes="(max-width: 768px) 100vw, 33vw"
                                     className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                 />
