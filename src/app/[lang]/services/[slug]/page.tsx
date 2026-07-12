@@ -130,7 +130,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         alt={service.title}
                         fill
                         sizes="100vw"
-                        quality={60}
+                        quality={50}
                         className="object-cover object-[center_30%]"
                         priority
                         fetchPriority="high"
@@ -177,7 +177,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                                             alt={section.title}
                                             fill
                                             sizes="(max-width: 768px) 100vw, 50vw"
-                                            quality={60}
+                                            quality={50}
                                             className="object-cover"
                                         />
                                     </div>
