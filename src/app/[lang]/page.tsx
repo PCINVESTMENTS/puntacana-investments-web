@@ -17,7 +17,7 @@ const FlyAndBuySection = dynamic(() => import("@/components/home/FlyAndBuySectio
 const FutureProjectsSection = dynamic(() => import("@/components/home/FutureProjectsSection"));
 // Refactored components
 const LocationsSection = dynamic(() => import("@/components/home/LocationsSection").then(mod => mod.LocationsSection));
-const AboutSection = dynamic(() => import("@/components/home/AboutSection").then(mod => mod.AboutSection));
+import { AboutSection } from "@/components/home/AboutSection";
 const ContactSection = dynamic(() => import("@/components/home/ContactSection").then(mod => mod.ContactSection));
 const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer));
 

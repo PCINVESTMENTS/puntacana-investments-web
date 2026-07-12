@@ -45,6 +45,7 @@ export function AboutSection({ dict }: AboutSectionProps) {
                                     fill
                                     quality={60}
                                     sizes="(max-width: 1024px) 100vw, 50vw"
+                                    priority={true}
                                     className="object-cover hover:scale-105 transition-transform duration-700"
                                 />
 
@@ -70,7 +71,7 @@ export function AboutSection({ dict }: AboutSectionProps) {
                     <div className="lg:col-span-7 space-y-16">
 
                         {/* Header & Intro */}
-                        <ScrollReveal>
+                        <ScrollReveal priority={true}>
                             <div>
                                 <span className="text-luxury-gold uppercase tracking-[0.2em] text-xs font-semibold mb-3 block">{dict.essence}</span>
                                 <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">{dict.title}</h2>
