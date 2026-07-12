@@ -264,28 +264,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     src={post.mainImage}
                     alt={getVal(post.title, lang)}
                     fill
-                    sizes="100vw"
+                    sizes="(max-width: 768px) 100vw, 100vw"
+                    quality={60}
                     className="object-cover"
-                    priority
+                    priority={true}
+                    fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="max-w-4xl mx-auto px-4 text-center">
-                        <ScrollReveal>
+                        <ScrollReveal priority={true}>
                             <div className="inline-flex items-center gap-2 bg-luxury-gold/90 text-black px-4 py-1.5 rounded-sm text-xs font-bold uppercase tracking-widest mb-6">
                                 <FaTag size={10} />
                                 {getVal(post.category, lang)}
                             </div>
                         </ScrollReveal>
 
-                        <ScrollReveal delay={0.2} direction="up">
+                        <ScrollReveal priority={true}>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight">
                                 {getVal(post.title, lang)}
                             </h1>
                         </ScrollReveal>
 
-                        <ScrollReveal delay={0.3} direction="up">
+                        <ScrollReveal priority={true}>
                             <div className="flex flex-wrap items-center justify-center gap-6 text-gray-300 text-sm font-medium tracking-wide">
                                 <span className="flex items-center gap-2">
                                     <FaCalendarAlt className="text-luxury-gold" />
