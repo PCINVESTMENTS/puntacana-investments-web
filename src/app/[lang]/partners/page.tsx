@@ -120,24 +120,25 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                 <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-luxury-gold rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
                 
                 <div className="relative z-10 max-w-7xl mx-auto text-center">
-                    <div className="flex justify-center mb-4 md:mb-8 animate-fade-in-up">
+                    <div className="flex justify-center mb-4 md:mb-8">
                         <div className="relative w-40 h-40 md:w-64 md:h-64 rounded-full overflow-hidden border border-luxury-gold/20 shadow-[0_0_40px_rgba(212,175,55,0.15)]">
                             <Image 
                                 src="/images/pci-golden-logo.jpg" 
                                 alt="Punta Cana Investments Global Network" 
                                 fill 
+                                sizes="(max-width: 768px) 160px, 256px"
                                 className="object-cover" 
                                 priority
                             />
                         </div>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 tracking-wide animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 tracking-wide">
                         {t.heroTitle}
                     </h1>
-                    <h2 className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+                    <h2 className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mx-auto mb-8">
                         {t.heroSubtitle}
                     </h2>
-                    <p className="text-base md:text-lg text-gray-400 max-w-4xl mx-auto animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+                    <p className="text-base md:text-lg text-gray-400 max-w-4xl mx-auto">
                         {t.heroText}
                     </p>
                 </div>
@@ -172,6 +173,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                                                         src={partner.logoUrl} 
                                                         alt={partner.name} 
                                                         fill 
+                                                        sizes="192px"
                                                         className="object-contain p-2" 
                                                     />
                                                 ) : (
