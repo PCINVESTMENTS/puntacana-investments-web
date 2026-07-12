@@ -182,7 +182,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             <div key={item.name} className="relative group">
                                 <Link
                                     href={item.href || "#"}
-                                    prefetch={shouldDisablePrefetch ? false : undefined}
+                                    prefetch={false}
                                     className="text-white hover:text-luxury-gold px-1 py-4 text-[10px] xl:text-xs font-bold transition-colors uppercase tracking-wider flex items-center gap-1 group-hover:text-luxury-gold whitespace-nowrap"
                                 >
                                     {item.name}
@@ -199,7 +199,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                                 <Link
                                                     key={subItem.label}
                                                     href={subItem.href}
-                                                    prefetch={subShouldDisable ? false : undefined}
+                                                    prefetch={false}
                                                     className="px-6 py-3 text-sm text-gray-300 hover:bg-luxury-gold hover:text-black transition-colors uppercase tracking-wider font-semibold border-b border-white/5 last:border-0"
                                                 >
                                                     {subItem.label}
@@ -243,7 +243,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         <div key={item.name} className="border-b border-white/5 last:border-0">
                             <Link
                                 href={item.href || "#"}
-                                prefetch={shouldDisablePrefetch ? false : undefined}
+                                prefetch={false}
                                 onClick={() => setIsOpen(false)}
                                 className="block px-3 py-5 text-base font-bold text-gray-300 hover:text-luxury-gold uppercase tracking-wider flex justify-between items-center"
                             >
@@ -253,12 +253,11 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             {item.hasDropdown && item.subItems && (
                                 <div className="pl-6 bg-black/20 pb-2">
                                     {item.subItems.map((subItem) => {
-                                        const subShouldDisable = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => subItem.href.includes(p));
                                         return (
                                         <Link
                                             key={subItem.label}
                                             href={subItem.href}
-                                            prefetch={subShouldDisable ? false : undefined}
+                                            prefetch={false}
                                             onClick={() => setIsOpen(false)}
                                             className="block py-4 text-sm text-gray-400 hover:text-luxury-gold uppercase tracking-wide min-h-[48px] flex items-center"
                                         >

@@ -40,9 +40,9 @@ export default function DueDiligenceContent() {
                 </div>
 
                 {/* Header Section */}
-                <div className="text-center space-y-4 pt-4 print:hidden">
+                <div className="text-center space-y-6 pt-12 pb-8 print:hidden">
                     <div className="flex justify-center mb-6">
-                        <div className="relative w-64 h-24">
+                        <div className="mb-6">
                             <Image
                                 src="/form-logo.jpg"
                                 alt="Punta Cana Investments"
