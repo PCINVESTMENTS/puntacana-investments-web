@@ -1,12 +1,13 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import dynamic from "next/dynamic";
+const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer), { ssr: true });
 import Image from "next/image";
 import Link from "next/link";
 import { FaShieldAlt, FaArrowRight } from "react-icons/fa";
 import InteractiveBlocks from "./InteractiveBlocks";
 import MonitoringForm from "@/components/forms/MonitoringForm";
-import { preload } from "react-dom";
+
 import PropertyListings from "@/components/home/PropertyListings";
 import { properties as localProperties } from "@/data/properties";
 
@@ -60,8 +61,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
 
-    // Force preload for LCP
-    preload("/images/monitoring-hero.jpg", { as: "image", fetchPriority: "high" });
+
 
     // Static translations for the UI
     const t = {
