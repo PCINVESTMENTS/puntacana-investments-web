@@ -52,6 +52,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                             quality={90}
                             className="object-cover object-[center_30%]"
                             priority
+                            fetchPriority="high"
                         />
                         <div className="absolute inset-0 bg-black/20"></div>
                         <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-transparent to-transparent"></div>
@@ -95,6 +96,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                                         alt={service.title}
                                         fill
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                                        quality={50}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                 ) : (
