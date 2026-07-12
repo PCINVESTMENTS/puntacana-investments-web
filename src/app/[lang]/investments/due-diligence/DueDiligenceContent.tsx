@@ -4,7 +4,6 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { User, Building2, ArrowLeft } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -47,8 +46,8 @@ export default function DueDiligenceContent() {
                             <Image
                                 src="/form-logo.jpg"
                                 alt="Punta Cana Investments"
-                                fill
-                                sizes="256px"
+                                width={301}
+                                height={168}
                                 className="object-contain"
                                 priority
                                 fetchPriority="high"
@@ -102,22 +101,12 @@ export default function DueDiligenceContent() {
                 </div>
 
                 {/* Form Container */}
-                <div className="relative min-h-[500px]">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={formType}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            {formType === "fisica" ? (
-                                <PersonaFisicaForm />
-                            ) : (
-                                <PersonaJuridicaForm />
-                            )}
-                        </motion.div>
-                    </AnimatePresence>
+                <div className="relative min-h-[500px] animate-in fade-in duration-500">
+                    {formType === "fisica" ? (
+                        <PersonaFisicaForm />
+                    ) : (
+                        <PersonaJuridicaForm />
+                    )}
                 </div>
 
             </div>

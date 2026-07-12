@@ -677,7 +677,7 @@ export function PersonaFisicaForm() {
                 <FormSection icon={<Handshake size={20} />} title="Referencias / References">
                     <div className="space-y-6">
                         <div>
-                            <h4 className="font-medium mb-2 text-white">Referencias Personales / Personal References</h4>
+                            <h3 className="font-medium mb-2 text-white">Referencias Personales / Personal References</h3>
                             {personalFields.map((field, index) => (
                                 <div key={field.id} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end mb-4 p-4 border border-white/10 rounded-md relative bg-white/5">
                                     <FormField control={form.control} name={`personalReferences.${index}.name`} render={({ field }) => (<FormItem><FormLabel>Nombre / Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -690,7 +690,7 @@ export function PersonaFisicaForm() {
                         </div>
 
                         <div>
-                            <h4 className="font-medium mb-2 text-white">Referencias Comerciales / Commercial References</h4>
+                            <h3 className="font-medium mb-2 text-white">Referencias Comerciales / Commercial References</h3>
                             {commercialFields.map((field, index) => (
                                 <div key={field.id} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end mb-4 p-4 border border-white/10 rounded-md relative bg-white/5">
                                     <FormField control={form.control} name={`commercialReferences.${index}.entity`} render={({ field }) => (<FormItem><FormLabel>Entidad / Entity</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -703,7 +703,7 @@ export function PersonaFisicaForm() {
                         </div>
 
                         <div>
-                            <h4 className="font-medium mb-2 text-white">Referencias Bancarias / Bank References</h4>
+                            <h3 className="font-medium mb-2 text-white">Referencias Bancarias / Bank References</h3>
                             {bankFields.map((field, index) => (
                                 <div key={field.id} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end mb-4 p-4 border border-white/10 rounded-md relative bg-white/5">
                                     <FormField control={form.control} name={`bankReferences.${index}.entity`} render={({ field }) => (<FormItem><FormLabel>Entidad / Entity</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
