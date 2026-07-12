@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaCheck, FaArrowRight, FaWhatsapp } from "react-icons/fa";
+import { preload } from "react-dom";
 
 // Valid slugs for static generation
 const VALID_SLUGS = [
@@ -108,6 +109,9 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
 
     // Type casting for robust access to extended fields
     const extendedService = service as any;
+
+    // Force preload with fetchpriority for LCP
+    preload(service.img, { as: "image", fetchPriority: "high" });
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
