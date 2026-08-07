@@ -6,6 +6,7 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Image from "next/image";
 import Link from "next/link";
 import { FaGlobe, FaHandshake, FaExternalLinkAlt } from "react-icons/fa";
+import ReadMore from "@/components/ui/ReadMore";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -84,21 +85,27 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
             heroSubtitle: "Alianzas estratégicas para inversiones seguras y rentables",
             heroText: "En Punta Cana Investments, creemos que la grandeza se logra a través de la colaboración. Hemos forjado sólidas alianzas con las organizaciones líderes del sector para ofrecerte propiedades de lujo y transacciones impecables a nivel mundial.",
             visitWebsite: "Visitar Sitio Web",
-            noPartners: "Próximamente estaremos anunciando nuestros nuevos aliados globales."
+            noPartners: "Próximamente estaremos anunciando nuestros nuevos aliados globales.",
+            readMore: "Leer Más",
+            readLess: "Leer Menos"
         },
         en: {
             heroTitle: "Our Global Partner Network",
             heroSubtitle: "Strategic alliances for secure and profitable investments",
             heroText: "At Punta Cana Investments, we believe greatness is achieved through collaboration. We have forged strong partnerships with leading organizations in the industry to bring you luxury properties and seamless transactions worldwide.",
             visitWebsite: "Visit Website",
-            noPartners: "We will be announcing our new global allies soon."
+            noPartners: "We will be announcing our new global allies soon.",
+            readMore: "Read More",
+            readLess: "Read Less"
         },
         fr: {
             heroTitle: "Notre Réseau de Partenaires Mondiaux",
             heroSubtitle: "Des alliances stratégiques pour des investissements sûrs et rentables",
             heroText: "Chez Punta Cana Investments, nous croyons que l'excellence s'atteint par la collaboration. Nous avons forgé de solides partenariats avec des organisations de premier plan de l'industrie pour vous offrir des propriétés de luxe et des transactions sans faille dans le monde entier.",
             visitWebsite: "Visiter le Site Web",
-            noPartners: "Nous annoncerons bientôt nos nouveaux alliés mondiaux."
+            noPartners: "Nous annoncerons bientôt nos nouveaux alliés mondiaux.",
+            readMore: "Lire Plus",
+            readLess: "Lire Moins"
         }
     };
 
@@ -156,6 +163,11 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12">
                             {partners.map((partner: any, index: number) => {
                                 const description = partner[`description_${lang}`] || partner.description_en || '';
+                                const paragraphs = description.split('\n\n');
+                                const hasMore = paragraphs.length > 2;
+                                const previewText = hasMore ? paragraphs.slice(0, 2).join('\n\n') : description;
+                                const moreTextContent = hasMore ? paragraphs.slice(2).join('\n\n') : null;
+                                
                                 return (
                                     <div 
                                         key={partner._id} 
@@ -186,9 +198,19 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                                                 {partner.name}
                                             </h3>
                                             
-                                            <p className="text-gray-400 text-sm leading-relaxed flex-grow">
-                                                {description}
-                                            </p>
+                                            <div className="text-gray-400 text-sm leading-relaxed flex-grow text-left w-full">
+                                                {hasMore ? (
+                                                    <ReadMore 
+                                                        preview={<p className="whitespace-pre-line">{previewText}</p>}
+                                                        moreText={t.readMore}
+                                                        lessText={t.readLess}
+                                                    >
+                                                        <p className="whitespace-pre-line">{moreTextContent}</p>
+                                                    </ReadMore>
+                                                ) : (
+                                                    <p className="whitespace-pre-line">{description}</p>
+                                                )}
+                                            </div>
                                         </div>
 
                                         {/* CTA Button */}
