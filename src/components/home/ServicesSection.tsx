@@ -49,8 +49,8 @@ export default function ServicesSection({ dict, lang, limit, heroImage, isPage }
                             src={heroImage}
                             alt={dict.title}
                             fill
-                            sizes="100vw"
-                            quality={75}
+                            sizes="(max-width: 768px) 100vw, 100vw"
+                            quality={65}
                             className="object-cover object-[center_30%]"
                             priority
                             fetchPriority="high"
