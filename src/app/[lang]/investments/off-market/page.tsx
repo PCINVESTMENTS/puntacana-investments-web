@@ -42,12 +42,13 @@ export async function generateMetadata({
                 es: `${baseUrl}/es/investments/off-market`,
                 en: `${baseUrl}/en/investments/off-market`,
                 fr: `${baseUrl}/fr/investments/off-market`,
+                "x-default": `${baseUrl}/en/investments/off-market`,
             }
         },
         openGraph: {
             title: title,
             description: description,
-            images: ['/images/off-market-hero.jpg']
+            images: [`${baseUrl}/images/off-market-hero-v3.webp`]
         }
     };
 }
@@ -61,8 +62,73 @@ export default async function OffMarketPage({
     const dict = await getDictionary(lang);
     const t = offMarketDict[lang];
 
+    const title = lang === "en" 
+        ? "Off-Market: Private Investment Portfolio | Punta Cana Investments"
+        : lang === "fr" 
+        ? "Off-Market: Portefeuille d'Investissement Privé | Punta Cana Investments"
+        : "Off-Market: Portafolio de Inversión Privado | Punta Cana Investments";
+
+    const description = lang === "en"
+        ? "Exclusive access to large-scale assets, hotel complexes, and distressed property opportunities under strict commercial reserve in the Dominican Republic."
+        : lang === "fr"
+        ? "Accès exclusif à des actifs de grande envergure, des complexes hôteliers et des opportunités de propriétés en difficulté sous stricte réserve commerciale en République Dominicaine."
+        : "Acceso exclusivo a activos de gran escala, complejos hoteleros y oportunidades de liquidación patrimonial bajo estricta reserva comercial en la República Dominicana.";
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const canonicalUrl = `${baseUrl}/${lang}/investments/off-market`;
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Service",
+                "name": title,
+                "description": description,
+                "provider": {
+                    "@type": "RealEstateAgent",
+                    "name": "Punta Cana Investments",
+                    "url": baseUrl,
+                    "telephone": "+1-829-408-4322"
+                },
+                "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Punta Cana, Dominican Republic"
+                },
+                "url": canonicalUrl,
+                "image": `${baseUrl}/images/off-market-hero-v3.webp`
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": lang === "en" ? "Home" : lang === "fr" ? "Accueil" : "Inicio",
+                        "item": `${baseUrl}/${lang}`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": dict.nav.investments,
+                        "item": `${baseUrl}/${lang}/investments`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": title,
+                        "item": canonicalUrl
+                    }
+                ]
+            }
+        ]
+    };
+
     return (
         <main className="min-h-screen bg-[#050505]">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar
                 dict={dict.nav}
                 lang={lang}
@@ -77,7 +143,8 @@ export default async function OffMarketPage({
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
                     <Image 
-                        src="/images/off-market-hero-v3.jpg" 
+                        src="/images/off-market-hero-v3.webp"
+                        quality={65} 
                         alt="Portafolio Privado Punta Cana Investments" 
                         fill
                         sizes="100vw"
@@ -140,7 +207,8 @@ export default async function OffMarketPage({
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-2xl border border-white/5">
                             <Image 
-                                src="/images/off-market-auction-v4.jpg" 
+                                src="/images/off-market-auction-v4.webp"
+                                quality={50} 
                                 alt="Market Value vs Auction Price Analysis" 
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"

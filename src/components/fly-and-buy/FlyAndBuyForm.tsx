@@ -125,9 +125,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
 
             {/* 1. Personal Details */}
             <section className="space-y-6">
-                <h3 className="text-2xl font-serif text-luxury-gold border-b border-white/10 pb-4">
+                <h2 className="text-2xl font-serif text-luxury-gold border-b border-white/10 pb-4">
                     {dict.personalDetails.title}
-                </h3>
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <label htmlFor="name" className="text-xs uppercase tracking-wider text-gray-400 font-semibold">{dict.personalDetails.name} *</label>
@@ -150,9 +150,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
 
             {/* 2. Objective */}
             <section className="space-y-6">
-                <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
+                <h2 className="text-xl font-serif text-white border-b border-white/10 pb-2">
                     {dict.objective.question} <span className="text-sm font-normal text-gray-400 ml-2 block sm:inline">{dict.multipleChoice}</span>
-                </h3>
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {Object.entries(dict.objective.options).map(([key, label]) => (
                         <label key={key} className="flex items-center gap-3 p-4 bg-white/5 border border-white/5 hover:border-luxury-gold/50 cursor-pointer transition-all rounded-sm group">
@@ -171,9 +171,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
 
             {/* 3. Property Type */}
             <section className="space-y-6">
-                <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
+                <h2 className="text-xl font-serif text-white border-b border-white/10 pb-2">
                     {dict.propertyType.question} <span className="text-sm font-normal text-gray-400 ml-2 block sm:inline">{dict.multipleChoice}</span>
-                </h3>
+                </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {Object.entries(dict.propertyType.options).map(([key, label]) => (
                         <label key={key} className="flex items-center gap-3 p-4 bg-white/5 border border-white/5 hover:border-luxury-gold/50 cursor-pointer transition-all rounded-sm group">
@@ -186,9 +186,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
 
             {/* 3.b Specific Property Question */}
             <section className="space-y-6">
-                <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
+                <h2 className="text-xl font-serif text-white border-b border-white/10 pb-2">
                     {dict.specificProperty.question}
-                </h3>
+                </h2>
                 <div className="space-y-4">
                     <div className="flex gap-6">
                         <label className="flex items-center gap-2 cursor-pointer">
@@ -253,9 +253,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                         animate={{ opacity: 1, height: 'auto' }}
                         className="space-y-6 overflow-hidden"
                     >
-                        <h3 className="text-xl font-serif text-luxury-gold border-b border-white/10 pb-2">
+                        <h2 className="text-xl font-serif text-luxury-gold border-b border-white/10 pb-2">
                             {dict.investmentFocus.question} <span className="text-sm font-normal text-luxury-gold/60 ml-2 block sm:inline">{dict.multipleChoice}</span>
-                        </h3>
+                        </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {Object.entries(dict.investmentFocus.options).map(([key, label]) => (
                                 <label key={key} className="flex items-center gap-3 p-4 bg-luxury-gold/5 border border-luxury-gold/20 hover:border-luxury-gold cursor-pointer transition-all rounded-sm group">
@@ -271,9 +271,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
             {/* 5. Experience & Horizon */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <section className="space-y-6">
-                    <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
+                    <h2 className="text-xl font-serif text-white border-b border-white/10 pb-2">
                         {dict.experience.question}
-                    </h3>
+                    </h2>
                     <div className="space-y-3">
                         {Object.entries(dict.experience.options).map(([key, label]) => (
                             <label key={key} className="flex items-center gap-3 cursor-pointer group">
@@ -285,9 +285,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                 </section>
 
                 <section className="space-y-6">
-                    <h3 className="text-xl font-serif text-white border-b border-white/10 pb-2">
+                    <h2 className="text-xl font-serif text-white border-b border-white/10 pb-2">
                         {dict.horizon.question}
-                    </h3>
+                    </h2>
                     <div className="space-y-3">
                         {Object.entries(dict.horizon.options).map(([key, label]) => (
                             <label key={key} className="flex items-center gap-3 cursor-pointer group">
@@ -301,9 +301,9 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
 
             {/* 6. Fly & Buy Specifics */}
             <section className="space-y-6">
-                <h3 className="text-2xl font-serif text-luxury-gold border-b border-white/10 pb-4">
+                <h2 className="text-2xl font-serif text-luxury-gold border-b border-white/10 pb-4">
                     Fly & Buy Program
-                </h3>
+                </h2>
 
                 <div className="space-y-4">
                     <p className="text-white font-medium">{dict.flyAndBuy.visited}</p>

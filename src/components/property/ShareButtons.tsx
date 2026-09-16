@@ -60,16 +60,18 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
                         rel="noopener noreferrer"
                         className={`text-gray-400 transition-colors ${link.color} text-xl`}
                         title={`Compartir en ${link.name}`}
+                        aria-label={`Compartir en ${link.name}`}
                     >
-                        <link.icon />
+                        <link.icon aria-hidden="true" />
                     </a>
                 ))}
                 <button
                     onClick={copyToClipboard}
                     className="text-gray-400 hover:text-white transition-colors text-xl relative"
                     title="Copiar Enlace"
+                    aria-label="Copiar Enlace"
                 >
-                    <FaLink />
+                    <FaLink aria-hidden="true" />
                     {copied && (
                         <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-luxury-gold text-black text-xs font-bold px-2 py-1 rounded shadow-lg whitespace-nowrap">
                             ¡Copiado!

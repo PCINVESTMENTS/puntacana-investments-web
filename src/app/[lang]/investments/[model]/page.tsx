@@ -87,8 +87,71 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
         return obj[key] || obj['en'] || obj['es'] || "";
     };
 
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const canonicalUrl = `${baseUrl}/${lang}/investments/${model}`;
+    const titleText = getVal(data.title, lang);
+    const descText = getVal(data.description, lang);
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "headline": titleText,
+                "description": descText,
+                "image": data.heroImage.startsWith("http") ? data.heroImage : `${baseUrl}${data.heroImage}`,
+                "author": {
+                    "@type": "Organization",
+                    "name": "Punta Cana Investments",
+                    "url": baseUrl
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Punta Cana Investments",
+                    "url": baseUrl,
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": `${baseUrl}/images/logo-pci-investments-gold.webp`
+                    }
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": canonicalUrl
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": lang === "en" ? "Home" : lang === "fr" ? "Accueil" : "Inicio",
+                        "item": `${baseUrl}/${lang}`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": dict.nav.investments,
+                        "item": `${baseUrl}/${lang}/investments`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": titleText,
+                        "item": canonicalUrl
+                    }
+                ]
+            }
+        ]
+    };
+
     return (
         <main className="min-h-screen bg-primary-black text-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar
                 dict={dict.nav}
                 lang={lang}
@@ -103,8 +166,11 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                         src={data.heroImage}
                         alt={getVal(data.title, lang)}
                         fill
+                        sizes="100vw"
+                        quality={65}
                         className="object-cover opacity-60"
                         priority
+                        fetchPriority="high"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-primary-black/60 to-transparent"></div>
                 </div>
@@ -153,7 +219,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                                         <FaRegCheckCircle size={20} />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-white text-lg mb-1">{getVal(benefit.title, lang)}</h4>
+                                        <h3 className="font-bold text-white text-lg mb-1">{getVal(benefit.title, lang)}</h3>
                                         <p className="text-sm text-gray-400">{getVal(benefit.text, lang)}</p>
                                     </div>
                                 </div>

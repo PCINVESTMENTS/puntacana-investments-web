@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/about',
         '/locations',
         '/fly-and-buy',
+        '/fly-and-buy/form',
         '/services',
     ];
 
@@ -133,6 +134,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
             sitemapEntries.push({
                 url: `${baseUrl}/${lang}/services/${currentSlug}`,
+                lastModified: new Date(),
+                changeFrequency: "weekly",
+                priority: 0.8,
+                alternates: {
+                    languages: alternateLanguages
+                }
+            });
+        });
+    });
+
+    // Investment Model Pages
+    const investmentModelsList = [
+        "pre-construction",
+        "vacation-villas",
+        "rent-pool",
+        "development-participation",
+        "passive-investments",
+        "strategic-buy-resale"
+    ];
+
+    investmentModelsList.forEach(modelSlug => {
+        languages.forEach(lang => {
+            const alternateLanguages: Record<string, string> = {
+                "x-default": `${baseUrl}/en/investments/${modelSlug}`,
+                es: `${baseUrl}/es/investments/${modelSlug}`,
+                en: `${baseUrl}/en/investments/${modelSlug}`,
+                fr: `${baseUrl}/fr/investments/${modelSlug}`,
+            };
+
+            sitemapEntries.push({
+                url: `${baseUrl}/${lang}/investments/${modelSlug}`,
                 lastModified: new Date(),
                 changeFrequency: "weekly",
                 priority: 0.8,

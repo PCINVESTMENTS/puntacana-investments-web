@@ -43,18 +43,38 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
         ? "Reserva tu viaje de inversión inmobiliaria en Punta Cana. Visita las mejores propiedades con nuestro servicio VIP Fly & Buy. ¡Tu boleto aéreo puede ser reembolsado!"
         : "Book your real estate investment trip to Punta Cana. Visit the best properties with our VIP Fly & Buy service. Your flight ticket can be reimbursed!";
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const canonicalUrl = `${baseUrl}/${lang}/fly-and-buy`;
+
     return {
         title: `${title} | Punta Cana Investments`,
         description,
         keywords: isEs
-            ? ['Viajes de inversión Punta Cana', 'Tour inmobiliario Punta Cana', 'Asesoría personalizada propiedades República Dominicana']
+            ? ["Viajes de inversión Punta Cana", "Tour inmobiliario Punta Cana", "Asesoría personalizada propiedades República Dominicana"]
             : isFr
-            ? ["Voyage d'investissement Punta Cana", 'Tour immobilier République Dominicaine']
-            : ['Fly and buy property Punta Cana', 'Real estate investment tours Punta Cana', 'VIP property viewing Dominican Republic'],
+            ? ["Voyage d'investissement Punta Cana", "Tour immobilier République Dominicaine"]
+            : ["Fly and buy property Punta Cana", "Real estate investment tours Punta Cana", "VIP property viewing Dominican Republic"],
+        robots: {
+            index: true,
+            follow: true,
+        },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                es: `${baseUrl}/es/fly-and-buy`,
+                en: `${baseUrl}/en/fly-and-buy`,
+                fr: `${baseUrl}/fr/fly-and-buy`,
+                "x-default": `${baseUrl}/en/fly-and-buy`,
+            }
+        },
         openGraph: {
             title: `${title} | Punta Cana Investments`,
             description,
-            images: ['/images/fly-and-buy/premium.jpg'],
+            url: canonicalUrl,
+            images: [`${baseUrl}/images/fly-and-buy/premium.jpg`],
+            locale: isFr ? "fr_FR" : isEs ? "es_DO" : "en_US",
+            siteName: "Punta Cana Investments",
+            type: "website",
         }
     };
 }
@@ -66,8 +86,50 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
     const dict = await getDictionary(lang);
     const l = (isFr ? 'fr' : isEs ? 'es' : 'en') as 'es' | 'en' | 'fr';
 
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const canonicalUrl = `${baseUrl}/${lang}/fly-and-buy`;
+    const pageTitle = isFr 
+        ? "Fly & Buy: Tour Immobilier et Voyage d'Investissement à Punta Cana"
+        : isEs 
+        ? "Fly & Buy: Tour Inmobiliario y Viajes de Inversión en Punta Cana"
+        : "Fly & Buy: Real Estate Investment Tours in Punta Cana";
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": lang === "en" ? "Home" : lang === "fr" ? "Accueil" : "Inicio",
+                        "item": `${baseUrl}/${lang}`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": dict.nav.investments,
+                        "item": `${baseUrl}/${lang}/investments`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": pageTitle,
+                        "item": canonicalUrl
+                    }
+                ]
+            }
+        ]
+    };
+
     return (
         <main className="min-h-screen bg-primary-black text-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} variant="solid" />
 
             {/* Hero Section */}

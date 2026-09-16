@@ -9,11 +9,30 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     const { lang } = await params;
     const dict = await getDictionary(lang);
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const canonicalUrl = `${baseUrl}/${lang}/fly-and-buy/form`;
+
     return {
         title: `${dict.flyAndBuyForm.title} | Punta Cana Investments`,
         description: dict.flyAndBuyForm.subtitle,
+        robots: {
+            index: true,
+            follow: true,
+        },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                es: `${baseUrl}/es/fly-and-buy/form`,
+                en: `${baseUrl}/en/fly-and-buy/form`,
+                fr: `${baseUrl}/fr/fly-and-buy/form`,
+                "x-default": `${baseUrl}/en/fly-and-buy/form`,
+            }
+        },
         openGraph: {
-            images: ['/images/fly-and-buy/premium.jpg'],
+            title: `${dict.flyAndBuyForm.title} | Punta Cana Investments`,
+            description: dict.flyAndBuyForm.subtitle,
+            url: canonicalUrl,
+            images: [`${baseUrl}/images/fly-and-buy/premium.jpg`],
         }
     };
 }
