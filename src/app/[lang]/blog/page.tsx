@@ -148,8 +148,10 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                             {getVal(post.excerpt, lang)}
                                         </p>
                                         <div className="mt-auto">
-                                            <Link href={`/${lang}/blog/${post.slug}`} aria-label={`${dict.sections.blog.readMore}: ${getVal(post.title, lang)}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
-                                                {dict.sections.blog.readMore} <FaArrowRight className="text-[10px]" />
+                                            <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
+                                                <span>{dict.sections.blog.readMore}</span>
+                                                <span className="sr-only"> - {getVal(post.title, lang)}</span>
+                                                <FaArrowRight className="text-[10px]" />
                                             </Link>
                                         </div>
                                     </div>

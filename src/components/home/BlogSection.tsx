@@ -74,8 +74,10 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                                 <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
                                     {getVal(post.excerpt, l)}
                                 </p>
-                                <Link href={`/${lang}/blog/${post.slug}`} aria-label={`${dict.readMore}: ${getVal(post.title, l)}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
-                                    {dict.readMore} <FaArrowRight aria-hidden="true" className="text-[10px]" />
+                                <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
+                                    <span>{dict.readMore}</span>
+                                    <span className="sr-only"> - {getVal(post.title, l)}</span>
+                                    <FaArrowRight aria-hidden="true" className="text-[10px]" />
                                 </Link>
                             </div>
                         </article>
