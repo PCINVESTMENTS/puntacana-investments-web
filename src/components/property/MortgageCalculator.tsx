@@ -79,6 +79,7 @@ export default function MortgageCalculator({ price }: MortgageCalculatorProps) {
                             max={price}
                             step={1000}
                             value={downPayment}
+                            aria-label="Porcentaje de pago inicial"
                             onChange={(e) => handleDownPaymentChange(Number(e.target.value))}
                             className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-luxury-gold mb-2"
                         />
@@ -87,6 +88,7 @@ export default function MortgageCalculator({ price }: MortgageCalculatorProps) {
                             <input
                                 type="number"
                                 value={downPayment}
+                                aria-label="Monto de pago inicial"
                                 onChange={(e) => handleDownPaymentChange(Number(e.target.value))}
                                 className="w-full bg-black border border-white/10 rounded pl-8 pr-4 py-2 text-white focus:border-luxury-gold outline-none"
                             />
@@ -102,6 +104,7 @@ export default function MortgageCalculator({ price }: MortgageCalculatorProps) {
                                     type="number"
                                     step="0.1"
                                     value={interestRate}
+                                    aria-label="Tasa de interés anual"
                                     onChange={(e) => setInterestRate(Number(e.target.value))}
                                     className="w-full bg-black border border-white/10 rounded pl-8 pr-4 py-2 text-white focus:border-luxury-gold outline-none"
                                 />
@@ -116,6 +119,7 @@ export default function MortgageCalculator({ price }: MortgageCalculatorProps) {
                                     min="1"
                                     max="40"
                                     value={loanTerm}
+                                    aria-label="Plazo del préstamo en años"
                                     onChange={(e) => setLoanTerm(Number(e.target.value))}
                                     className="w-full bg-black border border-white/10 rounded pl-8 pr-4 py-2 text-white focus:border-luxury-gold outline-none"
                                 />
@@ -130,7 +134,7 @@ export default function MortgageCalculator({ price }: MortgageCalculatorProps) {
                     <span className="text-4xl md:text-5xl font-bold text-luxury-gold mb-4">
                         {formatCurrency(monthlyPayment)}
                     </span>
-                    <div className="w-full space-y-2 mt-4 text-sm text-gray-500 border-t border-white/10 pt-4">
+                    <div className="w-full space-y-2 mt-4 text-sm text-gray-300 font-medium border-t border-white/10 pt-4">
                         <div className="flex justify-between">
                             <span>Préstamo:</span>
                             <span className="text-gray-300">{formatCurrency(loanAmount)}</span>
@@ -140,7 +144,7 @@ export default function MortgageCalculator({ price }: MortgageCalculatorProps) {
                             <span className="text-gray-300">{formatCurrency(downPayment)}</span>
                         </div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-6 italic">
+                    <p className="text-xs text-gray-400 font-medium mt-6 italic">
                         *Cálculo referencial. No incluye seguros ni impuestos.
                     </p>
                 </div>

@@ -74,7 +74,7 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
                 {completionPercent !== undefined && (
                     <div className="text-right">
                         <span className="text-4xl font-bold text-white font-serif">{completionPercent}%</span>
-                        <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{d.completion}</div>
+                        <div className="text-[10px] text-gray-300 uppercase tracking-widest font-bold">{d.completion}</div>
                     </div>
                 )}
             </div>
@@ -113,7 +113,7 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
 
                         <div className="flex-1">
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-1">
-                                <h4 className={`text-lg font-bold ${stage.status === "pending" ? "text-gray-500" : "text-white"}`}>
+                                <h4 className={`text-lg font-bold ${stage.status === "pending" ? "text-gray-400" : "text-white"}`}>
                                     {getVal(stage.title, lang)}
                                 </h4>
                                 <span className="text-xs font-bold text-luxury-gold/60 uppercase tracking-widest">{stage.date}</span>
@@ -127,7 +127,7 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
             </div>
 
             <div className="mt-12 pt-8 border-t border-white/5 text-center">
-                <p className="text-[10px] text-gray-600 uppercase tracking-[0.2em] mb-4">
+                <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] mb-4 font-medium">
                     {d.reportLabel}
                 </p>
                 <button className="text-luxury-gold text-xs font-bold uppercase tracking-widest hover:text-white transition-colors border border-luxury-gold/20 px-6 py-3 rounded hover:border-luxury-gold">

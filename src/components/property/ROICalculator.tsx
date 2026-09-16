@@ -94,6 +94,7 @@ export default function ROICalculator({ price, dict, propertyType }: ROICalculat
                             max={Math.max(1000, price * 0.005)}
                             step="10"
                             value={nightlyRate}
+                            aria-label={dict.avgNightlyRate || "Tarifa promedio por noche"}
                             onChange={(e) => setNightlyRate(Number(e.target.value))}
                             className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-luxury-gold"
                         />
@@ -110,6 +111,7 @@ export default function ROICalculator({ price, dict, propertyType }: ROICalculat
                             max="95"
                             step="5"
                             value={occupancy}
+                            aria-label={dict.occupancy || "Tasa de ocupación"}
                             onChange={(e) => setOccupancy(Number(e.target.value))}
                             className="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-luxury-gold"
                         />
@@ -125,7 +127,7 @@ export default function ROICalculator({ price, dict, propertyType }: ROICalculat
                             </div>
                             <div>
                                 <span className={`text-sm font-bold block ${useConfotur ? "text-luxury-gold" : "text-gray-400"}`}>{dict.confotur}</span>
-                                <span className="text-[10px] text-gray-500 uppercase tracking-tighter">{dict.confoturNote}</span>
+                                <span className="text-[10px] text-gray-300 uppercase tracking-tighter font-medium">{dict.confoturNote}</span>
                             </div>
                         </div>
                         <FaInfoCircle className={`transition-colors ${useConfotur ? "text-luxury-gold" : "text-gray-600"}`} />
@@ -148,16 +150,16 @@ export default function ROICalculator({ price, dict, propertyType }: ROICalculat
 
                     <div className="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
                         <div className="text-left">
-                            <span className="text-[10px] text-gray-500 uppercase block mb-1">{dict.annualRevenue}</span>
+                            <span className="text-[10px] text-gray-300 uppercase block mb-1 font-medium">{dict.annualRevenue}</span>
                             <span className="text-lg font-bold text-gray-200">{formatCurrency(annualGross)}</span>
                         </div>
                         <div className="text-right">
-                            <span className="text-[10px] text-gray-500 uppercase block mb-1">{dict.netIncome}</span>
+                            <span className="text-[10px] text-gray-300 uppercase block mb-1 font-medium">{dict.netIncome}</span>
                             <span className="text-lg font-bold text-luxury-gold">{formatCurrency(annualNet)}</span>
                         </div>
                     </div>
 
-                    <p className="text-[10px] text-gray-600 mt-6 italic leading-tight">
+                    <p className="text-[10px] text-gray-400 mt-6 italic leading-tight font-medium">
                         {dict.disclaimer}
                     </p>
                 </div>
