@@ -4,18 +4,21 @@ import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { FaBed, FaBath, FaRulerCombined, FaCheck, FaArrowLeft, FaWhatsapp } from "react-icons/fa";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import ContactForm from "@/components/contact/ContactForm";
-import PropertyGallery from "@/components/property/PropertyGallery";
-import VideoPlayer from "@/components/property/VideoPlayer";
-import MortgageCalculator from "@/components/property/MortgageCalculator";
-import ROICalculator from "@/components/property/ROICalculator";
 
-import ConstructionProgress from "@/components/property/ConstructionProgress";
-import PriceDropNotify from "@/components/property/PriceDropNotify";
-import ShareButtons from "@/components/property/ShareButtons";
+const PropertyGallery = dynamic(() => import("@/components/property/PropertyGallery"), {
+    loading: () => <div className="h-[400px] md:h-[600px] bg-white/5 animate-pulse rounded" />
+});
+const VideoPlayer = dynamic(() => import("@/components/property/VideoPlayer"));
+const MortgageCalculator = dynamic(() => import("@/components/property/MortgageCalculator"));
+const ROICalculator = dynamic(() => import("@/components/property/ROICalculator"));
+const ConstructionProgress = dynamic(() => import("@/components/property/ConstructionProgress"));
+const PriceDropNotify = dynamic(() => import("@/components/property/PriceDropNotify"));
+const ShareButtons = dynamic(() => import("@/components/property/ShareButtons"));
 
 // Sanity imports
 import { client } from "@/sanity/lib/client";
@@ -390,12 +393,23 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
             {/* Extended Hero / Header */}
             <div className="relative h-[60vh] md:h-[70vh]">
+                <link
+                    rel="preload"
+                    as="image"
+                    href={property.image}
+                    // @ts-ignore
+                    fetchpriority="high"
+                />
                 <div className="absolute inset-0">
                     <Image
                         src={property.image}
                         alt={translatedTitle}
                         fill
                         priority
+                        // @ts-ignore
+                        fetchPriority="high"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+                        quality={75}
                         className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/10 to-transparent"></div>
@@ -471,7 +485,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                         strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
                                         ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 text-gray-300" {...props} />,
                                         li: ({ node, ...props }) => <li className="mb-1" {...props} />,
-                                        a: ({ node, ...props }) => <a className="text-luxury-gold hover:underline transition-all" {...props} />,
+                                        a: ({ node, ...props }) => <a className="text-luxury-gold underline underline-offset-4 decoration-luxury-gold/80 hover:text-white font-medium transition-all" {...props} />,
                                     }}
                                 >
                                     {property.description[lang as 'en' | 'es' | 'fr'] || property.description['en']}
@@ -595,7 +609,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             />
 
                             <div className="mt-8 text-center pt-8 border-t border-white/10">
-                                <p className="text-sm text-gray-500 mb-4">WhatsApp:</p>
+                                <p className="text-sm text-gray-300 font-medium mb-4">WhatsApp:</p>
                                 <a href="https://wa.me/18294084322" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-500 hover:text-green-400 font-bold text-lg transition-colors min-h-[48px]">
                                     <FaWhatsapp aria-hidden="true" className="text-2xl" /> {lang === 'en' ? 'Direct Chat' : lang === 'fr' ? 'Chat Direct' : 'Chat Directo'}
                                 </a>
