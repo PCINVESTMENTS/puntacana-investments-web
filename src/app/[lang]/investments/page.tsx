@@ -112,12 +112,13 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
             <div className="relative h-[60vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
-                        src="/images/investments/modern-investments-hero.jpg"
+                        src="/images/investments/modern-investments-hero.webp"
                         alt="Investments in Punta Cana"
                         fill
                         className="object-cover"
                         priority={true}
                         fetchPriority="high"
+                        quality={60}
                         sizes="100vw"
                     />
                     {/* Subtle overlay for text readability only at the bottom */}
@@ -188,6 +189,8 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                 alt="Financial Growth"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
+                                loading="lazy"
+                                quality={60}
                                 className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute bottom-8 left-8 z-20 bg-black/80 p-6 border-l-4 border-luxury-gold backdrop-blur-sm max-w-xs">
@@ -265,7 +268,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
             <section className="py-24 bg-gradient-to-b from-dark-gray to-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-luxury-gold rounded-2xl p-8 md:p-16 flex flex-col md:flex-row items-center gap-12 shadow-2xl relative overflow-hidden">
-                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                        <div className="absolute inset-0 bg-[url('/images/cubes.png')] opacity-10"></div>
 
                         <div className="w-full md:w-1/2 relative z-10">
                             <h2 className="text-3xl md:text-4xl font-serif font-bold text-black mb-6">
