@@ -403,8 +403,6 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         priority
                         // @ts-ignore
                         fetchPriority="high"
-                        // @ts-ignore
-                        decoding="sync"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                         quality={75}
                         className="object-cover"
