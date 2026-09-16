@@ -55,9 +55,10 @@ export default function InteractiveBlocks({ blocks, translations }: any) {
                     <div className="relative bg-[#0A0A0A] border border-luxury-gold/30 w-full max-w-6xl max-h-full overflow-hidden flex flex-col lg:flex-row shadow-[0_0_50px_rgba(212,175,55,0.15)] animate-fade-in-up">
                         <button 
                             onClick={() => setActiveBlock(null)}
+                            aria-label="Close modal"
                             className="absolute top-4 right-4 z-20 bg-black/80 border border-white/20 hover:border-luxury-gold hover:text-luxury-gold text-white p-3 rounded-full transition-all"
                         >
-                            <FaTimes />
+                            <FaTimes aria-hidden="true" />
                         </button>
                         
                         <div className="w-full lg:w-2/5 relative h-64 lg:h-auto border-b lg:border-b-0 lg:border-r border-white/10">

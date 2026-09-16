@@ -163,7 +163,7 @@ export default {
                     slug: "legal-advice",
                     title: "Legal Advice",
                     description: "Complete contract management, due diligence, and tax advice to guarantee safe investments.",
-                    img: "/images/services/asesoria-legal-hero.jpg",
+                    img: "/images/services/asesoria-legal-hero.webp",
                     longDescription: "Our legal team specialized in real estate law provides total coverage to ensure that your investment in the Dominican Republic is solid and risk-free. We handle every legal detail, from title verification to tax optimization.",
                     contentSections: [
                         {
@@ -225,7 +225,7 @@ export default {
                     slug: "interior-design",
                     title: "Interior Design",
                     description: "Creation of exclusive and functional environments, selection of luxury furniture and finishes.",
-                    img: "/images/services/mobiliario-y-equipamiento-ffe.webp",
+                    img: "/images/services/diseno-de-interiores.webp",
                     longDescription: "Luxury is in the details. We design interiors that tell stories, carefully selecting every piece, texture, and finish to create atmospheres of unmatched sophistication and comfort.",
                     contentSections: [
                         {
@@ -313,7 +313,7 @@ export default {
                     slug: "construction",
                     title: "Construction",
                     description: "We materialize projects from the foundations to turnkey, guaranteeing excellence in every meter.",
-                    img: "/images/og-home-luxury.webp",
+                    img: "/images/services/construcciones.webp",
                     longDescription: "Construction quality without compromise. As a general contractor, we assume full responsibility for execution, coordinating teams, materials, and timelines to deliver impeccable works.",
                     contentSections: [
                         {
@@ -365,7 +365,7 @@ export default {
                     slug: "monitoreo-de-inversion",
                     title: "Investment Monitoring",
                     description: "Independent technical auditing, premium reports, and construction control for foreign investors in pre-construction.",
-                    img: "/images/monitoring-hero.png",
+                    img: "/images/monitoring-hero.webp",
                     longDescription: "Exclusive service to give you peace of mind. We are your eyes on the site, technically and legally auditing each phase of your remote investment.",
                     contentSections: [],
                     details: []

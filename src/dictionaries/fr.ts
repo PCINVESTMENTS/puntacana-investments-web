@@ -163,7 +163,7 @@ export default {
                     slug: "legal-advice",
                     title: "Conseil Juridique",
                     description: "Gestion complète des contrats, diligence raisonnable et conseils fiscaux pour garantir des investissements sûrs.",
-                    img: "/images/services/asesoria-legal-hero.jpg",
+                    img: "/images/services/asesoria-legal-hero.webp",
                     longDescription: "Notre équipe juridique spécialisée en droit immobilier offre une couverture totale pour s'assurer que votre investissement en République Dominicaine est solide et sans risque. Nous gérons chaque détail juridique, de la vérification des titres à l'optimisation fiscale.",
                     contentSections: [
                         {
@@ -225,7 +225,7 @@ export default {
                     slug: "interior-design",
                     title: "Design d'Intérieur",
                     description: "Création d'environnements exclusifs et fonctionnels, sélection de meubles et finitions de luxe.",
-                    img: "/images/services/mobiliario-y-equipamiento-ffe.webp",
+                    img: "/images/services/diseno-de-interiores.webp",
                     longDescription: "Le luxe est dans les détails. Nous concevons des intérieurs qui racontent des histoires, en sélectionnant soigneusement chaque pièce, texture et finition pour créer des atmosphères d'une sophistication et d'un confort inégalés.",
                     contentSections: [
                         {
@@ -313,7 +313,7 @@ export default {
                     slug: "construction",
                     title: "Construction",
                     description: "Nous matérialisons les projets, des fondations jusqu'au clé en main, en garantissant l'excellence dans chaque mètre.",
-                    img: "/images/og-home-luxury.webp",
+                    img: "/images/services/construcciones.webp",
                     longDescription: "La qualité de construction sans compromis. En tant qu'entrepreneur général, nous assumons la pleine responsabilité de l'exécution, en coordonnant les équipes, les matériaux et les délais pour livrer des ouvrages impeccables.",
                     contentSections: [
                         {
@@ -365,7 +365,7 @@ export default {
                     slug: "monitoreo-de-inversion",
                     title: "Suivi des Investissements",
                     description: "Audit technique indépendant, rapports premium et contrôle de la construction pour les investisseurs étrangers en pré-construction.",
-                    img: "/images/monitoring-hero.png",
+                    img: "/images/monitoring-hero.webp",
                     longDescription: "Service exclusif pour vous offrir la tranquillité d'esprit. Nous sommes vos yeux sur le chantier, en auditant techniquement et légalement chaque phase de votre investissement à distance.",
                     contentSections: [],
                     details: []

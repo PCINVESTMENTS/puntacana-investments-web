@@ -109,6 +109,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         });
     });
 
+    // Service Pages
+    const servicesList: { es: string; en: string; fr: string }[] = [
+        { es: "asesoria-legal", en: "legal-advice", fr: "legal-advice" },
+        { es: "arquitectura", en: "architecture", fr: "architecture" },
+        { es: "diseno-interiores", en: "interior-design", fr: "interior-design" },
+        { es: "ingenieria-civil", en: "civil-engineering", fr: "civil-engineering" },
+        { es: "ingenieria-electrica", en: "electrical-engineering", fr: "electrical-engineering" },
+        { es: "construccion", en: "construction", fr: "construction" },
+        { es: "desarrollo", en: "development", fr: "development" },
+        { es: "monitoreo-de-inversion", en: "monitoreo-de-inversion", fr: "monitoreo-de-inversion" },
+    ];
+
+    servicesList.forEach(serviceItem => {
+        languages.forEach(lang => {
+            const currentSlug = serviceItem[lang as "es" | "en" | "fr"];
+            const alternateLanguages: Record<string, string> = {
+                "x-default": `${baseUrl}/en/services/${serviceItem.en}`,
+                es: `${baseUrl}/es/services/${serviceItem.es}`,
+                en: `${baseUrl}/en/services/${serviceItem.en}`,
+                fr: `${baseUrl}/fr/services/${serviceItem.fr}`,
+            };
+
+            sitemapEntries.push({
+                url: `${baseUrl}/${lang}/services/${currentSlug}`,
+                lastModified: new Date(),
+                changeFrequency: "weekly",
+                priority: 0.8,
+                alternates: {
+                    languages: alternateLanguages
+                }
+            });
+        });
+    });
+
     // Blog Post Pages
     allPosts.forEach(post => {
         languages.forEach(lang => {

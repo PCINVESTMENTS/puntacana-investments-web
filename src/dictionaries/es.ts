@@ -163,7 +163,7 @@ export default {
                     slug: "asesoria-legal",
                     title: "Asesoría Legal",
                     description: "Gestión completa de contratos, debida diligencia y asesoría fiscal para garantizar inversiones seguras.",
-                    img: "/images/services/asesoria-legal-hero.jpg",
+                    img: "/images/services/asesoria-legal-hero.webp",
                     longDescription: "Nuestro equipo legal especializado en derecho inmobiliario brinda una cobertura total para asegurar que su inversión en República Dominicana sea sólida y libre de riesgos. Nos encargamos de cada detalle legal, desde la verificación de títulos hasta la optimización fiscal.",
                     contentSections: [
                         {
@@ -365,7 +365,7 @@ export default {
                     slug: "monitoreo-de-inversion",
                     title: "Monitoreo de Inversión",
                     description: "Auditoría técnica independiente, reportes premium y control de obra para inversionistas extranjeros en pre-construcción.",
-                    img: "/images/monitoring-hero.png",
+                    img: "/images/monitoring-hero.webp",
                     longDescription: "Servicio exclusivo para brindarle paz mental. Somos sus ojos en la obra, auditando técnica y legalmente cada fase de su inversión a distancia.",
                     contentSections: [],
                     details: []

@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             title,
             description,
             url: canonicalUrl,
-            images: [{ url: `${baseUrl}/images/monitoring-hero.png`, width: 1200, height: 630, alt: title }],
+            images: [{ url: `${baseUrl}/images/monitoring-hero.webp`, width: 1200, height: 630, alt: title }],
             locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
             siteName: 'Punta Cana Investments',
             type: 'website',
@@ -106,7 +106,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
     const blocks = [
         {
             title: lang === 'en' ? "Asset Protection & Permit Audit" : lang === 'fr' ? "Protection du Patrimoine & Audit des Permis" : "Bloque de Protección Patrimonial y Auditoría de Permisos",
-            image: "/images/monitoring-audit.png",
+            image: "/images/monitoring-audit.webp",
             content: (
                 <div className="space-y-4">
                     <p className="pl-6 border-l-2 border-luxury-gold text-white font-medium italic">
@@ -135,7 +135,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
         },
         {
             title: lang === 'en' ? "Benefits (For Monthly Quota Payers)" : lang === 'fr' ? "Avantages (Pour les payeurs de mensualités)" : "Sección de Beneficios (Para clientes que pagan cuotas mensuales)",
-            image: "/images/monitoring-benefits.png",
+            image: "/images/monitoring-benefits.webp",
             content: (
                 <div className="space-y-4">
                     <p>
@@ -177,7 +177,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
         },
         {
             title: lang === 'en' ? "What Will You Receive?" : lang === 'fr' ? "Que Recevrez-vous ?" : "Sección del Entregable",
-            image: "/images/monitoring-deliverables.png",
+            image: "/images/monitoring-deliverables.webp",
             content: (
                 <div className="space-y-4">
                     <h4 className="text-xl font-bold text-luxury-gold">
@@ -195,7 +195,7 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
         },
         {
             title: lang === 'en' ? "An Exclusive Benefit" : lang === 'fr' ? "Un Avantage Exclusif" : "Un Beneficio Exclusivo",
-            image: "/images/monitoring-closing.png",
+            image: "/images/monitoring-closing.webp",
             content: (
                 <div className="space-y-4">
                     <h4 className="text-xl font-bold text-luxury-gold">
@@ -213,15 +213,77 @@ export default async function MonitoreoInversionPage({ params }: { params: Promi
         }
     ];
 
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const canonicalUrl = `${baseUrl}/${lang}/services/monitoreo-de-inversion`;
+    const pageTitle = lang === "en" ? "Investment Monitoring | Punta Cana Real Estate Audit" :
+                      lang === "fr" ? "Suivi des Investissements | Audit Immobilier Punta Cana" :
+                      "Monitoreo de Inversión | Auditoría Inmobiliaria Punta Cana";
+    const pageDescription = lang === "en" ? "Secure your pre-construction investment in Punta Cana. Independent visual audits, technical inspections, and premium reports delivered directly to you." :
+                            lang === "fr" ? "Sécurisez votre investissement sur plan à Punta Cana. Audits visuels indépendants, inspections techniques et rapports premium livrés directement chez vous." :
+                            "Asegure su inversión en planos en Punta Cana. Auditorías visuales independientes, inspecciones técnicas y reportes premium entregados directamente a usted.";
+
+    // Structured Data (JSON-LD)
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Service",
+                "name": pageTitle,
+                "description": pageDescription,
+                "provider": {
+                    "@type": "RealEstateAgent",
+                    "name": "Punta Cana Investments",
+                    "url": baseUrl,
+                    "telephone": "+1-829-408-4322",
+                    "priceRange": "$$$$"
+                },
+                "areaServed": {
+                    "@type": "AdministrativeArea",
+                    "name": "Punta Cana, Dominican Republic"
+                },
+                "url": canonicalUrl,
+                "image": `${baseUrl}/images/monitoring-hero.webp`
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": lang === "en" ? "Home" : lang === "fr" ? "Accueil" : "Inicio",
+                        "item": `${baseUrl}/${lang}`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": dict.nav.services,
+                        "item": `${baseUrl}/${lang}/services`
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": pageTitle,
+                        "item": canonicalUrl
+                    }
+                ]
+            }
+        ]
+    };
+
     return (
         <main className="min-h-screen bg-[#0A0A0A] text-white selection:bg-luxury-gold selection:text-black">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
 
             {/* BLOCK 1: Hero Section */}
             <section className="relative h-[80vh] flex items-center justify-center overflow-hidden pt-20">
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/images/monitoring-hero.jpg"
+                        src="/images/monitoring-hero.webp"
                         alt={t.heroTitle}
                         fill
                         sizes="100vw"
