@@ -93,7 +93,6 @@ export default function ServicesSection({ dict, lang, limit, heroImage, isPage }
                         <Link
                             key={index}
                             href={`/${lang}/services/${service.slug}`}
-                            aria-label={`${service.title} - ${dict.cta}`}
                             className="bg-primary-black border border-white/5 hover:border-luxury-gold/50 transition-all duration-300 group hover:-translate-y-2 cursor-pointer flex flex-col relative overflow-hidden h-[400px] rounded-sm"
                         >
                             {/* Background Image with Overlay */}
@@ -115,9 +114,15 @@ export default function ServicesSection({ dict, lang, limit, heroImage, isPage }
                             </div>
 
                             <div className="relative z-10 p-8 flex flex-col h-full">
-                                <h3 className="text-2xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors mt-auto">
-                                    {service.title}
-                                </h3>
+                                {isPage || heroImage ? (
+                                    <h2 className="text-2xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors mt-auto">
+                                        {service.title}
+                                    </h2>
+                                ) : (
+                                    <h3 className="text-2xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors mt-auto">
+                                        {service.title}
+                                    </h3>
+                                )}
                                 <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
                                     {service.description}
                                 </p>
