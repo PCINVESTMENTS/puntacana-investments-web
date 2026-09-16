@@ -64,33 +64,22 @@ const KEYWORDS_BY_SERVICE: Record<string, { es: string; en: string; fr: string }
     }
 };
 
+const ALL_SERVICE_SLUGS = [
+    "asesoria-legal", "legal-advice",
+    "arquitectura", "architecture",
+    "diseno-interiores", "interior-design",
+    "ingenieria-civil", "civil-engineering",
+    "ingenieria-electrica", "electrical-engineering",
+    "construccion", "construction",
+    "desarrollo", "development"
+];
+
 export async function generateStaticParams() {
-    return [
-        // Spanish
-        { lang: "es", slug: "asesoria-legal" },
-        { lang: "es", slug: "arquitectura" },
-        { lang: "es", slug: "diseno-interiores" },
-        { lang: "es", slug: "ingenieria-civil" },
-        { lang: "es", slug: "ingenieria-electrica" },
-        { lang: "es", slug: "construccion" },
-        { lang: "es", slug: "desarrollo" },
-        // English
-        { lang: "en", slug: "legal-advice" },
-        { lang: "en", slug: "architecture" },
-        { lang: "en", slug: "interior-design" },
-        { lang: "en", slug: "civil-engineering" },
-        { lang: "en", slug: "electrical-engineering" },
-        { lang: "en", slug: "construction" },
-        { lang: "en", slug: "development" },
-        // French
-        { lang: "fr", slug: "legal-advice" },
-        { lang: "fr", slug: "architecture" },
-        { lang: "fr", slug: "interior-design" },
-        { lang: "fr", slug: "civil-engineering" },
-        { lang: "fr", slug: "electrical-engineering" },
-        { lang: "fr", slug: "construction" },
-        { lang: "fr", slug: "development" },
-    ];
+    return ALL_SERVICE_SLUGS.flatMap((slug) => [
+        { lang: "es", slug },
+        { lang: "en", slug },
+        { lang: "fr", slug }
+    ]);
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
