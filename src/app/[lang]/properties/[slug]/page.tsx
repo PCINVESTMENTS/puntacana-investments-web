@@ -403,6 +403,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         priority
                         // @ts-ignore
                         fetchPriority="high"
+                        // @ts-ignore
+                        decoding="sync"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
                         quality={75}
                         className="object-cover"
@@ -412,7 +414,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
                     <div className="max-w-7xl mx-auto">
-                        <Link href={`/${lang}#properties`} className="inline-flex items-center text-luxury-gold hover:text-white mb-6 uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px]">
+                        <Link href={`/${lang}#properties`} prefetch={false} className="inline-flex items-center text-luxury-gold hover:text-white mb-6 uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px]">
                             <FaArrowLeft aria-hidden="true" className="mr-2" /> {dict.properties.filters.allLocations}
                         </Link>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
