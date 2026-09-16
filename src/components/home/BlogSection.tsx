@@ -38,7 +38,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                             {dict.latestNews}
                         </h2>
                     </div>
-                    <Link href={`/${lang}/blog`} className="hidden md:flex items-center gap-2 text-white hover:text-luxury-gold transition-colors uppercase tracking-widest text-sm font-bold mt-6 md:mt-0">
+                    <Link href={`/${lang}/blog`} aria-label={dict.viewAll} className="hidden md:flex items-center gap-2 text-white hover:text-luxury-gold transition-colors uppercase tracking-widest text-sm font-bold mt-6 md:mt-0">
                         {dict.viewAll} <FaArrowRight aria-hidden="true" />
                     </Link>
                 </div>
@@ -74,7 +74,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                                 <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
                                     {getVal(post.excerpt, l)}
                                 </p>
-                                <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
+                                <Link href={`/${lang}/blog/${post.slug}`} aria-label={`${dict.readMore}: ${getVal(post.title, l)}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
                                     {dict.readMore} <FaArrowRight aria-hidden="true" className="text-[10px]" />
                                 </Link>
                             </div>
@@ -83,7 +83,7 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                 </div>
 
                 <div className="mt-12 text-center md:hidden">
-                    <Link href={`/${lang}/blog`} className="inline-flex items-center gap-2 text-white hover:text-luxury-gold transition-colors uppercase tracking-widest text-sm font-bold">
+                    <Link href={`/${lang}/blog`} aria-label={dict.viewAll} className="inline-flex items-center gap-2 text-white hover:text-luxury-gold transition-colors uppercase tracking-widest text-sm font-bold">
                         {dict.viewAll} <FaArrowRight aria-hidden="true" />
                     </Link>
                 </div>
