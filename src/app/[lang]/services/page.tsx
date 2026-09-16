@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
             url: canonicalUrl,
             images: [
                 {
-                    url: `${baseUrl}/images/services-team-horizontal.jpg`,
+                    url: `${baseUrl}/images/services-team-horizontal.webp`,
                     width: 1200,
                     height: 630,
                     alt: dict.sections.services.title,
@@ -75,7 +75,8 @@ export default async function ServicesPage({ params }: { params: Promise<{ lang:
                 <ServicesSection 
                     dict={dict.sections.services} 
                     lang={lang} 
-                    heroImage="/images/services-team-horizontal.jpg"
+                    heroImage="/images/services-team-horizontal.webp"
+                    isPage={true}
                 />
             </div>
 

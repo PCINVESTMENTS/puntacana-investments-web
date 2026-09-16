@@ -23,9 +23,10 @@ interface ServicesSectionProps {
     lang: string;
     limit?: number;
     heroImage?: string;
+    isPage?: boolean;
 }
 
-export default function ServicesSection({ dict, lang, limit, heroImage }: ServicesSectionProps) {
+export default function ServicesSection({ dict, lang, limit, heroImage, isPage }: ServicesSectionProps) {
     let items = dict.items;
 
     // Safety check for items
@@ -66,9 +67,15 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold drop-shadow-md">
                             {dict.subtitle}
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif drop-shadow-lg">
-                            {dict.title}
-                        </h2>
+                        {isPage || heroImage ? (
+                            <h1 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif drop-shadow-lg">
+                                {dict.title}
+                            </h1>
+                        ) : (
+                            <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif drop-shadow-lg">
+                                {dict.title}
+                            </h2>
+                        )}
                         <div className="h-1 w-24 bg-luxury-gold mx-auto shadow-lg"></div>
                         <p className="text-gray-100 mt-6 max-w-2xl mx-auto drop-shadow-md font-medium">
                             {dict.description}
@@ -86,6 +93,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                         <Link
                             key={index}
                             href={`/${lang}/services/${service.slug}`}
+                            aria-label={`${service.title} - ${dict.cta}`}
                             className="bg-primary-black border border-white/5 hover:border-luxury-gold/50 transition-all duration-300 group hover:-translate-y-2 cursor-pointer flex flex-col relative overflow-hidden h-[400px] rounded-sm"
                         >
                             {/* Background Image with Overlay */}
@@ -126,6 +134,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage }: Servic
                     <div className="mt-12 text-center">
                         <Link
                             href={`/${lang}/services`}
+                            aria-label={lang === "en" ? "Explore All Services" : lang === "fr" ? "Explorer Tous les Services" : "Explorar Todos los Servicios"}
                             className="inline-block bg-luxury-gold text-black font-bold py-4 px-10 rounded-sm hover:bg-white transition-colors uppercase tracking-widest text-sm shadow-lg hover:shadow-xl"
                         >
                             {lang === 'en' ? 'Explore All Services' : lang === 'fr' ? 'Explorer Tous les Services' : 'Explorar Todos los Servicios'}

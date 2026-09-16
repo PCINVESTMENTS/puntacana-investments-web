@@ -216,11 +216,13 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                             <div className="bg-dark-gray p-8 rounded-xl text-white shadow-2xl relative overflow-hidden group border border-luxury-gold/20">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/10 rounded-full blur-2xl transform translate-x-10 -translate-y-10 group-hover:bg-luxury-gold/20 transition-all"></div>
                                 <h3 className="text-2xl font-bold mb-4 font-serif relative z-10 text-luxury-gold">
-                                    {lang === 'en' ? 'Interested in this service?' : '¿Le interesa este servicio?'}
+                                    {lang === 'en' ? 'Interested in this service?' : lang === 'fr' ? 'Ce service vous intéresse ?' : '¿Le interesa este servicio?'}
                                 </h3>
                                 <p className="mb-8 font-medium relative z-10 opacity-90 text-gray-300">
                                     {lang === 'en'
                                         ? 'Contact our specialists for a personalized quote.'
+                                        : lang === 'fr'
+                                        ? 'Contactez nos spécialistes pour un devis personnalisé.'
                                         : 'Contacte a nuestros especialistas para una cotización personalizada.'}
                                 </p>
                                 <Link
@@ -234,7 +236,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                             {/* Navigation */}
                             <div className="bg-white/5 p-6 rounded-lg border border-white/10">
                                 <h4 className="text-sm uppercase tracking-widest text-gray-400 font-bold mb-4">
-                                    {lang === 'en' ? 'Other Services' : 'Otros Servicios'}
+                                    {lang === 'en' ? 'Other Services' : lang === 'fr' ? 'Autres Services' : 'Otros Servicios'}
                                 </h4>
                                 <nav className="space-y-2">
                                     {dict.sections.services.items.map((s: any) => (
