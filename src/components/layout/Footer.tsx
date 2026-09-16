@@ -45,8 +45,6 @@ export function Footer({ dict, lang }: FooterProps) {
                                 width={140}
                                 height={140}
                                 className="w-1/2 h-auto object-contain"
-                                priority={true}
-                                fetchPriority="high"
                                 sizes="140px"
                             />
                             <Image
@@ -55,8 +53,6 @@ export function Footer({ dict, lang }: FooterProps) {
                                 width={140}
                                 height={140}
                                 className="w-1/2 h-auto object-contain"
-                                priority={true}
-                                fetchPriority="high"
                                 sizes="140px"
                             />
                         </Link>

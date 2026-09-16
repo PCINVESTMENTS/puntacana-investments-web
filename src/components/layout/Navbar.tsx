@@ -154,7 +154,6 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 height={120}
                                 className="w-[60px] h-[60px] sm:w-20 sm:h-20 xl:w-24 xl:h-24 object-contain"
                                 priority={true}
-                                fetchPriority="high"
                                 sizes="(max-width: 640px) 60px, (max-width: 1280px) 80px, 96px"
                             />
                             <Image
@@ -164,7 +163,6 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 height={120}
                                 className="w-[60px] h-[60px] sm:w-20 sm:h-20 xl:w-24 xl:h-24 object-contain"
                                 priority={true}
-                                fetchPriority="high"
                                 sizes="(max-width: 640px) 60px, (max-width: 1280px) 80px, 96px"
                             />
                         </Link>

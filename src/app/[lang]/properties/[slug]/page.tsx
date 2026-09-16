@@ -8,7 +8,9 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
-import ContactForm from "@/components/contact/ContactForm";
+const ContactForm = dynamic(() => import("@/components/contact/ContactForm"), {
+    loading: () => <div className="h-[400px] bg-white/5 animate-pulse rounded-lg" />
+});
 
 const PropertyGallery = dynamic(() => import("@/components/property/PropertyGallery"), {
     loading: () => <div className="h-[400px] md:h-[600px] bg-white/5 animate-pulse rounded" />
@@ -393,13 +395,6 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
             {/* Extended Hero / Header */}
             <div className="relative h-[60vh] md:h-[70vh]">
-                <link
-                    rel="preload"
-                    as="image"
-                    href={property.image}
-                    // @ts-ignore
-                    fetchpriority="high"
-                />
                 <div className="absolute inset-0">
                     <Image
                         src={property.image}
