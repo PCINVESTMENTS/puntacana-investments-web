@@ -45,7 +45,7 @@ export function AboutSection({ dict }: AboutSectionProps) {
                                     fill
                                     quality={60}
                                     sizes="(max-width: 1024px) 100vw, 50vw"
-                                    priority={true}
+                                    loading="lazy"
                                     className="object-cover hover:scale-105 transition-transform duration-700"
                                 />
 

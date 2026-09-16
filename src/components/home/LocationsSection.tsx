@@ -45,12 +45,14 @@ export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = 
                             <Link
                                 key={idx}
                                 href={`/${lang}/properties?location=${loc.slug}`}
+                                aria-label={loc.title}
                                 className="group relative h-64 overflow-hidden cursor-pointer rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 block"
                             >
                                 <div className="absolute inset-0 z-0">
                                     <Image
                                         src={loc.img}
-                                        alt={loc.title}
+                                        alt=""
+                                        aria-hidden="true"
                                         fill
                                         quality={60}
                                         priority={isPriority}
