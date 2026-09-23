@@ -27,7 +27,7 @@ export default function Hero({ dict, featuredImages }: HeroProps) {
                         {dict.title}
                     </h1>
                     <div className="h-1 w-24 bg-luxury-gold mx-auto my-6 shadow-sm"></div>
-                    <p className="text-xl md:text-2xl text-white font-serif italic font-light leading-relaxed md:drop-shadow-md tracking-wide">
+                    <p className="text-lg md:text-2xl text-gray-100 font-light leading-relaxed md:drop-shadow-md tracking-wide">
                         {dict.subtitle}
                     </p>
                 </div>
