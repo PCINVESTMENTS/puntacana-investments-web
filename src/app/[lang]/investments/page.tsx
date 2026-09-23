@@ -1,5 +1,3 @@
-import { preload } from 'react-dom';
-
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -67,7 +65,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export const revalidate = 60;
 
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
-    preload('/images/investments/modern-investments-hero.webp', { as: 'image', fetchPriority: 'high' });
 
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");

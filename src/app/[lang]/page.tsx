@@ -1,4 +1,3 @@
-import { preload } from 'react-dom';
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 import { getDictionary } from "@/dictionaries/get-dictionary";
@@ -91,7 +90,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 }
 
 export default async function Home({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
-  preload('/images/luxury-villa-frame-hero.webp', { as: 'image', fetchPriority: 'high' });
 
   const { lang } = await params;
   const dict = await getDictionary(lang);
