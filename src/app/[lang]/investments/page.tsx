@@ -1,3 +1,4 @@
+import { preload } from 'react-dom';
 
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
@@ -66,6 +67,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export const revalidate = 60;
 
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
+    preload('/images/investments/modern-investments-hero.webp', { as: 'image', fetchPriority: 'high' });
+
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
 
@@ -127,7 +130,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                         className="object-cover"
                         priority={true}
                         fetchPriority="high"
-                        quality={60}
+                        unoptimized={true}
                         sizes="100vw"
                     />
                     {/* Subtle overlay for text readability only at the bottom */}

@@ -77,7 +77,7 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
                                 {...(isPriority ? { fetchPriority: "high" } : {})}
                                 sizes="100vw"
                                 className="object-cover"
-                                quality={75}
+                                quality={65}
                             />
                         ) : (
                             <Image
@@ -85,7 +85,7 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
                                 alt={altText}
                                 fill
                                 priority={isPriority}
-                                {...(isPriority ? { fetchPriority: "high" } : {})}
+                                {...(isPriority ? { fetchPriority: "high", unoptimized: true } : {})}
                                 sizes="100vw"
                                 className="object-cover"
                                 quality={60}
