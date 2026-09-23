@@ -1,3 +1,40 @@
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: "es" | "en" | "fr" }> }): Promise<Metadata> {
+    const { lang } = await params;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const title = lang === "en"
+        ? "Contact Our Real Estate Advisors | Punta Cana Investments"
+        : lang === "fr"
+        ? "Contactez Nos Conseillers Immobiliers | Punta Cana Investments"
+        : "Contacte a Nuestros Asesores Inmobiliarios | Punta Cana Investments";
+    const description = lang === "en"
+        ? "Get in touch with our team of luxury real estate advisors in Punta Cana and Cap Cana. Personalized guidance for buyers and investors."
+        : lang === "fr"
+        ? "Contactez notre équipe de conseillers en immobilier de luxe à Punta Cana et Cap Cana. Conseils personnalisés pour acheteurs et investisseurs."
+        : "Póngase en contacto con nuestro equipo de asesores inmobiliarios de lujo en Punta Cana y Cap Cana. Asesoría personalizada para compradores e inversionistas.";
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical: `${baseUrl}/${lang}/contact`,
+            languages: {
+                es: `${baseUrl}/es/contact`,
+                en: `${baseUrl}/en/contact`,
+                fr: `${baseUrl}/fr/contact`,
+                "x-default": `${baseUrl}/en/contact`,
+            },
+        },
+        openGraph: {
+            title,
+            description,
+            url: `${baseUrl}/${lang}/contact`,
+            images: [`${baseUrl}/images/og-home-luxury.webp`],
+        },
+    };
+}
+
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import ContactForm from '@/components/contact/ContactForm';
 import Navbar from '@/components/layout/Navbar';

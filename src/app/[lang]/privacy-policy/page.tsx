@@ -1,3 +1,30 @@
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: "es" | "en" | "fr" }> }): Promise<Metadata> {
+    const { lang } = await params;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const title = lang === "en" ? "Privacy Policy" : lang === "fr" ? "Politique de Confidentialité" : "Política de Privacidad";
+    const description = lang === "en"
+        ? "Privacy Policy of Punta Cana Investments. Learn how we handle and protect your personal information."
+        : lang === "fr"
+        ? "Politique de confidentialité de Punta Cana Investments. Découvrez comment nous traitons et protégeons vos données."
+        : "Política de privacidad de Punta Cana Investments. Conozca cómo gestionamos y protegemos su información personal.";
+
+    return {
+        title: `${title} | Punta Cana Investments`,
+        description,
+        alternates: {
+            canonical: `${baseUrl}/${lang}/privacy-policy`,
+            languages: {
+                es: `${baseUrl}/es/privacy-policy`,
+                en: `${baseUrl}/en/privacy-policy`,
+                fr: `${baseUrl}/fr/privacy-policy`,
+                "x-default": `${baseUrl}/en/privacy-policy`,
+            },
+        },
+    };
+}
+
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import Navbar from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';

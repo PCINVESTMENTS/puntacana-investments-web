@@ -1,3 +1,30 @@
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: "es" | "en" | "fr" }> }): Promise<Metadata> {
+    const { lang } = await params;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
+    const title = lang === "en" ? "Terms of Service" : lang === "fr" ? "Conditions d'Utilisation" : "Términos de Servicio";
+    const description = lang === "en"
+        ? "Terms of Service of Punta Cana Investments. Legal terms and conditions for our real estate advisory services."
+        : lang === "fr"
+        ? "Conditions d'utilisation de Punta Cana Investments. Conditions générales pour nos services de conseil immobilier."
+        : "Términos de servicio de Punta Cana Investments. Condiciones legales para nuestros servicios de asesoría inmobiliaria.";
+
+    return {
+        title: `${title} | Punta Cana Investments`,
+        description,
+        alternates: {
+            canonical: `${baseUrl}/${lang}/terms-of-service`,
+            languages: {
+                es: `${baseUrl}/es/terms-of-service`,
+                en: `${baseUrl}/en/terms-of-service`,
+                fr: `${baseUrl}/fr/terms-of-service`,
+                "x-default": `${baseUrl}/en/terms-of-service`,
+            },
+        },
+    };
+}
+
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import Navbar from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';

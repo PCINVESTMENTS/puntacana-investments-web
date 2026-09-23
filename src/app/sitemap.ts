@@ -20,10 +20,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/investments/due-diligence',
         '/blog',
         '/contact',
-        '/about',
         '/locations',
         '/fly-and-buy',
         '/fly-and-buy/form',
+        '/futuros-proyectos',
+        '/partners',
+        '/privacy-policy',
+        '/terms-of-service',
         '/services',
     ];
 

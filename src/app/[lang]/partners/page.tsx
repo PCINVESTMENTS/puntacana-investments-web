@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                 'es': 'https://www.puntacanainvestmentsrd.com/es/partners',
                 'en': 'https://www.puntacanainvestmentsrd.com/en/partners',
                 'fr': 'https://www.puntacanainvestmentsrd.com/fr/partners',
+                'x-default': 'https://www.puntacanainvestmentsrd.com/en/partners',
             },
         },
         openGraph: {

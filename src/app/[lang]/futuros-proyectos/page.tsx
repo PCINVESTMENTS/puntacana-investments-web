@@ -67,8 +67,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     alternates: {
         canonical: url,
         languages: {
-            'en': `${baseUrl}/en/futuros-proyectos`,
             'es': `${baseUrl}/es/futuros-proyectos`,
+            'en': `${baseUrl}/en/futuros-proyectos`,
+            'fr': `${baseUrl}/fr/futuros-proyectos`,
+            'x-default': `${baseUrl}/en/futuros-proyectos`,
         },
     }
   };

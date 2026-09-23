@@ -80,6 +80,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
                 'es': `${siteUrl}/es/blog/${post.slug}`,
                 'en': `${siteUrl}/en/blog/${post.slug}`,
                 'fr': `${siteUrl}/fr/blog/${post.slug}`,
+                'x-default': `${siteUrl}/en/blog/${post.slug}`,
             },
         },
     };

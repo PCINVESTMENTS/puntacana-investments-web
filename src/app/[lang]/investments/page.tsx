@@ -50,6 +50,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             description,
             images: ['https://www.puntacanainvestmentsrd.com/images/investments/modern-investments-hero.jpg?v=6'],
         },
+        alternates: {
+            canonical: `https://www.puntacanainvestmentsrd.com/${lang}/investments`,
+            languages: {
+                'es': 'https://www.puntacanainvestmentsrd.com/es/investments',
+                'en': 'https://www.puntacanainvestmentsrd.com/en/investments',
+                'fr': 'https://www.puntacanainvestmentsrd.com/fr/investments',
+                'x-default': 'https://www.puntacanainvestmentsrd.com/en/investments',
+            },
+        },
     };
 }
 

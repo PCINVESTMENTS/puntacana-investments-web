@@ -45,7 +45,8 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     const ip = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for') || 'Unknown';
     const country = request.headers.get('x-vercel-ip-country') || 'Unknown';
     const userAgent = request.headers.get('user-agent') || '';
-    const isBot = /googlebot|google-inspectiontool|bingbot|yandexbot|duckduckbot|slurp|baiduspider/i.test(userAgent);
+    // Legitimate Search & Discovery and User-Initiated AI crawlers (excluding training scrapers)
+    const isBot = (/googlebot|google-inspectiontool|bingbot|yandexbot|duckduckbot|slurp|baiduspider|oai-searchbot|chatgpt-user|claude-searchbot|claude-user|perplexitybot|perplexity-user|applebot/i.test(userAgent)) && !/applebot-extended/i.test(userAgent);
 
     // 1. Drop bad bots immediately
     if (SUSPICIOUS_PATHS.some(susp => pathLower.includes(susp))) {
