@@ -60,7 +60,7 @@ export const ScrollReveal = ({ children, width = "fit-content", delay = 0.25, di
                 style={{
                     opacity: isVisible ? 1 : 0,
                     transform: getTransform(),
-                    transition: `opacity 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${delay}s, transform 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${delay}s`
+                    transition: priority ? "none" : `opacity 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${delay}s, transform 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) ${delay}s`
                 }}
             >
                 {children}

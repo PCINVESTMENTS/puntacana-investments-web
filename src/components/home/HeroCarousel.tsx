@@ -17,11 +17,7 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [renderedIndexes, setRenderedIndexes] = useState<number[]>([0]);
 
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-    useEffect(() => {
-        setIsInitialLoad(false);
-    }, []);
 
     useEffect(() => {
         if (featuredImages.length > 0) {
