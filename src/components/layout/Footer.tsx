@@ -65,9 +65,9 @@ export function Footer({ dict, lang }: FooterProps) {
                         </h3>
                         <ul className="space-y-1 text-sm text-gray-400">
                             <li><Link href={`/${lang}/properties`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.properties}</Link></li>
-                            <li><Link prefetch={false} href={`/${lang}/projects`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.projects}</Link></li>
+                            <li><Link prefetch={false} href={`/${lang}/futuros-proyectos`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.projects}</Link></li>
                             <li><Link href={`/${lang}/investments`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.investments}</Link></li>
-                            <li><Link prefetch={false} href={`/${lang}/hotels`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.hotels}</Link></li>
+                            <li><Link prefetch={false} href={`/${lang}/properties?type=commercial`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.hotels}</Link></li>
                         </ul>
                     </div>
 
@@ -78,7 +78,7 @@ export function Footer({ dict, lang }: FooterProps) {
                         </h3>
                         <ul className="space-y-1 text-sm text-gray-400">
                             <li><Link href={`/${lang}/services`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.services}</Link></li>
-                            <li><Link prefetch={false} href={`/${lang}/about`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.about}</Link></li>
+                            <li><Link prefetch={false} href={`/${lang}#about`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.about}</Link></li>
                             <li><Link href={`/${lang}/contact`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.contact}</Link></li>
                             <li><Link prefetch={false} href={`/${lang}/blog`} className="block py-2 text-luxury-gold hover:text-white transition-colors">{dict.footer.links.blog}</Link></li>
                         </ul>

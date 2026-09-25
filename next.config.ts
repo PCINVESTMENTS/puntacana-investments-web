@@ -53,6 +53,40 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/:lang(es|en|fr)/about",
+        destination: "/:lang#about",
+        permanent: true,
+      },
+      {
+        source: "/:lang(es|en|fr)/projects",
+        destination: "/:lang/futuros-proyectos",
+        permanent: true,
+      },
+      {
+        source: "/:lang(es|en|fr)/hotels",
+        destination: "/:lang/properties?type=commercial",
+        permanent: false,
+      },
+      {
+        source: "/about",
+        destination: "/es#about",
+        permanent: true,
+      },
+      {
+        source: "/projects",
+        destination: "/es/futuros-proyectos",
+        permanent: true,
+      },
+      {
+        source: "/hotels",
+        destination: "/es/properties?type=commercial",
+        permanent: false,
+      },
+    ];
+  },
   // Trigger reload for image cache clear
   async headers() {
     return [
