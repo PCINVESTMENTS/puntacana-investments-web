@@ -13,13 +13,13 @@ export const viewport: Viewport = {
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  display: 'swap',
+  display: 'optional',
 });
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  display: 'swap',
+  display: 'optional',
 });
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
@@ -111,7 +111,8 @@ export default async function RootLayout({
   return (
     <html lang={lang} className="scroll-smooth">
       <head>
-
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
         {/* Scripts are now loaded dynamically via DelayedTracking to prevent TBT */}
       </head>
       <body

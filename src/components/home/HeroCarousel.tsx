@@ -88,7 +88,7 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
                                 fetchPriority={isPriority ? "high" : "auto"}
                                 sizes="(max-width: 768px) 100vw, 100vw"
                                 className="object-cover"
-                                quality={75}
+                                quality={50}
                             />
                         )}
                     </div>
