@@ -191,7 +191,25 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const seo = property.seo;
     const translatedTitleText = getLocalizedTitle(property, lang);
     const title = seo?.title ? seo.title[lang as 'en' | 'es' | 'fr'] : `${translatedTitleText} | Punta Cana Investments`;
-    const description = seo?.description ? seo.description[lang as 'en' | 'es' | 'fr'] : property.description[lang as 'en' | 'es' | 'fr']?.substring(0, 160);
+    let rawDesc = (seo?.description && seo.description[lang as 'en' | 'es' | 'fr']) 
+        ? seo.description[lang as 'en' | 'es' | 'fr'] 
+        : (property.description?.[lang as 'en' | 'es' | 'fr'] || "");
+    
+    // Clean markdown symbols and newlines for clean, indexable meta description
+    const cleanDesc = rawDesc
+        .replace(/#+\s*/g, '')
+        .replace(/[*_~`]/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/\s+/g, ' ')
+        .trim();
+        
+    const fallbackDesc = lang === 'en'
+        ? `Discover ${property.title} in Punta Cana. Luxury real estate investment opportunity with high ROI in Dominican Republic.`
+        : lang === 'fr'
+        ? `Découvrez ${property.title} à Punta Cana. Opportunité d'investissement immobilier de luxe à haut rendement en République Dominicaine.`
+        : `Descubra ${property.title} en Punta Cana. Oportunidad de inversión inmobiliaria de lujo con alta rentabilidad en República Dominicana.`;
+
+    const description = cleanDesc.length >= 20 ? cleanDesc.slice(0, 160) : fallbackDesc;
     
     let keywordList = seo?.keywords ? seo.keywords[lang as 'en' | 'es' | 'fr'] : [];
     if (!keywordList || keywordList.length === 0) {

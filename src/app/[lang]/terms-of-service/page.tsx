@@ -28,8 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: "es
 import { getDictionary } from '@/dictionaries/get-dictionary';
 import Navbar from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { properties } from '@/data/properties';
-import { investmentModels } from '@/data/investment-models';
+
 
 export default async function TermsPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
@@ -40,7 +39,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: 'e
             <Navbar
                 lang={lang}
                 dict={dict.nav}
-                servicesList={investmentModels.map(m => ({ title: (m.title as any)[lang] || m.title['en'] || m.title['es'], slug: m.slug }))}
+                servicesList={dict.sections.services.items}
                 propertyTypes={dict.properties.types}
             />
 
