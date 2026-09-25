@@ -60,7 +60,7 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
                 if (!renderedIndexes.includes(index)) return null;
 
                 const isActive = index === currentImageIndex;
-                const transitionClass = (isPriority && isInitialLoad) ? "" : "transition-opacity duration-1500 ease-in-out";
+                const transitionClass = (isPriority && currentImageIndex === 0) ? "" : "transition-opacity duration-1000 ease-in-out";
 
                 return (
                     <div
@@ -85,10 +85,10 @@ export default function HeroCarousel({ featuredImages, altText }: HeroCarouselPr
                                 alt={altText}
                                 fill
                                 priority={isPriority}
-                                {...(isPriority ? { fetchPriority: "high", unoptimized: true } : {})}
-                                sizes="100vw"
+                                fetchPriority={isPriority ? "high" : "auto"}
+                                sizes="(max-width: 768px) 100vw, 100vw"
                                 className="object-cover"
-                                quality={60}
+                                quality={75}
                             />
                         )}
                     </div>
