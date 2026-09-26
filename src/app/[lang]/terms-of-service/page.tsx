@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: "es
         : "Términos de servicio de Punta Cana Investments. Condiciones legales para nuestros servicios de asesoría inmobiliaria.";
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         alternates: {
             canonical: `${baseUrl}/${lang}/terms-of-service`,

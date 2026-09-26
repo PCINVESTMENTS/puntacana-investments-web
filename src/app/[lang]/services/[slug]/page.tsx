@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const canonicalUrl = `${baseUrl}/${currentLang}/services/${targetSlug}`;
 
     return {
-        title: `${service.title} | Punta Cana Investments`,
+        title: service.title,
         description: service.description,
         keywords: customKeywords,
         robots: {

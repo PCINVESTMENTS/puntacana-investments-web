@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
 
     return {
-        title: `${getVal(post.title, lang)} | Punta Cana Investments`,
+        title: getVal(post.title, lang),
         description: typeof post.excerpt === 'string' ? post.excerpt : getVal(post.excerpt, lang),
         openGraph: {
             title: `${getVal(post.title, lang)} | Punta Cana Investments`,

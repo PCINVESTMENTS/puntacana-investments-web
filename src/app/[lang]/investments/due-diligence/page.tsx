@@ -11,10 +11,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: "es
     const canonicalUrl = `${baseUrl}/${lang}/investments/due-diligence`;
 
     const title = lang === "es" 
-        ? "Debida Diligencia | Punta Cana Investments" 
+        ? "Debida Diligencia" 
         : lang === "fr" 
-        ? "Diligence Raisonnable | Punta Cana Investments" 
-        : "Due Diligence | Punta Cana Investments";
+        ? "Diligence Raisonnable" 
+        : "Due Diligence";
 
     const description = lang === "es"
         ? "Complete los formularios oficiales de debida diligencia para Personas Físicas y Jurídicas antes de invertir en República Dominicana."

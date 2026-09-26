@@ -65,7 +65,12 @@ const nextConfig: NextConfig = {
       {
         source: "/:lang(es|en|fr)/hotels",
         destination: "/:lang/properties?type=commercial",
-        permanent: false,
+        permanent: true,
+      },
+      {
+        source: "/:lang(es|en|fr)/services/vacation-villas",
+        destination: "/:lang/investments/vacation-villas",
+        permanent: true,
       },
       {
         source: "/about",
@@ -80,7 +85,12 @@ const nextConfig: NextConfig = {
       {
         source: "/hotels",
         destination: "/es/properties?type=commercial",
-        permanent: false,
+        permanent: true,
+      },
+      {
+        source: "/services/vacation-villas",
+        destination: "/es/investments/vacation-villas",
+        permanent: true,
       },
     ];
   },

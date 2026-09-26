@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: "es
         : "Política de privacidad de Punta Cana Investments. Conozca cómo gestionamos y protegemos su información personal.";
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         alternates: {
             canonical: `${baseUrl}/${lang}/privacy-policy`,

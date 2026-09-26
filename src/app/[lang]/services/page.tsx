@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
         : "Servicios inmobiliarios integrales en Punta Cana. Administración de propiedades, abogados inmobiliarios y asesoría legal para asegurar tu inversión en la República Dominicana.";
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         keywords: lang === 'es'
             ? ['Administración de propiedades Punta Cana', 'Asesoría legal inmobiliaria República Dominicana', 'Abogados inmobiliarios Punta Cana']

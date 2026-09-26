@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     const canonicalUrl = `${baseUrl}/${lang}/fly-and-buy/form`;
 
     return {
-        title: `${dict.flyAndBuyForm.title} | Punta Cana Investments`,
+        title: dict.flyAndBuyForm.title,
         description: dict.flyAndBuyForm.subtitle,
         robots: {
             index: true,

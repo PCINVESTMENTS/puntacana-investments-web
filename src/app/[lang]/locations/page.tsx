@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: "es
         : "Explore propiedades de lujo en Cap Cana, Punta Cana Resort, Bávaro, Cocotal, White Sands, Vista Cana y Miches.";
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         alternates: {
             canonical: `${baseUrl}/${lang}/locations`,
@@ -55,7 +55,7 @@ export default async function LocationsPage({ params }: { params: Promise<{ lang
 
             <div className="pt-20">
                 {/* Reusing LocationsSection but without a limit to show all */}
-                <LocationsSection dict={dict.sections.locations} lang={lang} prioritizeImages={true} />
+                <LocationsSection isH1={true} dict={dict.sections.locations} lang={lang} prioritizeImages={true} />
             </div>
 
             <Footer dict={dict} lang={lang} />

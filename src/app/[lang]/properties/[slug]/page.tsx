@@ -190,7 +190,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     const seo = property.seo;
     const translatedTitleText = getLocalizedTitle(property, lang);
-    const title = seo?.title ? seo.title[lang as 'en' | 'es' | 'fr'] : `${translatedTitleText} | Punta Cana Investments`;
+    const rawTitle = (seo?.title && seo.title[lang as 'en' | 'es' | 'fr']) 
+        ? seo.title[lang as 'en' | 'es' | 'fr'] 
+        : translatedTitleText;
+    const cleanTitle = (rawTitle || translatedTitleText)
+        .replace(/\s*\|\s*Punta Cana Investments.*$/i, '')
+        .trim();
     let rawDesc = (seo?.description && seo.description[lang as 'en' | 'es' | 'fr']) 
         ? seo.description[lang as 'en' | 'es' | 'fr'] 
         : (property.description?.[lang as 'en' | 'es' | 'fr'] || "");
@@ -270,10 +275,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
     };
     const statusText = property.status === 'rent' ? (lang === 'fr' ? 'LOCATION' : lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'fr' ? 'VENTE' : lang === 'es' ? 'VENTA' : 'SALE');
-    const socialTitle = `[${statusText} - ${formatPrice(property.price)}] ${title}`;
+    const socialTitle = `[${statusText} - ${formatPrice(property.price)}] ${cleanTitle} | Punta Cana Investments`;
 
     return {
-        title: title,
+        title: cleanTitle,
         description: description,
         keywords: keywords,
         robots: {
@@ -321,16 +326,50 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     };
 }
 
+function getPropertySchemaType(type: string): string[] {
+    switch (type?.toLowerCase()) {
+        case 'villa':
+            return ['RealEstateListing', 'SingleFamilyResidence'];
+        case 'condo':
+        case 'penthouse':
+            return ['RealEstateListing', 'Apartment'];
+        case 'land':
+        case 'land-beach':
+            return ['RealEstateListing'];
+        case 'commercial':
+            return ['RealEstateListing', 'CommercialProperties'];
+        case 'condohotel':
+        case 'resorts':
+            return ['RealEstateListing', 'Hotel'];
+        default:
+            return ['RealEstateListing'];
+    }
+}
+
 // Helper for JSON-LD
 function generateJsonLd(property: Property, lang: string, baseUrl: string) {
-    return {
+    const rawDesc = property.description?.[lang as 'en' | 'es' | 'fr'] 
+        || property.description?.['es'] 
+        || property.description?.['en'] 
+        || '';
+
+    const cleanDesc = rawDesc
+        .replace(/#+\s*/g, '')
+        .replace(/[*_~`]/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    const datePosted = property._createdAt || '2025-01-15T00:00:00Z';
+
+    const schema: Record<string, any> = {
         '@context': 'https://schema.org',
-        '@type': ['RealEstateListing', 'SingleFamilyResidence'],
+        '@type': getPropertySchemaType(property.type),
         name: getLocalizedTitle(property, lang),
-        description: property.description?.[lang as 'en' | 'es' | 'fr']?.substring(0, 160) || '',
+        description: cleanDesc ? (cleanDesc.length > 250 ? cleanDesc.slice(0, 250) + '...' : cleanDesc) : getLocalizedTitle(property, lang),
         image: property.image ? [property.image, ...(property.gallery || [])] : [],
         url: `${baseUrl}/${lang}/properties/${property.slug}`,
-        datePosted: new Date().toISOString(), // Ideal if we had createdAt
+        datePosted: datePosted,
         offers: {
             '@type': 'Offer',
             price: property.price,
@@ -344,6 +383,12 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
             addressRegion: 'La Altagracia'
         }
     };
+
+    if (property._updatedAt) {
+        schema.dateModified = property._updatedAt;
+    }
+
+    return schema;
 }
 
 // Restoring ISR
@@ -491,7 +536,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 <ReactMarkdown
                                     components={{
                                         p: ({ node, ...props }) => <p className="mb-4 whitespace-pre-line text-gray-300" {...props} />,
-                                        h1: ({ node, ...props }) => <h1 className="text-3xl md:text-4xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-8 mb-4" {...props} />,
+                                        h1: ({ node, ...props }) => <h2 className="text-2xl md:text-3xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-8 mb-4" {...props} />,
                                         h2: ({ node, ...props }) => <h2 className="text-2xl md:text-3xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-8 mb-4" {...props} />,
                                         h3: ({ node, ...props }) => <h3 className="text-xl md:text-2xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-6 mb-3" {...props} />,
                                         h4: ({ node, ...props }) => <h4 className="text-lg md:text-xl font-serif font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent mt-4 mb-2" {...props} />,

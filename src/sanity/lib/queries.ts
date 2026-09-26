@@ -123,6 +123,8 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
 export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
   *[_type == "property" && slug.current == $slug][0] {
     _id,
+    _createdAt,
+    _updatedAt,
     id,
     title,
     titleEn,

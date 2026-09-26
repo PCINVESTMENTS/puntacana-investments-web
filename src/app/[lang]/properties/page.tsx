@@ -35,7 +35,7 @@ export async function generateMetadata({
         : "Explora propiedades exclusivas en venta en Punta Cana, incluyendo villas de lujo frente al mar en Cap Cana, apartamentos modernos en Bávaro y bienes raíces en Macao.";
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         keywords: lang === 'es'
             ? ['Propiedades en venta Punta Cana', 'Villas de lujo frente al mar Punta Cana', 'Apartamentos en Cap Cana', 'invertir en Cap Cana', 'Bávaro real estate', 'proyectos inmobiliarios en Macao', 'Casas en Cocotal', 'Apartamentos céntricos Punta Cana']
@@ -227,6 +227,7 @@ export default async function PropertiesPage({
 
             <div className="pt-20">
                 <PropertyListings
+                    isH1={true}
                     dict={dict.properties}
                     lang={lang}
                     locations={dict.sections.locations.items}

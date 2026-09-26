@@ -451,7 +451,7 @@ export function PersonaJuridicaForm() {
                             />
                         </div>
                     </div>
-                    <h1 className="text-2xl font-bold uppercase border-b-2 border-black pb-2 mb-4">Formulario de Debida Diligencia - Persona Jurídica / Due Diligence Form - Legal Entity</h1>
+                    <h2 className="text-2xl font-bold uppercase border-b-2 border-black pb-2 mb-4">Formulario de Debida Diligencia - Persona Jurídica / Due Diligence Form - Legal Entity</h2>
                 </div>
 
                 <FormSection icon={<Building size={20} />} title="Datos Generales / General Data">

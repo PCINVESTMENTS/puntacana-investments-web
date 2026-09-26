@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         : "Descubre las mejores oportunidades de inversión en bienes raíces en Punta Cana. Propiedades de alto ROI, proyectos en plano y modelos de inversión para Airbnb.";
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         keywords: lang === 'es'
             ? ['Invertir en bienes raíces en República Dominicana', 'Proyectos rentables en Punta Cana', 'Comprar apartamento para Airbnb en Punta Cana', 'Proyectos en plano Punta Cana', 'Nuevos desarrollos inmobiliarios Punta Cana']

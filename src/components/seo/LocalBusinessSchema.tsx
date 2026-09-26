@@ -26,7 +26,7 @@ export function LocalBusinessSchema({ lang }: { lang?: string }) {
           : lang === 'fr'
           ? "Agence immobilière de premier plan proposant des villas de luxe, des appartements à vendre et des investissements hors marché à Punta Cana, Cap Cana et Bavaro, République Dominicaine."
           : "Agencia de Bienes Raíces premium ofreciendo villas de lujo, apartamentos en venta, y propiedades de inversión off-market en Punta Cana, Cap Cana y Bávaro, República Dominicana.",
-        "telephone": "+1-809-555-5555", // Consider updating with real telephone
+        "telephone": "+1-829-408-4322",
         "email": "info@puntacanainvestmentsrd.com",
         "address": {
           "@type": "PostalAddress",

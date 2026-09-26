@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
     const canonicalUrl = `${baseUrl}/${lang}/fly-and-buy`;
 
     return {
-        title: `${title} | Punta Cana Investments`,
+        title: title,
         description,
         keywords: isEs
             ? ["Viajes de inversión Punta Cana", "Tour inmobiliario Punta Cana", "Asesoría personalizada propiedades República Dominicana"]

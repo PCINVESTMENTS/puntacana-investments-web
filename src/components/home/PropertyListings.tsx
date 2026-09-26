@@ -58,6 +58,7 @@ interface PropertyListingsProps {
     lockedStatus?: 'sale' | 'rent';
     exploreLink?: string;
     initialData: Property[];
+    isH1?: boolean;
 }
 
 const translatePropertyTitle = (title: string, lang: string) => {
@@ -184,7 +185,8 @@ function PropertyListingsContent({
     initialFilters = {},
     lockedStatus,
     exploreLink,
-    initialData
+    initialData,
+    isH1 = false
 }: PropertyListingsProps) {
     const searchParams = useSearchParams();
     const [filteredProperties, setFilteredProperties] = useState<Property[]>(initialData);
@@ -356,9 +358,15 @@ function PropertyListingsContent({
                             <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                                 {dict.subtitle}
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
-                                {sectionTitle || (featured && dict.featuredProperties ? dict.featuredProperties : dict.title)}
-                            </h2>
+                            {isH1 ? (
+                                <h1 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                                    {sectionTitle || (featured && dict.featuredProperties ? dict.featuredProperties : dict.title)}
+                                </h1>
+                            ) : (
+                                <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                                    {sectionTitle || (featured && dict.featuredProperties ? dict.featuredProperties : dict.title)}
+                                </h2>
+                            )}
                             <div className="h-1 w-24 bg-luxury-gold mx-auto"></div>
                             {!featured && (
                                 <p className="text-neutral-gray mt-6 max-w-2xl mx-auto">

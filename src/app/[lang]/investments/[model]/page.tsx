@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         : [`Inversiones ${modelData.slug} Punta Cana`, `${titleText}`, 'Inversiones inmobiliarias República Dominicana', 'Condo hotel alta rentabilidad', 'Propiedades frente al mar Cap Cana'];
 
     return {
-        title: `${titleText} | Punta Cana Investments`,
+        title: titleText,
         description: descText,
         keywords: keywordList.join(', '),
         openGraph: {
@@ -101,10 +101,16 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 "headline": titleText,
                 "description": descText,
                 "image": data.heroImage.startsWith("http") ? data.heroImage : `${baseUrl}${data.heroImage}`,
+                "datePublished": "2024-01-15T08:00:00+00:00",
+                "dateModified": "2025-06-01T12:00:00+00:00",
                 "author": {
                     "@type": "Organization",
                     "name": "Punta Cana Investments",
-                    "url": baseUrl
+                    "url": baseUrl,
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": `${baseUrl}/images/og-home-luxury.webp`
+                    }
                 },
                 "publisher": {
                     "@type": "Organization",
@@ -112,7 +118,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                     "url": baseUrl,
                     "logo": {
                         "@type": "ImageObject",
-                        "url": `${baseUrl}/images/logo-pci-investments-gold.webp`
+                        "url": `${baseUrl}/images/og-home-luxury.webp`
                     }
                 },
                 "mainEntityOfPage": {

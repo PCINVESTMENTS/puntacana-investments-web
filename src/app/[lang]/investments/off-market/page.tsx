@@ -21,10 +21,10 @@ export async function generateMetadata({
     const keywords = lang === 'en' ? keywordsEn : lang === 'fr' ? keywordsFr : keywordsEs;
 
     const title = lang === 'en' 
-        ? 'Off-Market: Private Investment Portfolio | Punta Cana Investments'
+        ? 'Off-Market: Private Investment Portfolio'
         : lang === 'fr' 
-        ? 'Off-Market: Portefeuille d\'Investissement Privé | Punta Cana Investments'
-        : 'Off-Market: Portafolio de Inversión Privado | Punta Cana Investments';
+        ? 'Off-Market: Portefeuille d\'Investissement Privé'
+        : 'Off-Market: Portafolio de Inversión Privado';
 
     const description = lang === 'en'
         ? 'Exclusive access to large-scale assets, hotel complexes, and distressed property opportunities under strict commercial reserve in the Dominican Republic.'

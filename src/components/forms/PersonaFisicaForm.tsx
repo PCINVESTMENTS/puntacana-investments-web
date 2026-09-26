@@ -519,7 +519,7 @@ export function PersonaFisicaForm() {
                             />
                         </div>
                     </div>
-                    <h1 className="text-2xl font-bold uppercase border-b-2 border-black pb-2 mb-4">Formulario de Debida Diligencia - Persona Física / Due Diligence Form - Individual</h1>
+                    <h2 className="text-2xl font-bold uppercase border-b-2 border-black pb-2 mb-4">Formulario de Debida Diligencia - Persona Física / Due Diligence Form - Individual</h2>
                 </div>
 
                 <FormSection icon={<CircleUserRound size={20} />} title="Datos Generales del Cliente / Customer General Data">

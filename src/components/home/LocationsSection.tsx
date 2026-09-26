@@ -17,9 +17,10 @@ interface LocationsSectionProps {
     lang?: string;
     prioritizeImages?: boolean;
     apiLocations?: any[];
+    isH1?: boolean;
 }
 
-export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = false, apiLocations = [] }: LocationsSectionProps) {
+export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = false, apiLocations = [], isH1 = false }: LocationsSectionProps) {
     let locations = apiLocations.length > 0 ? apiLocations : (dict.items || []);
 
     if (limit) {
@@ -35,7 +36,11 @@ export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = 
                 <ScrollReveal width="100%">
                     <div className="mb-12">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">{dict.subtitle}</span>
-                        <h2 className="text-4xl font-serif font-bold mt-2 text-white">{dict.title}</h2>
+                        {isH1 ? (
+                            <h1 className="text-4xl md:text-5xl font-serif font-bold mt-2 text-white">{dict.title}</h1>
+                        ) : (
+                            <h2 className="text-4xl font-serif font-bold mt-2 text-white">{dict.title}</h2>
+                        )}
                     </div>
                 </ScrollReveal>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -51,8 +56,7 @@ export function LocationsSection({ dict, limit, lang = 'es', prioritizeImages = 
                                 <div className="absolute inset-0 z-0">
                                     <Image
                                         src={loc.img}
-                                        alt=""
-                                        aria-hidden="true"
+                                        alt={lang === "en" ? `Luxury real estate in ${loc.title}` : lang === "fr" ? `Immobilier de luxe à ${loc.title}` : `Bienes raíces de lujo en ${loc.title}`}
                                         fill
                                         quality={60}
                                         priority={isPriority}

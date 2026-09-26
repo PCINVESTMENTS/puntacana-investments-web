@@ -14,11 +14,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
   const url = `${baseUrl}/${lang}/futuros-proyectos`;
   
   const title = lang === 'en' 
-    ? "Miches Eco-Resort Project | High-Yield Capital Investments | Punta Cana" 
-    : "Proyecto Eco-Resort Miches | Inversión de Capital y Alta Rentabilidad | Punta Cana";
+    ? "Miches Eco-Resort Project | High-Yield Capital Investments" 
+    : lang === 'fr'
+    ? "Projet Éco-Resort Miches | Investissement de Capital à Haut Rendement"
+    : "Proyecto Eco-Resort Miches | Inversión de Capital y Alta Rentabilidad";
     
   const description = lang === 'en' 
     ? "Exclusive pre-construction access: Eco-luxury villas & condo-hotels in Miches, Dominican Republic. SIMA Madrid 2026 featured project. Secure your investment." 
+    : lang === 'fr'
+    ? "Accès exclusif en prévente : Villas éco-luxe et appart-hôtels à Miches, République Dominicaine. Projet vedette SIMA Madrid 2026. Sécurisez votre investissement."
     : "Acceso exclusivo en preventa: Villas de eco-lujo y condo-hoteles en Miches, República Dominicana. Proyecto destacado rumbo a SIMA Madrid 2026. Invierte ahora.";
 
   const keywords = lang === 'en' 
@@ -29,6 +33,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
         "SIMA Madrid 2026 Dominican Republic", "Dominican Republic property investment", "High yield real estate Caribbean",
         "Miches land for sale", "Punta Cana Investments", "PCI Construction Group", "Off-plan property Miches"
       ] 
+    : lang === 'fr'
+    ? [
+        "Projets immobiliers à Miches", "Investissements de capital Punta Cana", "Éco-resort Miches prévente", 
+        "Investissement durable Caraïbes", "Villas écologiques à Miches", "Immobilier de luxe République Dominicaine", 
+        "Pool hôtelier Miches", "Investisseurs fondateurs Miches", "Développement écologique Punta Cana", 
+        "SIMA Madrid 2026 République Dominicaine", "Investir dans l'immobilier République Dominicaine", "Haut rendement immobilier Caraïbes",
+        "Terrains à Miches", "Punta Cana Investments", "PCI Construction Group", "Projets sur plan Miches"
+      ]
     : [
         "Proyectos inmobiliarios en Miches", "Inversiones de capital Punta Cana", "Eco-resort Miches preventa", 
         "Inversión sostenible Caribe", "Villas ecológicas en Miches", "Bienes raíces de lujo República Dominicana", 
@@ -55,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
             height: 630,
             alt: "Miches Eco Resort Masterplan"
         }],
-        locale: lang === 'es' ? 'es_DO' : 'en_US',
+        locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
         type: 'website',
     },
     twitter: {

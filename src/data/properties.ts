@@ -67,6 +67,8 @@ export interface Property {
         keywords: { en: string[]; es: string[]; fr?: string[] };
     };
     hideFromLabel?: boolean;
+    _createdAt?: string;
+    _updatedAt?: string;
 }
 
 export const properties: Property[] = [
