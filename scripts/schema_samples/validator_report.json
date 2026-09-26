@@ -1,0 +1,62 @@
+{
+  "Terreno": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "errors": [],
+    "warnings": [],
+    "rawSummary": {
+      "types": "RealEstateListing",
+      "mainEntityType": "Place",
+      "offersType": "Offer",
+      "businessFunction": "http://purl.org/goodrelations/v1#Sell"
+    }
+  },
+  "Villa": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "errors": [],
+    "warnings": [],
+    "rawSummary": {
+      "types": "RealEstateListing",
+      "mainEntityType": "SingleFamilyResidence",
+      "offersType": "Offer",
+      "businessFunction": "http://purl.org/goodrelations/v1#Sell"
+    }
+  },
+  "Apartamento": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "errors": [],
+    "warnings": [],
+    "rawSummary": {
+      "types": "RealEstateListing",
+      "mainEntityType": "Apartment",
+      "offersType": "Offer",
+      "businessFunction": "http://purl.org/goodrelations/v1#Sell"
+    }
+  },
+  "Alquiler": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "errors": [],
+    "warnings": [],
+    "rawSummary": {
+      "types": "RealEstateListing",
+      "mainEntityType": "SingleFamilyResidence",
+      "offersType": "Offer",
+      "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut"
+    }
+  },
+  "Condohotel": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "errors": [],
+    "warnings": [],
+    "rawSummary": {
+      "types": "RealEstateListing",
+      "mainEntityType": "Apartment",
+      "offersType": "Offer",
+      "businessFunction": "http://purl.org/goodrelations/v1#Sell"
+    }
+  }
+}

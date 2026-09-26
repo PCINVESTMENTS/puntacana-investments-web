@@ -1,0 +1,351 @@
+{
+  "terreno": {
+    "slug": "solar-lujo-caleton-cap-cana",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#listing",
+      "url": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana",
+      "name": "Exclusivo Solar de Ultra-Lujo (1,045 m²) en Caletón, Cap Cana | Perfecto para Villa de Lujo",
+      "description": "Exclusivo Solar Residencial de Ultra-Lujo en Caletón, Cap Cana Una Oportunidad de Inversión Inigualable para Desarrollar su Villa de Lujo Punta Cana Investments se complace en presentar este extraordinario solar residencial de ultra-lujo, ubicado en ...",
+      "mainEntity": {
+        "@type": "Place",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#property",
+        "name": "Exclusivo Solar de Ultra-Lujo (1,045 m²) en Caletón, Cap Cana | Perfecto para Villa de Lujo",
+        "description": "Exclusivo Solar Residencial de Ultra-Lujo en Caletón, Cap Cana Una Oportunidad de Inversión Inigualable para Desarrollar su Villa de Lujo Punta Cana Investments se complace en presentar este extraordinario solar residencial de ultra-lujo, ubicado en ...",
+        "image": [
+          "https://cdn.sanity.io/images/w7gp05my/production/e9d0195309cea8d44e5ccf94325cb7812ec45388-1024x487.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/e9d0195309cea8d44e5ccf94325cb7812ec45388-1024x487.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/eb0ed24850939858cea8f0c0a8b9a4b349784a47-1024x500.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/bd10eac830def2433194b3ffca35cbc2c70e08e7-1024x529.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/25cb0b93bedd710c9f022c5ebcb6be6f0ec4b958-1024x559.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/779d8c88171e091fef5d0c104c73fdf295781a89-1024x767.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/d3e44a0d26ac23a86e1cfbc050b6d19a0b2b7c7e-1024x680.jpg?q=75&auto=format"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "DO",
+          "addressLocality": "Caletón, Cap Cana",
+          "addressRegion": "La Altagracia"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 18.492,
+          "longitude": -68.411
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#offer",
+        "url": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana",
+        "price": 360000,
+        "priceCurrency": "USD",
+        "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+        "itemOffered": {
+          "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#property"
+        },
+        "seller": {
+          "@type": "RealEstateAgent",
+          "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+          "name": "Punta Cana Investments",
+          "telephone": "+1-829-408-4322",
+          "url": "https://www.puntacanainvestmentsrd.com"
+        }
+      }
+    },
+    "file": "scripts/schema_samples/terreno.json"
+  },
+  "villa": {
+    "slug": "villa-contemporanea-corales-vistas-golf-puntacana-resort",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#listing",
+      "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort",
+      "name": "Espectacular Villa de Diseño Contemporáneo-Tropical con Vistas al Golf en Corales – Puntacana Resort & Club",
+      "description": "Bienvenido a un oasis donde la elegancia arquitectónica se encuentra con la naturaleza. La experiencia de llegada es verdaderamente monumental: un inmaculado patio frontal en forma de \"U\" recibe a los visitantes, flanqueado por imponentes palmeras y ...",
+      "mainEntity": {
+        "@type": "SingleFamilyResidence",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#property",
+        "name": "Espectacular Villa de Diseño Contemporáneo-Tropical con Vistas al Golf en Corales – Puntacana Resort & Club",
+        "description": "Bienvenido a un oasis donde la elegancia arquitectónica se encuentra con la naturaleza. La experiencia de llegada es verdaderamente monumental: un inmaculado patio frontal en forma de \"U\" recibe a los visitantes, flanqueado por imponentes palmeras y ...",
+        "image": [
+          "https://cdn.sanity.io/images/w7gp05my/production/72710611802bf1bced20bab18d30808d96f56c8f-1024x682.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/72710611802bf1bced20bab18d30808d96f56c8f-1024x682.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/3fd51eb1c473e9a1687c4ad0365ef354c75c5920-1024x682.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/1c45b40cfd0e4ac8082dbdee6bf8f000b77be72b-1024x576.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/e348248ed94619cc1156ff23c869e32ad5738366-1024x682.png?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/f36b9b264515d5dc384f7bc989c1e047e58c5f1b-1024x679.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/6cb7b83f1b8e2a348143c82dc247321b944d2bfe-1024x681.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/5462b2f2bf0d49ac098227d1bc699bcbc537f331-1024x683.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/5e547ae9897a16f034dfd2cd7d76b339f6b9b1f0-1024x682.png?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/836063f640ca3ad99a972eb32c842791db6f7e37-1024x693.png?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/2f8bc307a2cc7aca2c019c42b33a551a8bf46f79-1024x683.png?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/babb03697498be1015ffc76d3ca160bdda71639a-1024x683.jpg?q=75&auto=format"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "DO",
+          "addressLocality": "Corales, Punta Cana",
+          "addressRegion": "La Altagracia"
+        },
+        "numberOfBedrooms": 7,
+        "numberOfBathroomsTotal": 7.5,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 1100,
+          "unitCode": "MTK"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#offer",
+        "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort",
+        "price": 6299000,
+        "priceCurrency": "USD",
+        "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+        "itemOffered": {
+          "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#property"
+        },
+        "seller": {
+          "@type": "RealEstateAgent",
+          "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+          "name": "Punta Cana Investments",
+          "telephone": "+1-829-408-4322",
+          "url": "https://www.puntacanainvestmentsrd.com"
+        }
+      }
+    },
+    "file": "scripts/schema_samples/villa.json"
+  },
+  "apartamento": {
+    "slug": "apartamento-1-habitacion-epic-punta-cana",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#listing",
+      "url": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana",
+      "name": "Exclusivo Apartamento de 1 Habitación en Epic Punta Cana",
+      "description": "Ubicado en el prestigioso proyecto residencial Epic Punta Cana, este apartamento de lujo de 1 habitación y 60 m2 representa la combinación perfecta entre diseño contemporáneo y rentabilidad estratégica. Con un precio altamente competitivo de US$105,9...",
+      "mainEntity": {
+        "@type": "Apartment",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#property",
+        "name": "Exclusivo Apartamento de 1 Habitación en Epic Punta Cana",
+        "description": "Ubicado en el prestigioso proyecto residencial Epic Punta Cana, este apartamento de lujo de 1 habitación y 60 m2 representa la combinación perfecta entre diseño contemporáneo y rentabilidad estratégica. Con un precio altamente competitivo de US$105,9...",
+        "image": [
+          "https://cdn.sanity.io/images/w7gp05my/production/38ae251bbc3d39481acb8faf4ffe75454104710b-1024x663.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/38ae251bbc3d39481acb8faf4ffe75454104710b-1024x663.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/9794e224cf97b92072091c459a56217c9b73d440-1024x703.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/52488c7d19dc397cab7e58080ef35014fbc3b8eb-1024x673.png?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/f8f63e89b7ddbf19194178d4fdd3165db91ebae4-1024x831.png?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/5dd8b03c07397f1575eee5e0d1371c0b3f7cd1ed-1024x949.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/fcaf0708511b86e37bbe66b5dd6bc505ede43776-782x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/12d52a65b04e97c42f9941f52f7ccc226695db2f-727x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/61b777a21e36f2de234065a299a7b3bd57a70755-739x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/e646320268440fda582ad585a74554b66bdf4947-790x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/e95da98330f754fde9797e2bb3198d5dddd822db-810x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/c26d81244239e67e79e96137fd0783a77e98c9f7-923x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/1e5bf53d9ee268b4e259de50e5a40bcf630f5140-747x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/ae4514a9f330e9a37591df502103fbdc19082bc9-802x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/61b777a21e36f2de234065a299a7b3bd57a70755-739x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/5ce39d0dfc9b807065e27272a9d21dd1664127dc-1024x669.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/fc14834ba5bf9fe759f29d9b73ebee72f29e5e85-1024x634.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/2649f6793d1cf373a9c25decea48b33d9b61442f-1024x624.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/86a486d2c3d7beb7f56445b0892423235266952c-583x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/8ea0e1c422a93573b3acb1890eddf01a78a7585a-774x1024.jpg?q=75&auto=format",
+          "https://cdn.sanity.io/images/w7gp05my/production/62e652713673bbb9ca59ab4130f0501fb5faa297-798x1024.jpg?q=75&auto=format"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "DO",
+          "addressLocality": "Epic Residences",
+          "addressRegion": "La Altagracia"
+        },
+        "numberOfBedrooms": 1,
+        "numberOfBathroomsTotal": 1,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 60,
+          "unitCode": "MTK"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#offer",
+        "url": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana",
+        "price": 105900,
+        "priceCurrency": "USD",
+        "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+        "itemOffered": {
+          "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#property"
+        },
+        "seller": {
+          "@type": "RealEstateAgent",
+          "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+          "name": "Punta Cana Investments",
+          "telephone": "+1-829-408-4322",
+          "url": "https://www.puntacanainvestmentsrd.com"
+        }
+      }
+    },
+    "file": "scripts/schema_samples/apartamento.json"
+  },
+  "alquiler": {
+    "slug": "villa-en-renta-white-sands-punta-cana-amueblada",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#listing",
+      "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada",
+      "name": "Villa en Renta Amueblada en White Sands Punta Cana",
+      "description": "Villa Amueblada en Renta en White Sands - Contrato de 1 Año Esta villa totalmente amueblada en renta en White Sands ofrece la combinación perfecta de confort y lujo para vivienda a largo plazo. Ubicada en uno de los residenciales cerrados más prestig...",
+      "mainEntity": {
+        "@type": "SingleFamilyResidence",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#property",
+        "name": "Villa en Renta Amueblada en White Sands Punta Cana",
+        "description": "Villa Amueblada en Renta en White Sands - Contrato de 1 Año Esta villa totalmente amueblada en renta en White Sands ofrece la combinación perfecta de confort y lujo para vivienda a largo plazo. Ubicada en uno de los residenciales cerrados más prestig...",
+        "image": [
+          "/images/properties/villa-white-sands-modern/white-sands-villa-rental-main.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-pool-terrace.jpg",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-terrace-dining.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-modern-kitchen.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-open-concept.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-pool-deck.jpg",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-island-view.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-paradise.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-living-area-decor.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-high-angle.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-coffee-table-detail.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-hallway-decor.jpg",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-staircase-lighting.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-master-balcony-view.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-tv-area.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-living-dining-wide.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-tv.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-bathroom-modern.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-angle-2.png",
+          "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-wardrobe.png"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "DO",
+          "addressLocality": "White Sands, Bávaro",
+          "addressRegion": "La Altagracia"
+        },
+        "numberOfBedrooms": 3,
+        "numberOfBathroomsTotal": 3.5,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 180,
+          "unitCode": "MTK"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#offer",
+        "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada",
+        "price": 2000,
+        "priceCurrency": "USD",
+        "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+        "itemOffered": {
+          "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#property"
+        },
+        "seller": {
+          "@type": "RealEstateAgent",
+          "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+          "name": "Punta Cana Investments",
+          "telephone": "+1-829-408-4322",
+          "url": "https://www.puntacanainvestmentsrd.com"
+        }
+      }
+    },
+    "file": "scripts/schema_samples/alquiler.json"
+  },
+  "condohotel": {
+    "slug": "condos-cruise-on-land-resort-punta-cana",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana",
+    "jsonLd": {
+      "@context": "https://schema.org",
+      "@type": "RealEstateListing",
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#listing",
+      "url": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana",
+      "name": "Condos | Cruise On Land Resort Punta Cana",
+      "description": "Cruise On Land – El Primer Resort de Parque Temático en Punta Cana Cruise On Land es un innovador complejo inmobiliario turístico que integra un resort de alta gama con un parque temático, ofreciendo una experiencia de entretenimiento única en el Car...",
+      "mainEntity": {
+        "@type": "Apartment",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#property",
+        "name": "Condos | Cruise On Land Resort Punta Cana",
+        "description": "Cruise On Land – El Primer Resort de Parque Temático en Punta Cana Cruise On Land es un innovador complejo inmobiliario turístico que integra un resort de alta gama con un parque temático, ofreciendo una experiencia de entretenimiento única en el Car...",
+        "image": [
+          "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
+          "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
+          "/images/cruises-on-land-crystal-lagoon-beach-view-punta-cana.jpg",
+          "/images/cruises-on-land-aerial-waterpark-view-punta-cana.jpg",
+          "/images/cruises-on-land-adventure-water-park-slides-punta-cana.jpg",
+          "/images/cruises-on-land-kids-water-park-zone-punta-cana.jpg",
+          "/images/cruises-on-land-wave-pool-event-stage-punta-cana.jpg",
+          "/images/cruises-on-land-lighthouse-lake-attraction-punta-cana.jpg",
+          "/images/cruises-on-land-spanish-plaza-restaurants-punta-cana.jpg",
+          "/images/cruises-on-land-dining-plaza-lake-view-punta-cana.jpg",
+          "/images/cruises-on-land-resort-amenities-lounge-punta-cana.jpg",
+          "/images/cruises-on-land-supermarket-grocery-store-punta-cana.jpg",
+          "/images/cruises-on-land-residences-aerial-view-punta-cana.jpg",
+          "/images/cruises-on-land-modern-living-dining-room-punta-cana.jpg",
+          "/images/cruises-on-land-luxury-living-room-interior-punta-cana.jpg",
+          "/images/cruises-on-land-living-room-dining-area-punta-cana.jpg",
+          "/images/cruises-on-land-living-area-sofa-detail-punta-cana.jpg",
+          "/images/cruises-on-land-master-bedroom-suite-interior-punta-cana.jpg",
+          "/images/cruises-on-land-bedroom-headboard-detail-punta-cana.jpg",
+          "/images/cruises-on-land-twin-bedroom-interior-punta-cana.jpg",
+          "/images/cruises-on-land-master-suite-balcony-view-punta-cana.jpg",
+          "/images/cruises-on-land-patio-picuzzi-jacuzzi-punta-cana.jpg",
+          "/images/cruises-on-land-villa-floor-plan-with-pool-punta-cana.jpg",
+          "/images/cruises-on-land-two-bedroom-suite-floor-plan-punta-cana.jpg",
+          "/images/cruises-on-land-garden-villa-floor-plan-punta-cana.jpg",
+          "/images/cruises-on-land-master-plan-map-punta-cana.png"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "DO",
+          "addressLocality": "Punta Cana",
+          "addressRegion": "La Altagracia"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 18.6,
+          "longitude": -68.45
+        },
+        "numberOfBedrooms": 1,
+        "numberOfBathroomsTotal": 1,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 45,
+          "unitCode": "MTK"
+        }
+      },
+      "offers": {
+        "@type": "Offer",
+        "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#offer",
+        "url": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana",
+        "price": 95700,
+        "priceCurrency": "USD",
+        "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+        "itemOffered": {
+          "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#property"
+        },
+        "seller": {
+          "@type": "RealEstateAgent",
+          "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+          "name": "Punta Cana Investments",
+          "telephone": "+1-829-408-4322",
+          "url": "https://www.puntacanainvestmentsrd.com"
+        }
+      }
+    },
+    "file": "scripts/schema_samples/condohotel.json"
+  }
+}

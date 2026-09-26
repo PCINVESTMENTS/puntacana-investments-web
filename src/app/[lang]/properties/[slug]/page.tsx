@@ -425,18 +425,26 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
                 unitCode: 'MTK'
             };
         }
+        if (typeof property.lotSize === 'number' && property.lotSize > 0) {
+            propertyEntity.lotSize = {
+                '@type': 'QuantitativeValue',
+                value: property.lotSize,
+                unitCode: 'MTK'
+            };
+        }
     }
 
     const isRent = property.status === 'rent';
-    const isSold = (property.status as string) === 'sold';
 
+    // In Sanity and local dataset, property.status strictly represents transaction mode ('sale' | 'rent').
+    // Since there is no verified field tracking live inventory availability (available/sold/withdrawn),
+    // availability is omitted rather than fabricating InStock.
     const offer: Record<string, any> = {
         '@type': 'Offer',
         '@id': `${listingUrl}#offer`,
         url: listingUrl,
         price: property.price,
         priceCurrency: 'USD',
-        availability: isSold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
         businessFunction: isRent ? 'http://purl.org/goodrelations/v1#LeaseOut' : 'http://purl.org/goodrelations/v1#Sell',
         itemOffered: {
             '@id': `${listingUrl}#property`

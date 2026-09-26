@@ -1,0 +1,78 @@
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#listing",
+  "url": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana",
+  "name": "Condos | Cruise On Land Resort Punta Cana",
+  "description": "Cruise On Land – El Primer Resort de Parque Temático en Punta Cana Cruise On Land es un innovador complejo inmobiliario turístico que integra un resort de alta gama con un parque temático, ofreciendo una experiencia de entretenimiento única en el Car...",
+  "mainEntity": {
+    "@type": "Apartment",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#property",
+    "name": "Condos | Cruise On Land Resort Punta Cana",
+    "description": "Cruise On Land – El Primer Resort de Parque Temático en Punta Cana Cruise On Land es un innovador complejo inmobiliario turístico que integra un resort de alta gama con un parque temático, ofreciendo una experiencia de entretenimiento única en el Car...",
+    "image": [
+      "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
+      "/images/cruises-on-land-resort-complex-overview-punta-cana.jpg",
+      "/images/cruises-on-land-crystal-lagoon-beach-view-punta-cana.jpg",
+      "/images/cruises-on-land-aerial-waterpark-view-punta-cana.jpg",
+      "/images/cruises-on-land-adventure-water-park-slides-punta-cana.jpg",
+      "/images/cruises-on-land-kids-water-park-zone-punta-cana.jpg",
+      "/images/cruises-on-land-wave-pool-event-stage-punta-cana.jpg",
+      "/images/cruises-on-land-lighthouse-lake-attraction-punta-cana.jpg",
+      "/images/cruises-on-land-spanish-plaza-restaurants-punta-cana.jpg",
+      "/images/cruises-on-land-dining-plaza-lake-view-punta-cana.jpg",
+      "/images/cruises-on-land-resort-amenities-lounge-punta-cana.jpg",
+      "/images/cruises-on-land-supermarket-grocery-store-punta-cana.jpg",
+      "/images/cruises-on-land-residences-aerial-view-punta-cana.jpg",
+      "/images/cruises-on-land-modern-living-dining-room-punta-cana.jpg",
+      "/images/cruises-on-land-luxury-living-room-interior-punta-cana.jpg",
+      "/images/cruises-on-land-living-room-dining-area-punta-cana.jpg",
+      "/images/cruises-on-land-living-area-sofa-detail-punta-cana.jpg",
+      "/images/cruises-on-land-master-bedroom-suite-interior-punta-cana.jpg",
+      "/images/cruises-on-land-bedroom-headboard-detail-punta-cana.jpg",
+      "/images/cruises-on-land-twin-bedroom-interior-punta-cana.jpg",
+      "/images/cruises-on-land-master-suite-balcony-view-punta-cana.jpg",
+      "/images/cruises-on-land-patio-picuzzi-jacuzzi-punta-cana.jpg",
+      "/images/cruises-on-land-villa-floor-plan-with-pool-punta-cana.jpg",
+      "/images/cruises-on-land-two-bedroom-suite-floor-plan-punta-cana.jpg",
+      "/images/cruises-on-land-garden-villa-floor-plan-punta-cana.jpg",
+      "/images/cruises-on-land-master-plan-map-punta-cana.png"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DO",
+      "addressLocality": "Punta Cana",
+      "addressRegion": "La Altagracia"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 18.6,
+      "longitude": -68.45
+    },
+    "numberOfBedrooms": 1,
+    "numberOfBathroomsTotal": 1,
+    "floorSize": {
+      "@type": "QuantitativeValue",
+      "value": 45,
+      "unitCode": "MTK"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#offer",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana",
+    "price": 95700,
+    "priceCurrency": "USD",
+    "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+    "itemOffered": {
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/condos-cruise-on-land-resort-punta-cana#property"
+    },
+    "seller": {
+      "@type": "RealEstateAgent",
+      "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+      "name": "Punta Cana Investments",
+      "telephone": "+1-829-408-4322",
+      "url": "https://www.puntacanainvestmentsrd.com"
+    }
+  }
+}

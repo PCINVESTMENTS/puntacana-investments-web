@@ -1,0 +1,68 @@
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#listing",
+  "url": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana",
+  "name": "Exclusivo Apartamento de 1 Habitación en Epic Punta Cana",
+  "description": "Ubicado en el prestigioso proyecto residencial Epic Punta Cana, este apartamento de lujo de 1 habitación y 60 m2 representa la combinación perfecta entre diseño contemporáneo y rentabilidad estratégica. Con un precio altamente competitivo de US$105,9...",
+  "mainEntity": {
+    "@type": "Apartment",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#property",
+    "name": "Exclusivo Apartamento de 1 Habitación en Epic Punta Cana",
+    "description": "Ubicado en el prestigioso proyecto residencial Epic Punta Cana, este apartamento de lujo de 1 habitación y 60 m2 representa la combinación perfecta entre diseño contemporáneo y rentabilidad estratégica. Con un precio altamente competitivo de US$105,9...",
+    "image": [
+      "https://cdn.sanity.io/images/w7gp05my/production/38ae251bbc3d39481acb8faf4ffe75454104710b-1024x663.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/38ae251bbc3d39481acb8faf4ffe75454104710b-1024x663.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/9794e224cf97b92072091c459a56217c9b73d440-1024x703.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/52488c7d19dc397cab7e58080ef35014fbc3b8eb-1024x673.png?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/f8f63e89b7ddbf19194178d4fdd3165db91ebae4-1024x831.png?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/5dd8b03c07397f1575eee5e0d1371c0b3f7cd1ed-1024x949.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/fcaf0708511b86e37bbe66b5dd6bc505ede43776-782x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/12d52a65b04e97c42f9941f52f7ccc226695db2f-727x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/61b777a21e36f2de234065a299a7b3bd57a70755-739x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/e646320268440fda582ad585a74554b66bdf4947-790x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/e95da98330f754fde9797e2bb3198d5dddd822db-810x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/c26d81244239e67e79e96137fd0783a77e98c9f7-923x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/1e5bf53d9ee268b4e259de50e5a40bcf630f5140-747x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/ae4514a9f330e9a37591df502103fbdc19082bc9-802x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/61b777a21e36f2de234065a299a7b3bd57a70755-739x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/5ce39d0dfc9b807065e27272a9d21dd1664127dc-1024x669.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/fc14834ba5bf9fe759f29d9b73ebee72f29e5e85-1024x634.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/2649f6793d1cf373a9c25decea48b33d9b61442f-1024x624.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/86a486d2c3d7beb7f56445b0892423235266952c-583x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/8ea0e1c422a93573b3acb1890eddf01a78a7585a-774x1024.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/62e652713673bbb9ca59ab4130f0501fb5faa297-798x1024.jpg?q=75&auto=format"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DO",
+      "addressLocality": "Epic Residences",
+      "addressRegion": "La Altagracia"
+    },
+    "numberOfBedrooms": 1,
+    "numberOfBathroomsTotal": 1,
+    "floorSize": {
+      "@type": "QuantitativeValue",
+      "value": 60,
+      "unitCode": "MTK"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#offer",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana",
+    "price": 105900,
+    "priceCurrency": "USD",
+    "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+    "itemOffered": {
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/apartamento-1-habitacion-epic-punta-cana#property"
+    },
+    "seller": {
+      "@type": "RealEstateAgent",
+      "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+      "name": "Punta Cana Investments",
+      "telephone": "+1-829-408-4322",
+      "url": "https://www.puntacanainvestmentsrd.com"
+    }
+  }
+}

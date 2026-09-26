@@ -1,0 +1,67 @@
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#listing",
+  "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada",
+  "name": "Villa en Renta Amueblada en White Sands Punta Cana",
+  "description": "Villa Amueblada en Renta en White Sands - Contrato de 1 Año Esta villa totalmente amueblada en renta en White Sands ofrece la combinación perfecta de confort y lujo para vivienda a largo plazo. Ubicada en uno de los residenciales cerrados más prestig...",
+  "mainEntity": {
+    "@type": "SingleFamilyResidence",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#property",
+    "name": "Villa en Renta Amueblada en White Sands Punta Cana",
+    "description": "Villa Amueblada en Renta en White Sands - Contrato de 1 Año Esta villa totalmente amueblada en renta en White Sands ofrece la combinación perfecta de confort y lujo para vivienda a largo plazo. Ubicada en uno de los residenciales cerrados más prestig...",
+    "image": [
+      "/images/properties/villa-white-sands-modern/white-sands-villa-rental-main.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-pool-terrace.jpg",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-terrace-dining.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-modern-kitchen.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-open-concept.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-pool-deck.jpg",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-island-view.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-paradise.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-living-area-decor.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-kitchen-high-angle.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-coffee-table-detail.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-hallway-decor.jpg",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-staircase-lighting.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-master-balcony-view.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-living-room-tv-area.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-living-dining-wide.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-tv.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-bathroom-modern.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-angle-2.png",
+      "/images/properties/villa-white-sands-modern/white-sands-villa-bedroom-wardrobe.png"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DO",
+      "addressLocality": "White Sands, Bávaro",
+      "addressRegion": "La Altagracia"
+    },
+    "numberOfBedrooms": 3,
+    "numberOfBathroomsTotal": 3.5,
+    "floorSize": {
+      "@type": "QuantitativeValue",
+      "value": 180,
+      "unitCode": "MTK"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#offer",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada",
+    "price": 2000,
+    "priceCurrency": "USD",
+    "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+    "itemOffered": {
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-en-renta-white-sands-punta-cana-amueblada#property"
+    },
+    "seller": {
+      "@type": "RealEstateAgent",
+      "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+      "name": "Punta Cana Investments",
+      "telephone": "+1-829-408-4322",
+      "url": "https://www.puntacanainvestmentsrd.com"
+    }
+  }
+}

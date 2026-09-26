@@ -1,0 +1,59 @@
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#listing",
+  "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort",
+  "name": "Espectacular Villa de Diseño Contemporáneo-Tropical con Vistas al Golf en Corales – Puntacana Resort & Club",
+  "description": "Bienvenido a un oasis donde la elegancia arquitectónica se encuentra con la naturaleza. La experiencia de llegada es verdaderamente monumental: un inmaculado patio frontal en forma de \"U\" recibe a los visitantes, flanqueado por imponentes palmeras y ...",
+  "mainEntity": {
+    "@type": "SingleFamilyResidence",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#property",
+    "name": "Espectacular Villa de Diseño Contemporáneo-Tropical con Vistas al Golf en Corales – Puntacana Resort & Club",
+    "description": "Bienvenido a un oasis donde la elegancia arquitectónica se encuentra con la naturaleza. La experiencia de llegada es verdaderamente monumental: un inmaculado patio frontal en forma de \"U\" recibe a los visitantes, flanqueado por imponentes palmeras y ...",
+    "image": [
+      "https://cdn.sanity.io/images/w7gp05my/production/72710611802bf1bced20bab18d30808d96f56c8f-1024x682.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/72710611802bf1bced20bab18d30808d96f56c8f-1024x682.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/3fd51eb1c473e9a1687c4ad0365ef354c75c5920-1024x682.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/1c45b40cfd0e4ac8082dbdee6bf8f000b77be72b-1024x576.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/e348248ed94619cc1156ff23c869e32ad5738366-1024x682.png?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/f36b9b264515d5dc384f7bc989c1e047e58c5f1b-1024x679.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/6cb7b83f1b8e2a348143c82dc247321b944d2bfe-1024x681.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/5462b2f2bf0d49ac098227d1bc699bcbc537f331-1024x683.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/5e547ae9897a16f034dfd2cd7d76b339f6b9b1f0-1024x682.png?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/836063f640ca3ad99a972eb32c842791db6f7e37-1024x693.png?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/2f8bc307a2cc7aca2c019c42b33a551a8bf46f79-1024x683.png?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/babb03697498be1015ffc76d3ca160bdda71639a-1024x683.jpg?q=75&auto=format"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DO",
+      "addressLocality": "Corales, Punta Cana",
+      "addressRegion": "La Altagracia"
+    },
+    "numberOfBedrooms": 7,
+    "numberOfBathroomsTotal": 7.5,
+    "floorSize": {
+      "@type": "QuantitativeValue",
+      "value": 1100,
+      "unitCode": "MTK"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#offer",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort",
+    "price": 6299000,
+    "priceCurrency": "USD",
+    "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+    "itemOffered": {
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/villa-contemporanea-corales-vistas-golf-puntacana-resort#property"
+    },
+    "seller": {
+      "@type": "RealEstateAgent",
+      "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+      "name": "Punta Cana Investments",
+      "telephone": "+1-829-408-4322",
+      "url": "https://www.puntacanainvestmentsrd.com"
+    }
+  }
+}

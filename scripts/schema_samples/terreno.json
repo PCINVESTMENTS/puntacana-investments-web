@@ -1,0 +1,52 @@
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#listing",
+  "url": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana",
+  "name": "Exclusivo Solar de Ultra-Lujo (1,045 m²) en Caletón, Cap Cana | Perfecto para Villa de Lujo",
+  "description": "Exclusivo Solar Residencial de Ultra-Lujo en Caletón, Cap Cana Una Oportunidad de Inversión Inigualable para Desarrollar su Villa de Lujo Punta Cana Investments se complace en presentar este extraordinario solar residencial de ultra-lujo, ubicado en ...",
+  "mainEntity": {
+    "@type": "Place",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#property",
+    "name": "Exclusivo Solar de Ultra-Lujo (1,045 m²) en Caletón, Cap Cana | Perfecto para Villa de Lujo",
+    "description": "Exclusivo Solar Residencial de Ultra-Lujo en Caletón, Cap Cana Una Oportunidad de Inversión Inigualable para Desarrollar su Villa de Lujo Punta Cana Investments se complace en presentar este extraordinario solar residencial de ultra-lujo, ubicado en ...",
+    "image": [
+      "https://cdn.sanity.io/images/w7gp05my/production/e9d0195309cea8d44e5ccf94325cb7812ec45388-1024x487.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/e9d0195309cea8d44e5ccf94325cb7812ec45388-1024x487.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/eb0ed24850939858cea8f0c0a8b9a4b349784a47-1024x500.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/bd10eac830def2433194b3ffca35cbc2c70e08e7-1024x529.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/25cb0b93bedd710c9f022c5ebcb6be6f0ec4b958-1024x559.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/779d8c88171e091fef5d0c104c73fdf295781a89-1024x767.jpg?q=75&auto=format",
+      "https://cdn.sanity.io/images/w7gp05my/production/d3e44a0d26ac23a86e1cfbc050b6d19a0b2b7c7e-1024x680.jpg?q=75&auto=format"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DO",
+      "addressLocality": "Caletón, Cap Cana",
+      "addressRegion": "La Altagracia"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 18.492,
+      "longitude": -68.411
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#offer",
+    "url": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana",
+    "price": 360000,
+    "priceCurrency": "USD",
+    "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+    "itemOffered": {
+      "@id": "https://www.puntacanainvestmentsrd.com/es/properties/solar-lujo-caleton-cap-cana#property"
+    },
+    "seller": {
+      "@type": "RealEstateAgent",
+      "@id": "https://www.puntacanainvestmentsrd.com/#organization",
+      "name": "Punta Cana Investments",
+      "telephone": "+1-829-408-4322",
+      "url": "https://www.puntacanainvestmentsrd.com"
+    }
+  }
+}
