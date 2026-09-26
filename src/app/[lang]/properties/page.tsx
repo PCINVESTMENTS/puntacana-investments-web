@@ -216,6 +216,12 @@ export default async function PropertiesPage({
     const typeParam = typeof resolvedSearchParams?.type === 'string' ? resolvedSearchParams.type : undefined;
     const maxPriceParam = typeof resolvedSearchParams?.maxPrice === 'string' ? resolvedSearchParams.maxPrice : undefined;
 
+    const catalogSectionTitle = lang === "en"
+        ? "Punta Cana Real Estate Portfolio | Properties for Sale & Rent"
+        : lang === "fr"
+        ? "Catalogue Immobilier à Punta Cana | Propriétés à Vendre et à Louer"
+        : "Catálogo Inmobiliario en Punta Cana | Propiedades en Venta y Alquiler";
+
     return (
         <main className="min-h-screen bg-primary-black">
             <Navbar
@@ -228,6 +234,7 @@ export default async function PropertiesPage({
             <div className="pt-20">
                 <PropertyListings
                     isH1={true}
+                    sectionTitle={catalogSectionTitle}
                     dict={dict.properties}
                     lang={lang}
                     locations={dict.sections.locations.items}

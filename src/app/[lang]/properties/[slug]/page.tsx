@@ -326,27 +326,47 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     };
 }
 
-function getPropertySchemaType(type: string): string[] {
-    switch (type?.toLowerCase()) {
-        case 'villa':
-            return ['RealEstateListing', 'SingleFamilyResidence'];
-        case 'condo':
-        case 'penthouse':
-            return ['RealEstateListing', 'Apartment'];
-        case 'land':
-        case 'land-beach':
-            return ['RealEstateListing'];
-        case 'commercial':
-            return ['RealEstateListing', 'CommercialProperties'];
-        case 'condohotel':
-        case 'resorts':
-            return ['RealEstateListing', 'Hotel'];
-        default:
-            return ['RealEstateListing'];
+function getPropertyEntitySchemaType(type: string, title: string = "", slug: string = ""): string {
+    const t = type?.toLowerCase() || "";
+    const lowerTitle = title.toLowerCase();
+    const lowerSlug = slug.toLowerCase();
+
+    // 1. Explicit property types from CMS
+    if (t === 'villa') return 'SingleFamilyResidence';
+    if (t === 'condo' || t === 'penthouse' || t === 'townhouse' || t === 'apartment') return 'Apartment';
+    if (t === 'land' || t === 'land-beach') return 'Place';
+    if (t === 'commercial') return 'Place';
+    if (t === 'condohotel') return 'Apartment'; // Individual condohotel units are Apartments, not entire Hotels
+
+    // 2. Units in condo/condohotel/apartments
+    if (lowerTitle.includes('condo') || lowerTitle.includes('apartamento') || lowerTitle.includes('apartment') || lowerTitle.includes('suite') || lowerTitle.includes('loft') || lowerTitle.includes('penthouse') || lowerSlug.includes('apartamento') || lowerSlug.includes('condo')) {
+        return 'Apartment';
     }
+
+    // 3. Villas / Mansions / Palacios
+    if (lowerTitle.includes('villa') || lowerTitle.includes('mansion') || lowerTitle.includes('mansión') || lowerTitle.includes('palacio') || lowerTitle.includes('casa') || lowerSlug.includes('villa')) {
+        return 'SingleFamilyResidence';
+    }
+
+    // 4. Land / Lots
+    if (lowerTitle.includes('terreno') || lowerTitle.includes('solar') || lowerTitle.includes('lote') || lowerTitle.includes('land') || lowerSlug.includes('terreno') || lowerSlug.includes('solar')) {
+        return 'Place';
+    }
+
+    // 5. Commercial
+    if (lowerTitle.includes('local') || lowerTitle.includes('comercial') || lowerTitle.includes('office') || lowerSlug.includes('comercial')) {
+        return 'Place';
+    }
+
+    // 6. Resorts / Hotels
+    if (t === 'resorts' || lowerTitle.includes('hotel') || lowerSlug.includes('hotel')) {
+        return 'Hotel';
+    }
+
+    return 'Place';
 }
 
-// Helper for JSON-LD
+// Helper for JSON-LD - Separates RealEstateListing (web page/listing) from mainEntity (physical property)
 function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     const rawDesc = property.description?.[lang as 'en' | 'es' | 'fr'] 
         || property.description?.['es'] 
@@ -360,22 +380,17 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
         .replace(/\s+/g, ' ')
         .trim();
 
-    const datePosted = property._createdAt || '2025-01-15T00:00:00Z';
+    const listingUrl = `${baseUrl}/${lang}/properties/${property.slug}`;
+    const localizedTitle = getLocalizedTitle(property, lang);
+    const entityType = getPropertyEntitySchemaType(property.type, property.title, property.slug);
+    const images = property.image ? [property.image, ...(property.gallery || [])] : [];
 
-    const schema: Record<string, any> = {
-        '@context': 'https://schema.org',
-        '@type': getPropertySchemaType(property.type),
-        name: getLocalizedTitle(property, lang),
-        description: cleanDesc ? (cleanDesc.length > 250 ? cleanDesc.slice(0, 250) + '...' : cleanDesc) : getLocalizedTitle(property, lang),
-        image: property.image ? [property.image, ...(property.gallery || [])] : [],
-        url: `${baseUrl}/${lang}/properties/${property.slug}`,
-        datePosted: datePosted,
-        offers: {
-            '@type': 'Offer',
-            price: property.price,
-            priceCurrency: 'USD',
-            availability: property.status === 'sale' || property.status === 'rent' ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
-        },
+    const propertyEntity: Record<string, any> = {
+        '@type': entityType,
+        '@id': `${listingUrl}#property`,
+        name: localizedTitle,
+        description: cleanDesc ? (cleanDesc.length > 250 ? cleanDesc.slice(0, 250) + '...' : cleanDesc) : localizedTitle,
+        image: images,
         address: {
             '@type': 'PostalAddress',
             addressCountry: 'DO',
@@ -384,11 +399,55 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
         }
     };
 
-    if (property._updatedAt) {
-        schema.dateModified = property._updatedAt;
+    if (property.coordinates?.lat && property.coordinates?.lng) {
+        propertyEntity.geo = {
+            '@type': 'GeoCoordinates',
+            latitude: property.coordinates.lat,
+            longitude: property.coordinates.lng
+        };
     }
 
-    return schema;
+    if (property.beds) {
+        propertyEntity.numberOfBedrooms = property.beds;
+    }
+    if (property.baths) {
+        propertyEntity.numberOfBathroomsTotal = property.baths;
+    }
+    if (property.area) {
+        propertyEntity.floorSize = {
+            '@type': 'QuantitativeValue',
+            value: property.area,
+            unitCode: 'MTK'
+        };
+    }
+
+    const offer: Record<string, any> = {
+        '@type': 'Offer',
+        '@id': `${listingUrl}#offer`,
+        url: listingUrl,
+        price: property.price,
+        priceCurrency: 'USD',
+        availability: property.status === 'sold' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+        businessFunction: property.status === 'rent' ? 'https://schema.org/LeaseOut' : 'https://schema.org/Sell',
+        seller: {
+            '@type': 'RealEstateAgent',
+            '@id': `${baseUrl}/#organization`,
+            name: 'Punta Cana Investments',
+            telephone: '+1-829-408-4322',
+            url: baseUrl
+        }
+    };
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'RealEstateListing',
+        '@id': `${listingUrl}#listing`,
+        url: listingUrl,
+        name: localizedTitle,
+        description: cleanDesc ? (cleanDesc.length > 250 ? cleanDesc.slice(0, 250) + '...' : cleanDesc) : localizedTitle,
+        mainEntity: propertyEntity,
+        offers: offer
+    };
 }
 
 // Restoring ISR

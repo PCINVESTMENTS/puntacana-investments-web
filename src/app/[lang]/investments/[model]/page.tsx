@@ -101,8 +101,6 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                 "headline": titleText,
                 "description": descText,
                 "image": data.heroImage.startsWith("http") ? data.heroImage : `${baseUrl}${data.heroImage}`,
-                "datePublished": "2024-01-15T08:00:00+00:00",
-                "dateModified": "2025-06-01T12:00:00+00:00",
                 "author": {
                     "@type": "Organization",
                     "name": "Punta Cana Investments",

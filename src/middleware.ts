@@ -18,9 +18,21 @@ const SUSPICIOUS_PATHS = ['.git', '.env', 'wp-admin', 'wp-login.php', 'config.ph
 const ipCache = new Map();
 
 function getLocale(request: NextRequest): string {
-    const headers = { 'accept-language': request.headers.get('accept-language') || '' };
-    const languages = new Negotiator({ headers }).languages();
-    return match(languages, locales, defaultLocale);
+    try {
+        const acceptLanguage = request.headers.get('accept-language');
+        if (!acceptLanguage || acceptLanguage.trim() === '*' || acceptLanguage.trim() === '') {
+            return defaultLocale;
+        }
+        const headers = { 'accept-language': acceptLanguage };
+        const rawLanguages = new Negotiator({ headers }).languages();
+        const languages = rawLanguages.filter(l => l && l !== '*' && !l.includes('*'));
+        if (!languages || languages.length === 0) {
+            return defaultLocale;
+        }
+        return match(languages, locales, defaultLocale);
+    } catch {
+        return defaultLocale;
+    }
 }
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
