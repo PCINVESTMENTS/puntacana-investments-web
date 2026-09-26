@@ -196,9 +196,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const cleanTitle = (rawTitle || translatedTitleText)
         .replace(/\s*\|\s*Punta Cana Investments.*$/i, '')
         .trim();
-    let rawDesc = (seo?.description && seo.description[lang as 'en' | 'es' | 'fr']) 
-        ? seo.description[lang as 'en' | 'es' | 'fr'] 
-        : (property.description?.[lang as 'en' | 'es' | 'fr'] || "");
+    const rawDesc: string = (seo?.description && seo.description[lang as 'en' | 'es' | 'fr']) 
+        || (property.description?.[lang as 'en' | 'es' | 'fr']) 
+        || "";
     
     // Clean markdown symbols and newlines for clean, indexable meta description
     const cleanDesc = rawDesc
@@ -407,19 +407,28 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
         };
     }
 
-    if (property.beds) {
-        propertyEntity.numberOfBedrooms = property.beds;
+    // Differentiate Land/Place vs Built Accommodations (SingleFamilyResidence, Apartment)
+    // floorSize, bedrooms, and bathrooms apply only to constructed living accommodations
+    const isAccommodation = entityType === 'SingleFamilyResidence' || entityType === 'Apartment';
+
+    if (isAccommodation) {
+        if (typeof property.beds === 'number' && property.beds > 0) {
+            propertyEntity.numberOfBedrooms = property.beds;
+        }
+        if (typeof property.baths === 'number' && property.baths > 0) {
+            propertyEntity.numberOfBathroomsTotal = property.baths;
+        }
+        if (typeof property.area === 'number' && property.area > 0) {
+            propertyEntity.floorSize = {
+                '@type': 'QuantitativeValue',
+                value: property.area,
+                unitCode: 'MTK'
+            };
+        }
     }
-    if (property.baths) {
-        propertyEntity.numberOfBathroomsTotal = property.baths;
-    }
-    if (property.area) {
-        propertyEntity.floorSize = {
-            '@type': 'QuantitativeValue',
-            value: property.area,
-            unitCode: 'MTK'
-        };
-    }
+
+    const isRent = property.status === 'rent';
+    const isSold = (property.status as string) === 'sold';
 
     const offer: Record<string, any> = {
         '@type': 'Offer',
@@ -427,8 +436,11 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
         url: listingUrl,
         price: property.price,
         priceCurrency: 'USD',
-        availability: property.status === 'sold' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
-        businessFunction: property.status === 'rent' ? 'https://schema.org/LeaseOut' : 'https://schema.org/Sell',
+        availability: isSold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+        businessFunction: isRent ? 'http://purl.org/goodrelations/v1#LeaseOut' : 'http://purl.org/goodrelations/v1#Sell',
+        itemOffered: {
+            '@id': `${listingUrl}#property`
+        },
         seller: {
             '@type': 'RealEstateAgent',
             '@id': `${baseUrl}/#organization`,
