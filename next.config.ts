@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ['react-icons', 'lucide-react'],
+    optimizePackageImports: ['react-icons', 'lucide-react', 'framer-motion'],
     serverActions: {
       bodySizeLimit: '10mb',
     },

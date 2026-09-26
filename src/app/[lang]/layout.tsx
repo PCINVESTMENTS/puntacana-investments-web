@@ -20,6 +20,7 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   display: 'optional',
+  preload: false,
 });
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
