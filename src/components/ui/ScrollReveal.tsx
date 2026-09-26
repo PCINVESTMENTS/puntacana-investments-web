@@ -20,6 +20,13 @@ export const ScrollReveal = ({ children, width = "fit-content", delay = 0.25, di
         const currentRef = ref.current;
         if (!currentRef) return;
 
+        // Check if element is already in viewport (e.g. hash navigation)
+        const rect = currentRef.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            setIsVisible(true);
+            return;
+        }
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -28,7 +35,7 @@ export const ScrollReveal = ({ children, width = "fit-content", delay = 0.25, di
                 }
             },
             {
-                rootMargin: "-50px 0px",
+                rootMargin: "50px 0px",
                 threshold: 0
             }
         );

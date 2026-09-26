@@ -81,7 +81,7 @@ export function AboutSection({ dict }: AboutSectionProps) {
 
                         {/* Mission & Vision - Side by Side Layout */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <ScrollReveal delay={0.2} direction="up">
+                            <ScrollReveal delay={0.2} direction="up" priority={true}>
                                 <div className="p-6 bg-white/5 border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300 rounded-sm h-full">
                                     <h3 className="text-2xl font-serif font-bold text-white mb-4 flex items-center gap-3">
                                         <span className="text-luxury-gold">✦</span> {dict.mission}
@@ -92,7 +92,7 @@ export function AboutSection({ dict }: AboutSectionProps) {
                                 </div>
                             </ScrollReveal>
 
-                            <ScrollReveal delay={0.3} direction="up">
+                            <ScrollReveal delay={0.3} direction="up" priority={true}>
                                 <div className="p-6 bg-white/5 border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300 rounded-sm h-full">
                                     <h3 className="text-2xl font-serif font-bold text-white mb-4 flex items-center gap-3">
                                         <span className="text-luxury-gold">✦</span> {dict.vision}

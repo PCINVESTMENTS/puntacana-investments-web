@@ -110,7 +110,7 @@ export default async function RootLayout({
   const hubspotId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
 
   return (
-    <html lang={lang} className="scroll-smooth">
+    <html lang={lang}>
       <head>
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
