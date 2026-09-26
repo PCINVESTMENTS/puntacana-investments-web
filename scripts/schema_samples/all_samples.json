@@ -33,7 +33,16 @@
           "@type": "GeoCoordinates",
           "latitude": 18.492,
           "longitude": -68.411
-        }
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "Superficie del Terreno",
+            "value": 1045,
+            "unitCode": "MTK",
+            "unitText": "m²"
+          }
+        ]
       },
       "offers": {
         "@type": "Offer",

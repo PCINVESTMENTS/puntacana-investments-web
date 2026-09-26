@@ -426,11 +426,32 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
             };
         }
         if (typeof property.lotSize === 'number' && property.lotSize > 0) {
-            propertyEntity.lotSize = {
-                '@type': 'QuantitativeValue',
+            const lotPropertyName = lang === 'en' ? 'Lot Size' : (lang === 'fr' ? 'Surface du Terrain' : 'Superficie del Terreno');
+            const lotProperty = {
+                '@type': 'PropertyValue',
+                name: lotPropertyName,
                 value: property.lotSize,
-                unitCode: 'MTK'
+                unitCode: 'MTK',
+                unitText: 'm²'
             };
+            propertyEntity.additionalProperty = propertyEntity.additionalProperty 
+                ? [...propertyEntity.additionalProperty, lotProperty] 
+                : [lotProperty];
+        }
+    } else if (entityType === 'Place') {
+        // For land/plots, property.area represents total plot/land surface area
+        if (typeof property.area === 'number' && property.area > 0) {
+            const lotPropertyName = lang === 'en' ? 'Lot Size' : (lang === 'fr' ? 'Surface du Terrain' : 'Superficie del Terreno');
+            const lotProperty = {
+                '@type': 'PropertyValue',
+                name: lotPropertyName,
+                value: property.area,
+                unitCode: 'MTK',
+                unitText: 'm²'
+            };
+            propertyEntity.additionalProperty = propertyEntity.additionalProperty 
+                ? [...propertyEntity.additionalProperty, lotProperty] 
+                : [lotProperty];
         }
     }
 
