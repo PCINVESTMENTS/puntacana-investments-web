@@ -4,6 +4,7 @@ import { PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost, blogPosts as localPosts } from "@/data/blog";
+import { fetchLocalSandboxCatalog, mapSandboxBlogPosts } from "@/lib/localSandbox";
 
 // In ISR mode, this will run at build time and revalidate every hour
 export const revalidate = 3600;
@@ -30,39 +31,50 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/services',
     ];
 
-    // 2. Fetch Properies from Sanity & Local
-    const rawProperties = await client.fetch(PROPERTIES_QUERY);
-    const fetchedProperties: Property[] = rawProperties
-        .map(mapSanityProperty)
-        .filter((p: any): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
+    // 2. Fetch Properties from Local Sandbox OR Sanity & Local
+    const sandboxData = await fetchLocalSandboxCatalog();
+    let allProperties: Property[];
+    let allPosts: BlogPost[];
 
-    // Merge logic
-    const localMap = new Map(localProperties.map(p => [p.id, p]));
-    const unitedProperties = fetchedProperties.map(p => {
-        const local = localMap.get(p.id);
-        if (local) {
-            localMap.delete(p.id);
-            return local;
-        }
-        return p;
-    });
-    const allProperties = [...unitedProperties, ...Array.from(localMap.values())];
+    if (sandboxData) {
+        allProperties = [...sandboxData.properties].sort(
+            (a, b) => (a.catalog_position ?? 999999) - (b.catalog_position ?? 999999)
+        ) as unknown as Property[];
+        allPosts = mapSandboxBlogPosts(sandboxData.blog_posts || []);
+    } else {
+        const rawProperties = await client.fetch(PROPERTIES_QUERY);
+        const fetchedProperties: Property[] = rawProperties
+            .map(mapSanityProperty)
+            .filter((p: any): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
 
-    // 2.5. Fetch Blog Posts from Sanity & Local
-    const rawPosts = await client.fetch(POSTS_QUERY);
-    const fetchedPosts: BlogPost[] = rawPosts.map(mapSanityPost);
+        // Merge logic
+        const localMap = new Map(localProperties.map(p => [p.id, p]));
+        const unitedProperties = fetchedProperties.map(p => {
+            const local = localMap.get(p.id);
+            if (local) {
+                localMap.delete(p.id);
+                return local;
+            }
+            return p;
+        });
+        allProperties = [...unitedProperties, ...Array.from(localMap.values())];
 
-    // Merge logic for posts
-    const localPostMap = new Map(localPosts.map(p => [p.slug, p]));
-    const unitedPosts = fetchedPosts.map(p => {
-        const local = localPostMap.get(p.slug);
-        if (local) {
-            localPostMap.delete(p.slug);
-            return { ...local, ...p }; // Sanity takes precedence
-        }
-        return p;
-    });
-    const allPosts = [...unitedPosts, ...Array.from(localPostMap.values())];
+        // 2.5. Fetch Blog Posts from Sanity & Local
+        const rawPosts = await client.fetch(POSTS_QUERY);
+        const fetchedPosts: BlogPost[] = rawPosts.map(mapSanityPost);
+
+        // Merge logic for posts
+        const localPostMap = new Map(localPosts.map(p => [p.slug, p]));
+        const unitedPosts = fetchedPosts.map(p => {
+            const local = localPostMap.get(p.slug);
+            if (local) {
+                localPostMap.delete(p.slug);
+                return { ...local, ...p }; // Sanity takes precedence
+            }
+            return p;
+        });
+        allPosts = [...unitedPosts, ...Array.from(localPostMap.values())];
+    }
 
     // 3. Generate Entries for Languages (ES / EN / FR)
     const languages = ['es', 'en', 'fr'];

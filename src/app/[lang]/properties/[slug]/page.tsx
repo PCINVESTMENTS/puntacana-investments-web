@@ -27,6 +27,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { PROPERTY_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import { Property, properties } from "@/data/properties";
+import { fetchLocalSandboxPropertyBySlug, isLocalSandboxEnabled } from "@/lib/localSandbox";
 
 // Helper to map Sanity data to our app's Property interface
 function translatePropertyTitle(title: string, lang: string) {
@@ -152,40 +153,47 @@ function mapSanityProperty(data: any): Property {
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
 
-    const localProperty = properties.find(p => p.slug === slug);
-    const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-    
     let property: Property;
-
-    if (propertyData) {
-        const mappedSanity = mapSanityProperty(propertyData);
-        if (localProperty) {
-            property = {
-                ...localProperty,
-                ...mappedSanity,
-                image: mappedSanity.image || localProperty.image,
-                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
-                price: (mappedSanity.id === 999 || mappedSanity.id === 998) ? localProperty.price : (mappedSanity.price || localProperty.price),
-                description: {
-                    en: mappedSanity.description?.en || localProperty.description?.en || "",
-                    es: mappedSanity.description?.es || localProperty.description?.es || "",
-                    fr: mappedSanity.description?.fr || localProperty.description?.fr || mappedSanity.description?.en || localProperty.description?.en || ""
-                },
-                features: {
-                    en: (mappedSanity.features?.en && mappedSanity.features.en.length > 0) ? mappedSanity.features.en : (localProperty.features?.en || []),
-                    es: (mappedSanity.features?.es && mappedSanity.features.es.length > 0) ? mappedSanity.features.es : (localProperty.features?.es || []),
-                    fr: (mappedSanity.features?.fr && mappedSanity.features.fr.length > 0) ? mappedSanity.features.fr : (localProperty.features?.fr || [])
-                }
-            };
-        } else {
-            property = mappedSanity;
+    if (isLocalSandboxEnabled()) {
+        const sbProp = await fetchLocalSandboxPropertyBySlug(slug);
+        if (!sbProp) {
+            return { title: 'Propiedad no encontrada' };
         }
-    } else if (localProperty) {
-        property = localProperty;
+        property = sbProp;
     } else {
-        return {
-            title: 'Propiedad no encontrada',
-        };
+        const localProperty = properties.find(p => p.slug === slug);
+        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
+
+        if (propertyData) {
+            const mappedSanity = mapSanityProperty(propertyData);
+            if (localProperty) {
+                property = {
+                    ...localProperty,
+                    ...mappedSanity,
+                    image: mappedSanity.image || localProperty.image,
+                    gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
+                    price: (mappedSanity.id === 999 || mappedSanity.id === 998) ? localProperty.price : (mappedSanity.price || localProperty.price),
+                    description: {
+                        en: mappedSanity.description?.en || localProperty.description?.en || "",
+                        es: mappedSanity.description?.es || localProperty.description?.es || "",
+                        fr: mappedSanity.description?.fr || localProperty.description?.fr || mappedSanity.description?.en || localProperty.description?.en || ""
+                    },
+                    features: {
+                        en: (mappedSanity.features?.en && mappedSanity.features.en.length > 0) ? mappedSanity.features.en : (localProperty.features?.en || []),
+                        es: (mappedSanity.features?.es && mappedSanity.features.es.length > 0) ? mappedSanity.features.es : (localProperty.features?.es || []),
+                        fr: (mappedSanity.features?.fr && mappedSanity.features.fr.length > 0) ? mappedSanity.features.fr : (localProperty.features?.fr || [])
+                    }
+                };
+            } else {
+                property = mappedSanity;
+            }
+        } else if (localProperty) {
+            property = localProperty;
+        } else {
+            return {
+                title: 'Propiedad no encontrada',
+            };
+        }
     }
 
     const seo = property.seo;
@@ -498,38 +506,45 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
     const { lang, slug } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
 
-    const localProperty = properties.find(p => p.slug === slug);
-    const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
-    
     let property: Property;
-
-    if (propertyData) {
-        const mappedSanity = mapSanityProperty(propertyData);
-        if (localProperty) {
-            property = {
-                ...localProperty,
-                ...mappedSanity,
-                image: mappedSanity.image || localProperty.image,
-                gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
-                price: (mappedSanity.id === 999 || mappedSanity.id === 998) ? localProperty.price : (mappedSanity.price || localProperty.price),
-                description: {
-                    en: mappedSanity.description?.en || localProperty.description?.en || "",
-                    es: mappedSanity.description?.es || localProperty.description?.es || "",
-                    fr: mappedSanity.description?.fr || localProperty.description?.fr || mappedSanity.description?.en || localProperty.description?.en || ""
-                },
-                features: {
-                    en: (mappedSanity.features?.en && mappedSanity.features.en.length > 0) ? mappedSanity.features.en : (localProperty.features?.en || []),
-                    es: (mappedSanity.features?.es && mappedSanity.features.es.length > 0) ? mappedSanity.features.es : (localProperty.features?.es || []),
-                    fr: (mappedSanity.features?.fr && mappedSanity.features.fr.length > 0) ? mappedSanity.features.fr : (localProperty.features?.fr || [])
-                }
-            };
-        } else {
-            property = mappedSanity;
+    if (isLocalSandboxEnabled()) {
+        const sbProp = await fetchLocalSandboxPropertyBySlug(slug);
+        if (!sbProp) {
+            notFound();
         }
-    } else if (localProperty) {
-        property = localProperty;
+        property = sbProp;
     } else {
-        notFound();
+        const localProperty = properties.find(p => p.slug === slug);
+        const propertyData = await client.fetch(PROPERTY_BY_SLUG_QUERY, { slug });
+
+        if (propertyData) {
+            const mappedSanity = mapSanityProperty(propertyData);
+            if (localProperty) {
+                property = {
+                    ...localProperty,
+                    ...mappedSanity,
+                    image: mappedSanity.image || localProperty.image,
+                    gallery: (mappedSanity.gallery && mappedSanity.gallery.length > 0) ? mappedSanity.gallery : localProperty.gallery,
+                    price: (mappedSanity.id === 999 || mappedSanity.id === 998) ? localProperty.price : (mappedSanity.price || localProperty.price),
+                    description: {
+                        en: mappedSanity.description?.en || localProperty.description?.en || "",
+                        es: mappedSanity.description?.es || localProperty.description?.es || "",
+                        fr: mappedSanity.description?.fr || localProperty.description?.fr || mappedSanity.description?.en || localProperty.description?.en || ""
+                    },
+                    features: {
+                        en: (mappedSanity.features?.en && mappedSanity.features.en.length > 0) ? mappedSanity.features.en : (localProperty.features?.en || []),
+                        es: (mappedSanity.features?.es && mappedSanity.features.es.length > 0) ? mappedSanity.features.es : (localProperty.features?.es || []),
+                        fr: (mappedSanity.features?.fr && mappedSanity.features.fr.length > 0) ? mappedSanity.features.fr : (localProperty.features?.fr || [])
+                    }
+                };
+            } else {
+                property = mappedSanity;
+            }
+        } else if (localProperty) {
+            property = localProperty;
+        } else {
+            notFound();
+        }
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';

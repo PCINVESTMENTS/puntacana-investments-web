@@ -6,6 +6,7 @@ import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, normalizeLocation } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
+import { fetchLocalSandboxCatalog } from "@/lib/localSandbox";
 import type { Metadata } from "next";
 
 // Restoring ISR to fix build panic. searchParams removed from generateMetadata to avoid dynamic bail-out issues in Turbopack.
@@ -70,6 +71,51 @@ export default async function PropertiesPage({
     const { lang } = await params;
     const resolvedSearchParams = await searchParams;
     const dict = await getDictionary(lang);
+
+    // Local Isolated Properties Sandbox Override (active ONLY when LOCAL_PROPERTIES_SANDBOX_URL is set)
+    const sandboxData = await fetchLocalSandboxCatalog();
+    if (sandboxData) {
+        const properties = [...sandboxData.properties].sort(
+            (a, b) => (a.catalog_position ?? 999999) - (b.catalog_position ?? 999999)
+        );
+        const statusParam = typeof resolvedSearchParams?.status === 'string' ? resolvedSearchParams.status : undefined;
+        const locationParam = typeof resolvedSearchParams?.location === 'string' ? resolvedSearchParams.location : undefined;
+        const typeParam = typeof resolvedSearchParams?.type === 'string' ? resolvedSearchParams.type : undefined;
+        const maxPriceParam = typeof resolvedSearchParams?.maxPrice === 'string' ? resolvedSearchParams.maxPrice : undefined;
+        const catalogSectionTitle = lang === "en"
+            ? "Punta Cana Real Estate Portfolio | Properties for Sale & Rent"
+            : lang === "fr"
+            ? "Catalogue Immobilier à Punta Cana | Propriétés à Vendre et à Louer"
+            : "Catálogo Inmobiliario en Punta Cana | Propiedades en Venta y Alquiler";
+
+        return (
+            <main className="min-h-screen bg-primary-black">
+                <Navbar
+                    dict={dict.nav}
+                    lang={lang}
+                    servicesList={dict.sections.services.items}
+                    propertyTypes={dict.properties.types}
+                />
+                <div className="pt-20">
+                    <PropertyListings
+                        isH1={true}
+                        sectionTitle={catalogSectionTitle}
+                        dict={dict.properties}
+                        lang={lang}
+                        locations={dict.sections.locations.items}
+                        initialFilters={{
+                            status: statusParam,
+                            location: locationParam,
+                            type: typeParam,
+                            maxPrice: maxPriceParam
+                        }}
+                        initialData={properties as Property[]}
+                    />
+                </div>
+                <Footer dict={dict} lang={lang} />
+            </main>
+        );
+    }
 
     // Fetch properties with Fallback Strategy
     let rawProperties: any[] = [];

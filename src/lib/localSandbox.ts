@@ -1,0 +1,84 @@
+/**
+ * Isolated Local Properties Sandbox loader for puntacana-investments-web.
+ * Activates ONLY when process.env.LOCAL_PROPERTIES_SANDBOX_URL is configured (local testing only).
+ * Never mutates production Sanity, Railway, or Vercel.
+ */
+import type { Property } from "@/data/properties";
+import type { BlogPost } from "@/data/blog";
+
+export interface LocalSandboxCatalogResponse {
+  sandbox_mode: boolean;
+  count: number;
+  properties: (Property & {
+    catalog_position?: number;
+    home_positions?: {
+      hero_position?: number | null;
+      sale_position?: number | null;
+      rent_position?: number | null;
+      featured_position?: number | null;
+    };
+  })[];
+  ordering_by_language?: Record<string, any>;
+  blog_posts?: any[];
+}
+
+export function isLocalSandboxEnabled(): boolean {
+  return Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_URL);
+}
+
+export async function fetchLocalSandboxCatalog(): Promise<LocalSandboxCatalogResponse | null> {
+  const baseUrl = process.env.LOCAL_PROPERTIES_SANDBOX_URL;
+  if (!baseUrl) return null;
+
+  try {
+    const res = await fetch(`${baseUrl}/api/properties-sandbox/public-catalog/`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as LocalSandboxCatalogResponse;
+  } catch (err) {
+    console.error("Local Sandbox catalog fetch error:", err);
+    return null;
+  }
+}
+
+export async function fetchLocalSandboxPropertyBySlug(slug: string): Promise<Property | null> {
+  const data = await fetchLocalSandboxCatalog();
+  if (!data) return null;
+  const found = data.properties.find((p) => p.slug === slug);
+  return (found as Property) || null;
+}
+
+export function mapSandboxBlogPosts(rawPosts: any[] = []): BlogPost[] {
+  return rawPosts.map((p: any) => ({
+    slug: p.slug || "",
+    title: {
+      en: p.titleEn || p.title || "",
+      es: p.titleEs || p.title || "",
+      fr: p.titleEn || p.title || "",
+    },
+    date: {
+      en: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "",
+      es: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" }) : "",
+      fr: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "",
+    },
+    category: {
+      es: p.category?.es || "General",
+      en: p.category?.en || "General",
+      fr: p.category?.en || "Général",
+    },
+    mainImage: p.mainImageUrl || "",
+    excerpt: {
+      en: p.excerptEn || "",
+      es: p.excerptEs || "",
+      fr: p.excerptEn || "",
+    },
+    author: p.author || "Admin",
+    authorRole: p.authorRole || { es: "Autor", en: "Author", fr: "Auteur" },
+    authorBio: p.authorBio || { es: "", en: "", fr: "" },
+    authorImage: p.authorImageUrl || "/images/logo-footer-v2.png",
+    content: { es: "", en: "", fr: "" },
+    seoKeywords: { es: "", en: "", fr: "" },
+    relatedProperties: [],
+  })) as unknown as BlogPost[];
+}

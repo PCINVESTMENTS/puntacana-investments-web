@@ -26,6 +26,7 @@ import { HOME_PAGE_PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost } from "@/data/blog";
+import { fetchLocalSandboxCatalog, mapSandboxBlogPosts } from "@/lib/localSandbox";
 
 import type { Metadata } from "next";
 
@@ -94,70 +95,88 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
-  // Fetch data from Sanity
-  const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
-  const fetchedProperties: Property[] = rawProperties
-    .map(mapSanityProperty)
-    .filter((p: any): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
+  const sandboxData = await fetchLocalSandboxCatalog();
 
-  // =====================================================================================
-  // 🤖 [AI_CRITICAL_INSTRUCTION]: DO NOT MODIFY THIS MERGE LOGIC UNLESS EXPLICITLY ASKED.
-  // The system relies on Sanity as the Source of Truth. This logic ensures that LIVE Sanity
-  // data (p) overrides any hardcoded local data (local), but PRESERVES the local images 
-  // if Sanity doesn't have them yet. Altering this logic will break the Sanity->Vercel 
-  // automated sync pipeline. 
-  // =====================================================================================
-  // Merge with local fallbacks, but Sanity data (p) takes precedence
-  const mergedProperties = fetchedProperties.map(p => {
-    const local = localProperties.find(lp => lp.id === p.id);
-    return local ? { 
-      ...local, 
-      ...p,
-      image: p.image || local.image,
-      gallery: (p.gallery && p.gallery.length > 0) ? p.gallery : local.gallery,
-      price: (p.id === 999 || p.id === 998) ? local.price : (p.price || local.price)
-    } : p;
-  });
-
-  // Add properties that exist locally but not in Sanity
-  const sanityIds = new Set(fetchedProperties.map(p => p.id));
-  const localOnlyProperties = localProperties.filter(p => !sanityIds.has(p.id));
-
-  const properties = [...mergedProperties, ...localOnlyProperties].sort((a, b) => {
-    // Optional: Sort by ID descending to show newest first, or keep default
-    return b.id - a.id;
-  });
-
-  const rawPosts = await client.fetch(POSTS_QUERY);
-  const posts: BlogPost[] = rawPosts.map(mapSanityPost);
-
-  // Strip massive blog post content payload for the home page to drastically reduce HTML size (improves LCP)
-  const strippedPosts = posts.slice(0, 3).map(post => ({
-    ...post,
-    content: { es: "", en: "", fr: "" },
-    rawContent: null
-  } as unknown as BlogPost));
-
-  // Fetch locations from Railway API securely on the server-side to prevent Layout Shifts and Client Fetching overhead
+  let properties: Property[];
+  let strippedPosts: BlogPost[];
   let apiLocations: any[] = [];
-  try {
-      const API_BASE = 'https://puntacana-fortress-production.up.railway.app';
-      const endpoint = `${API_BASE}/api/cms/locations/`;
-      const res = await fetch(endpoint, { next: { revalidate: 60 } });
-      if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) {
-              apiLocations = data
-                  .filter((item: any) => item.is_active)
-                  .map((item: any) => ({
-                      title: item.title,
-                      slug: item.slug,
-                      img: item.image_url || '/images/locations/bavaro.jpg'
-                  }));
-          }
-      }
-  } catch (err) {
-      console.error("FAILED to load locations from Backend in page.tsx:", err);
+  let explicitHomeSale: Property[] | null = null;
+  let explicitHomeRent: Property[] | null = null;
+  let explicitHomeFeatured: Property[] | null = null;
+
+  if (sandboxData) {
+    properties = ([...sandboxData.properties] as unknown as Property[]).sort((a, b) => b.id - a.id);
+    // Preserve exact baseline homepage sections independently of new properties (#40+)
+    const bySalePos = sandboxData.properties
+      .filter((p) => p.home_positions?.sale_position != null)
+      .sort((a, b) => (a.home_positions!.sale_position!) - (b.home_positions!.sale_position!));
+    const byRentPos = sandboxData.properties
+      .filter((p) => p.home_positions?.rent_position != null)
+      .sort((a, b) => (a.home_positions!.rent_position!) - (b.home_positions!.rent_position!));
+    const byFeatPos = sandboxData.properties
+      .filter((p) => p.home_positions?.featured_position != null)
+      .sort((a, b) => (a.home_positions!.featured_position!) - (b.home_positions!.featured_position!));
+    if (bySalePos.length > 0) explicitHomeSale = bySalePos as unknown as Property[];
+    if (byRentPos.length > 0) explicitHomeRent = byRentPos as unknown as Property[];
+    if (byFeatPos.length > 0) explicitHomeFeatured = byFeatPos as unknown as Property[];
+    strippedPosts = mapSandboxBlogPosts(sandboxData.blog_posts || []).slice(0, 3);
+  } else {
+    // Fetch data from Sanity
+    const rawProperties = await client.fetch(HOME_PAGE_PROPERTIES_QUERY);
+    const fetchedProperties: Property[] = rawProperties
+      .map(mapSanityProperty)
+      .filter((p: any): p is Property => p && typeof p.id === 'number' && !isNaN(p.id));
+
+    // Merge with local fallbacks, but Sanity data (p) takes precedence
+    const mergedProperties = fetchedProperties.map(p => {
+      const local = localProperties.find(lp => lp.id === p.id);
+      return local ? { 
+        ...local, 
+        ...p,
+        image: p.image || local.image,
+        gallery: (p.gallery && p.gallery.length > 0) ? p.gallery : local.gallery,
+        price: (p.id === 999 || p.id === 998) ? local.price : (p.price || local.price)
+      } : p;
+    });
+
+    // Add properties that exist locally but not in Sanity
+    const sanityIds = new Set(fetchedProperties.map(p => p.id));
+    const localOnlyProperties = localProperties.filter(p => !sanityIds.has(p.id));
+
+    properties = [...mergedProperties, ...localOnlyProperties].sort((a, b) => {
+      return b.id - a.id;
+    });
+
+    const rawPosts = await client.fetch(POSTS_QUERY);
+    const posts: BlogPost[] = rawPosts.map(mapSanityPost);
+
+    // Strip massive blog post content payload for the home page to drastically reduce HTML size (improves LCP)
+    strippedPosts = posts.slice(0, 3).map(post => ({
+      ...post,
+      content: { es: "", en: "", fr: "" },
+      rawContent: null
+    } as unknown as BlogPost));
+
+    // Fetch locations from Railway API securely on the server-side
+    try {
+        const API_BASE = 'https://puntacana-fortress-production.up.railway.app';
+        const endpoint = `${API_BASE}/api/cms/locations/`;
+        const res = await fetch(endpoint, { next: { revalidate: 60 } });
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data)) {
+                apiLocations = data
+                    .filter((item: any) => item.is_active)
+                    .map((item: any) => ({
+                        title: item.title,
+                        slug: item.slug,
+                        img: item.image_url || '/images/locations/bavaro.jpg'
+                    }));
+            }
+        }
+    } catch (err) {
+        console.error("FAILED to load locations from Backend in page.tsx:", err);
+    }
   }
 
   const heroProperties = properties.filter(p =>
@@ -207,9 +226,9 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
   const nonLandProperties = properties.filter(p => p.type !== "land");
 
-  const saleProperties = stripPayload(nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
-  const rentProperties = stripPayload(nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
-  const featuredOnlyProperties = stripPayload(nonLandProperties.filter(p => p.featured === true).slice(0, 3));
+  const saleProperties = stripPayload(explicitHomeSale || nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
+  const rentProperties = stripPayload(explicitHomeRent || nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
+  const featuredOnlyProperties = stripPayload(explicitHomeFeatured || nonLandProperties.filter(p => p.featured === true).slice(0, 3));
 
   const faqSchema = {
     "@context": "https://schema.org",
