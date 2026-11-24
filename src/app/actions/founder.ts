@@ -3,7 +3,13 @@
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resendClient: Resend | null = null;
+function getResend(): Resend {
+    if (!_resendClient) {
+        _resendClient = new Resend(process.env.RESEND_API_KEY);
+    }
+    return _resendClient;
+}
 
 export async function submitFounderForm(prevState: Record<string, any>, formData: FormData) {
     const name = formData.get('name') as string;
@@ -123,7 +129,7 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             </html>
             `;
 
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: [email],
                 subject: `Solicitud VIP Recibida - Punta Cana Investments`,
@@ -163,7 +169,7 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             </html>
             `;
 
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `NUEVO LEAD VIP (Founder): ${name} [${sequenceNumber}]`,

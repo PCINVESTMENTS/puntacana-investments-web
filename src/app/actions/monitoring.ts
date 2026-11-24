@@ -3,7 +3,13 @@
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resendClient: Resend | null = null;
+function getResend(): Resend {
+    if (!_resendClient) {
+        _resendClient = new Resend(process.env.RESEND_API_KEY);
+    }
+    return _resendClient;
+}
 
 export async function submitMonitoringForm(prevState: any, formData: FormData) {
     const name = formData.get('name') as string;
@@ -167,7 +173,7 @@ Fecha Entrega: ${date || 'N/A'}`;
             </html>
             `;
 
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: [email],
                 subject: subject,
@@ -211,7 +217,7 @@ Fecha Entrega: ${date || 'N/A'}`;
             </html>
             `;
 
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `LEAD MONITOREO: ${name} - ${project}`,

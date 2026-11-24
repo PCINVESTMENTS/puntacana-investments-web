@@ -11,7 +11,13 @@ const writeClient = client.withConfig({
     useCdn: false,
 })
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let _resendClient: Resend | null = null
+function getResend(): Resend {
+    if (!_resendClient) {
+        _resendClient = new Resend(process.env.RESEND_API_KEY)
+    }
+    return _resendClient
+}
 
 export async function submitKYCFromClient(formData: FormData) {
     try {
@@ -170,7 +176,7 @@ export async function submitKYCFromClient(formData: FormData) {
 
         // Admin Notification
         try {
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Punta Cana Investments <onboarding@resend.dev>',
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `Nuevo KYC Recibido: ${subjectName}`,
@@ -206,7 +212,7 @@ export async function submitKYCFromClient(formData: FormData) {
         // Client Confirmation
         if (clientEmail) {
             try {
-                await resend.emails.send({
+                await getResend().emails.send({
                     from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                     to: [clientEmail],
                     subject: `Confirmación de Recepción - Formulario KYC (${type})`,
@@ -268,7 +274,7 @@ export async function sendKYCEmailNotification(params: { type: string, clientEma
 
         // Admin Notification
         try {
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>', // MUST BE verified domain
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `Nuevo KYC Recibido: ${subjectName}`,
@@ -304,7 +310,7 @@ export async function sendKYCEmailNotification(params: { type: string, clientEma
         // Client Confirmation
         if (clientEmail) {
             try {
-                await resend.emails.send({
+                await getResend().emails.send({
                     from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                     to: [clientEmail],
                     subject: `Confirmación de Recepción - Formulario KYC (${type})`,

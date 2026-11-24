@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resendClient: Resend | null = null;
+function getResend(): Resend {
+    if (!_resendClient) {
+        _resendClient = new Resend(process.env.RESEND_API_KEY);
+    }
+    return _resendClient;
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -59,7 +65,7 @@ export async function POST(request: Request) {
         const data = await response.json();
 
         try {
-            await resend.emails.send({
+            await getResend().emails.send({
                 from: 'Punta Cana Investments <onboarding@resend.dev>',
                 to: ['info@puntacanainvestmentsrd.com'],
                 subject: `Nuevo KYC Recibido: ${subjectName.trim()}`,

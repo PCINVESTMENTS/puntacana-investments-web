@@ -1,8 +1,15 @@
 'use server'
 
 import { Resend } from 'resend';
+import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resendClient: Resend | null = null;
+function getResend(): Resend {
+    if (!_resendClient) {
+        _resendClient = new Resend(process.env.RESEND_API_KEY);
+    }
+    return _resendClient;
+}
 
 export async function submitNewsletter(prevState: any, formData: FormData) {
     const email = formData.get('email') as string;
@@ -12,6 +19,26 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
         return {
             success: false,
             message: 'Please enter a valid email.'
+        };
+    }
+
+    if (isLocalSandboxEnabled()) {
+        appendSandboxTestInboxEntry({
+            form_type: 'newsletter',
+            form_label: 'Suscripción Newsletter',
+            lang: 'es',
+            configured_from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
+            client_autoresponder_to: email,
+            admin_subject: `Nuevo Suscriptor Newsletter (${String(source)}): ${email}`,
+            client_subject: 'Bienvenido a Punta Cana Investments',
+            property_reference: { title: String(source), type: 'newsletter' },
+            lead: { name: email.split('@')[0], email, phone: '', message: String(source) },
+            deduplication_note: '1 suscripción = 1 aviso PCI + 1 bienvenida (buzón local)',
+        });
+        return {
+            success: true,
+            message: 'Suscripción registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
         };
     }
 
@@ -39,7 +66,7 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
             console.error("Backend Error:", errText);
             throw new Error(`Error del sistema central: ${res.status}`);
         }
-        await resend.emails.send({
+        await getResend().emails.send({
             from: 'Punta Cana Investments <onboarding@resend.dev>',
             to: ['info@puntacanainvestmentsrd.com'],
             subject: `New Investors Club Member (${source})`,
@@ -99,7 +126,7 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
         </div>
         `;
 
-        const welcomeMailObj = await resend.emails.send({
+        const welcomeMailObj = await getResend().emails.send({
             from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
             to: [email],
             subject: subjectStr,
