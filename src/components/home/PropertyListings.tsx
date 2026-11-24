@@ -174,6 +174,8 @@ function CompareToggle({ property, lang }: { property: Property, lang: string })
     );
 }
 
+const EMPTY_LOCATION_PLACEMENTS: Record<string, string[]> = {};
+
 function PropertyListingsContent({
     dict,
     lang,
@@ -190,7 +192,7 @@ function PropertyListingsContent({
     initialData,
     isH1 = false,
     preserveInitialOrder = false,
-    locationPlacements = {},
+    locationPlacements = EMPTY_LOCATION_PLACEMENTS,
 }: PropertyListingsProps) {
     const searchParams = useSearchParams();
     const initialLoc = searchParams.get("location") || initialFilters.location || "all";
@@ -290,7 +292,8 @@ function PropertyListingsContent({
         }
 
         setFilteredProperties(filtered);
-    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, featured, featuredCategory, featuredLimit, initialData, preserveInitialOrder, showFeaturedOnly, locationPlacements]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, featured, featuredCategory, featuredLimit, initialData, preserveInitialOrder, showFeaturedOnly, JSON.stringify(locationPlacements)]);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {
