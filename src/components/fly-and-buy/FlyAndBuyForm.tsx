@@ -232,8 +232,8 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                                 className="w-full bg-black/50 border border-white/10 focus:border-luxury-gold rounded-sm px-4 py-3 text-white outline-none transition-colors appearance-none"
                             >
                                 <option value="" disabled>Selecciona un Proyecto...</option>
-                                {properties.map((prop: any) => (
-                                    <option key={prop.id} value={prop.title}>{prop.title}</option>
+                                {properties.map((prop: any, idx: number) => (
+                                    <option key={prop.internal_code || prop.slug || `${prop.id}-${idx}`} value={prop.title}>{prop.title}</option>
                                 ))}
                                 <option value="other">Otro (Especificar)</option>
                             </select>

@@ -4,7 +4,13 @@ import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resendClient: Resend | null = null;
+function getResend(): Resend {
+    if (!_resendClient) {
+        _resendClient = new Resend(process.env.RESEND_API_KEY);
+    }
+    return _resendClient;
+}
 
 export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     // Obligamos a la acción a ir directo a Railway, ignorando NEXT_PUBLIC_API_URL de Vercel.
@@ -138,7 +144,7 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 </html>
                 `;
 
-                const { error, data } = await resend.emails.send({
+                const { error, data } = await getResend().emails.send({
                     from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                     to: [email],
                     subject: 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
@@ -188,7 +194,7 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 </html>
                 `;
 
-                await resend.emails.send({
+                await getResend().emails.send({
                     from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
                     to: ['info@puntacanainvestmentsrd.com'],
                     subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
