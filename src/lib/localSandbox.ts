@@ -1,8 +1,10 @@
 /**
  * Isolated Local Properties Sandbox loader for puntacana-investments-web.
- * Activates ONLY when process.env.LOCAL_PROPERTIES_SANDBOX_URL is configured (local testing only).
- * Never mutates production Sanity, Railway, or Vercel.
+ * Reads directly from the atomic local JSON mirror written by the isolated Django sandbox
+ * (.local-properties-sandbox/public_catalog_live.json), with HTTP fallback when configured.
+ * Activates ONLY in local sandbox mode; never mutates production Sanity, Railway, or Vercel.
  */
+import fs from "fs";
 import type { Property } from "@/data/properties";
 import type { BlogPost } from "@/data/blog";
 
@@ -23,10 +25,24 @@ export interface LocalSandboxCatalogResponse {
 }
 
 export function isLocalSandboxEnabled(): boolean {
-  return Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_URL);
+  return Boolean(
+    process.env.LOCAL_PROPERTIES_SANDBOX_FILE || process.env.LOCAL_PROPERTIES_SANDBOX_URL
+  );
 }
 
 export async function fetchLocalSandboxCatalog(): Promise<LocalSandboxCatalogResponse | null> {
+  const filePath = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (filePath) {
+    try {
+      if (fs.existsSync(filePath)) {
+        const raw = fs.readFileSync(filePath, "utf-8");
+        return JSON.parse(raw) as LocalSandboxCatalogResponse;
+      }
+    } catch (err) {
+      console.error("Local Sandbox JSON mirror read error:", err);
+    }
+  }
+
   const baseUrl = process.env.LOCAL_PROPERTIES_SANDBOX_URL;
   if (!baseUrl) return null;
 
