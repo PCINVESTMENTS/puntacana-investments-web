@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    unoptimized: Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE),
     formats: ['image/avif', 'image/webp'],
     qualities: [50, 75, 90, 100],
     remotePatterns: [
