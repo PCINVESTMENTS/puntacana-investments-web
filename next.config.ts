@@ -105,6 +105,18 @@ const nextConfig: NextConfig = {
   },
   // Trigger reload for image cache clear
   async headers() {
+    const isLocalSandbox = Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE);
+    const frameHeaders = isLocalSandbox
+      ? [
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self' http://127.0.0.1:3110 http://localhost:3110;",
+          },
+        ]
+      : [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self';" },
+        ];
     return [
       {
         source: '/:path*',
@@ -114,8 +126,7 @@ const nextConfig: NextConfig = {
           { key: 'X-XSS-Protection', value: '1; mode=block' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          { key: 'Content-Security-Policy', value: "frame-ancestors 'self';" }
+          ...frameHeaders,
         ]
       }
     ];

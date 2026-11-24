@@ -5,6 +5,7 @@
  * Activates ONLY in local sandbox mode; never mutates production Sanity, Railway, or Vercel.
  */
 import fs from "fs";
+import path from "path";
 import type { Property } from "@/data/properties";
 import type { BlogPost } from "@/data/blog";
 
@@ -63,6 +64,24 @@ export async function fetchLocalSandboxPropertyBySlug(slug: string): Promise<Pro
   if (!data) return null;
   const found = data.properties.find((p) => p.slug === slug);
   return (found as Property) || null;
+}
+
+export async function fetchLocalSandboxDraftPreview(slug: string): Promise<(Property & { is_draft_preview?: boolean; internal_code?: string; catalog_position?: number; specs?: Record<string, any> }) | null> {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (catalogFile) {
+    const safeSlug = slug.replace(/[^a-z0-9-]/gi, "");
+    const previewFile = path.join(path.dirname(catalogFile), "preview_drafts", `${safeSlug}.json`);
+    try {
+      if (fs.existsSync(previewFile)) {
+        const raw = fs.readFileSync(previewFile, "utf-8");
+        return JSON.parse(raw);
+      }
+    } catch (err) {
+      console.error("Draft preview read error:", err);
+    }
+  }
+  const pub = await fetchLocalSandboxPropertyBySlug(slug);
+  return pub as any;
 }
 
 export function mapSandboxBlogPosts(rawPosts: any[] = []): BlogPost[] {
