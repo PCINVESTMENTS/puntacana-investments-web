@@ -613,6 +613,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                         {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : lang === 'fr' ? 'Vente' : 'Venta') : (lang === 'en' ? 'Rent' : lang === 'fr' ? 'Location' : 'Renta')}
                                     </span>
                                     {(() => {
+                                        const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                                        if (disp.show_commercial_badge === false) return null;
                                         const st = (property as any).commercialStage || "";
                                         const map: Record<string, { es: string; en: string; fr: string; cls: string }> = {
                                             off_plan: { es: "En Planos", en: "Off-Plan", fr: "Sur Plan", cls: "bg-teal-700 text-white" },
@@ -625,16 +627,18 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                         const info = st && map[st] ? map[st] : null;
                                         if (!info) return null;
                                         const text = lang === 'en' ? info.en : lang === 'fr' ? info.fr : info.es;
-                                            return (
+                                        return (
                                             <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider inline-block ${info.cls}`}>
                                                 {text}
-                                                {(st === "pre_construction" || st === "under_construction") && Number(property.completionPercent) > 0
+                                                {disp.show_construction_progress !== false && (st === "pre_construction" || st === "under_construction") && Number(property.completionPercent) > 0
                                                     ? ` • ${property.completionPercent}%`
                                                     : ""}
                                             </span>
                                         );
                                     })()}
                                     {(() => {
+                                        const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                                        if (disp.show_availability_badge === false) return null;
                                         const inv = String((property as any).inventoryStatus || "Disponible");
                                         if (!inv || inv === "Disponible") return null;
                                         const invMap: Record<string, { es: string; en: string; fr: string; cls: string }> = {
@@ -757,7 +761,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         )}
 
                         {/* Video Section */}
-                        {(property.videoUrl || property.virtualTourUrl) && (
+                        {(((property as any)?.display || (property as any)?.specs?.display || {}).show_video_tour !== false) && (property.videoUrl || property.virtualTourUrl) && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {property.videoUrl && (
                                     <div>
@@ -779,33 +783,41 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         )}
 
                         {/* Calculations Section */}
-                        <div className="space-y-8">
-                            {property.status === 'sale' && property.price > 0 && (
-                                <MortgageCalculator price={property.price} />
-                            )}
+                        {(() => {
+                            const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                            const showMortgage = disp.show_mortgage_calculator !== false && property.status === 'sale' && property.price > 0;
+                            const showRoi = disp.show_roi_calculator !== false && property.status === 'sale' && property.price > 0;
+                            const showProgress = disp.show_construction_progress !== false && property.status === 'sale' && Boolean(property.constructionStages);
+                            if (!showMortgage && !showRoi && !showProgress) return null;
+                            return (
+                                <div className="space-y-8">
+                                    {showMortgage && (
+                                        <MortgageCalculator price={property.price} />
+                                    )}
 
-                            {/* ROI Calculator only for sale properties */}
-                            {property.status === 'sale' && property.price > 0 && (
-                                <ROICalculator
-                                    price={property.price}
-                                    dict={dict.calculator}
-                                    propertyType={property.type}
-                                />
-                            )}
+                                    {/* ROI Calculator only for sale properties */}
+                                    {showRoi && (
+                                        <ROICalculator
+                                            price={property.price}
+                                            dict={dict.calculator}
+                                            propertyType={property.type}
+                                        />
+                                    )}
 
-
-
-                            {/* Construction Progress - Simulation for specific project status or just as premium feature */}
-                            {property.status === 'sale' && property.constructionStages && (
-                                <ConstructionProgress
-                                    lang={lang}
-                                    stages={property.constructionStages}
-                                    completionPercent={property.completionPercent || 0}
-                                />
-                            )}
-                        </div>
+                                    {/* Construction Progress */}
+                                    {showProgress && property.constructionStages && (
+                                        <ConstructionProgress
+                                            lang={lang}
+                                            stages={property.constructionStages}
+                                            completionPercent={property.completionPercent || 0}
+                                        />
+                                    )}
+                                </div>
+                            );
+                        })()}
 
                         {/* Features */}
+                        {(((property as any)?.display || (property as any)?.specs?.display || {}).show_amenities !== false) && (
                         <div>
                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
                                 {lang === 'en' ? 'Amenities' : lang === 'fr' ? 'Commodités' : 'Amenidades'}
@@ -821,6 +833,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 ))}
                             </div>
                         </div>
+                        )}
                     </div>
 
                     {/* Sidebar / Contact */}
@@ -860,7 +873,9 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 url={`https://puntacanainvesment.com/${lang}/properties/${property.slug}`}
                             />
 
-                            <PriceDropNotify lang={lang} propertyTitle={property.title} />
+                            {(((property as any)?.display || (property as any)?.specs?.display || {}).show_price_drop_alert !== false) && (
+                                <PriceDropNotify lang={lang} propertyTitle={property.title} />
+                            )}
                         </div>
                     </div>
                 </div>

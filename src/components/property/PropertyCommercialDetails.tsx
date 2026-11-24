@@ -8,122 +8,132 @@ interface PropertyCommercialDetailsProps {
 
 export default function PropertyCommercialDetails({ property, lang }: PropertyCommercialDetailsProps) {
   const specs: Record<string, any> = property?.specs || {};
+  const display: Record<string, any> = property?.display || specs?.display || {};
+  const showPaymentPlan = display.show_payment_plan !== false;
+  const showTechnicalSpecs = display.show_technical_specs !== false;
+  const showHoa = display.show_hoa !== false;
+  const showConfotur = display.show_confotur !== false;
+  const showProgress = display.show_construction_progress !== false;
   const isEn = lang === "en";
   const isFr = lang === "fr";
 
-  const paymentSteps = [
-    {
-      key: "payment_reserve",
-      value: String(specs.payment_reserve || "").trim(),
-      label: isEn ? "Reservation" : isFr ? "Réservation" : "Reserva",
-      icon: FaCalendarCheck,
-    },
-    {
-      key: "payment_contract",
-      value: String(specs.payment_contract || "").trim(),
-      label: isEn ? "Contract Signing" : isFr ? "Signature du Contrat" : "Firma de Contrato",
-      icon: FaFileContract,
-    },
-    {
-      key: "payment_construction",
-      value: String(specs.payment_construction || "").trim(),
-      label: isEn ? "During Construction" : isFr ? "Pendant Construction" : "Durante Construcción",
-      icon: FaHardHat,
-    },
-    {
-      key: "payment_delivery",
-      value: String(specs.payment_delivery || "").trim(),
-      label: isEn ? "Upon Delivery" : isFr ? "À la Livraison" : "Contra Entrega",
-      icon: FaKey,
-    },
-  ].filter((s) => s.value.length > 0);
+  const paymentSteps = showPaymentPlan
+    ? [
+        {
+          key: "payment_reserve",
+          value: String(specs.payment_reserve || "").trim(),
+          label: isEn ? "Reservation" : isFr ? "Réservation" : "Reserva",
+          icon: FaCalendarCheck,
+        },
+        {
+          key: "payment_contract",
+          value: String(specs.payment_contract || "").trim(),
+          label: isEn ? "Contract Signing" : isFr ? "Signature du Contrat" : "Firma de Contrato",
+          icon: FaFileContract,
+        },
+        {
+          key: "payment_construction",
+          value: String(specs.payment_construction || "").trim(),
+          label: isEn ? "During Construction" : isFr ? "Pendant Construction" : "Durante Construcción",
+          icon: FaHardHat,
+        },
+        {
+          key: "payment_delivery",
+          value: String(specs.payment_delivery || "").trim(),
+          label: isEn ? "Upon Delivery" : isFr ? "À la Livraison" : "Contra Entrega",
+          icon: FaKey,
+        },
+      ].filter((s) => s.value.length > 0)
+    : [];
 
   const confirmedFacts: { label: string; value: string; highlight?: boolean }[] = [];
 
-  if (specs.confotur) {
-    confirmedFacts.push({
-      label: isEn ? "Tax Benefit" : isFr ? "Avantage Fiscal" : "Beneficio Fiscal",
-      value: isEn
-        ? "CONFOTUR Law (Tax Exemption)"
-        : isFr
-        ? "Loi CONFOTUR (Exonération Fiscale)"
-        : "Ley CONFOTUR (Exención Fiscal)",
-      highlight: true,
-    });
-  }
-  if (String(specs.delivery_date || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Estimated Delivery" : isFr ? "Livraison Estimée" : "Fecha de Entrega",
-      value: String(specs.delivery_date).trim(),
-    });
-  }
-  if (Number(property?.completionPercent || specs.completion_percent || 0) > 0) {
-    confirmedFacts.push({
-      label: isEn ? "Construction Progress" : isFr ? "Avancement des Travaux" : "Avance de Obra",
-      value: `${Number(property?.completionPercent || specs.completion_percent)}%`,
-    });
-  }
-  if (Number(property?.lotSize || 0) > 0) {
-    confirmedFacts.push({
-      label: isEn ? "Lot / Land Area" : isFr ? "Superficie du Terrain" : "Área del Solar",
-      value: `${Number(property.lotSize).toLocaleString("en-US")} m²`,
-    });
-  }
-  if (String(specs.floor_level || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Floor / Level" : isFr ? "Étage / Niveau" : "Nivel / Piso",
-      value: String(specs.floor_level).trim(),
-    });
-  }
-  if (String(specs.parking_spaces || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Parking Spaces" : isFr ? "Places de Parking" : "Parqueos",
-      value: String(specs.parking_spaces).trim(),
-    });
-  }
-  if (String(specs.hoa_monthly || "").trim()) {
-    const rawHoa = String(specs.hoa_monthly).trim();
-    const hoaDisplay = /^\d+(\.\d+)?$/.test(rawHoa) ? `US$ ${rawHoa} / mes` : rawHoa;
-    confirmedFacts.push({
-      label: isEn ? "Monthly HOA / Maintenance" : isFr ? "Charges HOA Mensuelles" : "Mantenimiento / HOA",
-      value: isEn ? hoaDisplay.replace("/ mes", "/ mo") : isFr ? hoaDisplay.replace("/ mes", "/ mois") : hoaDisplay,
-    });
-  }
-  if (String(specs.furnished || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Furnishing" : isFr ? "Ameublement" : "Mobiliario",
-      value: String(specs.furnished).trim(),
-    });
-  }
-  if (String(specs.zoning || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Zoning / Land Use" : isFr ? "Zonage / Usage" : "Zonificación",
-      value: String(specs.zoning).trim(),
-    });
-  }
-  if (specs.titled_deslindado) {
-    confirmedFacts.push({
-      label: isEn ? "Legal Title" : isFr ? "Titre de Propriété" : "Título Legal",
-      value: isEn ? "Titled / Deslindado" : isFr ? "Titre Foncier (Deslindado)" : "Título Deslindado",
-    });
-  }
-  if (String(specs.rooms_count || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Keys / Suites / Units" : isFr ? "Clés / Suites / Locaux" : "Llaves / Locales",
-      value: String(specs.rooms_count).trim(),
-    });
-  }
-  if (String(specs.operator_brand || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Hotel Operator / Brand" : isFr ? "Opérateur Hôtelier" : "Operador / Cadena",
-      value: String(specs.operator_brand).trim(),
-    });
-  }
-  if (String(specs.roi_estimate || "").trim()) {
-    confirmedFacts.push({
-      label: isEn ? "Confirmed Est. ROI" : isFr ? "ROI Estimé Confirmé" : "ROI Estimado Confirmado",
-      value: String(specs.roi_estimate).trim(),
-    });
+  if (showTechnicalSpecs) {
+    if (specs.confotur && showConfotur) {
+      confirmedFacts.push({
+        label: isEn ? "Tax Benefit" : isFr ? "Avantage Fiscal" : "Beneficio Fiscal",
+        value: isEn
+          ? "CONFOTUR Law (Tax Exemption)"
+          : isFr
+          ? "Loi CONFOTUR (Exonération Fiscale)"
+          : "Ley CONFOTUR (Exención Fiscal)",
+        highlight: true,
+      });
+    }
+    if (String(specs.delivery_date || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Estimated Delivery" : isFr ? "Livraison Estimée" : "Fecha de Entrega",
+        value: String(specs.delivery_date).trim(),
+      });
+    }
+    if (showProgress && Number(property?.completionPercent || specs.completion_percent || 0) > 0) {
+      confirmedFacts.push({
+        label: isEn ? "Construction Progress" : isFr ? "Avancement des Travaux" : "Avance de Obra",
+        value: `${Number(property?.completionPercent || specs.completion_percent)}%`,
+      });
+    }
+    if (Number(property?.lotSize || 0) > 0) {
+      confirmedFacts.push({
+        label: isEn ? "Lot / Land Area" : isFr ? "Superficie du Terrain" : "Área del Solar",
+        value: `${Number(property.lotSize).toLocaleString("en-US")} m²`,
+      });
+    }
+    if (String(specs.floor_level || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Floor / Level" : isFr ? "Étage / Niveau" : "Nivel / Piso",
+        value: String(specs.floor_level).trim(),
+      });
+    }
+    if (String(specs.parking_spaces || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Parking Spaces" : isFr ? "Places de Parking" : "Parqueos",
+        value: String(specs.parking_spaces).trim(),
+      });
+    }
+    if (showHoa && String(specs.hoa_monthly || "").trim()) {
+      const rawHoa = String(specs.hoa_monthly).trim();
+      const hoaDisplay = /^\d+(\.\d+)?$/.test(rawHoa) ? `US$ ${rawHoa} / mes` : rawHoa;
+      confirmedFacts.push({
+        label: isEn ? "Monthly HOA / Maintenance" : isFr ? "Charges HOA Mensuelles" : "Mantenimiento / HOA",
+        value: isEn ? hoaDisplay.replace("/ mes", "/ mo") : isFr ? hoaDisplay.replace("/ mes", "/ mois") : hoaDisplay,
+      });
+    }
+    if (String(specs.furnished || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Furnishing" : isFr ? "Ameublement" : "Mobiliario",
+        value: String(specs.furnished).trim(),
+      });
+    }
+    if (String(specs.zoning || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Zoning / Land Use" : isFr ? "Zonage / Usage" : "Zonificación",
+        value: String(specs.zoning).trim(),
+      });
+    }
+    if (specs.titled_deslindado) {
+      confirmedFacts.push({
+        label: isEn ? "Legal Title" : isFr ? "Titre de Propriété" : "Título Legal",
+        value: isEn ? "Titled / Deslindado" : isFr ? "Titre Foncier (Deslindado)" : "Título Deslindado",
+      });
+    }
+    if (String(specs.rooms_count || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Keys / Suites / Units" : isFr ? "Clés / Suites / Locaux" : "Llaves / Locales",
+        value: String(specs.rooms_count).trim(),
+      });
+    }
+    if (String(specs.operator_brand || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Hotel Operator / Brand" : isFr ? "Opérateur Hôtelier" : "Operador / Cadena",
+        value: String(specs.operator_brand).trim(),
+      });
+    }
+    if (String(specs.roi_estimate || "").trim()) {
+      confirmedFacts.push({
+        label: isEn ? "Confirmed Est. ROI" : isFr ? "ROI Estimé Confirmé" : "ROI Estimado Confirmado",
+        value: String(specs.roi_estimate).trim(),
+      });
+    }
   }
 
   if (paymentSteps.length === 0 && confirmedFacts.length === 0) {

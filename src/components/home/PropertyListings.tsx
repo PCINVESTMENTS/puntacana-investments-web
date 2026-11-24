@@ -455,6 +455,8 @@ function PropertyListingsContent({
 
                                             <CompareToggle property={prop} lang={lang} />
                                             {(() => {
+                                                const disp = ((prop as any)?.display || (prop as any)?.specs?.display || {}) as Record<string, any>;
+                                                if (disp.show_availability_badge === false) return null;
                                                 const inv = String((prop as any).inventoryStatus || "Disponible");
                                                 if (!inv || inv === "Disponible") return null;
                                                 const invMap: Record<string, { es: string; en: string; fr: string; cls: string }> = {
@@ -480,6 +482,8 @@ function PropertyListingsContent({
                                             <div className="p-8 relative flex-grow flex flex-col">
                                                 {/* Commercial Stage / Pre-Construction / En Planos / Pre-Sales / Resale Badge */}
                                                 {(() => {
+                                                    const disp = ((prop as any)?.display || (prop as any)?.specs?.display || {}) as Record<string, any>;
+                                                    if (disp.show_commercial_badge === false) return null;
                                                     const stage = (prop as any).commercialStage || "";
                                                     const hasRibbon = Boolean(
                                                         stage && stage !== "ready"

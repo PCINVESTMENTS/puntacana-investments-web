@@ -127,6 +127,8 @@ export default async function LocalDraftPreviewPage({
               {property.status === "rent" ? "ALQUILER" : "VENTA"}
             </span>
             {(() => {
+              const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+              if (disp.show_commercial_badge === false) return null;
               const stage = (property as unknown as { commercialStage?: string }).commercialStage || "";
               const stageMap: Record<string, { label: string; cls: string }> = {
                 off_plan: { label: "EN PLANOS", cls: "bg-teal-700 text-white" },
@@ -158,6 +160,8 @@ export default async function LocalDraftPreviewPage({
               );
             })()}
             {(() => {
+              const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+              if (disp.show_availability_badge === false) return null;
               const inv = String((property as any).inventoryStatus || "Disponible");
               if (!inv || inv === "Disponible") return null;
               const cls =
@@ -247,7 +251,7 @@ export default async function LocalDraftPreviewPage({
             <PropertyCommercialDetails property={property as any} lang={lang} />
 
             {/* Features */}
-            {feats.length > 0 && (
+            {(((property as any)?.display || (property as any)?.specs?.display || {}).show_amenities !== false) && feats.length > 0 && (
               <div>
                 <h2 className="text-2xl font-serif text-luxury-gold mb-4">Características y Amenidades</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
