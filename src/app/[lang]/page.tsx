@@ -30,8 +30,8 @@ import { fetchLocalSandboxCatalog, mapSandboxBlogPosts } from "@/lib/localSandbo
 
 import type { Metadata } from "next";
 
-// Restoring ISR
-export const revalidate = 60;
+// Instant real-time reflection in local sandbox mode
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
   const { lang } = await params;

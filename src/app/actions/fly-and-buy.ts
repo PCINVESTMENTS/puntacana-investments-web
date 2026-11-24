@@ -2,6 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
+import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -42,6 +43,39 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     };
 
     const cleanedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Stage 4):
+    // Captures Fly & Buy submissions into local test_inbox.json preserving exact PCI recipient
+    // and selected property reference, with ZERO calls to production Railway/HubSpot/Resend.
+    if (isLocalSandboxEnabled()) {
+        appendSandboxTestInboxEntry({
+            form_type: 'fly_and_buy',
+            form_label: 'Solicitud VIP Fly & Buy',
+            lang: 'es',
+            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
+            client_autoresponder_to: email,
+            admin_subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
+            client_subject: 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
+            property_reference: {
+                title: specificProperty || 'Tour Inmobiliario General Fly & Buy',
+                type: 'fly_and_buy',
+                location: country || 'Por definir',
+            },
+            lead: {
+                name: tripData.client_name,
+                email: tripData.client_email,
+                phone: tripData.client_phone,
+                country: tripData.origin_city,
+                message: tripData.notes,
+            },
+            deduplication_note: '1 solicitud Fly & Buy = 1 aviso PCI + 1 confirmación cliente (capturado en buzón local)',
+        });
+        return {
+            success: true,
+            message: 'Solicitud Fly & Buy registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
+        };
+    }
 
     try {
         const res = await fetch(`${cleanedApiUrl}/api/public/fly-buy/`, {

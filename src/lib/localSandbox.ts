@@ -84,6 +84,34 @@ export async function fetchLocalSandboxDraftPreview(slug: string): Promise<(Prop
   return pub as any;
 }
 
+export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: string; count: number } | null {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  let existing: Record<string, any>[] = [];
+  try {
+    if (fs.existsSync(inboxFile)) {
+      const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+      if (Array.isArray(parsed)) existing = parsed;
+    }
+  } catch {
+    existing = [];
+  }
+  const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const record = {
+    id,
+    received_at_iso: new Date().toISOString(),
+    delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
+    real_email_sent: false,
+    ...entry,
+  };
+  const next = [record, ...existing].slice(0, 100);
+  const tmpFile = `${inboxFile}.tmp`;
+  fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
+  fs.renameSync(tmpFile, inboxFile);
+  return { id, count: next.length };
+}
+
 export function mapSandboxBlogPosts(rawPosts: any[] = []): BlogPost[] {
   return rawPosts.map((p: any) => ({
     slug: p.slug || "",

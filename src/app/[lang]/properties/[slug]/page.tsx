@@ -502,8 +502,8 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     };
 }
 
-// Restoring ISR
-export const revalidate = 60;
+// Instant real-time reflection when editing properties in local sandbox mode
+export const dynamic = "force-dynamic";
 
 export default async function PropertyPage({ params }: { params: Promise<{ lang: string, slug: string }> }) {
     const { lang, slug } = await params;
@@ -810,6 +810,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 lang={lang}
                                 propertyData={JSON.stringify({
                                     title: translatedTitle,
+                                    internal_code: (property as any).internal_code || null,
+                                    slug: property.slug,
                                     location: property.locationLabel,
                                     price: property.price,
                                     area: property.area,

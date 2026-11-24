@@ -28,7 +28,13 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
         // Fetch properties strictly from absolute public endpoint
         const fetchProperties = async () => {
             try {
-                const res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/properties/');
+                const isLocalHost =
+                    typeof window !== 'undefined' &&
+                    (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+                const endpoint = isLocalHost
+                    ? '/api/sandbox-properties-dropdown'
+                    : 'https://puntacana-fortress-production.up.railway.app/api/public/properties/';
+                const res = await fetch(endpoint);
                 if (res.ok) {
                     const data = await res.json();
                     setProperties(data.results || data);

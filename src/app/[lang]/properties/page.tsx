@@ -9,8 +9,8 @@ import { Property, properties as localProperties } from "@/data/properties";
 import { fetchLocalSandboxCatalog } from "@/lib/localSandbox";
 import type { Metadata } from "next";
 
-// Restoring ISR to fix build panic. searchParams removed from generateMetadata to avoid dynamic bail-out issues in Turbopack.
-export const revalidate = 60;
+// Instant real-time reflection in local sandbox mode
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
     params

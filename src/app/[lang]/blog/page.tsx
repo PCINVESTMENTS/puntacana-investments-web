@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityPost } from "@/sanity/lib/mappers";
 import { BlogPost, blogPosts } from "@/data/blog";
+import { fetchLocalSandboxCatalog, isLocalSandboxEnabled, mapSandboxBlogPosts } from "@/lib/localSandbox";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -72,8 +73,14 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
     const { lang } = await params;
     const dict = await getDictionary(lang);
 
-    const rawPosts = await client.fetch(POSTS_QUERY);
-    const sanityPosts: BlogPost[] = rawPosts.map(mapSanityPost);
+    let sanityPosts: BlogPost[] = [];
+    if (isLocalSandboxEnabled()) {
+        const sb = await fetchLocalSandboxCatalog();
+        sanityPosts = mapSandboxBlogPosts(sb?.blog_posts || []);
+    } else {
+        const rawPosts = await client.fetch(POSTS_QUERY);
+        sanityPosts = rawPosts.map(mapSanityPost);
+    }
     
     // Merge local posts that are not in Sanity
     const localPosts = blogPosts.filter(localPost => !sanityPosts.some(p => p.slug === localPost.slug));

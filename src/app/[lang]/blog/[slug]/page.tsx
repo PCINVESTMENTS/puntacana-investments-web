@@ -2,6 +2,7 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BlogPost, blogPosts } from "@/data/blog";
+import { fetchLocalSandboxCatalog, isLocalSandboxEnabled, mapSandboxBlogPosts } from "@/lib/localSandbox";
 import { properties } from "@/data/properties";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -28,14 +29,25 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     const { lang, slug } = await params;
     let post: any = null;
 
-    const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
     const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical'];
     const shouldForceLocal = FORCE_LOCAL_SLUGS.includes(slug);
 
-    if (rawPost && !shouldForceLocal) {
-        post = mapSanityPost(rawPost);
+    if (isLocalSandboxEnabled()) {
+        const localMatch = blogPosts.find(p => p.slug === slug);
+        if (localMatch) {
+            post = localMatch;
+        } else {
+            const sb = await fetchLocalSandboxCatalog();
+            const mapped = mapSandboxBlogPosts(sb?.blog_posts || []);
+            post = mapped.find(p => p.slug === slug) || null;
+        }
     } else {
-        post = blogPosts.find(p => p.slug === slug);
+        const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
+        if (rawPost && !shouldForceLocal) {
+            post = mapSanityPost(rawPost);
+        } else {
+            post = blogPosts.find(p => p.slug === slug);
+        }
     }
 
     if (!post) return { title: 'Post not found' };
@@ -90,6 +102,9 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 export const revalidate = 60;
 
 export async function generateStaticParams() {
+    if (isLocalSandboxEnabled()) {
+        return blogPosts.map((post) => ({ slug: post.slug }));
+    }
     const posts = await client.fetch(POSTS_QUERY);
     return posts
         .filter((post: any) => post && post.slug && post.slug.current)
@@ -104,7 +119,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     let post: any = null; // Use any to allow mixed structure map
 
-    const rawPost = await client.fetch(POST_BY_SLUG_QUERY, { slug });
+    const rawPost = isLocalSandboxEnabled() ? null : await client.fetch(POST_BY_SLUG_QUERY, { slug });
 
     // FIX: Force local override for specific posts with issues or manual updates that are not in Sanity yet
     const FORCE_LOCAL_SLUGS = ['tendencias-diseno-tropical'];

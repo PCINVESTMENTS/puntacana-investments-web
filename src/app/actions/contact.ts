@@ -2,6 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
+import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -56,6 +57,76 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
     const subjectInput = formData.get('subject') as string;
     const emailSubject = subjectInput || `New Lead from Website: ${name}`;
+    const propertyDataStr = (formData.get('propertyData') as string) || '';
+
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Stage 4):
+    // Captures property/hotel/contact inquiries into local test_inbox.json preserving exact
+    // PCI recipient & property reference, with ZERO outbound calls to production Railway/HubSpot/Resend.
+    if (isLocalSandboxEnabled()) {
+        let parsedProp: Record<string, any> | null = null;
+        if (propertyDataStr) {
+            try {
+                parsedProp = JSON.parse(propertyDataStr);
+            } catch {
+                parsedProp = null;
+            }
+        }
+        const interestText = subjectInput
+            ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '').trim()
+            : 'General';
+        const isHotelOrCommercial = Boolean(
+            parsedProp &&
+            (['resorts', 'commercial', 'condohotel', 'hotel'].includes(String(parsedProp.type || '').toLowerCase()) ||
+              /hotel|resort|comercial/i.test(`${parsedProp.title || ''} ${interestText}`))
+        );
+        const formCategory = parsedProp
+            ? (isHotelOrCommercial ? 'hotel_inquiry' : 'property_inquiry')
+            : 'general_contact';
+
+        appendSandboxTestInboxEntry({
+            form_type: formCategory,
+            form_label:
+                formCategory === 'hotel_inquiry'
+                    ? 'Consulta de Hotel / Inversión Hotelera'
+                    : formCategory === 'property_inquiry'
+                    ? 'Consulta de Propiedad'
+                    : 'Formulario de Contacto General',
+            lang,
+            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
+            client_autoresponder_to: email,
+            admin_subject: `NUEVO LEAD WEB: ${name} - ${interestText}`,
+            client_subject:
+                lang === 'en'
+                    ? 'We have received your request - Punta Cana Investments'
+                    : lang === 'fr'
+                    ? 'Nous avons reçu votre demande - Punta Cana Investments'
+                    : 'Hemos recibido tu solicitud - Punta Cana Investments',
+            property_reference: parsedProp
+                ? {
+                      title: parsedProp.title || interestText,
+                      internal_code: parsedProp.internal_code || null,
+                      slug: parsedProp.slug || null,
+                      location: parsedProp.location || 'Punta Cana',
+                      price: parsedProp.price ?? null,
+                      area: parsedProp.area ?? null,
+                      type: parsedProp.type || 'property',
+                  }
+                : { title: interestText, type: 'general' },
+            lead: { name, email, phone, message },
+            deduplication_note: '1 envío = 1 aviso PCI + 1 auto-respuesta cliente (capturado en buzón local)',
+        });
+
+        return {
+            success: true,
+            message:
+                lang === 'es'
+                    ? '¡Consulta registrada en el Buzón Local de Pruebas! (Sin enviar correos reales).'
+                    : lang === 'fr'
+                    ? 'Demande enregistrée dans la boîte de test locale !'
+                    : 'Inquiry recorded in Local Test Inbox! (Zero real emails sent).',
+        };
+    }
 
     try {
         // 1. Send to "Fortaleza Digital" Backend (Django) - Server-to-Server (No CORS issues)
