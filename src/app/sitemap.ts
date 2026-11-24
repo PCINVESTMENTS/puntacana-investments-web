@@ -6,8 +6,8 @@ import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost, blogPosts as localPosts } from "@/data/blog";
 import { fetchLocalSandboxCatalog, mapSandboxBlogPosts } from "@/lib/localSandbox";
 
-// In ISR mode, this will run at build time and revalidate every hour
-export const revalidate = 3600;
+// In sandbox mode, always regenerate sitemap dynamically so published vs draft updates appear immediately
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';

@@ -6,11 +6,20 @@ import { FaTimes, FaChevronLeft, FaChevronRight, FaImages } from "react-icons/fa
 
 interface PropertyGalleryProps {
     images: string[];
+    alts?: string[];
+    title?: string;
+    lang?: string;
 }
 
-export default function PropertyGallery({ images }: PropertyGalleryProps) {
+export default function PropertyGallery({ images, alts, title }: PropertyGalleryProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    const getAlt = (idx: number, fallback: string) => {
+        if (alts && alts[idx] && alts[idx].trim()) return alts[idx].trim();
+        if (title) return `${title} — ${fallback}`;
+        return fallback;
+    };
 
     const openGallery = (index: number) => {
         setCurrentIndex(index);
@@ -47,7 +56,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                 >
                     <Image
                         src={images[0]}
-                        alt="Property Main"
+                        alt={getAlt(0, "Property Main")}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -62,7 +71,7 @@ export default function PropertyGallery({ images }: PropertyGalleryProps) {
                     >
                         <Image
                             src={img}
-                            alt={`Property Image ${idx + 2}`}
+                            alt={getAlt(idx + 1, `Property Image ${idx + 2}`)}
                             fill
                             sizes="25vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"

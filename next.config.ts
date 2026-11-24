@@ -126,6 +126,20 @@ const nextConfig: NextConfig = {
               { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
             ],
           },
+          {
+            source: '/sitemap.xml',
+            headers: [
+              { key: 'Access-Control-Allow-Origin', value: '*' },
+              { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
+            ],
+          },
+          {
+            source: '/robots.txt',
+            headers: [
+              { key: 'Access-Control-Allow-Origin', value: '*' },
+              { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
+            ],
+          },
         ]
       : [];
     return [

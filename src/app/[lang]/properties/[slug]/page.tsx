@@ -285,6 +285,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const statusText = property.status === 'rent' ? (lang === 'fr' ? 'LOCATION' : lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'fr' ? 'VENTE' : lang === 'es' ? 'VENTA' : 'SALE');
     const socialTitle = `[${statusText} - ${formatPrice(property.price)}] ${cleanTitle} | Punta Cana Investments`;
 
+    const mainAlt = (seo as any)?.main_image_alt?.[lang] || property.title;
     return {
         title: cleanTitle,
         description: description,
@@ -309,7 +310,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
                     url: property.image.includes('cdn.sanity.io') ? `${property.image}&w=1200&h=630&fit=crop` : property.image,
                     width: 1200,
                     height: 630,
-                    alt: property.title,
+                    alt: mainAlt,
                 }
             ],
             locale: lang === 'fr' ? 'fr_FR' : lang === 'es' ? 'es_DO' : 'en_US',
@@ -468,12 +469,14 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     // In Sanity and local dataset, property.status strictly represents transaction mode ('sale' | 'rent').
     // Since there is no verified field tracking live inventory availability (available/sold/withdrawn),
     // availability is omitted rather than fabricating InStock.
+    const isNewSandboxProp = Number((property as any).catalog_position || 0) >= 40;
+    const offerCurrency = isNewSandboxProp ? ((property as any).currency || 'USD') : 'USD';
     const offer: Record<string, any> = {
         '@type': 'Offer',
         '@id': `${listingUrl}#offer`,
         url: listingUrl,
-        price: property.price,
-        priceCurrency: 'USD',
+        ...(isNewSandboxProp && Number(property.price || 0) <= 0 ? {} : { price: property.price }),
+        priceCurrency: offerCurrency,
         businessFunction: isRent ? 'http://purl.org/goodrelations/v1#LeaseOut' : 'http://purl.org/goodrelations/v1#Sell',
         itemOffered: {
             '@id': `${listingUrl}#property`
@@ -562,6 +565,15 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
     const galleryImages = property.gallery && property.gallery.length > 0 ? property.gallery : [property.image];
     const translatedTitle = getLocalizedTitle(property, lang);
+    const galleryMeta: any[] = ((property as any).seo?.gallery_meta) || [];
+    const altField = lang === 'en' ? 'alt_en' : lang === 'fr' ? 'alt_fr' : 'alt_es';
+    const customHeroAlt = ((property as any).seo?.main_image_alt?.[lang]) || translatedTitle;
+    const customGalleryAlts = galleryMeta.length > 0
+        ? galleryImages.map((imgUrl, idx) => {
+            const match = galleryMeta.find((m) => m?.url && (imgUrl.endsWith(m.url) || m.url === imgUrl)) || galleryMeta[idx];
+            return (match && match[altField]) || `${translatedTitle} #${idx + 1}`;
+        })
+        : undefined;
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
@@ -576,7 +588,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                 <div className="absolute inset-0">
                     <Image
                         src={property.image}
-                        alt={translatedTitle}
+                        alt={customHeroAlt}
                         fill
                         priority
                         // @ts-ignore
@@ -712,7 +724,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
                                     {lang === 'en' ? 'Gallery' : lang === 'fr' ? 'Galerie' : 'Galería'}
                                 </h2>
-                                <PropertyGallery images={galleryImages} />
+                                <PropertyGallery images={galleryImages} alts={customGalleryAlts} />
                             </div>
                         )}
 
