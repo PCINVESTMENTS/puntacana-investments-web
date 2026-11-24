@@ -117,7 +117,19 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Content-Security-Policy', value: "frame-ancestors 'self';" },
         ];
+    const sandboxCorsRules = isLocalSandbox
+      ? [
+          {
+            source: '/:lang(es|en|fr)/properties/:slug',
+            headers: [
+              { key: 'Access-Control-Allow-Origin', value: '*' },
+              { key: 'Access-Control-Allow-Methods', value: 'GET, HEAD, OPTIONS' },
+            ],
+          },
+        ]
+      : [];
     return [
+      ...sandboxCorsRules,
       {
         source: '/:path*',
         headers: [
