@@ -465,7 +465,7 @@ function PropertyListingsContent({
                                                 const badge = invMap[inv];
                                                 if (!badge) return null;
                                                 return (
-                                                    <div className={`absolute top-4 left-4 z-30 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider shadow-lg ${badge.cls}`}>
+                                                    <div className={`absolute top-12 left-2 md:left-4 z-30 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider shadow-lg ${badge.cls}`}>
                                                         {lang === 'en' ? badge.en : lang === 'fr' ? badge.fr : badge.es}
                                                     </div>
                                                 );
