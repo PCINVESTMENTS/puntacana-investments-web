@@ -455,23 +455,51 @@ function PropertyListingsContent({
                                             className="flex-grow flex flex-col"
                                         >
                                             <div className="p-8 relative flex-grow flex flex-col">
-                                                {/* Pre-Construction / Pre-Sales / Resale Badge */}
-                                                {(prop.preLaunch || prop.preConstruction || prop.isResale) && (
-                                                    <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-1.5 md:px-2 py-1.5 md:py-1.5 shadow-lg text-[9px] md:text-[10px] z-30 uppercase tracking-tight md:tracking-normal ${prop.isResale ? 'bg-indigo-700' : 'bg-emerald-700'}`}>
-                                                        {prop.isResale
-                                                            ? (lang === 'en' ? 'Resale' : lang === 'fr' ? 'Revente' : 'Reventa')
-                                                            : (prop.preConstruction
-                                                                ? (lang === 'en' ? 'Pre-Construction' : lang === 'fr' ? 'Pré-Construction' : 'Pre-Construcción')
-                                                                : (lang === 'en' ? 'Pre-Sales' : lang === 'fr' ? 'Pré-Ventes' : 'Pre-Ventas')
-                                                            )
-                                                        }
-                                                    </div>
-                                                )}
+                                                {/* Commercial Stage / Pre-Construction / En Planos / Pre-Sales / Resale Badge */}
+                                                {(() => {
+                                                    const stage = (prop as any).commercialStage || "";
+                                                    const hasRibbon = Boolean(
+                                                        stage && stage !== "ready"
+                                                        || prop.preLaunch
+                                                        || prop.preConstruction
+                                                        || prop.isResale
+                                                    );
+                                                    if (!hasRibbon) return null;
+
+                                                    let label = "";
+                                                    let bgCls = "bg-emerald-700";
+                                                    if (stage === "off_plan") {
+                                                        label = lang === "en" ? "Off-Plan" : lang === "fr" ? "Sur Plan" : "En Planos";
+                                                        bgCls = "bg-teal-700";
+                                                    } else if (stage === "under_construction") {
+                                                        label = lang === "en" ? "Under Construction" : lang === "fr" ? "En Construction" : "En Construcción";
+                                                        bgCls = "bg-amber-700";
+                                                    } else if (stage === "turnkey") {
+                                                        label = lang === "en" ? "Turnkey" : lang === "fr" ? "Clé en Main" : "Llave en Mano";
+                                                        bgCls = "bg-sky-700";
+                                                    } else if (stage === "resale" || prop.isResale) {
+                                                        label = lang === "en" ? "Resale" : lang === "fr" ? "Revente" : "Reventa";
+                                                        bgCls = "bg-indigo-700";
+                                                    } else if (stage === "pre_construction" || prop.preConstruction) {
+                                                        label = lang === "en" ? "Pre-Construction" : lang === "fr" ? "Pré-Construction" : "Pre-Construcción";
+                                                        bgCls = "bg-emerald-700";
+                                                    } else if (stage === "pre_launch" || prop.preLaunch) {
+                                                        label = lang === "en" ? "Pre-Sales" : lang === "fr" ? "Pré-Ventes" : "Pre-Ventas";
+                                                        bgCls = "bg-emerald-700";
+                                                    }
+                                                    if (!label) return null;
+
+                                                    return (
+                                                        <div className={`absolute -top-6 left-2 md:left-4 text-white font-bold px-1.5 md:px-2 py-1.5 md:py-1.5 shadow-lg text-[9px] md:text-[10px] z-30 uppercase tracking-tight md:tracking-normal ${bgCls}`}>
+                                                            {label}
+                                                        </div>
+                                                    );
+                                                })()}
 
                                                 <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-2 md:px-3 py-1.5 md:py-1.5 shadow-lg text-[9px] md:text-[10px] z-30">
                                                     {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
                                                         <>
-                                                            {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : lang === 'fr' ? 'À partir de ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
+                                                            {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch || (prop as any).commercialStage === 'off_plan' || (prop as any).commercialStage === 'under_construction'))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : lang === 'fr' ? 'À partir de ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
                                                             {prop.status === 'rent' && (lang === 'en' ? ' /mo' : lang === 'fr' ? ' /mois' : ' /mes')}
                                                         </>
                                                     ) : (

@@ -121,9 +121,42 @@ export default async function LocalDraftPreviewPage({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-black/40 to-black/30" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto">
-          <span className="inline-block px-3 py-1 bg-luxury-gold text-black text-xs font-bold uppercase tracking-widest mb-3">
-            {property.status === "rent" ? "ALQUILER" : "VENTA"}
-          </span>
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <span className="inline-block px-3 py-1 bg-luxury-gold text-black text-xs font-bold uppercase tracking-widest">
+              {property.status === "rent" ? "ALQUILER" : "VENTA"}
+            </span>
+            {(() => {
+              const stage = (property as unknown as { commercialStage?: string }).commercialStage || "";
+              const stageMap: Record<string, { label: string; cls: string }> = {
+                off_plan: { label: "EN PLANOS", cls: "bg-teal-700 text-white" },
+                pre_launch: { label: "PRE-LANZAMIENTO", cls: "bg-emerald-700 text-white" },
+                pre_construction: { label: "PRE-CONSTRUCCIÓN", cls: "bg-emerald-700 text-white" },
+                under_construction: { label: "EN CONSTRUCCIÓN", cls: "bg-amber-700 text-white" },
+                resale: { label: "REVENTA", cls: "bg-indigo-700 text-white" },
+                turnkey: { label: "LLAVE EN MANO", cls: "bg-sky-700 text-white" },
+              };
+              const derived =
+                stage && stageMap[stage]
+                  ? stageMap[stage]
+                  : property.isResale
+                  ? stageMap.resale
+                  : property.preConstruction
+                  ? stageMap.pre_construction
+                  : property.preLaunch
+                  ? stageMap.pre_launch
+                  : null;
+              if (!derived) return null;
+              const pct = (property as unknown as { completionPercent?: number | string }).completionPercent;
+              return (
+                <span className={`inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest ${derived.cls}`}>
+                  {derived.label}
+                  {pct !== undefined && pct !== null && pct !== "" && (stage === "pre_construction" || stage === "under_construction")
+                    ? ` · ${pct}% obra`
+                    : ""}
+                </span>
+              );
+            })()}
+          </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h1 className="text-3xl md:text-5xl font-serif font-bold text-white leading-tight">

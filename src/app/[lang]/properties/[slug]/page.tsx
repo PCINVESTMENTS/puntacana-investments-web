@@ -595,9 +595,33 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         </Link>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
-                                <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider mb-4 inline-block">
-                                    {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : lang === 'fr' ? 'Vente' : 'Venta') : (lang === 'en' ? 'Rent' : lang === 'fr' ? 'Location' : 'Renta')}
-                                </span>
+                                <div className="flex flex-wrap items-center gap-2 mb-4">
+                                    <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider inline-block">
+                                        {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : lang === 'fr' ? 'Vente' : 'Venta') : (lang === 'en' ? 'Rent' : lang === 'fr' ? 'Location' : 'Renta')}
+                                    </span>
+                                    {(() => {
+                                        const st = (property as any).commercialStage || "";
+                                        const map: Record<string, { es: string; en: string; fr: string; cls: string }> = {
+                                            off_plan: { es: "En Planos", en: "Off-Plan", fr: "Sur Plan", cls: "bg-teal-700 text-white" },
+                                            pre_launch: { es: "Pre-Lanzamiento", en: "Pre-Sales", fr: "Pré-Ventes", cls: "bg-emerald-700 text-white" },
+                                            pre_construction: { es: "Pre-Construcción", en: "Pre-Construction", fr: "Pré-Construction", cls: "bg-emerald-700 text-white" },
+                                            under_construction: { es: "En Construcción", en: "Under Construction", fr: "En Construction", cls: "bg-amber-700 text-white" },
+                                            resale: { es: "Reventa", en: "Resale", fr: "Revente", cls: "bg-indigo-700 text-white" },
+                                            turnkey: { es: "Llave en Mano", en: "Turnkey", fr: "Clé en Main", cls: "bg-sky-700 text-white" },
+                                        };
+                                        const info = st && map[st] ? map[st] : null;
+                                        if (!info) return null;
+                                        const text = lang === 'en' ? info.en : lang === 'fr' ? info.fr : info.es;
+                                        return (
+                                            <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider inline-block ${info.cls}`}>
+                                                {text}
+                                                {(st === "pre_construction" || st === "under_construction") && Number(property.completionPercent) > 0
+                                                    ? ` • ${property.completionPercent}%`
+                                                    : ""}
+                                            </span>
+                                        );
+                                    })()}
+                                </div>
                                 <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-2 shadow-black drop-shadow-lg">
                                     {translatedTitle}
                                 </h1>
