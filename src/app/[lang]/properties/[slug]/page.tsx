@@ -4,23 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { FaBed, FaBath, FaRulerCombined, FaCheck, FaArrowLeft, FaWhatsapp } from "react-icons/fa";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
-const ContactForm = dynamic(() => import("@/components/contact/ContactForm"), {
+const ContactForm = nextDynamic(() => import("@/components/contact/ContactForm"), {
     loading: () => <div className="h-[400px] bg-white/5 animate-pulse rounded-lg" />
 });
 
-const PropertyGallery = dynamic(() => import("@/components/property/PropertyGallery"), {
+const PropertyGallery = nextDynamic(() => import("@/components/property/PropertyGallery"), {
     loading: () => <div className="h-[400px] md:h-[600px] bg-white/5 animate-pulse rounded" />
 });
-const VideoPlayer = dynamic(() => import("@/components/property/VideoPlayer"));
-const MortgageCalculator = dynamic(() => import("@/components/property/MortgageCalculator"));
-const ROICalculator = dynamic(() => import("@/components/property/ROICalculator"));
-const ConstructionProgress = dynamic(() => import("@/components/property/ConstructionProgress"));
-const PriceDropNotify = dynamic(() => import("@/components/property/PriceDropNotify"));
-const ShareButtons = dynamic(() => import("@/components/property/ShareButtons"));
+const VideoPlayer = nextDynamic(() => import("@/components/property/VideoPlayer"));
+const MortgageCalculator = nextDynamic(() => import("@/components/property/MortgageCalculator"));
+const ROICalculator = nextDynamic(() => import("@/components/property/ROICalculator"));
+const ConstructionProgress = nextDynamic(() => import("@/components/property/ConstructionProgress"));
+const PriceDropNotify = nextDynamic(() => import("@/components/property/PriceDropNotify"));
+const ShareButtons = nextDynamic(() => import("@/components/property/ShareButtons"));
 
 // Sanity imports
 import { client } from "@/sanity/lib/client";
