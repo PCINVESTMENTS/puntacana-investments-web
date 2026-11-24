@@ -376,14 +376,17 @@ function PropertyListingsContent({
                         </div>
                     </ScrollReveal>
 
-                    {/* Quick Category Tabs - Hide if featured */}
+                    {/* Quick Category Tabs - Hide if featured (includes any custom dynamic locations added in Fase 5 Gestor Web) */}
                     {!featured && (
                         <div className="flex flex-wrap justify-center gap-4 mb-12">
                             {[
                                 { id: "all", label: lang === 'en' ? "All" : lang === 'fr' ? "Tous" : "Todos" },
                                 { id: "puntacana", label: "Punta Cana" },
                                 { id: "capcana", label: "Cap Cana" },
-                                { id: "bavaro", label: "Bávaro" },
+                                { id: "bavaro", label: lang === 'en' ? "Bavaro" : "Bávaro" },
+                                ...(locations || [])
+                                    .filter((l: any) => l && l.is_baseline === false && !["puntacana", "capcana", "bavaro"].includes(l.slug))
+                                    .map((l: any) => ({ id: l.slug, label: l.title })),
                             ].map((cat) => (
                                 <button
                                     key={cat.id}

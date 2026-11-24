@@ -145,3 +145,86 @@ export function mapSandboxBlogPosts(rawPosts: any[] = []): BlogPost[] {
     relatedProperties: [],
   })) as unknown as BlogPost[];
 }
+
+export interface LocalWebManagerLocation {
+  order: number;
+  slug: string;
+  code_abbrev: string;
+  title_es: string;
+  title_en: string;
+  title_fr: string;
+  img: string;
+  lat?: number;
+  lng?: number;
+  show_in_homepage?: boolean;
+  show_in_locations_page?: boolean;
+  show_in_property_filters?: boolean;
+  show_in_property_wizard?: boolean;
+  is_baseline?: boolean;
+}
+
+export interface LocalWebManagerPayload {
+  sandbox_mode: boolean;
+  phase: string;
+  version: number;
+  updated_at_iso: string;
+  locations: LocalWebManagerLocation[];
+  homepage: {
+    hero: {
+      title: { es: string; en: string; fr: string };
+      subtitle: { es: string; en: string; fr: string };
+      cta: { es: string; en: string; fr: string };
+      scroll: { es: string; en: string; fr: string };
+      hero_image?: string;
+    };
+    locations_section: {
+      title: { es: string; en: string; fr: string };
+      subtitle: { es: string; en: string; fr: string };
+      exploreMore: { es: string; en: string; fr: string };
+      homepage_limit?: number;
+    };
+    sections_visibility: Record<string, boolean>;
+  };
+}
+
+export function fetchLocalSandboxWebManager(): LocalWebManagerPayload | null {
+  if (!isLocalSandboxEnabled()) return null;
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const wmFile = path.join(path.dirname(catalogFile), "web_manager_live.json");
+  try {
+    if (fs.existsSync(wmFile)) {
+      return JSON.parse(fs.readFileSync(wmFile, "utf-8"));
+    }
+  } catch (err) {
+    console.error("Local web manager read error:", err);
+  }
+  return null;
+}
+
+export function mapWebManagerLocations(
+  rawLocations: LocalWebManagerLocation[] = [],
+  lang: "es" | "en" | "fr" = "es",
+  flagKey: "show_in_homepage" | "show_in_locations_page" | "show_in_property_filters" = "show_in_homepage"
+) {
+  const apiOrigin = "http://127.0.0.1:8110";
+  return [...rawLocations]
+    .filter((loc) => loc && loc[flagKey] !== false)
+    .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+    .map((loc) => {
+      const rawImg = loc.img || "/images/locations/punta_cana.jpg";
+      const resolvedImg = rawImg.startsWith("/media/") ? `${apiOrigin}${rawImg}` : rawImg;
+      const localizedTitle =
+        lang === "en"
+          ? loc.title_en || loc.title_es
+          : lang === "fr"
+          ? loc.title_fr || loc.title_es
+          : loc.title_es;
+      return {
+        title: localizedTitle,
+        slug: loc.slug,
+        img: resolvedImg,
+        is_baseline: Boolean(loc.is_baseline),
+      };
+    });
+}

@@ -26,7 +26,12 @@ import { HOME_PAGE_PROPERTIES_QUERY, POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, mapSanityPost } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
 import { BlogPost } from "@/data/blog";
-import { fetchLocalSandboxCatalog, mapSandboxBlogPosts } from "@/lib/localSandbox";
+import {
+  fetchLocalSandboxCatalog,
+  fetchLocalSandboxWebManager,
+  mapSandboxBlogPosts,
+  mapWebManagerLocations,
+} from "@/lib/localSandbox";
 
 import type { Metadata } from "next";
 
@@ -195,14 +200,51 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     };
   });
 
-  // PERFORMANCE OPTIMIZATION: Inject a highly-optimized, local WebP image as the VERY FIRST image in the array.
-  // This forces the Hero LCP (Largest Contentful Paint) to load instantly from Vercel's Edge Network, 
-  // bypassing the DNS lookup, TCP handshake, and latency of external CDNs (Sanity/Unsplash).
+  // Fase 5 Local Web Manager overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
+  const webManager = fetchLocalSandboxWebManager();
+  const wmHero = webManager?.homepage?.hero;
+  const wmLocSec = webManager?.homepage?.locations_section;
+  const secVis = webManager?.homepage?.sections_visibility || {};
+
+  const effectiveHeroDict = wmHero
+    ? {
+        ...dict.hero,
+        title: wmHero.title?.[lang] || dict.hero.title,
+        subtitle: wmHero.subtitle?.[lang] || dict.hero.subtitle,
+        cta: wmHero.cta?.[lang] || dict.hero.cta,
+        scroll: wmHero.scroll?.[lang] || dict.hero.scroll,
+      }
+    : dict.hero;
+
+  const effectiveLocationsDict = wmLocSec
+    ? {
+        ...dict.sections.locations,
+        title: wmLocSec.title?.[lang] || dict.sections.locations.title,
+        subtitle: wmLocSec.subtitle?.[lang] || dict.sections.locations.subtitle,
+        exploreMore: wmLocSec.exploreMore?.[lang] || dict.sections.locations.exploreMore,
+      }
+    : dict.sections.locations;
+
+  const dynamicHomeLocations = webManager
+    ? mapWebManagerLocations(webManager.locations, lang, "show_in_homepage")
+    : apiLocations;
+  const dynamicFilterLocations = webManager
+    ? mapWebManagerLocations(webManager.locations, lang, "show_in_property_filters")
+    : dict.sections.locations.items;
+  const locationsHomepageLimit =
+    wmLocSec && typeof wmLocSec.homepage_limit === "number"
+      ? wmLocSec.homepage_limit
+      : 3;
+
+  const primaryHeroImage = wmHero?.hero_image
+    ? (wmHero.hero_image.startsWith("/media/") ? `http://127.0.0.1:8110${wmHero.hero_image}` : wmHero.hero_image)
+    : '/images/luxury-villa-frame-hero.webp';
+
   const featuredImages = [
     {
         id: 99999, // Fake ID
         mainImage: null,
-        backupImage: '/images/luxury-villa-frame-hero.webp'
+        backupImage: primaryHeroImage
     },
     ...heroProperties
   ];
@@ -274,59 +316,73 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
-      <Hero dict={dict.hero} featuredImages={featuredImages} />
-      <PropertyFilterBar dict={dict.properties} locations={dict.sections.locations.items} lang={lang} />
+      <Hero dict={effectiveHeroDict} featuredImages={featuredImages} />
+      {secVis.show_hero_filter_bar !== false && (
+        <PropertyFilterBar dict={dict.properties} locations={dynamicFilterLocations} lang={lang} />
+      )}
 
-      <PropertyListings
-        dict={dict.properties}
-        lang={lang}
-        locations={dict.sections.locations.items}
-        featured={true}
-        featuredCategory="sale"
-        featuredLimit={6}
-        sectionId="properties-sale"
-        sectionTitle={lang === 'en' ? 'Properties for Sale' : lang === 'fr' ? 'Propriétés à Vendre' : 'Propiedades en Venta'}
-        lockedStatus="sale"
-        exploreLink={`/${lang}/properties?status=sale`}
-        initialData={saleProperties}
-      />
-      <PropertyListings
-        dict={dict.properties}
-        lang={lang}
-        locations={dict.sections.locations.items}
-        featured={true}
-        featuredCategory="rent"
-        featuredLimit={3}
-        sectionId="properties-rent"
-        sectionTitle={lang === 'en' ? 'Properties for Rent' : lang === 'fr' ? 'Propriétés à Louer' : 'Propiedades en Renta'}
-        lockedStatus="rent"
-        exploreLink={`/${lang}/properties?status=rent`}
-        initialData={rentProperties}
-      />
-      <LocationsSection dict={dict.sections.locations} limit={3} lang={lang} apiLocations={apiLocations} />
-      <PropertyListings
-        dict={dict.properties}
-        lang={lang}
-        locations={dict.sections.locations.items}
-        featured={true}
-        showFeaturedOnly={true}
-        featuredCategory="sale"
-        featuredLimit={3}
-        sectionId="featured-properties"
-        sectionTitle={lang === 'en' ? 'Featured Properties' : lang === 'fr' ? 'Propriétés en Vedette' : 'Propiedades Destacadas'}
-        initialData={featuredOnlyProperties}
-      />
-      <FutureProjectsSection lang={lang} />
-      <InvestmentsSection dict={dict.sections.investments} lang={lang} />
-      <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
-      <OffMarketClub lang={lang} />
-      <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={strippedPosts} />
-      <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />
-      <TestimonialsSection dict={dict.sections.testimonials} />
-      <AboutSection dict={dict.sections.about} />
+      {secVis.show_sale_properties !== false && (
+        <PropertyListings
+          dict={dict.properties}
+          lang={lang}
+          locations={dynamicFilterLocations}
+          featured={true}
+          featuredCategory="sale"
+          featuredLimit={6}
+          sectionId="properties-sale"
+          sectionTitle={lang === 'en' ? 'Properties for Sale' : lang === 'fr' ? 'Propriétés à Vendre' : 'Propiedades en Venta'}
+          lockedStatus="sale"
+          exploreLink={`/${lang}/properties?status=sale`}
+          initialData={saleProperties}
+        />
+      )}
+      {secVis.show_rent_properties !== false && (
+        <PropertyListings
+          dict={dict.properties}
+          lang={lang}
+          locations={dynamicFilterLocations}
+          featured={true}
+          featuredCategory="rent"
+          featuredLimit={3}
+          sectionId="properties-rent"
+          sectionTitle={lang === 'en' ? 'Properties for Rent' : lang === 'fr' ? 'Propriétés à Louer' : 'Propiedades en Renta'}
+          lockedStatus="rent"
+          exploreLink={`/${lang}/properties?status=rent`}
+          initialData={rentProperties}
+        />
+      )}
+      {secVis.show_locations !== false && (
+        <LocationsSection
+          dict={effectiveLocationsDict}
+          limit={locationsHomepageLimit > 0 ? locationsHomepageLimit : undefined}
+          lang={lang}
+          apiLocations={dynamicHomeLocations}
+        />
+      )}
+      {secVis.show_featured_properties !== false && (
+        <PropertyListings
+          dict={dict.properties}
+          lang={lang}
+          locations={dynamicFilterLocations}
+          featured={true}
+          showFeaturedOnly={true}
+          featuredCategory="sale"
+          featuredLimit={3}
+          sectionId="featured-properties"
+          sectionTitle={lang === 'en' ? 'Featured Properties' : lang === 'fr' ? 'Propriétés en Vedette' : 'Propiedades Destacadas'}
+          initialData={featuredOnlyProperties}
+        />
+      )}
+      {secVis.show_future_projects !== false && <FutureProjectsSection lang={lang} />}
+      {secVis.show_investments !== false && <InvestmentsSection dict={dict.sections.investments} lang={lang} />}
+      {secVis.show_fly_and_buy !== false && <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />}
+      {secVis.show_off_market !== false && <OffMarketClub lang={lang} />}
+      {secVis.show_blog !== false && <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={strippedPosts} />}
+      {secVis.show_services !== false && <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />}
+      {secVis.show_testimonials !== false && <TestimonialsSection dict={dict.sections.testimonials} />}
+      {secVis.show_about !== false && <AboutSection dict={dict.sections.about} />}
 
-
-      <ContactSection dict={dict.contact} />
+      {secVis.show_contact !== false && <ContactSection dict={dict.contact} />}
       <Footer dict={dict} lang={lang} />
     </main>
   );

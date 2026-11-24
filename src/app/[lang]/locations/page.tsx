@@ -39,10 +39,25 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LocationsSection } from "@/components/home/LocationsSection";
+import { fetchLocalSandboxWebManager, mapWebManagerLocations } from "@/lib/localSandbox";
+
+export const dynamic = "force-dynamic";
 
 export default async function LocationsPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
+    const wm = fetchLocalSandboxWebManager();
+    const dynamicLocations = wm
+        ? mapWebManagerLocations(wm.locations, lang, "show_in_locations_page")
+        : [];
+    const effectiveLocDict = wm?.homepage?.locations_section
+        ? {
+            ...dict.sections.locations,
+            title: wm.homepage.locations_section.title?.[lang] || dict.sections.locations.title,
+            subtitle: wm.homepage.locations_section.subtitle?.[lang] || dict.sections.locations.subtitle,
+            exploreMore: wm.homepage.locations_section.exploreMore?.[lang] || dict.sections.locations.exploreMore,
+        }
+        : dict.sections.locations;
 
     return (
         <main className="min-h-screen bg-primary-black">
@@ -54,8 +69,14 @@ export default async function LocationsPage({ params }: { params: Promise<{ lang
             />
 
             <div className="pt-20">
-                {/* Reusing LocationsSection but without a limit to show all */}
-                <LocationsSection isH1={true} dict={dict.sections.locations} lang={lang} prioritizeImages={true} />
+                {/* Reusing LocationsSection without a limit to show all active dynamic locations */}
+                <LocationsSection
+                    isH1={true}
+                    dict={effectiveLocDict}
+                    lang={lang}
+                    prioritizeImages={true}
+                    apiLocations={dynamicLocations}
+                />
             </div>
 
             <Footer dict={dict} lang={lang} />

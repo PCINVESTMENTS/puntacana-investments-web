@@ -6,7 +6,11 @@ import { client } from "@/sanity/lib/client";
 import { PROPERTIES_QUERY } from "@/sanity/lib/queries";
 import { mapSanityProperty, normalizeLocation } from "@/sanity/lib/mappers";
 import { Property, properties as localProperties } from "@/data/properties";
-import { fetchLocalSandboxCatalog } from "@/lib/localSandbox";
+import {
+    fetchLocalSandboxCatalog,
+    fetchLocalSandboxWebManager,
+    mapWebManagerLocations,
+} from "@/lib/localSandbox";
 import type { Metadata } from "next";
 
 // Instant real-time reflection in local sandbox mode
@@ -102,7 +106,12 @@ export default async function PropertiesPage({
                         sectionTitle={catalogSectionTitle}
                         dict={dict.properties}
                         lang={lang}
-                        locations={dict.sections.locations.items}
+                        locations={(() => {
+                            const wm = fetchLocalSandboxWebManager();
+                            return wm
+                                ? mapWebManagerLocations(wm.locations, lang, "show_in_property_filters")
+                                : dict.sections.locations.items;
+                        })()}
                         initialFilters={{
                             status: statusParam,
                             location: locationParam,
