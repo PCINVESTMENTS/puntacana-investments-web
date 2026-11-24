@@ -59,6 +59,8 @@ interface PropertyListingsProps {
     exploreLink?: string;
     initialData: Property[];
     isH1?: boolean;
+    preserveInitialOrder?: boolean;
+    locationPlacements?: Record<string, string[]>;
 }
 
 const translatePropertyTitle = (title: string, lang: string) => {
@@ -186,13 +188,45 @@ function PropertyListingsContent({
     lockedStatus,
     exploreLink,
     initialData,
-    isH1 = false
+    isH1 = false,
+    preserveInitialOrder = false,
+    locationPlacements = {},
 }: PropertyListingsProps) {
     const searchParams = useSearchParams();
-    const [filteredProperties, setFilteredProperties] = useState<Property[]>(initialData);
+    const initialLoc = searchParams.get("location") || initialFilters.location || "all";
+
+    const sortByLocationPlacement = (list: Property[], locKey: string) => {
+        if (featured || !locKey || locKey === "all") return list;
+        const pinned = locationPlacements?.[locKey.toLowerCase()] || [];
+        if (!pinned.length) return list;
+        const rankMap = new Map(pinned.map((s, idx) => [s, idx]));
+        return [...list].sort((a, b) => {
+            const slugA = typeof a.slug === "object" && a.slug !== null ? (a.slug as any).current : a.slug;
+            const slugB = typeof b.slug === "object" && b.slug !== null ? (b.slug as any).current : b.slug;
+            const ra = rankMap.has(slugA) ? rankMap.get(slugA)! : Number.MAX_SAFE_INTEGER;
+            const rb = rankMap.has(slugB) ? rankMap.get(slugB)! : Number.MAX_SAFE_INTEGER;
+            return ra - rb;
+        });
+    };
+
+    const [filteredProperties, setFilteredProperties] = useState<Property[]>(() => {
+        if (preserveInitialOrder && featured) {
+            return initialData.slice(0, featuredLimit);
+        }
+        if (!featured && initialLoc && initialLoc !== "all") {
+            const locFiltered = initialData.filter(
+                (p) =>
+                    p.location === initialLoc ||
+                    (initialLoc === "bavaro" && ["vistacana", "whitesands"].includes(p.location)) ||
+                    (initialLoc === "puntacana" && p.location.toLowerCase().includes("puntacana"))
+            );
+            return sortByLocationPlacement(locFiltered, initialLoc);
+        }
+        return initialData;
+    });
 
     // Initialize state from URL params if available, else default (or featured defaults)
-    const [selectedLocation, setSelectedLocation] = useState(searchParams.get("location") || initialFilters.location || "all");
+    const [selectedLocation, setSelectedLocation] = useState(initialLoc);
     const [selectedType, setSelectedType] = useState(searchParams.get("type") || initialFilters.type || "all");
     const [selectedStatus, setSelectedStatus] = useState(lockedStatus || searchParams.get("status") || initialFilters.status || (featured ? featuredCategory : "all"));
     const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || initialFilters.maxPrice || "any");
@@ -245,14 +279,18 @@ function PropertyListingsContent({
             return matchLoc && matchType && matchStatus && matchPrice && matchProject;
         });
 
-        if (showFeaturedOnly) {
+        if (preserveInitialOrder && featured) {
+            filtered = initialData.slice(0, featuredLimit);
+        } else if (showFeaturedOnly) {
             filtered = initialData.filter(p => p.featured === true).slice(0, featuredLimit);
         } else if (featured) {
             filtered = initialData.filter(p => p.status === featuredCategory).slice(0, featuredLimit);
+        } else if (selectedLocation !== "all") {
+            filtered = sortByLocationPlacement(filtered, selectedLocation);
         }
 
         setFilteredProperties(filtered);
-    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, featured, featuredCategory, featuredLimit, initialData]);
+    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, featured, featuredCategory, featuredLimit, initialData, preserveInitialOrder, showFeaturedOnly, locationPlacements]);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {

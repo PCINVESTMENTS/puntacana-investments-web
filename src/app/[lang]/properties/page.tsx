@@ -112,6 +112,7 @@ export default async function PropertiesPage({
                                 ? mapWebManagerLocations(wm.locations, lang, "show_in_property_filters")
                                 : dict.sections.locations.items;
                         })()}
+                        locationPlacements={fetchLocalSandboxWebManager()?.placements?.location_placements || {}}
                         initialFilters={{
                             status: statusParam,
                             location: locationParam,

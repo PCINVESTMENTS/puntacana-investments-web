@@ -1,4 +1,4 @@
-import HeroCarousel from "./HeroCarousel";
+import HeroCarousel, { HeroSlideItem } from "./HeroCarousel";
 
 interface HeroProps {
     dict: {
@@ -7,18 +7,15 @@ interface HeroProps {
         cta: string;
         scroll: string;
     };
-    featuredImages: {
-        id: number;
-        mainImage: any;
-        backupImage: string;
-    }[];
+    featuredImages: HeroSlideItem[];
+    showSlideBadge?: boolean;
 }
 
-export default function Hero({ dict, featuredImages }: HeroProps) {
+export default function Hero({ dict, featuredImages, showSlideBadge = false }: HeroProps) {
     return (
         <section className="relative h-screen flex items-center justify-center overflow-hidden bg-primary-black">
             {/* Background Slider */}
-            <HeroCarousel featuredImages={featuredImages} altText={dict.title} />
+            <HeroCarousel featuredImages={featuredImages} altText={dict.title} showSlideBadge={showSlideBadge} />
 
             {/* Overlay */}
             <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/40 via-transparent to-primary-black/60 md:from-black/20 md:to-primary-black/50 pointer-events-none"></div>

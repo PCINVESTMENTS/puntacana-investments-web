@@ -176,6 +176,7 @@ export interface LocalWebManagerPayload {
       cta: { es: string; en: string; fr: string };
       scroll: { es: string; en: string; fr: string };
       hero_image?: string;
+      hero_slider_custom?: boolean;
     };
     locations_section: {
       title: { es: string; en: string; fr: string };
@@ -183,7 +184,16 @@ export interface LocalWebManagerPayload {
       exploreMore: { es: string; en: string; fr: string };
       homepage_limit?: number;
     };
+    sections_order?: string[];
     sections_visibility: Record<string, boolean>;
+  };
+  placements?: {
+    hero_slider: string[];
+    sale: string[];
+    rent: string[];
+    featured: string[];
+    suggested: string[];
+    location_placements: Record<string, string[]>;
   };
 }
 

@@ -240,14 +240,47 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     ? (wmHero.hero_image.startsWith("/media/") ? `http://127.0.0.1:8110${wmHero.hero_image}` : wmHero.hero_image)
     : '/images/luxury-villa-frame-hero.webp';
 
-  const featuredImages = [
-    {
-        id: 99999, // Fake ID
-        mainImage: null,
-        backupImage: primaryHeroImage
-    },
-    ...heroProperties
-  ];
+  const propBySlug = new Map<string, Property>();
+  for (const p of properties) {
+    const s = typeof p.slug === "object" && p.slug !== null ? (p.slug as any).current : p.slug;
+    if (s) propBySlug.set(s, p);
+  }
+  const resolvePlacementList = (slugs?: string[]): Property[] | null => {
+    if (!Array.isArray(slugs) || slugs.length === 0) return null;
+    const resolved = slugs.map((s) => propBySlug.get(s)).filter((p): p is Property => Boolean(p));
+    return resolved.length > 0 ? resolved : null;
+  };
+  const getLocalizedSlideTitle = (p: Property) =>
+    lang === "en" ? p.titleEn || p.title : lang === "fr" ? p.titleFr || p.title : p.titleEs || p.title;
+
+  const wmPlacements = webManager?.placements;
+  const customHeroProps = resolvePlacementList(wmPlacements?.hero_slider);
+  const toHeroSlide = (p: Property) => {
+    const isExternalCDN = typeof p.image === "string" && (p.image.includes("cdn.sanity.io") || p.image.includes("images.unsplash.com"));
+    const slugStr = typeof p.slug === "object" && p.slug !== null ? (p.slug as any).current : p.slug;
+    return {
+      id: p.id,
+      mainImage: isExternalCDN ? p.image : null,
+      backupImage: typeof p.image === "string" && !isExternalCDN ? p.image : (p.gallery && p.gallery.length > 0 ? p.gallery[0] : "/images/luxury-villa-frame-hero.webp"),
+      slug: slugStr,
+      internalCode: (p as any).internal_code || "",
+      title: getLocalizedSlideTitle(p),
+      lang,
+    };
+  };
+
+  const heroSliderCustom = Boolean(wmHero?.hero_slider_custom && customHeroProps && customHeroProps.length > 0);
+  const curatedHeroSlides = customHeroProps ? customHeroProps.map(toHeroSlide) : heroProperties;
+  const featuredImages = heroSliderCustom
+    ? curatedHeroSlides
+    : [
+        {
+          id: 99999,
+          mainImage: null,
+          backupImage: primaryHeroImage,
+        },
+        ...curatedHeroSlides,
+      ];
 
   // Perform server-side filtering to prevent sending the entire dataset to client components
   // Also strip heavy data arrays (like 50-image galleries) to drastically reduce Server-to-Client JSON payload (improves FCP & LCP)
@@ -268,9 +301,188 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
   const nonLandProperties = properties.filter(p => p.type !== "land");
 
-  const saleProperties = stripPayload(explicitHomeSale || nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
-  const rentProperties = stripPayload(explicitHomeRent || nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
-  const featuredOnlyProperties = stripPayload(explicitHomeFeatured || nonLandProperties.filter(p => p.featured === true).slice(0, 3));
+  const wmSale = resolvePlacementList(wmPlacements?.sale);
+  const wmRent = resolvePlacementList(wmPlacements?.rent);
+  const wmFeatured = resolvePlacementList(wmPlacements?.featured);
+  const wmSuggested = resolvePlacementList(wmPlacements?.suggested);
+
+  const saleProperties = stripPayload(wmSale || explicitHomeSale || nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
+  const rentProperties = stripPayload(wmRent || explicitHomeRent || nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
+  const featuredOnlyProperties = stripPayload(wmFeatured || explicitHomeFeatured || nonLandProperties.filter(p => p.featured === true).slice(0, 3));
+  const suggestedProperties = stripPayload(wmSuggested || []);
+
+  const defaultSectionsOrder = [
+    "hero_filter_bar",
+    "sale_properties",
+    "rent_properties",
+    "locations",
+    "featured_properties",
+    "suggested_properties",
+    "future_projects",
+    "investments",
+    "fly_and_buy",
+    "off_market",
+    "blog",
+    "services",
+    "testimonials",
+    "about",
+    "contact",
+  ];
+  const sectionsOrder =
+    Array.isArray(webManager?.homepage?.sections_order) && webManager!.homepage.sections_order!.length > 0
+      ? webManager!.homepage.sections_order!
+      : defaultSectionsOrder;
+
+  const renderHomeSection = (sectionKey: string) => {
+    switch (sectionKey) {
+      case "hero_filter_bar":
+        return secVis.show_hero_filter_bar !== false ? (
+          <div key="hero_filter_bar" data-home-section="hero_filter_bar">
+            <PropertyFilterBar dict={dict.properties} locations={dynamicFilterLocations} lang={lang} />
+          </div>
+        ) : null;
+      case "sale_properties":
+        return secVis.show_sale_properties !== false ? (
+          <div key="sale_properties" data-home-section="sale_properties">
+            <PropertyListings
+              dict={dict.properties}
+              lang={lang}
+              locations={dynamicFilterLocations}
+              featured={true}
+              preserveInitialOrder={Boolean(wmSale)}
+              featuredCategory="sale"
+              featuredLimit={Math.max(6, saleProperties.length)}
+              sectionId="properties-sale"
+              sectionTitle={lang === 'en' ? 'Properties for Sale' : lang === 'fr' ? 'Propriétés à Vendre' : 'Propiedades en Venta'}
+              lockedStatus="sale"
+              exploreLink={`/${lang}/properties?status=sale`}
+              initialData={saleProperties}
+            />
+          </div>
+        ) : null;
+      case "rent_properties":
+        return secVis.show_rent_properties !== false ? (
+          <div key="rent_properties" data-home-section="rent_properties">
+            <PropertyListings
+              dict={dict.properties}
+              lang={lang}
+              locations={dynamicFilterLocations}
+              featured={true}
+              preserveInitialOrder={Boolean(wmRent)}
+              featuredCategory="rent"
+              featuredLimit={Math.max(3, rentProperties.length)}
+              sectionId="properties-rent"
+              sectionTitle={lang === 'en' ? 'Properties for Rent' : lang === 'fr' ? 'Propriétés à Louer' : 'Propiedades en Renta'}
+              lockedStatus="rent"
+              exploreLink={`/${lang}/properties?status=rent`}
+              initialData={rentProperties}
+            />
+          </div>
+        ) : null;
+      case "locations":
+        return secVis.show_locations !== false ? (
+          <div key="locations" data-home-section="locations">
+            <LocationsSection
+              dict={effectiveLocationsDict}
+              limit={locationsHomepageLimit > 0 ? locationsHomepageLimit : undefined}
+              lang={lang}
+              apiLocations={dynamicHomeLocations}
+            />
+          </div>
+        ) : null;
+      case "featured_properties":
+        return secVis.show_featured_properties !== false ? (
+          <div key="featured_properties" data-home-section="featured_properties">
+            <PropertyListings
+              dict={dict.properties}
+              lang={lang}
+              locations={dynamicFilterLocations}
+              featured={true}
+              showFeaturedOnly={!wmFeatured}
+              preserveInitialOrder={Boolean(wmFeatured)}
+              featuredCategory="sale"
+              featuredLimit={Math.max(3, featuredOnlyProperties.length)}
+              sectionId="featured-properties"
+              sectionTitle={lang === 'en' ? 'Featured Properties' : lang === 'fr' ? 'Propriétés en Vedette' : 'Propiedades Destacadas'}
+              initialData={featuredOnlyProperties}
+            />
+          </div>
+        ) : null;
+      case "suggested_properties":
+        return secVis.show_suggested_properties === true && suggestedProperties.length > 0 ? (
+          <div key="suggested_properties" data-home-section="suggested_properties">
+            <PropertyListings
+              dict={dict.properties}
+              lang={lang}
+              locations={dynamicFilterLocations}
+              featured={true}
+              preserveInitialOrder={true}
+              featuredCategory="sale"
+              featuredLimit={Math.max(3, suggestedProperties.length)}
+              sectionId="suggested-properties"
+              sectionTitle={lang === 'en' ? 'Suggested Properties' : lang === 'fr' ? 'Propriétés Suggérées' : 'Propiedades Sugeridas'}
+              initialData={suggestedProperties}
+            />
+          </div>
+        ) : null;
+      case "future_projects":
+        return secVis.show_future_projects !== false ? (
+          <div key="future_projects" data-home-section="future_projects">
+            <FutureProjectsSection lang={lang} />
+          </div>
+        ) : null;
+      case "investments":
+        return secVis.show_investments !== false ? (
+          <div key="investments" data-home-section="investments">
+            <InvestmentsSection dict={dict.sections.investments} lang={lang} />
+          </div>
+        ) : null;
+      case "fly_and_buy":
+        return secVis.show_fly_and_buy !== false ? (
+          <div key="fly_and_buy" data-home-section="fly_and_buy">
+            <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
+          </div>
+        ) : null;
+      case "off_market":
+        return secVis.show_off_market !== false ? (
+          <div key="off_market" data-home-section="off_market">
+            <OffMarketClub lang={lang} />
+          </div>
+        ) : null;
+      case "blog":
+        return secVis.show_blog !== false ? (
+          <div key="blog" data-home-section="blog">
+            <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={strippedPosts} />
+          </div>
+        ) : null;
+      case "services":
+        return secVis.show_services !== false ? (
+          <div key="services" data-home-section="services">
+            <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />
+          </div>
+        ) : null;
+      case "testimonials":
+        return secVis.show_testimonials !== false ? (
+          <div key="testimonials" data-home-section="testimonials">
+            <TestimonialsSection dict={dict.sections.testimonials} />
+          </div>
+        ) : null;
+      case "about":
+        return secVis.show_about !== false ? (
+          <div key="about" data-home-section="about">
+            <AboutSection dict={dict.sections.about} />
+          </div>
+        ) : null;
+      case "contact":
+        return secVis.show_contact !== false ? (
+          <div key="contact" data-home-section="contact">
+            <ContactSection dict={dict.contact} />
+          </div>
+        ) : null;
+      default:
+        return null;
+    }
+  };
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -316,73 +528,8 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
-      <Hero dict={effectiveHeroDict} featuredImages={featuredImages} />
-      {secVis.show_hero_filter_bar !== false && (
-        <PropertyFilterBar dict={dict.properties} locations={dynamicFilterLocations} lang={lang} />
-      )}
-
-      {secVis.show_sale_properties !== false && (
-        <PropertyListings
-          dict={dict.properties}
-          lang={lang}
-          locations={dynamicFilterLocations}
-          featured={true}
-          featuredCategory="sale"
-          featuredLimit={6}
-          sectionId="properties-sale"
-          sectionTitle={lang === 'en' ? 'Properties for Sale' : lang === 'fr' ? 'Propriétés à Vendre' : 'Propiedades en Venta'}
-          lockedStatus="sale"
-          exploreLink={`/${lang}/properties?status=sale`}
-          initialData={saleProperties}
-        />
-      )}
-      {secVis.show_rent_properties !== false && (
-        <PropertyListings
-          dict={dict.properties}
-          lang={lang}
-          locations={dynamicFilterLocations}
-          featured={true}
-          featuredCategory="rent"
-          featuredLimit={3}
-          sectionId="properties-rent"
-          sectionTitle={lang === 'en' ? 'Properties for Rent' : lang === 'fr' ? 'Propriétés à Louer' : 'Propiedades en Renta'}
-          lockedStatus="rent"
-          exploreLink={`/${lang}/properties?status=rent`}
-          initialData={rentProperties}
-        />
-      )}
-      {secVis.show_locations !== false && (
-        <LocationsSection
-          dict={effectiveLocationsDict}
-          limit={locationsHomepageLimit > 0 ? locationsHomepageLimit : undefined}
-          lang={lang}
-          apiLocations={dynamicHomeLocations}
-        />
-      )}
-      {secVis.show_featured_properties !== false && (
-        <PropertyListings
-          dict={dict.properties}
-          lang={lang}
-          locations={dynamicFilterLocations}
-          featured={true}
-          showFeaturedOnly={true}
-          featuredCategory="sale"
-          featuredLimit={3}
-          sectionId="featured-properties"
-          sectionTitle={lang === 'en' ? 'Featured Properties' : lang === 'fr' ? 'Propriétés en Vedette' : 'Propiedades Destacadas'}
-          initialData={featuredOnlyProperties}
-        />
-      )}
-      {secVis.show_future_projects !== false && <FutureProjectsSection lang={lang} />}
-      {secVis.show_investments !== false && <InvestmentsSection dict={dict.sections.investments} lang={lang} />}
-      {secVis.show_fly_and_buy !== false && <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />}
-      {secVis.show_off_market !== false && <OffMarketClub lang={lang} />}
-      {secVis.show_blog !== false && <BlogSection dict={dict.sections.blog} lang={lang} initialPosts={strippedPosts} />}
-      {secVis.show_services !== false && <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />}
-      {secVis.show_testimonials !== false && <TestimonialsSection dict={dict.sections.testimonials} />}
-      {secVis.show_about !== false && <AboutSection dict={dict.sections.about} />}
-
-      {secVis.show_contact !== false && <ContactSection dict={dict.contact} />}
+      <Hero dict={effectiveHeroDict} featuredImages={featuredImages} showSlideBadge={heroSliderCustom} />
+      {sectionsOrder.map((secKey) => renderHomeSection(secKey))}
       <Footer dict={dict} lang={lang} />
     </main>
   );
