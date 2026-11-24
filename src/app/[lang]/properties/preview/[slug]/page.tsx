@@ -39,13 +39,14 @@ export default async function LocalDraftPreviewPage({
     notFound();
   }
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price: number, currencyCode = "USD") => {
     if (!price || price === 0) {
       return lang === "en" ? "Price on Request" : lang === "fr" ? "Prix sur Demande" : "Precio a Consultar";
     }
+    const safeCurrency = ["USD", "EUR", "DOP"].includes(currencyCode) ? currencyCode : "USD";
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: safeCurrency,
       maximumFractionDigits: 0,
     }).format(price);
   };
@@ -133,7 +134,7 @@ export default async function LocalDraftPreviewPage({
               </p>
             </div>
             <div className="text-2xl md:text-4xl font-bold text-luxury-gold">
-              {formatPrice(property.price)}
+              {formatPrice(property.price, (property as unknown as { currency?: string }).currency || "USD")}
               {property.status === "rent" && property.price > 0 ? (
                 <span className="text-sm text-gray-300 font-normal"> /mes</span>
               ) : null}
@@ -148,21 +149,21 @@ export default async function LocalDraftPreviewPage({
           <div className="lg:col-span-2 space-y-10">
             {/* Specs Strip */}
             <div className="grid grid-cols-3 gap-4 bg-dark-gray p-6 border border-white/10 rounded-lg text-center">
-              {property.type !== "land" && (
-                <>
-                  <div>
-                    <FaBed className="mx-auto text-luxury-gold text-xl mb-2" />
-                    <div className="text-xl font-bold text-white">{property.beds || 0}</div>
-                    <div className="text-xs uppercase text-gray-400">Habitaciones</div>
-                  </div>
-                  <div>
-                    <FaBath className="mx-auto text-luxury-gold text-xl mb-2" />
-                    <div className="text-xl font-bold text-white">{property.baths || 0}</div>
-                    <div className="text-xs uppercase text-gray-400">Baños</div>
-                  </div>
-                </>
+              {property.type !== "land" && property.type !== "commercial" && (
+                <div>
+                  <FaBed className="mx-auto text-luxury-gold text-xl mb-2" />
+                  <div className="text-xl font-bold text-white">{property.beds || 0}</div>
+                  <div className="text-xs uppercase text-gray-400">Habitaciones</div>
+                </div>
               )}
-              <div className={property.type === "land" ? "col-span-3" : ""}>
+              {property.type !== "land" && (
+                <div>
+                  <FaBath className="mx-auto text-luxury-gold text-xl mb-2" />
+                  <div className="text-xl font-bold text-white">{property.baths || 0}</div>
+                  <div className="text-xs uppercase text-gray-400">Baños</div>
+                </div>
+              )}
+              <div className={property.type === "land" ? "col-span-3" : property.type === "commercial" ? "col-span-2" : ""}>
                 <FaRulerCombined className="mx-auto text-luxury-gold text-xl mb-2" />
                 <div className="text-xl font-bold text-white">
                   {property.area ? `${property.area} m²` : "—"}
