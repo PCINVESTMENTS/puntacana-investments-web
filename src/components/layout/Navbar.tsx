@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 
@@ -35,8 +36,24 @@ interface NavbarProps {
 }
 
 export default function Navbar({ dict, lang, servicesList = [], propertyTypes, variant = 'transparent' }: NavbarProps) {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [querySuffix, setQuerySuffix] = useState("");
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setQuerySuffix(window.location.search || "");
+        }
+    }, [pathname]);
+
+    const getLocalizedHref = (targetLang: "es" | "en" | "fr") => {
+        if (!pathname) return `/${targetLang}${querySuffix}`;
+        if (/^\/(es|en|fr)(\/|$)/.test(pathname)) {
+            return `${pathname.replace(/^\/(es|en|fr)(\/|$)/, `/${targetLang}$2`)}${querySuffix}`;
+        }
+        return `/${targetLang}${pathname.startsWith("/") ? pathname : `/${pathname}`}${querySuffix}`;
+    };
 
     useEffect(() => {
         let ticking = false;
@@ -208,11 +225,11 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 )}
                             </div>
                         )})}
-                        {/* Language Switcher */}
+                        {/* Language Switcher (preserves current property/route and query params across ES/EN/FR) */}
                         <div className="flex gap-2 text-xs font-bold text-white border-l border-white/20 pl-4 ml-2">
-                            <Link href="/es" className={`hover:text-luxury-gold ${lang === 'es' ? 'text-luxury-gold' : ''}`}>ES</Link>
-                            <Link href="/en" className={`hover:text-luxury-gold ${lang === 'en' ? 'text-luxury-gold' : ''}`}>EN</Link>
-                            <Link href="/fr" className={`hover:text-luxury-gold ${lang === 'fr' ? 'text-luxury-gold' : ''}`}>FR</Link>
+                            <Link href={getLocalizedHref("es")} className={`hover:text-luxury-gold ${lang === 'es' ? 'text-luxury-gold' : ''}`}>ES</Link>
+                            <Link href={getLocalizedHref("en")} className={`hover:text-luxury-gold ${lang === 'en' ? 'text-luxury-gold' : ''}`}>EN</Link>
+                            <Link href={getLocalizedHref("fr")} className={`hover:text-luxury-gold ${lang === 'fr' ? 'text-luxury-gold' : ''}`}>FR</Link>
                         </div>
                     </div>
 
@@ -267,9 +284,9 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                         </div>
                     )})}
                     <div className="p-4 flex gap-8 justify-center mt-6">
-                        <Link href="/es" className={`text-lg font-bold p-4 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
-                        <Link href="/en" className={`text-lg font-bold p-4 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
-                        <Link href="/fr" className={`text-lg font-bold p-4 ${lang === 'fr' ? 'text-luxury-gold' : 'text-white'}`}>FRANÇAIS</Link>
+                        <Link href={getLocalizedHref("es")} onClick={() => setIsOpen(false)} className={`text-lg font-bold p-4 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
+                        <Link href={getLocalizedHref("en")} onClick={() => setIsOpen(false)} className={`text-lg font-bold p-4 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
+                        <Link href={getLocalizedHref("fr")} onClick={() => setIsOpen(false)} className={`text-lg font-bold p-4 ${lang === 'fr' ? 'text-luxury-gold' : 'text-white'}`}>FRANÇAIS</Link>
                     </div>
                 </div>
             </div>

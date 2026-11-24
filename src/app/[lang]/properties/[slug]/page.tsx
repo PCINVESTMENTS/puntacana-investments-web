@@ -870,7 +870,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             {/* Social Share Buttons */}
                             <ShareButtons
                                 title={`${lang === 'en' ? 'Check out this property:' : lang === 'fr' ? 'Découvrez cette propriété :' : 'Mira esta propiedad:'} ${translatedTitle}`}
-                                url={`https://puntacanainvesment.com/${lang}/properties/${property.slug}`}
+                                url={`https://www.puntacanainvestmentsrd.com/${lang}/properties/${property.slug}`}
                             />
 
                             {(((property as any)?.display || (property as any)?.specs?.display || {}).show_price_drop_alert !== false) && (

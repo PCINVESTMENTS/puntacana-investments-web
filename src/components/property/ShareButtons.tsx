@@ -49,7 +49,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
     };
 
     return (
-        <div className="flex items-center gap-4 mt-8 pt-8 border-t border-white/10">
+        <div className="flex items-center gap-4 mt-8 pt-8 border-t border-white/10" data-share-url={url}>
             <span className="text-sm text-gray-400 uppercase tracking-widest font-bold">Compartir:</span>
             <div className="flex gap-4">
                 {shareLinks.map((link) => (
@@ -66,8 +66,10 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
                     </a>
                 ))}
                 <button
+                    type="button"
                     onClick={copyToClipboard}
-                    className="text-gray-400 hover:text-white transition-colors text-xl relative"
+                    data-copy-url={url}
+                    className="text-gray-400 hover:text-white transition-colors text-xl relative cursor-pointer"
                     title="Copiar Enlace"
                     aria-label="Copiar Enlace"
                 >
