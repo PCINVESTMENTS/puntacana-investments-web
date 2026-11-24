@@ -399,6 +399,13 @@ function PropertyListingsContent({
                         </div>
                     )}
 
+                    {/* Strict H1 -> H2 -> H3 semantic heading bridge when listing section is the page H1 */}
+                    {isH1 && (
+                        <h2 className="sr-only">
+                            {lang === 'en' ? 'Property Listings' : lang === 'fr' ? 'Liste des Propriétés' : 'Listado de Propiedades'}
+                        </h2>
+                    )}
+
                     {/* Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {filteredProperties.length === 0 ? (
@@ -447,6 +454,22 @@ function PropertyListingsContent({
                                             </div>
 
                                             <CompareToggle property={prop} lang={lang} />
+                                            {(() => {
+                                                const inv = String((prop as any).inventoryStatus || "Disponible");
+                                                if (!inv || inv === "Disponible") return null;
+                                                const invMap: Record<string, { es: string; en: string; fr: string; cls: string }> = {
+                                                    Reservado: { es: "Reservado", en: "Reserved", fr: "Réservé", cls: "bg-amber-500 text-black" },
+                                                    Vendido: { es: "Vendido", en: "Sold", fr: "Vendu", cls: "bg-rose-700 text-white" },
+                                                    Alquilado: { es: "Alquilado", en: "Rented", fr: "Loué", cls: "bg-sky-700 text-white" },
+                                                };
+                                                const badge = invMap[inv];
+                                                if (!badge) return null;
+                                                return (
+                                                    <div className={`absolute top-4 left-4 z-30 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider shadow-lg ${badge.cls}`}>
+                                                        {lang === 'en' ? badge.en : lang === 'fr' ? badge.fr : badge.es}
+                                                    </div>
+                                                );
+                                            })()}
                                             <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent h-24 opacity-80 pointer-events-none"></div>
                                         </div>
 

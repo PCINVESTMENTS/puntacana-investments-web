@@ -2,6 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
+import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -46,6 +47,26 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         return {
             success: false,
             message: dict.error
+        };
+    }
+
+    if (isLocalSandboxEnabled()) {
+        appendSandboxTestInboxEntry({
+            form_type: 'investment_monitoring',
+            form_label: 'Plan de Monitoreo de Inversión',
+            lang,
+            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
+            client_autoresponder_to: email,
+            admin_subject: `LEAD MONITOREO: ${name} - ${project || 'Proyecto'}`,
+            client_subject: 'Confirmación Plan de Monitoreo — Punta Cana Investments',
+            property_reference: { title: project || 'Monitoreo de Inversión', location: location || 'Punta Cana', type: 'investment_monitoring' },
+            lead: { name, email, phone, message: `${project || ''} · ${location || ''} · ${investment || ''} · ${date || ''}` },
+            deduplication_note: '1 solicitud Monitoreo = 1 aviso PCI + 1 confirmación cliente (buzón local)',
+        });
+        return {
+            success: true,
+            message: 'Solicitud de Monitoreo registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
         };
     }
 

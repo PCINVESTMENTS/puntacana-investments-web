@@ -21,6 +21,7 @@ const ROICalculator = nextDynamic(() => import("@/components/property/ROICalcula
 const ConstructionProgress = nextDynamic(() => import("@/components/property/ConstructionProgress"));
 const PriceDropNotify = nextDynamic(() => import("@/components/property/PriceDropNotify"));
 const ShareButtons = nextDynamic(() => import("@/components/property/ShareButtons"));
+import PropertyCommercialDetails from "@/components/property/PropertyCommercialDetails";
 
 // Sanity imports
 import { client } from "@/sanity/lib/client";
@@ -624,12 +625,28 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                         const info = st && map[st] ? map[st] : null;
                                         if (!info) return null;
                                         const text = lang === 'en' ? info.en : lang === 'fr' ? info.fr : info.es;
-                                        return (
+                                            return (
                                             <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider inline-block ${info.cls}`}>
                                                 {text}
                                                 {(st === "pre_construction" || st === "under_construction") && Number(property.completionPercent) > 0
                                                     ? ` • ${property.completionPercent}%`
                                                     : ""}
+                                            </span>
+                                        );
+                                    })()}
+                                    {(() => {
+                                        const inv = String((property as any).inventoryStatus || "Disponible");
+                                        if (!inv || inv === "Disponible") return null;
+                                        const invMap: Record<string, { es: string; en: string; fr: string; cls: string }> = {
+                                            Reservado: { es: "Reservado", en: "Reserved", fr: "Réservé", cls: "bg-amber-500 text-black" },
+                                            Vendido: { es: "Vendido", en: "Sold", fr: "Vendu", cls: "bg-rose-700 text-white" },
+                                            Alquilado: { es: "Alquilado", en: "Rented", fr: "Loué", cls: "bg-sky-700 text-white" },
+                                        };
+                                        const badge = invMap[inv];
+                                        if (!badge) return null;
+                                        return (
+                                            <span className={`px-3 py-1 text-xs font-extrabold uppercase tracking-wider inline-block ${badge.cls}`}>
+                                                {lang === 'en' ? badge.en : lang === 'fr' ? badge.fr : badge.es}
                                             </span>
                                         );
                                     })()}
@@ -643,7 +660,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    {(!property.hideFromLabel && (property.preConstruction || property.preLaunch) && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
+                                    {(!property.hideFromLabel && (property.preConstruction || property.preLaunch || (property as any).commercialStage === 'off_plan' || (property as any).commercialStage === 'under_construction') && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
                                         <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : lang === 'fr' ? 'À partir de' : 'Desde'}</span>
                                     )} {formatPrice(property.price)}
                                 </p>
@@ -661,20 +678,28 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                     <div className="lg:col-span-2 space-y-12">
                         {/* Key Stats */}
                         <div className="bg-dark-gray p-8 border border-white/5 grid grid-cols-2 md:grid-cols-3 gap-8 text-center rounded-lg">
-                            <div className="flex flex-col items-center">
-                                <FaBed aria-hidden="true" className="text-4xl text-luxury-gold mb-3" />
-                                <span className="text-2xl font-bold">{property.beds}</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">{dict.properties.beds || 'Beds'}</span>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <FaBath aria-hidden="true" className="text-4xl text-luxury-gold mb-3" />
-                                <span className="text-2xl font-bold">{property.baths}</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">{dict.properties.baths || 'Baths'}</span>
-                            </div>
-                            <div className="flex flex-col items-center">
+                            {property.type !== 'land' && property.type !== 'commercial' && (
+                                <div className="flex flex-col items-center">
+                                    <FaBed aria-hidden="true" className="text-4xl text-luxury-gold mb-3" />
+                                    <span className="text-2xl font-bold">{property.beds}</span>
+                                    <span className="text-gray-400 text-xs uppercase tracking-wider">{dict.properties.beds || 'Beds'}</span>
+                                </div>
+                            )}
+                            {property.type !== 'land' && (
+                                <div className="flex flex-col items-center">
+                                    <FaBath aria-hidden="true" className="text-4xl text-luxury-gold mb-3" />
+                                    <span className="text-2xl font-bold">{property.baths}</span>
+                                    <span className="text-gray-400 text-xs uppercase tracking-wider">{dict.properties.baths || 'Baths'}</span>
+                                </div>
+                            )}
+                            <div className={`flex flex-col items-center ${property.type === 'land' ? 'col-span-2 md:col-span-3' : property.type === 'commercial' ? 'col-span-2' : ''}`}>
                                 <FaRulerCombined className="text-4xl text-luxury-gold mb-3" />
                                 <span className="text-2xl font-bold">{property.area} m² / {Math.round(property.area * 10.764).toLocaleString()} ft²</span>
-                                <span className="text-gray-400 text-xs uppercase tracking-wider">{lang === 'en' ? 'Area' : lang === 'fr' ? 'Surface' : 'Área'}</span>
+                                <span className="text-gray-400 text-xs uppercase tracking-wider">
+                                    {property.type === 'land'
+                                        ? (lang === 'en' ? 'Land Area' : lang === 'fr' ? 'Surface du Terrain' : 'Superficie del Terreno')
+                                        : (lang === 'en' ? 'Area' : lang === 'fr' ? 'Surface' : 'Área')}
+                                </span>
                             </div>
                         </div>
 
@@ -701,6 +726,9 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 </ReactMarkdown>
                             </div>
                         </div>
+
+                        {/* Payment Plan & Confirmed Technical Specs (only renders non-empty confirmed data) */}
+                        <PropertyCommercialDetails property={property as any} lang={lang} />
 
                         {/* Detailed Sections (e.g. Growth Developments) */}
                         {property.detailedSections && property.detailedSections.length > 0 && (

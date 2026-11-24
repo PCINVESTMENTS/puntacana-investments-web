@@ -12,6 +12,7 @@ import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import PropertyListings from "@/components/home/PropertyListings";
 import PropertyGallery from "@/components/property/PropertyGallery";
+import PropertyCommercialDetails from "@/components/property/PropertyCommercialDetails";
 import ContactForm from "@/components/contact/ContactForm";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { fetchLocalSandboxDraftPreview, isLocalSandboxEnabled } from "@/lib/localSandbox";
@@ -156,6 +157,21 @@ export default async function LocalDraftPreviewPage({
                 </span>
               );
             })()}
+            {(() => {
+              const inv = String((property as any).inventoryStatus || "Disponible");
+              if (!inv || inv === "Disponible") return null;
+              const cls =
+                inv === "Vendido"
+                  ? "bg-rose-700 text-white"
+                  : inv === "Reservado"
+                  ? "bg-amber-500 text-black"
+                  : "bg-sky-700 text-white";
+              return (
+                <span className={`inline-block px-3 py-1 text-xs font-extrabold uppercase tracking-widest ${cls}`}>
+                  {inv}
+                </span>
+              );
+            })()}
           </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
@@ -211,8 +227,9 @@ export default async function LocalDraftPreviewPage({
             {galleryImages.length > 0 && (
               <PropertyGallery
                 images={galleryImages}
-                title={property.title}
-                lang={lang}
+                alts={((property as any)?.seo?.gallery_meta || []).map((m: any) =>
+                  lang === "en" ? m?.alt_en || m?.alt_es || "" : lang === "fr" ? m?.alt_fr || m?.alt_es || "" : m?.alt_es || ""
+                )}
               />
             )}
 
@@ -225,6 +242,9 @@ export default async function LocalDraftPreviewPage({
                 <p className="text-gray-400 italic">Sin descripción todavía.</p>
               )}
             </div>
+
+            {/* Payment Plan & Confirmed Technical Specs */}
+            <PropertyCommercialDetails property={property as any} lang={lang} />
 
             {/* Features */}
             {feats.length > 0 && (

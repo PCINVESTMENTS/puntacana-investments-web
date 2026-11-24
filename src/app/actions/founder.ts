@@ -2,6 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
+import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -36,6 +37,26 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
         return {
             success: false,
             message: dict.error
+        };
+    }
+
+    if (isLocalSandboxEnabled()) {
+        appendSandboxTestInboxEntry({
+            form_type: 'founder_investor',
+            form_label: 'Lista Cero / Inversor Fundador',
+            lang,
+            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
+            client_autoresponder_to: email,
+            admin_subject: `NUEVO INVERSOR FUNDADOR: ${name} (${modality})`,
+            client_subject: 'Confirmación Lista Cero — Punta Cana Investments',
+            property_reference: { title: `Proyecto Fundador (${modality})`, type: 'founder_investor' },
+            lead: { name, email, phone, message: message || modality },
+            deduplication_note: '1 solicitud Fundador = 1 aviso PCI + 1 confirmación cliente (buzón local)',
+        });
+        return {
+            success: true,
+            message: 'Solicitud de Inversor Fundador registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
         };
     }
 
