@@ -48,28 +48,40 @@ export default function PropertyCommercialDetails({ property, lang }: PropertyCo
 
   const confirmedFacts: { label: string; value: string; highlight?: boolean }[] = [];
 
+  // Independent toggles: CONFOTUR, HOA, and Construction Progress work even if the general Technical Specs switch is OFF
+  if (specs.confotur && showConfotur) {
+    confirmedFacts.push({
+      label: isEn ? "Tax Benefit" : isFr ? "Avantage Fiscal" : "Beneficio Fiscal",
+      value: isEn
+        ? "CONFOTUR Law (Tax Exemption)"
+        : isFr
+        ? "Loi CONFOTUR (Exonération Fiscale)"
+        : "Ley CONFOTUR (Exención Fiscal)",
+      highlight: true,
+    });
+  }
+
+  if (showHoa && String(specs.hoa_monthly || "").trim()) {
+    const rawHoa = String(specs.hoa_monthly).trim();
+    const hoaDisplay = /^\d+(\.\d+)?$/.test(rawHoa) ? `US$ ${rawHoa} / mes` : rawHoa;
+    confirmedFacts.push({
+      label: isEn ? "Monthly HOA / Maintenance" : isFr ? "Charges HOA Mensuelles" : "Mantenimiento / HOA",
+      value: isEn ? hoaDisplay.replace("/ mes", "/ mo") : isFr ? hoaDisplay.replace("/ mes", "/ mois") : hoaDisplay,
+    });
+  }
+
+  if (showProgress && Number(property?.completionPercent || specs.completion_percent || 0) > 0) {
+    confirmedFacts.push({
+      label: isEn ? "Construction Progress" : isFr ? "Avancement des Travaux" : "Avance de Obra",
+      value: `${Number(property?.completionPercent || specs.completion_percent)}%`,
+    });
+  }
+
   if (showTechnicalSpecs) {
-    if (specs.confotur && showConfotur) {
-      confirmedFacts.push({
-        label: isEn ? "Tax Benefit" : isFr ? "Avantage Fiscal" : "Beneficio Fiscal",
-        value: isEn
-          ? "CONFOTUR Law (Tax Exemption)"
-          : isFr
-          ? "Loi CONFOTUR (Exonération Fiscale)"
-          : "Ley CONFOTUR (Exención Fiscal)",
-        highlight: true,
-      });
-    }
     if (String(specs.delivery_date || "").trim()) {
       confirmedFacts.push({
         label: isEn ? "Estimated Delivery" : isFr ? "Livraison Estimée" : "Fecha de Entrega",
         value: String(specs.delivery_date).trim(),
-      });
-    }
-    if (showProgress && Number(property?.completionPercent || specs.completion_percent || 0) > 0) {
-      confirmedFacts.push({
-        label: isEn ? "Construction Progress" : isFr ? "Avancement des Travaux" : "Avance de Obra",
-        value: `${Number(property?.completionPercent || specs.completion_percent)}%`,
       });
     }
     if (Number(property?.lotSize || 0) > 0) {
@@ -88,14 +100,6 @@ export default function PropertyCommercialDetails({ property, lang }: PropertyCo
       confirmedFacts.push({
         label: isEn ? "Parking Spaces" : isFr ? "Places de Parking" : "Parqueos",
         value: String(specs.parking_spaces).trim(),
-      });
-    }
-    if (showHoa && String(specs.hoa_monthly || "").trim()) {
-      const rawHoa = String(specs.hoa_monthly).trim();
-      const hoaDisplay = /^\d+(\.\d+)?$/.test(rawHoa) ? `US$ ${rawHoa} / mes` : rawHoa;
-      confirmedFacts.push({
-        label: isEn ? "Monthly HOA / Maintenance" : isFr ? "Charges HOA Mensuelles" : "Mantenimiento / HOA",
-        value: isEn ? hoaDisplay.replace("/ mes", "/ mo") : isFr ? hoaDisplay.replace("/ mes", "/ mois") : hoaDisplay,
       });
     }
     if (String(specs.furnished || "").trim()) {
