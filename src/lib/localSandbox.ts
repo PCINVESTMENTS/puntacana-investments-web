@@ -112,38 +112,145 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
   return { id, count: next.length };
 }
 
+function resolveSandboxMediaUrl(url: any, fallback = ""): string {
+  const s = typeof url === "string" ? url.trim() : "";
+  if (!s) return fallback;
+  if (s.startsWith("/media/")) return `http://127.0.0.1:8110${s}`;
+  return s;
+}
+
+function normalizeLocalizedText(val: any, fallbackEs = "", fallbackEn = "", fallbackFr = "") {
+  if (val && typeof val === "object") {
+    return {
+      es: String(val.es || fallbackEs || ""),
+      en: String(val.en || fallbackEn || ""),
+      fr: String(val.fr || fallbackFr || ""),
+    };
+  }
+  const s = typeof val === "string" ? val : "";
+  return {
+    es: s || fallbackEs,
+    en: s || fallbackEn,
+    fr: s || fallbackFr,
+  };
+}
+
 export function mapSandboxBlogPosts(rawPosts: any[] = []): BlogPost[] {
-  return rawPosts.map((p: any) => ({
-    slug: p.slug || "",
-    title: {
-      en: p.titleEn || p.title || "",
-      es: p.titleEs || p.title || "",
-      fr: p.titleEn || p.title || "",
-    },
-    date: {
-      en: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "",
-      es: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" }) : "",
-      fr: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "",
-    },
-    category: {
-      es: p.category?.es || "General",
-      en: p.category?.en || "General",
-      fr: p.category?.en || "Général",
-    },
-    mainImage: p.mainImageUrl || "",
-    excerpt: {
-      en: p.excerptEn || "",
-      es: p.excerptEs || "",
-      fr: p.excerptEn || "",
-    },
-    author: p.author || "Admin",
-    authorRole: p.authorRole || { es: "Autor", en: "Author", fr: "Auteur" },
-    authorBio: p.authorBio || { es: "", en: "", fr: "" },
-    authorImage: p.authorImageUrl || "/images/logo-footer-v2.png",
-    content: { es: "", en: "", fr: "" },
-    seoKeywords: { es: "", en: "", fr: "" },
-    relatedProperties: [],
-  })) as unknown as BlogPost[];
+  return rawPosts.map((p: any) => {
+    const titleLoc = p.titleLocalized || p.title;
+    const titleEs = (typeof titleLoc === "object" ? titleLoc?.es : "") || p.titleEs || (typeof p.title === "string" ? p.title : "") || "";
+    const titleEn = (typeof titleLoc === "object" ? titleLoc?.en : "") || p.titleEn || (typeof p.title === "string" ? p.title : "") || titleEs;
+    const titleFr = (typeof titleLoc === "object" ? titleLoc?.fr : "") || p.titleFr || titleEn || titleEs;
+
+    const excerptLoc = p.excerptLocalized || p.excerpt;
+    const excerptEs = (typeof excerptLoc === "object" ? excerptLoc?.es : "") || p.excerptEs || "";
+    const excerptEn = (typeof excerptLoc === "object" ? excerptLoc?.en : "") || p.excerptEn || excerptEs;
+    const excerptFr = (typeof excerptLoc === "object" ? excerptLoc?.fr : "") || p.excerptFr || excerptEn || excerptEs;
+
+    const cat = normalizeLocalizedText(p.category, "General", "General", "Général");
+    const altLoc = normalizeLocalizedText(p.coverImageAlt || p.cover_image_alt, titleEs, titleEn, titleFr);
+    const authorRole = normalizeLocalizedText(p.authorRole || p.author_role, "Autor", "Author", "Auteur");
+    const authorBio = normalizeLocalizedText(p.authorBio || p.author_bio, "", "", "");
+
+    const pubDate = p.publishedAt || p.published_at || "";
+    const dateObj = pubDate ? new Date(pubDate) : null;
+    const validDate = dateObj && !Number.isNaN(dateObj.getTime()) ? dateObj : null;
+
+    const seoIn = p.seo && typeof p.seo === "object" ? p.seo : {};
+    const seoTitle = normalizeLocalizedText(seoIn.title, titleEs, titleEn, titleFr);
+    const seoDesc = normalizeLocalizedText(seoIn.description, excerptEs, excerptEn, excerptFr);
+    const seoKw = {
+      es: String(seoIn.keywords?.es || p.seoKeywordsEs || ""),
+      en: String(seoIn.keywords?.en || p.seoKeywordsEn || ""),
+      fr: String(seoIn.keywords?.fr || p.seoKeywordsFr || ""),
+    };
+
+    const contentEs = Array.isArray(p.contentEs)
+      ? p.contentEs
+      : Array.isArray(p.content_blocks?.es)
+      ? p.content_blocks.es
+      : p.body?.es
+      ? [{ _type: "markdownText", text: p.body.es }]
+      : [];
+    const contentEn = Array.isArray(p.contentEn)
+      ? p.contentEn
+      : Array.isArray(p.content_blocks?.en)
+      ? p.content_blocks.en
+      : p.body?.en
+      ? [{ _type: "markdownText", text: p.body.en }]
+      : [];
+    const contentFr = Array.isArray(p.contentFr)
+      ? p.contentFr
+      : Array.isArray(p.content_blocks?.fr)
+      ? p.content_blocks.fr
+      : p.body?.fr
+      ? [{ _type: "markdownText", text: p.body.fr }]
+      : [];
+
+    return {
+      slug: p.slug || "",
+      title: { es: titleEs, en: titleEn, fr: titleFr },
+      date: {
+        en: validDate ? validDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : "",
+        es: validDate ? validDate.toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" }) : "",
+        fr: validDate ? validDate.toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }) : "",
+      },
+      publishedAt: pubDate || undefined,
+      category: cat,
+      mainImage: resolveSandboxMediaUrl(p.mainImageUrl || p.cover_image, "/images/og-home-luxury.webp"),
+      coverImageAlt: altLoc,
+      excerpt: { es: excerptEs, en: excerptEn, fr: excerptFr },
+      author: p.author || "Ulises Ubiera",
+      authorRole,
+      authorBio,
+      authorImage: resolveSandboxMediaUrl(p.authorImageUrl || p.author_image, "/images/ceo-final.jpg"),
+      content: { es: contentEs, en: contentEn, fr: contentFr },
+      seo: {
+        title: seoTitle,
+        description: seoDesc,
+        keywords: seoKw,
+      },
+      seoKeywords: seoKw,
+      relatedProperties: Array.isArray(p.relatedProperties) ? p.relatedProperties : [],
+      relatedPropertySlugs: Array.isArray(p.relatedPropertySlugs || p.related_property_slugs)
+        ? (p.relatedPropertySlugs || p.related_property_slugs)
+        : [],
+      linkedGuides: Array.isArray(p.linkedGuides || p.linked_guides) ? (p.linkedGuides || p.linked_guides) : [],
+      status: p.status || "published",
+      isDraftPreview: Boolean(p.is_draft_preview),
+    } as BlogPost;
+  });
+}
+
+export async function fetchLocalSandboxBlogPosts(): Promise<BlogPost[]> {
+  const sb = await fetchLocalSandboxCatalog();
+  if (sb?.blog_posts && Array.isArray(sb.blog_posts) && sb.blog_posts.length > 0) {
+    return mapSandboxBlogPosts(sb.blog_posts);
+  }
+  return [];
+}
+
+export async function fetchLocalSandboxBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  const posts = await fetchLocalSandboxBlogPosts();
+  return posts.find((p) => p.slug === slug) || null;
+}
+
+export async function fetchLocalSandboxBlogPreviewBySlug(slug: string): Promise<BlogPost | null> {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (catalogFile) {
+    const safeSlug = slug.replace(/[^a-z0-9-]/gi, "");
+    const previewFile = path.join(path.dirname(catalogFile), "blog_preview_drafts", `${safeSlug}.json`);
+    try {
+      if (fs.existsSync(previewFile)) {
+        const raw = JSON.parse(fs.readFileSync(previewFile, "utf-8"));
+        const mapped = mapSandboxBlogPosts([raw]);
+        if (mapped[0]) return mapped[0];
+      }
+    } catch (err) {
+      console.error("Blog draft preview read error:", err);
+    }
+  }
+  return fetchLocalSandboxBlogPostBySlug(slug);
 }
 
 export interface LocalWebManagerLocation {

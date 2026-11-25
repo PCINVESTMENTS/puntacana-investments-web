@@ -52,14 +52,22 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
                             <Link href={`/${lang}/blog/${post.slug}`} className="block h-64 overflow-hidden relative">
                                 <Image
                                     src={post.mainImage}
-                                    alt={getVal(post.title, l)}
+                                    alt={getVal(post.coverImageAlt, l) || getVal(post.title, l)}
                                     fill
+                                    unoptimized={typeof post.mainImage === "string" && post.mainImage.startsWith("http://127.0.0.1:8110")}
                                     quality={60}
                                     sizes="(max-width: 768px) 100vw, 33vw"
                                     className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                 />
-                                <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                                    {getVal(post.category, l)}
+                                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                                    <div className="bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                                        {getVal(post.category, l)}
+                                    </div>
+                                    {post.linkedGuides && post.linkedGuides.length > 0 && (
+                                        <div className="bg-black/85 border border-luxury-gold/70 text-luxury-gold px-2.5 py-1 text-xs font-bold uppercase tracking-wider">
+                                            {l === 'en' ? 'PDF Guide' : l === 'fr' ? 'Guide PDF' : 'Guía PDF'}
+                                        </div>
+                                    )}
                                 </div>
                             </Link>
                             <div className="p-8">

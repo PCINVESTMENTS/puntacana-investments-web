@@ -2,13 +2,13 @@ import { client } from "@/sanity/lib/client";
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 import { mapSanityPost } from "@/sanity/lib/mappers";
 import { BlogPost, blogPosts } from "@/data/blog";
-import { fetchLocalSandboxCatalog, isLocalSandboxEnabled, mapSandboxBlogPosts } from "@/lib/localSandbox";
+import { fetchLocalSandboxBlogPosts, isLocalSandboxEnabled } from "@/lib/localSandbox";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
-import { FaCalendarAlt, FaArrowRight, FaSearch } from "react-icons/fa";
+import { FaCalendarAlt, FaArrowRight, FaFilePdf } from "react-icons/fa";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import type { Metadata } from "next";
 
@@ -18,8 +18,8 @@ interface BlogListingPageProps {
     }>;
 }
 
-// Restoring ISR
-export const revalidate = 60;
+// Instant real-time reflection in isolated local sandbox mode
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: BlogListingPageProps): Promise<Metadata> {
     const { lang } = await params;
@@ -73,21 +73,21 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
     const { lang } = await params;
     const dict = await getDictionary(lang);
 
-    let sanityPosts: BlogPost[] = [];
+    let posts: BlogPost[] = [];
     if (isLocalSandboxEnabled()) {
-        const sb = await fetchLocalSandboxCatalog();
-        sanityPosts = mapSandboxBlogPosts(sb?.blog_posts || []);
+        const sandboxPosts = await fetchLocalSandboxBlogPosts();
+        const fallbackPosts = blogPosts.filter((lp) => !sandboxPosts.some((sp) => sp.slug === lp.slug));
+        posts = [...sandboxPosts, ...fallbackPosts];
     } else {
         const rawPosts = await client.fetch(POSTS_QUERY);
-        sanityPosts = rawPosts.map(mapSanityPost);
+        const sanityPosts = rawPosts.map(mapSanityPost);
+        const localPosts = blogPosts.filter(localPost => !sanityPosts.some((p: BlogPost) => p.slug === localPost.slug));
+        posts = [...sanityPosts, ...localPosts];
     }
-    
-    // Merge local posts that are not in Sanity
-    const localPosts = blogPosts.filter(localPost => !sanityPosts.some(p => p.slug === localPost.slug));
-    const posts = [...sanityPosts, ...localPosts];
 
     const getVal = (obj: any, key: 'es' | 'en' | 'fr') => {
         if (!obj) return "";
+        if (typeof obj === "string") return obj;
         return obj[key] || obj['en'] || obj['es'] || "";
     };
 
@@ -125,46 +125,62 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
 
                     {/* Blog Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {posts.filter(post => post && post.slug && post.slug !== "undefined").map((post, index) => (
-                            <ScrollReveal key={index} delay={index * 0.1}>
-                                <article className="group bg-dark-gray border border-white/5 overflow-hidden hover:border-luxury-gold/30 transition-all duration-300 h-full flex flex-col">
-                                    <Link href={`/${lang}/blog/${post.slug}`} className="block aspect-[4/3] overflow-hidden relative">
-                                        <Image
-                                            src={post.mainImage}
-                                            alt={getVal(post.title, lang)}
-                                            fill
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            priority={index <= 2}
-                                            quality={60}
-                                            className="object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                                        />
-                                        <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                                            {getVal(post.category, lang)}
+                        {posts.filter(post => post && post.slug && post.slug !== "undefined").map((post, index) => {
+                            const isLocalCover = typeof post.mainImage === "string" && post.mainImage.startsWith("http://127.0.0.1:8110");
+                            const altText = getVal(post.coverImageAlt, lang) || getVal(post.title, lang);
+                            return (
+                                <ScrollReveal key={post.slug || index} delay={index * 0.08}>
+                                    <article
+                                        data-blog-card-slug={post.slug}
+                                        className="group bg-dark-gray border border-white/5 overflow-hidden hover:border-luxury-gold/30 transition-all duration-300 h-full flex flex-col"
+                                    >
+                                        <Link href={`/${lang}/blog/${post.slug}`} className="block aspect-[4/3] overflow-hidden relative">
+                                            <Image
+                                                src={post.mainImage || "/images/og-home-luxury.webp"}
+                                                alt={altText}
+                                                fill
+                                                unoptimized={isLocalCover}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                priority={index <= 2}
+                                                quality={65}
+                                                className="object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                            />
+                                            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                                                <div className="bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                                                    {getVal(post.category, lang)}
+                                                </div>
+                                                {post.linkedGuides && post.linkedGuides.length > 0 && (
+                                                    <div className="bg-black/85 border border-luxury-gold/70 text-luxury-gold px-2.5 py-1 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1">
+                                                        <FaFilePdf aria-hidden="true" className="text-[11px]" />
+                                                        <span>{lang === 'en' ? 'PDF Guide' : lang === 'fr' ? 'Guide PDF' : 'Guía PDF'}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </Link>
+                                        <div className="p-8 flex flex-col flex-grow">
+                                            <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
+                                                <FaCalendarAlt /> {getVal(post.date, lang)}
+                                            </div>
+                                            <h2 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
+                                                <Link href={`/${lang}/blog/${post.slug}`}>
+                                                    {getVal(post.title, lang)}
+                                                </Link>
+                                            </h2>
+                                            <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                                                {getVal(post.excerpt, lang)}
+                                            </p>
+                                            <div className="mt-auto">
+                                                <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
+                                                    <span>{dict.sections.blog.readMore}</span>
+                                                    <span className="sr-only"> - {getVal(post.title, lang)}</span>
+                                                    <FaArrowRight className="text-[10px]" />
+                                                </Link>
+                                            </div>
                                         </div>
-                                    </Link>
-                                    <div className="p-8 flex flex-col flex-grow">
-                                        <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
-                                            <FaCalendarAlt /> {getVal(post.date, lang)}
-                                        </div>
-                                        <h2 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
-                                            <Link href={`/${lang}/blog/${post.slug}`}>
-                                                {getVal(post.title, lang)}
-                                            </Link>
-                                        </h2>
-                                        <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
-                                            {getVal(post.excerpt, lang)}
-                                        </p>
-                                        <div className="mt-auto">
-                                            <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center gap-2 text-luxury-gold uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
-                                                <span>{dict.sections.blog.readMore}</span>
-                                                <span className="sr-only"> - {getVal(post.title, lang)}</span>
-                                                <FaArrowRight className="text-[10px]" />
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </article>
-                            </ScrollReveal>
-                        ))}
+                                    </article>
+                                </ScrollReveal>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

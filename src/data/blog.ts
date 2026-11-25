@@ -1,8 +1,31 @@
 export interface BlogSection {
-    subtitle?: { es: string; en: string };
-    text: { es: string; en: string };
+    subtitle?: { es: string; en: string; fr?: string };
+    text: { es: string; en: string; fr?: string };
     image?: string;
-    imageCaption?: { es: string; en: string };
+    imageCaption?: { es: string; en: string; fr?: string };
+}
+
+export interface BlogGuideFile {
+    language: 'es' | 'en' | 'fr';
+    original_filename: string;
+    size_bytes: number;
+    media_url: string;
+    download_url: string;
+    view_url: string;
+    uploaded_at?: string;
+}
+
+export interface BlogLinkedGuide {
+    id: string;
+    slug: string;
+    language: 'es' | 'en' | 'fr';
+    available_languages: ('es' | 'en' | 'fr')[];
+    title: { es: string; en: string; fr?: string };
+    description: { es: string; en: string; fr?: string };
+    downloads: number;
+    is_active: boolean;
+    files_by_lang: Partial<Record<'es' | 'en' | 'fr', BlogGuideFile>>;
+    download_url_base: string;
 }
 
 export interface BlogPost {
@@ -11,6 +34,7 @@ export interface BlogPost {
     date: { es: string; en: string; fr?: string };
     category: { es: string; en: string; fr?: string };
     mainImage: string;
+    coverImageAlt?: { es: string; en: string; fr?: string };
     excerpt: { es: string; en: string; fr?: string };
     author: string;
     authorRole: { es: string; en: string; fr?: string };
@@ -18,9 +42,18 @@ export interface BlogPost {
     authorImage: string;
     content: BlogSection[] | { es: any; en: any; fr?: any }; // Support both legacy and Sanity PortableText
     rawContent?: any;
-    relatedProperties?: number[]; // IDs of related properties
+    relatedProperties?: number[]; // Legacy IDs of related properties
+    relatedPropertySlugs?: string[]; // Local Sandbox slugs of related properties
+    linkedGuides?: BlogLinkedGuide[];
     publishedAt?: string;
+    seo?: {
+        title?: { es: string; en: string; fr?: string };
+        description?: { es: string; en: string; fr?: string };
+        keywords?: { es: string; en: string; fr?: string };
+    };
     seoKeywords?: { es: string; en: string; fr: string; } | null;
+    status?: string;
+    isDraftPreview?: boolean;
 }
 
 export const blogPosts: BlogPost[] = [
