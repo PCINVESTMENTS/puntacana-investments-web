@@ -85,6 +85,7 @@ import { FavoritesProvider } from "@/components/property/FavoritesContext";
 import FavoritesDrawer from "@/components/property/FavoritesDrawer";
 import CleanPreviewBanner from "@/components/layout/CleanPreviewBanner";
 import {
+  fetchLocalSandboxCatalog,
   fetchLocalSandboxPhase8,
   getCleanPreviewFlags,
   isLocalSandboxEnabled,
@@ -108,6 +109,16 @@ export default async function RootLayout({
   const localSandbox = isLocalSandboxEnabled();
   const cleanPreview = await getCleanPreviewFlags();
   const phase8Config = fetchLocalSandboxPhase8(cleanPreview);
+  const sandboxCatalog = localSandbox ? await fetchLocalSandboxCatalog(cleanPreview) : null;
+  const availableFavoriteSlugs = sandboxCatalog
+    ? sandboxCatalog.properties
+        .map((p: any) =>
+          String(typeof p?.slug === "object" && p?.slug !== null ? p.slug.current : p?.slug || "")
+            .trim()
+            .toLowerCase()
+        )
+        .filter(Boolean)
+    : null;
   const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV";
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -142,7 +153,7 @@ export default async function RootLayout({
         )}
 
         <SiteConfigProvider config={phase8Config}>
-          <FavoritesProvider>
+          <FavoritesProvider availableSlugs={availableFavoriteSlugs}>
             <CompareProvider>
               <LocalBusinessSchema lang={lang} />
               {children}

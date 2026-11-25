@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 
 export interface FavoritePropertySnapshot {
   id: number | string;
@@ -46,10 +46,32 @@ function extractSlug(prop: any): string {
   return String(s || prop.id || "").trim().toLowerCase();
 }
 
-export function FavoritesProvider({ children }: { children: React.ReactNode }) {
-  const [favorites, setFavorites] = useState<FavoritePropertySnapshot[]>([]);
+export function FavoritesProvider({
+  children,
+  availableSlugs = null,
+}: {
+  children: React.ReactNode;
+  availableSlugs?: string[] | null;
+}) {
+  const [storedFavorites, setStoredFavorites] = useState<FavoritePropertySnapshot[]>([]);
   const [hydrated, setHydrated] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const allowedSlugSet = useMemo(() => {
+    if (!Array.isArray(availableSlugs)) return null;
+    return new Set(
+      availableSlugs
+        .map((s) => String(s || "").trim().toLowerCase())
+        .filter(Boolean)
+    );
+  }, [availableSlugs]);
+
+  const visibleFavorites = useMemo(() => {
+    if (!allowedSlugSet) return storedFavorites;
+    return storedFavorites.filter((item) =>
+      allowedSlugSet.has(String(item.slug || "").trim().toLowerCase())
+    );
+  }, [storedFavorites, allowedSlugSet]);
 
   useEffect(() => {
     try {
@@ -57,7 +79,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed)) {
-          setFavorites(parsed.filter((item) => item && item.slug));
+          setStoredFavorites(parsed.filter((item) => item && item.slug));
         }
       }
     } catch {
@@ -71,7 +93,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
       try {
         const parsed = e.newValue ? JSON.parse(e.newValue) : [];
         if (Array.isArray(parsed)) {
-          setFavorites(parsed.filter((item) => item && item.slug));
+          setStoredFavorites(parsed.filter((item) => item && item.slug));
         }
       } catch {
         // Ignore
@@ -93,16 +115,16 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     (slugOrId: string | number) => {
       const key = String(slugOrId || "").trim().toLowerCase();
       if (!key) return false;
-      return favorites.some((f) => f.slug.toLowerCase() === key || String(f.id) === key);
+      return visibleFavorites.some((f) => f.slug.toLowerCase() === key || String(f.id) === key);
     },
-    [favorites]
+    [visibleFavorites]
   );
 
   const toggleFavorite = useCallback(
     (property: any) => {
       const slug = extractSlug(property);
       if (!slug) return;
-      setFavorites((prev) => {
+      setStoredFavorites((prev) => {
         const exists = prev.some((f) => f.slug.toLowerCase() === slug || (property.id != null && String(f.id) === String(property.id)));
         let next: FavoritePropertySnapshot[];
         if (exists) {
@@ -141,7 +163,7 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   const removeFavorite = useCallback(
     (slugOrId: string | number) => {
       const key = String(slugOrId || "").trim().toLowerCase();
-      setFavorites((prev) => {
+      setStoredFavorites((prev) => {
         const next = prev.filter((f) => f.slug.toLowerCase() !== key && String(f.id) !== key);
         persist(next);
         return next;
@@ -151,15 +173,20 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   );
 
   const clearFavorites = useCallback(() => {
-    setFavorites([]);
-    persist([]);
-  }, [persist]);
+    setStoredFavorites((prev) => {
+      const next = allowedSlugSet
+        ? prev.filter((f) => !allowedSlugSet.has(String(f.slug || "").trim().toLowerCase()))
+        : [];
+      persist(next);
+      return next;
+    });
+  }, [persist, allowedSlugSet]);
 
   return (
     <FavoritesContext.Provider
       value={{
-        favorites,
-        count: favorites.length,
+        favorites: visibleFavorites,
+        count: visibleFavorites.length,
         hydrated,
         drawerOpen,
         setDrawerOpen,
