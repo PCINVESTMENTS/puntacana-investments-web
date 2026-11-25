@@ -83,6 +83,8 @@ export async function POST(request: Request) {
                     deduplicated: saved.deduplicated,
                     duplicate_attempts_blocked: saved.duplicate_attempts_blocked,
                     sequence_number: saved.sequence_number,
+                    merged_historical_codes: saved.merged_historical_codes,
+                    previous_reused_code: saved.previous_reused_code || null,
                     id: saved.id,
                     message: confirmMsg,
                 },

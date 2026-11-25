@@ -1,21 +1,46 @@
 import type { NextConfig } from "next";
+import path from "path";
+
+const isLocalSandboxEnv = Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE);
 
 const nextConfig: NextConfig = {
+  distDir: process.env.LOCAL_NEXT_DIST_DIR || '.next',
   experimental: {
-    optimizeCss: true,
+    optimizeCss: !isLocalSandboxEnv,
     optimizePackageImports: ['react-icons', 'lucide-react', 'framer-motion'],
     serverActions: {
       bodySizeLimit: '10mb',
     },
   },
 
+  webpack: (config, { dev }) => {
+    if (isLocalSandboxEnv) {
+      // Prevent macOS iCloud / Desktop filesystem races on persistent webpack .pack.gz cache in local dev
+      if (dev) {
+        config.cache = { type: 'memory' };
+      }
+      // In local isolated sandbox, Dashboard (:3110) replaces Sanity Studio (/studio);
+      // stubbing Sanity Studio avoids bundling 15k Studio modules during local mirror builds.
+      const studioStub = path.resolve(__dirname, 'src/lib/localStudioStub.tsx');
+      config.resolve = config.resolve || {};
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        'next-sanity/studio$': studioStub,
+        'sanity$': studioStub,
+        'sanity/structure$': studioStub,
+        '@sanity/vision$': studioStub,
+      };
+    }
+    return config;
+  },
+
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE),
+    unoptimized: isLocalSandboxEnv,
     formats: ['image/avif', 'image/webp'],
-    qualities: [50, 75, 90, 100],
+    qualities: [50, 60, 65, 75, 90, 100],
     remotePatterns: [
       {
         protocol: 'https',

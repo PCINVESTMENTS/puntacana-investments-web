@@ -112,6 +112,118 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
   return { id, count: next.length };
 }
 
+export interface FounderSequenceCodeEntry {
+  code: string;
+  seq: number;
+  status: "active" | "retired_reserved";
+  owner_id?: string;
+  original_owner_id?: string;
+  email?: string;
+  original_email?: string;
+  name?: string;
+  original_name?: string;
+  project_slug?: string;
+  assigned_at_iso?: string;
+  retired_at_iso?: string;
+  merged_into?: string;
+  merged_historical_codes?: string[];
+  merged_duplicate_ids?: string[];
+  migrated_from_reused_code?: string;
+  collision_reassigned_owner_id?: string;
+  collision_reassigned_email?: string;
+  collision_reassigned_to?: string;
+  retired_reason?: string;
+  note?: string;
+}
+
+export interface FounderSequenceRegistry {
+  schema_version: number;
+  prefix: string;
+  next_sequence: number;
+  off_market_next_sequence?: number;
+  updated_at_iso: string;
+  codes: Record<string, FounderSequenceCodeEntry>;
+}
+
+function parseFounderSeq(code: unknown): number {
+  const m = /^FND-LOC-(\d+)$/i.exec(String(code || "").trim());
+  return m ? parseInt(m[1], 10) : 0;
+}
+
+function formatFounderCode(seq: number): string {
+  return `FND-LOC-${String(seq).padStart(3, "0")}`;
+}
+
+function loadOrInitFounderSequenceRegistry(
+  sandboxDir: string,
+  existingEntries: Record<string, any>[],
+  nowIso: string
+): FounderSequenceRegistry {
+  const regFile = path.join(sandboxDir, "founder_sequence_registry.json");
+  let reg: FounderSequenceRegistry | null = null;
+  try {
+    if (fs.existsSync(regFile)) {
+      const parsed = JSON.parse(fs.readFileSync(regFile, "utf-8"));
+      if (parsed && typeof parsed === "object" && parsed.codes && typeof parsed.codes === "object") {
+        reg = parsed as FounderSequenceRegistry;
+      }
+    }
+  } catch {
+    reg = null;
+  }
+
+  if (!reg) {
+    reg = {
+      schema_version: 1,
+      prefix: "FND-LOC-",
+      next_sequence: 1,
+      off_market_next_sequence: 1,
+      updated_at_iso: nowIso,
+      codes: {},
+    };
+  }
+
+  // Ensure monotonic high-water mark never regresses below any active, merged, or retired code
+  let maxSeen = Math.max(0, Number(reg.next_sequence || 1) - 1);
+  for (const [k, v] of Object.entries(reg.codes)) {
+    const n = Math.max(parseFounderSeq(k), Number(v?.seq || 0));
+    if (n > maxSeen) maxSeen = n;
+  }
+  for (const item of existingEntries) {
+    if (!item || item.form_type !== "founder_investor") continue;
+    const n1 = parseFounderSeq(item.sequence_number);
+    if (n1 > maxSeen) maxSeen = n1;
+    for (const hc of Array.isArray(item.merged_historical_codes) ? item.merged_historical_codes : []) {
+      const n2 = parseFounderSeq(hc);
+      if (n2 > maxSeen) maxSeen = n2;
+    }
+    const n3 = parseFounderSeq(item.previous_reused_code);
+    if (n3 > maxSeen) maxSeen = n3;
+  }
+  if (Number(reg.next_sequence || 1) <= maxSeen) {
+    reg.next_sequence = maxSeen + 1;
+  }
+  return reg;
+}
+
+function allocateUnusedFounderCode(reg: FounderSequenceRegistry): { seq: number; code: string } {
+  let seq = Math.max(1, Number(reg.next_sequence || 1));
+  while (reg.codes[formatFounderCode(seq)]) {
+    seq += 1;
+  }
+  const code = formatFounderCode(seq);
+  reg.next_sequence = seq + 1;
+  return { seq, code };
+}
+
+function saveFounderSequenceRegistryAtomic(sandboxDir: string, reg: FounderSequenceRegistry, nowIso: string) {
+  reg.updated_at_iso = nowIso;
+  const regFile = path.join(sandboxDir, "founder_sequence_registry.json");
+  const tmpFile = `${regFile}.${process.pid}.${Date.now()}.tmp`;
+  fs.writeFileSync(tmpFile, JSON.stringify(reg, null, 2), "utf-8");
+  fs.renameSync(tmpFile, regFile);
+}
+
 export function upsertSandboxFounderLead(params: {
   name: string;
   email: string;
@@ -126,11 +238,14 @@ export function upsertSandboxFounderLead(params: {
   sequence_number: string;
   deduplicated: boolean;
   duplicate_attempts_blocked: number;
+  merged_historical_codes: string[];
+  previous_reused_code?: string;
   count: number;
 } | null {
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
   if (!catalogFile) return null;
-  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  const sandboxDir = path.dirname(catalogFile);
+  const inboxFile = path.join(sandboxDir, "test_inbox.json");
   let existing: Record<string, any>[] = [];
   try {
     if (fs.existsSync(inboxFile)) {
@@ -150,7 +265,10 @@ export function upsertSandboxFounderLead(params: {
     : "es";
   const nowIso = new Date().toISOString();
 
-  // First normalize any historical duplicate founder entries in chronological order
+  // Load persistent monotonic code registry so retired/merged codes are NEVER reused
+  const registry = loadOrInitFounderSequenceRegistry(sandboxDir, existing, nowIso);
+
+  // Separate founder entries from other forms
   const nonFounder: Record<string, any>[] = [];
   const founderEntries: Record<string, any>[] = [];
   for (const item of existing) {
@@ -161,14 +279,13 @@ export function upsertSandboxFounderLead(params: {
     }
   }
 
-  // Sort chronological (oldest first) so sequence_number is deterministic and stable
+  // Sort chronological (oldest first) for deterministic canonical preservation
   founderEntries.sort((a, b) =>
     String(a.received_at_iso || "").localeCompare(String(b.received_at_iso || ""))
   );
 
   const canonicalFounders: Record<string, any>[] = [];
   const bySemanticKey = new Map<string, Record<string, any>>();
-  let maxSeq = 0;
 
   for (const fe of founderEntries) {
     const feEmail = String(fe.lead?.email || fe.client_autoresponder_to || "").trim().toLowerCase();
@@ -184,14 +301,69 @@ export function upsertSandboxFounderLead(params: {
       const keys = Array.isArray(existingCanon.seen_idempotency_keys) ? existingCanon.seen_idempotency_keys : [];
       if (fe.idempotency_key && !keys.includes(fe.idempotency_key)) keys.push(fe.idempotency_key);
       existingCanon.seen_idempotency_keys = keys;
+
+      // Permanently retire and reserve any distinct historical code assigned to the merged duplicate
+      const dupCode = String(fe.sequence_number || "").trim();
+      const dupSeq = parseFounderSeq(dupCode);
+      if (dupSeq > 0 && dupCode !== existingCanon.sequence_number) {
+        const histCodes = Array.isArray(existingCanon.merged_historical_codes) ? existingCanon.merged_historical_codes : [];
+        if (!histCodes.includes(dupCode)) histCodes.push(dupCode);
+        existingCanon.merged_historical_codes = histCodes;
+        registry.codes[dupCode] = {
+          ...(registry.codes[dupCode] || {}),
+          code: dupCode,
+          seq: dupSeq,
+          status: "retired_reserved",
+          original_owner_id: String(fe.id || ""),
+          original_email: feEmail,
+          original_name: String(fe.lead?.name || ""),
+          project_slug: feProj,
+          assigned_at_iso: String(fe.received_at_iso || nowIso),
+          retired_at_iso: nowIso,
+          merged_into: String(existingCanon.sequence_number),
+          retired_reason: `Duplicado fusionado en ${existingCanon.sequence_number}; código reservado permanentemente para trazabilidad.`,
+        };
+        if (registry.codes[existingCanon.sequence_number]) {
+          registry.codes[existingCanon.sequence_number].merged_historical_codes = histCodes;
+          registry.codes[existingCanon.sequence_number].merged_duplicate_ids = mergedIds;
+        }
+        if (registry.next_sequence <= dupSeq) {
+          registry.next_sequence = dupSeq + 1;
+        }
+      }
       continue;
     }
-    const m = /^FND-LOC-(\d+)$/i.exec(String(fe.sequence_number || ""));
-    const seqNum = m ? parseInt(m[1], 10) : maxSeq + 1;
-    if (seqNum > maxSeq) maxSeq = seqNum;
-    fe.sequence_number = `FND-LOC-${String(seqNum).padStart(3, "0")}`;
+
+    let seqNum = parseFounderSeq(fe.sequence_number);
+    let assignedCode = seqNum > 0 ? formatFounderCode(seqNum) : "";
+    if (!assignedCode) {
+      const alloc = allocateUnusedFounderCode(registry);
+      seqNum = alloc.seq;
+      assignedCode = alloc.code;
+    } else if (!registry.codes[assignedCode]) {
+      registry.codes[assignedCode] = {
+        code: assignedCode,
+        seq: seqNum,
+        status: "active",
+        owner_id: String(fe.id || ""),
+        email: feEmail,
+        name: String(fe.lead?.name || ""),
+        project_slug: feProj,
+        assigned_at_iso: String(fe.received_at_iso || nowIso),
+        merged_historical_codes: Array.isArray(fe.merged_historical_codes) ? fe.merged_historical_codes : [],
+        merged_duplicate_ids: Array.isArray(fe.merged_duplicate_ids) ? fe.merged_duplicate_ids : [],
+      };
+      if (registry.next_sequence <= seqNum) {
+        registry.next_sequence = seqNum + 1;
+      }
+    }
+
+    fe.sequence_number = assignedCode;
     fe.project_slug = feProj;
     fe.duplicate_attempts_blocked = Number(fe.duplicate_attempts_blocked || 0);
+    if (!Array.isArray(fe.merged_historical_codes)) {
+      fe.merged_historical_codes = [];
+    }
     if (!Array.isArray(fe.seen_idempotency_keys)) {
       fe.seen_idempotency_keys = fe.idempotency_key ? [fe.idempotency_key] : [];
     }
@@ -225,8 +397,8 @@ export function upsertSandboxFounderLead(params: {
     }
     resultRecord = matched;
   } else {
-    const nextSeq = maxSeq + 1;
-    const sequenceNumber = `FND-LOC-${String(nextSeq).padStart(3, "0")}`;
+    // Allocate a brand-new, never-previously-issued monotonic sequence code
+    const { seq, code: sequenceNumber } = allocateUnusedFounderCode(registry);
     const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     resultRecord = {
       id,
@@ -236,6 +408,8 @@ export function upsertSandboxFounderLead(params: {
       idempotency_key: idemKey || `${normEmail}::${normProject}`,
       seen_idempotency_keys: idemKey ? [idemKey] : [],
       duplicate_attempts_blocked: 0,
+      merged_duplicate_ids: [],
+      merged_historical_codes: [],
       received_at_iso: nowIso,
       last_attempt_at_iso: nowIso,
       delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
@@ -261,10 +435,26 @@ export function upsertSandboxFounderLead(params: {
         modality: normModality,
         message: (params.message || "").trim() || normModality,
       },
-      deduplication_note: "Deduplicación activa por idempotency_key y correo+proyecto (1 interesado = 1 registro).",
+      deduplication_note: "Deduplicación activa por idempotency_key y correo+proyecto con secuencia monotónica permanente (sin reutilización de códigos).",
+    };
+    registry.codes[sequenceNumber] = {
+      code: sequenceNumber,
+      seq,
+      status: "active",
+      owner_id: id,
+      email: normEmail,
+      name: params.name.trim(),
+      project_slug: normProject,
+      assigned_at_iso: nowIso,
+      merged_historical_codes: [],
+      merged_duplicate_ids: [],
+      note: "Código inédito asignado por contador monotónico permanente.",
     };
     canonicalFounders.push(resultRecord);
   }
+
+  // Persist permanent sequence registry FIRST, then test_inbox atomically
+  saveFounderSequenceRegistryAtomic(sandboxDir, registry, nowIso);
 
   // Merge back newest first for inbox readability
   const mergedInbox = [...canonicalFounders, ...nonFounder]
@@ -280,6 +470,8 @@ export function upsertSandboxFounderLead(params: {
     sequence_number: String(resultRecord.sequence_number),
     deduplicated,
     duplicate_attempts_blocked: Number(resultRecord.duplicate_attempts_blocked || 0),
+    merged_historical_codes: Array.isArray(resultRecord.merged_historical_codes) ? resultRecord.merged_historical_codes : [],
+    previous_reused_code: resultRecord.previous_reused_code ? String(resultRecord.previous_reused_code) : undefined,
     count: canonicalFounders.length,
   };
 }

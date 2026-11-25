@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Inter, Playfair_Display } from "next/font/google";
 import "../globals.css";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 
@@ -10,18 +9,9 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: 'optional',
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: 'optional',
-  preload: false,
-});
+// Local sandbox-safe typography variables (avoids offline build/runtime network failures to fonts.googleapis.com)
+const inter = { variable: "" };
+const playfair = { variable: "" };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
   const { lang } = await params;

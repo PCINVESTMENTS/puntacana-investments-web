@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { PARTNERS_QUERY } from "@/sanity/lib/queries";
+import { isLocalSandboxEnabled } from "@/lib/localSandbox";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
@@ -8,7 +9,7 @@ import Link from "next/link";
 import { FaGlobe, FaHandshake, FaExternalLinkAlt } from "react-icons/fa";
 import ReadMore from "@/components/ui/ReadMore";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
@@ -78,7 +79,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function PartnersPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
-    const partners = await client.fetch(PARTNERS_QUERY);
+    const partners = isLocalSandboxEnabled() ? [] : await client.fetch(PARTNERS_QUERY);
 
     const translations = {
         es: {

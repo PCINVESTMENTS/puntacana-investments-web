@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "build:local-sandbox": "LOCAL_NEXT_DIST_DIR=.next-local.nosync next build --webpack",
+    "start:local-sandbox": "LOCAL_NEXT_DIST_DIR=.next-local.nosync next start -p 3111 -H 127.0.0.1",
     "lint": "eslint"
   },
   "dependencies": {
