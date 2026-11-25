@@ -126,6 +126,8 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     _createdAt,
     _updatedAt,
     id,
+    internal_code,
+    code,
     title,
     titleEn,
     titleEs,

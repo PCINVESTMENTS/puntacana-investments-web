@@ -7,11 +7,10 @@ import {
     buildOffMarketEmails,
     buildPropertyOrHotelEmails,
     generateReferenceCode,
-    getTeamRecipients,
     isHotelOrCommercialAsset,
-    isLocalDryRunEnabled,
     normalizeLang,
     recordLocalDryRunEmail,
+    resolveExecutionPolicy,
     resolveSiteOrigin,
 } from '@/lib/formEmails';
 
@@ -40,14 +39,27 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         };
     }
 
+    // Fail-closed Preview guard: stops BEFORE any Railway, HubSpot, or Resend call
+    const policy = resolveExecutionPolicy(email);
+    if (!policy.allowed) {
+        console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+        return {
+            success: false,
+            message: policy.error,
+        };
+    }
+
     const subjectInput = String(formData.get('subject') || '').trim();
     const propertyDataStr = String(formData.get('propertyData') || '').trim();
     const offMarketDataStr = String(formData.get('offMarketData') || '').trim();
 
     let parsedProperty: {
         id?: number | string | null;
-        code?: string | null;
+        technicalId?: number | string | null;
+        idSource?: string | null;
+        permanentCode?: string | null;
         internal_code?: string | null;
+        code?: string | null;
         slug?: string | null;
         title?: string | null;
         location?: string | null;
@@ -84,7 +96,6 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     const reqHeaders = await headers();
     const siteOrigin = resolveSiteOrigin(reqHeaders);
 
-    // Determine exact flow and generate one shared reference code for team + client + CRM
     const isOffMarketFlow = Boolean(parsedOffMarket);
     const isHotelFlow =
         !isOffMarketFlow &&
@@ -115,7 +126,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                   lang,
                   name,
                   company: parsedOffMarket.company || '',
-                  email,
+                  email: policy.clientRecipient,
                   phone,
                   tab: parsedOffMarket.tab === 'hoteles' ? 'hoteles' : 'oportunidad',
                   budget: parsedOffMarket.budget || '',
@@ -131,17 +142,15 @@ export async function submitContactForm(prevState: any, formData: FormData) {
               lang,
               siteOrigin,
               name,
-              email,
+              email: policy.clientRecipient,
               phone,
               message,
               interestText: cleanInterest,
               property: parsedProperty,
           });
 
-    const teamRecipients = getTeamRecipients();
-
     // Local isolated dry-run mode (never active on Vercel / production)
-    if (isLocalDryRunEnabled()) {
+    if (policy.mode === 'local_dry_run') {
         recordLocalDryRunEmail({
             recordedAt: new Date().toISOString(),
             flow: flowType,
@@ -149,9 +158,11 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             lang,
             siteOrigin,
             propertyUrl: emailBundle.propertyUrl || undefined,
+            railwayMode: policy.railwayMode,
+            hubspotMode: policy.hubspotMode,
             adminEmail: {
                 ...emailBundle.adminEmail,
-                recipients: teamRecipients,
+                recipients: policy.teamRecipients,
             },
             clientEmail: emailBundle.clientEmail,
         });
@@ -159,42 +170,54 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         return {
             success: true,
             message: 'Message sent successfully!',
-            referenceCode,
         };
     }
 
     try {
-        // 1. Send to "Fortaleza Digital" Backend (Django) - preserving existing Railway flow
-        const apiUrl = "https://puntacana-fortress-production.up.railway.app";
         const crmMessage = `[Ref: ${referenceCode}] ${message}`;
 
-        const backendData = {
-            first_name: name.split(' ')[0],
-            last_name: name.split(' ').slice(1).join(' ') || '.',
-            email,
-            phone,
-            message: crmMessage,
-            source: "Website Contact Form",
-            interest: cleanInterest,
-        };
+        // 1. Backend persistence: Production Railway in prod; isolated or simulated in Preview
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway /api/public/leads/ skipped [${referenceCode}]`);
+        } else if (policy.railwayApiUrl) {
+            const backendData = {
+                first_name: name.split(' ')[0],
+                last_name: name.split(' ').slice(1).join(' ') || '.',
+                email,
+                phone,
+                message: crmMessage,
+                source: "Website Contact Form",
+                interest: cleanInterest,
+            };
 
-        try {
-            const res = await fetch(`${apiUrl}/api/public/leads/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(backendData),
-            });
+            try {
+                const res = await fetch(`${policy.railwayApiUrl}/api/public/leads/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(backendData),
+                });
 
-            if (!res.ok) {
-                const errText = await res.text();
-                console.error("CRITICAL: Backend rejected the Lead payload:", errText);
-                throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.error("CRITICAL: Backend rejected the Lead payload:", errText);
+                    throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
+                }
+                console.log(`Lead saved to Backend successfully [${referenceCode}]`);
+            } catch (backendError) {
+                console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
+                return {
+                    success: false,
+                    message:
+                        'Error de conexión con el servidor principal. ' +
+                        (backendError instanceof Error ? backendError.message : 'Fallo desconocido.'),
+                };
             }
-            console.log(`Lead saved to Backend successfully [${referenceCode}]`);
+        }
 
-            // HubSpot API Integration (Background sync)
+        // HubSpot sync: Active in production; simulated/skipped in Preview
+        if (policy.hubspotMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] HubSpot contact sync skipped [${referenceCode}]`);
+        } else {
             try {
                 await createHubspotContact({
                     email,
@@ -207,14 +230,6 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             } catch (hsError) {
                 console.error("HubSpot sync failed in contact form:", hsError);
             }
-        } catch (backendError) {
-            console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
-            return {
-                success: false,
-                message:
-                    'Error de conexión con el servidor principal. ' +
-                    (backendError instanceof Error ? backendError.message : 'Fallo desconocido.'),
-            };
         }
 
         const resend = getResend();
@@ -223,7 +238,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         try {
             const clientEmailRes = await resend.emails.send({
                 from: emailBundle.clientEmail.from,
-                to: [emailBundle.clientEmail.to],
+                to: [policy.clientRecipient],
                 subject: emailBundle.clientEmail.subject,
                 html: emailBundle.clientEmail.html,
                 text: emailBundle.clientEmail.text,
@@ -240,7 +255,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         try {
             const adminEmailRes = await resend.emails.send({
                 from: emailBundle.adminEmail.from,
-                to: teamRecipients,
+                to: policy.teamRecipients,
                 subject: emailBundle.adminEmail.subject,
                 html: emailBundle.adminEmail.html,
                 text: emailBundle.adminEmail.text,
@@ -256,7 +271,6 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         return {
             success: true,
             message: 'Message sent successfully!',
-            referenceCode,
         };
     } catch (error) {
         console.error("Server Error:", error);

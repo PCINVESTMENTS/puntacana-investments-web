@@ -27,10 +27,9 @@ interface ContactFormProps {
     propertyData?: string;
 }
 
-const initialState: { success: boolean; message: string; referenceCode?: string } = {
+const initialState = {
     success: false,
     message: '',
-    referenceCode: undefined,
 };
 
 export default function ContactForm({ dict, subject, className, lang = 'en', propertyData }: ContactFormProps) {
@@ -71,11 +70,6 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
                 </div>
                 <h3 className="text-2xl font-playfair text-white mb-2">{dict.success}</h3>
                 <p className="text-gray-300">{dict.successText}</p>
-                {state.referenceCode && (
-                    <div className="mt-4 inline-block px-4 py-1.5 bg-black/50 border border-luxury-gold/40 rounded text-xs font-mono text-luxury-gold">
-                        {lang === 'es' ? 'Referencia' : lang === 'fr' ? 'Référence' : 'Reference'}: {state.referenceCode}
-                    </div>
-                )}
                 <p className="text-sm text-gray-400 mt-4 italic">
                     {lang === 'es' 
                         ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'

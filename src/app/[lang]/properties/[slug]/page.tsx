@@ -759,15 +759,25 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 lang={lang}
                                 propertyData={JSON.stringify({
                                     id: property.id,
-                                    code: (property as { internal_code?: string; code?: string }).internal_code
+                                    technicalId: property.id ?? (propertyData as { _id?: string } | null)?._id ?? null,
+                                    idSource: propertyData?.id != null
+                                        ? 'Sanity CMS (campo id)'
+                                        : localProperty?.id != null
+                                        ? 'Catálogo estático web (src/data/properties.ts)'
+                                        : (propertyData as { _id?: string } | null)?._id
+                                        ? 'Sanity CMS (_id)'
+                                        : null,
+                                    permanentCode: (propertyData as { internal_code?: string; code?: string } | null)?.internal_code
+                                        || (propertyData as { code?: string } | null)?.code
+                                        || (property as { internal_code?: string; code?: string }).internal_code
                                         || (property as { code?: string }).code
-                                        || (property.id ? `PCI-${property.id}` : undefined),
+                                        || null,
                                     slug: property.slug,
                                     title: translatedTitle,
                                     location: property.locationLabel,
                                     price: property.price,
                                     area: property.area,
-                                    type: property.type
+                                    type: property.type || localProperty?.type
                                 })}
                             />
 

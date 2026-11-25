@@ -6,10 +6,9 @@ import { createHubspotContact } from '@/lib/hubspot';
 import {
     buildFlyAndBuyEmails,
     generateReferenceCode,
-    getTeamRecipients,
-    isLocalDryRunEnabled,
     normalizeLang,
     recordLocalDryRunEmail,
+    resolveExecutionPolicy,
     resolveSiteOrigin,
 } from '@/lib/formEmails';
 
@@ -18,9 +17,6 @@ function getResend(): Resend {
 }
 
 export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
-    // Obligamos a la acción a ir directo a Railway, ignorando NEXT_PUBLIC_API_URL de Vercel.
-    const apiUrl = "https://puntacana-fortress-production.up.railway.app";
-
     // Extract data from FormData
     const name = String(formData.get('name') || '').trim();
     const email = String(formData.get('email') || '').trim();
@@ -28,6 +24,16 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const country = String(formData.get('country') || '').trim();
     const comments = String(formData.get('comments') || '').trim();
     const lang = normalizeLang(formData.get('lang'), 'es');
+
+    // Fail-closed Preview guard: stops BEFORE any Railway, HubSpot, or Resend call
+    const policy = resolveExecutionPolicy(email);
+    if (!policy.allowed) {
+        console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+        return {
+            success: false,
+            message: policy.error,
+        };
+    }
 
     // Additional fields
     const experience = String(formData.get('experience') || 'N/A');
@@ -54,7 +60,7 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         referenceCode,
         lang,
         name,
-        email,
+        email: policy.clientRecipient,
         phone,
         country,
         proposedDates: 'Por Definir',
@@ -69,19 +75,19 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         comments,
     });
 
-    const teamRecipients = getTeamRecipients();
-
     // Local isolated dry-run mode (never active on Vercel / production)
-    if (isLocalDryRunEnabled()) {
+    if (policy.mode === 'local_dry_run') {
         recordLocalDryRunEmail({
             recordedAt: new Date().toISOString(),
             flow: 'fly_and_buy',
             referenceCode,
             lang,
             siteOrigin,
+            railwayMode: policy.railwayMode,
+            hubspotMode: policy.hubspotMode,
             adminEmail: {
                 ...adminEmail,
-                recipients: teamRecipients,
+                recipients: policy.teamRecipients,
             },
             clientEmail,
         });
@@ -89,7 +95,6 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         return {
             success: true,
             message: 'Request sent successfully!',
-            referenceCode,
         };
     }
 
@@ -108,18 +113,28 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         notes: readableNotes,
     };
 
-    const cleanedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
-
     try {
-        const res = await fetch(`${cleanedApiUrl}/api/public/fly-buy/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tripData),
-        });
+        // 1. Backend persistence: Production Railway in prod; isolated or simulated in Preview
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway /api/public/fly-buy/ skipped [${referenceCode}]`);
+        } else if (policy.railwayApiUrl) {
+            const res = await fetch(`${policy.railwayApiUrl}/api/public/fly-buy/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tripData),
+            });
 
-        // Cortocircuito de éxito inmediato si el servidor responde 200 o 201
-        if (res.ok || res.status === 201 || res.status === 200) {
-            // HubSpot API Integration (Background sync)
+            if (!(res.ok || res.status === 201 || res.status === 200)) {
+                const errorText = await res.text();
+                console.error("Backend Error:", res.status, errorText);
+                return { success: false, message: `Rechazado por el servidor: ${res.status} - ${errorText}` };
+            }
+        }
+
+        // HubSpot API Integration: Active in production; simulated/skipped in Preview
+        if (policy.hubspotMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] HubSpot contact sync skipped [${referenceCode}]`);
+        } else {
             try {
                 await createHubspotContact({
                     email,
@@ -132,53 +147,45 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
             } catch (hsError) {
                 console.error("HubSpot sync failed in Fly&Buy form:", hsError);
             }
-
-            const resend = getResend();
-
-            // Send localized Auto-Responder Confirmation to CLIENT via Resend (same referenceCode)
-            try {
-                const { error } = await resend.emails.send({
-                    from: clientEmail.from,
-                    to: [clientEmail.to],
-                    subject: clientEmail.subject,
-                    html: clientEmail.html,
-                    text: clientEmail.text,
-                });
-
-                if (error) {
-                    console.error("Resend internal autoresponder failed:", error);
-                }
-            } catch (emailErr: any) {
-                console.error("Resend internal autoresponder exception:", emailErr);
-            }
-
-            // Send Spanish-labeled Admin Notification Email to TEAM via Resend (same referenceCode)
-            try {
-                const { error } = await resend.emails.send({
-                    from: adminEmail.from,
-                    to: teamRecipients,
-                    subject: adminEmail.subject,
-                    html: adminEmail.html,
-                    text: adminEmail.text,
-                });
-
-                if (error) {
-                    console.error("Resend Admin notification failed (Fly&Buy):", error);
-                }
-            } catch (adminEmailError) {
-                console.error("Admin Email Exception:", adminEmailError);
-            }
-
-            return {
-                success: true,
-                message: 'Request sent successfully!',
-                referenceCode,
-            };
         }
 
-        const errorText = await res.text();
-        console.error("Backend Error:", res.status, errorText);
-        return { success: false, message: `Rechazado por el servidor: ${res.status} - ${errorText}` };
+        const resend = getResend();
+
+        // Send localized Auto-Responder Confirmation to CLIENT via Resend (same referenceCode)
+        try {
+            const { error } = await resend.emails.send({
+                from: clientEmail.from,
+                to: [policy.clientRecipient],
+                subject: clientEmail.subject,
+                html: clientEmail.html,
+                text: clientEmail.text,
+            });
+
+            if (error) {
+                console.error("Resend internal autoresponder failed:", error);
+            }
+        } catch (emailErr: any) {
+            console.error("Resend internal autoresponder exception:", emailErr);
+        }
+
+        // Send Spanish-labeled Admin Notification Email to TEAM via Resend (same referenceCode)
+        try {
+            const { error } = await resend.emails.send({
+                from: adminEmail.from,
+                to: policy.teamRecipients,
+                subject: adminEmail.subject,
+                html: adminEmail.html,
+                text: adminEmail.text,
+            });
+
+            if (error) {
+                console.error("Resend Admin notification failed (Fly&Buy):", error);
+            }
+        } catch (adminEmailError) {
+            console.error("Admin Email Exception:", adminEmailError);
+        }
+
+        return { success: true, message: 'Request sent successfully!' };
     } catch (error: any) {
         console.error("Server Action Error:", error);
         return { success: false, message: `Error de red: ${error.message}` };
