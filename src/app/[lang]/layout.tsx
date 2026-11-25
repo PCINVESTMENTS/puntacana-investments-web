@@ -80,10 +80,16 @@ export async function generateStaticParams() {
 
 import { CompareProvider } from "@/components/property/CompareContext";
 import PropertyComparatorWrapper from "@/components/property/PropertyComparatorWrapper";
+import { SiteConfigProvider } from "@/components/layout/SiteConfigContext";
+import { FavoritesProvider } from "@/components/property/FavoritesContext";
+import FavoritesDrawer from "@/components/property/FavoritesDrawer";
+import { fetchLocalSandboxPhase8 } from "@/lib/localSandbox";
 
 import Script from "next/script";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 import DelayedTracking from "@/components/seo/DelayedTracking";
+
+export const dynamic = "force-dynamic";
 
 
 export default async function RootLayout({
@@ -94,6 +100,7 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
+  const phase8Config = fetchLocalSandboxPhase8();
   const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV";
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -127,12 +134,17 @@ export default async function RootLayout({
           </noscript>
         )}
 
-        <CompareProvider>
-          <LocalBusinessSchema lang={lang} />
-          {children}
-          <PropertyComparatorWrapper lang={lang} />
-          {/* ChatBot temporarily removed */}
-        </CompareProvider>
+        <SiteConfigProvider config={phase8Config}>
+          <FavoritesProvider>
+            <CompareProvider>
+              <LocalBusinessSchema lang={lang} />
+              {children}
+              <PropertyComparatorWrapper lang={lang} />
+              <FavoritesDrawer lang={lang} />
+              {/* ChatBot temporarily removed */}
+            </CompareProvider>
+          </FavoritesProvider>
+        </SiteConfigProvider>
         <Analytics />
 
         {/* Dynamic tracking scripts deferred until interaction for PageSpeed */}

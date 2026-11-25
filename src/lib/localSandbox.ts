@@ -811,6 +811,67 @@ export function fetchLocalSandboxWebManager(): LocalWebManagerPayload | null {
   return null;
 }
 
+export function appendSandboxFlyAndBuyLead(entry: Record<string, any>): { id: string; reference_code: string; count: number } | null {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  let existing: Record<string, any>[] = [];
+  try {
+    if (fs.existsSync(inboxFile)) {
+      const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+      if (Array.isArray(parsed)) existing = parsed;
+    }
+  } catch {
+    existing = [];
+  }
+  const existingFb = existing.filter((e) => e && e.form_type === "fly_and_buy");
+  let maxSeq = existingFb.length;
+  for (const item of existingFb) {
+    const m = /^FB-LOC-(\d+)$/i.exec(String(item.reference_code || ""));
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n > maxSeq) maxSeq = n;
+    }
+  }
+  const reference_code = `FB-LOC-${String(maxSeq + 1).padStart(3, "0")}`;
+  const id = `fb-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const record = {
+    id,
+    reference_code,
+    received_at_iso: new Date().toISOString(),
+    delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
+    real_email_sent: false,
+    ...entry,
+  };
+  const next = [record, ...existing].slice(0, 150);
+  const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+  fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
+  fs.renameSync(tmpFile, inboxFile);
+  return { id, reference_code, count: next.length };
+}
+
+export function fetchLocalSandboxPhase8(): Record<string, any> | null {
+  if (!isLocalSandboxEnabled()) return null;
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const p8File = path.join(path.dirname(catalogFile), "phase8_site_live.json");
+  try {
+    if (fs.existsSync(p8File)) {
+      return JSON.parse(fs.readFileSync(p8File, "utf-8"));
+    }
+  } catch (err) {
+    console.error("Local phase8 read error:", err);
+  }
+  return null;
+}
+
+export function resolvePhase8MediaUrl(url: any, fallback = "/images/og-home-luxury.webp"): string {
+  const s = typeof url === "string" ? url.trim() : "";
+  if (!s) return fallback;
+  if (s.startsWith("/media/")) return `http://127.0.0.1:8110${s}`;
+  return s;
+}
+
 export function fetchLocalSandboxPhase7(): Record<string, any> | null {
   if (!isLocalSandboxEnabled()) return null;
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;

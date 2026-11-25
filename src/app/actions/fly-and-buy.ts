@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxFlyAndBuyLead, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -50,19 +50,26 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
 
     const cleanedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Stage 4):
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Stage 4 & Fase 8):
     // Captures Fly & Buy submissions into local test_inbox.json preserving exact PCI recipient
     // and selected property reference, with ZERO calls to production Railway/HubSpot/Resend.
     if (isLocalSandboxEnabled()) {
-        appendSandboxTestInboxEntry({
+        const formLang = String(formData.get('lang') || 'es').toLowerCase();
+        const safeLang = formLang === 'en' || formLang === 'fr' ? formLang : 'es';
+        const saved = appendSandboxFlyAndBuyLead({
             form_type: 'fly_and_buy',
             form_label: 'Solicitud VIP Fly & Buy',
-            lang: 'es',
+            lang: safeLang,
             configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
             configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
             client_autoresponder_to: email,
             admin_subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
-            client_subject: 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
+            client_subject:
+                safeLang === 'en'
+                    ? 'Fly & Buy Request Confirmation - Punta Cana Investments'
+                    : safeLang === 'fr'
+                    ? 'Confirmation de Demande Fly & Buy - Punta Cana Investments'
+                    : 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
             property_reference: {
                 title: specificProperty || 'Tour Inmobiliario General Fly & Buy',
                 type: 'fly_and_buy',
@@ -77,9 +84,17 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
             },
             deduplication_note: '1 solicitud Fly & Buy = 1 aviso PCI + 1 confirmación cliente (capturado en buzón local)',
         });
+        const refCode = saved?.reference_code || 'FB-LOC-001';
         return {
             success: true,
-            message: 'Solicitud Fly & Buy registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
+            sandbox_isolated: true,
+            reference_code: refCode,
+            message:
+                safeLang === 'en'
+                    ? `Your Fly & Buy request was saved locally under reference ${refCode} (local isolated mode: no external emails sent).`
+                    : safeLang === 'fr'
+                    ? `Votre demande Fly & Buy a été enregistrée localement sous la référence ${refCode} (mode local isolé : aucun e-mail externe envoyé).`
+                    : `Tu solicitud Fly & Buy quedó registrada en el Dashboard local bajo la referencia ${refCode} (modo local aislado: sin enviar correos reales).`,
         };
     }
 

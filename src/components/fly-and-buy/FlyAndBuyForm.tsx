@@ -88,15 +88,33 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
+                data-flybuy-confirmation="true"
                 className="bg-zinc-900/80 backdrop-blur-md border border-luxury-gold p-12 rounded-sm text-center shadow-2xl max-w-2xl mx-auto"
             >
                 <div className="flex justify-center mb-6 text-luxury-gold">
                     <FaCheckCircle aria-hidden="true" size={64} />
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-white mb-4">{dict.success.title}</h3>
-                <p className="text-gray-300 text-lg leading-relaxed">{dict.success.message}</p>
+                {(state as any).reference_code && (
+                    <div
+                        data-flybuy-ref-code={(state as any).reference_code}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-luxury-gold/15 border border-luxury-gold/40 text-luxury-gold font-mono text-sm font-bold mb-4"
+                    >
+                        <span>{lang === 'en' ? 'Reference:' : lang === 'fr' ? 'Référence :' : 'Referencia:'}</span>
+                        <span>{(state as any).reference_code}</span>
+                    </div>
+                )}
+                <p className="text-gray-300 text-lg leading-relaxed">
+                    {(state as any).sandbox_isolated && state.message ? state.message : dict.success.message}
+                </p>
                 <p className="text-sm text-gray-400 mt-4 italic">
-                    {lang === 'es' 
+                    {(state as any).sandbox_isolated
+                        ? lang === 'en'
+                            ? 'Isolated local mode: visible immediately in Dashboard -> Fly & Buy.'
+                            : lang === 'fr'
+                            ? 'Mode local isolé : visible immédiatement dans le Dashboard -> Fly & Buy.'
+                            : 'Modo local aislado: visible de inmediato en el Dashboard -> Fly & Buy.'
+                        : lang === 'es'
                         ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
                         : lang === 'fr'
                         ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'

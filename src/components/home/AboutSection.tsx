@@ -14,6 +14,12 @@ interface AboutSectionProps {
         values: string;
         essence: string;
         ceoRole: string;
+        ceoName?: string;
+        ceoImage?: string;
+        ceoLinkedin?: string;
+        show_mission?: boolean;
+        show_vision?: boolean;
+        show_values?: boolean;
         valuesList: readonly {
             title: string;
             description: string;
@@ -22,6 +28,12 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ dict }: AboutSectionProps) {
+    const ceoName = dict.ceoName || "Ulises Ubiera";
+    const ceoImage = dict.ceoImage || "/images/ceo-final.jpg";
+    const ceoLinkedin = dict.ceoLinkedin || "https://www.linkedin.com/in/ulises-ubiera-b442b685";
+    const showMission = dict.show_mission !== false;
+    const showVision = dict.show_vision !== false;
+    const showValues = dict.show_values !== false && (dict.valuesList || []).length > 0;
     return (
         <section id="about" className="pt-20 pb-20 bg-primary-black relative overflow-hidden">
             {/* Background Pattern */}
@@ -40,9 +52,10 @@ export function AboutSection({ dict }: AboutSectionProps) {
                             {/* Image Container */}
                             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm shadow-2xl">
                                 <Image
-                                    src="/images/ceo-final.jpg"
-                                    alt="Ulises Ubiera - CEO Punta Cana Investments"
+                                    src={ceoImage}
+                                    alt={`${ceoName} - Punta Cana Investments`}
                                     fill
+                                    unoptimized={ceoImage.startsWith("http://127.0.0.1")}
                                     quality={60}
                                     sizes="(max-width: 1024px) 100vw, 50vw"
                                     loading="lazy"
@@ -51,17 +64,19 @@ export function AboutSection({ dict }: AboutSectionProps) {
 
                                 {/* Name Overlay (Bottom) */}
                                 <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-8 pt-24 text-center">
-                                    <h3 className="text-3xl font-serif font-bold text-white tracking-wide">Ulises Ubiera</h3>
+                                    <h3 className="text-3xl font-serif font-bold text-white tracking-wide">{ceoName}</h3>
                                     <p className="text-luxury-gold text-sm font-bold uppercase tracking-[0.2em] mt-2 mb-4">{dict.ceoRole}</p>
-                                    <a
-                                        href="https://www.linkedin.com/in/ulises-ubiera-b442b685"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 text-white hover:bg-luxury-gold hover:text-black transition-all duration-300"
-                                        aria-label="LinkedIn Profile"
-                                    >
-                                        <FaLinkedin aria-hidden="true" size={18} />
-                                    </a>
+                                    {ceoLinkedin && (
+                                        <a
+                                            href={ceoLinkedin}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 text-white hover:bg-luxury-gold hover:text-black transition-all duration-300"
+                                            aria-label="LinkedIn Profile"
+                                        >
+                                            <FaLinkedin aria-hidden="true" size={18} />
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -80,59 +95,67 @@ export function AboutSection({ dict }: AboutSectionProps) {
                         </ScrollReveal>
 
                         {/* Mission & Vision - Side by Side Layout */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <ScrollReveal delay={0.2} direction="up" priority={true}>
-                                <div className="p-6 bg-white/5 border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300 rounded-sm h-full">
-                                    <h3 className="text-2xl font-serif font-bold text-white mb-4 flex items-center gap-3">
-                                        <span className="text-luxury-gold">✦</span> {dict.mission}
-                                    </h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed text-justify opacity-90">
-                                        {dict.missionText}
-                                    </p>
-                                </div>
-                            </ScrollReveal>
+                        {(showMission || showVision) && (
+                            <div className={`grid grid-cols-1 ${showMission && showVision ? "md:grid-cols-2" : ""} gap-8`}>
+                                {showMission && (
+                                    <ScrollReveal delay={0.2} direction="up" priority={true}>
+                                        <div className="p-6 bg-white/5 border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300 rounded-sm h-full">
+                                            <h3 className="text-2xl font-serif font-bold text-white mb-4 flex items-center gap-3">
+                                                <span className="text-luxury-gold">✦</span> {dict.mission}
+                                            </h3>
+                                            <p className="text-gray-300 text-sm leading-relaxed text-justify opacity-90">
+                                                {dict.missionText}
+                                            </p>
+                                        </div>
+                                    </ScrollReveal>
+                                )}
 
-                            <ScrollReveal delay={0.3} direction="up" priority={true}>
-                                <div className="p-6 bg-white/5 border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300 rounded-sm h-full">
-                                    <h3 className="text-2xl font-serif font-bold text-white mb-4 flex items-center gap-3">
-                                        <span className="text-luxury-gold">✦</span> {dict.vision}
-                                    </h3>
-                                    <p className="text-gray-300 text-sm leading-relaxed text-justify opacity-90">
-                                        {dict.visionText}
-                                    </p>
-                                </div>
-                            </ScrollReveal>
-                        </div>
+                                {showVision && (
+                                    <ScrollReveal delay={0.3} direction="up" priority={true}>
+                                        <div className="p-6 bg-white/5 border border-white/5 hover:border-luxury-gold/30 transition-colors duration-300 rounded-sm h-full">
+                                            <h3 className="text-2xl font-serif font-bold text-white mb-4 flex items-center gap-3">
+                                                <span className="text-luxury-gold">✦</span> {dict.vision}
+                                            </h3>
+                                            <p className="text-gray-300 text-sm leading-relaxed text-justify opacity-90">
+                                                {dict.visionText}
+                                            </p>
+                                        </div>
+                                    </ScrollReveal>
+                                )}
+                            </div>
+                        )}
 
                         {/* Values Section */}
-                        <ScrollReveal delay={0.4}>
-                            <div>
-                                <h3 className="text-2xl font-serif font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">{dict.values}</h3>
+                        {showValues && (
+                            <ScrollReveal delay={0.4}>
+                                <div>
+                                    <h3 className="text-2xl font-serif font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">{dict.values}</h3>
 
-                                <div className="grid grid-cols-1 gap-6">
-                                    {(dict.valuesList || []).map((value, index) => {
-                                        // Assign icons based on index
-                                        const Icon = index === 0 ? FaChartLine : index === 1 ? FaHandshake : FaGem;
+                                    <div className="grid grid-cols-1 gap-6">
+                                        {(dict.valuesList || []).map((value, index) => {
+                                            // Assign icons based on index
+                                            const Icon = index === 0 ? FaChartLine : index === 1 ? FaHandshake : FaGem;
 
-                                        return (
-                                            <div key={index} className="flex gap-4 group">
-                                                <div className="flex-shrink-0 mt-1">
-                                                    <div className="w-12 h-12 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30 group-hover:bg-luxury-gold group-hover:text-black transition-all duration-300 text-luxury-gold">
-                                                        <Icon aria-hidden="true" size={18} />
+                                            return (
+                                                <div key={index} className="flex gap-4 group">
+                                                    <div className="flex-shrink-0 mt-1">
+                                                        <div className="w-12 h-12 rounded-full bg-luxury-gold/10 flex items-center justify-center border border-luxury-gold/30 group-hover:bg-luxury-gold group-hover:text-black transition-all duration-300 text-luxury-gold">
+                                                            <Icon aria-hidden="true" size={18} />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="text-lg font-bold text-white mb-2 group-hover:text-luxury-gold transition-colors">{value.title}</h4>
+                                                        <p className="text-gray-400 text-sm leading-relaxed text-justify">
+                                                            {value.description}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    <h4 className="text-lg font-bold text-white mb-2 group-hover:text-luxury-gold transition-colors">{value.title}</h4>
-                                                    <p className="text-gray-400 text-sm leading-relaxed text-justify">
-                                                        {value.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
-                        </ScrollReveal>
+                            </ScrollReveal>
+                        )}
 
                     </div>
                 </div>

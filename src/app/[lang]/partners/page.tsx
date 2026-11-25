@@ -1,6 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { PARTNERS_QUERY } from "@/sanity/lib/queries";
-import { isLocalSandboxEnabled } from "@/lib/localSandbox";
+import { isLocalSandboxEnabled, fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandbox";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
@@ -79,7 +79,25 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function PartnersPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
-    const partners = isLocalSandboxEnabled() ? [] : await client.fetch(PARTNERS_QUERY);
+    const phase8Data = fetchLocalSandboxPhase8();
+    const p8Partners = phase8Data?.partners || null;
+
+    const sandboxPartners = Array.isArray(p8Partners?.items)
+        ? [...p8Partners.items]
+            .filter((item: any) => item && item.is_active !== false)
+            .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+            .map((item: any) => ({
+                _id: item.id || item.name,
+                name: item.name || "Partner",
+                logoUrl: item.logo ? resolvePhase8MediaUrl(item.logo, "") : "",
+                website_url: item.website_url || "",
+                description_es: item.description?.es || "",
+                description_en: item.description?.en || item.description?.es || "",
+                description_fr: item.description?.fr || item.description?.en || item.description?.es || "",
+            }))
+        : [];
+
+    const partners = isLocalSandboxEnabled() ? sandboxPartners : await client.fetch(PARTNERS_QUERY);
 
     const translations = {
         es: {
@@ -111,7 +129,19 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
         }
     };
 
-    const t = translations[lang as keyof typeof translations] || translations.en;
+    const baseT = translations[lang as keyof typeof translations] || translations.en;
+    const pickP8 = (obj: any, fallback: string) =>
+        obj && typeof obj === "object" ? obj[lang] || obj.es || obj.en || fallback : fallback;
+    const t = p8Partners
+        ? {
+            ...baseT,
+            heroTitle: pickP8(p8Partners.heroTitle, baseT.heroTitle),
+            heroSubtitle: pickP8(p8Partners.heroSubtitle, baseT.heroSubtitle),
+            heroText: pickP8(p8Partners.heroText, baseT.heroText),
+            visitWebsite: pickP8(p8Partners.visitWebsite, baseT.visitWebsite),
+            noPartners: pickP8(p8Partners.noPartners, baseT.noPartners),
+        }
+        : baseT;
 
     return (
         <main className="min-h-screen bg-primary-black text-white selection:bg-luxury-gold selection:text-black">
@@ -173,6 +203,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                                 return (
                                     <div 
                                         key={partner._id} 
+                                        data-partner-card={partner._id}
                                         className="group relative bg-zinc-900 border border-luxury-gold/20 hover:border-luxury-gold/60 rounded-xl overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] flex flex-col h-full animate-fade-in-up"
                                         style={{ animationDelay: `${(index + 1) * 150}ms` }}
                                     >
@@ -187,6 +218,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
                                                         src={partner.logoUrl} 
                                                         alt={partner.name} 
                                                         fill 
+                                                        unoptimized={partner.logoUrl.startsWith("http://127.0.0.1")}
                                                         sizes="192px"
                                                         className="object-contain p-2" 
                                                     />

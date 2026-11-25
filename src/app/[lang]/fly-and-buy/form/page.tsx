@@ -5,6 +5,8 @@ import { Footer } from "@/components/layout/Footer";
 import FlyAndBuyForm from "@/components/fly-and-buy/FlyAndBuyForm";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
     const { lang } = await params;
     const dict = await getDictionary(lang);

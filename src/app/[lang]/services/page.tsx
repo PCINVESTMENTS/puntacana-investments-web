@@ -2,6 +2,9 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import ServicesSection from "@/components/home/ServicesSection";
+import { fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandbox";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
@@ -60,20 +63,46 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 export default async function ServicesPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
+    const phase8Data = fetchLocalSandboxPhase8();
+    const p8Services = phase8Data?.services;
+    const pick = (obj: any, fallback: string) =>
+        obj && typeof obj === "object" ? obj[lang] || obj.es || obj.en || fallback : fallback;
+
+    const effectiveServicesDict = p8Services
+        ? {
+            ...dict.sections.services,
+            title: pick(p8Services.title, dict.sections.services.title),
+            subtitle: pick(p8Services.subtitle, dict.sections.services.subtitle),
+            description: pick(p8Services.description, dict.sections.services.description),
+            cta: pick(p8Services.cta, dict.sections.services.cta),
+            items: Array.isArray(p8Services.items)
+                ? [...p8Services.items]
+                    .filter((s: any) => s && s.is_active !== false)
+                    .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+                    .map((s: any) => ({
+                        title: pick(s.title, s.slug),
+                        description: pick(s.description, ""),
+                        img: resolvePhase8MediaUrl(s.img, "/images/services-team-horizontal.webp"),
+                        slug: (lang === "en" ? s.slug_en : lang === "fr" ? s.slug_fr : s.slug) || s.slug,
+                        details: Array.isArray(s.details?.[lang]) ? s.details[lang] : [],
+                    }))
+                : dict.sections.services.items,
+        }
+        : dict.sections.services;
 
     return (
         <main className="min-h-screen bg-primary-black">
             <Navbar
                 dict={dict.nav}
                 lang={lang}
-                servicesList={dict.sections.services.items}
+                servicesList={effectiveServicesDict.items}
                 propertyTypes={dict.properties.types}
             />
 
             <div className="pt-20">
                 {/* Reusing ServicesSection but without a limit to show all */}
                 <ServicesSection 
-                    dict={dict.sections.services} 
+                    dict={effectiveServicesDict} 
                     lang={lang} 
                     heroImage="/images/services-team-horizontal.webp"
                     isPage={true}

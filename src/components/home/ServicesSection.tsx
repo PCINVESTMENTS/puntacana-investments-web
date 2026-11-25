@@ -91,7 +91,8 @@ export default function ServicesSection({ dict, lang, limit, heroImage, isPage }
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
                     {items.map((service, index) => (
                         <Link
-                            key={index}
+                            key={service.slug || index}
+                            data-service-card={service.slug || index}
                             href={`/${lang}/services/${service.slug}`}
                             className="bg-primary-black border border-white/5 hover:border-luxury-gold/50 transition-all duration-300 group hover:-translate-y-2 cursor-pointer flex flex-col relative overflow-hidden h-[400px] rounded-sm"
                         >
@@ -102,6 +103,7 @@ export default function ServicesSection({ dict, lang, limit, heroImage, isPage }
                                         src={service.img}
                                         alt={service.title}
                                         fill
+                                        unoptimized={service.img.startsWith("http://127.0.0.1")}
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                                         quality={50}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"

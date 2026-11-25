@@ -8,7 +8,10 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
+import { fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandbox";
 import { FaCheck, FaBuilding, FaHandshake, FaMapMarkedAlt, FaBriefcase, FaHotel, FaCar, FaChartLine, FaStar, FaPen, FaPlane, FaChevronDown } from "react-icons/fa";
+
+export const dynamic = "force-dynamic";
 
 // Icon mapping helper
 const getIcon = (iconName: string) => {
@@ -86,6 +89,47 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
     const dict = await getDictionary(lang);
     const l = (isFr ? 'fr' : isEs ? 'es' : 'en') as 'es' | 'en' | 'fr';
 
+    const phase8Data = fetchLocalSandboxPhase8();
+    const p8Fb = phase8Data?.fly_and_buy || null;
+    const pickP8 = (obj: any, fallback: string) =>
+        obj && typeof obj === "object" ? obj[l] || obj.es || obj.en || fallback : fallback;
+
+    const showComparisonTable = p8Fb?.show_comparison_table !== false;
+    const showForm = p8Fb?.show_form !== false;
+    const heroBadge = pickP8(p8Fb?.page_hero?.badge, isFr ? "Modalités Officielles" : isEs ? "Modalidades Oficiales" : "Official Modalities");
+    const heroTitle = pickP8(p8Fb?.page_hero?.title, "Fly & Buy");
+    const heroSubtitle = pickP8(
+        p8Fb?.page_hero?.subtitle,
+        isFr
+            ? "Fly & Buy n'est pas juste un voyage, c'est une décision intelligente. Venez, confirmez et achetez avec Punta Cana Investments."
+            : isEs
+            ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
+            : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments."
+    );
+    const heroCta = pickP8(p8Fb?.page_hero?.cta, isFr ? "Planifier Ma Visite Maintenant" : isEs ? "Agendar Mi Visita Ahora" : "Schedule My Visit Now");
+
+    const effectivePrograms: any[] =
+        Array.isArray(p8Fb?.programs) && p8Fb.programs.length > 0
+            ? [...p8Fb.programs]
+                .filter((p: any) => p && p.is_active !== false)
+                .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+                .map((p: any) => {
+                    const base = flyAndBuyPrograms.find((bp) => bp.slug === p.slug);
+                    return {
+                        ...base,
+                        ...p,
+                        heroImage: resolvePhase8MediaUrl(p.heroImage, base?.heroImage || "/images/fly-and-buy/basic.jpg"),
+                        includes: Array.isArray(p.includes) ? p.includes : base?.includes || [],
+                        conditions: p.conditions || base?.conditions || {
+                            clientCovers: [{ es: "Vuelo y hospedaje", en: "Flight & lodging", fr: "Vol et hébergement" }],
+                            purchaseBenefit: p.purchaseBenefit || { es: "Descuento aplicable en compra", en: "Applicable purchase discount", fr: "Remise applicable à l'achat" },
+                            refundPolicy: p.refundPolicy || { es: "Sujeto a cierre", en: "Subject to closing", fr: "Soumis à clôture" },
+                        },
+                        idealFor: Array.isArray(p.idealFor) ? p.idealFor : base?.idealFor || [],
+                    };
+                })
+            : flyAndBuyPrograms;
+
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
     const canonicalUrl = `${baseUrl}/${lang}/fly-and-buy`;
@@ -146,17 +190,13 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
                     <ScrollReveal>
                         <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm md:text-base mb-4 block">
-                            {isFr ? "Modalités Officielles" : isEs ? "Modalidades Oficiales" : "Official Modalities"}
+                            {heroBadge}
                         </span>
                         <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">
-                            Fly & Buy
+                            {heroTitle}
                         </h1>
                         <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto font-light">
-                            {isFr
-                                ? "Fly & Buy n'est pas juste un voyage, c'est une décision intelligente. Venez, confirmez et achetez avec Punta Cana Investments."
-                                : isEs
-                                    ? "Fly & Buy no es un viaje, es una decisión inteligente. Venga, confirme y compre con Punta Cana Investments."
-                                    : "Fly & Buy is not just a trip, it's a smart decision. Come, confirm, and buy with Punta Cana Investments."}
+                            {heroSubtitle}
                         </p>
                     </ScrollReveal>
                 </div>
@@ -164,10 +204,14 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
 
             {/* Programs Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-6 lg:py-20 space-y-12 lg:space-y-32">
-                {flyAndBuyPrograms.map((program, index) => {
+                {effectivePrograms.map((program: any, index: number) => {
                     const isEven = index % 2 === 0;
+                    const progTitle = pickP8(program.title, program.slug);
+                    const progSubtitle = pickP8(program.subtitle, "");
+                    const progDuration = pickP8(program.duration, "");
+                    const progDesc = pickP8(program.description, "");
                     return (
-                        <section key={program.slug} id={program.slug} className="scroll-mt-32">
+                        <section key={program.slug || index} id={program.slug} className="scroll-mt-32">
                             <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-20 items-stretch`}>
 
                                 {/* Image Column */}
@@ -175,15 +219,16 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                     <div className="sticky top-32 h-full max-h-[80vh] w-full rounded-sm overflow-hidden border border-white/10 shadow-2xl group">
                                         <Image
                                             src={program.heroImage}
-                                            alt={program.title[l]}
+                                            alt={progTitle}
                                             fill
+                                            unoptimized={typeof program.heroImage === "string" && program.heroImage.startsWith("http://127.0.0.1")}
                                             className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                         />
                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
 
                                         {/* Floating Badge */}
                                         <div className="absolute top-6 left-6 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 uppercase tracking-widest text-sm font-bold">
-                                            {program.duration[l]}
+                                            {progDuration}
                                         </div>
                                     </div>
                                 </div>
@@ -192,30 +237,30 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                 <div className="lg:w-1/2 flex flex-col justify-center">
                                     <ScrollReveal>
                                         <h2 className="text-4xl md:text-5xl font-serif font-bold text-luxury-gold mb-1 md:mb-2">
-                                            {program.title[l]}
+                                            {progTitle}
                                         </h2>
                                         <h3 className="text-xl text-white/90 font-medium mb-4 uppercase tracking-wide">
-                                            {program.subtitle[l]}
+                                            {progSubtitle}
                                         </h3>
                                         <p className="text-gray-300 text-lg leading-relaxed mb-6 border-l-2 border-luxury-gold/50 pl-6">
-                                            {program.description[l]}
+                                            {progDesc}
                                         </p>
 
                                         {/* Includes Grid */}
                                         <div className="grid grid-cols-1 gap-4 lg:gap-8 mb-6 lg:mb-10">
-                                            {program.includes.map((section, idx) => (
+                                            {(program.includes || []).map((section: any, idx: number) => (
                                                 <div key={idx} className="bg-white/5 p-4 lg:p-6 rounded-sm border border-white/5 hover:border-luxury-gold/30 transition-colors">
                                                     <div className="flex items-center gap-3 mb-4 text-luxury-gold">
                                                         <span className="text-xl">{getIcon(section.icon || 'check')}</span>
                                                         <h4 className="font-bold uppercase tracking-wider text-sm">
-                                                            {section.title[l]}
+                                                            {pickP8(section.title, "")}
                                                         </h4>
                                                     </div>
                                                     <ul className="space-y-2">
-                                                        {section.items.map((item, i) => (
+                                                        {(section.items || []).map((item: any, i: number) => (
                                                             <li key={i} className="flex items-start gap-3 text-gray-400 text-sm">
                                                                 <FaCheck className="mt-1 flex-shrink-0 text-luxury-gold/50 text-xs" />
-                                                                <span>{item[l]}</span>
+                                                                <span>{pickP8(item, "")}</span>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -231,40 +276,44 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                             <ul className="space-y-3 text-gray-300 text-sm mb-6">
                                                 <li className="flex gap-2">
                                                     <span className="font-semibold text-white">{isFr ? "Le client couvre:" : isEs ? "Cliente Cubre:" : "Client Covers:"}</span>
-                                                    {program.conditions.clientCovers.map(c => c[l]).join(", ")}
+                                                    {(program.conditions?.clientCovers || []).map((c: any) => pickP8(c, "")).join(", ")}
                                                 </li>
                                                 <li className="flex gap-2">
                                                     <span className="font-semibold text-white">{isFr ? "Avantage d'achat:" : isEs ? "Beneficio Compra:" : "Purchase Benefit:"}</span>
-                                                    {program.conditions.purchaseBenefit[l]}
+                                                    {pickP8(program.purchaseBenefit || program.conditions?.purchaseBenefit, "")}
                                                 </li>
                                                 <li className="flex gap-2">
                                                     <span className="font-semibold text-white">{isFr ? "Politique:" : isEs ? "Política:" : "Policy:"}</span>
-                                                    {program.conditions.refundPolicy[l]}
+                                                    {pickP8(program.refundPolicy || program.conditions?.refundPolicy, "")}
                                                 </li>
                                             </ul>
 
-                                            <div className="pt-6 border-t border-luxury-gold/20">
-                                                <h5 className="text-white font-bold mb-2 text-sm uppercase">
-                                                    {isFr ? "Idéal Pour:" : isEs ? "Ideal Para:" : "Ideal For:"}
-                                                </h5>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {program.idealFor.map((ideal, i) => (
-                                                        <span key={i} className="bg-black/40 text-gray-300 px-3 py-1 text-xs rounded-full border border-white/10">
-                                                            {ideal[l]}
-                                                        </span>
-                                                    ))}
+                                            {(program.idealFor || []).length > 0 && (
+                                                <div className="pt-6 border-t border-luxury-gold/20">
+                                                    <h5 className="text-white font-bold mb-2 text-sm uppercase">
+                                                        {isFr ? "Idéal Pour:" : isEs ? "Ideal Para:" : "Ideal For:"}
+                                                    </h5>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {(program.idealFor || []).map((ideal: any, i: number) => (
+                                                            <span key={i} className="bg-black/40 text-gray-300 px-3 py-1 text-xs rounded-full border border-white/10">
+                                                                {pickP8(ideal, "")}
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            )}
                                         </div>
 
-                                        <div className="mt-6 lg:mt-10">
-                                            <Link
-                                                href={`/${lang}/fly-and-buy/form`}
-                                                className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl w-full text-center md:w-auto"
-                                            >
-                                                {isFr ? "S'informer sur le programme" : isEs ? "Consultar sobre el programa" : "Inquire about program"}
-                                            </Link>
-                                        </div>
+                                        {showForm && (
+                                            <div className="mt-6 lg:mt-10">
+                                                <Link
+                                                    href={`/${lang}/fly-and-buy/form`}
+                                                    className="inline-block bg-luxury-gold text-black hover:bg-white px-8 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-lg hover:shadow-xl w-full text-center md:w-auto"
+                                                >
+                                                    {isFr ? "S'informer sur le programme" : isEs ? "Consultar sobre el programa" : "Inquire about program"}
+                                                </Link>
+                                            </div>
+                                        )}
                                     </ScrollReveal>
                                 </div>
                             </div>
@@ -274,6 +323,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
             </div>
 
             {/* Comparison Table */}
+            {showComparisonTable && (
             <section className="bg-dark-gray py-6 lg:py-20 border-t border-white/10">
                 <div className="max-w-5xl mx-auto px-4">
                     <div className="text-center mb-8 lg:mb-12">
@@ -319,6 +369,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Final CTA */}
             <section className="py-8 lg:py-24 bg-primary-black relative overflow-hidden">
@@ -339,12 +390,14 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                 ? "Venga, confirme y compre con Punta Cana Investments."
                                 : "Come, confirm, and buy with Punta Cana Investments."}
                     </p>
-                    <Link
-                        href={`/${lang}/fly-and-buy/form`}
-                        className="inline-block bg-white text-black hover:bg-luxury-gold px-10 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-xl hover:scale-105"
-                    >
-                        {isFr ? "Planifier Ma Visite Maintenant" : isEs ? "Agendar Mi Visita Ahora" : "Schedule My Visit Now"}
-                    </Link>
+                    {showForm && (
+                        <Link
+                            href={`/${lang}/fly-and-buy/form`}
+                            className="inline-block bg-white text-black hover:bg-luxury-gold px-10 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-xl hover:scale-105"
+                        >
+                            {heroCta}
+                        </Link>
+                    )}
                 </div>
             </section>
 

@@ -9,10 +9,12 @@ interface TestimonialsSectionProps {
         title: string;
         subtitle: string;
         reviews: readonly {
-            id: number;
+            id: number | string;
             name: string;
             role: string;
             content: string;
+            avatar?: string;
+            rating?: number;
         }[];
     };
 }
@@ -38,7 +40,7 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.title}
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 font-serif" data-testimonials-subtitle="true">
                             {dict.subtitle}
                         </h2>
                         <div className="h-1 w-24 bg-luxury-gold mx-auto"></div>
@@ -46,13 +48,16 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                 </ScrollReveal>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {dict.reviews.map((testim, index) => (
+                    {dict.reviews.map((testim, index) => {
+                        const avatarUrl = testim.avatar || images[index % images.length];
+                        const stars = Math.max(1, Math.min(5, Number(testim.rating || 5)));
+                        return (
                         <ScrollReveal key={testim.id} delay={index * 0.1}>
                             <div className="bg-primary-black p-8 border border-white/5 relative group hover:border-luxury-gold/30 transition-colors h-full">
                                 <FaQuoteLeft aria-hidden="true" className="text-4xl text-luxury-gold/20 mb-6 group-hover:text-luxury-gold/40 transition-colors" />
 
                                 <div className="flex gap-1 mb-6">
-                                    {[...Array(5)].map((_, i) => (
+                                    {[...Array(stars)].map((_, i) => (
                                         <FaStar key={i} aria-hidden="true" className="text-luxury-gold text-sm" />
                                     ))}
                                 </div>
@@ -64,9 +69,10 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                                 <div className="flex items-center gap-4 mt-auto border-t border-white/5 pt-6">
                                     <div className="relative w-12 h-12 rounded-full overflow-hidden border border-luxury-gold/50">
                                         <Image
-                                            src={images[index % images.length]}
+                                            src={avatarUrl}
                                             alt={testim.name}
                                             fill
+                                            unoptimized={avatarUrl.startsWith("http://127.0.0.1")}
                                             sizes="96px"
                                             className="object-cover"
                                         />
@@ -78,7 +84,7 @@ export default function TestimonialsSection({ dict }: TestimonialsSectionProps) 
                                 </div>
                             </div>
                         </ScrollReveal>
-                    ))}
+                    )})}
                 </div>
             </div>
         </section>

@@ -5,9 +5,11 @@ import Image from "next/image";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Property } from "@/data/properties";
-import { FaBed, FaBath, FaRulerCombined, FaSearch, FaArrowRight, FaExchangeAlt } from "react-icons/fa";
+import { FaBed, FaBath, FaRulerCombined, FaSearch, FaArrowRight, FaExchangeAlt, FaHeart } from "react-icons/fa";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { useCompare } from "@/components/property/CompareContext";
+import { useFavorites } from "@/components/property/FavoritesContext";
+import FavoriteButton from "@/components/property/FavoriteButton";
 import PropertyCardCarousel from "@/components/property/PropertyCardCarousel";
 import { getRentalPricingSummary } from "@/lib/propertyPricing";
 
@@ -229,11 +231,13 @@ function PropertyListingsContent({
     });
 
     // Initialize state from URL params if available, else default (or featured defaults)
+    const { isFavorite, count: favCount } = useFavorites();
     const [selectedLocation, setSelectedLocation] = useState(initialLoc);
     const [selectedType, setSelectedType] = useState(searchParams.get("type") || initialFilters.type || "all");
     const [selectedStatus, setSelectedStatus] = useState(lockedStatus || searchParams.get("status") || initialFilters.status || (featured ? featuredCategory : "all"));
     const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || initialFilters.maxPrice || "any");
     const [isProject, setIsProject] = useState<string | null>(searchParams.get("project") || null);
+    const [favoritesOnly, setFavoritesOnly] = useState(false);
 
     // Sync with URL changes
     useEffect(() => {
@@ -288,13 +292,21 @@ function PropertyListingsContent({
             filtered = initialData.filter(p => p.featured === true).slice(0, featuredLimit);
         } else if (featured) {
             filtered = initialData.filter(p => p.status === featuredCategory).slice(0, featuredLimit);
-        } else if (selectedLocation !== "all") {
-            filtered = sortByLocationPlacement(filtered, selectedLocation);
+        } else {
+            if (selectedLocation !== "all") {
+                filtered = sortByLocationPlacement(filtered, selectedLocation);
+            }
+            if (favoritesOnly) {
+                filtered = filtered.filter((p) => {
+                    const slugVal = typeof p.slug === "object" && p.slug !== null ? (p.slug as any).current : p.slug;
+                    return isFavorite(slugVal || p.id);
+                });
+            }
         }
 
         setFilteredProperties(filtered);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, featured, featuredCategory, featuredLimit, initialData, preserveInitialOrder, showFeaturedOnly, JSON.stringify(locationPlacements)]);
+    }, [selectedLocation, selectedType, selectedStatus, maxPrice, isProject, favoritesOnly, favCount, featured, featuredCategory, featuredLimit, initialData, preserveInitialOrder, showFeaturedOnly, JSON.stringify(locationPlacements)]);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat("en-US", {
@@ -441,6 +453,20 @@ function PropertyListingsContent({
                                     {cat.label}
                                 </button>
                             ))}
+                            <button
+                                type="button"
+                                onClick={() => setFavoritesOnly((prev) => !prev)}
+                                aria-pressed={favoritesOnly}
+                                data-favorites-filter-btn="true"
+                                className={`px-5 py-2 border text-sm uppercase tracking-wider font-bold transition-all inline-flex items-center gap-2 cursor-pointer ${
+                                    favoritesOnly
+                                        ? "border-rose-500 bg-rose-600 text-white"
+                                        : "border-white/20 text-gray-300 hover:border-rose-500 hover:text-rose-400"
+                                }`}
+                            >
+                                <FaHeart aria-hidden="true" className="text-xs" />
+                                {lang === 'en' ? 'My Favorites' : lang === 'fr' ? 'Mes Favoris' : 'Mis Favoritas'} ({favCount})
+                            </button>
                         </div>
                     )}
 
@@ -460,7 +486,7 @@ function PropertyListingsContent({
                                 </h3>
                                 {!featured && (
                                     <button
-                                        onClick={() => { setSelectedLocation("all"); setSelectedType("all"); setMaxPrice("any"); }}
+                                        onClick={() => { setSelectedLocation("all"); setSelectedType("all"); setMaxPrice("any"); setFavoritesOnly(false); }}
                                         className="mt-4 text-luxury-gold hover:underline"
                                     >
                                         {lang === 'en' ? 'Reset filters' : lang === 'fr' ? 'Réinitialiser les filtres' : 'Resetear filtros'}
@@ -469,7 +495,7 @@ function PropertyListingsContent({
                             </div>
                         ) : (
                             filteredProperties.map((prop, index) => (
-                                <ScrollReveal key={prop.slug || prop.id} delay={index * 0.1} priority={index < 2}>
+                                <ScrollReveal key={prop.slug || prop.id} delay={index * 0.1} priority={index < 3}>
                                     <div className="group bg-dark-gray border border-white/5 hover:border-luxury-gold/50 transition-all duration-500 overflow-hidden relative flex flex-col h-full shadow-xl">
                                         <div className="relative overflow-hidden h-72">
                                             <PropertyCardCarousel
@@ -503,6 +529,7 @@ function PropertyListingsContent({
                                             </div>
 
                                             <CompareToggle property={prop} lang={lang} />
+                                            <FavoriteButton property={prop} lang={lang} variant="card" />
                                             {(() => {
                                                 const disp = ((prop as any)?.display || (prop as any)?.specs?.display || {}) as Record<string, any>;
                                                 if (disp.show_availability_badge === false) return null;

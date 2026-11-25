@@ -30,6 +30,8 @@ import {
   fetchLocalSandboxCatalog,
   fetchLocalSandboxWebManager,
   fetchLocalSandboxPhase7,
+  fetchLocalSandboxPhase8,
+  resolvePhase8MediaUrl,
   mapSandboxBlogPosts,
   mapWebManagerLocations,
 } from "@/lib/localSandbox";
@@ -201,12 +203,116 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     };
   });
 
-  // Fase 5 & Fase 7 Local overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
+  // Fase 5, Fase 7 & Fase 8 Local overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
   const webManager = fetchLocalSandboxWebManager();
   const phase7Data = fetchLocalSandboxPhase7();
+  const phase8Data = fetchLocalSandboxPhase8();
   const wmHero = webManager?.homepage?.hero;
   const wmLocSec = webManager?.homepage?.locations_section;
   const secVis = webManager?.homepage?.sections_visibility || {};
+
+  const pickP8 = (obj: any, fallback: string) =>
+    obj && typeof obj === "object" ? obj[lang] || obj.es || obj.en || fallback : fallback;
+
+  // Fase 8 Services override
+  const p8Services = phase8Data?.services;
+  const effectiveServicesLimit = Number(p8Services?.homepage_limit || 4);
+  const effectiveServicesDict = p8Services
+    ? {
+        ...dict.sections.services,
+        title: pickP8(p8Services.title, dict.sections.services.title),
+        subtitle: pickP8(p8Services.subtitle, dict.sections.services.subtitle),
+        description: pickP8(p8Services.description, dict.sections.services.description),
+        cta: pickP8(p8Services.cta, dict.sections.services.cta),
+        items: Array.isArray(p8Services.items)
+          ? [...p8Services.items]
+              .filter((item: any) => item && item.is_active !== false)
+              .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+              .map((item: any) => ({
+                title: pickP8(item.title, item.slug),
+                description: pickP8(item.description, ""),
+                img: resolvePhase8MediaUrl(item.img, "/images/services-team-horizontal.webp"),
+                slug: (lang === "en" ? item.slug_en : lang === "fr" ? item.slug_fr : item.slug) || item.slug,
+                details: Array.isArray(item.details?.[lang]) ? item.details[lang] : [],
+              }))
+          : dict.sections.services.items,
+      }
+    : dict.sections.services;
+
+  // Fase 8 Fly & Buy override
+  const p8Fb = phase8Data?.fly_and_buy;
+  const effectiveFlyAndBuyDict = p8Fb?.home_section
+    ? {
+        ...dict.sections.flyAndBuy,
+        title: pickP8(p8Fb.home_section.title, dict.sections.flyAndBuy.title),
+        subtitle: pickP8(p8Fb.home_section.subtitle, dict.sections.flyAndBuy.subtitle),
+        description: pickP8(p8Fb.home_section.description, dict.sections.flyAndBuy.description),
+        cta: pickP8(p8Fb.home_section.cta, dict.sections.flyAndBuy.cta),
+      }
+    : dict.sections.flyAndBuy;
+  const effectiveFlyAndBuyPrograms = Array.isArray(p8Fb?.programs)
+    ? [...p8Fb.programs]
+        .filter((p: any) => p && p.is_active !== false)
+        .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+        .map((p: any) => ({
+          ...p,
+          heroImage: resolvePhase8MediaUrl(p.heroImage, "/images/fly-and-buy/basic.jpg"),
+        }))
+    : null;
+
+  // Fase 8 Testimonials override
+  const p8Testim = phase8Data?.testimonials;
+  const effectiveTestimonialsDict = p8Testim
+    ? {
+        ...dict.sections.testimonials,
+        title: pickP8(p8Testim.title, dict.sections.testimonials.title),
+        subtitle: pickP8(p8Testim.subtitle, dict.sections.testimonials.subtitle),
+        reviews: Array.isArray(p8Testim.items)
+          ? [...p8Testim.items]
+              .filter((t: any) => t && t.is_active !== false)
+              .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+              .map((t: any, idx: number) => ({
+                id: t.id || idx + 1,
+                name: t.name || "Cliente",
+                role: pickP8(t.role, ""),
+                content: pickP8(t.content, ""),
+                avatar: resolvePhase8MediaUrl(t.avatar, "/images/avatar-carlos.png"),
+                rating: t.rating || 5,
+              }))
+          : dict.sections.testimonials.reviews,
+      }
+    : dict.sections.testimonials;
+
+  // Fase 8 About override
+  const p8About = phase8Data?.about;
+  const effectiveAboutDict = p8About
+    ? {
+        ...dict.sections.about,
+        essence: pickP8(p8About.essence, dict.sections.about.essence),
+        title: pickP8(p8About.title, dict.sections.about.title),
+        ceoName: p8About.ceoName || "Ulises Ubiera",
+        ceoRole: pickP8(p8About.ceoRole, dict.sections.about.ceoRole),
+        ceoImage: resolvePhase8MediaUrl(p8About.ceoImage, "/images/ceo-final.jpg"),
+        ceoLinkedin: p8About.ceoLinkedin || "https://www.linkedin.com/in/ulises-ubiera-b442b685",
+        show_mission: p8About.show_mission !== false,
+        show_vision: p8About.show_vision !== false,
+        show_values: p8About.show_values !== false,
+        mission: pickP8(p8About.mission, dict.sections.about.mission),
+        missionText: pickP8(p8About.missionText, dict.sections.about.missionText),
+        vision: pickP8(p8About.vision, dict.sections.about.vision),
+        visionText: pickP8(p8About.visionText, dict.sections.about.visionText),
+        values: pickP8(p8About.values, dict.sections.about.values),
+        valuesList: Array.isArray(p8About.valuesList)
+          ? [...p8About.valuesList]
+              .filter((v: any) => v && v.is_active !== false)
+              .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+              .map((v: any) => ({
+                title: pickP8(v.title, ""),
+                description: pickP8(v.description, ""),
+              }))
+          : dict.sections.about.valuesList,
+      }
+    : dict.sections.about;
 
   const effectiveHeroDict = wmHero
     ? {
@@ -444,7 +550,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       case "fly_and_buy":
         return secVis.show_fly_and_buy !== false ? (
           <div key="fly_and_buy" data-home-section="fly_and_buy">
-            <FlyAndBuySection dict={dict.sections.flyAndBuy} lang={lang} />
+            <FlyAndBuySection dict={effectiveFlyAndBuyDict} lang={lang} programsOverride={effectiveFlyAndBuyPrograms} />
           </div>
         ) : null;
       case "off_market":
@@ -462,19 +568,19 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       case "services":
         return secVis.show_services !== false ? (
           <div key="services" data-home-section="services">
-            <ServicesSection dict={dict.sections.services} lang={lang} limit={4} />
+            <ServicesSection dict={effectiveServicesDict} lang={lang} limit={effectiveServicesLimit} />
           </div>
         ) : null;
       case "testimonials":
         return secVis.show_testimonials !== false ? (
           <div key="testimonials" data-home-section="testimonials">
-            <TestimonialsSection dict={dict.sections.testimonials} />
+            <TestimonialsSection dict={effectiveTestimonialsDict} />
           </div>
         ) : null;
       case "about":
         return secVis.show_about !== false ? (
           <div key="about" data-home-section="about">
-            <AboutSection dict={dict.sections.about} />
+            <AboutSection dict={effectiveAboutDict} />
           </div>
         ) : null;
       case "contact":
@@ -531,7 +637,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
+      <Navbar dict={dict.nav} lang={lang} servicesList={effectiveServicesDict.items} propertyTypes={dict.properties.types} />
       <Hero dict={effectiveHeroDict} featuredImages={featuredImages} showSlideBadge={heroSliderCustom} />
       {sectionsOrder.map((secKey) => renderHomeSection(secKey))}
       <Footer dict={dict} lang={lang} />

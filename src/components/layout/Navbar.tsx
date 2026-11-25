@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
+import { FaBars, FaTimes, FaChevronDown, FaHeart } from "react-icons/fa";
+import { useSiteConfig } from "@/components/layout/SiteConfigContext";
+import { useFavorites } from "@/components/property/FavoritesContext";
 
 interface NavbarProps {
     dict: {
@@ -37,6 +39,8 @@ interface NavbarProps {
 
 export default function Navbar({ dict, lang, servicesList = [], propertyTypes, variant = 'transparent' }: NavbarProps) {
     const pathname = usePathname();
+    const siteConfig = useSiteConfig();
+    const { count: favCount, setDrawerOpen } = useFavorites();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [querySuffix, setQuerySuffix] = useState("");
@@ -80,8 +84,21 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
         resorts: "Hotels & Resorts"
     };
 
-    const menuItems = [
-        {
+    // Resolve active ordered services from Fase 8 Gestor Web if configured
+    const phase8Services = siteConfig?.services?.items;
+    const effectiveServicesList =
+        Array.isArray(phase8Services) && phase8Services.length > 0
+            ? [...phase8Services]
+                  .filter((s: any) => s && s.is_active !== false)
+                  .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+                  .map((s: any) => ({
+                      title: s.title?.[lang] || s.title?.es || s.slug,
+                      slug: (lang === 'en' ? s.slug_en : lang === 'fr' ? s.slug_fr : s.slug) || s.slug,
+                  }))
+            : servicesList;
+
+    const baseMenuByKey: Record<string, { name: string; hasDropdown: boolean; href: string; subItems?: { label: string; href: string }[] }> = {
+        properties: {
             name: dict.properties,
             hasDropdown: true,
             href: `/${lang}/properties`,
@@ -94,7 +111,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 { label: dict.rent, href: `/${lang}/properties?status=rent` },
             ]
         },
-        {
+        projects: {
             name: dict.projects,
             hasDropdown: true,
             href: `/${lang}/properties?project=true`,
@@ -107,7 +124,7 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 { label: lang === 'en' ? "Future Projects" : lang === 'fr' ? "Projets Futurs" : "Futuros Proyectos", href: `/${lang}/futuros-proyectos` },
             ]
         },
-        {
+        investments: {
             name: dict.investments,
             hasDropdown: true,
             href: `/${lang}/investments`,
@@ -118,28 +135,61 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                 { label: dict.flyAndBuy, href: `/${lang}/fly-and-buy` }
             ]
         },
-        {
+        services: {
             name: dict.services,
             hasDropdown: true,
             href: `/${lang}/services`,
-            subItems: servicesList.length > 0 ? servicesList.map(s => ({
+            subItems: effectiveServicesList.length > 0 ? effectiveServicesList.map(s => ({
                 label: s.title,
                 href: `/${lang}/services/${s.slug}`
             })) : []
         },
-        { 
-            name: dict.about, 
-            hasDropdown: false, 
-            href: `/${lang}#about` 
+        about: {
+            name: dict.about,
+            hasDropdown: false,
+            href: `/${lang}#about`
         },
-        {
-            name: lang === 'es' ? 'Partners' : 'Partners',
+        partners: {
+            name: 'Partners',
             hasDropdown: false,
             href: `/${lang}/partners`
         },
-        { name: dict.contact, hasDropdown: false, href: `/${lang}/contact` },
-        { name: dict.blog, hasDropdown: false, href: `/${lang}/blog` },
-    ];
+        contact: { name: dict.contact, hasDropdown: false, href: `/${lang}/contact` },
+        blog: { name: dict.blog, hasDropdown: false, href: `/${lang}/blog` },
+    };
+
+    const resolveLocalizedMenuHref = (rawHref: string, fallbackHref: string) => {
+        const h = String(rawHref || "").trim();
+        if (!h) return fallbackHref;
+        if (h.startsWith("http://") || h.startsWith("https://")) return h;
+        if (h.startsWith(`/${lang}/`) || h === `/${lang}` || h.startsWith(`/${lang}#`)) return h;
+        if (h.startsWith("#")) return `/${lang}${h}`;
+        if (h.startsWith("/")) return `/${lang}${h}`;
+        return `/${lang}/${h}`;
+    };
+
+    const configuredMenuItems = siteConfig?.menu?.items;
+    const menuItems =
+        Array.isArray(configuredMenuItems) && configuredMenuItems.length > 0
+            ? [...configuredMenuItems]
+                  .filter((item: any) => item && item.is_active !== false)
+                  .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+                  .map((item: any) => {
+                      const base = baseMenuByKey[item.key] || baseMenuByKey[item.id];
+                      const localizedLabel = item.label?.[lang] || item.label?.es || base?.name || item.key || "Link";
+                      return {
+                          id: item.id || item.key || localizedLabel,
+                          name: localizedLabel,
+                          hasDropdown: base ? base.hasDropdown : Boolean(item.hasDropdown),
+                          href: resolveLocalizedMenuHref(item.href, base?.href || `/${lang}`),
+                          subItems: base?.subItems,
+                      };
+                  })
+            : Object.entries(baseMenuByKey).map(([k, v]) => ({ id: k, ...v }));
+
+    const showLanguageSwitcher = siteConfig?.menu?.show_language_switcher !== false;
+    const showFavoritesButton = siteConfig?.menu?.show_favorites_button !== false;
+    const favLabel = lang === 'en' ? 'My Favorites' : lang === 'fr' ? 'Mes Favoris' : 'Mis Favoritas';
 
     return (
         <nav
@@ -190,11 +240,10 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                     */}
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center gap-x-2 xl:gap-x-6">
+                    <div className="hidden lg:flex items-center gap-x-2 xl:gap-x-5" data-navbar-menu="true">
                         {menuItems.map((item) => {
-                            const shouldDisablePrefetch = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => item.href.includes(p));
                             return (
-                            <div key={item.name} className="relative group">
+                            <div key={item.id || item.name} className="relative group" data-nav-item={item.id}>
                                 <Link
                                     href={item.href || "#"}
                                     prefetch={false}
@@ -205,12 +254,10 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                 </Link>
 
                                 {/* Dropdown Menu */}
-                                {item.hasDropdown && item.subItems && (
+                                {item.hasDropdown && item.subItems && item.subItems.length > 0 && (
                                     <div className="absolute top-full left-0 w-56 bg-primary-black border border-white/10 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 pt-2">
                                         <div className="bg-primary-black border-t-2 border-luxury-gold flex flex-col">
-                                            {item.subItems.map((subItem) => {
-                                                const subShouldDisable = ['projects', 'hotels', 'services', 'investments', 'about', 'blog'].some(p => subItem.href.includes(p));
-                                                return (
+                                            {item.subItems.map((subItem) => (
                                                 <Link
                                                     key={subItem.label}
                                                     href={subItem.href}
@@ -219,26 +266,69 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                                                 >
                                                     {subItem.label}
                                                 </Link>
-                                            )})}
+                                            ))}
                                         </div>
                                     </div>
                                 )}
                             </div>
                         )})}
+
+                        {/* Favorites Heart Drawer Button */}
+                        {showFavoritesButton && (
+                            <button
+                                type="button"
+                                onClick={() => setDrawerOpen(true)}
+                                aria-label={`${favLabel} (${favCount})`}
+                                title={favLabel}
+                                data-favorites-nav-btn="true"
+                                data-favorites-count={favCount}
+                                className={`relative inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border text-xs font-bold transition-all cursor-pointer ml-1 ${
+                                    favCount > 0
+                                        ? "bg-rose-600/20 border-rose-500/70 text-rose-300 hover:bg-rose-600 hover:text-white"
+                                        : "bg-white/5 border-white/15 text-white hover:border-luxury-gold hover:text-luxury-gold"
+                                }`}
+                            >
+                                <FaHeart aria-hidden="true" className={favCount > 0 ? "text-rose-500 text-xs" : "text-luxury-gold text-xs"} />
+                                <span data-favorites-badge-desktop="true">{favCount}</span>
+                            </button>
+                        )}
+
                         {/* Language Switcher (preserves current property/route and query params across ES/EN/FR) */}
-                        <div className="flex gap-2 text-xs font-bold text-white border-l border-white/20 pl-4 ml-2">
-                            <Link href={getLocalizedHref("es")} className={`hover:text-luxury-gold ${lang === 'es' ? 'text-luxury-gold' : ''}`}>ES</Link>
-                            <Link href={getLocalizedHref("en")} className={`hover:text-luxury-gold ${lang === 'en' ? 'text-luxury-gold' : ''}`}>EN</Link>
-                            <Link href={getLocalizedHref("fr")} className={`hover:text-luxury-gold ${lang === 'fr' ? 'text-luxury-gold' : ''}`}>FR</Link>
-                        </div>
+                        {showLanguageSwitcher && (
+                            <div className="flex gap-2 text-xs font-bold text-white border-l border-white/20 pl-3 ml-1">
+                                <Link href={getLocalizedHref("es")} className={`hover:text-luxury-gold ${lang === 'es' ? 'text-luxury-gold' : ''}`}>ES</Link>
+                                <Link href={getLocalizedHref("en")} className={`hover:text-luxury-gold ${lang === 'en' ? 'text-luxury-gold' : ''}`}>EN</Link>
+                                <Link href={getLocalizedHref("fr")} className={`hover:text-luxury-gold ${lang === 'fr' ? 'text-luxury-gold' : ''}`}>FR</Link>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Mobile Menu Button */}
-                    <div className="lg:hidden flex items-center">
+                    {/* Mobile Actions: Favorites Heart + Menu Button */}
+                    <div className="lg:hidden flex items-center gap-1.5">
+                        {showFavoritesButton && (
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    setDrawerOpen(true);
+                                }}
+                                aria-label={`${favLabel} (${favCount})`}
+                                data-favorites-nav-btn-mobile="true"
+                                data-favorites-count={favCount}
+                                className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full border text-xs font-bold transition-all cursor-pointer ${
+                                    favCount > 0
+                                        ? "bg-rose-600/25 border-rose-500/70 text-rose-200"
+                                        : "bg-white/5 border-white/15 text-white"
+                                }`}
+                            >
+                                <FaHeart aria-hidden="true" className={favCount > 0 ? "text-rose-500 text-xs" : "text-luxury-gold text-xs"} />
+                                <span>{favCount}</span>
+                            </button>
+                        )}
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             aria-label={isOpen ? "Close menu" : "Open menu"}
-                            className="text-luxury-gold hover:text-white focus:outline-none text-2xl transition-transform p-3 -mr-3"
+                            className="text-luxury-gold hover:text-white focus:outline-none text-2xl transition-transform p-3 -mr-2"
                         >
                             {isOpen ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
                         </button>
@@ -283,11 +373,13 @@ export default function Navbar({ dict, lang, servicesList = [], propertyTypes, v
                             )}
                         </div>
                     )})}
-                    <div className="p-4 flex gap-8 justify-center mt-6">
-                        <Link href={getLocalizedHref("es")} onClick={() => setIsOpen(false)} className={`text-lg font-bold p-4 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
-                        <Link href={getLocalizedHref("en")} onClick={() => setIsOpen(false)} className={`text-lg font-bold p-4 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
-                        <Link href={getLocalizedHref("fr")} onClick={() => setIsOpen(false)} className={`text-lg font-bold p-4 ${lang === 'fr' ? 'text-luxury-gold' : 'text-white'}`}>FRANÇAIS</Link>
-                    </div>
+                    {showLanguageSwitcher && (
+                        <div className="p-4 flex gap-6 justify-center mt-6 flex-wrap">
+                            <Link href={getLocalizedHref("es")} onClick={() => setIsOpen(false)} className={`text-base font-bold p-3 ${lang === 'es' ? 'text-luxury-gold' : 'text-white'}`}>ESPAÑOL</Link>
+                            <Link href={getLocalizedHref("en")} onClick={() => setIsOpen(false)} className={`text-base font-bold p-3 ${lang === 'en' ? 'text-luxury-gold' : 'text-white'}`}>ENGLISH</Link>
+                            <Link href={getLocalizedHref("fr")} onClick={() => setIsOpen(false)} className={`text-base font-bold p-3 ${lang === 'fr' ? 'text-luxury-gold' : 'text-white'}`}>FRANÇAIS</Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>

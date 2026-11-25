@@ -22,6 +22,8 @@ const ConstructionProgress = nextDynamic(() => import("@/components/property/Con
 const PriceDropNotify = nextDynamic(() => import("@/components/property/PriceDropNotify"));
 import ShareButtons from "@/components/property/ShareButtons";
 import PropertyCommercialDetails from "@/components/property/PropertyCommercialDetails";
+import FavoriteButton from "@/components/property/FavoriteButton";
+import PropertyAdvisorCard from "@/components/property/PropertyAdvisorCard";
 import { getRentalPricingSummary } from "@/lib/propertyPricing";
 
 // Sanity imports
@@ -656,9 +658,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
                     <div className="max-w-7xl mx-auto">
-                        <Link href={`/${lang}#properties`} prefetch={false} className="inline-flex items-center text-luxury-gold hover:text-white mb-6 uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px]">
-                            <FaArrowLeft aria-hidden="true" className="mr-2" /> {dict.properties.filters.allLocations}
-                        </Link>
+                        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                            <Link href={`/${lang}#properties`} prefetch={false} className="inline-flex items-center text-luxury-gold hover:text-white uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px]">
+                                <FaArrowLeft aria-hidden="true" className="mr-2" /> {dict.properties.filters.allLocations}
+                            </Link>
+                            <FavoriteButton property={property} lang={lang} variant="detail" />
+                        </div>
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -847,27 +852,36 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                         )}
 
-                        {/* Video Section */}
-                        {(((property as any)?.display || (property as any)?.specs?.display || {}).show_video_tour !== false) && (property.videoUrl || property.virtualTourUrl) && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {property.videoUrl && (
-                                    <div>
-                                        <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                            Video Tour
-                                        </h2>
-                                        <VideoPlayer url={property.videoUrl} title="Video Tour" />
-                                    </div>
-                                )}
-                                {property.virtualTourUrl && (
-                                    <div>
-                                        <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
-                                            Tour Virtual 360°
-                                        </h2>
-                                        <VideoPlayer url={property.virtualTourUrl} title="Virtual Tour" />
-                                    </div>
-                                )}
-                            </div>
-                        )}
+                        {/* Video & Virtual Tour 360° Section (Independent Fase 4 Toggles with legacy fallback) */}
+                        {(() => {
+                            const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                            const legacyShow = disp.show_video_tour !== false;
+                            const showVideo = typeof disp.show_video === 'boolean' ? disp.show_video : legacyShow;
+                            const showVirtualTour = typeof disp.show_virtual_tour === 'boolean' ? disp.show_virtual_tour : legacyShow;
+                            const renderVideo = Boolean(showVideo && property.videoUrl);
+                            const renderTour = Boolean(showVirtualTour && property.virtualTourUrl);
+                            if (!renderVideo && !renderTour) return null;
+                            return (
+                                <div className={`grid grid-cols-1 ${renderVideo && renderTour ? 'md:grid-cols-2' : ''} gap-8`}>
+                                    {renderVideo && (
+                                        <div data-property-video-block="true">
+                                            <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
+                                                Video Tour
+                                            </h2>
+                                            <VideoPlayer url={property.videoUrl!} title="Video Tour" />
+                                        </div>
+                                    )}
+                                    {renderTour && (
+                                        <div data-property-tour360-block="true">
+                                            <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
+                                                Tour Virtual 360°
+                                            </h2>
+                                            <VideoPlayer url={property.virtualTourUrl!} title="Virtual Tour" />
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })()}
 
                         {/* Calculations Section */}
                         {(() => {
@@ -926,6 +940,18 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                     {/* Sidebar / Contact */}
                     <div className="lg:col-span-1">
                         <div className="bg-dark-gray p-8 border-t-4 border-luxury-gold sticky top-24 shadow-2xl">
+                            {(() => {
+                                const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                                const advisor = (property as any)?.advisor;
+                                if (disp.show_advisor !== true || !advisor) return null;
+                                return (
+                                    <PropertyAdvisorCard
+                                        advisor={advisor}
+                                        lang={lang}
+                                        propertyTitle={translatedTitle}
+                                    />
+                                );
+                            })()}
                             <h3 className="text-xl font-bold text-white mb-2">{dict.contact.title}</h3>
                             <p className="text-gray-400 text-sm mb-6">
                                 {dict.contact.subtitle}

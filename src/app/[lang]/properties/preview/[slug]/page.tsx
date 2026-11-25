@@ -13,6 +13,9 @@ import { Footer } from "@/components/layout/Footer";
 import PropertyListings from "@/components/home/PropertyListings";
 import PropertyGallery from "@/components/property/PropertyGallery";
 import PropertyCommercialDetails from "@/components/property/PropertyCommercialDetails";
+import FavoriteButton from "@/components/property/FavoriteButton";
+import PropertyAdvisorCard from "@/components/property/PropertyAdvisorCard";
+import VideoPlayer from "@/components/property/VideoPlayer";
 import ContactForm from "@/components/contact/ContactForm";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { fetchLocalSandboxDraftPreview, isLocalSandboxEnabled } from "@/lib/localSandbox";
@@ -124,65 +127,68 @@ export default async function LocalDraftPreviewPage({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-black/40 to-black/30" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto">
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            {(() => {
-              const pricing = getRentalPricingSummary(property as any, lang);
-              return (
-                <span className="inline-block px-3 py-1 bg-luxury-gold text-black text-xs font-bold uppercase tracking-widest">
-                  {pricing.statusBadge}
-                </span>
-              );
-            })()}
-            {(() => {
-              const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
-              if (disp.show_commercial_badge === false) return null;
-              const stage = (property as unknown as { commercialStage?: string }).commercialStage || "";
-              const stageMap: Record<string, { label: string; cls: string }> = {
-                off_plan: { label: "EN PLANOS", cls: "bg-teal-700 text-white" },
-                pre_launch: { label: "PRE-LANZAMIENTO", cls: "bg-emerald-700 text-white" },
-                pre_construction: { label: "PRE-CONSTRUCCIÓN", cls: "bg-emerald-700 text-white" },
-                under_construction: { label: "EN CONSTRUCCIÓN", cls: "bg-amber-700 text-white" },
-                resale: { label: "REVENTA", cls: "bg-indigo-700 text-white" },
-                turnkey: { label: "LLAVE EN MANO", cls: "bg-sky-700 text-white" },
-              };
-              const derived =
-                stage && stageMap[stage]
-                  ? stageMap[stage]
-                  : property.isResale
-                  ? stageMap.resale
-                  : property.preConstruction
-                  ? stageMap.pre_construction
-                  : property.preLaunch
-                  ? stageMap.pre_launch
-                  : null;
-              if (!derived) return null;
-              const pct = (property as unknown as { completionPercent?: number | string }).completionPercent;
-              return (
-                <span className={`inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest ${derived.cls}`}>
-                  {derived.label}
-                  {pct !== undefined && pct !== null && pct !== "" && (stage === "pre_construction" || stage === "under_construction")
-                    ? ` · ${pct}% obra`
-                    : ""}
-                </span>
-              );
-            })()}
-            {(() => {
-              const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
-              if (disp.show_availability_badge === false) return null;
-              const inv = String((property as any).inventoryStatus || "Disponible");
-              if (!inv || inv === "Disponible") return null;
-              const cls =
-                inv === "Vendido"
-                  ? "bg-rose-700 text-white"
-                  : inv === "Reservado"
-                  ? "bg-amber-500 text-black"
-                  : "bg-sky-700 text-white";
-              return (
-                <span className={`inline-block px-3 py-1 text-xs font-extrabold uppercase tracking-widest ${cls}`}>
-                  {inv}
-                </span>
-              );
-            })()}
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {(() => {
+                const pricing = getRentalPricingSummary(property as any, lang);
+                return (
+                  <span className="inline-block px-3 py-1 bg-luxury-gold text-black text-xs font-bold uppercase tracking-widest">
+                    {pricing.statusBadge}
+                  </span>
+                );
+              })()}
+              {(() => {
+                const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                if (disp.show_commercial_badge === false) return null;
+                const stage = (property as unknown as { commercialStage?: string }).commercialStage || "";
+                const stageMap: Record<string, { label: string; cls: string }> = {
+                  off_plan: { label: "EN PLANOS", cls: "bg-teal-700 text-white" },
+                  pre_launch: { label: "PRE-LANZAMIENTO", cls: "bg-emerald-700 text-white" },
+                  pre_construction: { label: "PRE-CONSTRUCCIÓN", cls: "bg-emerald-700 text-white" },
+                  under_construction: { label: "EN CONSTRUCCIÓN", cls: "bg-amber-700 text-white" },
+                  resale: { label: "REVENTA", cls: "bg-indigo-700 text-white" },
+                  turnkey: { label: "LLAVE EN MANO", cls: "bg-sky-700 text-white" },
+                };
+                const derived =
+                  stage && stageMap[stage]
+                    ? stageMap[stage]
+                    : property.isResale
+                    ? stageMap.resale
+                    : property.preConstruction
+                    ? stageMap.pre_construction
+                    : property.preLaunch
+                    ? stageMap.pre_launch
+                    : null;
+                if (!derived) return null;
+                const pct = (property as unknown as { completionPercent?: number | string }).completionPercent;
+                return (
+                  <span className={`inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest ${derived.cls}`}>
+                    {derived.label}
+                    {pct !== undefined && pct !== null && pct !== "" && (stage === "pre_construction" || stage === "under_construction")
+                      ? ` · ${pct}% obra`
+                      : ""}
+                  </span>
+                );
+              })()}
+              {(() => {
+                const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                if (disp.show_availability_badge === false) return null;
+                const inv = String((property as any).inventoryStatus || "Disponible");
+                if (!inv || inv === "Disponible") return null;
+                const cls =
+                  inv === "Vendido"
+                    ? "bg-rose-700 text-white"
+                    : inv === "Reservado"
+                    ? "bg-amber-500 text-black"
+                    : "bg-sky-700 text-white";
+                return (
+                  <span className={`inline-block px-3 py-1 text-xs font-extrabold uppercase tracking-widest ${cls}`}>
+                    {inv}
+                  </span>
+                );
+              })()}
+            </div>
+            <FavoriteButton property={property} lang={lang} variant="detail" />
           </div>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
@@ -284,6 +290,33 @@ export default async function LocalDraftPreviewPage({
             {/* Payment Plan & Confirmed Technical Specs */}
             <PropertyCommercialDetails property={property as any} lang={lang} />
 
+            {/* Video & Virtual Tour 360° (Independent toggles) */}
+            {(() => {
+              const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+              const legacyShow = disp.show_video_tour !== false;
+              const showVideo = typeof disp.show_video === "boolean" ? disp.show_video : legacyShow;
+              const showVirtualTour = typeof disp.show_virtual_tour === "boolean" ? disp.show_virtual_tour : legacyShow;
+              const renderVideo = Boolean(showVideo && property.videoUrl);
+              const renderTour = Boolean(showVirtualTour && property.virtualTourUrl);
+              if (!renderVideo && !renderTour) return null;
+              return (
+                <div className={`grid grid-cols-1 ${renderVideo && renderTour ? "md:grid-cols-2" : ""} gap-6`}>
+                  {renderVideo && (
+                    <div data-property-video-block="true">
+                      <h2 className="text-2xl font-serif text-luxury-gold mb-4">Video Tour</h2>
+                      <VideoPlayer url={property.videoUrl!} title="Video Tour" />
+                    </div>
+                  )}
+                  {renderTour && (
+                    <div data-property-tour360-block="true">
+                      <h2 className="text-2xl font-serif text-luxury-gold mb-4">Tour Virtual 360°</h2>
+                      <VideoPlayer url={property.virtualTourUrl!} title="Virtual Tour" />
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             {/* Features */}
             {(((property as any)?.display || (property as any)?.specs?.display || {}).show_amenities !== false) && feats.length > 0 && (
               <div>
@@ -303,6 +336,18 @@ export default async function LocalDraftPreviewPage({
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-dark-gray p-8 border-t-4 border-luxury-gold shadow-2xl">
+              {(() => {
+                const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
+                const advisor = (property as any)?.advisor;
+                if (disp.show_advisor !== true || !advisor) return null;
+                return (
+                  <PropertyAdvisorCard
+                    advisor={advisor}
+                    lang={lang}
+                    propertyTitle={property.title}
+                  />
+                );
+              })()}
               <h3 className="text-xl font-bold text-white mb-2">{dict.contact.title}</h3>
               <p className="text-gray-400 text-sm mb-6">{dict.contact.subtitle}</p>
               <ContactForm

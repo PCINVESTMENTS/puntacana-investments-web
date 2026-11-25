@@ -1,11 +1,14 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import dynamic from "next/dynamic";
-const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer), { ssr: true });
+import nextDynamic from "next/dynamic";
+const Footer = nextDynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer), { ssr: true });
 import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { FaCheck, FaArrowRight } from "react-icons/fa";
+import { fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandbox";
+
+export const dynamic = "force-dynamic";
 
 // Bidirectional slug mapping across all supported languages
 export const SERVICE_SLUG_MAP: Record<string, { es: string; en: string; fr: string }> = {
@@ -165,8 +168,38 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
         permanentRedirect(`/${currentLang}/services/${targetSlug}`);
     }
 
-    // Find service by targetSlug or slug
-    const service = dict.sections.services.items.find((s: any) => s.slug === targetSlug || s.slug === slug);
+    // Merge Fase 8 overrides (supports edited baseline services & custom new services)
+    const phase8Data = fetchLocalSandboxPhase8();
+    const p8Items = Array.isArray(phase8Data?.services?.items) ? phase8Data!.services.items : [];
+    const activeP8List = p8Items
+        .filter((s: any) => s && s.is_active !== false)
+        .sort((a: any, b: any) => (a.order ?? 999) - (b.order ?? 999))
+        .map((s: any) => {
+            const locSlug = (currentLang === "en" ? s.slug_en : currentLang === "fr" ? s.slug_fr : s.slug) || s.slug;
+            const dictFallback = dict.sections.services.items.find(
+                (d: any) => d.slug === locSlug || d.slug === s.slug || d.slug === s.slug_en
+            ) as any;
+            return {
+                ...(dictFallback || {}),
+                slug: locSlug,
+                rawSlugs: [s.slug, s.slug_en, s.slug_fr].filter(Boolean),
+                title: s.title?.[currentLang] || s.title?.es || dictFallback?.title || locSlug,
+                description: s.description?.[currentLang] || s.description?.es || dictFallback?.description || "",
+                longDescription: s.longDescription?.[currentLang] || s.longDescription?.es || dictFallback?.longDescription || s.description?.[currentLang] || "",
+                img: resolvePhase8MediaUrl(s.img, dictFallback?.img || "/images/services-team-horizontal.webp"),
+                details:
+                    Array.isArray(s.details?.[currentLang]) && s.details[currentLang].length > 0
+                        ? s.details[currentLang]
+                        : dictFallback?.details || [],
+            };
+        });
+
+    const effectiveServiceItems = activeP8List.length > 0 ? activeP8List : dict.sections.services.items;
+
+    // Find service by targetSlug or slug (including cross-language rawSlugs from Fase 8)
+    const service = effectiveServiceItems.find(
+        (s: any) => s.slug === targetSlug || s.slug === slug || (Array.isArray(s.rawSlugs) && (s.rawSlugs.includes(targetSlug) || s.rawSlugs.includes(slug)))
+    );
 
     if (!service) {
         return notFound();
@@ -244,6 +277,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                         src={service.img}
                         alt={service.title}
                         fill
+                        unoptimized={typeof service.img === "string" && service.img.startsWith("http://127.0.0.1")}
                         sizes="100vw"
                         quality={60}
                         className="object-cover object-[center_30%]"
@@ -355,11 +389,11 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
                                     {currentLang === "en" ? "Other Services" : currentLang === "fr" ? "Autres Services" : "Otros Servicios"}
                                 </h4>
                                 <nav className="space-y-2">
-                                    {dict.sections.services.items.map((s: any) => (
+                                    {effectiveServiceItems.map((s: any) => (
                                         <Link
                                             key={s.slug}
                                             href={`/${currentLang}/services/${s.slug}`}
-                                            className={`block p-3 rounded transition-colors ${s.slug === targetSlug ? "bg-luxury-gold text-black font-bold" : "text-gray-400 hover:text-white hover:bg-white/5"}`}
+                                            className={`block p-3 rounded transition-colors ${s.slug === targetSlug || s.slug === service.slug ? "bg-luxury-gold text-black font-bold" : "text-gray-400 hover:text-white hover:bg-white/5"}`}
                                         >
                                             {s.title}
                                         </Link>

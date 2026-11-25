@@ -14,9 +14,16 @@ interface FlyAndBuySectionProps {
         cta: string;
     };
     lang: string;
+    programsOverride?: any[] | null;
 }
 
-export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) {
+export default function FlyAndBuySection({ dict, lang, programsOverride }: FlyAndBuySectionProps) {
+    const programs = Array.isArray(programsOverride) && programsOverride.length > 0 ? programsOverride : flyAndBuyPrograms;
+    const pickL = (val: any) => {
+        if (!val) return "";
+        if (typeof val === "string") return val;
+        return val[lang as 'es' | 'en' | 'fr'] || val.es || val.en || "";
+    };
     return (
         <section id="fly-and-buy" className="py-10 md:py-20 bg-primary-black relative overflow-hidden">
             {/* Background Decoration */}
@@ -44,16 +51,20 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
 
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                    {flyAndBuyPrograms.map((program, index) => (
-                        <ScrollReveal key={program.slug} delay={index * 0.2}>
+                    {programs.map((program: any, index: number) => {
+                        const heroImg = program.heroImage || "/images/fly-and-buy/basic.jpg";
+                        const includesList = Array.isArray(program.includes) ? program.includes : [];
+                        return (
+                        <ScrollReveal key={program.slug || index} delay={index * 0.2}>
                             <Link href={`/${lang}/fly-and-buy#${program.slug}`} className="group block h-full">
                                 <div className="bg-primary-black border-2 border-luxury-gold/30 rounded-sm overflow-hidden h-full hover:border-luxury-gold transition-all duration-300 flex flex-col hover:shadow-2xl hover:-translate-y-2 relative">
                                     {/* Image Area */}
                                     <div className="relative h-64 overflow-hidden">
                                         <Image
-                                            src={program.heroImage}
-                                            alt={program.title[lang as 'es' | 'en' | 'fr']}
+                                            src={heroImg}
+                                            alt={pickL(program.title)}
                                             fill
+                                            unoptimized={heroImg.startsWith("http://127.0.0.1")}
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             quality={60}
                                             className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -62,32 +73,34 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
 
                                         {/* Duration Badge */}
                                         <div className="absolute bottom-4 left-4 bg-luxury-gold text-black text-xs font-bold px-3 py-1 uppercase tracking-widest shadow-lg">
-                                            {program.duration[lang as 'es' | 'en' | 'fr']}
+                                            {pickL(program.duration)}
                                         </div>
                                     </div>
 
                                     {/* Content Area */}
                                     <div className="p-8 flex flex-col flex-grow">
                                         <h3 className="text-[1.1rem] sm:text-xl md:text-2xl font-serif font-bold text-white mb-2 whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal group-hover:text-luxury-gold transition-colors">
-                                            {program.title[lang as 'es' | 'en' | 'fr']}
+                                            {pickL(program.title)}
                                         </h3>
                                         <p className="text-luxury-gold text-sm font-semibold uppercase tracking-wider mb-4">
-                                            {program.subtitle[lang as 'es' | 'en' | 'fr']}
+                                            {pickL(program.subtitle)}
                                         </p>
 
                                         <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow border-b border-white/10 pb-6">
-                                            {program.description[lang as 'es' | 'en' | 'fr']}
+                                            {pickL(program.description)}
                                         </p>
 
                                         {/* Features Preview */}
-                                        <ul className="space-y-3 mb-8">
-                                            {program.includes.slice(0, 3).map((section, idx) => (
-                                                <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
-                                                    <FaCheck aria-hidden="true" className="text-luxury-gold mt-1 flex-shrink-0 text-xs" />
-                                                    <span>{section.title[lang as 'es' | 'en' | 'fr']}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        {includesList.length > 0 && (
+                                            <ul className="space-y-3 mb-8">
+                                                {includesList.slice(0, 3).map((section: any, idx: number) => (
+                                                    <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
+                                                        <FaCheck aria-hidden="true" className="text-luxury-gold mt-1 flex-shrink-0 text-xs" />
+                                                        <span>{pickL(section.title)}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
 
                                         <div className="mt-auto flex items-center justify-between text-white group-hover:text-luxury-gold transition-colors text-sm font-bold uppercase tracking-wider">
                                             <span>{dict.cta}</span>
@@ -97,7 +110,7 @@ export default function FlyAndBuySection({ dict, lang }: FlyAndBuySectionProps) 
                                 </div>
                             </Link>
                         </ScrollReveal>
-                    ))}
+                    )})}
                 </div>
             </div>
         </section>
