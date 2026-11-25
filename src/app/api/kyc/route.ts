@@ -1,6 +1,111 @@
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { isLocalSandboxEnabled } from '@/lib/localSandbox';
+
+const ALLOWED_LOCAL_DD_EXTS = new Set(['.pdf', '.jpg', '.jpeg', '.png', '.webp']);
+
+async function saveLocalDueDiligenceDirect(formData: FormData) {
+    const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+    if (!catalogFile) {
+        throw new Error('LOCAL_PROPERTIES_SANDBOX_FILE no configurado.');
+    }
+    const sandboxDir = path.dirname(catalogFile);
+    const p7File = path.join(sandboxDir, 'phase7_investments_live.json');
+    if (!fs.existsSync(p7File)) {
+        throw new Error('Archivo local phase7_investments_live.json no encontrado.');
+    }
+    const state = JSON.parse(fs.readFileSync(p7File, 'utf-8'));
+    const ddCfg = state.due_diligence || {};
+
+    const subId = `KYC-LOC-${crypto.randomBytes(3).toString('hex').toUpperCase()}`;
+    const getStr = (...keys: string[]) => {
+        for (const k of keys) {
+            const v = formData.get(k);
+            if (typeof v === 'string' && v.trim()) return v.trim();
+        }
+        return '';
+    };
+
+    const formType = getStr('formType', 'form_type') || 'Persona Física';
+    const nombres = getStr('nombres', 'razon_social', 'nombre') || 'Inversor Local';
+    const apellidos = getStr('apellidos');
+    const fullName = `${nombres} ${apellidos}`.trim();
+    const email = getStr('correo_electronico', 'email');
+    const phone = getStr('tel_celular', 'telefono_celular', 'telefono', 'phone');
+    const rawLang = getStr('lang').toLowerCase();
+    const lang = rawLang === 'en' || rawLang === 'fr' ? rawLang : 'es';
+
+    const maxBytes = Number(ddCfg.max_file_mb || 5) * 1024 * 1024;
+    const destDir = path.join(sandboxDir, 'media', 'due_diligence_local', subId);
+    const savedDocs: Record<string, any>[] = [];
+    const nowIso = new Date().toISOString();
+
+    for (const [fieldName, value] of formData.entries()) {
+        if (typeof value === 'string' || !value || typeof (value as any).arrayBuffer !== 'function') continue;
+        const fileObj = value as unknown as File;
+        if (!fileObj.size) continue;
+        if (ddCfg.enable_document_uploads === false) {
+            return { error: 'La carga de documentos de Debida Diligencia está deshabilitada temporalmente.', status: 400 };
+        }
+        const origName = fileObj.name || `${fieldName}.pdf`;
+        const ext = path.extname(origName).toLowerCase();
+        if (!ALLOWED_LOCAL_DD_EXTS.has(ext)) {
+            return { error: `Formato no permitido en '${fieldName}': ${origName}. Solo PDF, JPG, PNG o WebP.`, status: 400 };
+        }
+        const buf = Buffer.from(await fileObj.arrayBuffer());
+        if (buf.length === 0) continue;
+        if (buf.length > maxBytes) {
+            return { error: `El archivo '${origName}' excede el límite de ${ddCfg.max_file_mb || 5} MB.`, status: 400 };
+        }
+        if (ext === '.pdf' && !buf.subarray(0, 5).equals(Buffer.from('%PDF-'))) {
+            return { error: `El archivo '${origName}' no tiene una cabecera PDF válida (%PDF-).`, status: 400 };
+        }
+        fs.mkdirSync(destDir, { recursive: true });
+        const safeField = fieldName.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40) || 'doc';
+        const storedName = `${safeField}-${crypto.randomBytes(3).toString('hex')}${ext}`;
+        const storedPath = path.join(destDir, storedName);
+        fs.writeFileSync(storedPath, buf);
+        savedDocs.push({
+            field_name: safeField,
+            original_filename: origName,
+            stored_filename: storedName,
+            stored_path: storedPath,
+            size_bytes: buf.length,
+            content_type: fileObj.type || 'application/octet-stream',
+            uploaded_at: nowIso,
+        });
+    }
+
+    const submission = {
+        id: subId,
+        form_type: formType,
+        full_name: fullName,
+        email,
+        phone,
+        lang,
+        status: 'Recibido',
+        created_at: nowIso,
+        documents: savedDocs,
+        documents_count: savedDocs.length,
+        sandbox_isolated: true,
+    };
+
+    const prevSubs = Array.isArray(ddCfg.submissions) ? ddCfg.submissions : [];
+    state.due_diligence = {
+        ...ddCfg,
+        submissions: [submission, ...prevSubs].slice(0, 100),
+    };
+    state.version = Number(state.version || 1) + 1;
+    state.updated_at_iso = nowIso;
+
+    const tmpFile = `${p7File}.tmp`;
+    fs.writeFileSync(tmpFile, JSON.stringify(state, null, 2), 'utf-8');
+    fs.renameSync(tmpFile, p7File);
+    return { submission, status: 201 };
+}
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -18,6 +123,17 @@ export async function POST(request: Request) {
         const formType = formData.get('formType') as string;
 
         if (isLocalSandboxEnabled()) {
+            if (process.env.LOCAL_PROPERTIES_SANDBOX_FILE) {
+                const direct = await saveLocalDueDiligenceDirect(formData);
+                if ('error' in direct && direct.error) {
+                    return NextResponse.json({ success: false, error: direct.error }, { status: direct.status || 400 });
+                }
+                return NextResponse.json({
+                    success: true,
+                    sandbox_isolated: true,
+                    data: direct.submission,
+                }, { status: 201 });
+            }
             const sandboxApi = process.env.LOCAL_PROPERTIES_SANDBOX_URL || 'http://127.0.0.1:8110';
             const localResp = await fetch(`${sandboxApi}/api/phase7-sandbox/due-diligence/submit/`, {
                 method: 'POST',
