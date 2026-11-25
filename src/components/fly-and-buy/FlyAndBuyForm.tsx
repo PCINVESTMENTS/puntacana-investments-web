@@ -142,7 +142,12 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-12 bg-zinc-900/50 p-8 md:p-12 border border-white/5 rounded-sm shadow-2xl backdrop-blur-sm">
             <input type="hidden" name="lang" value={lang} />
             {state.message && !state.success && (
-                <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-center">
+                <div
+                    role="alert"
+                    data-flybuy-error="true"
+                    data-flybuy-closed-error={(state as any).closed ? "true" : "false"}
+                    className="p-4 bg-red-950/60 border border-red-500/60 text-red-100 rounded-lg text-center font-medium"
+                >
                     {state.message}
                 </div>
             )}

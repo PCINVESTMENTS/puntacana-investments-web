@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxFlyAndBuyLead, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -56,6 +56,20 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     if (isLocalSandboxEnabled()) {
         const formLang = String(formData.get('lang') || 'es').toLowerCase();
         const safeLang = formLang === 'en' || formLang === 'fr' ? formLang : 'es';
+        const phase8 = fetchLocalSandboxPhase8();
+        if (phase8?.fly_and_buy?.show_form === false) {
+            return {
+                success: false,
+                closed: true,
+                sandbox_isolated: true,
+                message:
+                    safeLang === 'en'
+                        ? 'Fly & Buy intake is currently closed. Your request could not be submitted.'
+                        : safeLang === 'fr'
+                        ? 'La réception des demandes Fly & Buy est actuellement fermée. Votre demande n’a pas été envoyée.'
+                        : 'La recepción de solicitudes Fly & Buy está cerrada actualmente. Tu solicitud no fue registrada.',
+            };
+        }
         const saved = appendSandboxFlyAndBuyLead({
             form_type: 'fly_and_buy',
             form_label: 'Solicitud VIP Fly & Buy',

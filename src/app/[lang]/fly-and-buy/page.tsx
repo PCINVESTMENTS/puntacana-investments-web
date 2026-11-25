@@ -390,13 +390,24 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
                                 ? "Venga, confirme y compre con Punta Cana Investments."
                                 : "Come, confirm, and buy with Punta Cana Investments."}
                     </p>
-                    {showForm && (
+                    {showForm ? (
                         <Link
                             href={`/${lang}/fly-and-buy/form`}
                             className="inline-block bg-white text-black hover:bg-luxury-gold px-10 py-4 uppercase tracking-widest text-sm font-bold transition-all shadow-xl hover:scale-105"
                         >
                             {heroCta}
                         </Link>
+                    ) : (
+                        <div
+                            data-flybuy-form-closed-notice="true"
+                            className="inline-block px-6 py-3 rounded border border-amber-400/40 bg-amber-500/10 text-amber-200 text-sm font-semibold"
+                        >
+                            {isFr
+                                ? "La réception des demandes Fly & Buy est momentanément fermée."
+                                : isEs
+                                ? "La recepción de solicitudes Fly & Buy está cerrada temporalmente."
+                                : "Fly & Buy form intake is temporarily closed."}
+                        </div>
                     )}
                 </div>
             </section>

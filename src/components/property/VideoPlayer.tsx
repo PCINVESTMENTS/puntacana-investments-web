@@ -34,16 +34,39 @@ function toEmbedUrl(rawUrl: string): string {
     return trimmed;
 }
 
+function isDirectVideoFile(rawUrl: string): boolean {
+    const clean = String(rawUrl || "").trim().split("?")[0].split("#")[0].toLowerCase();
+    return /\.(mp4|webm|ogg|mov)$/i.test(clean);
+}
+
 export default function VideoPlayer({ url, title }: VideoPlayerProps) {
     if (!url) return null;
-    const embedSrc = toEmbedUrl(url);
+    const trimmed = String(url).trim();
+
+    if (isDirectVideoFile(trimmed)) {
+        return (
+            <div className="aspect-video w-full rounded-lg overflow-hidden border border-white/10 shadow-2xl relative bg-black">
+                <video
+                    src={trimmed}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    aria-label={title || "Video"}
+                    data-video-element="true"
+                    className="absolute inset-0 w-full h-full object-cover bg-black"
+                />
+            </div>
+        );
+    }
+
+    const embedSrc = toEmbedUrl(trimmed);
 
     return (
         <div className="aspect-video w-full rounded-lg overflow-hidden border border-white/10 shadow-2xl relative bg-black">
             <iframe
                 src={embedSrc}
                 title={title || "Video"}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; xr-spatial-tracking"
                 allowFullScreen
                 className="absolute inset-0 w-full h-full"
             ></iframe>
