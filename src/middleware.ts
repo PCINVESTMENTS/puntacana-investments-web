@@ -38,6 +38,20 @@ function getLocale(request: NextRequest): string {
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
     const { pathname } = request.nextUrl;
     const pathLower = pathname.toLowerCase();
+    const isCleanPreview = request.cookies.get("pci_clean_preview")?.value === "1";
+
+    // Block demo media files in Clean Pre-Publication Preview mode while preserving them in Sandbox
+    if (isCleanPreview && pathLower.startsWith("/demo-media")) {
+        return new NextResponse("Not Found (Demo media excluded in Clean Pre-Publication Preview)", {
+            status: 404,
+            headers: { "Content-Type": "text/plain; charset=utf-8" },
+        });
+    }
+
+    // Allow Clean Preview entry/exit route handlers without locale prefix redirects
+    if (pathLower === "/preview-clean" || pathLower.startsWith("/preview-clean/")) {
+        return NextResponse.next();
+    }
     
     // Safely parse API_URL to prevent double-slash errors (e.g. https://...//api/)
     // Removed duplicate API_URL logic here.

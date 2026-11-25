@@ -83,7 +83,12 @@ import PropertyComparatorWrapper from "@/components/property/PropertyComparatorW
 import { SiteConfigProvider } from "@/components/layout/SiteConfigContext";
 import { FavoritesProvider } from "@/components/property/FavoritesContext";
 import FavoritesDrawer from "@/components/property/FavoritesDrawer";
-import { fetchLocalSandboxPhase8 } from "@/lib/localSandbox";
+import CleanPreviewBanner from "@/components/layout/CleanPreviewBanner";
+import {
+  fetchLocalSandboxPhase8,
+  getCleanPreviewFlags,
+  isLocalSandboxEnabled,
+} from "@/lib/localSandbox";
 
 import Script from "next/script";
 import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
@@ -100,7 +105,9 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
-  const phase8Config = fetchLocalSandboxPhase8();
+  const localSandbox = isLocalSandboxEnabled();
+  const cleanPreview = await getCleanPreviewFlags();
+  const phase8Config = fetchLocalSandboxPhase8(cleanPreview);
   const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV";
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
@@ -141,11 +148,17 @@ export default async function RootLayout({
               {children}
               <PropertyComparatorWrapper lang={lang} />
               <FavoritesDrawer lang={lang} />
+              {cleanPreview.enabled && (
+                <CleanPreviewBanner
+                  lang={lang}
+                  includeCabezaDeToro={cleanPreview.includeCabezaDeToro}
+                />
+              )}
               {/* ChatBot temporarily removed */}
             </CompareProvider>
           </FavoritesProvider>
         </SiteConfigProvider>
-        <Analytics />
+        {!localSandbox && <Analytics />}
 
         {/* Dynamic tracking scripts deferred until interaction for PageSpeed */}
         <DelayedTracking gaId={gaId} metaPixelId={metaPixelId} hubspotId={hubspotId} gtmId={gtmId} />

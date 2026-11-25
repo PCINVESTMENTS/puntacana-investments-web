@@ -7,15 +7,35 @@ import { User, Building2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useParams } from "next/navigation";
+
+function LocalizedFormLoader() {
+    const params = useParams();
+    const lang = (params?.lang as "es" | "en" | "fr") || "es";
+    const loadingText =
+        lang === "fr"
+            ? "Chargement du formulaire..."
+            : lang === "en"
+            ? "Loading form..."
+            : "Cargando formulario...";
+    return (
+        <div
+            data-kyc-form-loading={lang}
+            className="min-h-[500px] flex items-center justify-center text-luxury-gold"
+        >
+            <div className="animate-pulse">{loadingText}</div>
+        </div>
+    );
+}
+
 // Dynamically import heavy form components to reduce initial JS payload and CPU time
 const PersonaFisicaForm = dynamic(() => import("@/components/forms/PersonaFisicaForm").then(mod => mod.PersonaFisicaForm), {
-    loading: () => <div className="min-h-[500px] flex items-center justify-center text-luxury-gold"><div className="animate-pulse">Cargando formulario... / Loading form...</div></div>
+    loading: () => <LocalizedFormLoader />
 });
 
 const PersonaJuridicaForm = dynamic(() => import("@/components/forms/PersonaJuridicaForm").then(mod => mod.PersonaJuridicaForm), {
-    loading: () => <div className="min-h-[500px] flex items-center justify-center text-luxury-gold"><div className="animate-pulse">Cargando formulario... / Loading form...</div></div>
+    loading: () => <LocalizedFormLoader />
 });
-import { useParams } from "next/navigation";
 
 export default function DueDiligenceContent({ ddConfig }: { ddConfig?: Record<string, any> | null }) {
     const enableFisica = ddConfig?.enable_persona_fisica !== false;

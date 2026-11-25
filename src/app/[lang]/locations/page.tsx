@@ -39,14 +39,15 @@ import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LocationsSection } from "@/components/home/LocationsSection";
-import { fetchLocalSandboxWebManager, mapWebManagerLocations } from "@/lib/localSandbox";
+import { fetchLocalSandboxWebManager, getCleanPreviewFlags, mapWebManagerLocations } from "@/lib/localSandbox";
 
 export const dynamic = "force-dynamic";
 
 export default async function LocationsPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
-    const wm = fetchLocalSandboxWebManager();
+    const cleanPreview = await getCleanPreviewFlags();
+    const wm = fetchLocalSandboxWebManager(cleanPreview);
     const dynamicLocations = wm
         ? mapWebManagerLocations(wm.locations, lang, "show_in_locations_page")
         : [];

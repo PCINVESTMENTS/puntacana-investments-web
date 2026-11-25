@@ -1,6 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { PARTNERS_QUERY } from "@/sanity/lib/queries";
-import { isLocalSandboxEnabled, fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandbox";
+import { isLocalSandboxEnabled, fetchLocalSandboxPhase8, getCleanPreviewFlags, resolvePhase8MediaUrl } from "@/lib/localSandbox";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
@@ -79,7 +79,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function PartnersPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
-    const phase8Data = fetchLocalSandboxPhase8();
+    const cleanPreview = await getCleanPreviewFlags();
+    const phase8Data = fetchLocalSandboxPhase8(cleanPreview);
     const p8Partners = phase8Data?.partners || null;
 
     const sandboxPartners = Array.isArray(p8Partners?.items)

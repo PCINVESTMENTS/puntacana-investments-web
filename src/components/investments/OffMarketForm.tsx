@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { FaCheckCircle, FaSpinner, FaExclamationTriangle } from "react-icons/fa";
 import { offMarketDict } from "@/dictionaries/offMarket";
 
-export default function OffMarketForm({ lang }: { lang: string }) {
+export default function OffMarketForm({ lang, isSandbox = false }: { lang: string; isSandbox?: boolean }) {
     const l = (lang === "en" || lang === "fr" ? lang : "es") as "es" | "en" | "fr";
     const t = offMarketDict[l].form;
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -510,7 +510,28 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         >
                             {status === "loading" ? <FaSpinner className="animate-spin text-xl" /> : t.fields.submit}
                         </button>
-                        <p className="text-center text-xs text-gray-400 mt-6">{t.fields.disclaimer}</p>
+                        {isSandbox ? (
+                            <p
+                                data-offmarket-local-disclaimer="true"
+                                className="text-center text-xs text-gray-300 mt-6 leading-relaxed bg-[#111111] border border-[#d4af37]/30 px-4 py-3"
+                            >
+                                {l === "en" ? (
+                                    <>
+                                        <strong className="text-[#d4af37]">Isolated local mode:</strong> upon submission, your request is recorded with a tracking reference directly in the Dashboard local test inbox (no real emails are sent to clients or production).
+                                    </>
+                                ) : l === "fr" ? (
+                                    <>
+                                        <strong className="text-[#d4af37]">Mode local isolé :</strong> lors de l&apos;envoi, votre demande est enregistrée avec une référence de suivi directement dans la boîte de test locale du tableau de bord (aucun e-mail réel n&apos;est envoyé aux clients ni en production).
+                                    </>
+                                ) : (
+                                    <>
+                                        <strong className="text-[#d4af37]">Modo local aislado:</strong> al enviar este requerimiento, su solicitud queda registrada con código de referencia directamente en el buzón local de pruebas del Dashboard (sin envío de correos reales a clientes ni a producción).
+                                    </>
+                                )}
+                            </p>
+                        ) : (
+                            <p className="text-center text-xs text-gray-400 mt-6">{t.fields.disclaimer}</p>
+                        )}
                     </div>
                 </div>
             </form>

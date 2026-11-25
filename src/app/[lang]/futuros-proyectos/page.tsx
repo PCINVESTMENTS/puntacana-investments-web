@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import FounderInvestmentForm from "@/components/forms/FounderInvestmentForm";
 import ReadMore from "@/components/ui/ReadMore";
 import { getDictionary } from "@/dictionaries/get-dictionary";
-import { fetchLocalSandboxPhase7, resolvePhase7MediaUrl } from "@/lib/localSandbox";
+import { fetchLocalSandboxPhase7, getCleanPreviewFlags, resolvePhase7MediaUrl } from "@/lib/localSandbox";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -94,7 +94,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 export default async function FuturosProyectosPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
-  const phase7 = fetchLocalSandboxPhase7();
+  const cleanPreview = await getCleanPreviewFlags();
+  const phase7 = fetchLocalSandboxPhase7(cleanPreview);
   const fp = phase7?.future_projects || null;
   const feat = fp?.featured || null;
   const heroBadge = feat?.badge?.[lang] || (lang === 'en' ? '🌿 Coming Soon' : lang === 'fr' ? '🌿 Bientôt' : '🌿 Próximamente');

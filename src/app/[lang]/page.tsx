@@ -31,6 +31,7 @@ import {
   fetchLocalSandboxWebManager,
   fetchLocalSandboxPhase7,
   fetchLocalSandboxPhase8,
+  getCleanPreviewFlags,
   resolvePhase8MediaUrl,
   mapSandboxBlogPosts,
   mapWebManagerLocations,
@@ -204,9 +205,10 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
   });
 
   // Fase 5, Fase 7 & Fase 8 Local overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
-  const webManager = fetchLocalSandboxWebManager();
-  const phase7Data = fetchLocalSandboxPhase7();
-  const phase8Data = fetchLocalSandboxPhase8();
+  const cleanPreview = await getCleanPreviewFlags();
+  const webManager = fetchLocalSandboxWebManager(cleanPreview);
+  const phase7Data = fetchLocalSandboxPhase7(cleanPreview);
+  const phase8Data = fetchLocalSandboxPhase8(cleanPreview);
   const wmHero = webManager?.homepage?.hero;
   const wmLocSec = webManager?.homepage?.locations_section;
   const secVis = webManager?.homepage?.sections_visibility || {};

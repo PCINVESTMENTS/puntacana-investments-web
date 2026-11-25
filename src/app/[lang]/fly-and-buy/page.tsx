@@ -8,7 +8,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { getDictionary } from "@/dictionaries/get-dictionary";
-import { fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandbox";
+import { fetchLocalSandboxPhase8, getCleanPreviewFlags, resolvePhase8MediaUrl } from "@/lib/localSandbox";
 import { FaCheck, FaBuilding, FaHandshake, FaMapMarkedAlt, FaBriefcase, FaHotel, FaCar, FaChartLine, FaStar, FaPen, FaPlane, FaChevronDown } from "react-icons/fa";
 
 export const dynamic = "force-dynamic";
@@ -89,7 +89,8 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
     const dict = await getDictionary(lang);
     const l = (isFr ? 'fr' : isEs ? 'es' : 'en') as 'es' | 'en' | 'fr';
 
-    const phase8Data = fetchLocalSandboxPhase8();
+    const cleanPreview = await getCleanPreviewFlags();
+    const phase8Data = fetchLocalSandboxPhase8(cleanPreview);
     const p8Fb = phase8Data?.fly_and_buy || null;
     const pickP8 = (obj: any, fallback: string) =>
         obj && typeof obj === "object" ? obj[l] || obj.es || obj.en || fallback : fallback;

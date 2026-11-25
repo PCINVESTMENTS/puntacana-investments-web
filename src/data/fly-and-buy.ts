@@ -94,7 +94,7 @@ export const flyAndBuyPrograms: FlyAndBuyProgram[] = [
         idealFor: [
             { es: "Clientes que visitan el país por primera vez", en: "First-time visitors to the country", fr: "Clients visitant le pays pour la première fois" },
             { es: "Compradores en etapa de evaluación", en: "Buyers in the evaluation stage", fr: "Acheteurs en phase d'évaluation" },
-            { es: "Inversionistas que desean 'ver para creer' antes de decidir", en: "Investors who want to 'see to believe' before deciding", fr: "Investisseurs souhaitant 'voir pour y croire' avant de decidir" }
+            { es: "Inversionistas que desean 'ver para creer' antes de decidir", en: "Investors who want to 'see to believe' before deciding", fr: "Investisseurs souhaitant 'voir pour y croire' avant de décider" }
         ]
     },
     {

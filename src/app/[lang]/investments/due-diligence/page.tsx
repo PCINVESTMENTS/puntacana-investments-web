@@ -4,7 +4,7 @@ import nextDynamic from "next/dynamic";
 const Footer = nextDynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer), { ssr: true });
 import DueDiligenceContent from "./DueDiligenceContent";
 import { Metadata } from "next";
-import { fetchLocalSandboxPhase7 } from "@/lib/localSandbox";
+import { fetchLocalSandboxPhase7, getCleanPreviewFlags } from "@/lib/localSandbox";
 
 export const dynamic = "force-dynamic";
 
@@ -108,7 +108,8 @@ export default async function DueDiligencePage({ params }: { params: Promise<{ l
         ]
     };
 
-    const phase7 = fetchLocalSandboxPhase7();
+    const cleanPreview = await getCleanPreviewFlags();
+    const phase7 = fetchLocalSandboxPhase7(cleanPreview);
     const ddConfig = phase7?.due_diligence || null;
 
     return (

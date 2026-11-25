@@ -9,6 +9,7 @@ import { Property, properties as localProperties } from "@/data/properties";
 import {
     fetchLocalSandboxCatalog,
     fetchLocalSandboxWebManager,
+    getCleanPreviewFlags,
     mapWebManagerLocations,
 } from "@/lib/localSandbox";
 import type { Metadata } from "next";
@@ -77,8 +78,10 @@ export default async function PropertiesPage({
     const dict = await getDictionary(lang);
 
     // Local Isolated Properties Sandbox Override (active ONLY when LOCAL_PROPERTIES_SANDBOX_URL is set)
-    const sandboxData = await fetchLocalSandboxCatalog();
+    const cleanPreview = await getCleanPreviewFlags();
+    const sandboxData = await fetchLocalSandboxCatalog(cleanPreview);
     if (sandboxData) {
+        const wm = fetchLocalSandboxWebManager(cleanPreview);
         const properties = [...sandboxData.properties].sort(
             (a, b) => (a.catalog_position ?? 999999) - (b.catalog_position ?? 999999)
         );
@@ -106,13 +109,12 @@ export default async function PropertiesPage({
                         sectionTitle={catalogSectionTitle}
                         dict={dict.properties}
                         lang={lang}
-                        locations={(() => {
-                            const wm = fetchLocalSandboxWebManager();
-                            return wm
+                        locations={
+                            wm
                                 ? mapWebManagerLocations(wm.locations, lang, "show_in_property_filters")
-                                : dict.sections.locations.items;
-                        })()}
-                        locationPlacements={fetchLocalSandboxWebManager()?.placements?.location_placements || {}}
+                                : dict.sections.locations.items
+                        }
+                        locationPlacements={wm?.placements?.location_placements || {}}
                         initialFilters={{
                             status: statusParam,
                             location: locationParam,
