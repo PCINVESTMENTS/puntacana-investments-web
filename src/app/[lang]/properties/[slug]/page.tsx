@@ -225,15 +225,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
     const fallbackDesc = pricingMeta.isRent
         ? (lang === 'en'
-            ? `Discover ${translatedTitle} for rent in ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`
+            ? `Discover ${translatedTitleText} for rent in ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`
             : lang === 'fr'
-            ? `Découvrez ${translatedTitle} à louer à ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`
-            : `Descubra ${translatedTitle} en renta en ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`)
+            ? `Découvrez ${translatedTitleText} à louer à ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`
+            : `Descubra ${translatedTitleText} en renta en ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`)
         : (lang === 'en'
-            ? `Discover ${translatedTitle} in Punta Cana. Luxury real estate investment opportunity with high ROI in Dominican Republic.`
+            ? `Discover ${translatedTitleText} in Punta Cana. Luxury real estate investment opportunity with high ROI in Dominican Republic.`
             : lang === 'fr'
-            ? `Découvrez ${translatedTitle} à Punta Cana. Opportunité d'investissement immobilier de luxe à haut rendement en République Dominicaine.`
-            : `Descubra ${translatedTitle} en Punta Cana. Oportunidad de inversión inmobiliaria de lujo con alta rentabilidad en República Dominicana.`);
+            ? `Découvrez ${translatedTitleText} à Punta Cana. Opportunité d'investissement immobilier de luxe à haut rendement en République Dominicaine.`
+            : `Descubra ${translatedTitleText} en Punta Cana. Oportunidad de inversión inmobiliaria de lujo con alta rentabilidad en República Dominicana.`);
 
     const description = cleanDesc.length >= 20 ? cleanDesc.slice(0, 160) : fallbackDesc;
     
@@ -245,7 +245,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             if (lang === 'en') {
                 keywordList = [
                     `Punta Cana ${property.type} for rent`,
-                    `${translatedTitle}`,
+                    `${translatedTitleText}`,
                     `Rent in ${loc}`,
                     ...(pricingMeta.hasNightly ? [`Nightly rental ${loc}`, `Vacation rental Punta Cana`] : []),
                     ...(pricingMeta.hasMonthly ? [`Monthly rental ${loc}`, `Long term rental Punta Cana`] : []),
@@ -253,7 +253,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             } else if (lang === 'fr') {
                 keywordList = [
                     `Location ${property.type === 'villa' ? 'villa' : 'appartement'} Punta Cana`,
-                    `${translatedTitle}`,
+                    `${translatedTitleText}`,
                     `Location à ${loc}`,
                     ...(pricingMeta.hasNightly ? [`Location par nuit ${loc}`, `Location saisonnière Punta Cana`] : []),
                     ...(pricingMeta.hasMonthly ? [`Location mensuelle ${loc}`, `Location longue durée Punta Cana`] : []),
@@ -261,7 +261,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
             } else {
                 keywordList = [
                     `${property.type === 'villa' ? 'Villa' : 'Apartamento'} en renta en ${loc}`,
-                    `${translatedTitle}`,
+                    `${translatedTitleText}`,
                     `Alquiler en ${loc}`,
                     ...(pricingMeta.hasNightly ? [`Renta por noches ${loc}`, `Renta vacacional Punta Cana`] : []),
                     ...(pricingMeta.hasMonthly ? [`Renta mensual ${loc}`, `Alquiler a largo plazo en ${loc}`] : []),
