@@ -10,7 +10,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import ShareButtons from "@/components/property/ShareButtons";
 import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { getRentalPricingSummary } from "@/lib/rentalPricing";
+import { getRentalPricingSummary } from "@/lib/propertyPricing";
 
 interface BlogArticleViewProps {
   post: BlogPost;
@@ -442,16 +442,9 @@ export default function BlogArticleView({
                     const isLocalPropImg =
                       typeof property.image === "string" && property.image.startsWith("http://127.0.0.1:8110");
                     const rentalSummary = getRentalPricingSummary(property as any, lang);
-                    const priceLabel =
-                      property.status === "rent" && rentalSummary.primaryDisplay
-                        ? rentalSummary.primaryDisplay
-                        : property.price > 0
-                        ? `US$${property.price.toLocaleString()}`
-                        : lang === "en"
-                        ? "Price on Request"
-                        : lang === "fr"
-                        ? "Prix sur Demande"
-                        : "Precio a Consultar";
+                    const priceLabel = rentalSummary.cardPriceSecondary
+                      ? `${rentalSummary.cardPricePrimary} · ${rentalSummary.cardPriceSecondary}`
+                      : rentalSummary.cardPricePrimary;
 
                     return (
                       <Link
