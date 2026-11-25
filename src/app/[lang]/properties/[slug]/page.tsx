@@ -758,6 +758,11 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 className="mt-4"
                                 lang={lang}
                                 propertyData={JSON.stringify({
+                                    id: property.id,
+                                    code: (property as { internal_code?: string; code?: string }).internal_code
+                                        || (property as { code?: string }).code
+                                        || (property.id ? `PCI-${property.id}` : undefined),
+                                    slug: property.slug,
                                     title: translatedTitle,
                                     location: property.locationLabel,
                                     price: property.price,

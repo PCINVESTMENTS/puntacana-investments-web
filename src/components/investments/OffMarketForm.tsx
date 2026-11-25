@@ -10,6 +10,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
     const t = offMarketDict[lang as "es" | "en" | "fr"].form;
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [message, setMessage] = useState("");
+    const [referenceCode, setReferenceCode] = useState<string>("");
     const [activeTab, setActiveTab] = useState<"oportunidad" | "hoteles">("oportunidad");
 
     // Common Dropdowns
@@ -63,6 +64,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
         // Get selected regions
         const selectedRegions = regions.filter(r => formData.get(`region_${r}`) === "on");
         const regionString = selectedRegions.length > 0 ? selectedRegions.join(", ") : "No especificada";
+        const additionalNotes = String(formData.get("additionalNotes") || "").trim();
 
         let compiledMessage = `[REQUERIMIENTO DE BÚSQUEDA PRIVADA OFF-MARKET]\n`;
         compiledMessage += `Nombre: ${fullName}\n`;
@@ -70,23 +72,39 @@ export default function OffMarketForm({ lang }: { lang: string }) {
         compiledMessage += `Email: ${email}\n`;
         compiledMessage += `Teléfono: ${phone}\n\n`;
 
+        let budgetValue = "";
+        const structuredDetails: Record<string, string> = {};
+
         if (activeTab === "oportunidad") {
+            budgetValue = String(formData.get("opp_budget") || "");
+            structuredDetails.property_type = String(formData.get("opp_type") || "");
+            structuredDetails.physical_state = String(formData.get("opp_state") || "");
+            structuredDetails.discount = String(formData.get("opp_discount") || "");
+            structuredDetails.strategy = String(formData.get("opp_strategy") || "");
             compiledMessage += `--- PROPIEDADES DE OPORTUNIDAD Y REMATES ---\n`;
-            compiledMessage += `Presupuesto: ${formData.get("opp_budget")}\n`;
-            compiledMessage += `Tipo de Propiedad: ${formData.get("opp_type")}\n`;
-            compiledMessage += `Estado Físico: ${formData.get("opp_state")}\n`;
-            compiledMessage += `Descuento Exigido: ${formData.get("opp_discount")}\n`;
-            compiledMessage += `Estrategia: ${formData.get("opp_strategy")}\n`;
+            compiledMessage += `Presupuesto: ${budgetValue}\n`;
+            compiledMessage += `Tipo de Propiedad: ${structuredDetails.property_type}\n`;
+            compiledMessage += `Estado Físico: ${structuredDetails.physical_state}\n`;
+            compiledMessage += `Descuento Exigido: ${structuredDetails.discount}\n`;
+            compiledMessage += `Estrategia: ${structuredDetails.strategy}\n`;
         } else {
+            budgetValue = String(formData.get("hotel_budget") || "");
+            structuredDetails.environment = String(formData.get("hotel_environment") || "");
+            structuredDetails.rooms = String(formData.get("hotel_rooms") || "");
+            structuredDetails.operator = String(formData.get("hotel_operator") || "");
+            structuredDetails.objective = String(formData.get("hotel_objective") || "");
             compiledMessage += `--- HOTELES, RESORTS Y TERRENOS ---\n`;
-            compiledMessage += `Presupuesto: ${formData.get("hotel_budget")}\n`;
-            compiledMessage += `Entorno / Naturaleza: ${formData.get("hotel_environment")}\n`;
-            compiledMessage += `Cantidad de Habitaciones: ${formData.get("hotel_rooms")}\n`;
-            compiledMessage += `Preferencia de Operadora: ${formData.get("hotel_operator")}\n`;
-            compiledMessage += `Objetivo Principal: ${formData.get("hotel_objective")}\n`;
+            compiledMessage += `Presupuesto: ${budgetValue}\n`;
+            compiledMessage += `Entorno / Naturaleza: ${structuredDetails.environment}\n`;
+            compiledMessage += `Cantidad de Habitaciones: ${structuredDetails.rooms}\n`;
+            compiledMessage += `Preferencia de Operadora: ${structuredDetails.operator}\n`;
+            compiledMessage += `Objetivo Principal: ${structuredDetails.objective}\n`;
         }
 
         compiledMessage += `\nRegiones de Interés: ${regionString}\n`;
+        if (additionalNotes) {
+            compiledMessage += `\nNotas Adicionales (${lang.toUpperCase()}):\n${additionalNotes}\n`;
+        }
 
         const finalFormData = new FormData();
         finalFormData.append("name", fullName);
@@ -95,12 +113,24 @@ export default function OffMarketForm({ lang }: { lang: string }) {
         finalFormData.append("message", compiledMessage);
         finalFormData.append("subject", "Aplicación a Búsqueda Privada Off-Market");
         finalFormData.append("lang", lang);
+        finalFormData.append(
+            "offMarketData",
+            JSON.stringify({
+                tab: activeTab,
+                company: companyName || "",
+                budget: budgetValue,
+                regions: selectedRegions,
+                details: structuredDetails,
+                freeText: additionalNotes,
+            })
+        );
 
         try {
             const result = await submitContactForm(null, finalFormData);
             if (result?.success) {
                 setStatus("success");
                 setMessage(t.successMsg);
+                setReferenceCode(result.referenceCode || "");
                 (e.target as HTMLFormElement).reset();
             } else {
                 setStatus("error");
@@ -123,7 +153,12 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                         <FaCheckCircle aria-hidden="true" size={56} />
                     </div>
                     <h3 className="text-2xl font-serif text-white mb-4 uppercase tracking-widest">{t.received}</h3>
-                    <p className="text-gray-300 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto">{message}</p>
+                    <p className="text-gray-300 text-base md:text-lg mb-6 leading-relaxed max-w-2xl mx-auto">{message}</p>
+                    {referenceCode && (
+                        <div className="mb-8 inline-block px-4 py-1.5 bg-black/50 border border-[#d4af37]/40 rounded text-sm font-mono text-[#d4af37]">
+                            {lang === "es" ? "Referencia" : lang === "fr" ? "Référence" : "Reference"}: {referenceCode}
+                        </div>
+                    )}
                     <button
                         onClick={() => window.location.reload()}
                         className="px-8 py-3 bg-transparent border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-black transition-colors rounded-full font-semibold uppercase tracking-wider text-sm"
@@ -296,6 +331,29 @@ export default function OffMarketForm({ lang }: { lang: string }) {
                             </label>
                         ))}
                     </div>
+                </div>
+
+                <div>
+                    <label htmlFor="offmarket_additional_notes" className={labelClassName}>
+                        {lang === "fr"
+                            ? "Notes complémentaires / Commentaires (Optionnel)"
+                            : lang === "en"
+                            ? "Additional Notes / Comments (Optional)"
+                            : "Notas Adicionales / Comentarios (Opcional)"}
+                    </label>
+                    <textarea
+                        id="offmarket_additional_notes"
+                        name="additionalNotes"
+                        rows={4}
+                        className="w-full bg-[#111111] border border-white/20 px-4 py-4 text-white focus:outline-none focus:border-[#d4af37] transition-colors resize-none"
+                        placeholder={
+                            lang === "fr"
+                                ? "Partagez des critères spécifiques, délais ou préférences complémentaires dans votre langue..."
+                                : lang === "en"
+                                ? "Share specific criteria, timeline, or additional preferences in your language..."
+                                : "Comparta criterios específicos, plazos o preferencias adicionales..."
+                        }
+                    />
                 </div>
 
                 <div className="pt-8">
