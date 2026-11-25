@@ -9,6 +9,7 @@ import { FaBed, FaBath, FaRulerCombined, FaSearch, FaArrowRight, FaExchangeAlt }
 import { ScrollReveal } from "../ui/ScrollReveal";
 import { useCompare } from "@/components/property/CompareContext";
 import PropertyCardCarousel from "@/components/property/PropertyCardCarousel";
+import { getRentalPricingSummary } from "@/lib/propertyPricing";
 
 interface PropertyListingsProps {
     dict: {
@@ -486,15 +487,19 @@ function PropertyListingsContent({
                                                 </div>
 
                                                 {/* Status Badge */}
-                                                <div className={`px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-widest shadow-lg shrink-0 pointer-events-auto ${prop.status === 'sale'
-                                                    ? 'bg-luxury-gold text-black'
-                                                    : 'bg-white text-black'
-                                                    }`}>
-                                                    {prop.status === 'sale'
-                                                        ? (lang === 'en' ? 'For Sale' : lang === 'fr' ? 'À Vendre' : 'Venta')
-                                                        : (lang === 'en' ? 'Monthly Rent' : lang === 'fr' ? 'Loyer Mensuel' : 'Renta Mensual')
-                                                    }
-                                                </div>
+                                                {(() => {
+                                                    const pricing = getRentalPricingSummary(prop as any, lang);
+                                                    return (
+                                                        <div className={`px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-widest shadow-lg shrink-0 pointer-events-auto ${prop.status === 'sale'
+                                                            ? 'bg-luxury-gold text-black'
+                                                            : pricing.hasNightly
+                                                                ? 'bg-sky-400 text-black'
+                                                                : 'bg-white text-black'
+                                                            }`}>
+                                                            {pricing.statusBadge}
+                                                        </div>
+                                                    );
+                                                })()}
                                             </div>
 
                                             <CompareToggle property={prop} lang={lang} />
@@ -567,16 +572,44 @@ function PropertyListingsContent({
                                                     );
                                                 })()}
 
-                                                <div className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-2 md:px-3 py-1.5 md:py-1.5 shadow-lg text-[9px] md:text-[10px] z-30">
-                                                    {(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price) > 0 ? (
-                                                        <>
-                                                            {((prop.hideFromLabel === false || (prop.hideFromLabel !== true && (prop.preConstruction || prop.preLaunch || (prop as any).commercialStage === 'off_plan' || (prop as any).commercialStage === 'under_construction'))) && prop.status !== 'rent' && prop.type !== 'land' && prop.type !== 'commercial') && (lang === 'en' ? 'From ' : lang === 'fr' ? 'À partir de ' : 'Desde ')} {formatPrice(prop.is_rental_active && prop.rental_price ? prop.rental_price : prop.price)}
-                                                            {prop.status === 'rent' && (lang === 'en' ? ' /mo' : lang === 'fr' ? ' /mois' : ' /mes')}
-                                                        </>
-                                                    ) : (
-                                                        lang === 'en' ? 'Price on Request' : lang === 'fr' ? 'Prix sur Demande' : 'Precio a Consultar'
-                                                    )}
-                                                </div>
+                                                {(() => {
+                                                    const pricing = getRentalPricingSummary(prop as any, lang);
+                                                    const showFrom =
+                                                        !pricing.isRent &&
+                                                        prop.price > 0 &&
+                                                        (prop.hideFromLabel === false ||
+                                                            (prop.hideFromLabel !== true &&
+                                                                (prop.preConstruction ||
+                                                                    prop.preLaunch ||
+                                                                    (prop as any).commercialStage === "off_plan" ||
+                                                                    (prop as any).commercialStage === "under_construction"))) &&
+                                                        prop.type !== "land" &&
+                                                        prop.type !== "commercial";
+                                                    return (
+                                                        <div
+                                                            data-card-price={prop.slug}
+                                                            className="absolute -top-6 right-2 md:right-4 bg-luxury-gold text-black font-bold px-2 md:px-3 py-1.5 shadow-lg text-[9px] md:text-[10px] z-30 text-right leading-tight"
+                                                        >
+                                                            {pricing.isRent ? (
+                                                                <div className="flex flex-col items-end gap-0.5">
+                                                                    <span>{pricing.cardPricePrimary}</span>
+                                                                    {pricing.cardPriceSecondary && (
+                                                                        <span className="text-[8px] md:text-[9px] font-semibold opacity-90 border-t border-black/20 pt-0.5">
+                                                                            {pricing.cardPriceSecondary}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            ) : prop.price > 0 ? (
+                                                                <>
+                                                                    {showFrom && (lang === "en" ? "From " : lang === "fr" ? "À partir de " : "Desde ")}
+                                                                    {pricing.salePriceLabel}
+                                                                </>
+                                                            ) : (
+                                                                lang === "en" ? "Price on Request" : lang === "fr" ? "Prix sur Demande" : "Precio a Consultar"
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })()}
 
                                                 <h3 className="text-lg md:text-xl text-white font-serif mb-2 group-hover:text-luxury-gold transition-colors">
                                                     {getLocalizedTitle(prop, lang)}

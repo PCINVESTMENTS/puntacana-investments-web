@@ -16,6 +16,7 @@ import PropertyCommercialDetails from "@/components/property/PropertyCommercialD
 import ContactForm from "@/components/contact/ContactForm";
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import { fetchLocalSandboxDraftPreview, isLocalSandboxEnabled } from "@/lib/localSandbox";
+import { getRentalPricingSummary } from "@/lib/propertyPricing";
 import type { Property } from "@/data/properties";
 
 export const dynamic = "force-dynamic";
@@ -69,6 +70,7 @@ export default async function LocalDraftPreviewPage({
             lang={lang}
             locations={dict.sections.locations.items}
             featured={true}
+            preserveInitialOrder={true}
             featuredLimit={1}
             featuredCategory={property.status === "rent" ? "rent" : "sale"}
             sectionTitle={
@@ -123,9 +125,14 @@ export default async function LocalDraftPreviewPage({
         <div className="absolute inset-0 bg-gradient-to-t from-primary-black via-black/40 to-black/30" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-7xl mx-auto">
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className="inline-block px-3 py-1 bg-luxury-gold text-black text-xs font-bold uppercase tracking-widest">
-              {property.status === "rent" ? "ALQUILER" : "VENTA"}
-            </span>
+            {(() => {
+              const pricing = getRentalPricingSummary(property as any, lang);
+              return (
+                <span className="inline-block px-3 py-1 bg-luxury-gold text-black text-xs font-bold uppercase tracking-widest">
+                  {pricing.statusBadge}
+                </span>
+              );
+            })()}
             {(() => {
               const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
               if (disp.show_commercial_badge === false) return null;
@@ -186,11 +193,38 @@ export default async function LocalDraftPreviewPage({
                 {property.locationLabel || "Punta Cana"}
               </p>
             </div>
-            <div className="text-2xl md:text-4xl font-bold text-luxury-gold">
-              {formatPrice(property.price, (property as unknown as { currency?: string }).currency || "USD")}
-              {property.status === "rent" && property.price > 0 ? (
-                <span className="text-sm text-gray-300 font-normal"> /mes</span>
-              ) : null}
+            <div className="text-left md:text-right" data-preview-pricing="true">
+              {(() => {
+                const pricing = getRentalPricingSummary(property as any, lang);
+                if (pricing.isRent) {
+                  return (
+                    <div className="space-y-1">
+                      <div className="text-2xl md:text-4xl font-bold text-luxury-gold">
+                        {pricing.cardPricePrimary}
+                      </div>
+                      {pricing.cardPriceSecondary && (
+                        <div className="text-base md:text-xl font-semibold text-white">
+                          {pricing.cardPriceSecondary}
+                        </div>
+                      )}
+                      {pricing.minStay && pricing.hasNightly && (
+                        <div className="text-xs uppercase tracking-wider text-gray-300">
+                          {lang === "en"
+                            ? `Minimum stay: ${pricing.minStay} nights`
+                            : lang === "fr"
+                            ? `Séjour minimum : ${pricing.minStay} nuits`
+                            : `Estadía mínima: ${pricing.minStay} noches`}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                return (
+                  <div className="text-2xl md:text-4xl font-bold text-luxury-gold">
+                    {pricing.salePriceLabel}
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>

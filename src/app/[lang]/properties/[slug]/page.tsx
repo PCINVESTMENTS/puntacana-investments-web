@@ -20,8 +20,9 @@ const MortgageCalculator = nextDynamic(() => import("@/components/property/Mortg
 const ROICalculator = nextDynamic(() => import("@/components/property/ROICalculator"));
 const ConstructionProgress = nextDynamic(() => import("@/components/property/ConstructionProgress"));
 const PriceDropNotify = nextDynamic(() => import("@/components/property/PriceDropNotify"));
-const ShareButtons = nextDynamic(() => import("@/components/property/ShareButtons"));
+import ShareButtons from "@/components/property/ShareButtons";
 import PropertyCommercialDetails from "@/components/property/PropertyCommercialDetails";
+import { getRentalPricingSummary } from "@/lib/propertyPricing";
 
 // Sanity imports
 import { client } from "@/sanity/lib/client";
@@ -609,9 +610,14 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
                                 <div className="flex flex-wrap items-center gap-2 mb-4">
-                                    <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider inline-block">
-                                        {property.type ? `${property.type} • ` : ''}{property.status === 'sale' ? (lang === 'en' ? 'Sale' : lang === 'fr' ? 'Vente' : 'Venta') : (lang === 'en' ? 'Rent' : lang === 'fr' ? 'Location' : 'Renta')}
-                                    </span>
+                                    {(() => {
+                                        const pricing = getRentalPricingSummary(property as any, lang);
+                                        return (
+                                            <span className="bg-luxury-gold text-black px-4 py-1 text-xs font-bold uppercase tracking-wider inline-block">
+                                                {property.type ? `${property.type} • ` : ""}{pricing.statusBadge}
+                                            </span>
+                                        );
+                                    })()}
                                     {(() => {
                                         const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
                                         if (disp.show_commercial_badge === false) return null;
@@ -662,12 +668,41 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                     {property.locationLabel}
                                 </p>
                             </div>
-                            <div className="text-left md:text-right">
-                                <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    {(!property.hideFromLabel && (property.preConstruction || property.preLaunch || (property as any).commercialStage === 'off_plan' || (property as any).commercialStage === 'under_construction') && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
-                                        <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : lang === 'fr' ? 'À partir de' : 'Desde'}</span>
-                                    )} {formatPrice(property.price)}
-                                </p>
+                            <div className="text-left md:text-right" data-detail-pricing="true">
+                                {(() => {
+                                    const pricing = getRentalPricingSummary(property as any, lang);
+                                    if (pricing.isRent) {
+                                        return (
+                                            <div className="space-y-1.5">
+                                                <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif leading-tight">
+                                                    {pricing.cardPricePrimary}
+                                                </p>
+                                                {pricing.cardPriceSecondary && (
+                                                    <p className="text-white/95 text-lg md:text-2xl font-serif font-semibold">
+                                                        {pricing.cardPriceSecondary}
+                                                    </p>
+                                                )}
+                                                {pricing.minStay && pricing.hasNightly && (
+                                                    <p className="text-xs uppercase tracking-widest text-gray-300">
+                                                        {lang === "en"
+                                                            ? `Minimum stay: ${pricing.minStay} nights`
+                                                            : lang === "fr"
+                                                            ? `Séjour minimum : ${pricing.minStay} nuits`
+                                                            : `Estadía mínima: ${pricing.minStay} noches`}
+                                                        {pricing.weeklyLabel ? ` · ${pricing.weeklyLabel}` : ""}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        );
+                                    }
+                                    return (
+                                        <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
+                                            {(!property.hideFromLabel && (property.preConstruction || property.preLaunch || (property as any).commercialStage === 'off_plan' || (property as any).commercialStage === 'under_construction') && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
+                                                <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : lang === 'fr' ? 'À partir de' : 'Desde'}</span>
+                                            )} {pricing.salePriceLabel}
+                                        </p>
+                                    );
+                                })()}
                             </div>
                         </div>
                     </div>
@@ -871,6 +906,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             <ShareButtons
                                 title={`${lang === 'en' ? 'Check out this property:' : lang === 'fr' ? 'Découvrez cette propriété :' : 'Mira esta propiedad:'} ${translatedTitle}`}
                                 url={`https://www.puntacanainvestmentsrd.com/${lang}/properties/${property.slug}`}
+                                lang={lang}
                             />
 
                             {(((property as any)?.display || (property as any)?.specs?.display || {}).show_price_drop_alert !== false) && (

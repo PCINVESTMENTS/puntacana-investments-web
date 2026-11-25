@@ -9,8 +9,14 @@ export interface Property {
     locationLabel: string;
     type: string;
     status: 'sale' | 'rent';
+    currency?: string;
     is_rental_active?: boolean;
     rental_price?: number;
+    rental_price_night?: number | null;
+    rental_price_week?: number | null;
+    rental_min_stay?: number | null;
+    rental_monthly_active?: boolean;
+    rental_nightly_active?: boolean;
     airbnb_friendly?: boolean;
     price: number;
     image: string;
