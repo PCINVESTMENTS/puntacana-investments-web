@@ -547,6 +547,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
 
     const galleryImages = property.gallery && property.gallery.length > 0 ? property.gallery : [property.image];
     const translatedTitle = getLocalizedTitle(property, lang);
+    const isStartingPrice = Boolean(
+        !property.hideFromLabel &&
+        (property.preConstruction || property.preLaunch) &&
+        property.status !== 'rent' &&
+        property.type !== 'land' &&
+        property.type !== 'commercial'
+    );
 
     return (
         <main className="min-h-screen bg-primary-black text-white">
@@ -592,7 +599,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             </div>
                             <div className="text-left md:text-right">
                                 <p className="text-luxury-gold text-3xl md:text-5xl font-bold font-serif">
-                                    {(!property.hideFromLabel && (property.preConstruction || property.preLaunch) && property.status !== 'rent' && property.type !== 'land' && property.type !== 'commercial') && (
+                                    {isStartingPrice && (
                                         <span className="text-lg md:text-2xl align-top mr-1">{lang === 'en' ? 'From' : lang === 'fr' ? 'À partir de' : 'Desde'}</span>
                                     )} {formatPrice(property.price)}
                                 </p>
@@ -776,6 +783,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                     title: translatedTitle,
                                     location: property.locationLabel,
                                     price: property.price,
+                                    isStartingPrice,
                                     area: property.area,
                                     type: property.type || localProperty?.type
                                 })}

@@ -64,6 +64,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         title?: string | null;
         location?: string | null;
         price?: number | null;
+        isStartingPrice?: boolean | null;
         area?: number | null;
         type?: string | null;
     } | null = null;

@@ -586,6 +586,7 @@ export interface PropertyOrHotelEmailInput {
     title?: string | null;
     location?: string | null;
     price?: number | null;
+    isStartingPrice?: boolean | null;
     area?: number | null;
     type?: string | null;
   } | null;
@@ -641,7 +642,7 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
 
   const formattedPrice =
     property?.price && Number(property.price) > 0
-      ? `US$${Number(property.price).toLocaleString("en-US")}`
+      ? `${property.isStartingPrice ? "Desde " : ""}US$${Number(property.price).toLocaleString("en-US")}`
       : "";
 
   const adminHeading = isHotel
