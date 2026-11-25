@@ -301,13 +301,15 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
   const nonLandProperties = properties.filter(p => p.type !== "land");
 
-  const wmSale = resolvePlacementList(wmPlacements?.sale);
-  const wmRent = resolvePlacementList(wmPlacements?.rent);
+  const wmSaleRaw = resolvePlacementList(wmPlacements?.sale);
+  const wmSale = wmSaleRaw ? wmSaleRaw.filter((p) => p.status === "sale") : null;
+  const wmRentRaw = resolvePlacementList(wmPlacements?.rent);
+  const wmRent = wmRentRaw ? wmRentRaw.filter((p) => p.status === "rent") : null;
   const wmFeatured = resolvePlacementList(wmPlacements?.featured);
   const wmSuggested = resolvePlacementList(wmPlacements?.suggested);
 
-  const saleProperties = stripPayload(wmSale || explicitHomeSale || nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
-  const rentProperties = stripPayload(wmRent || explicitHomeRent || nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
+  const saleProperties = stripPayload((wmSale && wmSale.length > 0 ? wmSale : null) || explicitHomeSale || nonLandProperties.filter(p => p.status === "sale").slice(0, 6));
+  const rentProperties = stripPayload((wmRent && wmRent.length > 0 ? wmRent : null) || explicitHomeRent || nonLandProperties.filter(p => p.status === "rent").slice(0, 3));
   const featuredOnlyProperties = stripPayload(wmFeatured || explicitHomeFeatured || nonLandProperties.filter(p => p.featured === true).slice(0, 3));
   const suggestedProperties = stripPayload(wmSuggested || []);
 

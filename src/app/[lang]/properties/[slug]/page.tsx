@@ -218,11 +218,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         .replace(/\s+/g, ' ')
         .trim();
         
-    const fallbackDesc = lang === 'en'
-        ? `Discover ${property.title} in Punta Cana. Luxury real estate investment opportunity with high ROI in Dominican Republic.`
-        : lang === 'fr'
-        ? `Découvrez ${property.title} à Punta Cana. Opportunité d'investissement immobilier de luxe à haut rendement en République Dominicaine.`
-        : `Descubra ${property.title} en Punta Cana. Oportunidad de inversión inmobiliaria de lujo con alta rentabilidad en República Dominicana.`;
+    const pricingMeta = getRentalPricingSummary(property as any, lang);
+    const metaPriceText = pricingMeta.isRent
+        ? [pricingMeta.cardPricePrimary, pricingMeta.cardPriceSecondary].filter(Boolean).join(" · ")
+        : pricingMeta.salePriceLabel;
+
+    const fallbackDesc = pricingMeta.isRent
+        ? (lang === 'en'
+            ? `Discover ${translatedTitle} for rent in ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`
+            : lang === 'fr'
+            ? `Découvrez ${translatedTitle} à louer à ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`
+            : `Descubra ${translatedTitle} en renta en ${property.locationLabel || 'Punta Cana'} (${metaPriceText}).`)
+        : (lang === 'en'
+            ? `Discover ${translatedTitle} in Punta Cana. Luxury real estate investment opportunity with high ROI in Dominican Republic.`
+            : lang === 'fr'
+            ? `Découvrez ${translatedTitle} à Punta Cana. Opportunité d'investissement immobilier de luxe à haut rendement en République Dominicaine.`
+            : `Descubra ${translatedTitle} en Punta Cana. Oportunidad de inversión inmobiliaria de lujo con alta rentabilidad en República Dominicana.`);
 
     const description = cleanDesc.length >= 20 ? cleanDesc.slice(0, 160) : fallbackDesc;
     
@@ -230,7 +241,33 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     if (!keywordList || keywordList.length === 0) {
         const loc = property.locationLabel || 'Punta Cana';
         
-        if (lang === 'en') {
+        if (property.status === 'rent') {
+            if (lang === 'en') {
+                keywordList = [
+                    `Punta Cana ${property.type} for rent`,
+                    `${translatedTitle}`,
+                    `Rent in ${loc}`,
+                    ...(pricingMeta.hasNightly ? [`Nightly rental ${loc}`, `Vacation rental Punta Cana`] : []),
+                    ...(pricingMeta.hasMonthly ? [`Monthly rental ${loc}`, `Long term rental Punta Cana`] : []),
+                ];
+            } else if (lang === 'fr') {
+                keywordList = [
+                    `Location ${property.type === 'villa' ? 'villa' : 'appartement'} Punta Cana`,
+                    `${translatedTitle}`,
+                    `Location à ${loc}`,
+                    ...(pricingMeta.hasNightly ? [`Location par nuit ${loc}`, `Location saisonnière Punta Cana`] : []),
+                    ...(pricingMeta.hasMonthly ? [`Location mensuelle ${loc}`, `Location longue durée Punta Cana`] : []),
+                ];
+            } else {
+                keywordList = [
+                    `${property.type === 'villa' ? 'Villa' : 'Apartamento'} en renta en ${loc}`,
+                    `${translatedTitle}`,
+                    `Alquiler en ${loc}`,
+                    ...(pricingMeta.hasNightly ? [`Renta por noches ${loc}`, `Renta vacacional Punta Cana`] : []),
+                    ...(pricingMeta.hasMonthly ? [`Renta mensual ${loc}`, `Alquiler a largo plazo en ${loc}`] : []),
+                ];
+            }
+        } else if (lang === 'en') {
              keywordList = [
                  `Punta Cana ${property.type} for sale`,
                  `${property.title}`,
@@ -242,7 +279,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
              if (property.type === 'commercial') keywordList.push(`Commercial real estate ${loc}`, `Retail space Punta Cana`, `Invest in commercial properties DR`);
              if (property.type === 'condohotel') keywordList.push(`Condo hotel for sale ${loc}`, `Hotel investment Punta Cana`, `Resort for sale Dominican Republic`, `High ROI condo hotel`);
              if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hotels for sale Dominican Republic`, `Resorts for sale in Punta Cana`);
-             if (property.status === 'rent') keywordList.push(`Monthly rentals ${loc}`, `Long term rental Punta Cana`);
              if (loc.toLowerCase().includes('miches')) keywordList.push(`Invest in Miches`, `Hotels for sale in Miches`, `Land for hotel development Miches`);
         } else if (lang === 'fr') {
              keywordList = [
@@ -256,7 +292,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
              if (property.type === 'commercial') keywordList.push(`Immobilier commercial ${loc}`, `Local commercial Punta Cana`, `Investir dans l'immobilier commercial République Dominicaine`);
              if (property.type === 'condohotel') keywordList.push(`Condo-hôtel à vendre ${loc}`, `Investissement hôtelier Punta Cana`, `Hôtel à vendre République Dominicaine`, `Condo-hôtel haut rendement`);
              if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hôtels à vendre République Dominicaine`, `Resorts à vendre à Punta Cana`);
-             if (property.status === 'rent') keywordList.push(`Location mensuelle ${loc}`, `Location longue durée Punta Cana`);
              if (loc.toLowerCase().includes('miches')) keywordList.push(`Investir à Miches`, `Hôtels à vendre à Miches`, `Terrain pour développement hôtelier Miches`);
         } else {
              keywordList = [
@@ -270,7 +305,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
              if (property.type === 'commercial') keywordList.push(`Locales comerciales en ${loc}`, `Inversión comercial Punta Cana`);
              if (property.type === 'condohotel') keywordList.push(`Condo hotel en venta`, `Inversión hotelera Punta Cana`, `Apartahotel en venta`);
              if (property.type === 'resorts' || property.title.toLowerCase().includes('hotel')) keywordList.push(`Hoteles en ventas`, `Resort en venta en Punta Cana`);
-             if (property.status === 'rent') keywordList.push(`Rentas mensual Punta Cana`, `Alquiler a largo plazo en ${loc}`);
              if (loc.toLowerCase().includes('miches')) keywordList.push(`Inversiones en Miches`, `Hoteles en Miches en ventas`, `Terreno para desarrollar hoteles en Miches`);
         }
     }
@@ -278,14 +312,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.puntacanainvestmentsrd.com';
     const canonicalUrl = `${baseUrl}/${lang}/properties/${slug}`;
 
-    const formatPrice = (price: number) => {
-        if (price === 0) {
-            return lang === 'en' ? 'Price on Request' : lang === 'fr' ? 'Prix sur Demande' : 'Precio a Consultar';
-        }
-        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
-    };
     const statusText = property.status === 'rent' ? (lang === 'fr' ? 'LOCATION' : lang === 'es' ? 'ALQUILER' : 'RENT') : (lang === 'fr' ? 'VENTE' : lang === 'es' ? 'VENTA' : 'SALE');
-    const socialTitle = `[${statusText} - ${formatPrice(property.price)}] ${cleanTitle} | Punta Cana Investments`;
+    const socialTitle = `[${statusText} - ${metaPriceText}] ${cleanTitle} | Punta Cana Investments`;
 
     const mainAlt = (seo as any)?.main_image_alt?.[lang] || property.title;
     return {
@@ -473,11 +501,35 @@ function generateJsonLd(property: Property, lang: string, baseUrl: string) {
     // availability is omitted rather than fabricating InStock.
     const isNewSandboxProp = Number((property as any).catalog_position || 0) >= 40;
     const offerCurrency = isNewSandboxProp ? ((property as any).currency || 'USD') : 'USD';
+    const pricingLd = getRentalPricingSummary(property as any, lang);
+    const priceSpecs: Record<string, any>[] = [];
+    if (isRent && pricingLd.hasNightly) {
+        priceSpecs.push({
+            '@type': 'UnitPriceSpecification',
+            price: pricingLd.nightlyAmount,
+            priceCurrency: offerCurrency,
+            unitCode: 'DAY',
+            unitText: lang === 'en' ? 'per night' : lang === 'fr' ? 'par nuit' : 'por noche',
+        });
+    }
+    if (isRent && pricingLd.hasMonthly) {
+        priceSpecs.push({
+            '@type': 'UnitPriceSpecification',
+            price: pricingLd.monthlyAmount,
+            priceCurrency: offerCurrency,
+            unitCode: 'MON',
+            unitText: lang === 'en' ? 'per month' : lang === 'fr' ? 'par mois' : 'por mes',
+        });
+    }
+    const primaryOfferPrice = isRent
+        ? (pricingLd.hasNightly ? pricingLd.nightlyAmount : pricingLd.monthlyAmount)
+        : Number(property.price || 0);
     const offer: Record<string, any> = {
         '@type': 'Offer',
         '@id': `${listingUrl}#offer`,
         url: listingUrl,
-        ...(isNewSandboxProp && Number(property.price || 0) <= 0 ? {} : { price: property.price }),
+        ...(isNewSandboxProp && primaryOfferPrice <= 0 ? {} : { price: primaryOfferPrice }),
+        ...(priceSpecs.length > 0 ? { priceSpecification: priceSpecs } : {}),
         priceCurrency: offerCurrency,
         businessFunction: isRent ? 'http://purl.org/goodrelations/v1#LeaseOut' : 'http://purl.org/goodrelations/v1#Sell',
         itemOffered: {
