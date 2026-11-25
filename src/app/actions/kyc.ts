@@ -93,7 +93,17 @@ export async function submitKYCFromClient(formData: FormData) {
             payload.pais_constitucion = formData.get('constitutionCountry')
             payload.ciudad = formData.get('city')
             payload.rnc = formData.get('rnc')
-            payload.socios = [] // Default empty list for now as per dynamic implement note
+            const rawSocios = formData.get('socios')
+            let parsedSocios: any[] = []
+            if (typeof rawSocios === 'string' && rawSocios.trim()) {
+                try {
+                    const tmp = JSON.parse(rawSocios)
+                    if (Array.isArray(tmp)) parsedSocios = tmp
+                } catch {
+                    parsedSocios = []
+                }
+            }
+            payload.socios = parsedSocios
 
             payload.rep_nombres = formData.get('legalRepFirstName')
             payload.rep_apellidos = formData.get('legalRepLastName')
@@ -231,7 +241,7 @@ export async function submitKYCFromClient(formData: FormData) {
                             Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.
                         </p>
                         <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
-                            Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad. Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.
+                            Sus datos y documentos han sido recibidos mediante conexión segura (HTTPS) y resguardados con acceso restringido bajo estricta confidencialidad. Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.
                         </p>
                     </div>
                     <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
@@ -329,7 +339,7 @@ export async function sendKYCEmailNotification(params: { type: string, clientEma
                             Hemos recibido exitosamente su Formulario KYC de <strong>${type}</strong>.
                         </p>
                         <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
-                            Sus datos y documentos han sido encriptados y almacenados de manera segura en nuestra Base de Datos bajo estricta confidencialidad. Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.
+                            Sus datos y documentos han sido recibidos mediante conexión segura (HTTPS) y resguardados con acceso restringido bajo estricta confidencialidad. Nuestro equipo de Cumplimiento Legal evaluará su expediente a la mayor brevedad posible. Si requerimos alguna información adicional, nos pondremos en contacto con usted por esta misma vía.
                         </p>
                     </div>
                     <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">

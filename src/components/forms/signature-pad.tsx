@@ -2,10 +2,14 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Eraser } from "lucide-react";
+import { getKycDict } from "@/dictionaries/kyc";
 
 export function SignaturePad() {
+    const params = useParams();
+    const kycCommon = getKycDict(params?.lang as string).common;
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const { setValue, watch } = useFormContext();
@@ -109,12 +113,12 @@ export function SignaturePad() {
                     onTouchEnd={stopDrawing}
                 />
                 <div className="absolute bottom-2 right-2 opacity-50 text-xs text-black select-none pointer-events-none">
-                    Firme aquí / Sign here
+                    {kycCommon.signHere}
                 </div>
             </div>
             <div className="flex justify-end">
                 <Button type="button" variant="outline" size="sm" onClick={clear} className="text-red-400 hover:text-red-500 hover:bg-red-500/10 border-red-500/30">
-                    <Eraser className="mr-2 h-4 w-4" /> Limpiar Firma / Clear
+                    <Eraser className="mr-2 h-4 w-4" /> {kycCommon.clearSignature}
                 </Button>
             </div>
             <input type="hidden" {...{ name: "signature", value: signature || "" }} />

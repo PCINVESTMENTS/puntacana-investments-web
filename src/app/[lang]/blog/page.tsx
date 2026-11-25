@@ -92,11 +92,11 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
     };
 
     return (
-        <main className="min-h-screen bg-black text-white">
+        <main className="min-h-screen bg-black text-white overflow-x-hidden">
             <Navbar dict={dict.nav} lang={lang} servicesList={dict.sections.services.items} propertyTypes={dict.properties.types} />
 
             {/* Header */}
-            <div className="pt-32 pb-16 bg-primary-black relative">
+            <div className="pt-32 pb-16 bg-primary-black relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-luxury-gold/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <ScrollReveal priority={true}>
@@ -104,7 +104,7 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                             <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold mb-4 block">
                                 {dict.sections.blog.title}
                             </span>
-                            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white mb-6">
+                            <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 break-words">
                                 {dict.sections.blog.latestNews}
                             </h1>
                             <p className="text-gray-400 text-lg leading-relaxed">
@@ -149,16 +149,16 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                                 {getVal(post.category, lang)}
                                             </div>
                                         </Link>
-                                        <div className="p-8 flex flex-col flex-grow">
+                                        <div className="p-6 sm:p-8 flex flex-col flex-grow min-w-0">
                                             <div className="flex items-center gap-2 text-gray-400 text-xs mb-4 uppercase tracking-wider font-semibold">
                                                 <FaCalendarAlt /> {getVal(post.date, lang)}
                                             </div>
-                                            <h2 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight">
+                                            <h2 className="text-xl text-white font-serif font-bold mb-4 group-hover:text-luxury-gold transition-colors leading-tight break-words">
                                                 <Link href={`/${lang}/blog/${post.slug}`}>
                                                     {getVal(post.title, lang)}
                                                 </Link>
                                             </h2>
-                                            <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                                            <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 break-words">
                                                 {getVal(post.excerpt, lang)}
                                             </p>
                                             <div className="mt-auto">

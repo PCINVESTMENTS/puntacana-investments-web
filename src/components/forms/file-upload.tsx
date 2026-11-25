@@ -1,10 +1,12 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
+import { useParams } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { UploadCloud, CheckCircle2, Trash2, Loader2 } from "lucide-react";
 import { useState } from "react";
 import imageCompression from "browser-image-compression";
+import { getKycDict } from "@/dictionaries/kyc";
 
 interface FileUploadProps {
     name: string;
@@ -13,6 +15,8 @@ interface FileUploadProps {
 }
 
 export function FileUpload({ name, label, description }: FileUploadProps) {
+    const params = useParams();
+    const kycCommon = getKycDict(params?.lang as string).common;
     const { register, setValue, formState: { errors } } = useFormContext();
     const error = errors[name];
     
@@ -90,7 +94,7 @@ export function FileUpload({ name, label, description }: FileUploadProps) {
                             <div className="p-3 bg-zinc-900 rounded-full border border-white/10 text-white">
                                 <Loader2 size={24} className="animate-spin" />
                             </div>
-                            <div className="text-sm font-medium text-white">Procesando documento... / Processing...</div>
+                            <div className="text-sm font-medium text-white">{kycCommon.uploadProcessing}</div>
                         </>
                     ) : isSuccess ? (
                         <>
@@ -98,11 +102,11 @@ export function FileUpload({ name, label, description }: FileUploadProps) {
                                 <CheckCircle2 size={24} />
                             </div>
                             <div className="flex items-center space-x-2 relative z-20">
-                                <span className="text-sm font-bold text-luxury-gold truncate max-w-[200px]" title={uploadedFileName}>{uploadedFileName}</span>
+                                <span className="text-sm font-bold text-luxury-gold truncate max-w-[220px]" title={uploadedFileName}>{uploadedFileName}</span>
                                 <button 
                                     onClick={handleRemove}
                                     className="p-1 rounded bg-red-900/40 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
-                                    title="Eliminar documento"
+                                    title={kycCommon.uploadRemove}
                                     type="button"
                                 >
                                     <Trash2 size={16} />
@@ -114,7 +118,7 @@ export function FileUpload({ name, label, description }: FileUploadProps) {
                             <div className="p-3 bg-zinc-900 rounded-full border border-white/10 group-hover:border-luxury-gold/50 text-gray-400 group-hover:text-luxury-gold">
                                 <UploadCloud size={24} />
                             </div>
-                            <div className="text-sm font-medium text-gray-400 group-hover:text-luxury-gold">Click para subir / Click to add</div>
+                            <div className="text-sm font-medium text-gray-400 group-hover:text-luxury-gold">{kycCommon.uploadClick}</div>
                             <div className="text-xs text-gray-400">{description}</div>
                         </>
                     )}

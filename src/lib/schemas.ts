@@ -102,6 +102,15 @@ export const personaJuridicaSchema = z.object({
     city: z.string().min(1, "Ciudad requerida"),
     rnc: z.string().min(1, "RNC requerido"),
 
+    // Socios / Accionistas
+    socios: z.array(z.object({
+        nombre: z.string(),
+        identificacion: z.string(),
+        nacionalidad: z.string(),
+        porcentaje: z.string(),
+        cargo: z.string().optional(),
+    })).optional(),
+
     // Legal Rep
     legalRepFirstName: z.string().min(1, "Nombres requeridos"),
     legalRepLastName: z.string().min(1, "Apellidos requeridos"),

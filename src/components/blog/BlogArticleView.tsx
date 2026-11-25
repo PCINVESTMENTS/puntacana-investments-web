@@ -148,7 +148,7 @@ export default function BlogArticleView({
   const siteUrl = "https://www.puntacanainvestmentsrd.com";
 
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-luxury-gold selection:text-black">
+    <main className="min-h-screen bg-black text-white selection:bg-luxury-gold selection:text-black overflow-x-hidden">
       <Navbar
         dict={dict.nav}
         lang={lang}

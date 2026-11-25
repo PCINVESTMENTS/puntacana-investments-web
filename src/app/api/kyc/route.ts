@@ -7,6 +7,37 @@ import { isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 const ALLOWED_LOCAL_DD_EXTS = new Set(['.pdf', '.jpg', '.jpeg', '.png', '.webp']);
 
+const KYC_DOC_LABELS: Record<string, string> = {
+    doc_identidad_file: 'Fotocopia de documentos de identidad',
+    doc_estado_cuenta_file: 'Constancia de fondos / Estado de cuenta',
+    doc_bureau_credito_file: 'Bureau de crédito',
+    doc_comprobante_domicilio_file: 'Constancia de domicilio',
+    doc_certificado_laboral_file: 'Carta de trabajo / Certificación laboral',
+    doc_registro_mercantil_file: 'Registro Mercantil',
+    doc_rep_id_file: 'ID del Representante Legal',
+    doc_asamblea_file: 'Acta de Asamblea o Poder Legal',
+    doc_firmas_file: 'ID de Firmantes Autorizados',
+    doc_nomina_socios_file: 'Nómina de Accionistas / Socios',
+    doc_estados_financieros_file: 'Estados Financieros',
+    firma_digital: 'Firma Digital',
+};
+
+const JSON_ARRAY_KEYS = new Set([
+    'socios',
+    'referencias_personales',
+    'referencias_comerciales',
+    'referencias_bancarias',
+]);
+
+const BOOLEAN_KEYS = new Set([
+    'es_pep',
+    'tiene_otros_ingresos',
+    'declaracion_jurada',
+    'declaracion_licitud_fondos',
+    'autorizacion_compartir_info',
+    'declaracion_veracidad',
+]);
+
 async function saveLocalDueDiligenceDirect(formData: FormData) {
     const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
     if (!catalogFile) {
@@ -32,11 +63,31 @@ async function saveLocalDueDiligenceDirect(formData: FormData) {
     const formType = getStr('formType', 'form_type') || 'Persona Física';
     const nombres = getStr('nombres', 'razon_social', 'nombre') || 'Inversor Local';
     const apellidos = getStr('apellidos');
-    const fullName = `${nombres} ${apellidos}`.trim();
-    const email = getStr('correo_electronico', 'email');
-    const phone = getStr('tel_celular', 'telefono_celular', 'telefono', 'phone');
+    const fullName = formType.toLowerCase().includes('jur') ? nombres : `${nombres} ${apellidos}`.trim();
+    const email = getStr('correo_electronico', 'email', 'rep_email');
+    const phone = getStr('tel_celular', 'rep_telefono', 'telefono_celular', 'telefono', 'phone');
     const rawLang = getStr('lang').toLowerCase();
     const lang = rawLang === 'en' || rawLang === 'fr' ? rawLang : 'es';
+
+    // Capture 100% of submitted text, date, boolean and JSON-array fields (zero dropped fields)
+    const capturedFields: Record<string, any> = {};
+    for (const [key, val] of formData.entries()) {
+        if (typeof val !== 'string') continue;
+        if (key === 'formType' || key === 'form_type' || key === 'lang') continue;
+        const trimmed = val.trim();
+        if (JSON_ARRAY_KEYS.has(key)) {
+            try {
+                const parsed = JSON.parse(trimmed || '[]');
+                capturedFields[key] = Array.isArray(parsed) ? parsed : [];
+            } catch {
+                capturedFields[key] = [];
+            }
+        } else if (BOOLEAN_KEYS.has(key)) {
+            capturedFields[key] = trimmed === 'true' || trimmed === 'on' || trimmed === '1';
+        } else if (trimmed !== '') {
+            capturedFields[key] = trimmed;
+        }
+    }
 
     const maxBytes = Number(ddCfg.max_file_mb || 5) * 1024 * 1024;
     const destDir = path.join(sandboxDir, 'media', 'due_diligence_local', subId);
@@ -70,11 +121,21 @@ async function saveLocalDueDiligenceDirect(formData: FormData) {
         fs.writeFileSync(storedPath, buf);
         savedDocs.push({
             field_name: safeField,
+            label: KYC_DOC_LABELS[safeField] || safeField,
             original_filename: origName,
             stored_filename: storedName,
             stored_path: storedPath,
             size_bytes: buf.length,
-            content_type: fileObj.type || 'application/octet-stream',
+            content_type:
+                ext === '.pdf'
+                    ? 'application/pdf'
+                    : ext === '.png'
+                    ? 'image/png'
+                    : ext === '.webp'
+                    ? 'image/webp'
+                    : ext === '.jpg' || ext === '.jpeg'
+                    ? 'image/jpeg'
+                    : fileObj.type || 'application/octet-stream',
             uploaded_at: nowIso,
         });
     }
@@ -88,9 +149,16 @@ async function saveLocalDueDiligenceDirect(formData: FormData) {
         lang,
         status: 'Recibido',
         created_at: nowIso,
+        fields: capturedFields,
+        fields_count: Object.keys(capturedFields).length,
+        socios: Array.isArray(capturedFields.socios) ? capturedFields.socios : [],
         documents: savedDocs,
         documents_count: savedDocs.length,
         sandbox_isolated: true,
+        encryption_at_rest: false,
+        storage_mode: 'local_isolated_unencrypted_sandbox',
+        email_sent: false,
+        email_note: 'Modo local aislado: no se envió correo electrónico externo.',
     };
 
     const prevSubs = Array.isArray(ddCfg.submissions) ? ddCfg.submissions : [];

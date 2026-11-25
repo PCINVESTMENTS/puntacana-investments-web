@@ -105,11 +105,311 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
     real_email_sent: false,
     ...entry,
   };
-  const next = [record, ...existing].slice(0, 100);
-  const tmpFile = `${inboxFile}.tmp`;
+  const next = [record, ...existing].slice(0, 150);
+  const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
   fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
   fs.renameSync(tmpFile, inboxFile);
   return { id, count: next.length };
+}
+
+export function upsertSandboxFounderLead(params: {
+  name: string;
+  email: string;
+  phone: string;
+  modality: string;
+  message?: string;
+  lang?: string;
+  project_slug?: string;
+  idempotency_key?: string;
+}): {
+  id: string;
+  sequence_number: string;
+  deduplicated: boolean;
+  duplicate_attempts_blocked: number;
+  count: number;
+} | null {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  let existing: Record<string, any>[] = [];
+  try {
+    if (fs.existsSync(inboxFile)) {
+      const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+      if (Array.isArray(parsed)) existing = parsed;
+    }
+  } catch {
+    existing = [];
+  }
+
+  const normEmail = String(params.email || "").trim().toLowerCase();
+  const normProject = String(params.project_slug || "miches-eco-resort").trim().toLowerCase();
+  const normModality = String(params.modality || "unidades").trim().toLowerCase() === "capital" ? "capital" : "unidades";
+  const idemKey = String(params.idempotency_key || "").trim();
+  const lang = ["es", "en", "fr"].includes(String(params.lang || "").toLowerCase())
+    ? String(params.lang).toLowerCase()
+    : "es";
+  const nowIso = new Date().toISOString();
+
+  // First normalize any historical duplicate founder entries in chronological order
+  const nonFounder: Record<string, any>[] = [];
+  const founderEntries: Record<string, any>[] = [];
+  for (const item of existing) {
+    if (item && item.form_type === "founder_investor") {
+      founderEntries.push(item);
+    } else if (item) {
+      nonFounder.push(item);
+    }
+  }
+
+  // Sort chronological (oldest first) so sequence_number is deterministic and stable
+  founderEntries.sort((a, b) =>
+    String(a.received_at_iso || "").localeCompare(String(b.received_at_iso || ""))
+  );
+
+  const canonicalFounders: Record<string, any>[] = [];
+  const bySemanticKey = new Map<string, Record<string, any>>();
+  let maxSeq = 0;
+
+  for (const fe of founderEntries) {
+    const feEmail = String(fe.lead?.email || fe.client_autoresponder_to || "").trim().toLowerCase();
+    const feProj = String(fe.project_slug || "miches-eco-resort").trim().toLowerCase();
+    const semKey = `${feEmail}::${feProj}`;
+    const existingCanon = feEmail ? bySemanticKey.get(semKey) : undefined;
+    if (existingCanon) {
+      existingCanon.duplicate_attempts_blocked = Number(existingCanon.duplicate_attempts_blocked || 0) + 1 + Number(fe.duplicate_attempts_blocked || 0);
+      existingCanon.last_attempt_at_iso = fe.received_at_iso || nowIso;
+      const mergedIds = Array.isArray(existingCanon.merged_duplicate_ids) ? existingCanon.merged_duplicate_ids : [];
+      if (fe.id && !mergedIds.includes(fe.id)) mergedIds.push(fe.id);
+      existingCanon.merged_duplicate_ids = mergedIds;
+      const keys = Array.isArray(existingCanon.seen_idempotency_keys) ? existingCanon.seen_idempotency_keys : [];
+      if (fe.idempotency_key && !keys.includes(fe.idempotency_key)) keys.push(fe.idempotency_key);
+      existingCanon.seen_idempotency_keys = keys;
+      continue;
+    }
+    const m = /^FND-LOC-(\d+)$/i.exec(String(fe.sequence_number || ""));
+    const seqNum = m ? parseInt(m[1], 10) : maxSeq + 1;
+    if (seqNum > maxSeq) maxSeq = seqNum;
+    fe.sequence_number = `FND-LOC-${String(seqNum).padStart(3, "0")}`;
+    fe.project_slug = feProj;
+    fe.duplicate_attempts_blocked = Number(fe.duplicate_attempts_blocked || 0);
+    if (!Array.isArray(fe.seen_idempotency_keys)) {
+      fe.seen_idempotency_keys = fe.idempotency_key ? [fe.idempotency_key] : [];
+    }
+    canonicalFounders.push(fe);
+    if (feEmail) bySemanticKey.set(semKey, fe);
+  }
+
+  // Match incoming request by idempotency_key OR (normalized_email + project_slug)
+  let matched: Record<string, any> | undefined;
+  if (idemKey) {
+    matched = canonicalFounders.find(
+      (f) => f.idempotency_key === idemKey || (Array.isArray(f.seen_idempotency_keys) && f.seen_idempotency_keys.includes(idemKey))
+    );
+  }
+  if (!matched && normEmail) {
+    matched = bySemanticKey.get(`${normEmail}::${normProject}`);
+  }
+
+  let resultRecord: Record<string, any>;
+  let deduplicated = false;
+
+  if (matched) {
+    deduplicated = true;
+    matched.duplicate_attempts_blocked = Number(matched.duplicate_attempts_blocked || 0) + 1;
+    matched.last_attempt_at_iso = nowIso;
+    if (idemKey && !matched.seen_idempotency_keys.includes(idemKey)) {
+      matched.seen_idempotency_keys.push(idemKey);
+    }
+    if (params.message && !matched.lead?.message) {
+      matched.lead = { ...(matched.lead || {}), message: params.message };
+    }
+    resultRecord = matched;
+  } else {
+    const nextSeq = maxSeq + 1;
+    const sequenceNumber = `FND-LOC-${String(nextSeq).padStart(3, "0")}`;
+    const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    resultRecord = {
+      id,
+      sequence_number: sequenceNumber,
+      project_slug: normProject,
+      modality: normModality,
+      idempotency_key: idemKey || `${normEmail}::${normProject}`,
+      seen_idempotency_keys: idemKey ? [idemKey] : [],
+      duplicate_attempts_blocked: 0,
+      received_at_iso: nowIso,
+      last_attempt_at_iso: nowIso,
+      delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
+      real_email_sent: false,
+      form_type: "founder_investor",
+      form_label: "Lista Cero / Inversor Fundador",
+      lang,
+      configured_from: "Web Punta Cana Investments <info@puntacanainvestmentsrd.com>",
+      configured_pci_recipient: "info@puntacanainvestmentsrd.com",
+      client_autoresponder_to: params.email.trim(),
+      admin_subject: `NUEVO INVERSOR FUNDADOR: ${params.name.trim()} (${normModality}) [${sequenceNumber}]`,
+      client_subject:
+        lang === "en"
+          ? `Zero List Confirmation (${sequenceNumber}) — Punta Cana Investments`
+          : lang === "fr"
+          ? `Confirmation Liste Zéro (${sequenceNumber}) — Punta Cana Investments`
+          : `Confirmación Lista Cero (${sequenceNumber}) — Punta Cana Investments`,
+      property_reference: { title: `Proyecto Fundador (${normModality})`, type: "founder_investor" },
+      lead: {
+        name: params.name.trim(),
+        email: params.email.trim(),
+        phone: params.phone.trim(),
+        modality: normModality,
+        message: (params.message || "").trim() || normModality,
+      },
+      deduplication_note: "Deduplicación activa por idempotency_key y correo+proyecto (1 interesado = 1 registro).",
+    };
+    canonicalFounders.push(resultRecord);
+  }
+
+  // Merge back newest first for inbox readability
+  const mergedInbox = [...canonicalFounders, ...nonFounder]
+    .sort((a, b) => String(b.received_at_iso || "").localeCompare(String(a.received_at_iso || "")))
+    .slice(0, 150);
+
+  const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+  fs.writeFileSync(tmpFile, JSON.stringify(mergedInbox, null, 2), "utf-8");
+  fs.renameSync(tmpFile, inboxFile);
+
+  return {
+    id: String(resultRecord.id),
+    sequence_number: String(resultRecord.sequence_number),
+    deduplicated,
+    duplicate_attempts_blocked: Number(resultRecord.duplicate_attempts_blocked || 0),
+    count: canonicalFounders.length,
+  };
+}
+
+export function upsertSandboxOffMarketApplication(params: {
+  name: string;
+  company?: string;
+  email: string;
+  phone: string;
+  tab: "oportunidad" | "hoteles";
+  budget: string;
+  regions: string[];
+  details: Record<string, string>;
+  compiledMessage: string;
+  lang?: string;
+  idempotency_key?: string;
+  simulate_email_failure?: boolean;
+}): {
+  id: string;
+  reference_code: string;
+  deduplicated: boolean;
+  email_status: "intercepted_local" | "failed_simulated";
+  email_error: string | null;
+} | null {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  let existing: Record<string, any>[] = [];
+  try {
+    if (fs.existsSync(inboxFile)) {
+      const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+      if (Array.isArray(parsed)) existing = parsed;
+    }
+  } catch {
+    existing = [];
+  }
+
+  const nowIso = new Date().toISOString();
+  const idemKey = String(params.idempotency_key || "").trim();
+  const lang = ["es", "en", "fr"].includes(String(params.lang || "").toLowerCase())
+    ? String(params.lang).toLowerCase()
+    : "es";
+  const emailFailed = Boolean(params.simulate_email_failure);
+  const emailStatus: "intercepted_local" | "failed_simulated" = emailFailed ? "failed_simulated" : "intercepted_local";
+  const emailError = emailFailed
+    ? "Fallo simulado de envío de correo (proveedor SMTP/Resend no disponible); solicitud preservada localmente."
+    : null;
+
+  const existingOm = existing.filter((e) => e && e.form_type === "off_market_application");
+  let maxSeq = 0;
+  for (const item of existingOm) {
+    const m = /^OM-LOC-(\d+)$/i.exec(String(item.reference_code || ""));
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n > maxSeq) maxSeq = n;
+    }
+  }
+
+  const dup = idemKey ? existingOm.find((e) => e.idempotency_key === idemKey) : undefined;
+  if (dup) {
+    dup.last_attempt_at_iso = nowIso;
+    dup.duplicate_attempts_blocked = Number(dup.duplicate_attempts_blocked || 0) + 1;
+    const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+    fs.writeFileSync(tmpFile, JSON.stringify(existing, null, 2), "utf-8");
+    fs.renameSync(tmpFile, inboxFile);
+    return {
+      id: String(dup.id),
+      reference_code: String(dup.reference_code),
+      deduplicated: true,
+      email_status: dup.email_status || emailStatus,
+      email_error: dup.email_error || null,
+    };
+  }
+
+  const referenceCode = `OM-LOC-${String(maxSeq + 1).padStart(3, "0")}`;
+  const id = `om-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const record = {
+    id,
+    reference_code: referenceCode,
+    idempotency_key: idemKey || `${params.email.trim().toLowerCase()}::${params.tab}::${Date.now()}`,
+    received_at_iso: nowIso,
+    last_attempt_at_iso: nowIso,
+    duplicate_attempts_blocked: 0,
+    delivery_mode: emailFailed ? "LOCAL_SANDBOX_SAVED_EMAIL_FAILED_SIMULATED" : "LOCAL_TEST_INBOX_INTERCEPTED",
+    real_email_sent: false,
+    email_status: emailStatus,
+    email_error: emailError,
+    form_type: "off_market_application",
+    form_label: "Solicitud Búsqueda Privada Off-Market",
+    lang,
+    configured_from: "Web Punta Cana Investments <info@puntacanainvestmentsrd.com>",
+    configured_pci_recipient: "info@puntacanainvestmentsrd.com",
+    client_autoresponder_to: params.email.trim(),
+    admin_subject: `SOLICITUD OFF-MARKET [${referenceCode}]: ${params.name.trim()} (${params.budget})`,
+    client_subject:
+      lang === "en"
+        ? `Off-Market Request Received (${referenceCode}) — Punta Cana Investments`
+        : lang === "fr"
+        ? `Demande Off-Market Reçue (${referenceCode}) — Punta Cana Investments`
+        : `Requerimiento Off-Market Recibido (${referenceCode}) — Punta Cana Investments`,
+    off_market_data: {
+      tab: params.tab,
+      company: (params.company || "").trim(),
+      budget: params.budget,
+      regions: params.regions,
+      details: params.details,
+    },
+    lead: {
+      name: params.name.trim(),
+      company: (params.company || "").trim(),
+      email: params.email.trim(),
+      phone: params.phone.trim(),
+      budget: params.budget,
+      regions: params.regions,
+      message: params.compiledMessage,
+    },
+  };
+
+  const next = [record, ...existing].slice(0, 150);
+  const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+  fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
+  fs.renameSync(tmpFile, inboxFile);
+
+  return {
+    id,
+    reference_code: referenceCode,
+    deduplicated: false,
+    email_status: emailStatus,
+    email_error: emailError,
+  };
 }
 
 function resolveSandboxMediaUrl(url: any, fallback = ""): string {

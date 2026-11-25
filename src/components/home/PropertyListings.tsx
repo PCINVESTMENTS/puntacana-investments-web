@@ -615,7 +615,14 @@ function PropertyListingsContent({
                                                     {getLocalizedTitle(prop, lang)}
                                                 </h3>
                                                 <p className="text-neutral-gray text-sm mb-6 line-clamp-2">
-                                                    {prop.description[lang as 'en' | 'es' | 'fr'] || prop.description['en']}
+                                                    {String(prop.description[lang as 'en' | 'es' | 'fr'] || prop.description['en'] || '')
+                                                        .replace(/^#{1,6}\s+[^\n]*\n*/gm, '')
+                                                        .replace(/#{1,6}\s*/g, '')
+                                                        .replace(/\*\*(.*?)\*\*/g, '$1')
+                                                        .replace(/__(.*?)__/g, '$1')
+                                                        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                                                        .replace(/\s+/g, ' ')
+                                                        .trim()}
                                                 </p>
 
                                                 <div className="flex justify-between items-center border-t border-white/10 pt-4 mt-auto">

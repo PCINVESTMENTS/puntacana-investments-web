@@ -27,14 +27,14 @@ export default function BlogSection({ dict, lang, initialPosts }: BlogSectionPro
     };
 
     return (
-        <section id="blog" className="py-8 lg:py-16 bg-primary-black border-t border-white/5">
+        <section id="blog" className="py-8 lg:py-16 bg-primary-black border-t border-white/5 overflow-x-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-8 lg:mb-16">
-                    <div className="max-w-2xl">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 lg:mb-16">
+                    <div className="max-w-2xl min-w-0">
                         <span className="text-luxury-gold uppercase tracking-[0.2em] text-sm font-semibold">
                             {dict.title}
                         </span>
-                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mt-3 font-serif whitespace-nowrap sm:whitespace-normal tracking-tighter sm:tracking-normal">
+                        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mt-3 font-serif break-words tracking-tight sm:tracking-normal">
                             {dict.latestNews}
                         </h2>
                     </div>

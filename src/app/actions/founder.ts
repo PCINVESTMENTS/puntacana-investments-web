@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { isLocalSandboxEnabled, upsertSandboxFounderLead } from '@/lib/localSandbox';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -41,22 +41,38 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
     }
 
     if (isLocalSandboxEnabled()) {
-        appendSandboxTestInboxEntry({
-            form_type: 'founder_investor',
-            form_label: 'Lista Cero / Inversor Fundador',
+        const idempotencyKey = String(formData.get('idempotency_key') || '').trim();
+        const projectSlug = String(formData.get('project_slug') || 'miches-eco-resort').trim();
+        const saved = upsertSandboxFounderLead({
+            name,
+            email,
+            phone,
+            modality,
+            message: message || '',
             lang,
-            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
-            client_autoresponder_to: email,
-            admin_subject: `NUEVO INVERSOR FUNDADOR: ${name} (${modality})`,
-            client_subject: 'Confirmación Lista Cero — Punta Cana Investments',
-            property_reference: { title: `Proyecto Fundador (${modality})`, type: 'founder_investor' },
-            lead: { name, email, phone, message: message || modality },
-            deduplication_note: '1 solicitud Fundador = 1 aviso PCI + 1 confirmación cliente (buzón local)',
+            project_slug: projectSlug,
+            idempotency_key: idempotencyKey,
         });
+        const seq = saved?.sequence_number || 'FND-LOC-001';
+        const dedup = Boolean(saved?.deduplicated);
         return {
             success: true,
-            message: 'Solicitud de Inversor Fundador registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
+            sandbox_isolated: true,
+            email_sent: false,
+            deduplicated: dedup,
+            sequence_number: seq,
+            id: saved?.id,
+            message: dedup
+                ? lang === 'en'
+                    ? `Your Zero List registration was already confirmed under reference ${seq} (no duplicate created).`
+                    : lang === 'fr'
+                    ? `Votre inscription à la Liste Zéro était déjà confirmée sous la référence ${seq} (aucun doublon créé).`
+                    : `Tu solicitud en Lista Cero ya estaba registrada bajo la referencia ${seq} (sin duplicar tu registro).`
+                : lang === 'en'
+                ? `Your Zero List registration was saved locally under reference ${seq} (local test mode: no real email sent).`
+                : lang === 'fr'
+                ? `Votre inscription à la Liste Zéro a été enregistrée localement sous la référence ${seq} (mode local : aucun e-mail réel envoyé).`
+                : `Tu solicitud en Lista Cero quedó registrada en local bajo la referencia ${seq} (modo local aislado: sin enviar correos reales).`,
         };
     }
 
