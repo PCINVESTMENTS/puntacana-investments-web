@@ -89,7 +89,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             ? (isHotelOrCommercial ? 'hotel_inquiry' : 'property_inquiry')
             : 'general_contact';
 
-        appendSandboxTestInboxEntry({
+        const saved = appendSandboxTestInboxEntry({
             form_type: formCategory,
             form_label:
                 formCategory === 'hotel_inquiry'
@@ -123,14 +123,18 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             deduplication_note: '1 envío = 1 aviso PCI + 1 auto-respuesta cliente (capturado en buzón local)',
         });
 
+        const refCode = saved?.reference_code || 'INQ-LOC-001';
         return {
             success: true,
+            sandbox_isolated: true,
+            reference_code: refCode,
+            email_status: 'intercepted_local',
             message:
                 lang === 'es'
-                    ? '¡Consulta registrada en el Buzón Local de Pruebas! (Sin enviar correos reales).'
+                    ? `Tu consulta quedó registrada en el buzón local bajo la referencia ${refCode} (modo local aislado: sin enviar correos reales).`
                     : lang === 'fr'
-                    ? 'Demande enregistrée dans la boîte de test locale !'
-                    : 'Inquiry recorded in Local Test Inbox! (Zero real emails sent).',
+                    ? `Votre demande a été enregistrée localement sous la référence ${refCode} (mode local isolé : aucun e-mail réel envoyé).`
+                    : `Your inquiry was registered locally under reference ${refCode} (isolated local mode: no real email sent).`,
         };
     }
 

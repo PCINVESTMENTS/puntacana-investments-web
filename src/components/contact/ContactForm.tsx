@@ -59,19 +59,39 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
     // No client-side handleSubmit needed, formAction handles it
 
     if (state.success) {
+        const refCode = (state as any).reference_code as string | undefined;
+        const isSandbox = Boolean((state as any).sandbox_isolated);
         return (
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                data-contact-confirmation="true"
                 className="bg-zinc-900 border border-luxury-gold/30 p-8 rounded-xl text-center shadow-2xl"
             >
                 <div className="flex justify-center mb-4 text-luxury-gold">
                     <FaCheckCircle aria-hidden="true" size={48} />
                 </div>
                 <h3 className="text-2xl font-playfair text-white mb-2">{dict.success}</h3>
-                <p className="text-gray-300">{dict.successText}</p>
+                {refCode && (
+                    <div
+                        data-contact-ref-code={refCode}
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-luxury-gold/15 border border-luxury-gold/40 text-luxury-gold font-mono text-xs font-bold mb-3"
+                    >
+                        <span>{lang === 'es' ? 'Referencia:' : lang === 'fr' ? 'Référence :' : 'Reference:'}</span>
+                        <span>{refCode}</span>
+                    </div>
+                )}
+                <p className="text-gray-300">
+                    {isSandbox && state.message ? state.message : dict.successText}
+                </p>
                 <p className="text-sm text-gray-400 mt-4 italic">
-                    {lang === 'es' 
+                    {isSandbox
+                        ? lang === 'es'
+                            ? 'Modo local aislado: visible de inmediato en el Buzón Local de Pruebas del Dashboard (0 correos reales enviados).'
+                            : lang === 'fr'
+                            ? 'Mode local isolé : visible immédiatement dans la boîte de test du Dashboard (0 e-mail réel envoyé).'
+                            : 'Isolated local mode: visible immediately in the Dashboard Local Test Inbox (0 real emails sent).'
+                        : lang === 'es' 
                         ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
                         : lang === 'fr'
                         ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'

@@ -84,7 +84,7 @@ export async function fetchLocalSandboxDraftPreview(slug: string): Promise<(Prop
   return pub as any;
 }
 
-export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: string; count: number } | null {
+export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: string; reference_code: string; email_status: string; count: number } | null {
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
   if (!catalogFile) return null;
   const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
@@ -97,11 +97,32 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
   } catch {
     existing = [];
   }
+  const formType = String(entry.form_type || "general_contact");
+  const prefix =
+    formType === "hotel_inquiry"
+      ? "HTL-LOC-"
+      : formType === "property_inquiry"
+      ? "INQ-LOC-"
+      : "CNT-LOC-";
+  const sameType = existing.filter((e) => e && e.form_type === formType);
+  let maxSeq = sameType.length;
+  const rx = new RegExp(`^${prefix}(\\d+)$`, "i");
+  for (const item of sameType) {
+    const m = rx.exec(String(item.reference_code || ""));
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n > maxSeq) maxSeq = n;
+    }
+  }
+  const reference_code = String(entry.reference_code || `${prefix}${String(maxSeq + 1).padStart(3, "0")}`);
   const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const email_status = String(entry.email_status || "intercepted_local");
   const record = {
     id,
+    reference_code,
     received_at_iso: new Date().toISOString(),
     delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
+    email_status,
     real_email_sent: false,
     ...entry,
   };
@@ -109,7 +130,7 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
   const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
   fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
   fs.renameSync(tmpFile, inboxFile);
-  return { id, count: next.length };
+  return { id, reference_code, email_status, count: next.length };
 }
 
 export interface FounderSequenceCodeEntry {
@@ -840,6 +861,7 @@ export function appendSandboxFlyAndBuyLead(entry: Record<string, any>): { id: st
     reference_code,
     received_at_iso: new Date().toISOString(),
     delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
+    email_status: "intercepted_local",
     real_email_sent: false,
     ...entry,
   };
