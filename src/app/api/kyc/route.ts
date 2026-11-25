@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { isLocalSandboxEnabled } from '@/lib/localSandbox';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -15,6 +16,26 @@ export async function POST(request: Request) {
     try {
         const formData = await request.formData();
         const formType = formData.get('formType') as string;
+
+        if (isLocalSandboxEnabled()) {
+            const sandboxApi = process.env.LOCAL_PROPERTIES_SANDBOX_URL || 'http://127.0.0.1:8110';
+            const localResp = await fetch(`${sandboxApi}/api/phase7-sandbox/due-diligence/submit/`, {
+                method: 'POST',
+                body: formData,
+            });
+            const localJson = await localResp.json().catch(() => ({}));
+            if (!localResp.ok) {
+                return NextResponse.json(
+                    { success: false, error: localJson.error || 'Error guardando Debida Diligencia en local.' },
+                    { status: localResp.status }
+                );
+            }
+            return NextResponse.json({
+                success: true,
+                sandbox_isolated: true,
+                data: localJson.submission || localJson,
+            }, { status: 201 });
+        }
         
         let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
         if (apiUrl === 'undefined' || apiUrl === 'null') {

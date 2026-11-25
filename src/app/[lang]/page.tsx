@@ -29,6 +29,7 @@ import { BlogPost } from "@/data/blog";
 import {
   fetchLocalSandboxCatalog,
   fetchLocalSandboxWebManager,
+  fetchLocalSandboxPhase7,
   mapSandboxBlogPosts,
   mapWebManagerLocations,
 } from "@/lib/localSandbox";
@@ -200,8 +201,9 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
     };
   });
 
-  // Fase 5 Local Web Manager overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
+  // Fase 5 & Fase 7 Local overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
   const webManager = fetchLocalSandboxWebManager();
+  const phase7Data = fetchLocalSandboxPhase7();
   const wmHero = webManager?.homepage?.hero;
   const wmLocSec = webManager?.homepage?.locations_section;
   const secVis = webManager?.homepage?.sections_visibility || {};
@@ -430,7 +432,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       case "future_projects":
         return secVis.show_future_projects !== false ? (
           <div key="future_projects" data-home-section="future_projects">
-            <FutureProjectsSection lang={lang} />
+            <FutureProjectsSection lang={lang} featuredOverride={phase7Data?.future_projects?.featured || null} />
           </div>
         ) : null;
       case "investments":

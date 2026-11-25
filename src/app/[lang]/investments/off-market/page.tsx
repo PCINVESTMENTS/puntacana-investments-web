@@ -5,7 +5,10 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import OffMarketForm from "@/components/investments/OffMarketForm";
 import Image from "next/image";
 import { offMarketDict } from "@/dictionaries/offMarket";
+import { fetchLocalSandboxPhase7, resolvePhase7MediaUrl } from "@/lib/localSandbox";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
     params
@@ -61,6 +64,20 @@ export default async function OffMarketPage({
     const { lang } = await params;
     const dict = await getDictionary(lang);
     const t = offMarketDict[lang];
+    const phase7 = fetchLocalSandboxPhase7();
+    const om = phase7?.off_market || null;
+    const omHeroTag = om?.hero?.tag?.[lang] || t.hero.tag;
+    const omHeroTitle1 = om?.hero?.title1?.[lang] || t.hero.title1;
+    const omHeroTitle2 = om?.hero?.title2?.[lang] || t.hero.title2;
+    const omHeroDesc = om?.hero?.desc?.[lang] || t.hero.desc;
+    const omHeroImg = resolvePhase7MediaUrl(om?.hero?.image, "/images/off-market-hero-v3.webp");
+    const showHotels = om?.show_hotels_section !== false;
+    const showDistressed = om?.show_distressed_section !== false;
+    const showCompliance = om?.show_compliance_section !== false;
+    const showAppForm = om?.show_application_form !== false;
+    const activeTeasers = om?.show_public_teasers === true && Array.isArray(om?.opportunities)
+        ? om.opportunities.filter((o: any) => o && o.is_active !== false)
+        : [];
 
     const title = lang === "en" 
         ? "Off-Market: Private Investment Portfolio | Punta Cana Investments"
@@ -143,7 +160,8 @@ export default async function OffMarketPage({
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-black/40 z-10"></div>
                     <Image 
-                        src="/images/off-market-hero-v3.webp"
+                        src={omHeroImg}
+                        unoptimized={omHeroImg.startsWith("http://127.0.0.1:8110")}
                         quality={65} 
                         alt="Portafolio Privado Punta Cana Investments" 
                         fill
@@ -158,22 +176,68 @@ export default async function OffMarketPage({
                     <ScrollReveal>
                         <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
                             <span className="text-luxury-gold uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block text-center">
-                                {t.hero.tag}
+                                {omHeroTag}
                             </span>
                             <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-white mb-4 uppercase tracking-tight leading-tight text-center">
-                                {t.hero.title1} <br className="hidden md:block"/>
-                                <span className="text-luxury-gold">{t.hero.title2}</span>
+                                {omHeroTitle1} <br className="hidden md:block"/>
+                                <span className="text-luxury-gold">{omHeroTitle2}</span>
                             </h1>
                             <div className="h-0.5 w-16 bg-luxury-gold mb-6 mx-auto"></div>
                             <p className="text-gray-200 text-sm md:text-base leading-relaxed font-light text-center max-w-2xl mx-auto drop-shadow-md">
-                                {t.hero.desc}
+                                {omHeroDesc}
                             </p>
                         </div>
                     </ScrollReveal>
                 </div>
             </section>
 
+            {/* Optional Confidential Off-Market Teasers managed in Phase 7 */}
+            {activeTeasers.length > 0 && (
+                <section data-offmarket-teasers="true" className="py-14 bg-[#090909] border-b border-luxury-gold/20">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-10">
+                            <span className="text-luxury-gold uppercase tracking-[0.25em] text-xs font-bold">
+                                {lang === "en" ? "Active Confidential Mandates" : lang === "fr" ? "Mandats Confidentiels Actifs" : "Mandatos Confidenciales Activos"}
+                            </span>
+                            <h2 className="text-2xl md:text-3xl font-serif text-white mt-2">
+                                {lang === "en" ? "Selected Off-Market Highlights" : lang === "fr" ? "Sélection Off-Market sous NDA" : "Selección Off-Market bajo NDA"}
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {activeTeasers.map((op: any) => (
+                                <div key={op.id} className="bg-black border border-luxury-gold/30 p-6 flex flex-col justify-between gap-4">
+                                    <div>
+                                        <div className="flex items-center justify-between gap-2 text-xs mb-3">
+                                            <span className="font-mono text-luxury-gold font-bold">{op.code}</span>
+                                            <span className="px-2 py-0.5 bg-luxury-gold/15 text-luxury-gold uppercase font-semibold text-[10px]">
+                                                {op.status}
+                                            </span>
+                                        </div>
+                                        <div className="text-[11px] uppercase tracking-wider text-gray-400 mb-1">
+                                            {op.category} · {op.location}
+                                        </div>
+                                        <h3 className="text-lg font-serif text-white font-bold mb-2">
+                                            {op.title?.[lang] || op.title?.es}
+                                        </h3>
+                                        <p className="text-sm text-gray-400 leading-relaxed">
+                                            {op.summary?.[lang] || op.summary?.es}
+                                        </p>
+                                    </div>
+                                    <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                                        <span className="text-luxury-gold font-bold">{op.investment_range}</span>
+                                        <a href="#application-form" className="text-white hover:text-luxury-gold uppercase tracking-wider font-semibold">
+                                            {lang === "en" ? "Request NDA →" : lang === "fr" ? "Demander NDA →" : "Solicitar NDA →"}
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* 2. SECTION: HOTELES, RESORTS Y MACRO-LOTES */}
+            {showHotels && (
             <section className="py-16 md:py-24 bg-black relative">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal>
@@ -200,8 +264,10 @@ export default async function OffMarketPage({
                     </ScrollReveal>
                 </div>
             </section>
+            )}
 
             {/* 3. SECTION: PROPIEDADES EN REMATE (DISTRESSED ASSETS) */}
+            {showDistressed && (
             <section className="py-16 md:py-24 bg-[#0a0a0a] relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -237,8 +303,10 @@ export default async function OffMarketPage({
                     </div>
                 </div>
             </section>
+            )}
 
             {/* 4. SECTION: EL PROTOCOLO DE FILTRADO Y COMPLIANCE */}
+            {showCompliance && (
             <section className="py-16 md:py-24 bg-black">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                     <ScrollReveal>
@@ -282,8 +350,10 @@ export default async function OffMarketPage({
                     </ScrollReveal>
                 </div>
             </section>
+            )}
 
             {/* 5. SECTION: FORMULARIO DE APLICACIÓN PRIVADA */}
+            {showAppForm && (
             <section className="py-16 md:py-24 bg-black relative" id="application-form">
                 {/* Subtle Grid Background */}
                 <div className="absolute inset-0 bg-transparent opacity-[0.03] pointer-events-none mix-blend-screen"></div>
@@ -294,6 +364,7 @@ export default async function OffMarketPage({
                     </ScrollReveal>
                 </div>
             </section>
+            )}
 
             <Footer dict={dict} lang={lang} />
         </main>

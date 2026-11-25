@@ -215,7 +215,7 @@ export function mapSandboxBlogPosts(rawPosts: any[] = []): BlogPost[] {
       relatedPropertySlugs: Array.isArray(p.relatedPropertySlugs || p.related_property_slugs)
         ? (p.relatedPropertySlugs || p.related_property_slugs)
         : [],
-      linkedGuides: Array.isArray(p.linkedGuides || p.linked_guides) ? (p.linkedGuides || p.linked_guides) : [],
+      linkedGuides: [],
       status: p.status || "published",
       isDraftPreview: Boolean(p.is_draft_preview),
     } as BlogPost;
@@ -317,6 +317,28 @@ export function fetchLocalSandboxWebManager(): LocalWebManagerPayload | null {
     console.error("Local web manager read error:", err);
   }
   return null;
+}
+
+export function fetchLocalSandboxPhase7(): Record<string, any> | null {
+  if (!isLocalSandboxEnabled()) return null;
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const p7File = path.join(path.dirname(catalogFile), "phase7_investments_live.json");
+  try {
+    if (fs.existsSync(p7File)) {
+      return JSON.parse(fs.readFileSync(p7File, "utf-8"));
+    }
+  } catch (err) {
+    console.error("Local phase7 read error:", err);
+  }
+  return null;
+}
+
+export function resolvePhase7MediaUrl(url: any, fallback = "/images/og-home-luxury.webp"): string {
+  const s = typeof url === "string" ? url.trim() : "";
+  if (!s) return fallback;
+  if (s.startsWith("/media/")) return `http://127.0.0.1:8110${s}`;
+  return s;
 }
 
 export function mapWebManagerLocations(

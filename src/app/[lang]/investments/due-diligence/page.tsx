@@ -1,9 +1,12 @@
 import { getDictionary } from "@/dictionaries/get-dictionary";
 import Navbar from "@/components/layout/Navbar";
-import dynamic from "next/dynamic";
-const Footer = dynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer), { ssr: true });
+import nextDynamic from "next/dynamic";
+const Footer = nextDynamic(() => import("@/components/layout/Footer").then(mod => mod.Footer), { ssr: true });
 import DueDiligenceContent from "./DueDiligenceContent";
 import { Metadata } from "next";
+import { fetchLocalSandboxPhase7 } from "@/lib/localSandbox";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: "es" | "en" | "fr" }> }): Promise<Metadata> {
     const { lang } = await params;
@@ -105,6 +108,9 @@ export default async function DueDiligencePage({ params }: { params: Promise<{ l
         ]
     };
 
+    const phase7 = fetchLocalSandboxPhase7();
+    const ddConfig = phase7?.due_diligence || null;
+
     return (
         <main className="min-h-screen bg-black">
             <script
@@ -118,7 +124,7 @@ export default async function DueDiligencePage({ params }: { params: Promise<{ l
                 propertyTypes={dict.properties.types}
                 variant="solid"
             />
-            <DueDiligenceContent />
+            <DueDiligenceContent ddConfig={ddConfig} />
             <Footer dict={dict} lang={lang} />
         </main>
     );

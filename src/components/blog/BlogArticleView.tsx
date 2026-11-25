@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
-import { FaArrowLeft, FaCalendarAlt, FaUser, FaTag, FaFilePdf, FaDownload, FaExternalLinkAlt, FaEye } from "react-icons/fa";
-import { BlogPost, BlogLinkedGuide } from "@/data/blog";
+import { FaArrowLeft, FaCalendarAlt, FaUser, FaTag, FaEye } from "react-icons/fa";
+import { BlogPost } from "@/data/blog";
 import { Property } from "@/data/properties";
 import { urlFor } from "@/sanity/lib/image";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -25,157 +25,6 @@ const getVal = (obj: any, key: "es" | "en" | "fr"): string => {
   if (typeof obj === "string") return obj;
   return obj[key] || obj["en"] || obj["es"] || "";
 };
-
-const formatBytes = (bytes?: number) => {
-  if (!bytes || bytes <= 0) return "";
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-};
-
-const LANG_LABEL: Record<"es" | "en" | "fr", { es: string; en: string; fr: string }> = {
-  es: { es: "Español (ES)", en: "Spanish (ES)", fr: "Espagnol (ES)" },
-  en: { es: "Inglés (EN)", en: "English (EN)", fr: "Anglais (EN)" },
-  fr: { es: "Francés (FR)", en: "French (FR)", fr: "Français (FR)" },
-};
-
-function GuideDownloadBox({ guides, lang }: { guides: BlogLinkedGuide[]; lang: "es" | "en" | "fr" }) {
-  if (!guides || guides.length === 0) return null;
-
-  const heading =
-    lang === "en"
-      ? "Downloadable PDF Investment Guide"
-      : lang === "fr"
-      ? "Guide d'Investissement PDF Téléchargeable"
-      : "Guía de Inversión Descargable en PDF";
-
-  const downloadLabel =
-    lang === "en" ? "Download PDF" : lang === "fr" ? "Télécharger le PDF" : "Descargar PDF";
-  const openLabel =
-    lang === "en" ? "Open PDF" : lang === "fr" ? "Ouvrir le PDF" : "Abrir PDF";
-
-  return (
-    <section
-      data-blog-guides-section="true"
-      className="my-14 p-6 md:p-8 bg-gradient-to-br from-[#1b170b] via-dark-gray to-black border border-luxury-gold/40 rounded-sm shadow-2xl"
-    >
-      <div className="flex items-center gap-3 mb-4">
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-sm bg-luxury-gold text-black">
-          <FaFilePdf className="text-xl" aria-hidden="true" />
-        </span>
-        <div>
-          <span className="text-luxury-gold text-xs font-bold uppercase tracking-[0.2em] block">
-            {lang === "en" ? "Exclusive Resource" : lang === "fr" ? "Ressource Exclusive" : "Recurso Exclusivo"}
-          </span>
-          <h3 className="text-xl md:text-2xl font-serif font-bold text-white">{heading}</h3>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        {guides.map((guide) => {
-          const available = (guide.available_languages || []).filter((l) => Boolean(guide.files_by_lang?.[l]));
-          const preferredLang = available.includes(lang)
-            ? lang
-            : available.includes(guide.language)
-            ? guide.language
-            : available[0] || "es";
-          const primaryFile = guide.files_by_lang?.[preferredLang];
-          const gTitle = getVal(guide.title, lang) || guide.slug;
-          const gDesc = getVal(guide.description, lang);
-
-          return (
-            <div
-              key={guide.id}
-              data-guide-card={guide.id}
-              className="p-5 bg-black/60 border border-white/10 rounded-sm flex flex-col gap-4"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                <div>
-                  <h4 className="text-lg font-serif font-bold text-white">{gTitle}</h4>
-                  {gDesc && <p className="text-sm text-gray-300 mt-1 leading-relaxed">{gDesc}</p>}
-                  {primaryFile && (
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-gray-400">
-                      <span className="text-luxury-gold font-semibold">
-                        {lang === "en" ? "Language:" : lang === "fr" ? "Langue :" : "Idioma:"}{" "}
-                        {LANG_LABEL[preferredLang]?.[lang] || preferredLang.toUpperCase()}
-                      </span>
-                      <span>•</span>
-                      <span>{primaryFile.original_filename}</span>
-                      {primaryFile.size_bytes > 0 && (
-                        <>
-                          <span>•</span>
-                          <span>{formatBytes(primaryFile.size_bytes)}</span>
-                        </>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {primaryFile && (
-                  <div className="flex flex-wrap items-center gap-2 shrink-0">
-                    <a
-                      href={primaryFile.download_url}
-                      download={primaryFile.original_filename}
-                      data-guide-download-btn={guide.id}
-                      data-guide-lang={preferredLang}
-                      className="inline-flex items-center gap-2 bg-luxury-gold hover:bg-white text-black px-5 py-3 text-xs font-bold uppercase tracking-widest transition-colors"
-                    >
-                      <FaDownload aria-hidden="true" />
-                      <span>
-                        {downloadLabel} ({preferredLang.toUpperCase()})
-                      </span>
-                    </a>
-                    <a
-                      href={primaryFile.view_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-guide-open-btn={guide.id}
-                      className="inline-flex items-center gap-2 border border-luxury-gold/60 text-luxury-gold hover:bg-luxury-gold hover:text-black px-4 py-3 text-xs font-bold uppercase tracking-widest transition-colors"
-                    >
-                      <FaExternalLinkAlt aria-hidden="true" className="text-[10px]" />
-                      <span>{openLabel}</span>
-                    </a>
-                  </div>
-                )}
-              </div>
-
-              {available.length > 1 && (
-                <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs">
-                  <span className="text-gray-400">
-                    {lang === "en"
-                      ? "Available versions:"
-                      : lang === "fr"
-                      ? "Versions disponibles :"
-                      : "Versiones disponibles:"}
-                  </span>
-                  {available.map((vl) => {
-                    const vf = guide.files_by_lang?.[vl];
-                    if (!vf) return null;
-                    return (
-                      <a
-                        key={vl}
-                        href={vf.download_url}
-                        download={vf.original_filename}
-                        data-guide-variant-download={`${guide.id}-${vl}`}
-                        className={`px-2.5 py-1 border rounded-sm font-semibold transition-colors ${
-                          vl === preferredLang
-                            ? "border-luxury-gold bg-luxury-gold/15 text-luxury-gold"
-                            : "border-white/15 text-gray-300 hover:border-luxury-gold hover:text-luxury-gold"
-                        }`}
-                      >
-                        PDF {vl.toUpperCase()}
-                      </a>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
 
 export default function BlogArticleView({
   post,
@@ -297,7 +146,6 @@ export default function BlogArticleView({
     [];
 
   const siteUrl = "https://www.puntacanainvestmentsrd.com";
-  const linkedGuides = post.linkedGuides || [];
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-luxury-gold selection:text-black">
@@ -318,10 +166,10 @@ export default function BlogArticleView({
               <FaEye className="text-amber-300 shrink-0" />
               <span>
                 {lang === "en"
-                  ? "LOCAL PREVIEW MODE — Review cover, ALT text, translations, linked properties and PDF guide before publishing."
+                  ? "LOCAL PREVIEW MODE — Review cover, ALT text, translations, and linked properties before publishing."
                   : lang === "fr"
-                  ? "MODE APERÇU LOCAL — Vérifiez la couverture, le texte ALT, les traductions, les propriétés liées et le guide PDF avant publication."
-                  : "MODO VISTA PREVIA LOCAL — Revisa portada, texto ALT, traducciones ES/EN/FR, propiedades vinculadas y guía PDF antes de publicar."}
+                  ? "MODE APERÇU LOCAL — Vérifiez la couverture, le texte ALT, les traductions et les propriétés liées avant publication."
+                  : "MODO VISTA PREVIA LOCAL — Revisa portada, texto ALT, traducciones ES/EN/FR y propiedades vinculadas antes de publicar."}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -412,9 +260,6 @@ export default function BlogArticleView({
               <PortableText value={contentBlocks} components={ptComponents} />
             </div>
 
-            {/* Linked PDF Guides Box */}
-            <GuideDownloadBox guides={linkedGuides} lang={lang} />
-
             {/* Social Share */}
             <div className="mt-16 pt-10 border-t border-white/10">
               <h3 className="text-white text-lg font-bold mb-6">{dict.blog.share}</h3>
@@ -499,7 +344,7 @@ export default function BlogArticleView({
             )}
           </article>
 
-          {/* Sidebar / Author + Quick Guide Access */}
+          {/* Sidebar / Author */}
           <aside className="lg:col-span-4 space-y-8">
             <div className="bg-dark-gray p-8 border border-white/5 rounded-sm sticky top-32 space-y-6">
               <div className="text-center">
@@ -524,38 +369,6 @@ export default function BlogArticleView({
                   {dict.blog.contactAuthor}
                 </Link>
               </div>
-
-              {linkedGuides.length > 0 && (
-                <div className="pt-6 border-t border-white/10">
-                  <p className="text-luxury-gold text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <FaFilePdf aria-hidden="true" />
-                    {lang === "en" ? "Included PDF Guide" : lang === "fr" ? "Guide PDF Inclus" : "Guía PDF Incluida"}
-                  </p>
-                  {linkedGuides.map((g) => {
-                    const avail = (g.available_languages || []).filter((l) => Boolean(g.files_by_lang?.[l]));
-                    const pref = avail.includes(lang) ? lang : avail[0] || "es";
-                    const f = g.files_by_lang?.[pref];
-                    if (!f) return null;
-                    return (
-                      <a
-                        key={g.id}
-                        href={f.download_url}
-                        download={f.original_filename}
-                        className="mt-2 flex items-center justify-center gap-2 w-full bg-luxury-gold hover:bg-white text-black py-3 px-4 text-xs font-bold uppercase tracking-widest transition-colors"
-                      >
-                        <FaDownload aria-hidden="true" />
-                        <span>
-                          {lang === "en"
-                            ? `Download PDF (${pref.toUpperCase()})`
-                            : lang === "fr"
-                            ? `Télécharger PDF (${pref.toUpperCase()})`
-                            : `Descargar PDF (${pref.toUpperCase()})`}
-                        </span>
-                      </a>
-                    );
-                  })}
-                </div>
-              )}
             </div>
           </aside>
         </div>

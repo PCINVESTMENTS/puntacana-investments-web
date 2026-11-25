@@ -6,7 +6,10 @@ import { Footer } from "@/components/layout/Footer";
 import FounderInvestmentForm from "@/components/forms/FounderInvestmentForm";
 import ReadMore from "@/components/ui/ReadMore";
 import { getDictionary } from "@/dictionaries/get-dictionary";
+import { fetchLocalSandboxPhase7, resolvePhase7MediaUrl } from "@/lib/localSandbox";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -91,6 +94,18 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 export default async function FuturosProyectosPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const phase7 = fetchLocalSandboxPhase7();
+  const fp = phase7?.future_projects || null;
+  const feat = fp?.featured || null;
+  const heroBadge = feat?.badge?.[lang] || (lang === 'en' ? '🌿 Coming Soon' : lang === 'fr' ? '🌿 Bientôt' : '🌿 Próximamente');
+  const heroLine1 = feat?.hero_title_line1?.[lang] || (lang === 'en' ? 'The Future of' : lang === 'fr' ? "L’Avenir de la" : 'El Futuro de la');
+  const heroHighlight = feat?.hero_title_highlight?.[lang] || (lang === 'en' ? 'Ecological Life' : lang === 'fr' ? 'Vie Écologique' : 'Vida Ecológica');
+  const heroSub = feat?.hero_subtitle?.[lang] || (lang === 'en' ? 'and Experience Tourism in the Caribbean' : lang === 'fr' ? "et du Tourisme d’Expérience dans les Caraïbes" : 'y el Turismo de Experiencias en el Caribe');
+  const heroImg = resolvePhase7MediaUrl(feat?.hero_image, "/images/miches-eco-resort-main.jpg");
+  const showFounderForm = feat?.show_founder_form !== false;
+  const extraProjects = Array.isArray(fp?.projects)
+    ? fp.projects.filter((p: any) => p && p.is_active !== false)
+    : [];
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -127,7 +142,8 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
       <section className="relative h-[100svh] min-h-[500px] md:min-h-[700px] flex items-center justify-center pt-16 md:pt-20">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/miches-eco-resort-main.jpg"
+            src={heroImg}
+            unoptimized={heroImg.startsWith("http://127.0.0.1:8110")}
             alt="Vista principal del Masterplan del Eco-Resort en Miches, Inversión de Capital en el Caribe"
             fill
             className="object-cover object-center"
@@ -139,13 +155,13 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center mt-16 md:mt-20">
           <div className="inline-flex items-center gap-3 mb-4 md:mb-6 bg-white/10 backdrop-blur-md px-4 py-2 md:px-6 rounded-full border border-luxury-gold/50">
             <FaLeaf className="text-luxury-gold text-sm md:text-base" />
-            <span className="uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm font-bold text-luxury-gold">{lang === 'en' ? '🌿 Coming Soon' : lang === 'fr' ? '🌿 Bientôt' : '🌿 Próximamente'}</span>
+            <span className="uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-sm font-bold text-luxury-gold">{heroBadge}</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 md:mb-6 uppercase tracking-widest drop-shadow-2xl leading-tight">
-            {lang === 'en' ? 'The Future of' : lang === 'fr' ? "L’Avenir de la" : 'El Futuro de la'} <br className="hidden sm:block" /> <span className="text-luxury-gold italic">{lang === 'en' ? 'Ecological Life' : lang === 'fr' ? 'Vie Écologique' : 'Vida Ecológica'}</span>
+            {heroLine1} <br className="hidden sm:block" /> <span className="text-luxury-gold italic">{heroHighlight}</span>
           </h1>
           <p className="text-lg sm:text-xl md:text-3xl text-gray-200 font-light max-w-4xl mx-auto drop-shadow-md">
-            {lang === 'en' ? 'and Experience Tourism in the Caribbean' : lang === 'fr' ? "et du Tourisme d’Expérience dans les Caraïbes" : 'y el Turismo de Experiencias en el Caribe'}
+            {heroSub}
           </p>
         </div>
       </section>
@@ -539,6 +555,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                 </div>
             </div>
 
+            {showFounderForm && (
             <div className="max-w-2xl mx-auto bg-black/60 p-4 sm:p-6 md:p-10 rounded-2xl border border-luxury-gold/40 shadow-2xl relative z-10">
                 <div className="text-center mb-6 md:mb-8">
                     <h3 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-wider mb-3">{lang === 'en' ? 'I Want to Be a Founding Investor' : lang === 'fr' ? 'Je Veux Devenir Investisseur Fondateur' : 'Quiero Ser Inversionista Fundador'}</h3>
@@ -554,8 +571,54 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
                     lang={lang} 
                 />
             </div>
+            )}
         </div>
       </section>
+
+      {extraProjects.length > 0 && (
+        <section data-extra-future-projects="true" className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="text-luxury-gold uppercase tracking-[0.25em] text-xs font-bold">
+              {lang === "en" ? "Pipeline & Zero List" : lang === "fr" ? "Pipeline & Liste Zéro" : "Pipeline y Lista Cero"}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mt-2">
+              {lang === "en" ? "Additional Upcoming Developments" : lang === "fr" ? "Autres Projets à Venir" : "Próximos Desarrollos Adicionales"}
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {extraProjects.map((proj: any) => {
+              const pImg = resolvePhase7MediaUrl(proj.image, "/images/miches-eco-resort-main.jpg");
+              return (
+                <div key={proj.slug} className="bg-dark-gray border border-white/10 overflow-hidden rounded-sm">
+                  <div className="relative h-60">
+                    <Image
+                      src={pImg}
+                      unoptimized={pImg.startsWith("http://127.0.0.1:8110")}
+                      alt={proj.title?.[lang] || proj.title?.es || proj.slug}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-3 left-3 bg-luxury-gold text-black text-xs font-bold uppercase px-3 py-1">
+                      {proj.stage_badge?.[lang] || proj.stage_badge?.es || "Lista Cero"}
+                    </div>
+                    <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs font-semibold px-3 py-1">
+                      {proj.location} · {proj.estimated_launch}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-serif font-bold text-white mb-2">
+                      {proj.title?.[lang] || proj.title?.es}
+                    </h3>
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      {proj.summary?.[lang] || proj.summary?.es}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <Footer dict={dict} lang={lang} />
     </main>

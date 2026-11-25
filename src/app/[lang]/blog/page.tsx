@@ -8,7 +8,7 @@ import Navbar from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import Image from "next/image";
-import { FaCalendarAlt, FaArrowRight, FaFilePdf } from "react-icons/fa";
+import { FaCalendarAlt, FaArrowRight } from "react-icons/fa";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import type { Metadata } from "next";
 
@@ -145,16 +145,8 @@ export default async function BlogListingPage({ params }: BlogListingPageProps) 
                                                 quality={65}
                                                 className="object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                                             />
-                                            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                                                <div className="bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
-                                                    {getVal(post.category, lang)}
-                                                </div>
-                                                {post.linkedGuides && post.linkedGuides.length > 0 && (
-                                                    <div className="bg-black/85 border border-luxury-gold/70 text-luxury-gold px-2.5 py-1 text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1">
-                                                        <FaFilePdf aria-hidden="true" className="text-[11px]" />
-                                                        <span>{lang === 'en' ? 'PDF Guide' : lang === 'fr' ? 'Guide PDF' : 'Guía PDF'}</span>
-                                                    </div>
-                                                )}
+                                            <div className="absolute top-4 left-4 bg-luxury-gold text-black px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                                                {getVal(post.category, lang)}
                                             </div>
                                         </Link>
                                         <div className="p-8 flex flex-col flex-grow">

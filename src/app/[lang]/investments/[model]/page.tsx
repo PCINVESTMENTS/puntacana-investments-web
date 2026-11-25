@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { investmentModels } from "@/data/investment-models";
+import { fetchLocalSandboxPhase7, resolvePhase7MediaUrl } from "@/lib/localSandbox";
 import { FaCheck, FaArrowRight, FaChartPie, FaRegCheckCircle } from "react-icons/fa";
 
 export async function generateStaticParams() {
@@ -16,13 +17,35 @@ export async function generateStaticParams() {
     ]);
 }
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
+
+function resolveInvestmentModel(slug: string) {
+    const phase7 = fetchLocalSandboxPhase7();
+    const p7Models = phase7?.investments_page?.models;
+    const baseMatch = investmentModels.find((m) => m.slug === slug);
+    if (Array.isArray(p7Models)) {
+        const dyn = p7Models.find((m: any) => m && m.slug === slug && m.is_active !== false);
+        if (dyn) {
+            return {
+                slug: dyn.slug,
+                title: dyn.title || baseMatch?.title || { es: slug, en: slug, fr: slug },
+                heroImage: resolvePhase7MediaUrl(dyn.hero_image, baseMatch?.heroImage || "/images/og-home-luxury.webp"),
+                description: dyn.description || baseMatch?.description || { es: "", en: "", fr: "" },
+                longDescription: dyn.long_description || baseMatch?.longDescription || dyn.description || { es: "", en: "", fr: "" },
+                keyBenefits: (Array.isArray(dyn.key_benefits) && dyn.key_benefits.length > 0 ? dyn.key_benefits : baseMatch?.keyBenefits) || [],
+                roiStats: (Array.isArray(dyn.roi_stats) && dyn.roi_stats.length > 0 ? dyn.roi_stats : baseMatch?.roiStats) || [],
+                contentSections: baseMatch?.contentSections || [],
+            };
+        }
+    }
+    return baseMatch || null;
+}
 
 import ShareButtons from "@/components/property/ShareButtons";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, model: string }> }) {
     const { lang, model } = await params;
-    const modelData = investmentModels.find(m => m.slug === model);
+    const modelData = resolveInvestmentModel(model);
 
     if (!modelData) return { title: 'Not Found' };
 
@@ -78,7 +101,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function InvestmentModelPage({ params }: { params: Promise<{ lang: string, model: string }> }) {
     const { lang, model } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
-    const data = investmentModels.find(m => m.slug === model);
+    const data = resolveInvestmentModel(model);
 
     if (!data) return notFound();
 

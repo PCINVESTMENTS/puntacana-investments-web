@@ -369,23 +369,39 @@ export function PersonaFisicaForm() {
                 formData.append('firma_digital', sigFile);
             }
 
-            // Enviar los datos directamente al backend de Django en Railway sin headers bloqueantes
-            const res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/kyc/fisica/', {
-                method: 'POST',
-                body: formData
-            });
+            const isLocalHost =
+                typeof window !== 'undefined' &&
+                (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+
+            let res: Response;
+            if (isLocalHost) {
+                formData.append('formType', 'Persona Física');
+                formData.append('lang', lang);
+                res = await fetch('/api/kyc', {
+                    method: 'POST',
+                    body: formData
+                });
+            } else {
+                // Enviar los datos directamente al backend de Django en Railway sin headers bloqueantes
+                res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/kyc/fisica/', {
+                    method: 'POST',
+                    body: formData
+                });
+            }
 
             // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
             if (res.ok || res.status === 201) {
-                // Send email notification using Server Action safely AFTER Django success
-                try {
-                    await sendKYCEmailNotification({
-                        type: 'Persona Física',
-                        clientEmail: data.email,
-                        subjectName: `${data.firstName} ${data.lastName}`.trim()
-                    });
-                } catch (emailError) {
-                    console.error("Failed to send KYC confirmation email", emailError);
+                if (!isLocalHost) {
+                    // Send email notification using Server Action safely AFTER Django success
+                    try {
+                        await sendKYCEmailNotification({
+                            type: 'Persona Física',
+                            clientEmail: data.email,
+                            subjectName: `${data.firstName} ${data.lastName}`.trim()
+                        });
+                    } catch (emailError) {
+                        console.error("Failed to send KYC confirmation email", emailError);
+                    }
                 }
 
                 toast({

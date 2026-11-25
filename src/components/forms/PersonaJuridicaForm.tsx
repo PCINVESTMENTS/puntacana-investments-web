@@ -306,23 +306,39 @@ export function PersonaJuridicaForm() {
                 formData.append('firma_digital', sigFile);
             }
 
-            // Enviar los datos directamente al backend de Django en Railway sin headers bloqueantes
-            const res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/kyc/juridica/', {
-                method: 'POST',
-                body: formData
-            });
+            const isLocalHost =
+                typeof window !== 'undefined' &&
+                (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+
+            let res: Response;
+            if (isLocalHost) {
+                formData.append('formType', 'Persona Jurídica');
+                formData.append('lang', lang);
+                res = await fetch('/api/kyc', {
+                    method: 'POST',
+                    body: formData
+                });
+            } else {
+                // Enviar los datos directamente al backend de Django en Railway sin headers bloqueantes
+                res = await fetch('https://puntacana-fortress-production.up.railway.app/api/public/kyc/juridica/', {
+                    method: 'POST',
+                    body: formData
+                });
+            }
 
             // CRITICO: Atrapar el 201 OK INMEDIATAMENTE para evitar fallos de parseo de JSON
             if (res.ok || res.status === 201) {
-                // Send email notification safely AFTER Django success
-                try {
-                    await sendKYCEmailNotification({
-                        type: 'Persona Jurídica',
-                        clientEmail: data.legalRepEmail,
-                        subjectName: data.companyName.trim()
-                    });
-                } catch (emailError) {
-                    console.error("Failed to send KYC confirmation email", emailError);
+                if (!isLocalHost) {
+                    // Send email notification safely AFTER Django success
+                    try {
+                        await sendKYCEmailNotification({
+                            type: 'Persona Jurídica',
+                            clientEmail: data.legalRepEmail,
+                            subjectName: data.companyName.trim()
+                        });
+                    } catch (emailError) {
+                        console.error("Failed to send KYC confirmation email", emailError);
+                    }
                 }
 
                 toast({

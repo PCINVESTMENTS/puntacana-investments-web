@@ -17,10 +17,20 @@ const PersonaJuridicaForm = dynamic(() => import("@/components/forms/PersonaJuri
 });
 import { useParams } from "next/navigation";
 
-export default function DueDiligenceContent() {
-    const [formType, setFormType] = useState<"fisica" | "juridica">("fisica");
+export default function DueDiligenceContent({ ddConfig }: { ddConfig?: Record<string, any> | null }) {
+    const enableFisica = ddConfig?.enable_persona_fisica !== false;
+    const enableJuridica = ddConfig?.enable_persona_juridica !== false;
+    const [formType, setFormType] = useState<"fisica" | "juridica">(enableFisica ? "fisica" : "juridica");
     const params = useParams();
-    const lang = params.lang as string || 'es';
+    const lang = (params.lang as "es" | "en" | "fr") || 'es';
+    const customTitle = ddConfig?.title?.[lang] || (lang === 'es' ? 'Debida Diligencia' : lang === 'fr' ? 'Diligence Raisonnable' : 'Due Diligence');
+    const customSubtitle = ddConfig?.subtitle?.[lang] || (
+        lang === 'es'
+            ? 'Complete el formulario correspondiente para iniciar su proceso de inversión. Seleccione el tipo de persona para continuar.'
+            : lang === 'fr'
+            ? 'Veuillez remplir le formulaire correspondant pour initier votre processus d\'investissement. Sélectionnez le type de personne pour continuer.'
+            : 'Please complete the corresponding form to initiate your investment process. Select the type of entity to continue.'
+    );
 
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-12 px-4 md:px-8 lg:px-12">
@@ -55,20 +65,17 @@ export default function DueDiligenceContent() {
                         </div>
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-luxury-gold via-yellow-200 to-luxury-gold bg-clip-text text-transparent">
-                        {lang === 'es' ? 'Debida Diligencia' : lang === 'fr' ? 'Diligence Raisonnable' : 'Due Diligence'}
+                        {customTitle}
                     </h1>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-                        {lang === 'es'
-                            ? 'Complete el formulario correspondiente para iniciar su proceso de inversión. Seleccione el tipo de persona para continuar.'
-                            : lang === 'fr'
-                            ? 'Veuillez remplir le formulaire correspondant pour initier votre processus d\'investissement. Sélectionnez le type de personne pour continuer.'
-                            : 'Please complete the corresponding form to initiate your investment process. Select the type of entity to continue.'}
+                        {customSubtitle}
                     </p>
                     <div className="h-1 w-24 bg-luxury-gold mx-auto rounded-full mt-6 mb-8" />
                 </div>
 
                 {/* Form Type Selector */}
                 <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12 print:hidden">
+                    {enableFisica && (
                     <Button
                         onClick={() => setFormType("fisica")}
                         variant={formType === "fisica" ? "default" : "outline"}
@@ -76,14 +83,16 @@ export default function DueDiligenceContent() {
               h-16 px-8 text-lg gap-3 border-luxury-gold transition-all duration-300
               ${formType === "fisica"
                                 ? "bg-luxury-gold text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-105"
-                                : "text-luxury-gold hover:bg-luxury-gold/10"
+                                : "bg-black/70 text-luxury-gold hover:bg-luxury-gold/10"
                             }
             `}
                     >
                         <User className="w-6 h-6" />
                         {lang === 'es' ? 'Persona Física' : lang === 'fr' ? 'Personne Physique' : 'Individual'}
                     </Button>
+                    )}
 
+                    {enableJuridica && (
                     <Button
                         onClick={() => setFormType("juridica")}
                         variant={formType === "juridica" ? "default" : "outline"}
@@ -91,13 +100,14 @@ export default function DueDiligenceContent() {
               h-16 px-8 text-lg gap-3 border-luxury-gold transition-all duration-300
               ${formType === "juridica"
                                 ? "bg-luxury-gold text-black shadow-[0_0_20px_rgba(212,175,55,0.3)] scale-105"
-                                : "text-luxury-gold hover:bg-luxury-gold/10"
+                                : "bg-black/70 text-luxury-gold hover:bg-luxury-gold/10"
                             }
             `}
                     >
                         <Building2 className="w-6 h-6" />
                         {lang === 'es' ? 'Persona Jurídica' : lang === 'fr' ? 'Personne Morale' : 'Legal Entity'}
                     </Button>
+                    )}
                 </div>
 
                 {/* Form Container */}

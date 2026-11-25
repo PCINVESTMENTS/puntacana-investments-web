@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaChartLine, FaHandHoldingUsd, FaFileContract, FaArrowRight, FaCity, FaUmbrellaBeach, FaPlane, FaCheck } from "react-icons/fa";
 import { investmentModels } from "@/data/investment-models";
+import { fetchLocalSandboxPhase7, resolvePhase7MediaUrl } from "@/lib/localSandbox";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
@@ -61,13 +62,37 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     };
 }
 
-// Restoring ISR
-export const revalidate = 60;
+// Instant reflection in isolated local sandbox mode
+export const dynamic = "force-dynamic";
 
 export default async function InvestmentsPage({ params }: { params: Promise<{ lang: string }> }) {
 
     const { lang } = await params;
-    const dict = await getDictionary(lang as "es" | "en" | "fr");
+    const l = (lang === "en" || lang === "fr" ? lang : "es") as "es" | "en" | "fr";
+    const dict = await getDictionary(l);
+    const phase7 = fetchLocalSandboxPhase7();
+    const p7Inv = phase7?.investments_page || null;
+    const p7Hero = p7Inv?.hero || null;
+
+    const heroSubtitle = p7Hero?.subtitle?.[l] || dict.sections.investments.subtitle;
+    const heroTitle = p7Hero?.title?.[l] || dict.sections.investments.title;
+    const heroDesc = p7Hero?.description?.[l] || dict.sections.investments.description;
+    const heroImg = resolvePhase7MediaUrl(p7Hero?.image, "/images/investments/modern-investments-hero.webp");
+    const roiBadgeValue = p7Hero?.roi_badge_value || "+12%";
+    const roiBadgeLabel =
+        p7Hero?.roi_badge_label?.[l] ||
+        (lang === 'en' ? "Avg. Annual Return" : lang === 'fr' ? "Rendement Annuel Moyen" : "Retorno Anual Prom.");
+
+    const effectiveModels = Array.isArray(p7Inv?.models) && p7Inv.models.length > 0
+        ? p7Inv.models
+              .filter((m: any) => m && m.is_active !== false)
+              .map((m: any) => ({
+                  slug: m.slug,
+                  title: m.title,
+                  description: m.description,
+                  heroImage: resolvePhase7MediaUrl(m.hero_image, "/images/og-home-luxury.webp"),
+              }))
+        : investmentModels;
 
     const benefits = [
         {
@@ -121,8 +146,8 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
             <div className="relative h-[60vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
-                        src="/images/investments/modern-investments-hero.webp"
-                        alt="Investments in Punta Cana"
+                        src={heroImg}
+                        alt={heroTitle}
                         fill
                         className="object-cover"
                         priority={true}
@@ -135,13 +160,13 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                 </div>
                 <div className="relative z-10 max-w-7xl mx-auto px-4 text-center mt-32">
                     <span className="text-luxury-gold uppercase tracking-[0.2em] font-bold text-sm mb-4 block animate-fade-in-up">
-                        {dict.sections.investments.subtitle}
+                        {heroSubtitle}
                     </span>
                     <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 drop-shadow-lg shadow-black animate-fade-in-up animation-delay-200">
-                        {dict.sections.investments.title}
+                        {heroTitle}
                     </h1>
                     <p className="max-w-2xl mx-auto text-xl text-gray-200 font-light leading-relaxed animate-fade-in-up animation-delay-400">
-                        {dict.sections.investments.description}
+                        {heroDesc}
                     </p>
                 </div>
             </div>
@@ -203,9 +228,9 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                                 className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute bottom-8 left-8 z-20 bg-black/80 p-6 border-l-4 border-luxury-gold backdrop-blur-sm max-w-xs">
-                                <div className="text-3xl font-bold text-white mb-1">+12%</div>
+                                <div className="text-3xl font-bold text-white mb-1">{roiBadgeValue}</div>
                                 <div className="text-xs uppercase tracking-widest text-gray-300">
-                                    {lang === 'en' ? "Avg. Annual Return" : lang === 'fr' ? "Rendement Annuel Moyen" : "Retorno Anual Prom."}
+                                    {roiBadgeLabel}
                                 </div>
                             </div>
                         </div>
@@ -234,7 +259,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {investmentModels.map((model, idx) => {
+                        {effectiveModels.map((model: any, idx: number) => {
                             const getVal = (obj: any, key: string) => {
                                 if (!obj) return "";
                                 return obj[key] || obj['en'] || obj['es'] || "";
@@ -281,11 +306,13 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
 
                         <div className="w-full md:w-1/2 relative z-10">
                             <h2 className="text-3xl md:text-4xl font-serif font-bold text-black mb-6">
-                                {lang === 'en' ? "Comprehensive Solutions" : "Soluciones Integrales"}
+                                {lang === 'en' ? "Comprehensive Solutions" : lang === 'fr' ? "Solutions Intégrales" : "Soluciones Integrales"}
                             </h2>
                             <p className="text-black/80 font-medium text-lg mb-8">
                                 {lang === 'en'
                                     ? "Our goal is to connect every investor with solid, transparent, and profitable opportunities in the heart of the Caribbean."
+                                    : lang === 'fr'
+                                    ? "Notre objectif est de connecter chaque investisseur à des opportunités solides, transparentes et rentables au cœur des Caraïbes."
                                     : "Nuestro objetivo es conectar a cada inversionista con oportunidades sólidas, transparentes y rentables en el corazón del Caribe."}
                             </p>
                             <Link href={`/${lang}#contact`} className="inline-block bg-black text-white px-8 py-4 uppercase font-bold tracking-widest hover:bg-white hover:text-black transition-colors shadow-xl">
@@ -295,15 +322,15 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
 
                         <div className="w-full md:w-1/2 bg-black/10 p-8 rounded-xl backdrop-blur-sm border border-black/5 relative z-10">
                             <h3 className="text-xl font-bold text-black mb-6 uppercase tracking-wider border-b border-black/10 pb-4">
-                                {lang === 'en' ? "We Offer:" : "Ofrecemos:"}
+                                {lang === 'en' ? "We Offer:" : lang === 'fr' ? "Nous Offrons :" : "Ofrecemos:"}
                             </h3>
                             <ul className="space-y-4">
                                 {[
-                                    lang === 'en' ? "Feasibility Studies" : "Estudios de factibilidad",
-                                    lang === 'en' ? "ROI & Appreciation Analysis" : "Análisis de retorno y plusvalía",
-                                    lang === 'en' ? "Legal Due Diligence" : "Due diligence legal",
-                                    lang === 'en' ? "Investment Model Structuring" : "Estructuración de modelos de inversión",
-                                    lang === 'en' ? "Full Accompaniment (Prospecting to Delivery)" : "Acompañamiento desde la prospección hasta la entrega"
+                                    lang === 'en' ? "Feasibility Studies" : lang === 'fr' ? "Études de faisabilité" : "Estudios de factibilidad",
+                                    lang === 'en' ? "ROI & Appreciation Analysis" : lang === 'fr' ? "Analyse du ROI et de la plus-value" : "Análisis de retorno y plusvalía",
+                                    lang === 'en' ? "Legal Due Diligence" : lang === 'fr' ? "Diligence raisonnable juridique" : "Due diligence legal",
+                                    lang === 'en' ? "Investment Model Structuring" : lang === 'fr' ? "Structuration de modèles d'investissement" : "Estructuración de modelos de inversión",
+                                    lang === 'en' ? "Full Accompaniment (Prospecting to Delivery)" : lang === 'fr' ? "Accompagnement complet (de la prospection à la livraison)" : "Acompañamiento desde la prospección hasta la entrega"
                                 ].map((item, idx) => (
                                     <li key={idx} className="flex items-center gap-3">
                                         <div className="bg-black text-white p-1 rounded-full text-xs">
