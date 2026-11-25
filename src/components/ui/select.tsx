@@ -2,26 +2,39 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-// Simplest possible Select implementation without Radix UI for speed/compatibility if not installed,
-// BUT standard Shadcn uses Radix. I will create a standard HTML select wrapper for robustness if Radix isn't strictly enforced, or I can try to simulate the Radix structure if I'm confident. 
-// Given the user wants "Premium" feel, standard HTML select is ugly. 
-// I will implement a custom dropdown using standard React state to ensure it looks good without requiring full Radix installation debug cycle.
-// ACTUALLY, to avoid complexity and bugs, I'll use a standard styled <select> for now but styled heavily.
-// ...On second thought, the user provided code uses <Select>, <SelectTrigger>, etc. which implies the Radix structure.
-// I will build a Context-based mock of Radix Select to support the syntax provided in the prompt.
 
 const SelectContext = React.createContext<{
     value: string;
     onValueChange: (value: string) => void;
     open: boolean;
     setOpen: (open: boolean) => void;
+    labelsByValue: Record<string, React.ReactNode>;
 } | null>(null);
+
+function extractSelectLabels(children: React.ReactNode, map: Record<string, React.ReactNode>) {
+    React.Children.forEach(children, (child) => {
+        if (!React.isValidElement(child)) return;
+        const props: any = child.props || {};
+        if (typeof props.value === "string" && props.children !== undefined) {
+            map[props.value] = props.children;
+        }
+        if (props.children) {
+            extractSelectLabels(props.children, map);
+        }
+    });
+}
 
 const Select = ({ children, onValueChange, defaultValue, value: controlledValue }: any) => {
     const [value, setValue] = React.useState(defaultValue || "");
     const [open, setOpen] = React.useState(false);
     const isControlled = controlledValue !== undefined;
     const currentValue = isControlled ? controlledValue : value;
+
+    const labelsByValue = React.useMemo(() => {
+        const map: Record<string, React.ReactNode> = {};
+        extractSelectLabels(children, map);
+        return map;
+    }, [children]);
 
     const handleValueChange = (val: string) => {
         if (!isControlled) setValue(val);
@@ -30,7 +43,7 @@ const Select = ({ children, onValueChange, defaultValue, value: controlledValue 
     };
 
     return (
-        <SelectContext.Provider value={{ value: currentValue, onValueChange: handleValueChange, open, setOpen }}>
+        <SelectContext.Provider value={{ value: currentValue, onValueChange: handleValueChange, open, setOpen, labelsByValue }}>
             <div className="relative">{children}</div>
         </SelectContext.Provider>
     );
@@ -58,10 +71,9 @@ SelectTrigger.displayName = "SelectTrigger"
 
 const SelectValue = ({ placeholder }: { placeholder?: string }) => {
     const context = React.useContext(SelectContext);
-    // This is a naive implementation; normally we'd look up the label from children.
-    // For simplicity in this mock, we might just show the value if we can't easily access children labels.
-    // Ideally, we'd use a real library. I'll rely on the value being displayable or just show the placeholder if empty.
-    return <span>{context?.value || placeholder}</span>;
+    const val = context?.value;
+    const label = val ? (context?.labelsByValue?.[val] ?? val) : undefined;
+    return <span>{label || placeholder}</span>;
 }
 
 const SelectContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, children, ...props }, ref) => {
@@ -71,7 +83,7 @@ const SelectContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
         <div
             ref={ref}
             className={cn(
-                "absolute z-50 min-w-[8rem] overflow-hidden rounded-md border border-luxury-gold/50 bg-zinc-900 text-white shadow-xl animate-in fade-in-0 zoom-in-95 mt-1 w-full",
+                "absolute z-50 min-w-[8rem] max-h-64 overflow-y-auto rounded-md border border-luxury-gold/50 bg-zinc-900 text-white shadow-xl animate-in fade-in-0 zoom-in-95 mt-1 w-full",
                 className
             )}
             {...props}
