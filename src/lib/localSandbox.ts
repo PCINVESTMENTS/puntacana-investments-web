@@ -9,6 +9,7 @@ import path from "path";
 import { cookies } from "next/headers";
 import type { Property } from "@/data/properties";
 import type { BlogPost } from "@/data/blog";
+import { buildOffMarketEmails, normalizeLang, type RenderedEmailPayload } from "@/lib/formEmails";
 
 export const CLEAN_PREVIEW_COOKIE = "pci_clean_preview";
 export const CLEAN_CABEZADETORO_COOKIE = "pci_clean_cabezadetoro";
@@ -176,7 +177,16 @@ export async function fetchLocalSandboxDraftPreview(slug: string): Promise<(Prop
   return pub as any;
 }
 
-export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: string; reference_code: string; email_status: string; count: number } | null {
+export function appendSandboxTestInboxEntry(
+  entry: Record<string, any>,
+  buildEmailOverrides?: (referenceCode: string) => {
+    admin_subject?: string;
+    client_subject?: string;
+    admin_email?: RenderedEmailPayload;
+    client_email?: RenderedEmailPayload | null;
+    property_reference?: Record<string, any>;
+  }
+): { id: string; reference_code: string; email_status: string; count: number } | null {
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
   if (!catalogFile) return null;
   const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
@@ -209,6 +219,7 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
   const reference_code = String(entry.reference_code || `${prefix}${String(maxSeq + 1).padStart(3, "0")}`);
   const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
   const email_status = String(entry.email_status || "intercepted_local");
+  const overrides = buildEmailOverrides ? buildEmailOverrides(reference_code) : {};
   const record = {
     id,
     reference_code,
@@ -217,6 +228,10 @@ export function appendSandboxTestInboxEntry(entry: Record<string, any>): { id: s
     email_status,
     real_email_sent: false,
     ...entry,
+    ...overrides,
+    property_reference: overrides.property_reference
+      ? { ...(entry.property_reference || {}), ...overrides.property_reference }
+      : entry.property_reference,
   };
   const next = [record, ...existing].slice(0, 150);
   const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
@@ -598,6 +613,7 @@ export function upsertSandboxOffMarketApplication(params: {
   budget: string;
   regions: string[];
   details: Record<string, string>;
+  freeText?: string;
   compiledMessage: string;
   lang?: string;
   idempotency_key?: string;
@@ -624,9 +640,7 @@ export function upsertSandboxOffMarketApplication(params: {
 
   const nowIso = new Date().toISOString();
   const idemKey = String(params.idempotency_key || "").trim();
-  const lang = ["es", "en", "fr"].includes(String(params.lang || "").toLowerCase())
-    ? String(params.lang).toLowerCase()
-    : "es";
+  const lang = normalizeLang(params.lang, "es");
   const emailFailed = Boolean(params.simulate_email_failure);
   const emailStatus: "intercepted_local" | "failed_simulated" = emailFailed ? "failed_simulated" : "intercepted_local";
   const emailError = emailFailed
@@ -661,6 +675,19 @@ export function upsertSandboxOffMarketApplication(params: {
 
   const referenceCode = `OM-LOC-${String(maxSeq + 1).padStart(3, "0")}`;
   const id = `om-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const built = buildOffMarketEmails({
+    referenceCode,
+    lang,
+    name: params.name.trim(),
+    company: (params.company || "").trim(),
+    email: params.email.trim(),
+    phone: params.phone.trim(),
+    tab: params.tab,
+    budget: params.budget,
+    regions: params.regions,
+    details: params.details,
+    freeText: (params.freeText || "").trim(),
+  });
   const record = {
     id,
     reference_code: referenceCode,
@@ -675,22 +702,20 @@ export function upsertSandboxOffMarketApplication(params: {
     form_type: "off_market_application",
     form_label: "Solicitud Búsqueda Privada Off-Market",
     lang,
-    configured_from: "Web Punta Cana Investments <info@puntacanainvestmentsrd.com>",
-    configured_pci_recipient: "info@puntacanainvestmentsrd.com",
-    client_autoresponder_to: params.email.trim(),
-    admin_subject: `SOLICITUD OFF-MARKET [${referenceCode}]: ${params.name.trim()} (${params.budget})`,
-    client_subject:
-      lang === "en"
-        ? `Off-Market Request Received (${referenceCode}) — Punta Cana Investments`
-        : lang === "fr"
-        ? `Demande Off-Market Reçue (${referenceCode}) — Punta Cana Investments`
-        : `Requerimiento Off-Market Recibido (${referenceCode}) — Punta Cana Investments`,
+    configured_from: built.adminEmail.from,
+    configured_pci_recipient: built.adminEmail.to,
+    client_autoresponder_to: built.clientEmail.to,
+    admin_subject: built.adminEmail.subject,
+    client_subject: built.clientEmail.subject,
+    admin_email: built.adminEmail,
+    client_email: built.clientEmail,
     off_market_data: {
       tab: params.tab,
       company: (params.company || "").trim(),
       budget: params.budget,
       regions: params.regions,
       details: params.details,
+      free_text: (params.freeText || "").trim(),
     },
     lead: {
       name: params.name.trim(),
@@ -699,8 +724,10 @@ export function upsertSandboxOffMarketApplication(params: {
       phone: params.phone.trim(),
       budget: params.budget,
       regions: params.regions,
+      free_text: (params.freeText || "").trim(),
       message: params.compiledMessage,
     },
+    deduplication_note: "1 solicitud Off-Market = 1 aviso PCI (opciones en español + mensaje libre original) + 1 confirmación cliente en su idioma (buzón local)",
   };
 
   const next = [record, ...existing].slice(0, 150);
@@ -957,7 +984,15 @@ export function fetchLocalSandboxWebManager(clean?: CleanPreviewFlags): LocalWeb
   return null;
 }
 
-export function appendSandboxFlyAndBuyLead(entry: Record<string, any>): { id: string; reference_code: string; count: number } | null {
+export function appendSandboxFlyAndBuyLead(
+  entry: Record<string, any>,
+  buildEmailOverrides?: (referenceCode: string) => {
+    admin_subject?: string;
+    client_subject?: string;
+    admin_email?: RenderedEmailPayload;
+    client_email?: RenderedEmailPayload | null;
+  }
+): { id: string; reference_code: string; count: number } | null {
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
   if (!catalogFile) return null;
   const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
@@ -981,6 +1016,7 @@ export function appendSandboxFlyAndBuyLead(entry: Record<string, any>): { id: st
   }
   const reference_code = `FB-LOC-${String(maxSeq + 1).padStart(3, "0")}`;
   const id = `fb-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const overrides = buildEmailOverrides ? buildEmailOverrides(reference_code) : {};
   const record = {
     id,
     reference_code,
@@ -989,6 +1025,7 @@ export function appendSandboxFlyAndBuyLead(entry: Record<string, any>): { id: st
     email_status: "intercepted_local",
     real_email_sent: false,
     ...entry,
+    ...overrides,
   };
   const next = [record, ...existing].slice(0, 150);
   const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;

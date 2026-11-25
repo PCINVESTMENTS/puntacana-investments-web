@@ -64,6 +64,7 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
 
         const selectedRegions = regions.filter((r) => formData.get(`region_${r}`) === "on");
         const regionString = selectedRegions.length > 0 ? selectedRegions.join(", ") : "No especificada";
+        const additionalNotes = String(formData.get("additionalNotes") || "").trim();
 
         const budget =
             activeTab === "oportunidad"
@@ -107,6 +108,9 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
             compiledMessage += `Objetivo Principal: ${details.objective}\n`;
         }
         compiledMessage += `\nRegiones de Interés: ${regionString}\n`;
+        if (additionalNotes) {
+            compiledMessage += `Comentarios: ${additionalNotes}\n`;
+        }
 
         const idemKey = idemKeyRef.current || `om-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
         idemKeyRef.current = idemKey;
@@ -131,6 +135,7 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
                     budget,
                     regions: selectedRegions,
                     details,
+                    freeText: additionalNotes,
                     compiledMessage,
                     lang: l,
                     idempotency_key: idemKey,
@@ -499,6 +504,30 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
                                 </label>
                             ))}
                         </div>
+                    </div>
+
+                    <div>
+                        <label htmlFor="offmarket-notes" className={labelClassName}>
+                            {l === "en"
+                                ? "Additional Specifications / Message (Optional)"
+                                : l === "fr"
+                                ? "Spécifications Supplémentaires / Message (Optionnel)"
+                                : "Especificaciones Adicionales / Mensaje Libre (Opcional)"}
+                        </label>
+                        <textarea
+                            id="offmarket-notes"
+                            name="additionalNotes"
+                            data-offmarket-notes="true"
+                            rows={3}
+                            placeholder={
+                                l === "en"
+                                    ? "Share target ROI, timing, financing structure, or any confidential criteria..."
+                                    : l === "fr"
+                                    ? "Précisez votre objectif de rendement, calendrier, financement ou critères confidentiels..."
+                                    : "Indique criterios de retorno, plazo de cierre, estructura o notas confidenciales..."
+                            }
+                            className="w-full bg-[#111111] border border-white/20 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d4af37] transition-colors resize-none text-sm"
+                        />
                     </div>
 
                     <div className="pt-8">

@@ -3,6 +3,13 @@
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import {
+    buildFlyAndBuyEmails,
+    generateProductionRefCode,
+    normalizeLang,
+    PCI_TEAM_FROM,
+    PCI_TEAM_TO,
+} from '@/lib/formEmails';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -14,30 +21,36 @@ function getResend(): Resend {
 
 export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     // Obligamos a la acción a ir directo a Railway, ignorando NEXT_PUBLIC_API_URL de Vercel.
-    const apiUrl = "https://puntacana-fortress-production.up.railway.app";
+    const apiUrl = 'https://puntacana-fortress-production.up.railway.app';
 
     // Extract data from FormData
-    const name = (formData.get('name') as string) || '';
-    const email = (formData.get('email') as string) || '';
-    const phone = (formData.get('phone') as string) || '';
-    const country = (formData.get('country') as string) || '';
-    const comments = (formData.get('comments') as string) || '';
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const phone = String(formData.get('phone') || '').trim();
+    const country = String(formData.get('country') || '').trim();
+    const comments = String(formData.get('comments') || '').trim();
+    const safeLang = normalizeLang(formData.get('lang'), 'es');
 
     // Additional fields
-    const experience = formData.get('experience') as string || 'N/A';
-    const horizon = formData.get('horizon') as string || 'N/A';
-    const visited = formData.get('visited') as string || 'N/A';
-    
+    const experience = String(formData.get('experience') || 'N/A');
+    const horizon = String(formData.get('horizon') || 'N/A');
+    const visited = String(formData.get('visited') || 'N/A');
+
     // Arrays for multiple checkboxes
-    const objectives = formData.getAll('objective').join(', ') || 'N/A';
-    const propertyTypes = formData.getAll('propertyType').join(', ') || 'N/A';
-    const investmentFocus = formData.getAll('investmentFocus').join(', ') || 'N/A';
-    const motivation = formData.getAll('motivation').join(', ') || 'N/A';
+    const objectivesArr = formData.getAll('objective').map(String).filter(Boolean);
+    const propertyTypesArr = formData.getAll('propertyType').map(String).filter(Boolean);
+    const investmentFocusArr = formData.getAll('investmentFocus').map(String).filter(Boolean);
+    const motivationArr = formData.getAll('motivation').map(String).filter(Boolean);
+
+    const objectives = objectivesArr.join(', ') || 'N/A';
+    const propertyTypes = propertyTypesArr.join(', ') || 'N/A';
+    const investmentFocus = investmentFocusArr.join(', ') || 'N/A';
+    const motivation = motivationArr.join(', ') || 'N/A';
 
     // Check dynamic select/input correctly
-    const propertySelection = formData.get('specificPropertySelect') as string;
-    const propertyInput = formData.get('specificPropertyName') as string;
-    const specificProperty = (propertySelection === 'other' || !propertySelection) ? propertyInput : propertySelection; 
+    const propertySelection = String(formData.get('specificPropertySelect') || '');
+    const propertyInput = String(formData.get('specificPropertyName') || '');
+    const specificProperty = propertySelection === 'other' || !propertySelection ? propertyInput : propertySelection;
 
     const tripData = {
         client_name: name,
@@ -45,17 +58,15 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         client_phone: phone,
         origin_city: country,
         proposed_dates: 'Por Definir',
-        notes: `Comentarios: ${comments}\nObjetivos: ${objectives}\nTipo de Propiedad: ${propertyTypes}\nEnfoque de Inversión: ${investmentFocus}\nExperiencia: ${experience}\nHorizonte: ${horizon}\nHa visitado RD: ${visited}\nMotivación: ${motivation}\nPropiedad Específica: ${specificProperty || 'Ninguna'}`
+        notes: `Comentarios: ${comments}\nObjetivos: ${objectives}\nTipo de Propiedad: ${propertyTypes}\nEnfoque de Inversión: ${investmentFocus}\nExperiencia: ${experience}\nHorizonte: ${horizon}\nHa visitado RD: ${visited}\nMotivación: ${motivation}\nPropiedad Específica: ${specificProperty || 'Ninguna'}`,
     };
 
     const cleanedApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Stage 4 & Fase 8):
-    // Captures Fly & Buy submissions into local test_inbox.json preserving exact PCI recipient
-    // and selected property reference, with ZERO calls to production Railway/HubSpot/Resend.
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR:
+    // Captures Fly & Buy submissions + exact rendered Team & Client emails into test_inbox.json,
+    // with ZERO calls to production Railway/HubSpot/Resend.
     if (isLocalSandboxEnabled()) {
-        const formLang = String(formData.get('lang') || 'es').toLowerCase();
-        const safeLang = formLang === 'en' || formLang === 'fr' ? formLang : 'es';
         const phase8 = fetchLocalSandboxPhase8();
         if (phase8?.fly_and_buy?.show_form === false) {
             return {
@@ -70,34 +81,58 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                         : 'La recepción de solicitudes Fly & Buy está cerrada actualmente. Tu solicitud no fue registrada.',
             };
         }
-        const saved = appendSandboxFlyAndBuyLead({
-            form_type: 'fly_and_buy',
-            form_label: 'Solicitud VIP Fly & Buy',
-            lang: safeLang,
-            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
-            client_autoresponder_to: email,
-            admin_subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
-            client_subject:
-                safeLang === 'en'
-                    ? 'Fly & Buy Request Confirmation - Punta Cana Investments'
-                    : safeLang === 'fr'
-                    ? 'Confirmation de Demande Fly & Buy - Punta Cana Investments'
-                    : 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
-            property_reference: {
-                title: specificProperty || 'Tour Inmobiliario General Fly & Buy',
-                type: 'fly_and_buy',
-                location: country || 'Por definir',
+
+        const saved = appendSandboxFlyAndBuyLead(
+            {
+                form_type: 'fly_and_buy',
+                form_label: 'Solicitud VIP Fly & Buy',
+                lang: safeLang,
+                configured_from: PCI_TEAM_FROM,
+                configured_pci_recipient: PCI_TEAM_TO,
+                client_autoresponder_to: email,
+                property_reference: {
+                    title: specificProperty || 'Tour Inmobiliario General Fly & Buy',
+                    type: 'fly_and_buy',
+                    location: country || 'Por definir',
+                },
+                lead: {
+                    name: tripData.client_name,
+                    email: tripData.client_email,
+                    phone: tripData.client_phone,
+                    country: tripData.origin_city,
+                    message: tripData.notes,
+                },
+                deduplication_note:
+                    '1 solicitud Fly & Buy = 1 aviso PCI (cuestionario en español + referencia) + 1 confirmación cliente en su idioma (buzón local)',
             },
-            lead: {
-                name: tripData.client_name,
-                email: tripData.client_email,
-                phone: tripData.client_phone,
-                country: tripData.origin_city,
-                message: tripData.notes,
-            },
-            deduplication_note: '1 solicitud Fly & Buy = 1 aviso PCI + 1 confirmación cliente (capturado en buzón local)',
-        });
+            (referenceCode) => {
+                const built = buildFlyAndBuyEmails({
+                    referenceCode,
+                    lang: safeLang,
+                    name,
+                    email,
+                    phone,
+                    country,
+                    proposedDates: tripData.proposed_dates,
+                    objectives: objectivesArr,
+                    propertyTypes: propertyTypesArr,
+                    investmentFocus: investmentFocusArr,
+                    experience,
+                    horizon,
+                    visited,
+                    motivation: motivationArr,
+                    specificProperty,
+                    comments,
+                });
+                return {
+                    admin_subject: built.adminEmail.subject,
+                    client_subject: built.clientEmail.subject,
+                    admin_email: built.adminEmail,
+                    client_email: built.clientEmail,
+                };
+            }
+        );
+
         const refCode = saved?.reference_code || 'FB-LOC-001';
         return {
             success: true,
@@ -113,135 +148,91 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     }
 
     try {
+        const referenceCode = generateProductionRefCode('FB');
+        const built = buildFlyAndBuyEmails({
+            referenceCode,
+            lang: safeLang,
+            name,
+            email,
+            phone,
+            country,
+            proposedDates: tripData.proposed_dates,
+            objectives: objectivesArr,
+            propertyTypes: propertyTypesArr,
+            investmentFocus: investmentFocusArr,
+            experience,
+            horizon,
+            visited,
+            motivation: motivationArr,
+            specificProperty,
+            comments,
+        });
+
         const res = await fetch(`${cleanedApiUrl}/api/public/fly-buy/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tripData),
+            body: JSON.stringify({
+                ...tripData,
+                notes: `[Ref: ${referenceCode}]\n${tripData.notes}`,
+            }),
         });
 
         // Cortocircuito de éxito inmediato si el servidor responde 200 o 201
         if (res.ok || res.status === 201 || res.status === 200) {
-            
-            // HubSpot API Integration (Background sync)
+            // HubSpot API Integration (Background sync - preserved)
             try {
                 await createHubspotContact({
-                    email: email,
+                    email,
                     firstname: name.split(' ')[0],
                     lastname: name.split(' ').slice(1).join(' '),
-                    phone: phone,
-                    message: tripData.notes,
-                    form_source: "Fly & Buy Form"
+                    phone,
+                    message: `[Ref: ${referenceCode}]\n${tripData.notes}`,
+                    form_source: 'Fly & Buy Form',
                 });
             } catch (hsError) {
-                console.error("HubSpot sync failed in Fly&Buy form:", hsError);
+                console.error('HubSpot sync failed in Fly&Buy form:', hsError);
             }
 
-            // Send the exact same Auto-Responder via Resend instead of Django SMTP
+            // Client Auto-Responder via existing Resend integration (ES/EN/FR + same refCode)
             try {
-                const firstName = name.split(' ')[0] || 'Cliente';
-                const htmlTemplate = `
-                <html>
-                    <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
-                        <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
-                            <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
-                        </div>
-                        <div style="padding: 40px 30px; background-color: #0a0a0a;">
-                            <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">Confirmación de Solicitud</h2>
-                            <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
-                                Hola <strong>${firstName}</strong>,
-                            </p>
-                            <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
-                                Hemos recibido exitosamente tu solicitud de participación para nuestro programa exclusivo <strong>Fly &amp; Buy</strong>.
-                            </p>
-                            <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 30px;">
-                                Un agente de nuestro equipo estará evaluando tu perfil comercial y se comunicará contigo a la mayor brevedad posible para estructurar tu visita a la República Dominicana.
-                            </p>
-                            
-                            <div style="background-color: #1a1a1a; padding: 25px; border-left: 4px solid #c9ae5d; margin: 30px 0; border-radius: 4px;">
-                                <p style="margin: 0 0 15px 0; color: #ffffff; font-size: 15px;"><strong>¿Deseas agilizar el proceso?</strong><br>
-                                Puedes seleccionar el horario de tu preferencia para una videollamada accediendo directamente a nuestra agenda comercial:</p>
-                                <p style="margin: 0;">
-                                    <a href="https://calendly.com/ulisespp9/30min" style="display: inline-block; background-color: #c9ae5d; color: #000000; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Agendar Videollamada</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div style="background-color: #111111; padding: 30px; text-align: center; border-top: 1px solid #333333;">
-                            <p style="margin: 0; font-size: 14px; color: #c9ae5d; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;">Punta Cana Investments</p>
-                            <p style="margin: 10px 0 0 0; font-size: 12px; color: #888888;">El paraíso de tus inversiones inmobiliarias</p>
-                        </div>
-                    </body>
-                </html>
-                `;
-
-                const { error, data } = await getResend().emails.send({
-                    from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-                    to: [email],
-                    subject: 'Confirmación de Solicitud Fly & Buy - Punta Cana Investments',
-                    html: htmlTemplate
+                const { error } = await getResend().emails.send({
+                    from: built.clientEmail.from,
+                    to: [built.clientEmail.to],
+                    subject: built.clientEmail.subject,
+                    html: built.clientEmail.html,
+                    text: built.clientEmail.text,
                 });
-                
                 if (error) {
-                    console.error("Resend internal autoresponder failed:", error);
-                    // Do not block success if email fails, lead is already saved
+                    console.error('Resend internal autoresponder failed:', error);
                 }
-            } catch (emailErr: any) {
-                console.error("Resend internal autoresponder exception exception:", emailErr);
-                // Do not block success
+            } catch (emailErr) {
+                console.error('Resend internal autoresponder exception:', emailErr);
             }
 
-            // Send Admin Notification Email via Resend
+            // Team Notification Email via existing Resend integration (Spanish questionnaire + refCode)
             try {
-                const adminHtmlTemplate = `
-                <html>
-                    <body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #000000; color: #ffffff; max-width: 600px; margin: 0 auto; padding: 0;">
-                        <div style="background-color: #111111; padding: 40px 20px; text-align: center; border-bottom: 2px solid #c9ae5d;">
-                            <img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments Logo" style="max-width: 320px; height: auto;" />
-                        </div>
-                        <div style="padding: 40px 30px; background-color: #0a0a0a;">
-                            <h2 style="color: #c9ae5d; text-transform: uppercase; margin-top: 0; font-weight: 400; letter-spacing: 1px; text-align: center;">NUEVO LEAD FLY & BUY</h2>
-                            <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0; margin-bottom: 20px;">
-                                Se ha registrado un nuevo lead VIP (Fly & Buy).
-                            </p>
-                            
-                            <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
-                                <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Datos del Cliente</p>
-                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Nombre:</strong> ${tripData.client_name}</p>
-                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Email:</strong> ${tripData.client_email}</p>
-                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Teléfono:</strong> ${tripData.client_phone}</p>
-                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Ciudad de Origen:</strong> ${tripData.origin_city}</p>
-                                <p style="margin: 5px 0; color: #e0e0e0;"><strong>Fechas Propuestas:</strong> ${tripData.proposed_dates}</p>
-                            </div>
-
-                            <div style="background-color: #1a1a1a; padding: 20px; border-left: 4px solid #c9ae5d; margin: 20px 0; border-radius: 4px;">
-                                <p style="margin: 0 0 10px 0; color: #c9ae5d; font-size: 15px; font-weight: bold; text-transform: uppercase;">Notas y Respuestas del Cuestionario</p>
-                                <pre style="font-family: 'Helvetica Neue', Arial, sans-serif; white-space: pre-wrap; color: #e0e0e0; margin: 0;">${tripData.notes}</pre>
-                            </div>
-                            
-                            <p style="font-size: 12px; color: #888888; text-align: center; margin-top: 30px;">Este lead ya fue enviado a HubSpot de forma automática.</p>
-                        </div>
-                    </body>
-                </html>
-                `;
-
-                await getResend().emails.send({
-                    from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-                    to: ['info@puntacanainvestmentsrd.com'],
-                    subject: `NUEVO LEAD FLY & BUY: ${tripData.client_name}`,
-                    html: adminHtmlTemplate
+                const { error } = await getResend().emails.send({
+                    from: built.adminEmail.from,
+                    to: [built.adminEmail.to],
+                    subject: built.adminEmail.subject,
+                    html: built.adminEmail.html,
+                    text: built.adminEmail.text,
                 });
+                if (error) {
+                    console.error('Resend admin notification failed:', error);
+                }
             } catch (adminEmailError) {
-                console.error("Admin Email Exception:", adminEmailError);
+                console.error('Admin Email Exception:', adminEmailError);
             }
 
-            return { success: true, message: 'Request sent successfully!' };
+            return { success: true, reference_code: referenceCode, message: 'Request sent successfully!' };
         }
 
         const errorText = await res.text();
-        console.error("Backend Error:", res.status, errorText);
+        console.error('Backend Error:', res.status, errorText);
         return { success: false, message: `Rechazado por el servidor: ${res.status} - ${errorText}` };
-
     } catch (error: any) {
-        console.error("Server Action Error:", error);
+        console.error('Server Action Error:', error);
         return { success: false, message: `Error de red: ${error.message}` };
     }
 }
