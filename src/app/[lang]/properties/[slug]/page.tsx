@@ -888,7 +888,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             const disp = ((property as any)?.display || (property as any)?.specs?.display || {}) as Record<string, any>;
                             const showMortgage = disp.show_mortgage_calculator !== false && property.status === 'sale' && property.price > 0;
                             const showRoi = disp.show_roi_calculator !== false && property.status === 'sale' && property.price > 0;
-                            const showProgress = disp.show_construction_progress !== false && property.status === 'sale' && Boolean(property.constructionStages);
+                            const showProgress = disp.show_construction_progress !== false && property.status === 'sale' && Array.isArray(property.constructionStages) && property.constructionStages.length > 0;
                             if (!showMortgage && !showRoi && !showProgress) return null;
                             return (
                                 <div className="space-y-8">
