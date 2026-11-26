@@ -963,11 +963,25 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                 className="mt-4"
                                 lang={lang}
                                 propertyData={JSON.stringify({
+                                    id: property.id,
+                                    technicalId: property.id,
+                                    idSource: isLocalSandboxEnabled() ? 'Catálogo Local Fases 1–8' : 'Sanity CMS (campo id)',
                                     title: translatedTitle,
                                     internal_code: (property as any).internal_code || null,
+                                    permanentCode: (property as any).internal_code || null,
                                     slug: property.slug,
                                     location: property.locationLabel,
                                     price: property.price,
+                                    isStartingPrice: Boolean(
+                                        !property.hideFromLabel &&
+                                        (property.preConstruction ||
+                                            property.preLaunch ||
+                                            (property as any).commercialStage === 'off_plan' ||
+                                            (property as any).commercialStage === 'under_construction') &&
+                                        property.status !== 'rent' &&
+                                        property.type !== 'land' &&
+                                        property.type !== 'commercial'
+                                    ),
                                     area: property.area,
                                     type: property.type
                                 })}

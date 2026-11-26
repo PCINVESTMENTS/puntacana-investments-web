@@ -18,6 +18,8 @@ export const PROPERTIES_QUERY = defineQuery(`
   *[_type == "property" && !(_id in path("drafts.**")) && status != "draft"] {
     _id,
     id,
+    internal_code,
+    code,
     title,
     titleEn,
     titleEs,
@@ -48,6 +50,8 @@ export const HOME_PAGE_PROPERTIES_QUERY = defineQuery(`
   *[_type == "property" && !(_id in path("drafts.**")) && status != "draft"] {
     _id,
     id,
+    internal_code,
+    code,
     title,
     titleEn,
     titleEs,
@@ -82,6 +86,8 @@ export const PROPERTY_BY_ID_QUERY = defineQuery(`
   *[_type == "property" && id == $id][0] {
     _id,
     id,
+    internal_code,
+    code,
     title,
     titleEn,
     titleEs,
@@ -126,6 +132,8 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     _createdAt,
     _updatedAt,
     id,
+    internal_code,
+    code,
     title,
     titleEn,
     titleEs,

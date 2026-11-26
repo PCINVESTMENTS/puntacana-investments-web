@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { FaCheckCircle, FaSpinner, FaExclamationTriangle } from "react-icons/fa";
+import { FormAntispamFields } from "@/components/forms/FormAntispamFields";
 import { offMarketDict } from "@/dictionaries/offMarket";
 
 export default function OffMarketForm({ lang, isSandbox = false }: { lang: string; isSandbox?: boolean }) {
@@ -138,6 +139,8 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
                     freeText: additionalNotes,
                     compiledMessage,
                     lang: l,
+                    website_url: String(formData.get("website_url") || ""),
+                    form_loaded_at: String(formData.get("form_loaded_at") || ""),
                     idempotency_key: idemKey,
                     simulate_email_failure: simulateEmailFailure,
                 }),
@@ -225,6 +228,7 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
                         : "bg-[#000000] border border-[#d4af37]/30 p-8 md:p-12 shadow-2xl relative overflow-hidden"
                 }
             >
+                <FormAntispamFields />
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/10 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none"></div>
 
                 <div className="text-center mb-10">

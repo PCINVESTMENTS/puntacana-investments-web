@@ -17,5 +17,5 @@ export const client = isLocalSandboxProject
     ? ({
           ...realClient,
           fetch: async () => [],
-      } as typeof realClient)
+      } as unknown as typeof realClient)
     : realClient

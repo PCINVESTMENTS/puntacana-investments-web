@@ -2,6 +2,7 @@
 
 import { useActionState, useState, useEffect, startTransition } from 'react';
 import { submitFlyAndBuyForm } from '@/app/actions/fly-and-buy';
+import { FormAntispamFields } from '@/components/forms/FormAntispamFields';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 
@@ -141,6 +142,7 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
     return (
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-12 bg-zinc-900/50 p-8 md:p-12 border border-white/5 rounded-sm shadow-2xl backdrop-blur-sm">
             <input type="hidden" name="lang" value={lang} />
+            <FormAntispamFields />
             {state.message && !state.success && (
                 <div
                     role="alert"

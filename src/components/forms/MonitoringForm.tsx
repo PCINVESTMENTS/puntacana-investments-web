@@ -2,6 +2,7 @@
 
 import { useActionState, useRef, useEffect, startTransition } from 'react';
 import { submitMonitoringForm } from '@/app/actions/monitoring';
+import { FormAntispamFields } from '@/components/forms/FormAntispamFields';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 
@@ -90,6 +91,7 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
     return (
         <form onSubmit={handleSubmit} ref={formRef} className="space-y-6 lg:space-y-8">
             <input type="hidden" name="lang" value={lang} />
+            <FormAntispamFields />
 
             {state.message && !state.success && (
                 <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-sm">

@@ -588,7 +588,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       case "contact":
         return secVis.show_contact !== false ? (
           <div key="contact" data-home-section="contact">
-            <ContactSection dict={dict.contact} />
+            <ContactSection dict={dict.contact} lang={lang} />
           </div>
         ) : null;
       default:

@@ -30,9 +30,10 @@ interface ContactSectionProps {
             office: string;
         };
     };
+    lang?: string;
 }
 
-export function ContactSection({ dict }: ContactSectionProps) {
+export function ContactSection({ dict, lang = 'es' }: ContactSectionProps) {
     // Reusing the same verified ContactForm component
     return (
         <section id="contact" className="pt-8 pb-10 lg:pt-12 lg:pb-24 bg-primary-black relative overflow-hidden">
@@ -101,7 +102,7 @@ export function ContactSection({ dict }: ContactSectionProps) {
                     {/* Contact Form */}
                     <ScrollReveal delay={0.4} direction="left">
                         <div className="bg-black/50 p-8 md:p-10 border border-white/10 rounded-lg shadow-2xl backdrop-blur-sm relative">
-                            <ContactForm dict={dict.form} subject="Contact Section (Home)" />
+                            <ContactForm dict={dict.form} subject="Contact Section (Home)" lang={lang} />
                         </div>
                     </ScrollReveal>
                 </div>

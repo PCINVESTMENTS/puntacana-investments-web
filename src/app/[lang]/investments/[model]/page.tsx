@@ -218,7 +218,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
             {data.roiStats && data.roiStats.length > 0 && (
                 <div className="bg-luxury-gold text-black py-12 relative z-20 -mt-20 mx-4 md:mx-auto max-w-6xl rounded-xl shadow-2xl">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-black/10">
-                        {data.roiStats.map((stat, idx) => (
+                        {data.roiStats.map((stat: any, idx: number) => (
                             <div key={idx} className="p-4">
                                 <div className="text-4xl md:text-5xl font-bold mb-2">{stat.value}</div>
                                 <div className="uppercase tracking-widest text-xs font-semibold opacity-80">{getVal(stat.label, lang)}</div>
@@ -240,7 +240,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                         </p>
 
                         <div className="space-y-6">
-                            {(data.keyBenefits || []).map((benefit, idx) => (
+                            {(data.keyBenefits || []).map((benefit: any, idx: number) => (
                                 <div key={idx} className="flex gap-4">
                                     <div className="bg-dark-gray p-3 rounded-full h-fit text-luxury-gold border border-white/10 shadow-lg">
                                         <FaRegCheckCircle size={20} />

@@ -11,7 +11,7 @@ import { fetchLocalSandboxPhase8, resolvePhase8MediaUrl } from "@/lib/localSandb
 export const dynamic = "force-dynamic";
 
 // Bidirectional slug mapping across all supported languages
-export const SERVICE_SLUG_MAP: Record<string, { es: string; en: string; fr: string }> = {
+const SERVICE_SLUG_MAP: Record<string, { es: string; en: string; fr: string }> = {
     "asesoria-legal": { es: "asesoria-legal", en: "legal-advice", fr: "legal-advice" },
     "legal-advice": { es: "asesoria-legal", en: "legal-advice", fr: "legal-advice" },
     "arquitectura": { es: "arquitectura", en: "architecture", fr: "architecture" },

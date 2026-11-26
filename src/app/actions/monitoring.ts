@@ -3,6 +3,16 @@
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import {
+    normalizeLang,
+    PCI_CLIENT_FROM,
+    PCI_TEAM_FROM,
+    resolveExecutionPolicy,
+} from '@/lib/formEmails';
+import {
+    evaluateFormAntispam,
+    extractAntispamFromFormData,
+} from '@/lib/formSecurity';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -13,16 +23,16 @@ function getResend(): Resend {
 }
 
 export async function submitMonitoringForm(prevState: any, formData: FormData) {
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const phone = formData.get('phone') as string;
-    const country = formData.get('country') as string;
-    const project = formData.get('project') as string;
-    const location = formData.get('location') as string;
-    const investment = formData.get('investment') as string;
-    const date = formData.get('date') as string;
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const phone = String(formData.get('phone') || '').trim();
+    const country = String(formData.get('country') || '').trim();
+    const project = String(formData.get('project') || '').trim();
+    const location = String(formData.get('location') || '').trim();
+    const investment = String(formData.get('investment') || '').trim();
+    const date = String(formData.get('date') || '').trim();
 
-    const lang = (formData.get('lang') as string) || 'en';
+    const lang = normalizeLang(formData.get('lang'), 'en');
 
     // Email translations
     const t = {
@@ -50,12 +60,35 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         };
     }
 
+    const { honeypot, formLoadedAt } = extractAntispamFromFormData(formData);
+    const antispam = evaluateFormAntispam({
+        email,
+        honeypot,
+        formLoadedAt,
+        lang,
+        sourceLabel: 'MonitoringForm',
+    });
+    if (antispam.action === 'silent_drop') {
+        console.warn(antispam.logMessage);
+        return {
+            success: true,
+            message: 'Message sent successfully!'
+        };
+    }
+    if (antispam.action === 'reject') {
+        console.warn(antispam.logMessage);
+        return {
+            success: false,
+            message: antispam.errorMessage
+        };
+    }
+
     if (isLocalSandboxEnabled()) {
         appendSandboxTestInboxEntry({
             form_type: 'investment_monitoring',
             form_label: 'Plan de Monitoreo de Inversión',
             lang,
-            configured_from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
+            configured_from: PCI_TEAM_FROM,
             configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
             client_autoresponder_to: email,
             admin_subject: `LEAD MONITOREO: ${name} - ${project || 'Proyecto'}`,
@@ -70,6 +103,22 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         };
     }
 
+    const policy = resolveExecutionPolicy(email);
+    if (!policy.allowed) {
+        console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+        return {
+            success: false,
+            message: policy.error
+        };
+    }
+
+    if (policy.mode === 'local_dry_run') {
+        return {
+            success: true,
+            message: 'Message sent successfully!'
+        };
+    }
+
     try {
         // Construct message for the CRM
         const combinedMessage = `Solicitud de Monitoreo Técnico:
@@ -79,9 +128,10 @@ Ubicación: ${location || 'N/A'}
 Monto Inversión: ${investment || 'N/A'}
 Fecha Entrega: ${date || 'N/A'}`;
 
-        const apiUrl = "https://puntacana-fortress-production.up.railway.app";
-        
-        const backendData = {
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway /api/public/leads/ skipped [MONITORING]`);
+        } else if (policy.railwayApiUrl) {
+            const backendData = {
                 first_name: name.split(' ')[0],
                 last_name: name.split(' ').slice(1).join(' ') || '.',
                 email: email,
@@ -91,22 +141,32 @@ Fecha Entrega: ${date || 'N/A'}`;
                 interest: "Servicio de Monitoreo de Inversión"
             };
 
-        try {
-            const res = await fetch(`${apiUrl}/api/public/leads/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(backendData),
-            });
+            try {
+                const res = await fetch(`${policy.railwayApiUrl}/api/public/leads/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(backendData),
+                });
 
-            if (!res.ok) {
-                const errText = await res.text();
-                console.error("CRITICAL: Backend rejected the Lead payload:", errText);
-                throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.error("CRITICAL: Backend rejected the Lead payload:", errText);
+                    throw new Error(`Backend Validation Error: ${res.status} - ${errText}`);
+                }
+            } catch (backendError) {
+                console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
+                return {
+                    success: false,
+                    message: 'Error de conexión con el servidor principal. ' + (backendError instanceof Error ? backendError.message : 'Fallo desconocido.')
+                };
             }
+        }
 
-            // HubSpot API Integration (Background sync)
+        if (policy.hubspotMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] HubSpot contact sync skipped [MONITORING]`);
+        } else {
             try {
                 await createHubspotContact({
                     email: email,
@@ -120,13 +180,6 @@ Fecha Entrega: ${date || 'N/A'}`;
             } catch (hsError) {
                 console.error("HubSpot sync failed in monitoring form:", hsError);
             }
-
-        } catch (backendError) {
-            console.error("FATAL: Cannot reach Backend or payload rejected:", backendError);
-            return {
-                success: false,
-                message: 'Error de conexión con el servidor principal. ' + (backendError instanceof Error ? backendError.message : 'Fallo desconocido.')
-            };
         }
 
         // Send Auto-Responder to the CLIENT
@@ -195,8 +248,8 @@ Fecha Entrega: ${date || 'N/A'}`;
             `;
 
             await getResend().emails.send({
-                from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-                to: [email],
+                from: PCI_CLIENT_FROM,
+                to: [policy.clientRecipient],
                 subject: subject,
                 html: htmlTemplate
             });
@@ -239,8 +292,8 @@ Fecha Entrega: ${date || 'N/A'}`;
             `;
 
             await getResend().emails.send({
-                from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-                to: ['info@puntacanainvestmentsrd.com'],
+                from: PCI_TEAM_FROM,
+                to: policy.teamRecipients,
                 subject: `LEAD MONITOREO: ${name} - ${project}`,
                 html: adminHtmlTemplate
             });

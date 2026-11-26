@@ -2,7 +2,13 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import { isLocalSandboxEnabled, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
-import { buildOffMarketEmails, generateProductionRefCode, normalizeLang } from '@/lib/formEmails';
+import {
+    buildOffMarketEmails,
+    generateProductionRefCode,
+    normalizeLang,
+    resolveExecutionPolicy,
+} from '@/lib/formEmails';
+import { evaluateFormAntispam } from '@/lib/formSecurity';
 
 export const dynamic = 'force-dynamic';
 
@@ -41,6 +47,29 @@ export async function POST(request: Request) {
                     ? 'Veuillez remplir tous les champs obligatoires.'
                     : 'Por favor complete todos los campos requeridos.';
             return NextResponse.json({ success: false, message: errMsg }, { status: 400 });
+        }
+
+        const antispam = evaluateFormAntispam({
+            email,
+            honeypot: body.website_url,
+            formLoadedAt: body.form_loaded_at,
+            lang,
+            sourceLabel: 'OffMarketAPI',
+        });
+        if (antispam.action === 'silent_drop') {
+            console.warn(antispam.logMessage);
+            return NextResponse.json(
+                {
+                    success: true,
+                    reference_code: '',
+                    message: 'Off-Market application sent successfully!',
+                },
+                { status: 201 }
+            );
+        }
+        if (antispam.action === 'reject') {
+            console.warn(antispam.logMessage);
+            return NextResponse.json({ success: false, message: antispam.errorMessage }, { status: 400 });
         }
 
         if (isLocalSandboxEnabled()) {
@@ -93,14 +122,21 @@ export async function POST(request: Request) {
             );
         }
 
-        // Production path: reuses exact same Railway /api/public/leads/, HubSpot, and Resend integration
+        // Fail-closed Preview guard: stops BEFORE any Railway, HubSpot, or Resend call
+        const policy = resolveExecutionPolicy(email);
+        if (!policy.allowed) {
+            console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+            return NextResponse.json({ success: false, message: policy.error }, { status: 403 });
+        }
+
+        // Production / Preview path
         const referenceCode = generateProductionRefCode('OM');
         const built = buildOffMarketEmails({
             referenceCode,
             lang,
             name,
             company,
-            email,
+            email: policy.clientRecipient,
             phone,
             tab,
             budget,
@@ -109,70 +145,77 @@ export async function POST(request: Request) {
             freeText,
         });
 
-        const apiUrl = 'https://puntacana-fortress-production.up.railway.app';
-        const leadRes = await fetch(`${apiUrl}/api/public/leads/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                first_name: name.split(' ')[0],
-                last_name: name.split(' ').slice(1).join(' ') || '.',
-                email,
-                phone,
-                message: built.adminEmail.text,
-                source: 'Website Off-Market Form',
-                interest: `Off-Market (${tab === 'hoteles' ? 'Hoteles y Resorts' : 'Oportunidades'}) [${referenceCode}]`,
-            }),
-        });
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway /api/public/leads/ skipped [${referenceCode}]`);
+        } else if (policy.railwayApiUrl) {
+            const leadRes = await fetch(`${policy.railwayApiUrl}/api/public/leads/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    first_name: name.split(' ')[0],
+                    last_name: name.split(' ').slice(1).join(' ') || '.',
+                    email,
+                    phone,
+                    message: built.adminEmail.text,
+                    source: 'Website Off-Market Form',
+                    interest: `Off-Market (${tab === 'hoteles' ? 'Hoteles y Resorts' : 'Oportunidades'}) [${referenceCode}]`,
+                }),
+            });
 
-        if (!leadRes.ok) {
-            const errText = await leadRes.text();
-            console.error('Off-Market Backend Lead Error:', leadRes.status, errText);
-            return NextResponse.json(
-                { success: false, message: `Error de conexión con el servidor principal (${leadRes.status}).` },
-                { status: 502 }
-            );
+            if (!leadRes.ok) {
+                const errText = await leadRes.text();
+                console.error('Off-Market Backend Lead Error:', leadRes.status, errText);
+                return NextResponse.json(
+                    { success: false, message: `Error de conexión con el servidor principal (${leadRes.status}).` },
+                    { status: 502 }
+                );
+            }
         }
 
-        try {
-            await createHubspotContact({
-                email,
-                firstname: name.split(' ')[0],
-                lastname: name.split(' ').slice(1).join(' '),
-                phone,
-                message: built.adminEmail.text,
-                budget: built.budgetEs,
-                form_source: 'Website Off-Market Form',
-            });
-        } catch (hsErr) {
-            console.error('HubSpot sync failed in Off-Market API:', hsErr);
+        if (policy.hubspotMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] HubSpot contact sync skipped [${referenceCode}]`);
+        } else {
+            try {
+                await createHubspotContact({
+                    email,
+                    firstname: name.split(' ')[0],
+                    lastname: name.split(' ').slice(1).join(' '),
+                    phone,
+                    message: built.adminEmail.text,
+                    budget: built.budgetEs,
+                    form_source: 'Website Off-Market Form',
+                });
+            } catch (hsErr) {
+                console.error('HubSpot sync failed in Off-Market API:', hsErr);
+            }
         }
 
-        // Client Autoresponder (ES/EN/FR + matching referenceCode) via existing Resend integration
-        try {
-            const clientRes = await getResend().emails.send({
-                from: built.clientEmail.from,
-                to: [built.clientEmail.to],
-                subject: built.clientEmail.subject,
-                html: built.clientEmail.html,
-                text: built.clientEmail.text,
-            });
-            if (clientRes.error) console.error('Resend Error (Off-Market Client):', clientRes.error);
-        } catch (err) {
-            console.error('Off-Market Client Autoresponder Exception:', err);
-        }
+        if (policy.mode !== 'local_dry_run') {
+            try {
+                const clientRes = await getResend().emails.send({
+                    from: built.clientEmail.from,
+                    to: [policy.clientRecipient],
+                    subject: built.clientEmail.subject,
+                    html: built.clientEmail.html,
+                    text: built.clientEmail.text,
+                });
+                if (clientRes.error) console.error('Resend Error (Off-Market Client):', clientRes.error);
+            } catch (err) {
+                console.error('Off-Market Client Autoresponder Exception:', err);
+            }
 
-        // Team Notification (Spanish structured choices + original free text + refCode) via existing Resend integration
-        try {
-            const adminRes = await getResend().emails.send({
-                from: built.adminEmail.from,
-                to: [built.adminEmail.to],
-                subject: built.adminEmail.subject,
-                html: built.adminEmail.html,
-                text: built.adminEmail.text,
-            });
-            if (adminRes.error) console.error('Resend Error (Off-Market Admin):', adminRes.error);
-        } catch (err) {
-            console.error('Off-Market Admin Email Exception:', err);
+            try {
+                const adminRes = await getResend().emails.send({
+                    from: built.adminEmail.from,
+                    to: policy.teamRecipients,
+                    subject: built.adminEmail.subject,
+                    html: built.adminEmail.html,
+                    text: built.adminEmail.text,
+                });
+                if (adminRes.error) console.error('Resend Error (Off-Market Admin):', adminRes.error);
+            } catch (err) {
+                console.error('Off-Market Admin Email Exception:', err);
+            }
         }
 
         return NextResponse.json(

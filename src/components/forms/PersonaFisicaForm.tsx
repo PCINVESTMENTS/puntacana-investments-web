@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,8 @@ import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
 import { getKycDict } from "@/dictionaries/kyc";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { sendKYCEmailNotification } from "@/app/actions/kyc";
+import { precheckKycSubmission, sendKYCEmailNotification } from "@/app/actions/kyc";
+import { FormAntispamFields } from "./FormAntispamFields";
 import {
     Form,
     FormControl,
@@ -165,6 +166,14 @@ export function PersonaFisicaForm() {
     const otherIncomeSource = form.watch("otherIncomeSource");
 
     const currentValues = form.watch();
+    const honeypotRef = useRef("");
+    const formLoadedAtRef = useRef("");
+    const handleHoneypotChange = useCallback((val: string) => {
+        honeypotRef.current = val;
+    }, []);
+    const handleLoadedAtReady = useCallback((ts: string) => {
+        formLoadedAtRef.current = ts;
+    }, []);
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setDraft(currentValues as Partial<PersonaFisicaData>);
@@ -174,9 +183,58 @@ export function PersonaFisicaForm() {
 
     const onSubmit = async (data: PersonaFisicaData) => {
         try {
+            const subjectName = `${data.firstName} ${data.lastName}`.trim();
+            const isLocalHost =
+                typeof window !== "undefined" &&
+                (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost");
+
+            let precheckRefCode = "";
+            if (!isLocalHost) {
+                const precheck = await precheckKycSubmission({
+                    email: data.email,
+                    formType: "Persona Física",
+                    lang,
+                    honeypot: honeypotRef.current,
+                    formLoadedAt: formLoadedAtRef.current,
+                });
+                if (!precheck.allowed) {
+                    if (precheck.silentDrop) {
+                        setDraft(null);
+                        form.reset(defaultValues);
+                        setSuccessMeta({ dossierId: "", sandboxIsolated: false, emailSent: false, emailAttempted: false });
+                        return;
+                    }
+                    toast({ title: c.toastValErrorTitle, description: precheck.error || c.toastValErrorDesc });
+                    return;
+                }
+                precheckRefCode = precheck.referenceCode;
+                if (precheck.skipExternalBackend) {
+                    const mailRes = await sendKYCEmailNotification({
+                        type: "Persona Física",
+                        clientEmail: data.email,
+                        subjectName,
+                        lang,
+                        referenceCode: precheckRefCode,
+                        phone: data.mobilePhone1 || data.homePhone || "",
+                        country: data.residenceCountry || "",
+                    });
+                    if (!mailRes?.success) {
+                        toast({ title: c.toastValErrorTitle, description: (mailRes as any)?.error || c.toastValErrorDesc });
+                        return;
+                    }
+                    toast({ title: c.toastSuccessTitle, description: f.toastSuccessDesc });
+                    setDraft(null);
+                    form.reset(defaultValues);
+                    setSuccessMeta({ dossierId: precheckRefCode, sandboxIsolated: false, emailSent: true, emailAttempted: true });
+                    return;
+                }
+            }
+
             const formData = new FormData();
             formData.set("formType", "Persona Física");
             formData.set("lang", lang);
+            formData.set("website_url", honeypotRef.current);
+            formData.set("form_loaded_at", formLoadedAtRef.current);
 
             // Complete field mapping (zero dropped fields)
             const fieldMap: Record<string, string> = {
@@ -307,10 +365,6 @@ export function PersonaFisicaForm() {
                 formData.append("firma_digital", sigFile);
             }
 
-            const isLocalHost =
-                typeof window !== "undefined" &&
-                (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost");
-
             let res: Response;
             if (isLocalHost) {
                 res = await fetch("/api/kyc", {
@@ -326,7 +380,7 @@ export function PersonaFisicaForm() {
 
             if (res.ok || res.status === 201) {
                 const payload = await res.json().catch(() => ({}));
-                const dossierId = String(payload?.data?.id || payload?.id || "");
+                const dossierId = String(payload?.data?.id || payload?.id || precheckRefCode || "");
                 const sandboxIsolated = Boolean(isLocalHost || payload?.sandbox_isolated);
                 let emailSent = false;
                 let emailAttempted = false;
@@ -337,7 +391,11 @@ export function PersonaFisicaForm() {
                         const mailRes = await sendKYCEmailNotification({
                             type: "Persona Física",
                             clientEmail: data.email,
-                            subjectName: `${data.firstName} ${data.lastName}`.trim(),
+                            subjectName,
+                            lang,
+                            referenceCode: precheckRefCode || undefined,
+                            phone: data.mobilePhone1 || data.homePhone || "",
+                            country: data.residenceCountry || "",
                         });
                         emailSent = Boolean((mailRes as any)?.success);
                     } catch (emailError) {
@@ -472,6 +530,7 @@ export function PersonaFisicaForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8 print:space-y-4 border-2 border-luxury-gold/50 rounded-xl p-6 md:p-8 bg-black/40">
+                <FormAntispamFields onHoneypotChange={handleHoneypotChange} onLoadedAtReady={handleLoadedAtReady} />
                 <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-white/10 px-6 py-4 -mx-6 md:-mx-8 print:hidden">
                     <div className="flex justify-between items-center text-center text-xs font-medium text-gray-400">
                         {f.steps.map((step, i) => (

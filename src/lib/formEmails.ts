@@ -1,9 +1,23 @@
+import fs from "fs";
+import path from "path";
+
 /**
- * Unified Email Builders & Spanish Structured Formatters for Punta Cana Investments Forms.
+ * Unified Email Templates, Spanish Structured Formatters, Environment URL Resolver
+ * and Fail-Closed Preview Safety Guard for Punta Cana Investments web forms.
  *
- * Reused identically by BOTH:
- * - Local isolated sandbox test inbox (0 real emails dispatched)
- * - Production Resend delivery (preserving Resend provider, RESEND_API_KEY, verified sender, and recipients)
+ * Production behavior (VERCEL_ENV === "production" or standard non-preview runtime):
+ * - Provider: Resend (RESEND_API_KEY)
+ * - Verified senders: info@puntacanainvestmentsrd.com
+ * - Team recipient: info@puntacanainvestmentsrd.com
+ * - CRM/Backend: existing Railway + HubSpot connections
+ *
+ * Preview behavior (VERCEL_ENV === "preview" or FORM_EMAILS_PREVIEW_MODE === "true"):
+ * - Fail-closed: aborts BEFORE sending any email or calling external APIs if
+ *   FORM_EMAILS_PREVIEW_TEAM_TO is missing or points to info@puntacanainvestmentsrd.com,
+ *   or if the client recipient is not authorized via FORM_EMAILS_PREVIEW_CLIENT_ALLOWLIST /
+ *   FORM_EMAILS_PREVIEW_CLIENT_TO.
+ * - Railway & HubSpot calls are simulated by default (or routed only to an isolated
+ *   non-production FORM_EMAILS_PREVIEW_API_URL).
  */
 
 export type SupportedLang = "es" | "en" | "fr";
@@ -14,13 +28,13 @@ export interface RenderedEmailPayload {
   subject: string;
   text: string;
   html: string;
-  lang?: SupportedLang;
-  enabled?: boolean;
+  lang: SupportedLang;
 }
 
 export const PCI_TEAM_FROM = "Web Punta Cana Investments <info@puntacanainvestmentsrd.com>";
 export const PCI_CLIENT_FROM = "Punta Cana Investments <info@puntacanainvestmentsrd.com>";
 export const PCI_TEAM_TO = "info@puntacanainvestmentsrd.com";
+export const PCI_PROD_RAILWAY_HOST = "puntacana-fortress-production.up.railway.app";
 export const PCI_CALENDLY_URL = "https://calendly.com/ulisespp9/30min";
 export const PCI_EMAIL_LOGO_URL = "https://puntacanainvestmentsrd.com/images/logo-email.jpg";
 
@@ -30,18 +44,266 @@ export function normalizeLang(raw: unknown, fallback: SupportedLang = "es"): Sup
   return fallback;
 }
 
-export function generateProductionRefCode(prefix: "INQ" | "HTL" | "OM" | "FB" | "CNT"): string {
+export function generateReferenceCode(prefix: "INQ" | "HTL" | "OM" | "FB" | "CNT" | "KYC"): string {
   const now = new Date();
   const y = now.getUTCFullYear();
   const m = String(now.getUTCMonth() + 1).padStart(2, "0");
   const d = String(now.getUTCDate()).padStart(2, "0");
-  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+  const rand = Math.random().toString(36).slice(2, 6).toUpperCase().padEnd(4, "X");
   return `${prefix}-${y}${m}${d}-${rand}`;
 }
 
-export function getCanonicalSiteOrigin(): string {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL || "https://www.puntacanainvestmentsrd.com";
-  return raw.replace(/\/+$/, "");
+export const generateProductionRefCode = generateReferenceCode;
+
+function parseEmailList(raw: string | undefined): string[] {
+  return String(raw || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function isProductionTeamInbox(address: string): boolean {
+  return address.trim().toLowerCase() === PCI_TEAM_TO.toLowerCase();
+}
+
+export function isLocalDryRunEnabled(): boolean {
+  return process.env.VERCEL !== "1" && Boolean(process.env.FORM_EMAILS_LOCAL_DRY_RUN_FILE);
+}
+
+export function isPreviewEnvironment(): boolean {
+  return (
+    process.env.VERCEL_ENV === "preview" ||
+    String(process.env.FORM_EMAILS_PREVIEW_MODE || "").trim().toLowerCase() === "true"
+  );
+}
+
+export type ExecutionPolicyResult =
+  | {
+      allowed: false;
+      mode: "preview";
+      code:
+        | "PREVIEW_TEAM_RECIPIENT_MISSING"
+        | "PREVIEW_PRODUCTION_RECIPIENT_BLOCKED"
+        | "PREVIEW_CLIENT_RECIPIENT_UNAUTHORIZED"
+        | "PREVIEW_PRODUCTION_RAILWAY_BLOCKED";
+      error: string;
+    }
+  | {
+      allowed: true;
+      mode: "local_dry_run" | "preview" | "production";
+      teamRecipients: string[];
+      clientRecipient: string;
+      railwayMode: "production" | "preview_isolated" | "simulated";
+      railwayApiUrl: string | null;
+      hubspotMode: "production" | "simulated";
+    };
+
+/**
+ * Enforces fail-closed Preview isolation BEFORE any email or CRM call occurs.
+ */
+export function resolveExecutionPolicy(submittedClientEmail: string): ExecutionPolicyResult {
+  const cleanClientEmail = String(submittedClientEmail || "").trim();
+
+  // 1. Preview fail-closed guard (takes precedence even if local dry-run is unset)
+  if (isPreviewEnvironment()) {
+    const previewTeamRecipients = parseEmailList(process.env.FORM_EMAILS_PREVIEW_TEAM_TO);
+    if (previewTeamRecipients.length === 0) {
+      return {
+        allowed: false,
+        mode: "preview",
+        code: "PREVIEW_TEAM_RECIPIENT_MISSING",
+        error:
+          "Envío detenido en Preview: falta configurar el buzón autorizado del equipo (FORM_EMAILS_PREVIEW_TEAM_TO). No se envió ningún correo al destinatario de producción.",
+      };
+    }
+
+    if (previewTeamRecipients.some(isProductionTeamInbox)) {
+      return {
+        allowed: false,
+        mode: "preview",
+        code: "PREVIEW_PRODUCTION_RECIPIENT_BLOCKED",
+        error:
+          "Envío detenido en Preview: FORM_EMAILS_PREVIEW_TEAM_TO no puede incluir el buzón de producción (info@puntacanainvestmentsrd.com).",
+      };
+    }
+
+    const previewClientOverride = String(process.env.FORM_EMAILS_PREVIEW_CLIENT_TO || "").trim();
+    const previewClientAllowlist = parseEmailList(process.env.FORM_EMAILS_PREVIEW_CLIENT_ALLOWLIST).map((a) =>
+      a.toLowerCase()
+    );
+
+    let resolvedClientRecipient = "";
+    if (previewClientOverride) {
+      if (isProductionTeamInbox(previewClientOverride)) {
+        return {
+          allowed: false,
+          mode: "preview",
+          code: "PREVIEW_PRODUCTION_RECIPIENT_BLOCKED",
+          error:
+            "Envío detenido en Preview: FORM_EMAILS_PREVIEW_CLIENT_TO no puede apuntar al buzón de producción.",
+        };
+      }
+      resolvedClientRecipient = previewClientOverride;
+    } else if (
+      previewClientAllowlist.length > 0 &&
+      previewClientAllowlist.includes(cleanClientEmail.toLowerCase()) &&
+      !isProductionTeamInbox(cleanClientEmail)
+    ) {
+      resolvedClientRecipient = cleanClientEmail;
+    } else {
+      return {
+        allowed: false,
+        mode: "preview",
+        code: "PREVIEW_CLIENT_RECIPIENT_UNAUTHORIZED",
+        error:
+          "Envío detenido en Preview: el correo del cliente no está autorizado en FORM_EMAILS_PREVIEW_CLIENT_ALLOWLIST ni se definió FORM_EMAILS_PREVIEW_CLIENT_TO. No se envió ningún correo.",
+      };
+    }
+
+    const previewApiUrl = String(process.env.FORM_EMAILS_PREVIEW_API_URL || "")
+      .trim()
+      .replace(/\/+$/, "");
+    if (previewApiUrl && previewApiUrl.toLowerCase().includes(PCI_PROD_RAILWAY_HOST)) {
+      return {
+        allowed: false,
+        mode: "preview",
+        code: "PREVIEW_PRODUCTION_RAILWAY_BLOCKED",
+        error:
+          "Envío detenido en Preview: FORM_EMAILS_PREVIEW_API_URL no puede apuntar al backend de producción en Railway.",
+      };
+    }
+
+    return {
+      allowed: true,
+      mode: isLocalDryRunEnabled() ? "local_dry_run" : "preview",
+      teamRecipients: previewTeamRecipients,
+      clientRecipient: resolvedClientRecipient,
+      railwayMode: previewApiUrl ? "preview_isolated" : "simulated",
+      railwayApiUrl: previewApiUrl || null,
+      hubspotMode: "simulated",
+    };
+  }
+
+  // 2. Local dry-run mode (isolated local verification with 0 real emails & 0 external writes)
+  if (isLocalDryRunEnabled()) {
+    return {
+      allowed: true,
+      mode: "local_dry_run",
+      teamRecipients: [PCI_TEAM_TO],
+      clientRecipient: cleanClientEmail,
+      railwayMode: "simulated",
+      railwayApiUrl: null,
+      hubspotMode: "simulated",
+    };
+  }
+
+  // 3. Standard production mode (100% identical to master)
+  return {
+    allowed: true,
+    mode: "production",
+    teamRecipients: [PCI_TEAM_TO],
+    clientRecipient: cleanClientEmail,
+    railwayMode: "production",
+    railwayApiUrl: `https://${PCI_PROD_RAILWAY_HOST}`,
+    hubspotMode: "production",
+  };
+}
+
+/**
+ * Resolves the active environment origin so listing links always point to the
+ * matching environment (local dev/preview, Vercel preview, or production domain).
+ */
+export function resolveSiteOrigin(requestHeaders?: Headers | null): string {
+  const envUrl = String(process.env.NEXT_PUBLIC_SITE_URL || "").trim().replace(/\/+$/, "");
+
+  if (requestHeaders) {
+    const rawOrigin = String(requestHeaders.get("origin") || "").trim();
+    const forwardedHost = String(requestHeaders.get("x-forwarded-host") || "").split(",")[0].trim();
+    const host = forwardedHost || String(requestHeaders.get("host") || "").trim();
+    const forwardedProto = String(requestHeaders.get("x-forwarded-proto") || "").split(",")[0].trim();
+
+    const isLocalOrPreviewHost = (h: string) =>
+      /^(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?$/i.test(h) ||
+      /\.local(:\d+)?$/i.test(h) ||
+      /\.vercel\.app$/i.test(h);
+
+    if (host && isLocalOrPreviewHost(host)) {
+      const proto = forwardedProto || (/^(localhost|127\.0\.0\.1|0\.0\.0\.0)/i.test(host) ? "http" : "https");
+      return `${proto}://${host}`.replace(/\/+$/, "");
+    }
+
+    if (rawOrigin && /^https?:\/\//i.test(rawOrigin)) {
+      try {
+        const parsed = new URL(rawOrigin);
+        if (isLocalOrPreviewHost(parsed.host)) {
+          return parsed.origin.replace(/\/+$/, "");
+        }
+      } catch {
+        // Ignore malformed Origin header
+      }
+    }
+
+    if (envUrl && /^https?:\/\//i.test(envUrl)) {
+      return envUrl;
+    }
+
+    if (host) {
+      const proto = forwardedProto || "https";
+      return `${proto}://${host}`.replace(/\/+$/, "");
+    }
+  }
+
+  if (envUrl && /^https?:\/\//i.test(envUrl)) {
+    return envUrl;
+  }
+
+  return "https://www.puntacanainvestmentsrd.com";
+}
+
+export function isHotelOrCommercialAsset(
+  type?: string | null,
+  title?: string | null,
+  slug?: string | null
+): boolean {
+  const t = String(type || "").trim().toLowerCase();
+  if (["hotel", "resorts", "resort", "commercial", "condohotel", "condo-hotel"].includes(t)) {
+    return true;
+  }
+  const combined = `${title || ""} ${slug || ""}`;
+  return /\b(hotel|hoteles|hotelero|hotelera|resort|resorts|condohotel|condo-hotel|boutique hotel)\b/i.test(
+    combined
+  );
+}
+
+export interface LocalDryRunRecord {
+  recordedAt: string;
+  flow: "property_inquiry" | "hotel_inquiry" | "general_contact" | "off_market" | "fly_and_buy" | "kyc";
+  referenceCode: string;
+  lang: SupportedLang;
+  siteOrigin: string;
+  propertyUrl?: string;
+  railwayMode: "production" | "preview_isolated" | "simulated";
+  hubspotMode: "production" | "simulated";
+  adminEmail: RenderedEmailPayload & { recipients: string[] };
+  clientEmail: RenderedEmailPayload;
+}
+
+export function recordLocalDryRunEmail(record: LocalDryRunRecord): void {
+  const targetFile = process.env.FORM_EMAILS_LOCAL_DRY_RUN_FILE;
+  if (!targetFile || process.env.VERCEL === "1") return;
+  const resolved = path.resolve(targetFile);
+  fs.mkdirSync(path.dirname(resolved), { recursive: true });
+  let existing: LocalDryRunRecord[] = [];
+  if (fs.existsSync(resolved)) {
+    try {
+      const parsed = JSON.parse(fs.readFileSync(resolved, "utf-8"));
+      if (Array.isArray(parsed)) existing = parsed;
+    } catch {
+      existing = [];
+    }
+  }
+  existing.push(record);
+  fs.writeFileSync(resolved, JSON.stringify(existing, null, 2), "utf-8");
 }
 
 function escHtml(value: unknown): string {
@@ -87,7 +349,7 @@ function htmlSection(heading: string, rows: Array<{ label: string; value: string
 }
 
 // =============================================================================
-// OFF-MARKET SPANISH FORMATTERS (EN/FR -> ES, preserving free text verbatim)
+// OFF-MARKET SPANISH FORMATTERS (EN/FR -> ES)
 // =============================================================================
 
 const OFF_MARKET_DETAIL_LABELS_ES: Record<string, string> = {
@@ -309,17 +571,24 @@ export interface PropertyOrHotelEmailInput {
   referenceCode: string;
   formCategory: "property_inquiry" | "hotel_inquiry" | "general_contact";
   lang: SupportedLang;
+  siteOrigin: string;
   name: string;
   email: string;
   phone: string;
   message: string;
   interestText: string;
   property?: {
-    title?: string;
+    id?: number | string | null;
+    technicalId?: number | string | null;
+    idSource?: string | null;
+    permanentCode?: string | null;
     internal_code?: string | null;
+    code?: string | null;
     slug?: string | null;
+    title?: string | null;
     location?: string | null;
     price?: number | null;
+    isStartingPrice?: boolean | null;
     area?: number | null;
     type?: string | null;
   } | null;
@@ -329,13 +598,31 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
   adminEmail: RenderedEmailPayload;
   clientEmail: RenderedEmailPayload;
   propertyUrl: string;
+  identifierKind: "permanent_code" | "technical_id" | "none";
 } {
-  const { referenceCode, formCategory, lang, name, email, phone, message, interestText, property } = input;
-  const siteOrigin = getCanonicalSiteOrigin();
+  const { referenceCode, formCategory, lang, siteOrigin, name, email, phone, message, interestText, property } = input;
+  const cleanOrigin = siteOrigin.replace(/\/+$/, "");
   const slug = property?.slug ? String(property.slug).trim() : "";
-  const propertyUrl = slug ? `${siteOrigin}/${lang}/properties/${slug}` : "";
+  const propertyUrl = slug ? `${cleanOrigin}/${lang}/properties/${slug}` : "";
   const propTitle = String(property?.title || interestText || "Consulta General").trim();
-  const internalCode = property?.internal_code ? String(property.internal_code).trim() : "";
+
+  // Only treat explicit permanent code fields as permanent codes; never synthesize a fake prefix
+  const permanentCode = String(
+    property?.permanentCode || property?.internal_code || property?.code || ""
+  ).trim();
+  const rawTechId = property?.technicalId ?? property?.id;
+  const technicalId =
+    rawTechId !== undefined && rawTechId !== null && String(rawTechId).trim() !== ""
+      ? String(rawTechId).trim()
+      : "";
+  const idSource = String(property?.idSource || "fuente vigente").trim();
+
+  const identifierKind: "permanent_code" | "technical_id" | "none" = permanentCode
+    ? "permanent_code"
+    : technicalId
+    ? "technical_id"
+    : "none";
+
   const isHotel = formCategory === "hotel_inquiry";
   const isProperty = formCategory === "property_inquiry";
 
@@ -357,20 +644,20 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
 
   const formattedPrice =
     property?.price && Number(property.price) > 0
-      ? `US$${Number(property.price).toLocaleString("en-US")}`
+      ? `${property.isStartingPrice ? "Desde " : ""}US$${Number(property.price).toLocaleString("en-US")}`
       : "";
 
-  // --- TEAM EMAIL (Always clear Spanish for PCI team; free message preserved verbatim) ---
   const adminHeading = isHotel
     ? "CONSULTA DIRECTA DE HOTEL / ACTIVO COMERCIAL"
     : isProperty
     ? "CONSULTA DE PROPIEDAD"
     : "NUEVO CONTACTO WEB";
 
+  const codeTag = permanentCode ? ` [${permanentCode}]` : "";
   const adminSubject = isHotel
-    ? `CONSULTA HOTEL / ACTIVO [${referenceCode}]${internalCode ? ` [${internalCode}]` : ""} ${propTitle} — ${name}`
+    ? `CONSULTA HOTEL / ACTIVO [${referenceCode}]${codeTag} ${propTitle} — ${name}`
     : isProperty
-    ? `CONSULTA PROPIEDAD [${referenceCode}]${internalCode ? ` [${internalCode}]` : ""} ${propTitle} — ${name}`
+    ? `CONSULTA PROPIEDAD [${referenceCode}]${codeTag} ${propTitle} — ${name}`
     : `CONTACTO WEB [${referenceCode}] — ${name} (${interestText || "General"})`;
 
   const assetRows: Array<{ label: string; value: string; href?: string }> = [];
@@ -379,10 +666,32 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
       label: isHotel ? "Hotel / Activo consultado" : "Nombre de la propiedad",
       value: propTitle,
     });
-    assetRows.push({
-      label: isHotel ? "Código del activo" : "Código de la propiedad",
-      value: internalCode || "Sin código asignado",
-    });
+    if (permanentCode) {
+      assetRows.push({
+        label: isHotel ? "Código permanente del activo" : "Código permanente del inmueble",
+        value: permanentCode,
+      });
+      if (technicalId) {
+        assetRows.push({
+          label: "ID técnico de referencia",
+          value: `${technicalId} (${idSource})`,
+        });
+      }
+    } else if (technicalId) {
+      assetRows.push({
+        label: isHotel ? "Código permanente del activo" : "Código permanente del inmueble",
+        value: "No disponible en la fuente vigente",
+      });
+      assetRows.push({
+        label: isHotel ? "ID técnico del activo" : "ID técnico del inmueble",
+        value: `${technicalId} (origen: ${idSource})`,
+      });
+    } else {
+      assetRows.push({
+        label: isHotel ? "Código del activo" : "Código del inmueble",
+        value: "No disponible en la fuente vigente",
+      });
+    }
     assetRows.push({
       label: "Tipo de activo",
       value: categoryHumanEs,
@@ -441,17 +750,23 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
     "Notificación interna automática — Punta Cana Investments"
   );
 
-  // --- CLIENT AUTO-RESPONDER (Localized ES/EN/FR with identical referenceCode) ---
+  // Client confirmation (ES / EN / FR with identical referenceCode and environment-aware listing URL)
   const firstName = name.split(" ")[0] || (lang === "en" ? "Client" : lang === "fr" ? "Client" : "Cliente");
-  const propBadge = internalCode ? `${propTitle} (${internalCode})` : propTitle;
+  const propBadge = permanentCode ? `${propTitle} (${permanentCode})` : propTitle;
 
   const clientCopy =
     lang === "en"
       ? {
           subject: isHotel
             ? `Hotel / Asset Inquiry Confirmation [${referenceCode}] — Punta Cana Investments`
-            : `Inquiry Confirmation [${referenceCode}] — Punta Cana Investments`,
-          title: isHotel ? "Hotel & Asset Inquiry Confirmation" : "Inquiry Confirmation",
+            : isProperty
+            ? `Inquiry Confirmation [${referenceCode}] — Punta Cana Investments`
+            : `Contact Confirmation [${referenceCode}] — Punta Cana Investments`,
+          title: isHotel
+            ? "Hotel & Asset Inquiry Confirmation"
+            : isProperty
+            ? "Inquiry Confirmation"
+            : "Contact Confirmation",
           greeting: `Hello ${firstName},`,
           intro:
             isHotel || isProperty
@@ -469,8 +784,14 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
       ? {
           subject: isHotel
             ? `Confirmation de demande hôtel / actif [${referenceCode}] — Punta Cana Investments`
-            : `Confirmation de demande [${referenceCode}] — Punta Cana Investments`,
-          title: isHotel ? "Confirmation de Demande Hôtel / Actif" : "Confirmation de Demande",
+            : isProperty
+            ? `Confirmation de demande [${referenceCode}] — Punta Cana Investments`
+            : `Confirmation de contact [${referenceCode}] — Punta Cana Investments`,
+          title: isHotel
+            ? "Confirmation de Demande Hôtel / Actif"
+            : isProperty
+            ? "Confirmation de Demande"
+            : "Confirmation de Contact",
           greeting: `Bonjour ${firstName},`,
           intro:
             isHotel || isProperty
@@ -487,8 +808,14 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
       : {
           subject: isHotel
             ? `Confirmación de consulta de hotel / activo [${referenceCode}] — Punta Cana Investments`
-            : `Confirmación de consulta [${referenceCode}] — Punta Cana Investments`,
-          title: isHotel ? "Confirmación de Consulta Hotelera / Comercial" : "Confirmación de Consulta",
+            : isProperty
+            ? `Confirmación de consulta [${referenceCode}] — Punta Cana Investments`
+            : `Confirmación de contacto [${referenceCode}] — Punta Cana Investments`,
+          title: isHotel
+            ? "Confirmación de Consulta Hotelera / Comercial"
+            : isProperty
+            ? "Confirmación de Consulta"
+            : "Confirmación de Contacto",
           greeting: `Hola ${firstName},`,
           intro:
             isHotel || isProperty
@@ -542,6 +869,7 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
 
   return {
     propertyUrl,
+    identifierKind,
     adminEmail: {
       from: PCI_TEAM_FROM,
       to: PCI_TEAM_TO,
@@ -549,7 +877,6 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
       text: adminTextLines.join("\n"),
       html: adminHtml,
       lang: "es",
-      enabled: true,
     },
     clientEmail: {
       from: PCI_CLIENT_FROM,
@@ -558,7 +885,6 @@ export function buildPropertyOrHotelEmails(input: PropertyOrHotelEmailInput): {
       text: clientTextLines.join("\n"),
       html: clientHtml,
       lang,
-      enabled: true,
     },
   };
 }
@@ -629,10 +955,17 @@ export function buildOffMarketEmails(input: OffMarketEmailInput): {
     "",
     "--- PREFERENCIAS SELECCIONADAS (EN ESPAÑOL PARA EL EQUIPO) ---",
     ...criteriaRows.map((r) => `${r.label}: ${r.value}`),
-    "",
-    `--- MENSAJE LIBRE DEL CLIENTE (IDIOMA ORIGINAL: ${lang.toUpperCase()}) ---`,
-    cleanFreeText || "Sin notas adicionales.",
+    ...(cleanFreeText
+      ? ["", `--- MENSAJE LIBRE DEL CLIENTE (IDIOMA ORIGINAL: ${lang.toUpperCase()}) ---`, cleanFreeText]
+      : []),
   ];
+
+  const freeTextHtmlBlock = cleanFreeText
+    ? `<div style="background-color: #1a1a1a; padding: 18px 20px; border-left: 4px solid #c9ae5d; margin: 18px 0; border-radius: 4px;">
+        <p style="margin: 0 0 8px 0; color: #c9ae5d; font-size: 13px; font-weight: bold; text-transform: uppercase;">Mensaje Libre del Cliente (Idioma original: ${escHtml(lang.toUpperCase())})</p>
+        <p style="margin: 0; color: #e0e0e0; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${escHtml(cleanFreeText)}</p>
+      </div>`
+    : "";
 
   const adminHtml = wrapBrandedHtml(
     "SOLICITUD BÚSQUEDA PRIVADA OFF-MARKET",
@@ -642,15 +975,11 @@ export function buildOffMarketEmails(input: OffMarketEmailInput): {
       </p>
       ${htmlSection("Datos de Contacto", contactRows)}
       ${htmlSection("Preferencias Seleccionadas (Español)", criteriaRows)}
-      <div style="background-color: #1a1a1a; padding: 18px 20px; border-left: 4px solid #c9ae5d; margin: 18px 0; border-radius: 4px;">
-        <p style="margin: 0 0 8px 0; color: #c9ae5d; font-size: 13px; font-weight: bold; text-transform: uppercase;">Mensaje Libre del Cliente (Idioma original: ${escHtml(lang.toUpperCase())})</p>
-        <p style="margin: 0; color: #e0e0e0; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">${escHtml(cleanFreeText || "Sin notas adicionales.")}</p>
-      </div>
+      ${freeTextHtmlBlock}
     `,
     "División Privada Off-Market — Punta Cana Investments"
   );
 
-  // Client Autoresponder (ES/EN/FR with identical referenceCode)
   const firstName = name.split(" ")[0] || "Cliente";
   const clientCopy =
     lang === "en"
@@ -738,7 +1067,6 @@ export function buildOffMarketEmails(input: OffMarketEmailInput): {
       text: adminTextLines.join("\n"),
       html: adminHtml,
       lang: "es",
-      enabled: true,
     },
     clientEmail: {
       from: PCI_CLIENT_FROM,
@@ -747,7 +1075,6 @@ export function buildOffMarketEmails(input: OffMarketEmailInput): {
       text: clientTextLines.join("\n"),
       html: clientHtml,
       lang,
-      enabled: true,
     },
   };
 }
@@ -857,7 +1184,6 @@ export function buildFlyAndBuyEmails(input: FlyAndBuyEmailInput): {
     "Programa VIP Fly & Buy — Punta Cana Investments"
   );
 
-  // Client Autoresponder (ES/EN/FR with identical referenceCode)
   const firstName = name.split(" ")[0] || "Cliente";
   const clientCopy =
     lang === "en"
@@ -943,7 +1269,6 @@ export function buildFlyAndBuyEmails(input: FlyAndBuyEmailInput): {
       text: adminTextLines.join("\n"),
       html: adminHtml,
       lang: "es",
-      enabled: true,
     },
     clientEmail: {
       from: PCI_CLIENT_FROM,
@@ -952,7 +1277,170 @@ export function buildFlyAndBuyEmails(input: FlyAndBuyEmailInput): {
       text: clientTextLines.join("\n"),
       html: clientHtml,
       lang,
-      enabled: true,
+    },
+  };
+}
+
+// =============================================================================
+// 5. KYC (DUE DILIGENCE) EMAILS — PRIVACY-SAFE METADATA ONLY (ES/EN/FR)
+// =============================================================================
+
+export interface KycEmailInput {
+  referenceCode: string;
+  lang: SupportedLang;
+  entityType: "Persona Física" | "Persona Jurídica";
+  subjectName: string;
+  clientEmail: string;
+  phone?: string;
+  country?: string;
+}
+
+export function buildKycEmails(input: KycEmailInput): {
+  adminEmail: RenderedEmailPayload;
+  clientEmail: RenderedEmailPayload;
+} {
+  const {
+    referenceCode,
+    lang,
+    entityType,
+    subjectName,
+    clientEmail,
+    phone,
+    country,
+  } = input;
+
+  const cleanName = String(subjectName || "").trim() || "Cliente KYC";
+  const cleanPhone = String(phone || "").trim();
+  const cleanCountry = String(country || "").trim();
+
+  const adminRows: Array<{ label: string; value: string; href?: string }> = [
+    { label: "Referencia KYC", value: referenceCode },
+    { label: "Tipo de expediente", value: entityType },
+    { label: entityType === "Persona Jurídica" ? "Entidad / Razón social" : "Titular", value: cleanName },
+    ...(clientEmail ? [{ label: "Correo electrónico", value: clientEmail, href: `mailto:${clientEmail}` }] : []),
+    ...(cleanPhone ? [{ label: "Teléfono de contacto", value: cleanPhone }] : []),
+    ...(cleanCountry ? [{ label: "País", value: cleanCountry }] : []),
+    { label: "Idioma del formulario", value: lang.toUpperCase() },
+  ];
+
+  const adminSubject = `NUEVO EXPEDIENTE KYC [${referenceCode}] (${entityType}) — ${cleanName}`;
+
+  const adminTextLines = [
+    "[NUEVO EXPEDIENTE KYC — DEBIDA DILIGENCIA]",
+    `Referencia: ${referenceCode}`,
+    "",
+    "--- RESUMEN DEL EXPEDIENTE ---",
+    ...adminRows.slice(1).map((r) => `${r.label}: ${r.value}`),
+    "",
+    "Nota de confidencialidad: Los datos financieros, documentos de identidad y firma digital se almacenan exclusivamente en la Bóveda Segura del Módulo Legal de Fortress CRM.",
+  ];
+
+  const adminHtml = wrapBrandedHtml(
+    "NUEVO EXPEDIENTE KYC RECIBIDO",
+    `
+      <p style="font-size: 14px; color: #cccccc; text-align: center; margin-bottom: 20px;">
+        Referencia de cumplimiento: <strong style="color: #c9ae5d; font-family: monospace; font-size: 15px;">${escHtml(referenceCode)}</strong>
+      </p>
+      ${htmlSection("Resumen del Expediente (Solo Metadatos)", adminRows)}
+      <div style="background-color: #161616; padding: 16px 20px; border: 1px solid #333333; margin: 18px 0; border-radius: 4px;">
+        <p style="margin: 0; color: #cccccc; font-size: 13px; line-height: 1.6;">
+          Por seguridad y cumplimiento (Ley 155-17), los documentos adjuntos y datos sensibles no se incluyen por correo. Revise el expediente completo en el <strong>Módulo Legal de Fortress CRM</strong>.
+        </p>
+      </div>
+    `,
+    "Departamento Legal y Cumplimiento — Punta Cana Investments"
+  );
+
+  const localizedType =
+    entityType === "Persona Jurídica"
+      ? lang === "en"
+        ? "Legal Entity"
+        : lang === "fr"
+        ? "Personne Morale"
+        : "Persona Jurídica"
+      : lang === "en"
+      ? "Individual"
+      : lang === "fr"
+      ? "Personne Physique"
+      : "Persona Física";
+
+  const clientCopy =
+    lang === "en"
+      ? {
+          subject: `KYC Dossier Confirmation [${referenceCode}] — Punta Cana Investments`,
+          title: "KYC Receipt Confirmation",
+          greeting: `Dear ${cleanName},`,
+          intro: `We have successfully received your ${localizedType} KYC (Due Diligence) dossier under reference ${referenceCode}.`,
+          body: "Your information and supporting documents are handled under strict confidentiality by our Legal & Compliance Department. Our team will review your file shortly and contact you via this channel if any additional information is required.",
+          refLabel: "Compliance Reference",
+          typeLabel: "Dossier Type",
+          footer: "Legal & Compliance Department",
+        }
+      : lang === "fr"
+      ? {
+          subject: `Confirmation de Dossier KYC [${referenceCode}] — Punta Cana Investments`,
+          title: "Confirmation de Réception KYC",
+          greeting: `Bonjour ${cleanName},`,
+          intro: `Nous avons bien reçu votre dossier KYC (Diligence Raisonnable — ${localizedType}) sous la référence ${referenceCode}.`,
+          body: "Vos informations et justificatifs sont traités en toute confidentialité par notre Département Juridique et Conformité. Notre équipe examinera votre dossier dans les plus brefs délais et vous contactera par cette même voie si des éléments complémentaires sont nécessaires.",
+          refLabel: "Référence de Conformité",
+          typeLabel: "Type de Dossier",
+          footer: "Département Juridique et Conformité",
+        }
+      : {
+          subject: `Confirmación de Expediente KYC [${referenceCode}] — Punta Cana Investments`,
+          title: "Confirmación de Recepción KYC",
+          greeting: `Estimado/a ${cleanName},`,
+          intro: `Hemos recibido exitosamente su expediente KYC (Debida Diligencia — ${localizedType}) bajo la referencia ${referenceCode}.`,
+          body: "Sus datos y documentos son tratados bajo estricta confidencialidad por nuestro Departamento Legal y de Cumplimiento. Nuestro equipo evaluará su expediente a la mayor brevedad y se comunicará por esta vía si requiere información adicional.",
+          refLabel: "Referencia de Cumplimiento",
+          typeLabel: "Tipo de Expediente",
+          footer: "Departamento Legal y Cumplimiento",
+        };
+
+  const clientTextLines = [
+    clientCopy.greeting,
+    "",
+    clientCopy.intro,
+    `${clientCopy.refLabel}: ${referenceCode}`,
+    `${clientCopy.typeLabel}: ${localizedType}`,
+    "",
+    clientCopy.body,
+    "",
+    `Punta Cana Investments — ${clientCopy.footer}`,
+  ];
+
+  const clientHtml = wrapBrandedHtml(
+    clientCopy.title,
+    `
+      <p style="font-size: 15px; line-height: 1.6; color: #e0e0e0;"><strong>${escHtml(clientCopy.greeting)}</strong></p>
+      <p style="font-size: 15px; line-height: 1.6; color: #e0e0e0;">${escHtml(clientCopy.intro)}</p>
+      <div style="background-color: #161616; border: 1px solid #c9ae5d; padding: 14px 18px; margin: 18px 0; border-radius: 4px; text-align: center;">
+        <span style="font-size: 12px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px;">${escHtml(clientCopy.refLabel)}:</span>
+        <strong style="display: block; color: #c9ae5d; font-family: monospace; font-size: 18px; margin-top: 4px;">${escHtml(referenceCode)}</strong>
+        <span style="display: block; font-size: 12px; color: #cccccc; margin-top: 6px;">${escHtml(clientCopy.typeLabel)}: ${escHtml(localizedType)}</span>
+      </div>
+      <p style="font-size: 15px; line-height: 1.6; color: #e0e0e0;">${escHtml(clientCopy.body)}</p>
+    `,
+    clientCopy.footer
+  );
+
+  return {
+    adminEmail: {
+      from: PCI_TEAM_FROM,
+      to: PCI_TEAM_TO,
+      subject: adminSubject,
+      text: adminTextLines.join("\n"),
+      html: adminHtml,
+      lang: "es",
+    },
+    clientEmail: {
+      from: PCI_CLIENT_FROM,
+      to: clientEmail,
+      subject: clientCopy.subject,
+      text: clientTextLines.join("\n"),
+      html: clientHtml,
+      lang,
     },
   };
 }
