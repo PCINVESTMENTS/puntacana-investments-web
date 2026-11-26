@@ -52,6 +52,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: '**.up.railway.app',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.vercel.app',
+      },
+      {
+        protocol: 'https',
         hostname: 'example.com',
       },
       {

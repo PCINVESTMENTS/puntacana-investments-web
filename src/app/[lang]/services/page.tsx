@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 export default async function ServicesPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
-    const phase8Data = fetchLocalSandboxPhase8();
+    const phase8Data = await fetchLocalSandboxPhase8();
     const p8Services = phase8Data?.services;
     const pick = (obj: any, fallback: string) =>
         obj && typeof obj === "object" ? obj[lang] || obj.es || obj.en || fallback : fallback;

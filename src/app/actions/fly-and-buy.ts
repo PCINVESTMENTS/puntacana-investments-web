@@ -3,7 +3,7 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, isLocalFileSandbox, isLocalSandboxEnabled } from '@/lib/localSandbox';
 import {
     buildFlyAndBuyEmails,
     generateReferenceCode,
@@ -68,14 +68,14 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const propertyInput = String(formData.get('specificPropertyName') || '');
     const specificProperty = propertySelection === 'other' || !propertySelection ? propertyInput : propertySelection;
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Fases 1-8 local mirror):
+    // Respect Fly & Buy open/closed toggle from Gestor Web (both local sandbox & Cloud Staging/Production)
     if (isLocalSandboxEnabled()) {
-        const phase8 = fetchLocalSandboxPhase8();
+        const phase8 = await fetchLocalSandboxPhase8();
         if (phase8?.fly_and_buy?.show_form === false) {
             return {
                 success: false,
                 closed: true,
-                sandbox_isolated: true,
+                sandbox_isolated: isLocalFileSandbox(),
                 message:
                     safeLang === 'en'
                         ? 'Fly & Buy intake is currently closed. Your request could not be submitted.'
@@ -84,6 +84,10 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                         : 'La recepción de solicitudes Fly & Buy está cerrada actualmente. Tu solicitud no fue registrada.',
             };
         }
+    }
+
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror only; cloud Staging/Preview uses resolveExecutionPolicy):
+    if (isLocalFileSandbox()) {
 
         const saved = appendSandboxFlyAndBuyLead(
             {

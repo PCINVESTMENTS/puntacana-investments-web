@@ -109,7 +109,7 @@ export default async function DueDiligencePage({ params }: { params: Promise<{ l
     };
 
     const cleanPreview = await getCleanPreviewFlags();
-    const phase7 = fetchLocalSandboxPhase7(cleanPreview);
+    const phase7 = await fetchLocalSandboxPhase7(cleanPreview);
     const ddConfig = phase7?.due_diligence || null;
 
     return (

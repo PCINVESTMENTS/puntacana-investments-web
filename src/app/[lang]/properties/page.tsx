@@ -81,7 +81,7 @@ export default async function PropertiesPage({
     const cleanPreview = await getCleanPreviewFlags();
     const sandboxData = await fetchLocalSandboxCatalog(cleanPreview);
     if (sandboxData) {
-        const wm = fetchLocalSandboxWebManager(cleanPreview);
+        const wm = await fetchLocalSandboxWebManager(cleanPreview);
         const properties = [...sandboxData.properties].sort(
             (a, b) => (a.catalog_position ?? 999999) - (b.catalog_position ?? 999999)
         );

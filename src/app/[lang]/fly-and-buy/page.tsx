@@ -90,7 +90,7 @@ export default async function FlyAndBuyPage({ params }: { params: Promise<{ lang
     const l = (isFr ? 'fr' : isEs ? 'es' : 'en') as 'es' | 'en' | 'fr';
 
     const cleanPreview = await getCleanPreviewFlags();
-    const phase8Data = fetchLocalSandboxPhase8(cleanPreview);
+    const phase8Data = await fetchLocalSandboxPhase8(cleanPreview);
     const p8Fb = phase8Data?.fly_and_buy || null;
     const pickP8 = (obj: any, fallback: string) =>
         obj && typeof obj === "object" ? obj[l] || obj.es || obj.en || fallback : fallback;

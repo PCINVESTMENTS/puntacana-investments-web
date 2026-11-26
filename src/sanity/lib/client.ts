@@ -11,7 +11,9 @@ const realClient = createClient({
 })
 
 const isLocalSandboxProject =
-    projectId === 'local-sandbox' || Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE)
+    projectId === 'local-sandbox' ||
+    Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE) ||
+    Boolean(process.env.PHASE4_BACKEND_URL)
 
 export const client = isLocalSandboxProject
     ? ({

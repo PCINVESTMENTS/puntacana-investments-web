@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { isLocalSandboxEnabled, upsertSandboxFounderLead } from '@/lib/localSandbox';
+import { isLocalFileSandbox, upsertSandboxFounderLead } from '@/lib/localSandbox';
 import { submitFounderForm } from '@/app/actions/founder';
 
 export const dynamic = 'force-dynamic';
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: false, message: errMsg }, { status: 400 });
         }
 
-        if (isLocalSandboxEnabled()) {
+        if (isLocalFileSandbox()) {
             const saved = upsertSandboxFounderLead({
                 name,
                 email,

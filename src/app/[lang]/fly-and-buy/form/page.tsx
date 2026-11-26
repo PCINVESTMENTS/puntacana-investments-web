@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'es
 export default async function FlyAndBuyFormPage({ params }: { params: Promise<{ lang: 'es' | 'en' | 'fr' }> }) {
     const { lang } = await params;
     const dict = await getDictionary(lang);
-    const phase8 = fetchLocalSandboxPhase8();
+    const phase8 = await fetchLocalSandboxPhase8();
     const isFormOpen = phase8?.fly_and_buy?.show_form !== false;
 
     const closedCopy =

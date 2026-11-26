@@ -108,7 +108,7 @@ export default async function RootLayout({
   const { lang } = await params;
   const localSandbox = isLocalSandboxEnabled();
   const cleanPreview = await getCleanPreviewFlags();
-  const phase8Config = fetchLocalSandboxPhase8(cleanPreview);
+  const phase8Config = await fetchLocalSandboxPhase8(cleanPreview);
   const sandboxCatalog = localSandbox ? await fetchLocalSandboxCatalog(cleanPreview) : null;
   const availableFavoriteSlugs = sandboxCatalog
     ? sandboxCatalog.properties

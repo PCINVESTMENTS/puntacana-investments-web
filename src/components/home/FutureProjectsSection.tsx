@@ -34,7 +34,8 @@ export default function FutureProjectsSection({
             ? 'Une nouvelle destination écologique naît dans les Caraïbes. Un lieu conçu pour vivre, investir et se connecter profondément avec la nature.'
             : 'Un nuevo destino ecológico está naciendo en el Caribe. Un lugar diseñado para vivir, invertir y conectar profundamente con la naturaleza.');
     const rawImg = featuredOverride?.hero_image || "/images/miches-eco-resort-main.jpg";
-    const cardImg = typeof rawImg === "string" && rawImg.startsWith("/media/") ? `http://127.0.0.1:8110${rawImg}` : rawImg;
+    const apiOrigin = (process.env.NEXT_PUBLIC_SANDBOX_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8110").replace(/\/+$/, "");
+    const cardImg = typeof rawImg === "string" && rawImg.startsWith("/media/") ? `${apiOrigin}${rawImg}` : rawImg;
 
     return (
         <section className="py-6 md:py-24 px-4 sm:px-6 lg:px-8 bg-primary-black relative overflow-hidden text-white">

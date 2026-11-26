@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxTestInboxEntry, isLocalFileSandbox } from '@/lib/localSandbox';
 import {
     normalizeLang,
     PCI_CLIENT_FROM,
@@ -83,7 +83,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         };
     }
 
-    if (isLocalSandboxEnabled()) {
+    if (isLocalFileSandbox()) {
         appendSandboxTestInboxEntry({
             form_type: 'investment_monitoring',
             form_label: 'Plan de Monitoreo de Inversión',

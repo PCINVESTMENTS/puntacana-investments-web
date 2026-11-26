@@ -80,7 +80,7 @@ export default async function PartnersPage({ params }: { params: Promise<{ lang:
     const { lang } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
     const cleanPreview = await getCleanPreviewFlags();
-    const phase8Data = fetchLocalSandboxPhase8(cleanPreview);
+    const phase8Data = await fetchLocalSandboxPhase8(cleanPreview);
     const p8Partners = phase8Data?.partners || null;
 
     const sandboxPartners = Array.isArray(p8Partners?.items)

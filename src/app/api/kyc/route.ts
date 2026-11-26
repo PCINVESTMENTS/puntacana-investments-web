@@ -3,7 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { isLocalFileSandbox } from '@/lib/localSandbox';
 import {
     buildKycEmails,
     generateReferenceCode,
@@ -225,7 +225,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: false, error: antispam.errorMessage }, { status: 400 });
         }
 
-        if (isLocalSandboxEnabled()) {
+        if (isLocalFileSandbox()) {
             if (process.env.LOCAL_PROPERTIES_SANDBOX_FILE) {
                 const direct = await saveLocalDueDiligenceDirect(formData);
                 if ('error' in direct && direct.error) {

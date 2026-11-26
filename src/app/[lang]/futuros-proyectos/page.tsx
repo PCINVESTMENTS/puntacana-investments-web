@@ -95,7 +95,7 @@ export default async function FuturosProyectosPage({ params }: { params: Promise
   const { lang } = await params;
   const dict = await getDictionary(lang);
   const cleanPreview = await getCleanPreviewFlags();
-  const phase7 = fetchLocalSandboxPhase7(cleanPreview);
+  const phase7 = await fetchLocalSandboxPhase7(cleanPreview);
   const fp = phase7?.future_projects || null;
   const feat = fp?.featured || null;
   const heroBadge = feat?.badge?.[lang] || (lang === 'en' ? '🌿 Coming Soon' : lang === 'fr' ? '🌿 Bientôt' : '🌿 Próximamente');

@@ -1,7 +1,7 @@
 'use server'
 
 import { Resend } from 'resend';
-import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxTestInboxEntry, isLocalFileSandbox } from '@/lib/localSandbox';
 import {
     normalizeLang,
     PCI_CLIENT_FROM,
@@ -61,7 +61,7 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
         };
     }
 
-    if (isLocalSandboxEnabled()) {
+    if (isLocalFileSandbox()) {
         appendSandboxTestInboxEntry({
             form_type: 'newsletter',
             form_label: 'Suscripción Newsletter',

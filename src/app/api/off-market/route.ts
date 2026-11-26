@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { isLocalSandboxEnabled, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
+import { isLocalFileSandbox, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     generateProductionRefCode,
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ success: false, message: antispam.errorMessage }, { status: 400 });
         }
 
-        if (isLocalSandboxEnabled()) {
+        if (isLocalFileSandbox()) {
             const saved = upsertSandboxOffMarketApplication({
                 name,
                 company,

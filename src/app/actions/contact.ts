@@ -3,7 +3,7 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxTestInboxEntry, isLocalFileSandbox } from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     buildPropertyOrHotelEmails,
@@ -139,8 +139,8 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '').trim()
         : 'General';
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (Fases 1-8 local mirror):
-    if (isLocalSandboxEnabled()) {
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror only; cloud Staging/Preview uses resolveExecutionPolicy):
+    if (isLocalFileSandbox()) {
         const saved = appendSandboxTestInboxEntry(
             {
                 form_type: flowType,

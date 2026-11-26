@@ -2,7 +2,9 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { isLocalSandboxEnabled, upsertSandboxFounderLead } from '@/lib/localSandbox';
+import { isLocalFileSandbox, upsertSandboxFounderLead } from '@/lib/localSandbox';
+import { normalizeLang, PCI_CLIENT_FROM, PCI_TEAM_FROM, resolveExecutionPolicy } from '@/lib/formEmails';
+import { evaluateFormAntispam, extractAntispamFromFormData } from '@/lib/formSecurity';
 
 let _resendClient: Resend | null = null;
 function getResend(): Resend {
@@ -40,7 +42,25 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
         };
     }
 
-    if (isLocalSandboxEnabled()) {
+    const safeLang = normalizeLang(lang, 'es');
+    const { honeypot, formLoadedAt } = extractAntispamFromFormData(formData);
+    const antispam = evaluateFormAntispam({
+        email,
+        honeypot,
+        formLoadedAt,
+        lang: safeLang,
+        sourceLabel: 'FounderForm',
+    });
+    if (antispam.action === 'silent_drop') {
+        console.warn(antispam.logMessage);
+        return { success: true, message: 'Application sent successfully!' };
+    }
+    if (antispam.action === 'reject') {
+        console.warn(antispam.logMessage);
+        return { success: false, message: antispam.errorMessage };
+    }
+
+    if (isLocalFileSandbox()) {
         const idempotencyKey = String(formData.get('idempotency_key') || '').trim();
         const projectSlug = String(formData.get('project_slug') || 'miches-eco-resort').trim();
         const saved = upsertSandboxFounderLead({
@@ -76,10 +96,16 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
         };
     }
 
+    const policy = resolveExecutionPolicy(email);
+    if (!policy.allowed) {
+        console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+        return { success: false, message: policy.error };
+    }
+    if (policy.mode === 'local_dry_run') {
+        return { success: true, message: 'Application sent successfully!' };
+    }
+
     try {
-        // Enviar al Backend dedicado de Founder Leads
-        const apiUrl = "https://puntacana-fortress-production.up.railway.app";
-        
         const backendData = {
             first_name: name.split(' ')[0],
             last_name: name.split(' ').slice(1).join(' ') || '.',
@@ -89,28 +115,41 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             message: message || "Sin mensaje adicional."
         };
 
-        let sequenceNumber = "FND-???";
+        let sequenceNumber = "FND-PREVIEW";
 
-        try {
-            const res = await fetch(`${apiUrl}/api/public/founder-leads/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(backendData),
-            });
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway /api/public/founder-leads/ skipped`);
+        } else if (policy.railwayApiUrl) {
+            try {
+                const res = await fetch(`${policy.railwayApiUrl}/api/public/founder-leads/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(backendData),
+                });
 
-            if (!res.ok) {
-                const errText = await res.text();
-                console.error("Backend Validation Error (Founder Lead):", errText);
-                throw new Error(`Error: ${res.status}`);
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.error("Backend Validation Error (Founder Lead):", errText);
+                    throw new Error(`Error: ${res.status}`);
+                }
+                
+                const data = await res.json();
+                sequenceNumber = data.sequence_number || sequenceNumber;
+                console.log(`Founder Lead saved successfully: ${sequenceNumber}`);
+            } catch (backendError) {
+                console.error("Cannot reach Founder Lead API:", backendError);
+                return {
+                    success: false,
+                    message: 'Error de conexión con el servidor. Por favor intente más tarde.'
+                };
             }
-            
-            const data = await res.json();
-            sequenceNumber = data.sequence_number || sequenceNumber;
-            console.log(`Founder Lead saved successfully: ${sequenceNumber}`);
+        }
 
-            // HubSpot API Integration (Background sync)
+        if (policy.hubspotMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] HubSpot contact sync skipped [FOUNDER]`);
+        } else {
             try {
                 await createHubspotContact({
                     email: email,
@@ -123,13 +162,6 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             } catch (hsError) {
                 console.error("HubSpot sync failed in founder form:", hsError);
             }
-
-        } catch (backendError) {
-            console.error("Cannot reach Founder Lead API:", backendError);
-            return {
-                success: false,
-                message: 'Error de conexión con el servidor. Por favor intente más tarde.'
-            };
         }
 
         // Enviar Correo de Confirmación al Cliente con su Número
@@ -167,8 +199,8 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             `;
 
             await getResend().emails.send({
-                from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-                to: [email],
+                from: PCI_CLIENT_FROM,
+                to: [policy.clientRecipient],
                 subject: `Solicitud VIP Recibida - Punta Cana Investments`,
                 html: htmlTemplate
             });
@@ -207,8 +239,8 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             `;
 
             await getResend().emails.send({
-                from: 'Web Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-                to: ['info@puntacanainvestmentsrd.com'],
+                from: PCI_TEAM_FROM,
+                to: policy.teamRecipients,
                 subject: `NUEVO LEAD VIP (Founder): ${name} [${sequenceNumber}]`,
                 html: adminHtmlTemplate
             });

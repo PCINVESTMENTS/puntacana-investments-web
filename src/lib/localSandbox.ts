@@ -6,6 +6,7 @@
  */
 import fs from "fs";
 import path from "path";
+import { cache } from "react";
 import { cookies } from "next/headers";
 import type { Property } from "@/data/properties";
 import type { BlogPost } from "@/data/blog";
@@ -111,10 +112,61 @@ export interface LocalSandboxCatalogResponse {
   blog_posts?: any[];
 }
 
+export function getPhase4BackendBaseUrl(): string {
+  const raw =
+    process.env.PHASE4_BACKEND_URL ||
+    process.env.LOCAL_PROPERTIES_SANDBOX_URL ||
+    process.env.NEXT_PUBLIC_SANDBOX_API_URL ||
+    "";
+  return raw.trim().replace(/\/+$/, "");
+}
+
+/**
+ * True ONLY in isolated local Mac disk sandbox (where test_inbox.json & local JSON files exist).
+ * Used to intercept forms into local disk test_inbox.json without sending real emails.
+ */
+export function isLocalFileSandbox(): boolean {
+  return Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE);
+}
+
+/**
+ * True whenever the Web runs in Fases 1-8 Backend-driven mode (local file sandbox OR Cloud Staging/Production HTTP backend).
+ */
 export function isLocalSandboxEnabled(): boolean {
-  return Boolean(
-    process.env.LOCAL_PROPERTIES_SANDBOX_FILE || process.env.LOCAL_PROPERTIES_SANDBOX_URL
-  );
+  return Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE || getPhase4BackendBaseUrl());
+}
+
+interface RemotePublicBundleResponse {
+  catalog?: LocalSandboxCatalogResponse | null;
+  web_manager?: LocalWebManagerPayload | null;
+  phase7?: Record<string, any> | null;
+  phase8?: Record<string, any> | null;
+}
+
+const fetchRemotePublicBundleCached = cache(async (): Promise<RemotePublicBundleResponse | null> => {
+  const baseUrl = getPhase4BackendBaseUrl();
+  if (!baseUrl) return null;
+  try {
+    const res = await fetch(`${baseUrl}/api/properties-sandbox/public-bundle/`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return (await res.json()) as RemotePublicBundleResponse;
+  } catch (err) {
+    console.error("Phase 4 public-bundle fetch error:", err);
+    return null;
+  }
+});
+
+function resolveBackendMediaUrl(url: any, fallback = ""): string {
+  const s = typeof url === "string" ? url.trim() : "";
+  if (!s) return fallback;
+  const apiOrigin = getPhase4BackendBaseUrl() || "http://127.0.0.1:8110";
+  if (s.startsWith("/media/")) return `${apiOrigin}${s}`;
+  if (apiOrigin.startsWith("https://") && s.startsWith("http://127.0.0.1:8110/media/")) {
+    return `${apiOrigin}${s.slice("http://127.0.0.1:8110".length)}`;
+  }
+  return s;
 }
 
 export async function fetchLocalSandboxCatalog(
@@ -134,7 +186,12 @@ export async function fetchLocalSandboxCatalog(
     }
   }
 
-  const baseUrl = process.env.LOCAL_PROPERTIES_SANDBOX_URL;
+  const bundle = await fetchRemotePublicBundleCached();
+  if (bundle?.catalog) {
+    return applyCleanCatalogFilter(bundle.catalog, clean);
+  }
+
+  const baseUrl = getPhase4BackendBaseUrl();
   if (!baseUrl) return null;
 
   try {
@@ -745,10 +802,7 @@ export function upsertSandboxOffMarketApplication(params: {
 }
 
 function resolveSandboxMediaUrl(url: any, fallback = ""): string {
-  const s = typeof url === "string" ? url.trim() : "";
-  if (!s) return fallback;
-  if (s.startsWith("/media/")) return `http://127.0.0.1:8110${s}`;
-  return s;
+  return resolveBackendMediaUrl(url, fallback);
 }
 
 function normalizeLocalizedText(val: any, fallbackEs = "", fallbackEn = "", fallbackFr = "") {
@@ -938,48 +992,60 @@ export interface LocalWebManagerPayload {
   };
 }
 
-export function fetchLocalSandboxWebManager(clean?: CleanPreviewFlags): LocalWebManagerPayload | null {
+function applyCleanWebManagerFilter(
+  parsed: LocalWebManagerPayload,
+  clean?: CleanPreviewFlags
+): LocalWebManagerPayload {
+  if (!clean?.enabled) return parsed;
+  const nextLocations = (parsed.locations || []).filter((loc) => {
+    if (!loc) return false;
+    if (loc.slug === "cabezadetoro" || loc.is_baseline === false) {
+      return Boolean(clean.includeCabezaDeToro);
+    }
+    return true;
+  });
+  const cleanSlugs = (arr: string[] = []) =>
+    arr.filter((s) => !EXCLUDED_TEST_PROPERTY_SLUGS.has(String(s || "")));
+  const rawPl = parsed.placements;
+  const nextPlacements = rawPl
+    ? {
+        ...rawPl,
+        hero_slider: cleanSlugs(rawPl.hero_slider),
+        sale: cleanSlugs(rawPl.sale),
+        rent: cleanSlugs(rawPl.rent),
+        featured: cleanSlugs(rawPl.featured),
+        suggested: cleanSlugs(rawPl.suggested),
+        location_placements: Object.fromEntries(
+          Object.entries(rawPl.location_placements || {}).map(([k, v]) => [k, cleanSlugs(v)])
+        ),
+      }
+    : undefined;
+  return {
+    ...parsed,
+    locations: nextLocations,
+    placements: nextPlacements,
+  };
+}
+
+export async function fetchLocalSandboxWebManager(
+  clean?: CleanPreviewFlags
+): Promise<LocalWebManagerPayload | null> {
   if (!isLocalSandboxEnabled()) return null;
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
-  if (!catalogFile) return null;
-  const wmFile = path.join(path.dirname(catalogFile), "web_manager_live.json");
-  try {
-    if (fs.existsSync(wmFile)) {
-      const parsed = JSON.parse(fs.readFileSync(wmFile, "utf-8")) as LocalWebManagerPayload;
-      if (clean?.enabled) {
-        const nextLocations = (parsed.locations || []).filter((loc) => {
-          if (!loc) return false;
-          if (loc.slug === "cabezadetoro" || loc.is_baseline === false) {
-            return Boolean(clean.includeCabezaDeToro);
-          }
-          return true;
-        });
-        const cleanSlugs = (arr: string[] = []) =>
-          arr.filter((s) => !EXCLUDED_TEST_PROPERTY_SLUGS.has(String(s || "")));
-        const rawPl = parsed.placements;
-        const nextPlacements = rawPl
-          ? {
-              ...rawPl,
-              hero_slider: cleanSlugs(rawPl.hero_slider),
-              sale: cleanSlugs(rawPl.sale),
-              rent: cleanSlugs(rawPl.rent),
-              featured: cleanSlugs(rawPl.featured),
-              suggested: cleanSlugs(rawPl.suggested),
-              location_placements: Object.fromEntries(
-                Object.entries(rawPl.location_placements || {}).map(([k, v]) => [k, cleanSlugs(v)])
-              ),
-            }
-          : undefined;
-        return {
-          ...parsed,
-          locations: nextLocations,
-          placements: nextPlacements,
-        };
+  if (catalogFile) {
+    const wmFile = path.join(path.dirname(catalogFile), "web_manager_live.json");
+    try {
+      if (fs.existsSync(wmFile)) {
+        const parsed = JSON.parse(fs.readFileSync(wmFile, "utf-8")) as LocalWebManagerPayload;
+        return applyCleanWebManagerFilter(parsed, clean);
       }
-      return parsed;
+    } catch (err) {
+      console.error("Local web manager read error:", err);
     }
-  } catch (err) {
-    console.error("Local web manager read error:", err);
+  }
+  const bundle = await fetchRemotePublicBundleCached();
+  if (bundle?.web_manager) {
+    return applyCleanWebManagerFilter(bundle.web_manager, clean);
   }
   return null;
 }
@@ -1034,86 +1100,98 @@ export function appendSandboxFlyAndBuyLead(
   return { id, reference_code, count: next.length };
 }
 
-export function fetchLocalSandboxPhase8(clean?: CleanPreviewFlags): Record<string, any> | null {
+function applyCleanPhase8Filter(parsed: Record<string, any>, clean?: CleanPreviewFlags): Record<string, any> {
+  if (!clean?.enabled) return parsed;
+  const rawPartners = Array.isArray(parsed?.partners?.items) ? parsed.partners.items : [];
+  const cleanPartners = rawPartners.filter((pt: any) => {
+    if (!pt) return false;
+    const name = String(pt.name || "").toLowerCase();
+    const url = String(pt.website_url || "").toLowerCase();
+    if (name.includes("caribe legal") || url.includes(".example.invalid") || url.includes(".example.test")) {
+      return false;
+    }
+    return true;
+  });
+  return {
+    ...parsed,
+    partners: {
+      ...(parsed.partners || {}),
+      items: cleanPartners,
+    },
+    advisors: [],
+    fly_and_buy_leads: [],
+  };
+}
+
+export async function fetchLocalSandboxPhase8(
+  clean?: CleanPreviewFlags
+): Promise<Record<string, any> | null> {
   if (!isLocalSandboxEnabled()) return null;
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
-  if (!catalogFile) return null;
-  const p8File = path.join(path.dirname(catalogFile), "phase8_site_live.json");
-  try {
-    if (fs.existsSync(p8File)) {
-      const parsed = JSON.parse(fs.readFileSync(p8File, "utf-8"));
-      if (clean?.enabled) {
-        const rawPartners = Array.isArray(parsed?.partners?.items) ? parsed.partners.items : [];
-        const cleanPartners = rawPartners.filter((pt: any) => {
-          if (!pt) return false;
-          const name = String(pt.name || "").toLowerCase();
-          const url = String(pt.website_url || "").toLowerCase();
-          if (name.includes("caribe legal") || url.includes(".example.invalid") || url.includes(".example.test")) {
-            return false;
-          }
-          return true;
-        });
-        return {
-          ...parsed,
-          partners: {
-            ...(parsed.partners || {}),
-            items: cleanPartners,
-          },
-          advisors: [],
-          fly_and_buy_leads: [],
-        };
+  if (catalogFile) {
+    const p8File = path.join(path.dirname(catalogFile), "phase8_site_live.json");
+    try {
+      if (fs.existsSync(p8File)) {
+        const parsed = JSON.parse(fs.readFileSync(p8File, "utf-8"));
+        return applyCleanPhase8Filter(parsed, clean);
       }
-      return parsed;
+    } catch (err) {
+      console.error("Local phase8 read error:", err);
     }
-  } catch (err) {
-    console.error("Local phase8 read error:", err);
+  }
+  const bundle = await fetchRemotePublicBundleCached();
+  if (bundle?.phase8) {
+    return applyCleanPhase8Filter(bundle.phase8, clean);
   }
   return null;
 }
 
 export function resolvePhase8MediaUrl(url: any, fallback = "/images/og-home-luxury.webp"): string {
-  const s = typeof url === "string" ? url.trim() : "";
-  if (!s) return fallback;
-  if (s.startsWith("/media/")) return `http://127.0.0.1:8110${s}`;
-  return s;
+  return resolveBackendMediaUrl(url, fallback);
 }
 
-export function fetchLocalSandboxPhase7(clean?: CleanPreviewFlags): Record<string, any> | null {
+function applyCleanPhase7Filter(parsed: Record<string, any>, clean?: CleanPreviewFlags): Record<string, any> {
+  if (!clean?.enabled) return parsed;
+  return {
+    ...parsed,
+    founder_leads: [],
+    off_market_applications: [],
+    off_market: {
+      ...(parsed.off_market || {}),
+      show_public_teasers: false,
+    },
+    due_diligence: {
+      ...(parsed.due_diligence || {}),
+      submissions: [],
+    },
+  };
+}
+
+export async function fetchLocalSandboxPhase7(
+  clean?: CleanPreviewFlags
+): Promise<Record<string, any> | null> {
   if (!isLocalSandboxEnabled()) return null;
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
-  if (!catalogFile) return null;
-  const p7File = path.join(path.dirname(catalogFile), "phase7_investments_live.json");
-  try {
-    if (fs.existsSync(p7File)) {
-      const parsed = JSON.parse(fs.readFileSync(p7File, "utf-8"));
-      if (clean?.enabled) {
-        return {
-          ...parsed,
-          founder_leads: [],
-          off_market_applications: [],
-          off_market: {
-            ...(parsed.off_market || {}),
-            show_public_teasers: false,
-          },
-          due_diligence: {
-            ...(parsed.due_diligence || {}),
-            submissions: [],
-          },
-        };
+  if (catalogFile) {
+    const p7File = path.join(path.dirname(catalogFile), "phase7_investments_live.json");
+    try {
+      if (fs.existsSync(p7File)) {
+        const parsed = JSON.parse(fs.readFileSync(p7File, "utf-8"));
+        return applyCleanPhase7Filter(parsed, clean);
       }
-      return parsed;
+    } catch (err) {
+      console.error("Local phase7 read error:", err);
     }
-  } catch (err) {
-    console.error("Local phase7 read error:", err);
+  }
+  const bundle = await fetchRemotePublicBundleCached();
+  if (bundle?.phase7) {
+    return applyCleanPhase7Filter(bundle.phase7, clean);
   }
   return null;
 }
 
 export function resolvePhase7MediaUrl(url: any, fallback = "/images/og-home-luxury.webp"): string {
-  const s = typeof url === "string" ? url.trim() : "";
-  if (!s) return fallback;
-  if (s.startsWith("/media/")) return `http://127.0.0.1:8110${s}`;
-  return s;
+  return resolveBackendMediaUrl(url, fallback);
 }
 
 export function mapWebManagerLocations(
@@ -1121,13 +1199,12 @@ export function mapWebManagerLocations(
   lang: "es" | "en" | "fr" = "es",
   flagKey: "show_in_homepage" | "show_in_locations_page" | "show_in_property_filters" = "show_in_homepage"
 ) {
-  const apiOrigin = "http://127.0.0.1:8110";
   return [...rawLocations]
     .filter((loc) => loc && loc[flagKey] !== false)
     .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
     .map((loc) => {
       const rawImg = loc.img || "/images/locations/punta_cana.jpg";
-      const resolvedImg = rawImg.startsWith("/media/") ? `${apiOrigin}${rawImg}` : rawImg;
+      const resolvedImg = resolveBackendMediaUrl(rawImg, "/images/locations/punta_cana.jpg");
       const localizedTitle =
         lang === "en"
           ? loc.title_en || loc.title_es

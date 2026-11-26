@@ -70,7 +70,7 @@ export default async function InvestmentsPage({ params }: { params: Promise<{ la
     const { lang } = await params;
     const l = (lang === "en" || lang === "fr" ? lang : "es") as "es" | "en" | "fr";
     const dict = await getDictionary(l);
-    const phase7 = fetchLocalSandboxPhase7();
+    const phase7 = await fetchLocalSandboxPhase7();
     const p7Inv = phase7?.investments_page || null;
     const p7Hero = p7Inv?.hero || null;
 

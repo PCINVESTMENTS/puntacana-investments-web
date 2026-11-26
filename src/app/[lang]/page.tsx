@@ -206,9 +206,11 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
 
   // Fase 5, Fase 7 & Fase 8 Local overrides (instant 0ms reflection in sandbox mode; defaults match production 100%)
   const cleanPreview = await getCleanPreviewFlags();
-  const webManager = fetchLocalSandboxWebManager(cleanPreview);
-  const phase7Data = fetchLocalSandboxPhase7(cleanPreview);
-  const phase8Data = fetchLocalSandboxPhase8(cleanPreview);
+  const [webManager, phase7Data, phase8Data] = await Promise.all([
+    fetchLocalSandboxWebManager(cleanPreview),
+    fetchLocalSandboxPhase7(cleanPreview),
+    fetchLocalSandboxPhase8(cleanPreview),
+  ]);
   const wmHero = webManager?.homepage?.hero;
   const wmLocSec = webManager?.homepage?.locations_section;
   const secVis = webManager?.homepage?.sections_visibility || {};
@@ -347,7 +349,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       : 3;
 
   const primaryHeroImage = wmHero?.hero_image
-    ? (wmHero.hero_image.startsWith("/media/") ? `http://127.0.0.1:8110${wmHero.hero_image}` : wmHero.hero_image)
+    ? resolvePhase8MediaUrl(wmHero.hero_image, '/images/luxury-villa-frame-hero.webp')
     : '/images/luxury-villa-frame-hero.webp';
 
   const propBySlug = new Map<string, Property>();

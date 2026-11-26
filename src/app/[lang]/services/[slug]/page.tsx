@@ -169,7 +169,7 @@ export default async function ServicePage({ params }: { params: Promise<{ lang: 
     }
 
     // Merge Fase 8 overrides (supports edited baseline services & custom new services)
-    const phase8Data = fetchLocalSandboxPhase8();
+    const phase8Data = await fetchLocalSandboxPhase8();
     const p8Items = Array.isArray(phase8Data?.services?.items) ? phase8Data!.services.items : [];
     const activeP8List = p8Items
         .filter((s: any) => s && s.is_active !== false)

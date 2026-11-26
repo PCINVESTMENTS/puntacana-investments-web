@@ -47,7 +47,7 @@ export default async function LocationsPage({ params }: { params: Promise<{ lang
     const { lang } = await params;
     const dict = await getDictionary(lang);
     const cleanPreview = await getCleanPreviewFlags();
-    const wm = fetchLocalSandboxWebManager(cleanPreview);
+    const wm = await fetchLocalSandboxWebManager(cleanPreview);
     const dynamicLocations = wm
         ? mapWebManagerLocations(wm.locations, lang, "show_in_locations_page")
         : [];

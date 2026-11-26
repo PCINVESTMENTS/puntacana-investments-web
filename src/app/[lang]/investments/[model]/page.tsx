@@ -19,8 +19,8 @@ export async function generateStaticParams() {
 
 export const dynamic = "force-dynamic";
 
-function resolveInvestmentModel(slug: string) {
-    const phase7 = fetchLocalSandboxPhase7();
+async function resolveInvestmentModel(slug: string) {
+    const phase7 = await fetchLocalSandboxPhase7();
     const p7Models = phase7?.investments_page?.models;
     const baseMatch = investmentModels.find((m) => m.slug === slug);
     if (Array.isArray(p7Models)) {
@@ -45,7 +45,7 @@ import ShareButtons from "@/components/property/ShareButtons";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string, model: string }> }) {
     const { lang, model } = await params;
-    const modelData = resolveInvestmentModel(model);
+    const modelData = await resolveInvestmentModel(model);
 
     if (!modelData) return { title: 'Not Found' };
 
@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function InvestmentModelPage({ params }: { params: Promise<{ lang: string, model: string }> }) {
     const { lang, model } = await params;
     const dict = await getDictionary(lang as "es" | "en" | "fr");
-    const data = resolveInvestmentModel(model);
+    const data = await resolveInvestmentModel(model);
 
     if (!data) return notFound();
 
