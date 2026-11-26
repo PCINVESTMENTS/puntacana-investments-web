@@ -130,10 +130,8 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 return {
                     admin_subject: built.adminEmail.subject,
                     client_subject: built.clientEmail.subject,
-                    admin_email_text: built.adminEmail.text,
-                    admin_email_html: built.adminEmail.html,
-                    client_email_text: built.clientEmail.text,
-                    client_email_html: built.clientEmail.html,
+                    admin_email: built.adminEmail,
+                    client_email: built.clientEmail,
                     questionnaire_es: built.questionnaireEs,
                 };
             }
