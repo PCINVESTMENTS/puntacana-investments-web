@@ -1,52 +1,115 @@
 'use server'
 
 import { Resend } from 'resend';
+import {
+    normalizeLang,
+    PCI_CLIENT_FROM,
+    PCI_TEAM_FROM,
+    resolveExecutionPolicy,
+} from '@/lib/formEmails';
+import {
+    evaluateFormAntispam,
+    extractAntispamFromFormData,
+} from '@/lib/formSecurity';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend(): Resend {
+    return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function submitNewsletter(prevState: any, formData: FormData) {
-    const email = formData.get('email') as string;
-    const source = formData.get('source') || 'Footer Newsletter';
+    const email = String(formData.get('email') || '').trim();
+    const source = String(formData.get('source') || 'Footer Newsletter').trim();
+    const lang = normalizeLang(formData.get('lang'), 'es');
 
     if (!email) {
         return {
             success: false,
-            message: 'Please enter a valid email.'
+            message:
+                lang === 'es'
+                    ? 'Por favor ingrese un correo válido.'
+                    : lang === 'fr'
+                    ? 'Veuillez saisir une adresse e-mail valide.'
+                    : 'Please enter a valid email.'
+        };
+    }
+
+    const { honeypot, formLoadedAt } = extractAntispamFromFormData(formData);
+    const antispam = evaluateFormAntispam({
+        email,
+        honeypot,
+        formLoadedAt,
+        lang,
+        sourceLabel: 'NewsletterForm',
+    });
+    if (antispam.action === 'silent_drop') {
+        console.warn(antispam.logMessage);
+        return {
+            success: true,
+            message: 'Subscribed successfully!'
+        };
+    }
+    if (antispam.action === 'reject') {
+        console.warn(antispam.logMessage);
+        return {
+            success: false,
+            message: antispam.errorMessage
+        };
+    }
+
+    const policy = resolveExecutionPolicy(email);
+    if (!policy.allowed) {
+        console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+        return {
+            success: false,
+            message: policy.error
+        };
+    }
+
+    if (policy.mode === 'local_dry_run') {
+        return {
+            success: true,
+            message: 'Subscribed successfully!'
         };
     }
 
     try {
-        // 1. Send to "Fortaleza Digital" Backend (Django)
-        const apiUrl = "https://puntacana-fortress-production.up.railway.app";
+        // 1. Send to "Fortaleza Digital" Backend (Django) — simulated in Preview
         const isOffMarket = String(source).toLowerCase().includes('off market');
-        
-        const backendData = {
-            first_name: isOffMarket ? "Inversor Elite" : "Suscriptor Newsletter",
-            last_name: email.split('@')[0],
-            email: email,
-            message: isOffMarket ? `Solicitud de acceso al club Off Market. Origen: ${source}` : `Suscripción a boletín registrada desde: ${source}`,
-            source: source // Conservar 'Off Market Club' o lo que provenga del form ('Footer Newsletter')
-        };
 
-        const res = await fetch(`${apiUrl}/api/public/leads/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(backendData),
-        });
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway /api/public/leads/ skipped [NEWSLETTER]`);
+        } else if (policy.railwayApiUrl) {
+            const backendData = {
+                first_name: isOffMarket ? "Inversor Elite" : "Suscriptor Newsletter",
+                last_name: email.split('@')[0],
+                email: email,
+                message: isOffMarket ? `Solicitud de acceso al club Off Market. Origen: ${source}` : `Suscripción a boletín registrada desde: ${source}`,
+                source: source // Conservar 'Off Market Club' o lo que provenga del form ('Footer Newsletter')
+            };
 
-        if (!res.ok) {
-            const errText = await res.text();
-            console.error("Backend Error:", errText);
-            throw new Error(`Error del sistema central: ${res.status}`);
+            const res = await fetch(`${policy.railwayApiUrl}/api/public/leads/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(backendData),
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                console.error("Backend Error:", errText);
+                throw new Error(`Error del sistema central: ${res.status}`);
+            }
         }
+
+        const resend = getResend();
+
         await resend.emails.send({
-            from: 'Punta Cana Investments <onboarding@resend.dev>',
-            to: ['info@puntacanainvestmentsrd.com'],
+            from: PCI_TEAM_FROM,
+            to: policy.teamRecipients,
             subject: `New Investors Club Member (${source})`,
             html: `
         <h1>New Member Joined</h1>
         <p><strong>Source:</strong> ${source}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Email:</strong> ${policy.clientRecipient}</p>
         <p><em>This user has requested access to the Off-Market portfolio.</em></p>
       `
         });
@@ -100,8 +163,8 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
         `;
 
         const welcomeMailObj = await resend.emails.send({
-            from: 'Punta Cana Investments <info@puntacanainvestmentsrd.com>',
-            to: [email],
+            from: PCI_CLIENT_FROM,
+            to: [policy.clientRecipient],
             subject: subjectStr,
             html: htmlBody
         });

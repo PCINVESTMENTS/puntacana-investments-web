@@ -307,7 +307,7 @@ export default async function Home({ params }: { params: Promise<{ lang: 'es' | 
       <AboutSection dict={dict.sections.about} />
 
 
-      <ContactSection dict={dict.contact} />
+      <ContactSection dict={dict.contact} lang={lang} />
       <Footer dict={dict} lang={lang} />
     </main>
   );

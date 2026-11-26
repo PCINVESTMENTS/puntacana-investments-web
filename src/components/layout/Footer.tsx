@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube, FaCheckCircle, FaSpinner, FaArrowRight } from "react-icons/fa";
 import { submitNewsletter } from "@/app/actions/newsletter";
+import { FormAntispamFields } from "@/components/forms/FormAntispamFields";
 import { useActionState, startTransition } from "react";
 
 interface FooterProps {
@@ -118,24 +119,31 @@ export function Footer({ dict, lang }: FooterProps) {
                                 <FaCheckCircle /> Subscribed!
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="flex border border-white/20 p-1">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    required
-                                    aria-label={dict.footer.emailPlaceholder || "Email address"}
-                                    placeholder={dict.footer.emailPlaceholder}
-                                    className="bg-transparent text-white px-4 py-2 w-full focus:outline-none placeholder-gray-400 text-sm"
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={isPending}
-                                    aria-label={dict.footer.newsletterButton || "Subscribe to newsletter"}
-                                    className="bg-white/10 text-luxury-gold px-6 py-3 hover:bg-luxury-gold hover:text-black transition-colors disabled:opacity-50 min-h-[48px]"
-                                >
-                                    {isPending ? <FaSpinner aria-hidden="true" className="animate-spin" /> : <FaArrowRight aria-hidden="true" />}
-                                </button>
-                            </form>
+                            <>
+                                <form onSubmit={handleSubmit} className="flex border border-white/20 p-1 relative">
+                                    <input type="hidden" name="lang" value={lang} />
+                                    <FormAntispamFields />
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        required
+                                        aria-label={dict.footer.emailPlaceholder || "Email address"}
+                                        placeholder={dict.footer.emailPlaceholder}
+                                        className="bg-transparent text-white px-4 py-2 w-full focus:outline-none placeholder-gray-400 text-sm"
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={isPending}
+                                        aria-label={dict.footer.newsletterButton || "Subscribe to newsletter"}
+                                        className="bg-white/10 text-luxury-gold px-6 py-3 hover:bg-luxury-gold hover:text-black transition-colors disabled:opacity-50 min-h-[48px]"
+                                    >
+                                        {isPending ? <FaSpinner aria-hidden="true" className="animate-spin" /> : <FaArrowRight aria-hidden="true" />}
+                                    </button>
+                                </form>
+                                {state.message && !state.success && (
+                                    <p className="text-red-300 text-xs mt-2">{state.message}</p>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

@@ -44,7 +44,7 @@ export function normalizeLang(raw: unknown, fallback: SupportedLang = "es"): Sup
   return fallback;
 }
 
-export function generateReferenceCode(prefix: "INQ" | "HTL" | "OM" | "FB" | "CNT"): string {
+export function generateReferenceCode(prefix: "INQ" | "HTL" | "OM" | "FB" | "CNT" | "KYC"): string {
   const now = new Date();
   const y = now.getUTCFullYear();
   const m = String(now.getUTCMonth() + 1).padStart(2, "0");
@@ -275,7 +275,7 @@ export function isHotelOrCommercialAsset(
 
 export interface LocalDryRunRecord {
   recordedAt: string;
-  flow: "property_inquiry" | "hotel_inquiry" | "general_contact" | "off_market" | "fly_and_buy";
+  flow: "property_inquiry" | "hotel_inquiry" | "general_contact" | "off_market" | "fly_and_buy" | "kyc";
   referenceCode: string;
   lang: SupportedLang;
   siteOrigin: string;
@@ -1271,6 +1271,170 @@ export function buildFlyAndBuyEmails(input: FlyAndBuyEmailInput): {
     clientEmail: {
       from: PCI_CLIENT_FROM,
       to: email,
+      subject: clientCopy.subject,
+      text: clientTextLines.join("\n"),
+      html: clientHtml,
+      lang,
+    },
+  };
+}
+
+// =============================================================================
+// 5. KYC (DUE DILIGENCE) EMAILS — PRIVACY-SAFE METADATA ONLY (ES/EN/FR)
+// =============================================================================
+
+export interface KycEmailInput {
+  referenceCode: string;
+  lang: SupportedLang;
+  entityType: "Persona Física" | "Persona Jurídica";
+  subjectName: string;
+  clientEmail: string;
+  phone?: string;
+  country?: string;
+}
+
+export function buildKycEmails(input: KycEmailInput): {
+  adminEmail: RenderedEmailPayload;
+  clientEmail: RenderedEmailPayload;
+} {
+  const {
+    referenceCode,
+    lang,
+    entityType,
+    subjectName,
+    clientEmail,
+    phone,
+    country,
+  } = input;
+
+  const cleanName = String(subjectName || "").trim() || "Cliente KYC";
+  const cleanPhone = String(phone || "").trim();
+  const cleanCountry = String(country || "").trim();
+
+  const adminRows: Array<{ label: string; value: string; href?: string }> = [
+    { label: "Referencia KYC", value: referenceCode },
+    { label: "Tipo de expediente", value: entityType },
+    { label: entityType === "Persona Jurídica" ? "Entidad / Razón social" : "Titular", value: cleanName },
+    ...(clientEmail ? [{ label: "Correo electrónico", value: clientEmail, href: `mailto:${clientEmail}` }] : []),
+    ...(cleanPhone ? [{ label: "Teléfono de contacto", value: cleanPhone }] : []),
+    ...(cleanCountry ? [{ label: "País", value: cleanCountry }] : []),
+    { label: "Idioma del formulario", value: lang.toUpperCase() },
+  ];
+
+  const adminSubject = `NUEVO EXPEDIENTE KYC [${referenceCode}] (${entityType}) — ${cleanName}`;
+
+  const adminTextLines = [
+    "[NUEVO EXPEDIENTE KYC — DEBIDA DILIGENCIA]",
+    `Referencia: ${referenceCode}`,
+    "",
+    "--- RESUMEN DEL EXPEDIENTE ---",
+    ...adminRows.slice(1).map((r) => `${r.label}: ${r.value}`),
+    "",
+    "Nota de confidencialidad: Los datos financieros, documentos de identidad y firma digital se almacenan exclusivamente en la Bóveda Segura del Módulo Legal de Fortress CRM.",
+  ];
+
+  const adminHtml = wrapBrandedHtml(
+    "NUEVO EXPEDIENTE KYC RECIBIDO",
+    `
+      <p style="font-size: 14px; color: #cccccc; text-align: center; margin-bottom: 20px;">
+        Referencia de cumplimiento: <strong style="color: #c9ae5d; font-family: monospace; font-size: 15px;">${escHtml(referenceCode)}</strong>
+      </p>
+      ${htmlSection("Resumen del Expediente (Solo Metadatos)", adminRows)}
+      <div style="background-color: #161616; padding: 16px 20px; border: 1px solid #333333; margin: 18px 0; border-radius: 4px;">
+        <p style="margin: 0; color: #cccccc; font-size: 13px; line-height: 1.6;">
+          Por seguridad y cumplimiento (Ley 155-17), los documentos adjuntos y datos sensibles no se incluyen por correo. Revise el expediente completo en el <strong>Módulo Legal de Fortress CRM</strong>.
+        </p>
+      </div>
+    `,
+    "Departamento Legal y Cumplimiento — Punta Cana Investments"
+  );
+
+  const localizedType =
+    entityType === "Persona Jurídica"
+      ? lang === "en"
+        ? "Legal Entity"
+        : lang === "fr"
+        ? "Personne Morale"
+        : "Persona Jurídica"
+      : lang === "en"
+      ? "Individual"
+      : lang === "fr"
+      ? "Personne Physique"
+      : "Persona Física";
+
+  const clientCopy =
+    lang === "en"
+      ? {
+          subject: `KYC Dossier Confirmation [${referenceCode}] — Punta Cana Investments`,
+          title: "KYC Receipt Confirmation",
+          greeting: `Dear ${cleanName},`,
+          intro: `We have successfully received your ${localizedType} KYC (Due Diligence) dossier under reference ${referenceCode}.`,
+          body: "Your information and supporting documents are handled under strict confidentiality by our Legal & Compliance Department. Our team will review your file shortly and contact you via this channel if any additional information is required.",
+          refLabel: "Compliance Reference",
+          typeLabel: "Dossier Type",
+          footer: "Legal & Compliance Department",
+        }
+      : lang === "fr"
+      ? {
+          subject: `Confirmation de Dossier KYC [${referenceCode}] — Punta Cana Investments`,
+          title: "Confirmation de Réception KYC",
+          greeting: `Bonjour ${cleanName},`,
+          intro: `Nous avons bien reçu votre dossier KYC (Diligence Raisonnable — ${localizedType}) sous la référence ${referenceCode}.`,
+          body: "Vos informations et justificatifs sont traités en toute confidentialité par notre Département Juridique et Conformité. Notre équipe examinera votre dossier dans les plus brefs délais et vous contactera par cette même voie si des éléments complémentaires sont nécessaires.",
+          refLabel: "Référence de Conformité",
+          typeLabel: "Type de Dossier",
+          footer: "Département Juridique et Conformité",
+        }
+      : {
+          subject: `Confirmación de Expediente KYC [${referenceCode}] — Punta Cana Investments`,
+          title: "Confirmación de Recepción KYC",
+          greeting: `Estimado/a ${cleanName},`,
+          intro: `Hemos recibido exitosamente su expediente KYC (Debida Diligencia — ${localizedType}) bajo la referencia ${referenceCode}.`,
+          body: "Sus datos y documentos son tratados bajo estricta confidencialidad por nuestro Departamento Legal y de Cumplimiento. Nuestro equipo evaluará su expediente a la mayor brevedad y se comunicará por esta vía si requiere información adicional.",
+          refLabel: "Referencia de Cumplimiento",
+          typeLabel: "Tipo de Expediente",
+          footer: "Departamento Legal y Cumplimiento",
+        };
+
+  const clientTextLines = [
+    clientCopy.greeting,
+    "",
+    clientCopy.intro,
+    `${clientCopy.refLabel}: ${referenceCode}`,
+    `${clientCopy.typeLabel}: ${localizedType}`,
+    "",
+    clientCopy.body,
+    "",
+    `Punta Cana Investments — ${clientCopy.footer}`,
+  ];
+
+  const clientHtml = wrapBrandedHtml(
+    clientCopy.title,
+    `
+      <p style="font-size: 15px; line-height: 1.6; color: #e0e0e0;"><strong>${escHtml(clientCopy.greeting)}</strong></p>
+      <p style="font-size: 15px; line-height: 1.6; color: #e0e0e0;">${escHtml(clientCopy.intro)}</p>
+      <div style="background-color: #161616; border: 1px solid #c9ae5d; padding: 14px 18px; margin: 18px 0; border-radius: 4px; text-align: center;">
+        <span style="font-size: 12px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px;">${escHtml(clientCopy.refLabel)}:</span>
+        <strong style="display: block; color: #c9ae5d; font-family: monospace; font-size: 18px; margin-top: 4px;">${escHtml(referenceCode)}</strong>
+        <span style="display: block; font-size: 12px; color: #cccccc; margin-top: 6px;">${escHtml(clientCopy.typeLabel)}: ${escHtml(localizedType)}</span>
+      </div>
+      <p style="font-size: 15px; line-height: 1.6; color: #e0e0e0;">${escHtml(clientCopy.body)}</p>
+    `,
+    clientCopy.footer
+  );
+
+  return {
+    adminEmail: {
+      from: PCI_TEAM_FROM,
+      to: PCI_TEAM_TO,
+      subject: adminSubject,
+      text: adminTextLines.join("\n"),
+      html: adminHtml,
+      lang: "es",
+    },
+    clientEmail: {
+      from: PCI_CLIENT_FROM,
+      to: clientEmail,
       subject: clientCopy.subject,
       text: clientTextLines.join("\n"),
       html: clientHtml,

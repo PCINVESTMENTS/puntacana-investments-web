@@ -11,6 +11,10 @@ import {
     resolveExecutionPolicy,
     resolveSiteOrigin,
 } from '@/lib/formEmails';
+import {
+    evaluateFormAntispam,
+    extractAntispamFromFormData,
+} from '@/lib/formSecurity';
 
 function getResend(): Resend {
     return new Resend(process.env.RESEND_API_KEY);
@@ -24,6 +28,30 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     const country = String(formData.get('country') || '').trim();
     const comments = String(formData.get('comments') || '').trim();
     const lang = normalizeLang(formData.get('lang'), 'es');
+
+    // Silent antispam + self-domain bounce shield: stops BEFORE Preview guard, CRM, or Resend
+    const { honeypot, formLoadedAt } = extractAntispamFromFormData(formData);
+    const antispam = evaluateFormAntispam({
+        email,
+        honeypot,
+        formLoadedAt,
+        lang,
+        sourceLabel: 'FlyAndBuyForm',
+    });
+    if (antispam.action === 'silent_drop') {
+        console.warn(antispam.logMessage);
+        return {
+            success: true,
+            message: 'Request sent successfully!',
+        };
+    }
+    if (antispam.action === 'reject') {
+        console.warn(antispam.logMessage);
+        return {
+            success: false,
+            message: antispam.errorMessage,
+        };
+    }
 
     // Fail-closed Preview guard: stops BEFORE any Railway, HubSpot, or Resend call
     const policy = resolveExecutionPolicy(email);

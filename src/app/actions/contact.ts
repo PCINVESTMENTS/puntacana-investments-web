@@ -13,6 +13,10 @@ import {
     resolveExecutionPolicy,
     resolveSiteOrigin,
 } from '@/lib/formEmails';
+import {
+    evaluateFormAntispam,
+    extractAntispamFromFormData,
+} from '@/lib/formSecurity';
 
 function getResend(): Resend {
     return new Resend(process.env.RESEND_API_KEY);
@@ -36,6 +40,30 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         return {
             success: false,
             message: validationError,
+        };
+    }
+
+    // Silent antispam + self-domain bounce shield: stops BEFORE Preview guard, CRM, or Resend
+    const { honeypot, formLoadedAt } = extractAntispamFromFormData(formData);
+    const antispam = evaluateFormAntispam({
+        email,
+        honeypot,
+        formLoadedAt,
+        lang,
+        sourceLabel: 'ContactForm',
+    });
+    if (antispam.action === 'silent_drop') {
+        console.warn(antispam.logMessage);
+        return {
+            success: true,
+            message: 'Message sent successfully!',
+        };
+    }
+    if (antispam.action === 'reject') {
+        console.warn(antispam.logMessage);
+        return {
+            success: false,
+            message: antispam.errorMessage,
         };
     }
 

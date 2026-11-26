@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,8 @@ import Image from "next/image";
 import { personaFisicaSchema, type PersonaFisicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { sendKYCEmailNotification } from "@/app/actions/kyc";
+import { precheckKycSubmission, sendKYCEmailNotification } from "@/app/actions/kyc";
+import { FormAntispamFields } from "./FormAntispamFields";
 import {
     Form,
     FormControl,
@@ -198,6 +199,14 @@ export function PersonaFisicaForm() {
 
     const [hasLoadedDraft, setHasLoadedDraft] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const honeypotRef = useRef("");
+    const formLoadedAtRef = useRef("");
+    const handleHoneypotChange = useCallback((val: string) => {
+        honeypotRef.current = val;
+    }, []);
+    const handleLoadedAtReady = useCallback((ts: string) => {
+        formLoadedAtRef.current = ts;
+    }, []);
 
     useEffect(() => {
         if (draft && !hasLoadedDraft) {
@@ -235,6 +244,59 @@ export function PersonaFisicaForm() {
 
     const onSubmit = async (data: PersonaFisicaData) => {
         try {
+            const subjectName = `${data.firstName} ${data.lastName}`.trim();
+
+            // Pre-check antispam + Preview fail-closed isolation BEFORE uploading files to Railway
+            const precheck = await precheckKycSubmission({
+                email: data.email,
+                formType: 'Persona Física',
+                lang,
+                honeypot: honeypotRef.current,
+                formLoadedAt: formLoadedAtRef.current,
+            });
+
+            if (!precheck.allowed) {
+                if (precheck.silentDrop) {
+                    setDraft(null);
+                    form.reset(defaultValues);
+                    setIsSuccess(true);
+                    return;
+                }
+                toast({
+                    title: d.toastValErrorTitle,
+                    description: precheck.error || d.toastValErrorDesc,
+                });
+                return;
+            }
+
+            // Preview / local dry-run mode: skip Railway production upload, send Preview emails safely
+            if (precheck.skipExternalBackend) {
+                const emailRes = await sendKYCEmailNotification({
+                    type: 'Persona Física',
+                    clientEmail: data.email,
+                    subjectName,
+                    lang,
+                    referenceCode: precheck.referenceCode,
+                    phone: data.mobilePhone1 || data.homePhone || '',
+                    country: data.residenceCountry || '',
+                });
+                if (!emailRes?.success) {
+                    toast({
+                        title: d.toastValErrorTitle,
+                        description: emailRes?.error || d.toastValErrorDesc,
+                    });
+                    return;
+                }
+                toast({
+                    title: d.toastSuccessTitle,
+                    description: d.toastSuccessDesc,
+                });
+                setDraft(null);
+                form.reset(defaultValues);
+                setIsSuccess(true);
+                return;
+            }
+
             const formData = new FormData();
             formData.append('formType', 'Persona Física');
 
@@ -382,7 +444,11 @@ export function PersonaFisicaForm() {
                     await sendKYCEmailNotification({
                         type: 'Persona Física',
                         clientEmail: data.email,
-                        subjectName: `${data.firstName} ${data.lastName}`.trim()
+                        subjectName,
+                        lang,
+                        referenceCode: precheck.referenceCode,
+                        phone: data.mobilePhone1 || data.homePhone || '',
+                        country: data.residenceCountry || '',
                     });
                 } catch (emailError) {
                     console.error("Failed to send KYC confirmation email", emailError);
@@ -496,6 +562,7 @@ export function PersonaFisicaForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8 print:space-y-4 border-2 border-luxury-gold/50 rounded-xl p-8 bg-black/40">
+                <FormAntispamFields onHoneypotChange={handleHoneypotChange} onLoadedAtReady={handleLoadedAtReady} />
                 <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-white/10 px-6 py-4 -mx-6 md:-mx-8 print:hidden">
                     <div className="flex justify-between items-center text-center text-xs font-medium text-gray-400">
                         {['Datos Generales', 'Cónyuge', 'Ocupación', 'Político', 'Ref. & Decl.'].map((step, i) => (

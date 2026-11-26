@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { submitContactForm } from "@/app/actions/contact";
+import { FormAntispamFields } from "@/components/forms/FormAntispamFields";
 import { FaCheckCircle, FaSpinner } from "react-icons/fa";
 
 import { offMarketDict } from "@/dictionaries/offMarket";
@@ -108,6 +109,8 @@ export default function OffMarketForm({ lang }: { lang: string }) {
         finalFormData.append("message", compiledMessage);
         finalFormData.append("subject", "Aplicación a Búsqueda Privada Off-Market");
         finalFormData.append("lang", lang);
+        finalFormData.append("website_url", String(formData.get("website_url") || ""));
+        finalFormData.append("form_loaded_at", String(formData.get("form_loaded_at") || ""));
         finalFormData.append(
             "offMarketData",
             JSON.stringify({
@@ -157,6 +160,7 @@ export default function OffMarketForm({ lang }: { lang: string }) {
             )}
 
             <form onSubmit={handleSubmit} className={status === 'success' ? 'absolute opacity-0 h-0 w-0 overflow-hidden pointer-events-none' : 'bg-[#000000] border border-[#d4af37]/30 p-8 md:p-12 shadow-2xl relative overflow-hidden'}>
+            <FormAntispamFields />
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4af37]/10 blur-3xl rounded-full -mr-16 -mt-16 pointer-events-none"></div>
 
             <div className="text-center mb-10">

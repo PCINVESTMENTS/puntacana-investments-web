@@ -2,6 +2,7 @@
 
 import { useActionState, useRef, useEffect } from 'react';
 import { submitContactForm } from '@/app/actions/contact';
+import { FormAntispamFields } from '@/components/forms/FormAntispamFields';
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 
@@ -92,6 +93,7 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
             {subject && <input type="hidden" name="subject" value={subject} />}
             <input type="hidden" name="lang" value={lang} />
             {propertyData && <input type="hidden" name="propertyData" value={propertyData} />}
+            <FormAntispamFields />
 
             {state.message && !state.success && (
                 <div className="p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded-lg text-sm">

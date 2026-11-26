@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,8 @@ import Image from "next/image";
 import { personaJuridicaSchema, type PersonaJuridicaData } from "@/lib/schemas";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { sendKYCEmailNotification } from "@/app/actions/kyc";
+import { precheckKycSubmission, sendKYCEmailNotification } from "@/app/actions/kyc";
+import { FormAntispamFields } from "./FormAntispamFields";
 import {
     Form,
     FormControl,
@@ -173,6 +174,14 @@ export function PersonaJuridicaForm() {
 
     const [hasLoadedDraft, setHasLoadedDraft] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const honeypotRef = useRef("");
+    const formLoadedAtRef = useRef("");
+    const handleHoneypotChange = useCallback((val: string) => {
+        honeypotRef.current = val;
+    }, []);
+    const handleLoadedAtReady = useCallback((ts: string) => {
+        formLoadedAtRef.current = ts;
+    }, []);
 
     useEffect(() => {
         if (draft && !hasLoadedDraft) {
@@ -201,6 +210,59 @@ export function PersonaJuridicaForm() {
 
     const onSubmit = async (data: PersonaJuridicaData) => {
         try {
+            const subjectName = data.companyName.trim();
+
+            // Pre-check antispam + Preview fail-closed isolation BEFORE uploading files to Railway
+            const precheck = await precheckKycSubmission({
+                email: data.legalRepEmail,
+                formType: 'Persona Jurídica',
+                lang,
+                honeypot: honeypotRef.current,
+                formLoadedAt: formLoadedAtRef.current,
+            });
+
+            if (!precheck.allowed) {
+                if (precheck.silentDrop) {
+                    setDraft(null);
+                    form.reset(defaultValues);
+                    setIsSuccess(true);
+                    return;
+                }
+                toast({
+                    title: d.toastValErrorTitle,
+                    description: precheck.error || d.toastValErrorDesc,
+                });
+                return;
+            }
+
+            // Preview / local dry-run mode: skip Railway production upload, send Preview emails safely
+            if (precheck.skipExternalBackend) {
+                const emailRes = await sendKYCEmailNotification({
+                    type: 'Persona Jurídica',
+                    clientEmail: data.legalRepEmail,
+                    subjectName,
+                    lang,
+                    referenceCode: precheck.referenceCode,
+                    phone: data.legalRepPhone || '',
+                    country: data.constitutionCountry || '',
+                });
+                if (!emailRes?.success) {
+                    toast({
+                        title: d.toastValErrorTitle,
+                        description: emailRes?.error || d.toastValErrorDesc,
+                    });
+                    return;
+                }
+                toast({
+                    title: d.toastSuccessTitle,
+                    description: d.toastSuccessDesc,
+                });
+                setDraft(null);
+                form.reset(defaultValues);
+                setIsSuccess(true);
+                return;
+            }
+
             const formData = new FormData();
             formData.append('formType', 'Persona Jurídica');
 
@@ -319,7 +381,11 @@ export function PersonaJuridicaForm() {
                     await sendKYCEmailNotification({
                         type: 'Persona Jurídica',
                         clientEmail: data.legalRepEmail,
-                        subjectName: data.companyName.trim()
+                        subjectName,
+                        lang,
+                        referenceCode: precheck.referenceCode,
+                        phone: data.legalRepPhone || '',
+                        country: data.constitutionCountry || '',
                     });
                 } catch (emailError) {
                     console.error("Failed to send KYC confirmation email", emailError);
@@ -399,26 +465,31 @@ export function PersonaJuridicaForm() {
     const { isSubmitting } = form.formState;
 
     if (isSuccess) {
+        const waMsg = lang === 'es'
+            ? "Hola, acabo de enviar el expediente KYC (Debida Diligencia) corporativo a través del portal de Punta Cana Investments. Quedo atento/a a su revisión."
+            : lang === 'fr'
+            ? "Bonjour, je viens d'envoyer le dossier KYC (Diligence Raisonnable) d'entreprise via le portail de Punta Cana Investments. Je reste en attente de votre examen."
+            : "Hello, I have just submitted the corporate KYC (Due Diligence) dossier through the Punta Cana Investments portal. I look forward to your review.";
+
         return (
             <div className="flex flex-col items-center justify-center p-12 text-center bg-zinc-950 rounded-lg border border-luxury-gold/50 shadow-2xl min-h-[50vh] animate-in fade-in zoom-in duration-500">
                 <CheckCircle className="w-24 h-24 text-green-500 mb-6" />
-                <h2 className="text-3xl font-bold text-white mb-4">Formulario Registrado con Éxito</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">{d.submitSuccessTitle}</h2>
                 <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                    Su expediente KYC ha sido encriptado y guardado de manera segura en nuestra Bóveda de Fortress. 
-                    Nuestro equipo evaluará los datos de la Persona Jurídica próximamente.
+                    {d.submitSuccessDesc}
                 </p>
                 
                 <div className="bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 p-4 rounded-lg max-w-md mx-auto mb-8 text-sm">
-                    <strong>Importante:</strong> Le hemos enviado un correo de confirmación. Por favor, <strong>verifique su bandeja de SPAM o Correo no Deseado</strong> si no lo ve en su bandeja principal.
+                    <strong>{lang === 'es' ? 'Importante:' : lang === 'fr' ? 'Important :' : 'Important:'}</strong> {d.submitSuccessImportant}
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <Button onClick={() => setIsSuccess(false)} className="bg-luxury-gold text-black hover:bg-white font-bold px-8">
-                        Completar Otro Formulario
+                        {d.completeAnother}
                     </Button>
-                    <a href="https://api.whatsapp.com/send?text=Hola,%20acabo%20de%20enviar%20el%20expediente%20KYC%20(Debida%20Diligencia)%20corporativo%20a%20través%20del%20portal%20de%20Punta%20Cana%20Investments.%20Quedo%20atento/a%20a%20su%20revisión." target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-8 py-2 bg-[#25D366] text-white hover:bg-[#20bd5a]">
+                    <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(waMsg)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-8 py-2 bg-[#25D366] text-white hover:bg-[#20bd5a]">
                         <svg viewBox="0 0 24 24" className="w-5 h-5 mr-2" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-                        Notificar por WhatsApp
+                        {d.notifyWhatsapp}
                     </a>
                 </div>
             </div>
@@ -428,6 +499,7 @@ export function PersonaJuridicaForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-8 print:space-y-4 border-2 border-luxury-gold/50 rounded-xl p-8 bg-black/40">
+                <FormAntispamFields onHoneypotChange={handleHoneypotChange} onLoadedAtReady={handleLoadedAtReady} />
                 <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-white/10 px-6 py-4 -mx-6 md:-mx-8 print:hidden">
                     <div className="flex justify-between items-center text-center text-xs font-medium text-gray-400">
                         {['Datos Generales', 'Socios', 'Representante', 'Económica', 'Docs'].map((step, i) => (

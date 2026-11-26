@@ -1,36 +1,69 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import {
+    buildKycEmails,
+    generateReferenceCode,
+    normalizeLang,
+    resolveExecutionPolicy,
+} from '@/lib/formEmails';
+import {
+    evaluateFormAntispam,
+    extractAntispamFromFormData,
+} from '@/lib/formSecurity';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend(): Resend {
+    return new Resend(process.env.RESEND_API_KEY);
+}
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
-        const formType = formData.get('formType') as string;
-        
-        let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://puntacana-fortress-production.up.railway.app';
-        if (apiUrl === 'undefined' || apiUrl === 'null') {
-            apiUrl = 'https://puntacana-fortress-production.up.railway.app';
+        const rawFormType = String(formData.get('formType') || 'Persona Física');
+        const entityType: 'Persona Física' | 'Persona Jurídica' =
+            rawFormType.toLowerCase().includes('jur') ? 'Persona Jurídica' : 'Persona Física';
+        const lang = normalizeLang(formData.get('lang'), 'es');
+
+        const clientEmail = String(
+            entityType === 'Persona Física'
+                ? formData.get('email') || ''
+                : formData.get('rep_email') || formData.get('legalRepEmail') || ''
+        ).trim();
+
+        const { honeypot, formLoadedAt } = extractAntispamFromFormData(formData);
+        const antispam = evaluateFormAntispam({
+            email: clientEmail,
+            honeypot,
+            formLoadedAt,
+            lang,
+            sourceLabel: `API KYC (${entityType})`,
+        });
+        if (antispam.action === 'silent_drop') {
+            console.warn(antispam.logMessage);
+            return NextResponse.json({ success: true });
         }
-        if (apiUrl.endsWith('/')) {
-            apiUrl = apiUrl.slice(0, -1);
+        if (antispam.action === 'reject') {
+            console.warn(antispam.logMessage);
+            return NextResponse.json({ success: false, error: antispam.errorMessage }, { status: 400 });
         }
 
-        const endpoint = formType === 'Persona Física'
-            ? '/api/public/kyc/fisica/'
-            : '/api/public/kyc/juridica/';
-            
-        const url = `${apiUrl}${endpoint}`;
+        const policy = resolveExecutionPolicy(clientEmail);
+        if (!policy.allowed) {
+            console.error(`[FormEmails:${policy.code}] ${policy.error}`);
+            return NextResponse.json({ success: false, error: policy.error }, { status: 403 });
+        }
 
-        // Create a new FormData to send to Django, excluding internal tracking fields
+        const referenceCode = generateReferenceCode('KYC');
+        const endpoint =
+            entityType === 'Persona Física' ? '/api/public/kyc/fisica/' : '/api/public/kyc/juridica/';
+
+        // Build FormData for Django excluding internal routing/antispam fields
         const djangoFormData = new FormData();
-        
         let subjectName = '';
 
         for (const [key, value] of formData.entries()) {
-            if (key === 'formType') continue; // Skip internal routing field
+            if (['formType', 'lang', 'website_url', 'form_loaded_at'].includes(key)) continue;
             if (key === 'nombres' || key === 'razon_social') {
                 subjectName = value.toString();
             }
@@ -40,57 +73,74 @@ export async function POST(request: Request) {
             djangoFormData.append(key, value);
         }
 
-        const response = await fetch(url, {
-            method: 'POST',
-            body: djangoFormData,
-            headers: {
-                'Accept': 'application/json',
-                'X-API-KEY': process.env.API_SHARED_SECRET || '',
-                // Fetch automatically sets Content-Type to multipart/form-data with boundary when body is FormData
-            },
+        let data: any = { simulated: true, referenceCode };
+
+        if (policy.railwayMode === 'simulated') {
+            console.log(`[PREVIEW-SIMULATED] Railway ${endpoint} skipped [${referenceCode}]`);
+        } else if (policy.railwayApiUrl) {
+            const response = await fetch(`${policy.railwayApiUrl}${endpoint}`, {
+                method: 'POST',
+                body: djangoFormData,
+                headers: {
+                    Accept: 'application/json',
+                    'X-API-KEY': process.env.API_SHARED_SECRET || '',
+                },
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`Django Error (${response.status}):`, errorText);
+                return NextResponse.json({ success: false, error: errorText }, { status: response.status });
+            }
+
+            data = await response.json();
+        }
+
+        const emailBundle = buildKycEmails({
+            referenceCode,
+            lang,
+            entityType,
+            subjectName: subjectName.trim(),
+            clientEmail: policy.clientRecipient,
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`Django Error (${response.status}):`, errorText);
-            return NextResponse.json({ success: false, error: errorText }, { status: response.status });
+        if (policy.mode !== 'local_dry_run') {
+            const resend = getResend();
+            try {
+                await resend.emails.send({
+                    from: emailBundle.adminEmail.from,
+                    to: policy.teamRecipients,
+                    subject: emailBundle.adminEmail.subject,
+                    html: emailBundle.adminEmail.html,
+                    text: emailBundle.adminEmail.text,
+                });
+            } catch (e) {
+                console.error('Resend KYC Admin notification failed:', e);
+            }
         }
 
-        const data = await response.json();
-
-        try {
-            await resend.emails.send({
-                from: 'Punta Cana Investments <onboarding@resend.dev>',
-                to: ['info@puntacanainvestmentsrd.com'],
-                subject: `Nuevo KYC Recibido: ${subjectName.trim()}`,
-                html: `
-                    <h1>Formulario KYC - Debida Diligencia</h1>
-                    <p>Un nuevo formulario de <strong>${formType}</strong> ha sido completado y procesado de forma segura.</p>
-                    <p>Los datos sensibles y documentos han sido almacenados de manera protegida bajo cifrado en la <strong>Bóveda Segura de Fortress CRM</strong>.</p>
-                    <p>Ya puede revisarlo internamente a través de su Dashboard Administrativo en el Módulo de Due Diligence.</p>
-                `
-            });
-        } catch (e) {
-            console.error("Resend notification failed:", e);
-        }
-
-        return NextResponse.json({ success: true, data });
-
+        return NextResponse.json({ success: true, referenceCode, data });
     } catch (error) {
-        console.error("KYC API Route Error:", error);
-        return NextResponse.json({ success: false, error: 'Failed to process request in Next.js Server.' }, { status: 500 });
+        console.error('KYC API Route Error:', error);
+        return NextResponse.json(
+            { success: false, error: 'Failed to process request in Next.js Server.' },
+            { status: 500 }
+        );
     }
 }
 
 export async function GET() {
-    return NextResponse.json({ error: "Restricted Method. Endpoint configured for POST architecture strictly." }, { status: 405 });
+    return NextResponse.json(
+        { error: 'Restricted Method. Endpoint configured for POST architecture strictly.' },
+        { status: 405 }
+    );
 }
 
 export async function OPTIONS() {
     return new NextResponse(null, {
         status: 204,
         headers: {
-            'Allow': 'POST, OPTIONS'
-        }
+            Allow: 'POST, OPTIONS',
+        },
     });
 }
