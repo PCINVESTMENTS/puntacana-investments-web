@@ -13,26 +13,30 @@ const nextConfig: NextConfig = {
     },
   },
 
-  webpack: (config, { dev }) => {
-    if (isLocalSandboxEnv) {
-      // Prevent macOS iCloud / Desktop filesystem races on persistent webpack .pack.gz cache in local dev
-      if (dev) {
-        config.cache = { type: 'memory' };
+  turbopack: {},
+
+  ...(isLocalSandboxEnv
+    ? {
+        webpack: (config: any, { dev }: { dev: boolean }) => {
+          // Prevent macOS iCloud / Desktop filesystem races on persistent webpack .pack.gz cache in local dev
+          if (dev) {
+            config.cache = { type: 'memory' };
+          }
+          // In local isolated sandbox, Dashboard (:3110) replaces Sanity Studio (/studio);
+          // stubbing Sanity Studio avoids bundling 15k Studio modules during local mirror builds.
+          const studioStub = path.resolve(__dirname, 'src/lib/localStudioStub.tsx');
+          config.resolve = config.resolve || {};
+          config.resolve.alias = {
+            ...(config.resolve.alias || {}),
+            'next-sanity/studio$': studioStub,
+            'sanity$': studioStub,
+            'sanity/structure$': studioStub,
+            '@sanity/vision$': studioStub,
+          };
+          return config;
+        },
       }
-      // In local isolated sandbox, Dashboard (:3110) replaces Sanity Studio (/studio);
-      // stubbing Sanity Studio avoids bundling 15k Studio modules during local mirror builds.
-      const studioStub = path.resolve(__dirname, 'src/lib/localStudioStub.tsx');
-      config.resolve = config.resolve || {};
-      config.resolve.alias = {
-        ...(config.resolve.alias || {}),
-        'next-sanity/studio$': studioStub,
-        'sanity$': studioStub,
-        'sanity/structure$': studioStub,
-        '@sanity/vision$': studioStub,
-      };
-    }
-    return config;
-  },
+    : {}),
 
   typescript: {
     ignoreBuildErrors: true,
