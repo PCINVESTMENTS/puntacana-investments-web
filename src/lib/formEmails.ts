@@ -67,14 +67,36 @@ function isProductionTeamInbox(address: string): boolean {
 }
 
 export function isLocalDryRunEnabled(): boolean {
-  return process.env.VERCEL !== "1" && Boolean(process.env.FORM_EMAILS_LOCAL_DRY_RUN_FILE);
+  return (
+    process.env.VERCEL !== "1" &&
+    (Boolean(process.env.FORM_EMAILS_LOCAL_DRY_RUN_FILE) ||
+      String(process.env.FORM_EMAILS_LOCAL_DRY_RUN || "").trim().toLowerCase() === "true")
+  );
 }
 
 export function isPreviewEnvironment(): boolean {
-  return (
+  if (
     process.env.VERCEL_ENV === "preview" ||
     String(process.env.FORM_EMAILS_PREVIEW_MODE || "").trim().toLowerCase() === "true"
-  );
+  ) {
+    return true;
+  }
+  // Fail-closed safety: if connected to a non-production Phase 4 backend outside Vercel production,
+  // never fall through to production Railway or info@puntacanainvestmentsrd.com.
+  const phase4Url = String(
+    process.env.PHASE4_BACKEND_URL || process.env.LOCAL_PROPERTIES_SANDBOX_URL || ""
+  )
+    .trim()
+    .toLowerCase();
+  if (
+    phase4Url &&
+    !phase4Url.includes(PCI_PROD_RAILWAY_HOST) &&
+    process.env.VERCEL_ENV !== "production" &&
+    !isLocalDryRunEnabled()
+  ) {
+    return true;
+  }
+  return false;
 }
 
 export type ExecutionPolicyResult =
