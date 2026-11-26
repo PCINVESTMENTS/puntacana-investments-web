@@ -11,6 +11,9 @@ export async function createHubspotContact(data: {
     property_type?: string;
     form_source?: string;
 }) {
+    if (process.env.HUBSPOT_CRM_ENABLED === 'false' || process.env.FORM_EMAILS_LOCAL_DRY_RUN === 'true') {
+        return null;
+    }
     const token = process.env.HUBSPOT_ACCESS_TOKEN;
     if (!token) {
         console.warn('No HubSpot token configured. Skipping HubSpot sync.');

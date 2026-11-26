@@ -858,8 +858,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             const legacyShow = disp.show_video_tour !== false;
                             const showVideo = typeof disp.show_video === 'boolean' ? disp.show_video : legacyShow;
                             const showVirtualTour = typeof disp.show_virtual_tour === 'boolean' ? disp.show_virtual_tour : legacyShow;
-                            const renderVideo = Boolean(showVideo && property.videoUrl);
-                            const renderTour = Boolean(showVirtualTour && property.virtualTourUrl);
+                            const normalizeLocalDemoUrl = (raw?: string | null) =>
+                                raw ? String(raw).replace(/^https?:\/\/(?:127\.0\.0\.1|localhost):\d+(\/demo-media\/)/i, '$1') : '';
+                            const resolvedVideoUrl = normalizeLocalDemoUrl(property.videoUrl);
+                            const resolvedTourUrl = normalizeLocalDemoUrl(property.virtualTourUrl);
+                            const renderVideo = Boolean(showVideo && resolvedVideoUrl);
+                            const renderTour = Boolean(showVirtualTour && resolvedTourUrl);
                             if (!renderVideo && !renderTour) return null;
                             return (
                                 <div className={`grid grid-cols-1 ${renderVideo && renderTour ? 'md:grid-cols-2' : ''} gap-8`}>
@@ -868,7 +872,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
                                                 Video Tour
                                             </h2>
-                                            <VideoPlayer url={property.videoUrl!} title="Video Tour" />
+                                            <VideoPlayer url={resolvedVideoUrl} title="Video Tour" />
                                         </div>
                                     )}
                                     {renderTour && (
@@ -876,7 +880,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                             <h2 className="text-2xl font-serif font-bold text-luxury-gold mb-6 uppercase tracking-wider">
                                                 Tour Virtual 360°
                                             </h2>
-                                            <VideoPlayer url={property.virtualTourUrl!} title="Virtual Tour" />
+                                            <VideoPlayer url={resolvedTourUrl} title="Virtual Tour" />
                                         </div>
                                     )}
                                 </div>

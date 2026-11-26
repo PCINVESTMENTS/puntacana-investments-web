@@ -12,8 +12,10 @@ interface DelayedTrackingProps {
 
 export default function DelayedTracking({ gaId, metaPixelId, hubspotId, gtmId }: DelayedTrackingProps) {
     const [interacted, setInteracted] = useState(false);
+    const trackingDisabled = process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_TRACKING === "true";
 
     useEffect(() => {
+        if (trackingDisabled) return;
         const handleInteraction = () => {
             setInteracted(true);
             window.removeEventListener("mousemove", handleInteraction);
@@ -39,7 +41,7 @@ export default function DelayedTracking({ gaId, metaPixelId, hubspotId, gtmId }:
         };
     }, []);
 
-    if (!interacted) return null;
+    if (trackingDisabled || !interacted) return null;
 
     return (
         <>
