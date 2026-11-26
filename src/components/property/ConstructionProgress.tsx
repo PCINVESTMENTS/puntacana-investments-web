@@ -85,7 +85,8 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
                     <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${completionPercent}%` }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        viewport={{ once: true, amount: "some" }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
                         className="h-full bg-gradient-to-r from-luxury-gold/50 to-luxury-gold shadow-[0_0_15px_rgba(212,175,55,0.4)]"
                     ></motion.div>
                 </div>
@@ -99,9 +100,10 @@ export default function ConstructionProgress({ lang, stages, completionPercent }
                 {stages.map((stage, idx) => (
                     <motion.div
                         key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
+                        initial={{ opacity: 0.9, y: 6 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: "some" }}
+                        transition={{ delay: idx * 0.08 }}
                         className="flex flex-col md:flex-row gap-6 items-start"
                     >
                         <div className={`relative z-10 w-12 h-12 rounded-full border-2 flex items-center justify-center text-lg transition-colors ${stage.status === "completed" ? "bg-luxury-gold border-luxury-gold text-black shadow-[0_0_15px_rgba(212,175,55,0.3)]" :

@@ -305,7 +305,7 @@ export default async function InvestmentModelPage({ params }: { params: Promise<
                             href={`/${lang}/investments`}
                             className="px-10 py-4 rounded uppercase tracking-widest font-bold border border-white text-white hover:bg-white hover:text-black transition-all"
                         >
-                            {lang === 'en' ? "View All Models" : lang === 'fr' ? "Voir Tous les Modèles" : "Ver Tous los Modèles"}
+                            {lang === 'en' ? "View All Models" : lang === 'fr' ? "Voir Tous les Modèles" : "Ver Todos los Modelos"}
                         </Link>
                     </div>
                 </div>
