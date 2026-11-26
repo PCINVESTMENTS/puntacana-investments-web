@@ -146,16 +146,24 @@ interface RemotePublicBundleResponse {
 const fetchRemotePublicBundleCached = cache(async (): Promise<RemotePublicBundleResponse | null> => {
   const baseUrl = getPhase4BackendBaseUrl();
   if (!baseUrl) return null;
-  try {
-    const res = await fetch(`${baseUrl}/api/properties-sandbox/public-bundle/`, {
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-    return (await res.json()) as RemotePublicBundleResponse;
-  } catch (err) {
-    console.error("Phase 4 public-bundle fetch error:", err);
-    return null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(`${baseUrl}/api/properties-sandbox/public-bundle/`, {
+        cache: "no-store",
+      });
+      if (res.ok) {
+        return (await res.json()) as RemotePublicBundleResponse;
+      }
+    } catch (err) {
+      if (attempt === 1) {
+        console.error("Phase 4 public-bundle fetch error:", err);
+      }
+    }
+    if (attempt === 0) {
+      await new Promise((resolve) => setTimeout(resolve, 350));
+    }
   }
+  return null;
 });
 
 function resolveBackendMediaUrl(url: any, fallback = ""): string {
