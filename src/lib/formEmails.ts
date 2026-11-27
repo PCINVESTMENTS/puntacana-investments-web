@@ -288,17 +288,19 @@ export function isHotelOrCommercialAsset(
   slug?: string | null
 ): boolean {
   const t = String(type || "").trim().toLowerCase();
+  // 1. Criterio principal: cuando existe tipo de inmueble explícito, ese tipo decide la categoría.
   if (["hotel", "resorts", "resort", "commercial", "condohotel", "condo-hotel"].includes(t)) {
     return true;
   }
-  // Ignore residential location names like "Puntacana Resort" when detecting hotels/commercial assets
+  if (["villa", "condo", "apartment", "penthouse", "townhouse", "lot", "land"].includes(t)) {
+    return false;
+  }
+  // 2. Heurística de respaldo únicamente cuando el inmueble no declara tipo explícito
+  //    (ignorando nombres de urbanizaciones residenciales como "Puntacana Resort").
   const combined = `${title || ""} ${slug || ""}`
     .replace(/punta\s*cana[\s-]+resort(\s*&\s*club)?/gi, "")
     .replace(/cap\s*cana[\s-]+resort/gi, "");
-  if (["villa", "condo", "apartment", "penthouse"].includes(t)) {
-    return /\b(hotel|hoteles|hotelero|hotelera|condohotel|condo-hotel|boutique hotel)\b/i.test(combined);
-  }
-  return /\b(hotel|hoteles|hotelero|hotelera|resort|resorts|condohotel|condo-hotel|boutique hotel)\b/i.test(
+  return /\b(hotel|hoteles|hotelero|hotelera|condohotel|condo-hotel|boutique hotel)\b/i.test(
     combined
   );
 }
