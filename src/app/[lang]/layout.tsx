@@ -84,6 +84,7 @@ import { SiteConfigProvider } from "@/components/layout/SiteConfigContext";
 import { FavoritesProvider } from "@/components/property/FavoritesContext";
 import FavoritesDrawer from "@/components/property/FavoritesDrawer";
 import CleanPreviewBanner from "@/components/layout/CleanPreviewBanner";
+import AIAssistant from "@/components/ui/AIAssistant";
 import {
   fetchLocalSandboxCatalog,
   fetchLocalSandboxPhase8,
@@ -169,7 +170,7 @@ export default async function RootLayout({
                   includeCabezaDeToro={cleanPreview.includeCabezaDeToro}
                 />
               )}
-              {/* ChatBot temporarily removed */}
+              {!cleanPreview.enabled && <AIAssistant lang={lang} />}
             </CompareProvider>
           </FavoritesProvider>
         </SiteConfigProvider>
