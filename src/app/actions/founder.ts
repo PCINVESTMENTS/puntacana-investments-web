@@ -2,7 +2,14 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { isLocalFileSandbox, recordLocalServerOutboundEvent, upsertSandboxFounderLead } from '@/lib/localSandbox';
+import {
+    getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
+    isLocalFileSandbox,
+    recordLocalServerOutboundEvent,
+    upsertSandboxFounderLead,
+} from '@/lib/localSandbox';
 import { normalizeLang, PCI_CLIENT_FROM, PCI_TEAM_FROM, resolveExecutionPolicy } from '@/lib/formEmails';
 import { evaluateFormAntispam, extractAntispamFromFormData } from '@/lib/formSecurity';
 
@@ -115,6 +122,58 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
                 : lang === 'fr'
                 ? `Votre inscription à la Liste Zéro a été enregistrée localement sous la référence ${seq} (mode local : aucun e-mail réel envoyé).`
                 : `Tu solicitud en Lista Cero quedó registrada en local bajo la referencia ${seq} (modo local aislado: sin enviar correos reales).`,
+        };
+    }
+
+    if (isCloudStagingSimulatedMode()) {
+        const idempotencyKey = String(formData.get('idempotency_key') || '').trim();
+        const projectSlug = String(formData.get('project_slug') || 'miches-eco-resort').trim();
+        const backendBase = getPhase4BackendBaseUrl();
+        const apiKey = getServerStagingApiKey();
+        const resp = await fetch(`${backendBase}/api/phase7-sandbox/founder-leads/submit/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': apiKey,
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+                modality,
+                message: message || '',
+                lang: safeLang,
+                project_slug: projectSlug,
+                idempotency_key: idempotencyKey,
+            }),
+            cache: 'no-store',
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (!resp.ok || !json.success) {
+            return { success: false, message: json.error || 'No se pudo registrar en Lista Cero (Staging).' };
+        }
+        const seq = String(json.sequence_number || 'FND-STG-001');
+        const dedup = Boolean(json.deduplicated);
+        return {
+            success: true,
+            sandbox_isolated: true,
+            email_sent: false,
+            deduplicated: dedup,
+            sequence_number: seq,
+            crm_inquiry_id: json.crm_inquiry_id || null,
+            crm_inquiry_code: json.crm_inquiry_code || '',
+            id: json.id,
+            message: dedup
+                ? safeLang === 'en'
+                    ? `Your Zero List registration was already confirmed under reference ${seq} (no duplicate created).`
+                    : safeLang === 'fr'
+                    ? `Votre inscription à la Liste Zéro était déjà confirmée sous la référence ${seq} (aucun doublon créé).`
+                    : `Tu solicitud en Lista Cero ya estaba registrada bajo la referencia ${seq} (sin duplicar tu registro).`
+                : safeLang === 'en'
+                ? `Your Zero List registration was saved under reference ${seq} (simulated Stage 1 mode: 0 real emails sent).`
+                : safeLang === 'fr'
+                ? `Votre inscription à la Liste Zéro a été enregistrée sous la référence ${seq} (mode simulé Étape 1 : 0 e-mail réel envoyé).`
+                : `Tu solicitud en Lista Cero quedó registrada bajo la referencia ${seq} (Etapa A simulada: 0 correos externos enviados).`,
         };
     }
 

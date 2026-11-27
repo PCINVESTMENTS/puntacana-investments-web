@@ -80,10 +80,7 @@ export function isLocalDryRunEnabled(): boolean {
  */
 export function isSimulatedEmailModeEnabled(): boolean {
   if (isLocalDryRunEnabled()) return true;
-  if (
-    process.env.VERCEL_ENV !== "production" &&
-    String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true"
-  ) {
+  if (String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true") {
     return true;
   }
   return false;

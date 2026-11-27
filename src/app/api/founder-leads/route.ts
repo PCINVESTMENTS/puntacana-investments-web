@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import {
     attachM04LinkToInboxEntry,
     getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
     isLocalFileSandbox,
     recordLocalServerOutboundEvent,
     upsertSandboxFounderLead,
@@ -198,6 +200,64 @@ export async function POST(request: Request) {
                     message: confirmMsg,
                 },
                 { status: saved.deduplicated ? 200 : 201 }
+            );
+        }
+
+        if (isCloudStagingSimulatedMode()) {
+            const backendBase = getPhase4BackendBaseUrl();
+            const apiKey = getServerStagingApiKey();
+            const resp = await fetch(`${backendBase}/api/phase7-sandbox/founder-leads/submit/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': apiKey,
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    phone,
+                    modality,
+                    message,
+                    lang,
+                    project_slug: projectSlug,
+                    idempotency_key: idempotencyKey,
+                }),
+                cache: 'no-store',
+            });
+            const json = await resp.json().catch(() => ({}));
+            if (!resp.ok || !json.success) {
+                return NextResponse.json(
+                    { success: false, message: json.error || 'No se pudo registrar la solicitud en Staging.' },
+                    { status: resp.status || 500 }
+                );
+            }
+            const seq = String(json.sequence_number || 'FND-STG-001');
+            const dedup = Boolean(json.deduplicated);
+            const confirmMsg = dedup
+                ? lang === 'en'
+                    ? `Your Zero List registration was already confirmed under reference ${seq} (no duplicate created).`
+                    : lang === 'fr'
+                    ? `Votre inscription à la Liste Zéro était déjà confirmée sous la référence ${seq} (aucun doublon créé).`
+                    : `Tu solicitud en Lista Cero ya estaba registrada bajo la referencia ${seq} (sin duplicar tu registro).`
+                : lang === 'en'
+                ? `Your Zero List registration was saved under reference ${seq} (simulated Stage 1 mode: 0 real emails sent).`
+                : lang === 'fr'
+                ? `Votre inscription à la Liste Zéro a été enregistrée sous la référence ${seq} (mode simulé Étape 1 : 0 e-mail réel envoyé).`
+                : `Tu solicitud en Lista Cero quedó registrada bajo la referencia ${seq} (Etapa A simulada: 0 correos externos enviados).`;
+            return NextResponse.json(
+                {
+                    success: true,
+                    sandbox_isolated: true,
+                    email_sent: false,
+                    deduplicated: dedup,
+                    duplicate_attempts_blocked: Number(json.duplicate_attempts_blocked || 0),
+                    sequence_number: seq,
+                    crm_inquiry_id: json.crm_inquiry_id || null,
+                    crm_inquiry_code: json.crm_inquiry_code || '',
+                    id: json.id,
+                    message: confirmMsg,
+                },
+                { status: dedup ? 200 : 201 }
             );
         }
 

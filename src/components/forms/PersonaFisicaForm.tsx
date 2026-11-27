@@ -378,18 +378,13 @@ export function PersonaFisicaForm() {
                 formData.append("firma_digital", sigFile);
             }
 
-            let res: Response;
-            if (isLocalHost) {
-                res = await fetch("/api/kyc", {
-                    method: "POST",
-                    body: formData,
-                });
-            } else {
-                res = await fetch("https://puntacana-fortress-production.up.railway.app/api/public/kyc/fisica/", {
-                    method: "POST",
-                    body: formData,
-                });
-            }
+            // Always submit through same-origin /api/kyc so server-side policy enforces
+            // isolated local sandbox, Cloud Staging Stage 1 encrypted storage, or fail-closed Preview guards
+            // (NEVER directly posting from browser to production Railway).
+            const res = await fetch("/api/kyc", {
+                method: "POST",
+                body: formData,
+            });
 
             if (res.ok || res.status === 201) {
                 const payload = await res.json().catch(() => ({}));

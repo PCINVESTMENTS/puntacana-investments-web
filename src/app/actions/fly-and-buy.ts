@@ -7,6 +7,8 @@ import {
     appendSandboxFlyAndBuyLead,
     fetchLocalSandboxPhase8,
     getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
     isLocalFileSandbox,
     isLocalSandboxEnabled,
     linkSandboxFlyAndBuyCrmInquiry,
@@ -287,6 +289,77 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                     : safeLang === 'fr'
                     ? `Demande Fly & Buy enregistrée dans le CRM M04 sous ${effectiveRef} (Réf. Web : ${saved?.reference_code || 'LOCAL'}, aucun e-mail réel envoyé).`
                     : `Solicitud Fly & Buy registrada en M04 Leads y Buzón Fly & Buy bajo ${effectiveRef} (Ref. web: ${saved?.reference_code || 'LOCAL'}, sin envío de correo real).`,
+        };
+    }
+
+    // CLOUD STAGING STAGE 1 SIMULATED MODE (Vercel -> Railway Staging PostgreSQL; 0 real emails, 0 HubSpot)
+    if (isCloudStagingSimulatedMode()) {
+        const builtPreview = buildFlyAndBuyEmails({
+            referenceCode: 'FB-STG',
+            lang: safeLang,
+            name,
+            email,
+            phone,
+            country,
+            proposedDates: 'Por Definir',
+            objectives: objectivesArr,
+            propertyTypes: propertyTypesArr,
+            investmentFocus: investmentFocusArr,
+            experience,
+            horizon,
+            visited,
+            motivation: motivationArr,
+            specificProperty,
+            comments,
+        });
+        const backendBase = getPhase4BackendBaseUrl();
+        const apiKey = getServerStagingApiKey();
+        const resp = await fetch(`${backendBase}/api/phase8-sandbox/fly-buy-leads/submit/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': apiKey,
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+                country,
+                comments,
+                specific_property: specificProperty,
+                questionnaire_es: builtPreview.questionnaireEs || [],
+                experience,
+                horizon,
+                visited,
+                objectives: objectivesArr,
+                property_types: propertyTypesArr,
+                investment_focus: investmentFocusArr,
+                motivation: motivationArr,
+                lang: safeLang,
+            }),
+            cache: 'no-store',
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (!resp.ok || !json.success) {
+            return {
+                success: false,
+                message: json.error || 'No se pudo registrar la solicitud Fly & Buy en Staging.',
+            };
+        }
+        const effectiveRef = json.reference_code || json.crm_inquiry_code || json.web_reference_code || 'FB-STG';
+        return {
+            success: true,
+            sandbox_isolated: true,
+            reference_code: effectiveRef,
+            web_reference_code: json.web_reference_code || '',
+            crm_inquiry_id: json.crm_inquiry_id || null,
+            email_sent: false,
+            message:
+                safeLang === 'en'
+                    ? `Fly & Buy application recorded in M04 CRM under ${effectiveRef} (Web Ref: ${json.web_reference_code || 'FB-STG'}, simulated Stage 1: 0 real emails dispatched).`
+                    : safeLang === 'fr'
+                    ? `Demande Fly & Buy enregistrée dans le CRM M04 sous ${effectiveRef} (Réf. Web : ${json.web_reference_code || 'FB-STG'}, mode simulé Étape 1 : 0 e-mail réel envoyé).`
+                    : `Solicitud Fly & Buy registrada en M04 Leads y Buzón Fly & Buy bajo ${effectiveRef} (Ref. web: ${json.web_reference_code || 'FB-STG'}, Etapa A simulada: 0 correos externos enviados).`,
         };
     }
 

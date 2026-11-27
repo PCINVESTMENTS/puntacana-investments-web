@@ -1,7 +1,12 @@
 'use server'
 
 import { Resend } from 'resend';
-import { appendSandboxTestInboxEntry, isLocalFileSandbox } from '@/lib/localSandbox';
+import {
+    appendSandboxTestInboxEntry,
+    isCloudStagingSimulatedMode,
+    isLocalFileSandbox,
+    recordCloudStagingOutboxEvent,
+} from '@/lib/localSandbox';
 import {
     normalizeLang,
     PCI_CLIENT_FROM,
@@ -78,6 +83,23 @@ export async function submitNewsletter(prevState: any, formData: FormData) {
         return {
             success: true,
             message: 'Suscripción registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
+        };
+    }
+
+    if (isCloudStagingSimulatedMode()) {
+        await recordCloudStagingOutboxEvent({
+            flow: 'newsletter',
+            provider: 'resend',
+            target_url: 'https://api.resend.com/emails',
+            blocked: true,
+            simulated: true,
+            subject: `Newsletter (${source}): ${email}`,
+            reason: 'RESEND_SIMULATED_STAGING_STAGE1',
+        });
+        return {
+            success: true,
+            email_sent: false,
+            message: 'Suscripción registrada en Staging (Etapa A simulada: 0 correos externos enviados).',
         };
     }
 

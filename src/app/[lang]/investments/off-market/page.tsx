@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import OffMarketForm from "@/components/investments/OffMarketForm";
 import Image from "next/image";
 import { offMarketDict } from "@/dictionaries/offMarket";
-import { fetchLocalSandboxPhase7, getCleanPreviewFlags, isLocalFileSandbox, resolvePhase7MediaUrl } from "@/lib/localSandbox";
+import { fetchLocalSandboxPhase7, getCleanPreviewFlags, isCloudStagingSimulatedMode, isLocalFileSandbox, resolvePhase7MediaUrl } from "@/lib/localSandbox";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -361,7 +361,7 @@ export default async function OffMarketPage({
                 
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <ScrollReveal>
-                        <OffMarketForm lang={lang} isSandbox={isLocalFileSandbox()} />
+                        <OffMarketForm lang={lang} isSandbox={isLocalFileSandbox() || isCloudStagingSimulatedMode()} />
                     </ScrollReveal>
                 </div>
             </section>

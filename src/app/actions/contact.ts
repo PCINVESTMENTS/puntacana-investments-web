@@ -3,7 +3,15 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, getPhase4BackendBaseUrl, isLocalFileSandbox, recordLocalServerOutboundEvent } from '@/lib/localSandbox';
+import {
+    appendSandboxTestInboxEntry,
+    getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
+    isLocalFileSandbox,
+    recordCloudStagingOutboxEvent,
+    recordLocalServerOutboundEvent,
+} from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     buildPropertyOrHotelEmails,
@@ -139,9 +147,10 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '').trim()
         : 'General';
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror + M04 CRM V2 local ingest; ZERO real emails, ZERO HubSpot):
-    if (isLocalFileSandbox()) {
-        // 1. Send idempotently to local isolated CRM V2 M04 LeadInquiry endpoint (when local backend is configured)
+    // ISOLATED LOCAL SANDBOX OR CLOUD STAGING STAGE 1 SIMULATED INTERCEPTOR (ZERO real emails, ZERO HubSpot):
+    if (isLocalFileSandbox() || isCloudStagingSimulatedMode()) {
+        const isCloudStaging = isCloudStagingSimulatedMode();
+        // 1. Send idempotently to isolated CRM V2 M04 LeadInquiry endpoint
         let crmIngest: {
             created?: boolean;
             deduplicated?: boolean;
@@ -149,12 +158,11 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             inquiry?: { id?: number; inquiry_code?: string };
         } | null = null;
         const localBackendBase = getPhase4BackendBaseUrl();
-        const localApiKey = String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || '').trim();
-        if (
-            localBackendBase &&
-            (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&
-            localApiKey
-        ) {
+        const localApiKey = getServerStagingApiKey();
+        const allowedHost = isCloudStaging
+            ? Boolean(localBackendBase && !localBackendBase.includes('puntacana-fortress-production.up.railway.app'))
+            : Boolean(localBackendBase && (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')));
+        if (allowedHost && localApiKey) {
             try {
                 const ingestRes = await fetch(`${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`, {
                     method: 'POST',
@@ -198,25 +206,26 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 if (ingestRes.ok) {
                     crmIngest = await ingestRes.json();
                 } else {
-                    console.warn('Local M04 ingest non-OK status:', ingestRes.status);
+                    console.warn('M04 ingest non-OK status:', ingestRes.status);
                 }
-                recordLocalServerOutboundEvent({
+                const ingestLog = {
                     flow: flowType,
-                    provider: 'local_crm_v2',
+                    provider: isCloudStaging ? 'staging_crm_v2' : 'local_crm_v2',
                     target_url: `${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`,
                     method: 'POST',
                     blocked: false,
                     simulated: false,
                     status_code: ingestRes.status,
                     crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
-                    reason: crmIngest?.deduplicated ? 'LOCAL_M04_DEDUPLICATED' : 'LOCAL_M04_INGEST',
-                });
+                    reason: crmIngest?.deduplicated ? 'M04_DEDUPLICATED' : 'M04_INGEST',
+                };
+                if (isLocalFileSandbox()) recordLocalServerOutboundEvent(ingestLog);
             } catch (ingestErr) {
-                console.warn('Local M04 ingest skipped:', ingestErr);
+                console.warn('M04 ingest skipped:', ingestErr);
             }
         }
 
-        recordLocalServerOutboundEvent({
+        const hsLog = {
             flow: flowType,
             provider: 'hubspot',
             target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
@@ -225,9 +234,9 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             simulated: false,
             status_code: 0,
             crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
-            reason: 'HUBSPOT_DISABLED_LOCAL',
-        });
-        recordLocalServerOutboundEvent({
+            reason: isCloudStaging ? 'HUBSPOT_DISABLED_STAGING_STAGE1' : 'HUBSPOT_DISABLED_LOCAL',
+        };
+        const resendLog = {
             flow: flowType,
             provider: 'resend',
             target_url: 'https://api.resend.com/emails',
@@ -236,10 +245,17 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             simulated: true,
             status_code: 0,
             crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
-            reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
-        });
+            reason: isCloudStaging ? 'RESEND_SIMULATED_STAGING_STAGE1' : 'RESEND_SIMULATED_LOCAL_OUTBOX',
+        };
+        if (isCloudStaging) {
+            await recordCloudStagingOutboxEvent(hsLog);
+            await recordCloudStagingOutboxEvent(resendLog);
+        } else {
+            recordLocalServerOutboundEvent(hsLog);
+            recordLocalServerOutboundEvent(resendLog);
+        }
 
-        // If CRM V2 M04 deduplicated an identical retry, do NOT duplicate test_inbox notification
+        // If CRM V2 M04 deduplicated an identical retry, do NOT duplicate notification
         if (crmIngest?.deduplicated && crmIngest?.inquiry?.inquiry_code) {
             return {
                 success: true,
@@ -256,70 +272,72 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             };
         }
 
-        const saved = appendSandboxTestInboxEntry(
-            {
-                form_type: flowType,
-                form_label:
-                    flowType === 'off_market'
-                        ? 'Búsqueda Privada Off-Market'
-                        : flowType === 'hotel_inquiry'
-                        ? 'Consulta Directa de Hotel / Activo Comercial'
-                        : flowType === 'property_inquiry'
-                        ? 'Consulta de Propiedad'
-                        : 'Formulario de Contacto General',
-                lang,
-                configured_from: PCI_TEAM_FROM,
-                configured_pci_recipient: PCI_TEAM_TO,
-                client_autoresponder_to: email,
-                crm_inquiry_id: crmIngest?.inquiry?.id || null,
-                crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || null,
-                property_reference: parsedProperty || { title: cleanInterest, type: 'general' },
-                lead: { name, email, phone, message },
-                deduplication_note:
-                    '1 envío = 1 consulta M04 + 1 aviso simulado PCI (sin correos reales ni HubSpot)',
-            },
-            (referenceCode) => {
-                const effectiveRef = crmIngest?.inquiry?.inquiry_code || referenceCode;
-                const built =
-                    isOffMarketFlow && parsedOffMarket
-                        ? buildOffMarketEmails({
-                              referenceCode: effectiveRef,
-                              lang,
-                              name,
-                              company: parsedOffMarket.company || '',
-                              email,
-                              phone,
-                              tab: parsedOffMarket.tab === 'hoteles' ? 'hoteles' : 'oportunidad',
-                              budget: parsedOffMarket.budget || '',
-                              regions: Array.isArray(parsedOffMarket.regions) ? parsedOffMarket.regions : [],
-                              details: parsedOffMarket.details || {},
-                              freeText: parsedOffMarket.freeText || '',
-                          })
-                        : buildPropertyOrHotelEmails({
-                              referenceCode: effectiveRef,
-                              formCategory,
-                              lang,
-                              siteOrigin,
-                              name,
-                              email,
-                              phone,
-                              message,
-                              interestText: cleanInterest,
-                              property: parsedProperty,
-                          });
-                return {
-                    admin_subject: built.adminEmail.subject,
-                    client_subject: built.clientEmail.subject,
-                    admin_email: built.adminEmail,
-                    client_email: built.clientEmail,
-                    property_reference: parsedProperty
-                        ? { ...parsedProperty, url: 'propertyUrl' in built ? built.propertyUrl : '' }
-                        : { title: cleanInterest, type: 'general' },
-                };
-            }
-        );
+        const saved = isLocalFileSandbox()
+            ? appendSandboxTestInboxEntry(
+                  {
+                      form_type: flowType,
+                      form_label:
+                          flowType === 'off_market'
+                              ? 'Búsqueda Privada Off-Market'
+                              : flowType === 'hotel_inquiry'
+                              ? 'Consulta Directa de Hotel / Activo Comercial'
+                              : flowType === 'property_inquiry'
+                              ? 'Consulta de Propiedad'
+                              : 'Formulario de Contacto General',
+                      lang,
+                      configured_from: PCI_TEAM_FROM,
+                      configured_pci_recipient: PCI_TEAM_TO,
+                      client_autoresponder_to: email,
+                      crm_inquiry_id: crmIngest?.inquiry?.id || null,
+                      crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || null,
+                      property_reference: parsedProperty || { title: cleanInterest, type: 'general' },
+                      lead: { name, email, phone, message },
+                      deduplication_note:
+                          '1 envío = 1 consulta M04 + 1 aviso simulado PCI (sin correos reales ni HubSpot)',
+                  },
+                  (referenceCode) => {
+                      const effectiveRef = crmIngest?.inquiry?.inquiry_code || referenceCode;
+                      const built =
+                          isOffMarketFlow && parsedOffMarket
+                              ? buildOffMarketEmails({
+                                    referenceCode: effectiveRef,
+                                    lang,
+                                    name,
+                                    company: parsedOffMarket.company || '',
+                                    email,
+                                    phone,
+                                    tab: parsedOffMarket.tab === 'hoteles' ? 'hoteles' : 'oportunidad',
+                                    budget: parsedOffMarket.budget || '',
+                                    regions: Array.isArray(parsedOffMarket.regions) ? parsedOffMarket.regions : [],
+                                    details: parsedOffMarket.details || {},
+                                    freeText: parsedOffMarket.freeText || '',
+                                })
+                              : buildPropertyOrHotelEmails({
+                                    referenceCode: effectiveRef,
+                                    formCategory,
+                                    lang,
+                                    siteOrigin,
+                                    name,
+                                    email,
+                                    phone,
+                                    message,
+                                    interestText: cleanInterest,
+                                    property: parsedProperty,
+                                });
+                      return {
+                          admin_subject: built.adminEmail.subject,
+                          client_subject: built.clientEmail.subject,
+                          admin_email: built.adminEmail,
+                          client_email: built.clientEmail,
+                          property_reference: parsedProperty
+                              ? { ...parsedProperty, url: 'propertyUrl' in built ? built.propertyUrl : '' }
+                              : { title: cleanInterest, type: 'general' },
+                      };
+                  }
+              )
+            : null;
 
-        const finalRef = crmIngest?.inquiry?.inquiry_code || saved?.reference_code || 'LOCAL';
+        const finalRef = crmIngest?.inquiry?.inquiry_code || saved?.reference_code || (isCloudStaging ? 'STG' : 'LOCAL');
         return {
             success: true,
             sandbox_isolated: true,
@@ -328,10 +346,10 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             email_sent: false,
             message:
                 lang === 'en'
-                    ? `Inquiry registered in M04 CRM local sandbox under ${finalRef} (no real email dispatched).`
+                    ? `Inquiry registered in M04 CRM under ${finalRef} (simulated Stage 1 mode: 0 real emails dispatched).`
                     : lang === 'fr'
-                    ? `Demande enregistrée dans le CRM local M04 sous ${finalRef} (aucun e-mail réel envoyé).`
-                    : `Consulta registrada en M04 Leads bajo ${finalRef} con aviso simulado local (sin envío de correo real).`,
+                    ? `Demande enregistrée dans le CRM M04 sous ${finalRef} (mode simulé Étape 1 : 0 e-mail réel envoyé).`
+                    : `Consulta registrada en M04 Leads bajo ${finalRef} en modo simulado (0 correos externos enviados).`,
         };
     }
 

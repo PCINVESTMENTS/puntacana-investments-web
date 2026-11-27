@@ -1,20 +1,28 @@
 import { NextResponse } from 'next/server';
-import { getPhase4BackendBaseUrl, isLocalFileSandbox } from '@/lib/localSandbox';
+import {
+  getPhase4BackendBaseUrl,
+  getServerStagingApiKey,
+  isCloudStagingSimulatedMode,
+  isLocalFileSandbox,
+} from '@/lib/localSandbox';
 
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
     const localBackendBase = getPhase4BackendBaseUrl();
-    const localApiKey = String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || '').trim();
+    const localApiKey = getServerStagingApiKey();
+    const isLocalAllowed =
+      isLocalFileSandbox() &&
+      Boolean(localBackendBase) &&
+      (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:'));
+    const isStagingAllowed =
+      isCloudStagingSimulatedMode() &&
+      Boolean(localBackendBase) &&
+      !localBackendBase.includes('puntacana-fortress-production.up.railway.app');
 
-    if (
-      !isLocalFileSandbox() ||
-      !localBackendBase ||
-      !(localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) ||
-      !localApiKey
-    ) {
+    if ((!isLocalAllowed && !isStagingAllowed) || !localApiKey) {
       return NextResponse.json(
-        { ok: false, error: 'Handoff local deshabilitado fuera del entorno aislado.' },
+        { ok: false, error: 'Handoff deshabilitado fuera del entorno aislado/staging.' },
         { status: 503 }
       );
     }

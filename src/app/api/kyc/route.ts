@@ -3,7 +3,12 @@ import path from 'path';
 import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { isLocalFileSandbox } from '@/lib/localSandbox';
+import {
+    getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
+    isLocalFileSandbox,
+} from '@/lib/localSandbox';
 import {
     buildKycEmails,
     generateReferenceCode,
@@ -418,6 +423,39 @@ export async function POST(request: Request) {
                 sandbox_isolated: true,
                 data: localJson.submission || localJson,
             }, { status: 201 });
+        }
+        
+        if (isCloudStagingSimulatedMode()) {
+            const backendBase = getPhase4BackendBaseUrl();
+            const apiKey = getServerStagingApiKey();
+            const stageResp = await fetch(`${backendBase}/api/phase7-sandbox/due-diligence/submit/`, {
+                method: 'POST',
+                headers: {
+                    'X-API-KEY': apiKey,
+                },
+                body: formData,
+                cache: 'no-store',
+            });
+            const stageJson = await stageResp.json().catch(() => ({}));
+            if (!stageResp.ok || !stageJson.success) {
+                return NextResponse.json(
+                    { success: false, error: stageJson.error || 'Error guardando Debida Diligencia cifrada en Staging.' },
+                    { status: stageResp.status || 500 }
+                );
+            }
+            const isDedup = Boolean(stageJson.deduplicated);
+            return NextResponse.json(
+                {
+                    success: true,
+                    sandbox_isolated: true,
+                    deduplicated: isDedup,
+                    opportunity_created: false,
+                    crm_client_id: stageJson.crm_client_id || stageJson.submission?.crm_client_id || null,
+                    email_sent: false,
+                    data: stageJson.submission || stageJson,
+                },
+                { status: isDedup ? 200 : 201 }
+            );
         }
         
         const policy = resolveExecutionPolicy(clientEmail);

@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { getPhase4BackendBaseUrl, isLocalFileSandbox, recordLocalServerOutboundEvent, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
+import {
+    getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
+    isLocalFileSandbox,
+    recordLocalServerOutboundEvent,
+    upsertSandboxOffMarketApplication,
+} from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     generateProductionRefCode,
@@ -212,6 +219,64 @@ export async function POST(request: Request) {
                     message,
                 },
                 { status: (crmIngest?.deduplicated || saved.deduplicated) ? 200 : 201 }
+            );
+        }
+
+        if (isCloudStagingSimulatedMode()) {
+            const backendBase = getPhase4BackendBaseUrl();
+            const apiKey = getServerStagingApiKey();
+            const resp = await fetch(`${backendBase}/api/phase7-sandbox/off-market/submit/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': apiKey,
+                },
+                body: JSON.stringify({
+                    name,
+                    company,
+                    email,
+                    phone,
+                    tab,
+                    budget,
+                    regions,
+                    details,
+                    freeText,
+                    compiledMessage,
+                    lang,
+                    idempotency_key: idempotencyKey,
+                }),
+                cache: 'no-store',
+            });
+            const json = await resp.json().catch(() => ({}));
+            if (!resp.ok || !json.success) {
+                return NextResponse.json(
+                    { success: false, message: json.error || 'No se pudo registrar la solicitud Off-Market en Staging.' },
+                    { status: resp.status || 500 }
+                );
+            }
+            const effectiveRef = String(json.reference_code || json.crm_inquiry_code || json.web_reference_code || 'OM-STG');
+            const message =
+                lang === 'en'
+                    ? `Your Off-Market request has been registered in M04 CRM under reference ${effectiveRef} (simulated Stage 1 mode: 0 real emails dispatched).`
+                    : lang === 'fr'
+                    ? `Votre demande Off-Market a été enregistrée dans le CRM M04 sous la référence ${effectiveRef} (mode simulé Étape 1 : 0 e-mail réel envoyé).`
+                    : `Tu requerimiento Off-Market quedó registrado en M04 Leads bajo ${effectiveRef} (Ref. web: ${json.web_reference_code || 'OM-STG'}, Etapa A simulada: 0 correos externos enviados).`;
+            return NextResponse.json(
+                {
+                    success: true,
+                    sandbox_isolated: true,
+                    id: json.id,
+                    reference_code: effectiveRef,
+                    web_reference_code: json.web_reference_code || '',
+                    crm_inquiry_id: json.crm_inquiry_id || null,
+                    crm_inquiry_code: json.crm_inquiry_code || null,
+                    deduplicated: Boolean(json.deduplicated),
+                    email_sent: false,
+                    email_failed: false,
+                    email_status: json.email_status || 'simulated_staging_stage1',
+                    message,
+                },
+                { status: json.deduplicated ? 200 : 201 }
             );
         }
 

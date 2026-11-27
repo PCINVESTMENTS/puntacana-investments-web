@@ -130,6 +130,49 @@ export function isLocalFileSandbox(): boolean {
 }
 
 /**
+ * True in Cloud Staging Stage 1 (Vercel Web Staging -> Railway Staging Backend over HTTPS,
+ * FORM_EMAILS_SIMULATED_MODE=true, ZERO local disk files, ZERO external HubSpot/Resend sends).
+ * Fails closed against the production Railway hostname.
+ */
+export function isCloudStagingSimulatedMode(): boolean {
+  const sim = String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true";
+  const base = getPhase4BackendBaseUrl();
+  if (!sim || isLocalFileSandbox() || !base) return false;
+  if (base.toLowerCase().includes("puntacana-fortress-production.up.railway.app")) {
+    return false;
+  }
+  return true;
+}
+
+export function getServerStagingApiKey(): string {
+  return String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || "").trim();
+}
+
+export async function recordCloudStagingOutboxEvent(entry: Record<string, any>): Promise<void> {
+  if (!isCloudStagingSimulatedMode()) return;
+  const base = getPhase4BackendBaseUrl();
+  const key = getServerStagingApiKey();
+  if (!base || !key) return;
+  try {
+    await fetch(`${base}/api/crm-v2/staging/simulated-outbox/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": key,
+      },
+      body: JSON.stringify({
+        source_app: "web_staging",
+        external_provider_called: false,
+        ...entry,
+      }),
+      cache: "no-store",
+    });
+  } catch {
+    // Non-blocking audit log
+  }
+}
+
+/**
  * True whenever the Web runs in Fases 1-8 Backend-driven mode (local file sandbox OR Cloud Staging/Production HTTP backend).
  */
 export function isLocalSandboxEnabled(): boolean {

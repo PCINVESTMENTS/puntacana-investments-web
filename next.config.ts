@@ -189,6 +189,9 @@ const nextConfig: NextConfig = {
           { key: 'X-XSS-Protection', value: '1; mode=block' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+          ...(process.env.ENABLE_STAGING_NOINDEX === 'true'
+            ? [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }]
+            : []),
           ...frameHeaders,
         ]
       }

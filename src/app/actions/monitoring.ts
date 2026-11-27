@@ -5,6 +5,8 @@ import { createHubspotContact } from '@/lib/hubspot';
 import {
     attachM04LinkToInboxEntry,
     getPhase4BackendBaseUrl,
+    getServerStagingApiKey,
+    isCloudStagingSimulatedMode,
     isLocalFileSandbox,
     recordLocalServerOutboundEvent,
     upsertSandboxMonitoringRequest,
@@ -231,6 +233,60 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
                 : lang === 'fr'
                 ? `Demande de suivi enregistrée sous la référence ${refCode} (mode local isolé : aucun e-mail réel envoyé).`
                 : `Solicitud de Monitoreo registrada bajo la referencia de seguimiento ${refCode} (modo local aislado: sin correos reales ni HubSpot).`,
+        };
+    }
+
+    if (isCloudStagingSimulatedMode()) {
+        const idempotencyKey = String(formData.get('idempotency_key') || '').trim();
+        const backendBase = getPhase4BackendBaseUrl();
+        const apiKey = getServerStagingApiKey();
+        const resp = await fetch(`${backendBase}/api/phase7-sandbox/monitoring-requests/submit/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': apiKey,
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+                country,
+                project,
+                location,
+                investment,
+                date,
+                lang,
+                idempotency_key: idempotencyKey,
+            }),
+            cache: 'no-store',
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (!resp.ok || !json.success) {
+            return {
+                success: false,
+                message: json.error || 'No se pudo registrar la solicitud de Monitoreo en Staging.',
+            };
+        }
+        const refCode = String(json.reference_code || 'CNT-STG-001');
+        return {
+            success: true,
+            sandbox_isolated: true,
+            email_sent: false,
+            deduplicated: Boolean(json.deduplicated),
+            reference_code: refCode,
+            crm_inquiry_id: json.crm_inquiry_id || null,
+            crm_inquiry_code: json.crm_inquiry_code || '',
+            message: json.deduplicated
+                ? lang === 'en'
+                    ? `Your monitoring request was already registered under reference ${refCode} (no duplicate created).`
+                    : lang === 'fr'
+                    ? `Votre demande de suivi était déjà enregistrée sous la référence ${refCode} (aucun doublon créé).`
+                    : `Tu solicitud de Monitoreo ya estaba registrada bajo la referencia ${refCode} (sin duplicar tu registro).`
+                : lang === 'en'
+                ? `Monitoring request saved under tracking reference ${refCode} (simulated Stage 1 mode: 0 real emails sent).`
+                : lang === 'fr'
+                ? `Demande de suivi enregistrée sous la référence ${refCode} (mode simulé Étape 1 : 0 e-mail réel envoyé).`
+                : `Solicitud de Monitoreo registrada bajo la referencia de seguimiento ${refCode} (Etapa A simulada: 0 correos externos enviados).`,
         };
     }
 
