@@ -119,10 +119,14 @@ export default async function RootLayout({
         )
         .filter(Boolean)
     : null;
-  const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV";
-  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-  const hubspotId = process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
+  const disableExternalTracking =
+    process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_TRACKING === "true" ||
+    process.env.HUBSPOT_CRM_ENABLED === "false" ||
+    Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE);
+  const gaId = disableExternalTracking ? undefined : process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+  const gtmId = disableExternalTracking ? undefined : (process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV");
+  const metaPixelId = disableExternalTracking ? undefined : process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const hubspotId = disableExternalTracking ? undefined : process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
 
   return (
     <html lang={lang}>

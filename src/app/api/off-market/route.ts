@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { getPhase4BackendBaseUrl, isLocalFileSandbox, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
+import { getPhase4BackendBaseUrl, isLocalFileSandbox, recordLocalServerOutboundEvent, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     generateProductionRefCode,
@@ -123,10 +123,44 @@ export async function POST(request: Request) {
                     } else {
                         console.warn('Local M04 Off-Market ingest non-OK:', ingestRes.status);
                     }
+                    recordLocalServerOutboundEvent({
+                        flow: 'off_market',
+                        provider: 'local_crm_v2',
+                        target_url: `${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`,
+                        method: 'POST',
+                        blocked: false,
+                        simulated: false,
+                        status_code: ingestRes.status,
+                        crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                        reason: 'LOCAL_M04_INGEST',
+                    });
                 } catch (ingestErr) {
                     console.warn('Local M04 Off-Market ingest skipped:', ingestErr);
                 }
             }
+
+            recordLocalServerOutboundEvent({
+                flow: 'off_market',
+                provider: 'hubspot',
+                target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+                method: 'POST',
+                blocked: true,
+                simulated: false,
+                status_code: 0,
+                crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                reason: 'HUBSPOT_DISABLED_LOCAL',
+            });
+            recordLocalServerOutboundEvent({
+                flow: 'off_market',
+                provider: 'resend',
+                target_url: 'https://api.resend.com/emails',
+                method: 'POST',
+                blocked: true,
+                simulated: true,
+                status_code: 0,
+                crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+            });
 
             const saved = upsertSandboxOffMarketApplication({
                 name,

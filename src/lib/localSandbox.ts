@@ -1092,6 +1092,7 @@ export function appendSandboxFlyAndBuyLead(
     client_subject?: string;
     admin_email?: RenderedEmailPayload;
     client_email?: RenderedEmailPayload | null;
+    questionnaire_es?: Array<{ label: string; value: string }>;
   }
 ): { id: string; reference_code: string; count: number } | null {
   const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
@@ -1133,6 +1134,85 @@ export function appendSandboxFlyAndBuyLead(
   fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
   fs.renameSync(tmpFile, inboxFile);
   return { id, reference_code, count: next.length };
+}
+
+export function linkSandboxFlyAndBuyCrmInquiry(
+  fbId: string,
+  crmInquiryId: number | null,
+  crmInquiryCode: string | null,
+  fullFormattedMessage?: string
+): boolean {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile || !fbId) return false;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  try {
+    if (!fs.existsSync(inboxFile)) return false;
+    const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+    if (!Array.isArray(parsed)) return false;
+    let updated = false;
+    for (const item of parsed) {
+      if (item && item.id === fbId) {
+        item.crm_inquiry_id = crmInquiryId;
+        item.crm_inquiry_code = crmInquiryCode;
+        if (fullFormattedMessage && item.lead && typeof item.lead === "object") {
+          item.lead.full_questionnaire_text = fullFormattedMessage;
+        }
+        updated = true;
+        break;
+      }
+    }
+    if (!updated) return false;
+    const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+    fs.writeFileSync(tmpFile, JSON.stringify(parsed, null, 2), "utf-8");
+    fs.renameSync(tmpFile, inboxFile);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function recordLocalServerOutboundEvent(event: {
+  flow: string;
+  provider: "local_crm_v2" | "hubspot" | "resend" | "external";
+  target_url: string;
+  method?: string;
+  blocked?: boolean;
+  simulated?: boolean;
+  status_code?: number;
+  reference_code?: string;
+  crm_inquiry_code?: string;
+  reason?: string;
+}): void {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return;
+  try {
+    const outboxDir = path.resolve(path.dirname(catalogFile), "..", "outbox-simulated");
+    fs.mkdirSync(outboxDir, { recursive: true });
+    const auditFile = path.join(outboxDir, "server_outbound_audit.json");
+    let existing: Record<string, any>[] = [];
+    if (fs.existsSync(auditFile)) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(auditFile, "utf-8"));
+        if (Array.isArray(parsed)) existing = parsed;
+      } catch {
+        existing = [];
+      }
+    }
+    const entry = {
+      id: `out-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      recorded_at_iso: new Date().toISOString(),
+      method: event.method || "POST",
+      blocked: Boolean(event.blocked),
+      simulated: Boolean(event.simulated),
+      ...event,
+    };
+    const next = [entry, ...existing].slice(0, 300);
+    const tmpFile = `${auditFile}.${process.pid}.${Date.now()}.tmp`;
+    fs.writeFileSync(tmpFile, JSON.stringify(next, null, 2), "utf-8");
+    fs.renameSync(tmpFile, auditFile);
+  } catch {
+    // Non-blocking audit logger
+  }
 }
 
 function applyCleanPhase8Filter(parsed: Record<string, any>, clean?: CleanPreviewFlags): Record<string, any> {

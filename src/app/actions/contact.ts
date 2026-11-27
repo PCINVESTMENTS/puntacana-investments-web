@@ -3,7 +3,7 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, getPhase4BackendBaseUrl, isLocalFileSandbox } from '@/lib/localSandbox';
+import { appendSandboxTestInboxEntry, getPhase4BackendBaseUrl, isLocalFileSandbox, recordLocalServerOutboundEvent } from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     buildPropertyOrHotelEmails,
@@ -200,10 +200,44 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 } else {
                     console.warn('Local M04 ingest non-OK status:', ingestRes.status);
                 }
+                recordLocalServerOutboundEvent({
+                    flow: flowType,
+                    provider: 'local_crm_v2',
+                    target_url: `${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`,
+                    method: 'POST',
+                    blocked: false,
+                    simulated: false,
+                    status_code: ingestRes.status,
+                    crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                    reason: crmIngest?.deduplicated ? 'LOCAL_M04_DEDUPLICATED' : 'LOCAL_M04_INGEST',
+                });
             } catch (ingestErr) {
                 console.warn('Local M04 ingest skipped:', ingestErr);
             }
         }
+
+        recordLocalServerOutboundEvent({
+            flow: flowType,
+            provider: 'hubspot',
+            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+            method: 'POST',
+            blocked: true,
+            simulated: false,
+            status_code: 0,
+            crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+            reason: 'HUBSPOT_DISABLED_LOCAL',
+        });
+        recordLocalServerOutboundEvent({
+            flow: flowType,
+            provider: 'resend',
+            target_url: 'https://api.resend.com/emails',
+            method: 'POST',
+            blocked: true,
+            simulated: true,
+            status_code: 0,
+            crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+            reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+        });
 
         // If CRM V2 M04 deduplicated an identical retry, do NOT duplicate test_inbox notification
         if (crmIngest?.deduplicated && crmIngest?.inquiry?.inquiry_code) {

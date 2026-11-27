@@ -1,4 +1,5 @@
 import 'server-only';
+import { isLocalFileSandbox, recordLocalServerOutboundEvent } from '@/lib/localSandbox';
 
 export async function createHubspotContact(data: {
     email: string;
@@ -11,7 +12,22 @@ export async function createHubspotContact(data: {
     property_type?: string;
     form_source?: string;
 }) {
-    if (process.env.HUBSPOT_CRM_ENABLED === 'false' || process.env.FORM_EMAILS_LOCAL_DRY_RUN === 'true') {
+    if (
+        process.env.HUBSPOT_CRM_ENABLED === 'false' ||
+        process.env.FORM_EMAILS_LOCAL_DRY_RUN === 'true' ||
+        isLocalFileSandbox()
+    ) {
+        recordLocalServerOutboundEvent({
+            flow: data.form_source || 'hubspot_sync',
+            provider: 'hubspot',
+            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+            method: 'POST',
+            blocked: true,
+            simulated: false,
+            status_code: 0,
+            reason: 'HUBSPOT_DISABLED_LOCAL',
+        });
+        console.log('[LOCAL-GUARD] HubSpot sync explicitly disabled; 0 calls sent to api.hubapi.com.');
         return null;
     }
     const token = process.env.HUBSPOT_ACCESS_TOKEN;

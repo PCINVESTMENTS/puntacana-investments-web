@@ -3,7 +3,15 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, getPhase4BackendBaseUrl, isLocalFileSandbox, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import {
+    appendSandboxFlyAndBuyLead,
+    fetchLocalSandboxPhase8,
+    getPhase4BackendBaseUrl,
+    isLocalFileSandbox,
+    isLocalSandboxEnabled,
+    linkSandboxFlyAndBuyCrmInquiry,
+    recordLocalServerOutboundEvent,
+} from '@/lib/localSandbox';
 import {
     buildFlyAndBuyEmails,
     generateReferenceCode,
@@ -165,7 +173,12 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                     `Comentarios (${safeLang.toUpperCase()}): ${comments || 'Sin comentarios'}`,
                 ].join('\n');
 
-                const ingestRes = await fetch(`${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`, {
+                const propCodeMatch = /^\[([A-Z0-9-]+)\]\s*(.*)$/i.exec(specificProperty || '');
+                const extractedPropCode = propCodeMatch ? propCodeMatch[1].trim() : '';
+                const cleanPropTitle = propCodeMatch ? propCodeMatch[2].trim() : specificProperty;
+
+                const ingestUrl = `${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`;
+                const ingestRes = await fetch(ingestUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -183,9 +196,13 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                         source_page: `/${safeLang}/fly-and-buy/form`,
                         subject: `Solicitud VIP Fly & Buy · ${specificProperty || 'Tour Inmobiliario Personalizado'}`,
                         message: readableNotesEs,
-                        property_title: specificProperty || '',
+                        property_title: cleanPropTitle || '',
+                        property: extractedPropCode
+                            ? { internal_code: extractedPropCode, title: cleanPropTitle }
+                            : undefined,
                         reference_code: saved?.reference_code || '',
                         metadata: {
+                            web_reference_code: saved?.reference_code || '',
                             fly_buy_reference_code: saved?.reference_code || '',
                             specific_property: specificProperty || '',
                             questionnaire_es: capturedQuestionnaireEs,
@@ -202,13 +219,59 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                 });
                 if (ingestRes.ok) {
                     crmIngest = await ingestRes.json();
+                    if (saved?.id) {
+                        linkSandboxFlyAndBuyCrmInquiry(
+                            saved.id,
+                            crmIngest?.inquiry?.id || null,
+                            crmIngest?.inquiry?.inquiry_code || null,
+                            readableNotesEs
+                        );
+                    }
                 } else {
                     console.warn('Local M04 Fly & Buy ingest non-OK:', ingestRes.status);
                 }
+                recordLocalServerOutboundEvent({
+                    flow: 'fly_and_buy',
+                    provider: 'local_crm_v2',
+                    target_url: ingestUrl,
+                    method: 'POST',
+                    blocked: false,
+                    simulated: false,
+                    status_code: ingestRes.status,
+                    reference_code: saved?.reference_code || '',
+                    crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                    reason: 'LOCAL_M04_INGEST',
+                });
             } catch (ingestErr) {
                 console.warn('Local M04 Fly & Buy ingest skipped:', ingestErr);
             }
         }
+
+        // Explicitly audit that HubSpot was blocked and Resend stayed in local simulation
+        recordLocalServerOutboundEvent({
+            flow: 'fly_and_buy',
+            provider: 'hubspot',
+            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+            method: 'POST',
+            blocked: true,
+            simulated: false,
+            status_code: 0,
+            reference_code: saved?.reference_code || '',
+            crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+            reason: 'HUBSPOT_DISABLED_LOCAL',
+        });
+        recordLocalServerOutboundEvent({
+            flow: 'fly_and_buy',
+            provider: 'resend',
+            target_url: 'https://api.resend.com/emails',
+            method: 'POST',
+            blocked: true,
+            simulated: true,
+            status_code: 0,
+            reference_code: saved?.reference_code || '',
+            crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+            reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+        });
 
         const effectiveRef = crmIngest?.inquiry?.inquiry_code || saved?.reference_code || 'LOCAL';
         return {
