@@ -2,7 +2,13 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalFileSandbox, recordLocalServerOutboundEvent } from '@/lib/localSandbox';
+import {
+    attachM04LinkToInboxEntry,
+    getPhase4BackendBaseUrl,
+    isLocalFileSandbox,
+    recordLocalServerOutboundEvent,
+    upsertSandboxMonitoringRequest,
+} from '@/lib/localSandbox';
 import {
     normalizeLang,
     PCI_CLIENT_FROM,
@@ -84,45 +90,145 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
     }
 
     if (isLocalFileSandbox()) {
-        const savedMon = appendSandboxTestInboxEntry({
-            form_type: 'investment_monitoring',
-            form_label: 'Plan de Monitoreo de Inversión',
+        const idempotencyKey = String(formData.get('idempotency_key') || '').trim();
+        const savedMon = upsertSandboxMonitoringRequest({
+            name,
+            email,
+            phone,
+            country,
+            project,
+            location,
+            investment,
+            date,
             lang,
-            configured_from: PCI_TEAM_FROM,
-            configured_pci_recipient: 'info@puntacanainvestmentsrd.com',
-            client_autoresponder_to: email,
-            admin_subject: `LEAD MONITOREO: ${name} - ${project || 'Proyecto'}`,
-            client_subject: 'Confirmación Plan de Monitoreo — Punta Cana Investments',
-            property_reference: { title: project || 'Monitoreo de Inversión', location: location || 'Punta Cana', type: 'investment_monitoring' },
-            lead: { name, email, phone, message: `${project || ''} · ${location || ''} · ${investment || ''} · ${date || ''}` },
-            deduplication_note: '1 solicitud Monitoreo = 1 aviso PCI + 1 confirmación cliente (buzón local)',
+            idempotency_key: idempotencyKey,
         });
-        recordLocalServerOutboundEvent({
-            flow: 'investment_monitoring',
-            provider: 'hubspot',
-            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
-            method: 'POST',
-            blocked: true,
-            simulated: false,
-            status_code: 0,
-            reference_code: savedMon?.reference_code || '',
-            reason: 'HUBSPOT_DISABLED_LOCAL',
-        });
-        recordLocalServerOutboundEvent({
-            flow: 'investment_monitoring',
-            provider: 'resend',
-            target_url: 'https://api.resend.com/emails',
-            method: 'POST',
-            blocked: true,
-            simulated: true,
-            status_code: 0,
-            reference_code: savedMon?.reference_code || '',
-            reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
-        });
+        const refCode = savedMon?.reference_code || 'CNT-LOC-001';
+        let crmInquiryId: number | null = savedMon?.crm_inquiry_id || null;
+        let crmInquiryCode = savedMon?.crm_inquiry_code || '';
+        let crmClientId: number | null = null;
+
+        const localBackendBase = getPhase4BackendBaseUrl();
+        const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+        if (
+            savedMon &&
+            localBackendBase &&
+            (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&
+            localApiKey
+        ) {
+            try {
+                const ingestRes = await fetch(`${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': localApiKey,
+                        'Idempotency-Key': `cnt::${refCode}`,
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        country,
+                        lang,
+                        budget: investment,
+                        channel: 'investment_monitoring',
+                        origin_label: 'Plan de Monitoreo de Inversión',
+                        subject: `Monitoreo (${refCode}) · ${project || 'Proyecto'} (${location || 'Punta Cana'})`,
+                        message: [
+                            `[Plan de Monitoreo de Inversión · Ref: ${refCode}]`,
+                            `País: ${country || 'N/A'}`,
+                            `Proyecto: ${project || 'N/A'}`,
+                            `Ubicación: ${location || 'N/A'}`,
+                            `Monto Inversión: ${investment || 'N/A'}`,
+                            `Fecha Entrega: ${date || 'N/A'}`,
+                        ].join('\n'),
+                        reference_code: refCode,
+                        idempotency_key: `cnt::${refCode}`,
+                        source_page: `/${lang}/services/monitoreo-de-inversion`,
+                        metadata: {
+                            monitoring_reference_code: refCode,
+                            web_reference_code: refCode,
+                            monitoring_project: project,
+                            monitoring_location: location,
+                            monitoring_investment: investment,
+                            monitoring_delivery_date: date,
+                            country,
+                            inbox_entry_id: savedMon.id,
+                        },
+                    }),
+                });
+                const ingestJson = await ingestRes.json().catch(() => ({}));
+                if (ingestRes.ok && ingestJson?.inquiry?.id) {
+                    crmInquiryId = Number(ingestJson.inquiry.id);
+                    crmInquiryCode = String(ingestJson.inquiry.inquiry_code || '');
+                    crmClientId = ingestJson.inquiry?.client?.id ? Number(ingestJson.inquiry.client.id) : null;
+                    attachM04LinkToInboxEntry(savedMon.id, {
+                        crm_inquiry_id: crmInquiryId,
+                        crm_inquiry_code: crmInquiryCode,
+                        crm_client_id: crmClientId,
+                    });
+                }
+                recordLocalServerOutboundEvent({
+                    flow: 'investment_monitoring',
+                    provider: 'crm_v2_local',
+                    target_url: `${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`,
+                    method: 'POST',
+                    blocked: false,
+                    simulated: false,
+                    status_code: ingestRes.status,
+                    reference_code: refCode,
+                    crm_inquiry_code: crmInquiryCode,
+                    reason: ingestJson?.deduplicated ? 'LOCAL_M04_DEDUPLICATED' : 'LOCAL_M04_INGEST',
+                });
+            } catch (err) {
+                console.warn('Local M04 monitoring bridge skipped:', err);
+            }
+        }
+
+        if (!savedMon?.deduplicated) {
+            recordLocalServerOutboundEvent({
+                flow: 'investment_monitoring',
+                provider: 'hubspot',
+                target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+                method: 'POST',
+                blocked: true,
+                simulated: false,
+                status_code: 0,
+                reference_code: refCode,
+                crm_inquiry_code: crmInquiryCode,
+                reason: 'HUBSPOT_DISABLED_LOCAL',
+            });
+            recordLocalServerOutboundEvent({
+                flow: 'investment_monitoring',
+                provider: 'resend',
+                target_url: 'https://api.resend.com/emails',
+                method: 'POST',
+                blocked: true,
+                simulated: true,
+                status_code: 0,
+                reference_code: refCode,
+                crm_inquiry_code: crmInquiryCode,
+                reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+            });
+        }
         return {
             success: true,
-            reference_code: savedMon?.reference_code || '',
-            message: `Solicitud de Monitoreo registrada en el Buzón Local de Pruebas bajo ${savedMon?.reference_code || 'CNT-LOC'} (sin correos reales ni HubSpot).`,
+            sandbox_isolated: true,
+            deduplicated: Boolean(savedMon?.deduplicated),
+            reference_code: refCode,
+            crm_inquiry_id: crmInquiryId,
+            crm_inquiry_code: crmInquiryCode,
+            message: savedMon?.deduplicated
+                ? lang === 'en'
+                    ? `Your monitoring request was already registered under reference ${refCode} (no duplicate created).`
+                    : lang === 'fr'
+                    ? `Votre demande de suivi était déjà enregistrée sous la référence ${refCode} (aucun doublon créé).`
+                    : `Tu solicitud de Monitoreo ya estaba registrada bajo la referencia ${refCode} (sin duplicar tu registro).`
+                : lang === 'en'
+                ? `Monitoring request saved under tracking reference ${refCode} (local isolated mode: no real email sent).`
+                : lang === 'fr'
+                ? `Demande de suivi enregistrée sous la référence ${refCode} (mode local isolé : aucun e-mail réel envoyé).`
+                : `Solicitud de Monitoreo registrada bajo la referencia de seguimiento ${refCode} (modo local aislado: sin correos reales ni HubSpot).`,
         };
     }
 

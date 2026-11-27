@@ -216,6 +216,18 @@ export function PersonaJuridicaForm() {
             formData.set("lang", lang);
             formData.set("website_url", honeypotRef.current);
             formData.set("form_loaded_at", formLoadedAtRef.current);
+            const kycIdemStorageKey = `pci_kyc_pj_idem::${String(data.legalRepEmail || "").trim().toLowerCase()}::${String(data.rnc || "").trim().toLowerCase()}`;
+            let kycIdemKey = "";
+            try {
+                kycIdemKey = sessionStorage.getItem(kycIdemStorageKey) || "";
+                if (!kycIdemKey) {
+                    kycIdemKey = `kyc-pj-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+                    sessionStorage.setItem(kycIdemStorageKey, kycIdemKey);
+                }
+            } catch {
+                kycIdemKey = `kyc-pj-${String(data.legalRepEmail || "").trim().toLowerCase()}-${String(data.rnc || "").trim().toLowerCase()}`;
+            }
+            formData.set("idempotency_key", kycIdemKey);
 
             // Complete field mapping (zero dropped fields)
             const fieldMap: Record<string, string> = {
@@ -318,7 +330,8 @@ export function PersonaJuridicaForm() {
             }
 
             if (data.signature) {
-                const sigFile = dataURLtoFile(data.signature, "firma.png");
+                const sigExt = data.signature.startsWith("data:image/jpeg") ? "jpg" : "png";
+                const sigFile = dataURLtoFile(data.signature, `firma.${sigExt}`);
                 formData.append("firma_digital", sigFile);
             }
 

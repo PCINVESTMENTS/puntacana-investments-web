@@ -510,7 +510,8 @@ export function upsertSandboxFounderLead(params: {
   for (const fe of founderEntries) {
     const feEmail = String(fe.lead?.email || fe.client_autoresponder_to || "").trim().toLowerCase();
     const feProj = String(fe.project_slug || "miches-eco-resort").trim().toLowerCase();
-    const semKey = `${feEmail}::${feProj}`;
+    const feMod = String(fe.modality || fe.lead?.modality || "").trim().toLowerCase() === "capital" ? "capital" : "unidades";
+    const semKey = `${feEmail}::${feProj}::${feMod}`;
     const existingCanon = feEmail ? bySemanticKey.get(semKey) : undefined;
     if (existingCanon) {
       existingCanon.duplicate_attempts_blocked = Number(existingCanon.duplicate_attempts_blocked || 0) + 1 + Number(fe.duplicate_attempts_blocked || 0);
@@ -591,7 +592,9 @@ export function upsertSandboxFounderLead(params: {
     if (feEmail) bySemanticKey.set(semKey, fe);
   }
 
-  // Match incoming request by idempotency_key OR (normalized_email + project_slug)
+  // Match incoming request by idempotency_key OR (normalized_email + project_slug + modality)
+  // so a retry returns the exact same FND-LOC code, while a second legitimate request
+  // (different modality or different future project) preserves its own history & reference.
   let matched: Record<string, any> | undefined;
   if (idemKey) {
     matched = canonicalFounders.find(
@@ -599,7 +602,7 @@ export function upsertSandboxFounderLead(params: {
     );
   }
   if (!matched && normEmail) {
-    matched = bySemanticKey.get(`${normEmail}::${normProject}`);
+    matched = bySemanticKey.get(`${normEmail}::${normProject}::${normModality}`);
   }
 
   let resultRecord: Record<string, any>;
@@ -692,7 +695,186 @@ export function upsertSandboxFounderLead(params: {
     duplicate_attempts_blocked: Number(resultRecord.duplicate_attempts_blocked || 0),
     merged_historical_codes: Array.isArray(resultRecord.merged_historical_codes) ? resultRecord.merged_historical_codes : [],
     previous_reused_code: resultRecord.previous_reused_code ? String(resultRecord.previous_reused_code) : undefined,
+    crm_inquiry_id: resultRecord.crm_inquiry_id || null,
+    crm_inquiry_code: resultRecord.crm_inquiry_code || "",
     count: canonicalFounders.length,
+  };
+}
+
+export function attachM04LinkToInboxEntry(
+  entryId: string,
+  link: { crm_inquiry_id?: number | null; crm_inquiry_code?: string; crm_client_id?: number | null }
+): boolean {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile || !entryId) return false;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  if (!fs.existsSync(inboxFile)) return false;
+  try {
+    const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+    if (!Array.isArray(parsed)) return false;
+    let changed = false;
+    for (const item of parsed) {
+      if (item && String(item.id) === String(entryId)) {
+        if (link.crm_inquiry_id) item.crm_inquiry_id = link.crm_inquiry_id;
+        if (link.crm_inquiry_code) item.crm_inquiry_code = link.crm_inquiry_code;
+        if (link.crm_client_id) item.crm_client_id = link.crm_client_id;
+        changed = true;
+        break;
+      }
+    }
+    if (!changed) return false;
+    const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+    fs.writeFileSync(tmpFile, JSON.stringify(parsed, null, 2), "utf-8");
+    fs.renameSync(tmpFile, inboxFile);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function upsertSandboxMonitoringRequest(params: {
+  name: string;
+  email: string;
+  phone: string;
+  country?: string;
+  project: string;
+  location: string;
+  investment?: string;
+  date?: string;
+  lang?: string;
+  idempotency_key?: string;
+}): {
+  id: string;
+  reference_code: string;
+  deduplicated: boolean;
+  duplicate_attempts_blocked: number;
+  crm_inquiry_id?: number | null;
+  crm_inquiry_code?: string;
+  count: number;
+} | null {
+  const catalogFile = process.env.LOCAL_PROPERTIES_SANDBOX_FILE;
+  if (!catalogFile) return null;
+  const inboxFile = path.join(path.dirname(catalogFile), "test_inbox.json");
+  let existing: Record<string, any>[] = [];
+  try {
+    if (fs.existsSync(inboxFile)) {
+      const parsed = JSON.parse(fs.readFileSync(inboxFile, "utf-8"));
+      if (Array.isArray(parsed)) existing = parsed;
+    }
+  } catch {
+    existing = [];
+  }
+
+  const normEmail = String(params.email || "").trim().toLowerCase();
+  const normProject = String(params.project || "").trim().toLowerCase().replace(/\s+/g, " ");
+  const normLocation = String(params.location || "").trim().toLowerCase().replace(/\s+/g, " ");
+  const idemKey = String(params.idempotency_key || "").trim();
+  const lang = ["es", "en", "fr"].includes(String(params.lang || "").toLowerCase())
+    ? String(params.lang).toLowerCase()
+    : "es";
+  const nowIso = new Date().toISOString();
+
+  const monEntries = existing.filter((e) => e && e.form_type === "investment_monitoring");
+  let maxSeq = 0;
+  for (const item of existing) {
+    const m = /^CNT-LOC-(\d+)$/i.exec(String(item?.reference_code || ""));
+    if (m) {
+      const n = parseInt(m[1], 10);
+      if (n > maxSeq) maxSeq = n;
+    }
+  }
+
+  // Deduplicate retries by idempotency_key OR (email + project + location)
+  // A second legitimate request for a different project/location gets its own CNT-LOC code & history.
+  let matched: Record<string, any> | undefined;
+  if (idemKey) {
+    matched = monEntries.find(
+      (e) =>
+        e.idempotency_key === idemKey ||
+        (Array.isArray(e.seen_idempotency_keys) && e.seen_idempotency_keys.includes(idemKey))
+    );
+  }
+  if (!matched && normEmail && normProject) {
+    matched = monEntries.find((e) => {
+      const eEmail = String(e.lead?.email || e.client_autoresponder_to || "").trim().toLowerCase();
+      const eProj = String(e.monitoring_data?.project || e.property_reference?.title || "").trim().toLowerCase().replace(/\s+/g, " ");
+      const eLoc = String(e.monitoring_data?.location || e.property_reference?.location || "").trim().toLowerCase().replace(/\s+/g, " ");
+      return eEmail === normEmail && eProj === normProject && (!normLocation || !eLoc || eLoc === normLocation);
+    });
+  }
+
+  let resultRecord: Record<string, any>;
+  let deduplicated = false;
+  if (matched) {
+    deduplicated = true;
+    matched.duplicate_attempts_blocked = Number(matched.duplicate_attempts_blocked || 0) + 1;
+    matched.last_attempt_at_iso = nowIso;
+    const seen = Array.isArray(matched.seen_idempotency_keys) ? matched.seen_idempotency_keys : [];
+    if (idemKey && !seen.includes(idemKey)) seen.push(idemKey);
+    matched.seen_idempotency_keys = seen;
+    resultRecord = matched;
+  } else {
+    const reference_code = `CNT-LOC-${String(maxSeq + 1).padStart(3, "0")}`;
+    const id = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    resultRecord = {
+      id,
+      reference_code,
+      idempotency_key: idemKey || `${normEmail}::${normProject}::${normLocation}`,
+      seen_idempotency_keys: idemKey ? [idemKey] : [],
+      duplicate_attempts_blocked: 0,
+      received_at_iso: nowIso,
+      last_attempt_at_iso: nowIso,
+      delivery_mode: "LOCAL_TEST_INBOX_INTERCEPTED",
+      email_status: "intercepted_local",
+      real_email_sent: false,
+      form_type: "investment_monitoring",
+      form_label: "Plan de Monitoreo de Inversión",
+      lang,
+      configured_from: "Web Punta Cana Investments <info@puntacanainvestmentsrd.com>",
+      configured_pci_recipient: "info@puntacanainvestmentsrd.com",
+      client_autoresponder_to: params.email.trim(),
+      admin_subject: `LEAD MONITOREO: ${params.name.trim()} - ${params.project.trim() || "Proyecto"} [${reference_code}]`,
+      client_subject:
+        lang === "en"
+          ? `Monitoring Request Confirmation (${reference_code}) — Punta Cana Investments`
+          : lang === "fr"
+          ? `Confirmation Demande de Suivi (${reference_code}) — Punta Cana Investments`
+          : `Confirmación Plan de Monitoreo (${reference_code}) — Punta Cana Investments`,
+      property_reference: {
+        title: params.project.trim() || "Monitoreo de Inversión",
+        location: params.location.trim() || "Punta Cana",
+        type: "investment_monitoring",
+      },
+      monitoring_data: {
+        country: (params.country || "").trim(),
+        project: params.project.trim(),
+        location: params.location.trim(),
+        investment: (params.investment || "").trim(),
+        date: (params.date || "").trim(),
+      },
+      lead: {
+        name: params.name.trim(),
+        email: params.email.trim(),
+        phone: params.phone.trim(),
+        message: `${params.project.trim()} · ${params.location.trim()} · ${(params.investment || "").trim()} · ${(params.date || "").trim()}`,
+      },
+      deduplication_note: "1 solicitud Monitoreo = 1 aviso PCI + 1 confirmación cliente (idempotente por correo+proyecto en buzón local y M04).",
+    };
+    existing = [resultRecord, ...existing].slice(0, 150);
+  }
+
+  const tmpFile = `${inboxFile}.${process.pid}.${Date.now()}.tmp`;
+  fs.writeFileSync(tmpFile, JSON.stringify(existing, null, 2), "utf-8");
+  fs.renameSync(tmpFile, inboxFile);
+
+  return {
+    id: String(resultRecord.id),
+    reference_code: String(resultRecord.reference_code),
+    deduplicated,
+    duplicate_attempts_blocked: Number(resultRecord.duplicate_attempts_blocked || 0),
+    crm_inquiry_id: resultRecord.crm_inquiry_id || null,
+    crm_inquiry_code: resultRecord.crm_inquiry_code || "",
+    count: existing.filter((e) => e && e.form_type === "investment_monitoring").length,
   };
 }
 

@@ -235,6 +235,18 @@ export function PersonaFisicaForm() {
             formData.set("lang", lang);
             formData.set("website_url", honeypotRef.current);
             formData.set("form_loaded_at", formLoadedAtRef.current);
+            const kycIdemStorageKey = `pci_kyc_pf_idem::${String(data.email || "").trim().toLowerCase()}::${String(data.idDocument || "").trim().toLowerCase()}`;
+            let kycIdemKey = "";
+            try {
+                kycIdemKey = sessionStorage.getItem(kycIdemStorageKey) || "";
+                if (!kycIdemKey) {
+                    kycIdemKey = `kyc-pf-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+                    sessionStorage.setItem(kycIdemStorageKey, kycIdemKey);
+                }
+            } catch {
+                kycIdemKey = `kyc-pf-${String(data.email || "").trim().toLowerCase()}-${String(data.idDocument || "").trim().toLowerCase()}`;
+            }
+            formData.set("idempotency_key", kycIdemKey);
 
             // Complete field mapping (zero dropped fields)
             const fieldMap: Record<string, string> = {
@@ -361,7 +373,8 @@ export function PersonaFisicaForm() {
             }
 
             if (data.signature) {
-                const sigFile = dataURLtoFile(data.signature, "firma.png");
+                const sigExt = data.signature.startsWith("data:image/jpeg") ? "jpg" : "png";
+                const sigFile = dataURLtoFile(data.signature, `firma.${sigExt}`);
                 formData.append("firma_digital", sigFile);
             }
 

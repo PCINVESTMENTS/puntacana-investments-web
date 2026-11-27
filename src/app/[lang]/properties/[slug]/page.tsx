@@ -640,7 +640,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
             <Navbar dict={dict.nav} lang={lang} />
 
             {/* Extended Hero / Header */}
-            <div className="relative h-[60vh] md:h-[70vh]">
+            <div className="relative min-h-[68vh] md:min-h-[72vh] flex flex-col justify-end pt-28 sm:pt-32 md:pt-36">
                 <div className="absolute inset-0">
                     <Image
                         src={property.image}
@@ -653,13 +653,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                         quality={75}
                         className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/10 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-black/60"></div>
                 </div>
 
-                <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
+                <div className="relative z-10 w-full px-5 pb-8 pt-4 sm:px-8 md:p-16">
                     <div className="max-w-7xl mx-auto">
-                        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                            <Link href={`/${lang}#properties`} prefetch={false} className="inline-flex items-center text-luxury-gold hover:text-white uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px]">
+                        <div className="flex flex-wrap items-center justify-between gap-3 mb-6" data-property-hero-actions="true">
+                            <Link href={`/${lang}#properties`} prefetch={false} data-property-back-btn="true" className="inline-flex items-center text-luxury-gold hover:text-white uppercase tracking-widest text-xs font-bold transition-colors min-h-[44px] bg-black/50 backdrop-blur-sm px-3 py-2 rounded border border-luxury-gold/30">
                                 <FaArrowLeft aria-hidden="true" className="mr-2" /> {dict.properties.filters.allLocations}
                             </Link>
                             <FavoriteButton property={property} lang={lang} variant="detail" />
@@ -718,7 +718,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                         );
                                     })()}
                                 </div>
-                                <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-2 shadow-black drop-shadow-lg">
+                                <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif font-bold text-white mb-2 shadow-black drop-shadow-lg">
                                     {translatedTitle}
                                 </h1>
                                 <p className="text-xl md:text-2xl text-gray-200 font-light">
@@ -897,7 +897,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                             return (
                                 <div className="space-y-8">
                                     {showMortgage && (
-                                        <MortgageCalculator price={property.price} />
+                                        <MortgageCalculator price={property.price} lang={lang} />
                                     )}
 
                                     {/* ROI Calculator only for sale properties */}

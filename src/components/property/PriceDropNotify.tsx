@@ -17,18 +17,53 @@ export default function PriceDropNotify({ lang, propertyTitle }: { lang: string;
         }
     };
 
+    const l = lang === "en" || lang === "fr" ? lang : "es";
+    const copy =
+        l === "en"
+            ? {
+                  button: "Notify me of price drops",
+                  active: "Alert Active",
+                  close: "Close",
+                  modalTitle: "Price Drop Alert",
+                  modalDesc: `We will email you immediately if "${propertyTitle}" has a price reduction.`,
+                  placeholder: "your-email@example.com",
+                  confirm: "Confirm Alert",
+                  footer: "Private VIP Insights • No Spam",
+              }
+            : l === "fr"
+            ? {
+                  button: "M'alerter si le prix baisse",
+                  active: "Alerte Activée",
+                  close: "Fermer",
+                  modalTitle: "Alerte de Baisse de Prix",
+                  modalDesc: `Nous vous informerons immédiatement par e-mail si le prix de « ${propertyTitle} » baisse.`,
+                  placeholder: "votre-email@exemple.com",
+                  confirm: "Confirmer l'Alerte",
+                  footer: "Alertes VIP Privées • Sans Spam",
+              }
+            : {
+                  button: "Avísame si baja de precio",
+                  active: "Alerta Activada",
+                  close: "Cerrar",
+                  modalTitle: "Alerta de Precio",
+                  modalDesc: `Te avisaremos por email de inmediato si "${propertyTitle}" tiene una reducción de precio.`,
+                  placeholder: "tu-correo@ejemplo.com",
+                  confirm: "Confirmar Alerta",
+                  footer: "Alertas VIP Privadas • Sin Spam",
+              };
+
     return (
-        <div className="mt-8 border-t border-white/10 pt-8">
+        <div className="mt-8 border-t border-white/10 pt-8" data-price-drop-notify="true" data-lang={l}>
             {!isSubscribed ? (
                 <button
                     onClick={() => setShowModal(true)}
                     className="w-full flex items-center justify-center gap-2 text-luxury-gold hover:text-white transition-colors text-sm font-bold uppercase tracking-widest border border-luxury-gold/30 p-4 rounded hover:border-luxury-gold"
                 >
-                    <FaBell /> {lang === "en" ? "Notify me of price drops" : "Avísame si baja de precio"}
+                    <FaBell /> {copy.button}
                 </button>
             ) : (
                 <div className="flex items-center justify-center gap-2 text-green-500 text-sm font-bold uppercase tracking-widest bg-green-500/10 p-4 rounded border border-green-500/30">
-                    <FaCheck /> {lang === "en" ? "Alert Active" : "Alerta Activada"}
+                    <FaCheck /> {copy.active}
                 </div>
             )}
 
@@ -52,8 +87,8 @@ export default function PriceDropNotify({ lang, propertyTitle }: { lang: string;
                             <button
                                 onClick={() => setShowModal(false)}
                                 className="absolute top-4 right-4 text-gray-500 hover:text-white"
-                                title="Cerrar"
-                                aria-label="Cerrar modal"
+                                title={copy.close}
+                                aria-label={copy.close}
                             >
                                 <FaTimes />
                             </button>
@@ -63,12 +98,10 @@ export default function PriceDropNotify({ lang, propertyTitle }: { lang: string;
                                     <FaBell />
                                 </div>
                                 <h3 className="text-2xl font-serif font-bold text-white mb-2">
-                                    {lang === "en" ? "Price Drop Alert" : "Alerta de Precio"}
+                                    {copy.modalTitle}
                                 </h3>
                                 <p className="text-gray-400 text-sm">
-                                    {lang === "en"
-                                        ? `We will email you immediately if "${propertyTitle}" has a price reduction.`
-                                        : `Te avisaremos por email de inmediato si "${propertyTitle}" tiene una reducción de precio.`}
+                                    {copy.modalDesc}
                                 </p>
                             </div>
 
@@ -78,19 +111,19 @@ export default function PriceDropNotify({ lang, propertyTitle }: { lang: string;
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="your-email@example.com"
+                                    placeholder={copy.placeholder}
                                     className="w-full bg-black border border-white/10 p-4 rounded text-white focus:border-luxury-gold outline-none"
                                 />
                                 <button
                                     type="submit"
                                     className="w-full bg-luxury-gold text-black font-bold py-4 uppercase tracking-widest hover:bg-white transition-colors shadow-lg"
                                 >
-                                    {lang === "en" ? "Confirm Alert" : "Confirmar Alerta"}
+                                    {copy.confirm}
                                 </button>
                             </form>
 
                             <p className="text-[10px] text-gray-600 uppercase text-center mt-6 tracking-widest font-bold">
-                                Secret VIP Insights • No Spam
+                                {copy.footer}
                             </p>
                         </motion.div>
                     </div>
