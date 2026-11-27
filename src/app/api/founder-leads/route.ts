@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { isLocalFileSandbox, upsertSandboxFounderLead } from '@/lib/localSandbox';
+import { isLocalFileSandbox, recordLocalServerOutboundEvent, upsertSandboxFounderLead } from '@/lib/localSandbox';
 import { submitFounderForm } from '@/app/actions/founder';
 
 export const dynamic = 'force-dynamic';
@@ -62,6 +62,28 @@ export async function POST(request: Request) {
             if (!saved) {
                 return NextResponse.json({ success: false, message: 'Local sandbox storage unavailable.' }, { status: 500 });
             }
+            recordLocalServerOutboundEvent({
+                flow: 'founder_lista_cero',
+                provider: 'hubspot',
+                target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+                method: 'POST',
+                blocked: true,
+                simulated: false,
+                status_code: 0,
+                reference_code: saved.sequence_number,
+                reason: 'HUBSPOT_DISABLED_LOCAL',
+            });
+            recordLocalServerOutboundEvent({
+                flow: 'founder_lista_cero',
+                provider: 'resend',
+                target_url: 'https://api.resend.com/emails',
+                method: 'POST',
+                blocked: true,
+                simulated: true,
+                status_code: 0,
+                reference_code: saved.sequence_number,
+                reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+            });
 
             const confirmMsg = saved.deduplicated
                 ? lang === 'en'

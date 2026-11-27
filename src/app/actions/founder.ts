@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { isLocalFileSandbox, upsertSandboxFounderLead } from '@/lib/localSandbox';
+import { isLocalFileSandbox, recordLocalServerOutboundEvent, upsertSandboxFounderLead } from '@/lib/localSandbox';
 import { normalizeLang, PCI_CLIENT_FROM, PCI_TEAM_FROM, resolveExecutionPolicy } from '@/lib/formEmails';
 import { evaluateFormAntispam, extractAntispamFromFormData } from '@/lib/formSecurity';
 
@@ -75,6 +75,28 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
         });
         const seq = saved?.sequence_number || 'FND-LOC-001';
         const dedup = Boolean(saved?.deduplicated);
+        recordLocalServerOutboundEvent({
+            flow: 'founder_lista_cero',
+            provider: 'hubspot',
+            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+            method: 'POST',
+            blocked: true,
+            simulated: false,
+            status_code: 0,
+            reference_code: seq,
+            reason: 'HUBSPOT_DISABLED_LOCAL',
+        });
+        recordLocalServerOutboundEvent({
+            flow: 'founder_lista_cero',
+            provider: 'resend',
+            target_url: 'https://api.resend.com/emails',
+            method: 'POST',
+            blocked: true,
+            simulated: true,
+            status_code: 0,
+            reference_code: seq,
+            reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+        });
         return {
             success: true,
             sandbox_isolated: true,

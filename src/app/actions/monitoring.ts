@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalFileSandbox } from '@/lib/localSandbox';
+import { appendSandboxTestInboxEntry, isLocalFileSandbox, recordLocalServerOutboundEvent } from '@/lib/localSandbox';
 import {
     normalizeLang,
     PCI_CLIENT_FROM,
@@ -84,7 +84,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
     }
 
     if (isLocalFileSandbox()) {
-        appendSandboxTestInboxEntry({
+        const savedMon = appendSandboxTestInboxEntry({
             form_type: 'investment_monitoring',
             form_label: 'Plan de Monitoreo de Inversión',
             lang,
@@ -97,9 +97,32 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
             lead: { name, email, phone, message: `${project || ''} · ${location || ''} · ${investment || ''} · ${date || ''}` },
             deduplication_note: '1 solicitud Monitoreo = 1 aviso PCI + 1 confirmación cliente (buzón local)',
         });
+        recordLocalServerOutboundEvent({
+            flow: 'investment_monitoring',
+            provider: 'hubspot',
+            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+            method: 'POST',
+            blocked: true,
+            simulated: false,
+            status_code: 0,
+            reference_code: savedMon?.reference_code || '',
+            reason: 'HUBSPOT_DISABLED_LOCAL',
+        });
+        recordLocalServerOutboundEvent({
+            flow: 'investment_monitoring',
+            provider: 'resend',
+            target_url: 'https://api.resend.com/emails',
+            method: 'POST',
+            blocked: true,
+            simulated: true,
+            status_code: 0,
+            reference_code: savedMon?.reference_code || '',
+            reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+        });
         return {
             success: true,
-            message: 'Solicitud de Monitoreo registrada en el Buzón Local de Pruebas (sin enviar correos reales).',
+            reference_code: savedMon?.reference_code || '',
+            message: `Solicitud de Monitoreo registrada en el Buzón Local de Pruebas bajo ${savedMon?.reference_code || 'CNT-LOC'} (sin correos reales ni HubSpot).`,
         };
     }
 

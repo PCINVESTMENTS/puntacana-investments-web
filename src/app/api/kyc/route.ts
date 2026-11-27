@@ -226,11 +226,35 @@ export async function POST(request: Request) {
         }
 
         if (isLocalFileSandbox()) {
+            const { recordLocalServerOutboundEvent } = await import('@/lib/localSandbox');
             if (process.env.LOCAL_PROPERTIES_SANDBOX_FILE) {
                 const direct = await saveLocalDueDiligenceDirect(formData);
                 if ('error' in direct && direct.error) {
                     return NextResponse.json({ success: false, error: direct.error }, { status: direct.status || 400 });
                 }
+                const kycRef = String(direct.submission?.reference_code || direct.submission?.id || '');
+                recordLocalServerOutboundEvent({
+                    flow: 'kyc_due_diligence',
+                    provider: 'hubspot',
+                    target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+                    method: 'POST',
+                    blocked: true,
+                    simulated: false,
+                    status_code: 0,
+                    reference_code: kycRef,
+                    reason: 'HUBSPOT_DISABLED_LOCAL',
+                });
+                recordLocalServerOutboundEvent({
+                    flow: 'kyc_due_diligence',
+                    provider: 'resend',
+                    target_url: 'https://api.resend.com/emails',
+                    method: 'POST',
+                    blocked: true,
+                    simulated: true,
+                    status_code: 0,
+                    reference_code: kycRef,
+                    reason: 'RESEND_SIMULATED_LOCAL_OUTBOX',
+                });
                 return NextResponse.json({
                     success: true,
                     sandbox_isolated: true,
