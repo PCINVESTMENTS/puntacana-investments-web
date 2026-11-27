@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import {
   getPhase4BackendBaseUrl,
   getServerStagingApiKey,
-  isCloudStagingSimulatedMode,
+  isCloudStagingBackend,
   isLocalFileSandbox,
 } from '@/lib/localSandbox';
 
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       Boolean(localBackendBase) &&
       (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:'));
     const isStagingAllowed =
-      isCloudStagingSimulatedMode() &&
+      isCloudStagingBackend() &&
       Boolean(localBackendBase) &&
       !localBackendBase.includes('puntacana-fortress-production.up.railway.app');
 

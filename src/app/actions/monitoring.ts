@@ -4,9 +4,11 @@ import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import {
     attachM04LinkToInboxEntry,
+    dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingSimulatedMode,
+    isCloudStagingBackend,
+    isCloudStagingRealAllowlistMode,
     isLocalFileSandbox,
     recordLocalServerOutboundEvent,
     upsertSandboxMonitoringRequest,
@@ -236,7 +238,19 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         };
     }
 
-    if (isCloudStagingSimulatedMode()) {
+    if (isCloudStagingBackend()) {
+        const isStage2Real = isCloudStagingRealAllowlistMode();
+        let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
+        if (isStage2Real) {
+            stage2Policy = resolveExecutionPolicy(email);
+            if (!stage2Policy.allowed) {
+                console.error(`[Stage2 Monitoring Fail-Closed:${stage2Policy.code}] ${stage2Policy.error}`);
+                return {
+                    success: false,
+                    message: stage2Policy.error,
+                };
+            }
+        }
         const idempotencyKey = String(formData.get('idempotency_key') || '').trim();
         const backendBase = getPhase4BackendBaseUrl();
         const apiKey = getServerStagingApiKey();
@@ -268,6 +282,59 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
             };
         }
         const refCode = String(json.reference_code || 'CNT-STG-001');
+        if (isStage2Real && stage2Policy && stage2Policy.allowed) {
+            let clientEmailAccepted = false;
+            let resendIds: { admin?: string; client?: string } = {};
+            if (!json.deduplicated) {
+                const firstName = name.split(' ')[0] || (lang === 'en' ? 'Client' : lang === 'fr' ? 'Client' : 'Cliente');
+                const clientSubject =
+                    lang === 'en'
+                        ? `[${refCode}] We have received your Monitoring request - Punta Cana Investments`
+                        : lang === 'fr'
+                        ? `[${refCode}] Nous avons reçu votre demande de suivi - Punta Cana Investments`
+                        : `[${refCode}] Hemos recibido tu solicitud de Monitoreo - Punta Cana Investments`;
+                const clientTitle = lang === 'en' ? 'Request in Process' : lang === 'fr' ? 'Demande en cours' : 'Solicitud en Proceso';
+                const clientBody =
+                    lang === 'en'
+                        ? `Reference: <strong>${refCode}</strong>. An expert consultant is reviewing your project (${project || 'N/A'}) and will contact you within 24 hours.`
+                        : lang === 'fr'
+                        ? `Référence : <strong>${refCode}</strong>. Un consultant expert examine votre projet (${project || 'N/A'}) et vous contactera sous 24 heures.`
+                        : `Referencia: <strong>${refCode}</strong>. Un consultor experto está revisando los datos de tu proyecto (${project || 'N/A'}) y se comunicará contigo dentro de las próximas 24 horas.`;
+                const clientHtml = `<html><body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;max-width:600px;margin:0 auto;padding:0;"><div style="background:#111;padding:32px 20px;text-align:center;border-bottom:2px solid #c9ae5d;"><img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments" style="max-width:280px;height:auto;"/></div><div style="padding:32px 28px;background:#0a0a0a;"><h2 style="color:#c9ae5d;text-transform:uppercase;margin-top:0;text-align:center;">${clientTitle}</h2><p style="font-size:15px;color:#e0e0e0;">${lang === 'en' ? 'Hello' : lang === 'fr' ? 'Bonjour' : 'Hola'} <strong>${firstName}</strong>,</p><p style="font-size:15px;color:#e0e0e0;line-height:1.6;">${clientBody}</p></div></body></html>`;
+                const adminHtml = `<html><body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;max-width:600px;margin:0 auto;padding:0;"><div style="background:#111;padding:28px 20px;text-align:center;border-bottom:2px solid #c9ae5d;"><img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments" style="max-width:260px;height:auto;"/></div><div style="padding:28px;background:#0a0a0a;"><h2 style="color:#c9ae5d;text-transform:uppercase;text-align:center;">NUEVO LEAD MONITOREO [${refCode}]</h2><p><strong>CRM M04:</strong> ${json.crm_inquiry_code || ''}</p><p><strong>Nombre:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Teléfono:</strong> ${phone}</p><p><strong>País:</strong> ${country}</p><p><strong>Proyecto:</strong> ${project}</p><p><strong>Ubicación:</strong> ${location}</p><p><strong>Inversión:</strong> ${investment}</p><p><strong>Fecha Entrega:</strong> ${date}</p></div></body></html>`;
+                const sent = await dispatchCloudStagingStage2Emails({
+                    flow: 'investment_monitoring',
+                    referenceCode: refCode,
+                    crmInquiryCode: json.crm_inquiry_code || '',
+                    lang,
+                    teamRecipients: stage2Policy.teamRecipients,
+                    clientRecipient: stage2Policy.clientRecipient,
+                    adminEmail: {
+                        from: PCI_TEAM_FROM,
+                        subject: `LEAD MONITOREO [${refCode}]: ${name} - ${project}`,
+                        html: adminHtml,
+                    },
+                    clientEmail: {
+                        from: PCI_CLIENT_FROM,
+                        subject: clientSubject,
+                        html: clientHtml,
+                    },
+                });
+                clientEmailAccepted = sent.clientAccepted;
+                resendIds = { admin: sent.adminResendId, client: sent.clientResendId };
+            }
+            return {
+                success: true,
+                sandbox_isolated: false,
+                email_sent: clientEmailAccepted,
+                resend_ids: resendIds,
+                deduplicated: Boolean(json.deduplicated),
+                reference_code: refCode,
+                crm_inquiry_id: json.crm_inquiry_id || null,
+                crm_inquiry_code: json.crm_inquiry_code || '',
+                message: `Solicitud de Monitoreo registrada bajo ${refCode}.`,
+            };
+        }
         return {
             success: true,
             sandbox_isolated: true,

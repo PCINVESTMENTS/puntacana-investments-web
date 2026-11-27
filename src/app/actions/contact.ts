@@ -5,9 +5,11 @@ import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import {
     appendSandboxTestInboxEntry,
+    dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingSimulatedMode,
+    isCloudStagingBackend,
+    isCloudStagingRealAllowlistMode,
     isLocalFileSandbox,
     recordCloudStagingOutboxEvent,
     recordLocalServerOutboundEvent,
@@ -147,9 +149,21 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '').trim()
         : 'General';
 
-    // ISOLATED LOCAL SANDBOX OR CLOUD STAGING STAGE 1 SIMULATED INTERCEPTOR (ZERO real emails, ZERO HubSpot):
-    if (isLocalFileSandbox() || isCloudStagingSimulatedMode()) {
-        const isCloudStaging = isCloudStagingSimulatedMode();
+    // ISOLATED LOCAL SANDBOX OR CLOUD STAGING (Stage 1 simulated OR Stage 2 real-Resend allowlist):
+    if (isLocalFileSandbox() || isCloudStagingBackend()) {
+        const isCloudStaging = isCloudStagingBackend();
+        const isStage2Real = isCloudStagingRealAllowlistMode();
+        let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
+        if (isStage2Real) {
+            stage2Policy = resolveExecutionPolicy(email);
+            if (!stage2Policy.allowed) {
+                console.error(`[Stage2 Contact Fail-Closed:${stage2Policy.code}] ${stage2Policy.error}`);
+                return {
+                    success: false,
+                    message: stage2Policy.error,
+                };
+            }
+        }
         // 1. Send idempotently to isolated CRM V2 M04 LeadInquiry endpoint
         let crmIngest: {
             created?: boolean;
@@ -225,34 +239,36 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             }
         }
 
-        const hsLog = {
-            flow: flowType,
-            provider: 'hubspot',
-            target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
-            method: 'POST',
-            blocked: true,
-            simulated: false,
-            status_code: 0,
-            crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
-            reason: isCloudStaging ? 'HUBSPOT_DISABLED_STAGING_STAGE1' : 'HUBSPOT_DISABLED_LOCAL',
-        };
-        const resendLog = {
-            flow: flowType,
-            provider: 'resend',
-            target_url: 'https://api.resend.com/emails',
-            method: 'POST',
-            blocked: true,
-            simulated: true,
-            status_code: 0,
-            crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
-            reason: isCloudStaging ? 'RESEND_SIMULATED_STAGING_STAGE1' : 'RESEND_SIMULATED_LOCAL_OUTBOX',
-        };
-        if (isCloudStaging) {
-            await recordCloudStagingOutboxEvent(hsLog);
-            await recordCloudStagingOutboxEvent(resendLog);
-        } else {
-            recordLocalServerOutboundEvent(hsLog);
-            recordLocalServerOutboundEvent(resendLog);
+        if (!isStage2Real) {
+            const hsLog = {
+                flow: flowType,
+                provider: 'hubspot',
+                target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+                method: 'POST',
+                blocked: true,
+                simulated: false,
+                status_code: 0,
+                crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                reason: isCloudStaging ? 'HUBSPOT_DISABLED_STAGING_STAGE1' : 'HUBSPOT_DISABLED_LOCAL',
+            };
+            const resendLog = {
+                flow: flowType,
+                provider: 'resend',
+                target_url: 'https://api.resend.com/emails',
+                method: 'POST',
+                blocked: true,
+                simulated: true,
+                status_code: 0,
+                crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || '',
+                reason: isCloudStaging ? 'RESEND_SIMULATED_STAGING_STAGE1' : 'RESEND_SIMULATED_LOCAL_OUTBOX',
+            };
+            if (isCloudStaging) {
+                await recordCloudStagingOutboxEvent(hsLog);
+                await recordCloudStagingOutboxEvent(resendLog);
+            } else {
+                recordLocalServerOutboundEvent(hsLog);
+                recordLocalServerOutboundEvent(resendLog);
+            }
         }
 
         // If CRM V2 M04 deduplicated an identical retry, do NOT duplicate notification
@@ -338,6 +354,66 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             : null;
 
         const finalRef = crmIngest?.inquiry?.inquiry_code || saved?.reference_code || (isCloudStaging ? 'STG' : 'LOCAL');
+
+        if (isStage2Real && stage2Policy && stage2Policy.allowed) {
+            const built =
+                isOffMarketFlow && parsedOffMarket
+                    ? buildOffMarketEmails({
+                          referenceCode: finalRef,
+                          lang,
+                          name,
+                          company: parsedOffMarket.company || '',
+                          email: stage2Policy.clientRecipient,
+                          phone,
+                          tab: parsedOffMarket.tab === 'hoteles' ? 'hoteles' : 'oportunidad',
+                          budget: parsedOffMarket.budget || '',
+                          regions: Array.isArray(parsedOffMarket.regions) ? parsedOffMarket.regions : [],
+                          details: parsedOffMarket.details || {},
+                          freeText: parsedOffMarket.freeText || '',
+                      })
+                    : buildPropertyOrHotelEmails({
+                          referenceCode: finalRef,
+                          formCategory,
+                          lang,
+                          siteOrigin,
+                          name,
+                          email: stage2Policy.clientRecipient,
+                          phone,
+                          message,
+                          interestText: cleanInterest,
+                          property: parsedProperty,
+                      });
+            const sent = await dispatchCloudStagingStage2Emails({
+                flow: flowType,
+                referenceCode: finalRef,
+                crmInquiryCode: crmIngest?.inquiry?.inquiry_code || finalRef,
+                lang,
+                teamRecipients: stage2Policy.teamRecipients,
+                clientRecipient: stage2Policy.clientRecipient,
+                adminEmail: built.adminEmail,
+                clientEmail: built.clientEmail,
+            });
+            return {
+                success: true,
+                sandbox_isolated: false,
+                reference_code: finalRef,
+                crm_inquiry_id: crmIngest?.inquiry?.id || null,
+                email_sent: sent.clientAccepted,
+                resend_ids: { admin: sent.adminResendId, client: sent.clientResendId },
+                message: sent.clientAccepted
+                    ? lang === 'en'
+                        ? `Inquiry registered under ${finalRef}. We sent a confirmation email to your address.`
+                        : lang === 'fr'
+                        ? `Demande enregistrée sous la référence ${finalRef}. Un e-mail de confirmation a été envoyé à votre adresse.`
+                        : `Consulta registrada bajo la referencia ${finalRef}. Hemos enviado un correo de confirmación a tu dirección.`
+                    : lang === 'en'
+                    ? `Inquiry registered under ${finalRef} (confirmation email could not be delivered right now).`
+                    : lang === 'fr'
+                    ? `Demande enregistrée sous la référence ${finalRef} (l'e-mail de confirmation n'a pas pu être envoyé pour le moment).`
+                    : `Consulta registrada bajo la referencia ${finalRef} (el correo de confirmación no pudo enviarse en este momento).`,
+            };
+        }
+
         return {
             success: true,
             sandbox_isolated: true,

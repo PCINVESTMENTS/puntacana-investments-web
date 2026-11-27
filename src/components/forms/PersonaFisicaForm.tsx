@@ -393,7 +393,10 @@ export function PersonaFisicaForm() {
                 let emailSent = false;
                 let emailAttempted = false;
 
-                if (!sandboxIsolated) {
+                if (payload?.email_handled_by_api) {
+                    emailSent = Boolean(payload?.email_sent);
+                    emailAttempted = Boolean(payload?.email_attempted);
+                } else if (!sandboxIsolated) {
                     emailAttempted = true;
                     try {
                         const mailRes = await sendKYCEmailNotification({

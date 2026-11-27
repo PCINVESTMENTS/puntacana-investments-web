@@ -149,10 +149,10 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
                 {state.sandbox_isolated ? (
                     <p data-monitoring-local-notice="true" className="text-xs text-luxury-gold/90 mt-3 italic">
                         {lang === 'fr'
-                            ? 'Mode local isolé : dossier enregistré dans la boîte interne et relié au CRM sans envoi d\'e-mail externe.'
+                            ? 'Environnement Staging simulé : dossier enregistré dans la boîte interne et relié au CRM sans envoi d\'e-mail externe.'
                             : lang === 'en'
-                            ? 'Isolated local mode: saved in internal sandbox inbox and linked to CRM without sending external emails.'
-                            : 'Modo local aislado: solicitud guardada en buzón interno y vinculada a M04 sin enviar correos externos.'}
+                            ? 'Simulated Staging environment: saved in internal inbox and linked to CRM without sending external emails.'
+                            : 'Entorno Staging simulado: solicitud guardada en buzón interno y vinculada a M04 sin enviar correos externos.'}
                     </p>
                 ) : state.email_sent === true ? (
                     <p data-monitoring-spam-notice="true" className="text-sm text-gray-400 mt-4 italic">

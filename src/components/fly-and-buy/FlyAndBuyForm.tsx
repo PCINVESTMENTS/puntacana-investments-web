@@ -100,21 +100,25 @@ export default function FlyAndBuyForm({ dict, lang }: FlyAndBuyFormProps) {
                     </div>
                 )}
                 <p className="text-gray-300 text-lg leading-relaxed">
-                    {(state as any).sandbox_isolated && state.message ? state.message : dict.success.message}
+                    {state.message ? state.message : dict.success.message}
                 </p>
-                <p className="text-sm text-gray-400 mt-4 italic">
-                    {(state as any).sandbox_isolated
-                        ? lang === 'en'
-                            ? 'Isolated local mode: visible immediately in Dashboard -> Fly & Buy.'
+                {(state as any).sandbox_isolated ? (
+                    <p className="text-sm text-gray-400 mt-4 italic">
+                        {lang === 'en'
+                            ? 'Simulated Staging environment: visible immediately in Dashboard -> Fly & Buy (0 external emails sent).'
                             : lang === 'fr'
-                            ? 'Mode local isolé : visible immédiatement dans le Dashboard -> Fly & Buy.'
-                            : 'Modo local aislado: visible de inmediato en el Dashboard -> Fly & Buy.'
-                        : lang === 'es'
-                        ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
-                        : lang === 'fr'
-                        ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
-                        : 'Please also check your junk or spam folder.'}
-                </p>
+                            ? 'Environnement Staging simulé : visible immédiatement dans le Dashboard -> Fly & Buy (0 e-mail externe envoyé).'
+                            : 'Entorno Staging simulado: visible de inmediato en el Dashboard -> Fly & Buy (0 correos externos enviados).'}
+                    </p>
+                ) : (state as any).email_sent === true ? (
+                    <p data-flybuy-spam-notice="true" className="text-sm text-gray-400 mt-4 italic">
+                        {lang === 'es'
+                            ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                            : lang === 'fr'
+                            ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
+                            : 'Please also check your junk or spam folder.'}
+                    </p>
+                ) : null}
                 <button
                     onClick={() => window.location.reload()}
                     className="mt-8 px-8 py-3 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-all rounded-full uppercase tracking-widest text-sm font-bold"

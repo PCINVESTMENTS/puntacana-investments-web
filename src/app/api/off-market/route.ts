@@ -2,9 +2,11 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import {
+    dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingSimulatedMode,
+    isCloudStagingBackend,
+    isCloudStagingRealAllowlistMode,
     isLocalFileSandbox,
     recordLocalServerOutboundEvent,
     upsertSandboxOffMarketApplication,
@@ -222,7 +224,19 @@ export async function POST(request: Request) {
             );
         }
 
-        if (isCloudStagingSimulatedMode()) {
+        if (isCloudStagingBackend()) {
+            const isStage2Real = isCloudStagingRealAllowlistMode();
+            let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
+            if (isStage2Real) {
+                stage2Policy = resolveExecutionPolicy(email);
+                if (!stage2Policy.allowed) {
+                    console.error(`[Stage2 OffMarket Fail-Closed:${stage2Policy.code}] ${stage2Policy.error}`);
+                    return NextResponse.json(
+                        { success: false, code: stage2Policy.code, message: stage2Policy.error },
+                        { status: 403 }
+                    );
+                }
+            }
             const backendBase = getPhase4BackendBaseUrl();
             const apiKey = getServerStagingApiKey();
             const resp = await fetch(`${backendBase}/api/phase7-sandbox/off-market/submit/`, {
@@ -255,6 +269,61 @@ export async function POST(request: Request) {
                 );
             }
             const effectiveRef = String(json.reference_code || json.crm_inquiry_code || json.web_reference_code || 'OM-STG');
+            if (isStage2Real && stage2Policy && stage2Policy.allowed) {
+                let clientEmailAccepted = false;
+                let resendIds: { admin?: string; client?: string } = {};
+                if (!json.deduplicated) {
+                    const built = buildOffMarketEmails({
+                        referenceCode: effectiveRef,
+                        lang,
+                        name,
+                        company,
+                        email: stage2Policy.clientRecipient,
+                        phone,
+                        tab,
+                        budget,
+                        regions,
+                        details,
+                        freeText,
+                    });
+                    const sent = await dispatchCloudStagingStage2Emails({
+                        flow: 'off_market',
+                        referenceCode: effectiveRef,
+                        crmInquiryCode: json.crm_inquiry_code || effectiveRef,
+                        lang,
+                        teamRecipients: stage2Policy.teamRecipients,
+                        clientRecipient: stage2Policy.clientRecipient,
+                        adminEmail: built.adminEmail,
+                        clientEmail: built.clientEmail,
+                    });
+                    clientEmailAccepted = sent.clientAccepted;
+                    resendIds = { admin: sent.adminResendId, client: sent.clientResendId };
+                }
+                return NextResponse.json(
+                    {
+                        success: true,
+                        sandbox_isolated: false,
+                        id: json.id,
+                        reference_code: effectiveRef,
+                        web_reference_code: json.web_reference_code || '',
+                        crm_inquiry_id: json.crm_inquiry_id || null,
+                        crm_inquiry_code: json.crm_inquiry_code || null,
+                        deduplicated: Boolean(json.deduplicated),
+                        email_sent: clientEmailAccepted,
+                        email_failed: !json.deduplicated && !clientEmailAccepted,
+                        email_status: clientEmailAccepted ? 'sent_stage2_allowlist' : 'failed_stage2_allowlist',
+                        resend_ids: resendIds,
+                        message: clientEmailAccepted
+                            ? lang === 'en'
+                                ? `Your Off-Market request has been registered under ${effectiveRef}. Confirmation email sent.`
+                                : lang === 'fr'
+                                ? `Votre demande Off-Market a été enregistrée sous ${effectiveRef}. E-mail de confirmation envoyé.`
+                                : `Tu requerimiento Off-Market quedó registrado bajo ${effectiveRef} (Ref. web: ${json.web_reference_code || 'OM-STG'}). Hemos enviado un correo de confirmación.`
+                            : `Tu requerimiento Off-Market quedó registrado bajo ${effectiveRef}.`,
+                    },
+                    { status: json.deduplicated ? 200 : 201 }
+                );
+            }
             const message =
                 lang === 'en'
                     ? `Your Off-Market request has been registered in M04 CRM under reference ${effectiveRef} (simulated Stage 1 mode: 0 real emails dispatched).`

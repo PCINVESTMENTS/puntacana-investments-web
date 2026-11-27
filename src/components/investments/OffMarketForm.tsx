@@ -550,15 +550,15 @@ export default function OffMarketForm({ lang, isSandbox = false }: { lang: strin
                             >
                                 {l === "en" ? (
                                     <>
-                                        <strong className="text-[#d4af37]">Isolated local mode:</strong> upon submission, your request is recorded with a tracking reference directly in the Dashboard local test inbox (no real emails are sent to clients or production).
+                                        <strong className="text-[#d4af37]">Simulated Staging environment:</strong> upon submission, your request is recorded with a tracking reference directly in Dashboard M04 Leads (no real external emails are sent in Stage 1).
                                     </>
                                 ) : l === "fr" ? (
                                     <>
-                                        <strong className="text-[#d4af37]">Mode local isolé :</strong> lors de l&apos;envoi, votre demande est enregistrée avec une référence de suivi directement dans la boîte de test locale du tableau de bord (aucun e-mail réel n&apos;est envoyé aux clients ni en production).
+                                        <strong className="text-[#d4af37]">Environnement Staging simulé :</strong> lors de l&apos;envoi, votre demande est enregistrée avec une référence de suivi directement dans M04 Leads du Dashboard (aucun e-mail externe réel en Étape 1).
                                     </>
                                 ) : (
                                     <>
-                                        <strong className="text-[#d4af37]">Modo local aislado:</strong> al enviar este requerimiento, su solicitud queda registrada con código de referencia directamente en el buzón local de pruebas del Dashboard (sin envío de correos reales a clientes ni a producción).
+                                        <strong className="text-[#d4af37]">Entorno Staging simulado:</strong> al enviar este requerimiento, su solicitud queda registrada con código de referencia directamente en M04 Leads del Dashboard (sin envío de correos externos en Etapa A).
                                     </>
                                 )}
                             </p>

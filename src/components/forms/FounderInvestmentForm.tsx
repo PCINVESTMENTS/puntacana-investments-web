@@ -47,7 +47,7 @@ const founderCopy = {
         successTitle: '¡Solicitud VIP Recibida!',
         dedupTitle: 'Solicitud Ya Registrada (Sin Duplicar)',
         refLabel: 'Código de Referencia:',
-        localNotice: 'Modo local aislado: registro verificado en el buzón interno sin enviar correos externos.',
+        localNotice: 'Entorno Staging simulado: registro verificado en el buzón interno sin enviar correos externos.',
         prodEmailNotice: 'Te hemos enviado un correo confirmando la recepción de tu solicitud. Verifica tu carpeta de Spam si no lo ves.',
         networkError: 'Se perdió la respuesta de red antes de confirmar. Puedes reintentar de forma segura: tu código de idempotencia evita registros duplicados.',
         back: 'Volver',

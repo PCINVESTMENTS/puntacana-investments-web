@@ -137,7 +137,7 @@ export default function AIAssistant({ lang }: { lang: string }) {
             const code = data?.inquiry?.inquiry_code || "INQ-AI";
             setHandoffResult({
                 code,
-                message: `Historial transferido al Centro de Mando bajo ${code}. Un asesor continuará desde este punto (modo simulado local).`,
+                message: `Historial transferido al Centro de Mando bajo ${code}. Un asesor continuará desde este punto.`,
             });
             setShowHandoffForm(false);
             setMessages((prev) => [

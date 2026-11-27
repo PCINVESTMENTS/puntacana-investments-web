@@ -5,10 +5,12 @@ import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
 import {
     appendSandboxFlyAndBuyLead,
+    dispatchCloudStagingStage2Emails,
     fetchLocalSandboxPhase8,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingSimulatedMode,
+    isCloudStagingBackend,
+    isCloudStagingRealAllowlistMode,
     isLocalFileSandbox,
     isLocalSandboxEnabled,
     linkSandboxFlyAndBuyCrmInquiry,
@@ -292,8 +294,20 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         };
     }
 
-    // CLOUD STAGING STAGE 1 SIMULATED MODE (Vercel -> Railway Staging PostgreSQL; 0 real emails, 0 HubSpot)
-    if (isCloudStagingSimulatedMode()) {
+    // CLOUD STAGING (Stage 1 simulated OR Stage 2 real-Resend allowlist -> Railway Staging PostgreSQL; 0 HubSpot)
+    if (isCloudStagingBackend()) {
+        const isStage2Real = isCloudStagingRealAllowlistMode();
+        let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
+        if (isStage2Real) {
+            stage2Policy = resolveExecutionPolicy(email);
+            if (!stage2Policy.allowed) {
+                console.error(`[Stage2 FlyBuy Fail-Closed:${stage2Policy.code}] ${stage2Policy.error}`);
+                return {
+                    success: false,
+                    message: stage2Policy.error,
+                };
+            }
+        }
         const builtPreview = buildFlyAndBuyEmails({
             referenceCode: 'FB-STG',
             lang: safeLang,
@@ -347,6 +361,56 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
             };
         }
         const effectiveRef = json.reference_code || json.crm_inquiry_code || json.web_reference_code || 'FB-STG';
+        if (isStage2Real && stage2Policy && stage2Policy.allowed) {
+            const finalBuilt = buildFlyAndBuyEmails({
+                referenceCode: effectiveRef,
+                lang: safeLang,
+                name,
+                email: stage2Policy.clientRecipient,
+                phone,
+                country,
+                proposedDates: 'Por Definir',
+                objectives: objectivesArr,
+                propertyTypes: propertyTypesArr,
+                investmentFocus: investmentFocusArr,
+                experience,
+                horizon,
+                visited,
+                motivation: motivationArr,
+                specificProperty,
+                comments,
+            });
+            const sent = await dispatchCloudStagingStage2Emails({
+                flow: 'fly_and_buy',
+                referenceCode: effectiveRef,
+                crmInquiryCode: json.crm_inquiry_code || effectiveRef,
+                lang: safeLang,
+                teamRecipients: stage2Policy.teamRecipients,
+                clientRecipient: stage2Policy.clientRecipient,
+                adminEmail: finalBuilt.adminEmail,
+                clientEmail: finalBuilt.clientEmail,
+            });
+            return {
+                success: true,
+                sandbox_isolated: false,
+                reference_code: effectiveRef,
+                web_reference_code: json.web_reference_code || '',
+                crm_inquiry_id: json.crm_inquiry_id || null,
+                email_sent: sent.clientAccepted,
+                resend_ids: { admin: sent.adminResendId, client: sent.clientResendId },
+                message: sent.clientAccepted
+                    ? safeLang === 'en'
+                        ? `Fly & Buy application registered under ${effectiveRef} (Web Ref: ${json.web_reference_code || 'FB-STG'}). Confirmation email sent.`
+                        : safeLang === 'fr'
+                        ? `Demande Fly & Buy enregistrée sous ${effectiveRef} (Réf. Web : ${json.web_reference_code || 'FB-STG'}). E-mail de confirmation envoyé.`
+                        : `Solicitud Fly & Buy registrada bajo ${effectiveRef} (Ref. web: ${json.web_reference_code || 'FB-STG'}). Te enviamos un correo de confirmación.`
+                    : safeLang === 'en'
+                    ? `Fly & Buy application registered under ${effectiveRef} (confirmation email could not be delivered right now).`
+                    : safeLang === 'fr'
+                    ? `Demande Fly & Buy enregistrée sous ${effectiveRef} (l'e-mail de confirmation n'a pas pu être envoyé).`
+                    : `Solicitud Fly & Buy registrada bajo ${effectiveRef} (el correo de confirmación no pudo enviarse en este momento).`,
+            };
+        }
         return {
             success: true,
             sandbox_isolated: true,

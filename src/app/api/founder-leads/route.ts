@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import {
     attachM04LinkToInboxEntry,
+    dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingSimulatedMode,
+    isCloudStagingBackend,
+    isCloudStagingRealAllowlistMode,
     isLocalFileSandbox,
     recordLocalServerOutboundEvent,
     upsertSandboxFounderLead,
 } from '@/lib/localSandbox';
+import { PCI_CLIENT_FROM, PCI_TEAM_FROM, resolveExecutionPolicy } from '@/lib/formEmails';
 import { submitFounderForm } from '@/app/actions/founder';
 
 export const dynamic = 'force-dynamic';
@@ -203,7 +206,19 @@ export async function POST(request: Request) {
             );
         }
 
-        if (isCloudStagingSimulatedMode()) {
+        if (isCloudStagingBackend()) {
+            const isStage2Real = isCloudStagingRealAllowlistMode();
+            let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
+            if (isStage2Real) {
+                stage2Policy = resolveExecutionPolicy(email);
+                if (!stage2Policy.allowed) {
+                    console.error(`[Stage2 Founder Fail-Closed:${stage2Policy.code}] ${stage2Policy.error}`);
+                    return NextResponse.json(
+                        { success: false, code: stage2Policy.code, message: stage2Policy.error },
+                        { status: 403 }
+                    );
+                }
+            }
             const backendBase = getPhase4BackendBaseUrl();
             const apiKey = getServerStagingApiKey();
             const resp = await fetch(`${backendBase}/api/phase7-sandbox/founder-leads/submit/`, {
@@ -233,6 +248,58 @@ export async function POST(request: Request) {
             }
             const seq = String(json.sequence_number || 'FND-STG-001');
             const dedup = Boolean(json.deduplicated);
+            if (isStage2Real && stage2Policy && stage2Policy.allowed) {
+                let clientEmailAccepted = false;
+                let resendIds: { admin?: string; client?: string } = {};
+                if (!dedup) {
+                    const firstName = name.split(' ')[0] || 'Inversor';
+                    const modLabel = modality === 'capital' ? 'Socio de Capital' : 'Inversor de Unidades';
+                    const clientSubject =
+                        lang === 'en'
+                            ? `[${seq}] VIP Zero List Request Received - Punta Cana Investments`
+                            : lang === 'fr'
+                            ? `[${seq}] Demande VIP Liste Zéro Reçue - Punta Cana Investments`
+                            : `[${seq}] Solicitud VIP Lista Cero Recibida - Punta Cana Investments`;
+                    const clientHtml = `<html><body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;max-width:600px;margin:0 auto;padding:0;"><div style="background:#111;padding:32px 20px;text-align:center;border-bottom:2px solid #c9ae5d;"><img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments" style="max-width:280px;height:auto;"/></div><div style="padding:32px 28px;background:#0a0a0a;"><h2 style="color:#c9ae5d;text-transform:uppercase;text-align:center;">Acceso Lista Cero Confirmado</h2><p style="font-size:15px;color:#e0e0e0;">Estimado/a <strong>${firstName}</strong>,</p><p style="font-size:15px;color:#e0e0e0;line-height:1.6;">Hemos recibido tu solicitud en Lista Cero bajo la referencia <strong>${seq}</strong> (modalidad: <strong>${modLabel}</strong>).</p></div></body></html>`;
+                    const adminHtml = `<html><body style="font-family:'Helvetica Neue',Arial,sans-serif;background:#000;color:#fff;max-width:600px;margin:0 auto;padding:0;"><div style="background:#111;padding:28px 20px;text-align:center;border-bottom:2px solid #c9ae5d;"><img src="https://puntacanainvestmentsrd.com/images/logo-email.jpg" alt="Punta Cana Investments" style="max-width:260px;height:auto;"/></div><div style="padding:28px;background:#0a0a0a;"><h2 style="color:#c9ae5d;text-transform:uppercase;text-align:center;">NUEVO LEAD VIP LISTA CERO [${seq}]</h2><p><strong>CRM M04:</strong> ${json.crm_inquiry_code || ''}</p><p><strong>Nombre:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Teléfono:</strong> ${phone}</p><p><strong>Modalidad:</strong> ${modLabel}</p><p><strong>Mensaje:</strong> ${message || 'Sin mensaje'}</p></div></body></html>`;
+                    const sent = await dispatchCloudStagingStage2Emails({
+                        flow: 'founder_lista_cero',
+                        referenceCode: seq,
+                        crmInquiryCode: json.crm_inquiry_code || '',
+                        lang,
+                        teamRecipients: stage2Policy.teamRecipients,
+                        clientRecipient: stage2Policy.clientRecipient,
+                        adminEmail: {
+                            from: PCI_TEAM_FROM,
+                            subject: `NUEVO LEAD VIP (Lista Cero): ${name} [${seq}]`,
+                            html: adminHtml,
+                        },
+                        clientEmail: {
+                            from: PCI_CLIENT_FROM,
+                            subject: clientSubject,
+                            html: clientHtml,
+                        },
+                    });
+                    clientEmailAccepted = sent.clientAccepted;
+                    resendIds = { admin: sent.adminResendId, client: sent.clientResendId };
+                }
+                return NextResponse.json(
+                    {
+                        success: true,
+                        sandbox_isolated: false,
+                        email_sent: clientEmailAccepted,
+                        resend_ids: resendIds,
+                        deduplicated: dedup,
+                        duplicate_attempts_blocked: Number(json.duplicate_attempts_blocked || 0),
+                        sequence_number: seq,
+                        crm_inquiry_id: json.crm_inquiry_id || null,
+                        crm_inquiry_code: json.crm_inquiry_code || '',
+                        id: json.id,
+                        message: `Tu solicitud en Lista Cero quedó registrada bajo la referencia ${seq}.`,
+                    },
+                    { status: dedup ? 200 : 201 }
+                );
+            }
             const confirmMsg = dedup
                 ? lang === 'en'
                     ? `Your Zero List registration was already confirmed under reference ${seq} (no duplicate created).`

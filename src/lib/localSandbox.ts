@@ -10,6 +10,7 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import type { Property } from "@/data/properties";
 import type { BlogPost } from "@/data/blog";
+import { Resend } from "resend";
 import { buildOffMarketEmails, normalizeLang, type RenderedEmailPayload } from "@/lib/formEmails";
 
 export const CLEAN_PREVIEW_COOKIE = "pci_clean_preview";
@@ -130,18 +131,35 @@ export function isLocalFileSandbox(): boolean {
 }
 
 /**
- * True in Cloud Staging Stage 1 (Vercel Web Staging -> Railway Staging Backend over HTTPS,
- * FORM_EMAILS_SIMULATED_MODE=true, ZERO local disk files, ZERO external HubSpot/Resend sends).
- * Fails closed against the production Railway hostname.
+ * True in Cloud Staging (Etapa A simulated OR Etapa B real-Resend closed allowlist).
+ * Always fails closed against the production Railway hostname.
  */
-export function isCloudStagingSimulatedMode(): boolean {
-  const sim = String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true";
+export function isCloudStagingBackend(): boolean {
   const base = getPhase4BackendBaseUrl();
-  if (!sim || isLocalFileSandbox() || !base) return false;
+  if (isLocalFileSandbox() || !base) return false;
   if (base.toLowerCase().includes("puntacana-fortress-production.up.railway.app")) {
     return false;
   }
-  return true;
+  const sim = String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true";
+  const prev = String(process.env.FORM_EMAILS_PREVIEW_MODE || "").trim().toLowerCase() === "true";
+  return sim || prev;
+}
+
+/**
+ * True in Cloud Staging Stage 1 (Etapa A: FORM_EMAILS_SIMULATED_MODE=true, ZERO external HubSpot/Resend sends).
+ */
+export function isCloudStagingSimulatedMode(): boolean {
+  const sim = String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true";
+  return sim && isCloudStagingBackend();
+}
+
+/**
+ * True in Cloud Staging Stage 2 / Puerta 2 (Etapa B: real Resend strictly gated by fail-closed
+ * Preview allowlist, Railway Staging CRM V2 persistence, and HubSpot strictly disabled).
+ */
+export function isCloudStagingRealAllowlistMode(): boolean {
+  const prev = String(process.env.FORM_EMAILS_PREVIEW_MODE || "").trim().toLowerCase() === "true";
+  return prev && isCloudStagingBackend() && !isCloudStagingSimulatedMode();
 }
 
 export function getServerStagingApiKey(): string {
@@ -149,7 +167,7 @@ export function getServerStagingApiKey(): string {
 }
 
 export async function recordCloudStagingOutboxEvent(entry: Record<string, any>): Promise<void> {
-  if (!isCloudStagingSimulatedMode()) return;
+  if (!isCloudStagingBackend()) return;
   const base = getPhase4BackendBaseUrl();
   const key = getServerStagingApiKey();
   if (!base || !key) return;
@@ -170,6 +188,159 @@ export async function recordCloudStagingOutboxEvent(entry: Record<string, any>):
   } catch {
     // Non-blocking audit log
   }
+}
+
+export interface Stage2EmailDispatchResult {
+  adminAccepted: boolean;
+  clientAccepted: boolean;
+  adminResendId: string;
+  clientResendId: string;
+  error?: string;
+}
+
+/**
+ * Dispatches real Resend emails strictly to fail-closed allowlisted recipients in Cloud Staging Stage 2,
+ * logs the blocked HubSpot event + real Resend IDs to Railway Staging audit outbox, and returns
+ * exact Resend acceptance flags so the UI displays the spam notice ONLY when Resend accepted the email.
+ */
+export async function dispatchCloudStagingStage2Emails(params: {
+  flow: string;
+  referenceCode: string;
+  crmInquiryCode?: string;
+  lang: string;
+  teamRecipients: string[];
+  clientRecipient: string;
+  adminEmail: { from: string; subject: string; html: string; text?: string };
+  clientEmail: { from: string; subject: string; html: string; text?: string };
+}): Promise<Stage2EmailDispatchResult> {
+  const resendKey = String(process.env.RESEND_API_KEY || "").trim();
+  const prodInbox = "info@puntacanainvestmentsrd.com";
+  const safeTeam = (params.teamRecipients || []).filter(
+    (addr) => addr && addr.trim().toLowerCase() !== prodInbox
+  );
+  const safeClient =
+    params.clientRecipient && params.clientRecipient.trim().toLowerCase() !== prodInbox
+      ? params.clientRecipient.trim()
+      : "";
+
+  // Always audit HubSpot blocked in Stage 2
+  await recordCloudStagingOutboxEvent({
+    flow: params.flow,
+    provider: "hubspot",
+    target_url: "https://api.hubapi.com/crm/v3/objects/contacts",
+    method: "POST",
+    blocked: true,
+    simulated: false,
+    status_code: 0,
+    reference_code: params.referenceCode,
+    crm_inquiry_code: params.crmInquiryCode || "",
+    external_provider_called: false,
+    reason: "HUBSPOT_DISABLED_STAGING_STAGE2",
+  });
+
+  if (!resendKey) {
+    await recordCloudStagingOutboxEvent({
+      flow: params.flow,
+      provider: "resend_stage2_allowlist",
+      target_url: "https://api.resend.com/emails",
+      method: "POST",
+      blocked: true,
+      simulated: false,
+      status_code: 0,
+      reference_code: params.referenceCode,
+      crm_inquiry_code: params.crmInquiryCode || "",
+      external_provider_called: false,
+      reason: "RESEND_API_KEY_MISSING_STAGING_STAGE2",
+    });
+    return {
+      adminAccepted: false,
+      clientAccepted: false,
+      adminResendId: "",
+      clientResendId: "",
+      error: "RESEND_API_KEY no configurada en Staging Etapa B.",
+    };
+  }
+
+  const resend = new Resend(resendKey);
+  let adminAccepted = false;
+  let clientAccepted = false;
+  let adminResendId = "";
+  let clientResendId = "";
+  let lastError = "";
+
+  if (safeTeam.length > 0) {
+    try {
+      const adminRes = await resend.emails.send({
+        from: params.adminEmail.from,
+        to: safeTeam,
+        subject: `[STAGING] ${params.adminEmail.subject}`,
+        html: params.adminEmail.html,
+        ...(params.adminEmail.text ? { text: params.adminEmail.text } : {}),
+      });
+      if (!adminRes.error && adminRes.data?.id) {
+        adminAccepted = true;
+        adminResendId = String(adminRes.data.id);
+      } else if (adminRes.error) {
+        lastError = String(adminRes.error.message || adminRes.error);
+        console.error(`[Stage2 Resend Admin Error:${params.flow}]`, adminRes.error);
+      }
+    } catch (err: any) {
+      lastError = err?.message || String(err);
+      console.error(`[Stage2 Resend Admin Exception:${params.flow}]`, err);
+    }
+  }
+
+  if (safeClient) {
+    try {
+      const clientRes = await resend.emails.send({
+        from: params.clientEmail.from,
+        to: [safeClient],
+        subject: `[STAGING] ${params.clientEmail.subject}`,
+        html: params.clientEmail.html,
+        ...(params.clientEmail.text ? { text: params.clientEmail.text } : {}),
+      });
+      if (!clientRes.error && clientRes.data?.id) {
+        clientAccepted = true;
+        clientResendId = String(clientRes.data.id);
+      } else if (clientRes.error) {
+        lastError = String(clientRes.error.message || clientRes.error);
+        console.error(`[Stage2 Resend Client Error:${params.flow}]`, clientRes.error);
+      }
+    } catch (err: any) {
+      lastError = err?.message || String(err);
+      console.error(`[Stage2 Resend Client Exception:${params.flow}]`, err);
+    }
+  }
+
+  await recordCloudStagingOutboxEvent({
+    flow: params.flow,
+    provider: "resend_stage2_allowlist",
+    purpose: "staging_stage2_real_allowlist_email",
+    target_url: "https://api.resend.com/emails",
+    method: "POST",
+    blocked: false,
+    simulated: false,
+    external_provider_called: Boolean(adminAccepted || clientAccepted),
+    status_code: adminAccepted || clientAccepted ? 200 : 502,
+    reference_code: params.referenceCode,
+    crm_inquiry_code: params.crmInquiryCode || "",
+    to: [...safeTeam, ...(safeClient ? [safeClient] : [])],
+    subject: `[STAGING] ${params.adminEmail.subject}`,
+    admin_resend_id: adminResendId,
+    client_resend_id: clientResendId,
+    admin_accepted: adminAccepted,
+    client_accepted: clientAccepted,
+    lang: params.lang,
+    reason: adminAccepted || clientAccepted ? "RESEND_STAGE2_ALLOWLIST_ACCEPTED" : `RESEND_STAGE2_REJECTED:${lastError}`,
+  });
+
+  return {
+    adminAccepted,
+    clientAccepted,
+    adminResendId,
+    clientResendId,
+    ...(lastError ? { error: lastError } : {}),
+  };
 }
 
 /**

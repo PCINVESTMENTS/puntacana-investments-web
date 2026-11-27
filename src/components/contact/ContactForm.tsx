@@ -83,21 +83,25 @@ export default function ContactForm({ dict, subject, className, lang = 'en', pro
                     </div>
                 )}
                 <p className="text-gray-300">
-                    {isSandbox && state.message ? state.message : dict.successText}
+                    {state.message ? state.message : dict.successText}
                 </p>
-                <p className="text-sm text-gray-400 mt-4 italic">
-                    {isSandbox
-                        ? lang === 'es'
-                            ? 'Modo local aislado: visible de inmediato en el Buzón Local de Pruebas del Dashboard (0 correos reales enviados).'
+                {isSandbox ? (
+                    <p className="text-sm text-gray-400 mt-4 italic">
+                        {lang === 'es'
+                            ? 'Entorno Staging simulado: visible de inmediato en M04 Leads del Dashboard (0 correos externos enviados).'
                             : lang === 'fr'
-                            ? 'Mode local isolé : visible immédiatement dans la boîte de test du Dashboard (0 e-mail réel envoyé).'
-                            : 'Isolated local mode: visible immediately in the Dashboard Local Test Inbox (0 real emails sent).'
-                        : lang === 'es' 
-                        ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
-                        : lang === 'fr'
-                        ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
-                        : 'Please also check your junk or spam folder.'}
-                </p>
+                            ? 'Environnement Staging simulé : visible immédiatement dans M04 Leads du Dashboard (0 e-mail externe envoyé).'
+                            : 'Simulated Staging environment: visible immediately in Dashboard M04 Leads (0 external emails sent).'}
+                    </p>
+                ) : (state as any).email_sent === true ? (
+                    <p data-contact-spam-notice="true" className="text-sm text-gray-400 mt-4 italic">
+                        {lang === 'es'
+                            ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                            : lang === 'fr'
+                            ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
+                            : 'Please also check your junk or spam folder.'}
+                    </p>
+                ) : null}
                 <button
                     onClick={() => window.location.reload()}
                     className="mt-6 px-6 py-2 bg-transparent border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-black transition-colors rounded-full"

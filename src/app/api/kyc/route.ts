@@ -4,9 +4,11 @@ import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import {
+    dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingSimulatedMode,
+    isCloudStagingBackend,
+    isCloudStagingRealAllowlistMode,
     isLocalFileSandbox,
     recordCloudStagingOutboxEvent,
 } from '@/lib/localSandbox';
@@ -426,7 +428,20 @@ export async function POST(request: Request) {
             }, { status: 201 });
         }
         
-        if (isCloudStagingSimulatedMode()) {
+        if (isCloudStagingBackend()) {
+            const isStage2Real = isCloudStagingRealAllowlistMode();
+            let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
+            if (isStage2Real) {
+                stage2Policy = resolveExecutionPolicy(clientEmail);
+                if (!stage2Policy.allowed) {
+                    console.error(`[Stage2 KYC Fail-Closed:${stage2Policy.code}] ${stage2Policy.error}`);
+                    return NextResponse.json(
+                        { success: false, code: stage2Policy.code, error: stage2Policy.error },
+                        { status: 403 }
+                    );
+                }
+            }
+
             const backendBase = getPhase4BackendBaseUrl();
             const apiKey = getServerStagingApiKey();
             const stageResp = await fetch(`${backendBase}/api/phase7-sandbox/due-diligence/submit/`, {
@@ -446,7 +461,37 @@ export async function POST(request: Request) {
             }
             const isDedup = Boolean(stageJson.deduplicated);
             const kycRef = String(stageJson.submission?.id || stageJson.id || '');
-            if (!isDedup && kycRef) {
+            let clientEmailAccepted = false;
+            let resendIds: { admin?: string; client?: string } = {};
+
+            if (isStage2Real && stage2Policy && stage2Policy.allowed) {
+                if (!isDedup && kycRef) {
+                    const subjectName =
+                        String(stageJson.submission?.full_name || '').trim() ||
+                        String(formData.get('razon_social') || `${formData.get('nombres') || ''} ${formData.get('apellidos') || ''}`).trim() ||
+                        'Inversionista';
+                    const emailBundle = buildKycEmails({
+                        referenceCode: kycRef,
+                        lang,
+                        entityType,
+                        subjectName,
+                        clientEmail: stage2Policy.clientRecipient,
+                        phone: String(stageJson.submission?.phone || ''),
+                        country: String(formData.get('pais') || formData.get('pais_constitucion') || ''),
+                    });
+                    const sent = await dispatchCloudStagingStage2Emails({
+                        flow: 'kyc_due_diligence',
+                        referenceCode: kycRef,
+                        lang,
+                        teamRecipients: stage2Policy.teamRecipients,
+                        clientRecipient: stage2Policy.clientRecipient,
+                        adminEmail: emailBundle.adminEmail,
+                        clientEmail: emailBundle.clientEmail,
+                    });
+                    clientEmailAccepted = sent.clientAccepted;
+                    resendIds = { admin: sent.adminResendId, client: sent.clientResendId };
+                }
+            } else if (!isDedup && kycRef) {
                 await recordCloudStagingOutboxEvent({
                     flow: 'kyc_due_diligence',
                     provider: 'hubspot',
@@ -475,11 +520,14 @@ export async function POST(request: Request) {
             return NextResponse.json(
                 {
                     success: true,
-                    sandbox_isolated: true,
+                    sandbox_isolated: !isStage2Real,
+                    email_handled_by_api: true,
+                    email_attempted: isStage2Real && !isDedup,
+                    email_sent: clientEmailAccepted,
+                    resend_ids: resendIds,
                     deduplicated: isDedup,
                     opportunity_created: false,
                     crm_client_id: stageJson.crm_client_id || stageJson.submission?.crm_client_id || null,
-                    email_sent: false,
                     data: stageJson.submission || stageJson,
                 },
                 { status: isDedup ? 200 : 201 }

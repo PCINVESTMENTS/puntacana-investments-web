@@ -60,7 +60,7 @@ export const kycDictionary = {
       submitSuccessEmailSent:
         'Se envió un correo electrónico de confirmación a su dirección registrada. Revise su bandeja de Spam si no lo ve en unos minutos.',
       submitSuccessEmailLocal:
-        'Modo local aislado: no se envió ningún correo electrónico externo; la recepción quedó registrada localmente para auditoría.',
+        'Entorno Staging simulado: no se envió ningún correo electrónico externo; la recepción quedó registrada para auditoría.',
       submitSuccessEmailFailed:
         'Su expediente quedó guardado correctamente, aunque el correo automático de confirmación no pudo enviarse en este momento.',
       toastSuccessDesc: 'Su formulario de Persona Física ha sido enviado con éxito.',
@@ -160,7 +160,7 @@ export const kycDictionary = {
       submitSuccessEmailSent:
         'Se envió un correo electrónico de confirmación al representante legal. Revise su bandeja de Spam si no lo ve en unos minutos.',
       submitSuccessEmailLocal:
-        'Modo local aislado: no se envió ningún correo electrónico externo; la recepción quedó registrada localmente para auditoría.',
+        'Entorno Staging simulado: no se envió ningún correo electrónico externo; la recepción quedó registrada para auditoría.',
       submitSuccessEmailFailed:
         'Su expediente corporativo quedó guardado correctamente, aunque el correo automático de confirmación no pudo enviarse en este momento.',
       toastSuccessDesc: 'Su formulario de Persona Jurídica ha sido enviado con éxito.',
