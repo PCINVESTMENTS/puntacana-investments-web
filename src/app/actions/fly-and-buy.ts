@@ -3,7 +3,7 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, isLocalFileSandbox, isLocalSandboxEnabled } from '@/lib/localSandbox';
+import { appendSandboxFlyAndBuyLead, fetchLocalSandboxPhase8, getPhase4BackendBaseUrl, isLocalFileSandbox, isLocalSandboxEnabled } from '@/lib/localSandbox';
 import {
     buildFlyAndBuyEmails,
     generateReferenceCode,
@@ -86,8 +86,9 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
         }
     }
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror only; cloud Staging/Preview uses resolveExecutionPolicy):
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror + M04 CRM V2 local ingest; ZERO real emails, ZERO HubSpot):
     if (isLocalFileSandbox()) {
+        let capturedQuestionnaireEs: Array<{ label: string; value: string }> = [];
 
         const saved = appendSandboxFlyAndBuyLead(
             {
@@ -110,7 +111,7 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                     message: comments,
                 },
                 deduplication_note:
-                    '1 solicitud Fly & Buy = 1 aviso PCI (cuestionario en español + referencia) + 1 confirmación cliente en su idioma (buzón local)',
+                    '1 solicitud Fly & Buy = 1 consulta M04 + 1 registro Fly & Buy + 1 aviso simulado PCI (cuestionario en español)',
             },
             (referenceCode) => {
                 const built = buildFlyAndBuyEmails({
@@ -131,6 +132,7 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
                     specificProperty,
                     comments,
                 });
+                capturedQuestionnaireEs = built.questionnaireEs || [];
                 return {
                     admin_subject: built.adminEmail.subject,
                     client_subject: built.clientEmail.subject,
@@ -141,17 +143,87 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
             }
         );
 
+        // Also ingest idempotently into isolated local CRM V2 M04 LeadInquiry so it lands in the advisor inbox
+        let crmIngest: {
+            created?: boolean;
+            deduplicated?: boolean;
+            notification_sent?: boolean;
+            inquiry?: { id?: number; inquiry_code?: string };
+        } | null = null;
+        const localBackendBase = getPhase4BackendBaseUrl();
+        const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+        if (
+            localBackendBase &&
+            (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&
+            localApiKey
+        ) {
+            try {
+                const readableNotesEs = [
+                    `[Solicitud VIP Fly & Buy · Ref Web: ${saved?.reference_code || 'LOCAL'}]`,
+                    `País de origen: ${country || 'Por definir'}`,
+                    ...capturedQuestionnaireEs.map((item) => `${item.label}: ${item.value}`),
+                    `Comentarios (${safeLang.toUpperCase()}): ${comments || 'Sin comentarios'}`,
+                ].join('\n');
+
+                const ingestRes = await fetch(`${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': localApiKey,
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        country,
+                        lang: safeLang,
+                        channel: 'fly_buy',
+                        origin_label: 'Solicitud VIP Fly & Buy',
+                        company_code: 'PCI-RE',
+                        source_page: `/${safeLang}/fly-and-buy/form`,
+                        subject: `Solicitud VIP Fly & Buy · ${specificProperty || 'Tour Inmobiliario Personalizado'}`,
+                        message: readableNotesEs,
+                        property_title: specificProperty || '',
+                        reference_code: saved?.reference_code || '',
+                        metadata: {
+                            fly_buy_reference_code: saved?.reference_code || '',
+                            specific_property: specificProperty || '',
+                            questionnaire_es: capturedQuestionnaireEs,
+                            experience,
+                            horizon,
+                            visited,
+                            objectives: objectivesArr,
+                            property_types: propertyTypesArr,
+                            investment_focus: investmentFocusArr,
+                            motivation: motivationArr,
+                        },
+                    }),
+                    cache: 'no-store',
+                });
+                if (ingestRes.ok) {
+                    crmIngest = await ingestRes.json();
+                } else {
+                    console.warn('Local M04 Fly & Buy ingest non-OK:', ingestRes.status);
+                }
+            } catch (ingestErr) {
+                console.warn('Local M04 Fly & Buy ingest skipped:', ingestErr);
+            }
+        }
+
+        const effectiveRef = crmIngest?.inquiry?.inquiry_code || saved?.reference_code || 'LOCAL';
         return {
             success: true,
             sandbox_isolated: true,
-            reference_code: saved?.reference_code || '',
+            reference_code: effectiveRef,
+            web_reference_code: saved?.reference_code || '',
+            crm_inquiry_id: crmIngest?.inquiry?.id || null,
             email_sent: false,
             message:
                 safeLang === 'en'
-                    ? `Fly & Buy application recorded in local sandbox under reference ${saved?.reference_code || 'LOCAL'} (no real email dispatched).`
+                    ? `Fly & Buy application recorded in M04 CRM under ${effectiveRef} (Web Ref: ${saved?.reference_code || 'LOCAL'}, no real email dispatched).`
                     : safeLang === 'fr'
-                    ? `Demande Fly & Buy enregistrée dans le bac à sable local sous la référence ${saved?.reference_code || 'LOCAL'} (aucun e-mail réel envoyé).`
-                    : `Solicitud Fly & Buy registrada en el Buzón Local bajo la referencia ${saved?.reference_code || 'LOCAL'} (sin envío de correo real).`,
+                    ? `Demande Fly & Buy enregistrée dans le CRM M04 sous ${effectiveRef} (Réf. Web : ${saved?.reference_code || 'LOCAL'}, aucun e-mail réel envoyé).`
+                    : `Solicitud Fly & Buy registrada en M04 Leads y Buzón Fly & Buy bajo ${effectiveRef} (Ref. web: ${saved?.reference_code || 'LOCAL'}, sin envío de correo real).`,
         };
     }
 

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { isLocalFileSandbox, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
+import { getPhase4BackendBaseUrl, isLocalFileSandbox, upsertSandboxOffMarketApplication } from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     generateProductionRefCode,
@@ -73,6 +73,61 @@ export async function POST(request: Request) {
         }
 
         if (isLocalFileSandbox()) {
+            // 1. Ingest idempotently into isolated local CRM V2 M04 LeadInquiry (zero real emails, zero HubSpot)
+            let crmIngest: {
+                created?: boolean;
+                deduplicated?: boolean;
+                notification_sent?: boolean;
+                inquiry?: { id?: number; inquiry_code?: string };
+            } | null = null;
+            const localBackendBase = getPhase4BackendBaseUrl();
+            const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+            if (
+                localBackendBase &&
+                (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&
+                localApiKey
+            ) {
+                try {
+                    const ingestRes = await fetch(`${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-API-KEY': localApiKey,
+                            ...(idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {}),
+                        },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            phone,
+                            message: compiledMessage || freeText || `Requerimiento Off-Market (${tab})`,
+                            subject: `Off-Market (${tab === 'hoteles' ? 'Hoteles y Resorts' : 'Propiedades de Oportunidad'}) · ${budget}`,
+                            lang,
+                            channel: 'off_market',
+                            origin_label: 'Búsqueda Privada Off-Market',
+                            company_code: 'PCI-RE',
+                            source_page: `/${lang}/investments/off-market`,
+                            idempotency_key: idempotencyKey || undefined,
+                            metadata: {
+                                company_name: company,
+                                active_tab: tab,
+                                budget,
+                                regions,
+                                details,
+                                free_text: freeText,
+                            },
+                        }),
+                        cache: 'no-store',
+                    });
+                    if (ingestRes.ok) {
+                        crmIngest = await ingestRes.json();
+                    } else {
+                        console.warn('Local M04 Off-Market ingest non-OK:', ingestRes.status);
+                    }
+                } catch (ingestErr) {
+                    console.warn('Local M04 Off-Market ingest skipped:', ingestErr);
+                }
+            }
+
             const saved = upsertSandboxOffMarketApplication({
                 name,
                 company,
@@ -92,33 +147,37 @@ export async function POST(request: Request) {
                 return NextResponse.json({ success: false, message: 'Local sandbox storage unavailable.' }, { status: 500 });
             }
 
+            const effectiveRef = crmIngest?.inquiry?.inquiry_code || saved.reference_code;
             const emailFailed = saved.email_status === 'failed_simulated';
             const message = emailFailed
                 ? lang === 'en'
-                    ? `Your Off-Market request was safely registered under reference ${saved.reference_code}. However, we could not send the confirmation email at this moment (simulated provider failure); our private investment committee already has your dossier.`
+                    ? `Your Off-Market request was safely registered under reference ${effectiveRef}. However, we could not send the confirmation email at this moment (simulated provider failure); our private investment committee already has your dossier.`
                     : lang === 'fr'
-                    ? `Votre demande Off-Market a bien été enregistrée sous la référence ${saved.reference_code}. Toutefois, l'e-mail de confirmation n'a pas pu être envoyé pour le moment (panne simulée) ; notre comité d'investissement dispose déjà de votre dossier.`
-                    : `Tu requerimiento Off-Market quedó guardado en el registro local bajo el código ${saved.reference_code}. Sin embargo, el correo de confirmación no pudo enviarse en este momento (fallo de correo simulado); nuestro comité privado ya recibió tu solicitud.`
+                    ? `Votre demande Off-Market a bien été enregistrée sous la référence ${effectiveRef}. Toutefois, l'e-mail de confirmation n'a pas pu être envoyé pour le moment (panne simulée) ; notre comité d'investissement dispose déjà de votre dossier.`
+                    : `Tu requerimiento Off-Market quedó guardado en el registro local bajo el código ${effectiveRef}. Sin embargo, el correo de confirmación no pudo enviarse en este momento (fallo de correo simulado); nuestro comité privado ya recibió tu solicitud.`
                 : lang === 'en'
-                ? `Your Off-Market request has been registered locally under reference ${saved.reference_code} (isolated local mode: no real email dispatched).`
+                ? `Your Off-Market request has been registered locally in M04 CRM under reference ${effectiveRef} (isolated local mode: no real email dispatched).`
                 : lang === 'fr'
-                ? `Votre demande Off-Market a été enregistrée localement sous la référence ${saved.reference_code} (mode local isolé : aucun e-mail réel envoyé).`
-                : `Tu requerimiento Off-Market quedó registrado en local bajo el código ${saved.reference_code} (modo local aislado: sin envío real de correo).`;
+                ? `Votre demande Off-Market a été enregistrée localement dans le CRM M04 sous la référence ${effectiveRef} (mode local isolé : aucun e-mail réel envoyé).`
+                : `Tu requerimiento Off-Market quedó registrado en M04 Leads bajo ${effectiveRef} (Ref. web: ${saved.reference_code}, sin envío real de correo).`;
 
             return NextResponse.json(
                 {
                     success: true,
                     sandbox_isolated: true,
                     id: saved.id,
-                    reference_code: saved.reference_code,
-                    deduplicated: saved.deduplicated,
+                    reference_code: effectiveRef,
+                    web_reference_code: saved.reference_code,
+                    crm_inquiry_id: crmIngest?.inquiry?.id || null,
+                    crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || null,
+                    deduplicated: Boolean(crmIngest?.deduplicated || saved.deduplicated),
                     email_sent: false,
                     email_failed: emailFailed,
                     email_status: saved.email_status,
                     email_error: saved.email_error,
                     message,
                 },
-                { status: saved.deduplicated ? 200 : 201 }
+                { status: (crmIngest?.deduplicated || saved.deduplicated) ? 200 : 201 }
             );
         }
 
