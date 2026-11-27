@@ -3,7 +3,7 @@
 import { headers } from 'next/headers';
 import { Resend } from 'resend';
 import { createHubspotContact } from '@/lib/hubspot';
-import { appendSandboxTestInboxEntry, isLocalFileSandbox } from '@/lib/localSandbox';
+import { appendSandboxTestInboxEntry, getPhase4BackendBaseUrl, isLocalFileSandbox } from '@/lib/localSandbox';
 import {
     buildOffMarketEmails,
     buildPropertyOrHotelEmails,
@@ -139,8 +139,89 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '').trim()
         : 'General';
 
-    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror only; cloud Staging/Preview uses resolveExecutionPolicy):
+    // ISOLATED LOCAL SANDBOX INTERCEPTOR (local disk mirror + M04 CRM V2 local ingest; ZERO real emails, ZERO HubSpot):
     if (isLocalFileSandbox()) {
+        // 1. Send idempotently to local isolated CRM V2 M04 LeadInquiry endpoint (when local backend is configured)
+        let crmIngest: {
+            created?: boolean;
+            deduplicated?: boolean;
+            notification_sent?: boolean;
+            inquiry?: { id?: number; inquiry_code?: string };
+        } | null = null;
+        const localBackendBase = getPhase4BackendBaseUrl();
+        const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+        if (
+            localBackendBase &&
+            (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&
+            localApiKey
+        ) {
+            try {
+                const ingestRes = await fetch(`${localBackendBase}/api/crm-v2/lead-inquiries/ingest/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-KEY': localApiKey,
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        message,
+                        subject: subjectInput || cleanInterest,
+                        lang,
+                        channel: isOffMarketFlow
+                            ? 'off_market'
+                            : isHotelFlow
+                            ? 'hotel'
+                            : 'website',
+                        origin_label:
+                            flowType === 'off_market'
+                                ? 'Búsqueda Privada Off-Market'
+                                : flowType === 'hotel_inquiry'
+                                ? 'Consulta Directa de Hotel / Activo Comercial'
+                                : flowType === 'property_inquiry'
+                                ? 'Formulario Web · Propiedad'
+                                : 'Formulario de Contacto General',
+                        company_code: 'PCI-RE',
+                        source_page: parsedProperty?.slug ? `/${lang}/properties/${parsedProperty.slug}` : `/${lang}/contact`,
+                        property: parsedProperty
+                            ? {
+                                  canonical_key: (parsedProperty as any).canonical_key || '',
+                                  internal_code: parsedProperty.internal_code || parsedProperty.permanentCode || parsedProperty.code || '',
+                                  slug: parsedProperty.slug || '',
+                                  code_number: (parsedProperty as any).code_number || null,
+                              }
+                            : undefined,
+                    }),
+                    cache: 'no-store',
+                });
+                if (ingestRes.ok) {
+                    crmIngest = await ingestRes.json();
+                } else {
+                    console.warn('Local M04 ingest non-OK status:', ingestRes.status);
+                }
+            } catch (ingestErr) {
+                console.warn('Local M04 ingest skipped:', ingestErr);
+            }
+        }
+
+        // If CRM V2 M04 deduplicated an identical retry, do NOT duplicate test_inbox notification
+        if (crmIngest?.deduplicated && crmIngest?.inquiry?.inquiry_code) {
+            return {
+                success: true,
+                sandbox_isolated: true,
+                deduplicated: true,
+                reference_code: crmIngest.inquiry.inquiry_code,
+                email_sent: false,
+                message:
+                    lang === 'en'
+                        ? `Duplicate submission detected: kept existing inquiry ${crmIngest.inquiry.inquiry_code} without duplicate notification (0 real emails sent).`
+                        : lang === 'fr'
+                        ? `Envoi en double détecté : demande existante ${crmIngest.inquiry.inquiry_code} conservée sans doublon (0 e-mail réel envoyé).`
+                        : `Reintento detectado: se conservó la consulta existente ${crmIngest.inquiry.inquiry_code} sin generar duplicado ni segundo aviso (0 correos reales enviados).`,
+            };
+        }
+
         const saved = appendSandboxTestInboxEntry(
             {
                 form_type: flowType,
@@ -156,16 +237,19 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 configured_from: PCI_TEAM_FROM,
                 configured_pci_recipient: PCI_TEAM_TO,
                 client_autoresponder_to: email,
+                crm_inquiry_id: crmIngest?.inquiry?.id || null,
+                crm_inquiry_code: crmIngest?.inquiry?.inquiry_code || null,
                 property_reference: parsedProperty || { title: cleanInterest, type: 'general' },
                 lead: { name, email, phone, message },
                 deduplication_note:
-                    '1 envío = 1 aviso PCI (con referencia, código y enlace) + 1 confirmación automática al cliente en su idioma (buzón local)',
+                    '1 envío = 1 consulta M04 + 1 aviso simulado PCI (sin correos reales ni HubSpot)',
             },
             (referenceCode) => {
+                const effectiveRef = crmIngest?.inquiry?.inquiry_code || referenceCode;
                 const built =
                     isOffMarketFlow && parsedOffMarket
                         ? buildOffMarketEmails({
-                              referenceCode,
+                              referenceCode: effectiveRef,
                               lang,
                               name,
                               company: parsedOffMarket.company || '',
@@ -178,7 +262,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                               freeText: parsedOffMarket.freeText || '',
                           })
                         : buildPropertyOrHotelEmails({
-                              referenceCode,
+                              referenceCode: effectiveRef,
                               formCategory,
                               lang,
                               siteOrigin,
@@ -201,17 +285,19 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             }
         );
 
+        const finalRef = crmIngest?.inquiry?.inquiry_code || saved?.reference_code || 'LOCAL';
         return {
             success: true,
             sandbox_isolated: true,
-            reference_code: saved?.reference_code || '',
+            reference_code: finalRef,
+            crm_inquiry_id: crmIngest?.inquiry?.id || null,
             email_sent: false,
             message:
                 lang === 'en'
-                    ? `Inquiry registered in the isolated local sandbox under reference ${saved?.reference_code || 'LOCAL'} (no real email dispatched).`
+                    ? `Inquiry registered in M04 CRM local sandbox under ${finalRef} (no real email dispatched).`
                     : lang === 'fr'
-                    ? `Demande enregistrée dans le bac à sable local isolé sous la référence ${saved?.reference_code || 'LOCAL'} (aucun e-mail réel envoyé).`
-                    : `Consulta registrada en el Buzón Local de Pruebas bajo la referencia ${saved?.reference_code || 'LOCAL'} (sin envío de correo real).`,
+                    ? `Demande enregistrée dans le CRM local M04 sous ${finalRef} (aucun e-mail réel envoyé).`
+                    : `Consulta registrada en M04 Leads bajo ${finalRef} con aviso simulado local (sin envío de correo real).`,
         };
     }
 

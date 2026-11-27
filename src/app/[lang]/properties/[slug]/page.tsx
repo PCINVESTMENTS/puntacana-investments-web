@@ -973,6 +973,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ lang:
                                     title: translatedTitle,
                                     internal_code: (property as any).internal_code || null,
                                     permanentCode: (property as any).internal_code || null,
+                                    canonical_key: (property as any).canonical_key || null,
+                                    code_number: (property as any).code_number || null,
                                     slug: property.slug,
                                     location: property.locationLabel,
                                     price: property.price,

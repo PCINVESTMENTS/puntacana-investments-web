@@ -291,7 +291,13 @@ export function isHotelOrCommercialAsset(
   if (["hotel", "resorts", "resort", "commercial", "condohotel", "condo-hotel"].includes(t)) {
     return true;
   }
-  const combined = `${title || ""} ${slug || ""}`;
+  // Ignore residential location names like "Puntacana Resort" when detecting hotels/commercial assets
+  const combined = `${title || ""} ${slug || ""}`
+    .replace(/punta\s*cana[\s-]+resort(\s*&\s*club)?/gi, "")
+    .replace(/cap\s*cana[\s-]+resort/gi, "");
+  if (["villa", "condo", "apartment", "penthouse"].includes(t)) {
+    return /\b(hotel|hoteles|hotelero|hotelera|condohotel|condo-hotel|boutique hotel)\b/i.test(combined);
+  }
   return /\b(hotel|hoteles|hotelero|hotelera|resort|resorts|condohotel|condo-hotel|boutique hotel)\b/i.test(
     combined
   );

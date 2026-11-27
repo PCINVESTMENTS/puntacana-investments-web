@@ -171,10 +171,37 @@ function resolveBackendMediaUrl(url: any, fallback = ""): string {
   if (!s) return fallback;
   const apiOrigin = getPhase4BackendBaseUrl() || "http://127.0.0.1:8110";
   if (s.startsWith("/media/")) return `${apiOrigin}${s}`;
-  if (apiOrigin.startsWith("https://") && s.startsWith("http://127.0.0.1:8110/media/")) {
-    return `${apiOrigin}${s.slice("http://127.0.0.1:8110".length)}`;
+  const localMediaMatch = s.match(/^https?:\/\/(?:127\.0\.0\.1|localhost):\d+(\/media\/.*)$/i);
+  if (localMediaMatch) {
+    return `${apiOrigin}${localMediaMatch[1]}`;
   }
   return s;
+}
+
+function normalizeCatalogMediaOrigins(
+  data: LocalSandboxCatalogResponse
+): LocalSandboxCatalogResponse {
+  if (!data || !Array.isArray(data.properties)) return data;
+  return {
+    ...data,
+    properties: data.properties.map((p: any) => {
+      if (!p || typeof p !== "object") return p;
+      const next: any = { ...p };
+      if (typeof next.image === "string") next.image = resolveBackendMediaUrl(next.image);
+      if (typeof next.mainImage === "string") next.mainImage = resolveBackendMediaUrl(next.mainImage);
+      if (typeof next.cover_image === "string") next.cover_image = resolveBackendMediaUrl(next.cover_image);
+      if (Array.isArray(next.images)) {
+        next.images = next.images.map((u: any) => (typeof u === "string" ? resolveBackendMediaUrl(u) : u));
+      }
+      if (Array.isArray(next.gallery)) {
+        next.gallery = next.gallery.map((u: any) => (typeof u === "string" ? resolveBackendMediaUrl(u) : u));
+      }
+      if (Array.isArray(next.gallery_urls)) {
+        next.gallery_urls = next.gallery_urls.map((u: any) => (typeof u === "string" ? resolveBackendMediaUrl(u) : u));
+      }
+      return next;
+    }),
+  };
 }
 
 export async function fetchLocalSandboxCatalog(
@@ -186,7 +213,7 @@ export async function fetchLocalSandboxCatalog(
     try {
       if (fs.existsSync(filePath)) {
         const raw = fs.readFileSync(filePath, "utf-8");
-        const parsed = JSON.parse(raw) as LocalSandboxCatalogResponse;
+        const parsed = normalizeCatalogMediaOrigins(JSON.parse(raw) as LocalSandboxCatalogResponse);
         return applyCleanCatalogFilter(parsed, clean);
       }
     } catch (err) {
@@ -196,7 +223,7 @@ export async function fetchLocalSandboxCatalog(
 
   const bundle = await fetchRemotePublicBundleCached();
   if (bundle?.catalog) {
-    return applyCleanCatalogFilter(bundle.catalog, clean);
+    return applyCleanCatalogFilter(normalizeCatalogMediaOrigins(bundle.catalog), clean);
   }
 
   const baseUrl = getPhase4BackendBaseUrl();
@@ -207,7 +234,7 @@ export async function fetchLocalSandboxCatalog(
       cache: "no-store",
     });
     if (!res.ok) return null;
-    const parsed = (await res.json()) as LocalSandboxCatalogResponse;
+    const parsed = normalizeCatalogMediaOrigins((await res.json()) as LocalSandboxCatalogResponse);
     return applyCleanCatalogFilter(parsed, clean);
   } catch (err) {
     console.error("Local Sandbox catalog fetch error:", err);
