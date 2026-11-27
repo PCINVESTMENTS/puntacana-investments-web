@@ -216,6 +216,7 @@ async function saveLocalDueDiligenceDirect(formData: FormData) {
 
     const submission: Record<string, any> = {
         id: subId,
+        company_code: 'PCI-RE',
         form_type: formType,
         full_name: fullName,
         email,

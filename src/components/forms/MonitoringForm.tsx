@@ -28,6 +28,7 @@ interface MonitoringSubmitState {
     crm_inquiry_code?: string;
     deduplicated?: boolean;
     sandbox_isolated?: boolean;
+    email_sent?: boolean;
 }
 
 const initialState: MonitoringSubmitState = {
@@ -37,6 +38,7 @@ const initialState: MonitoringSubmitState = {
     crm_inquiry_code: '',
     deduplicated: false,
     sandbox_isolated: false,
+    email_sent: undefined,
 };
 
 function getOrCreateMonitoringIdemKey(email: string, project: string): string {
@@ -144,22 +146,23 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
                         ? 'Un consultant expert vous contactera dans les prochaines 24 heures pour vous présenter une proposition sur mesure.'
                         : 'An expert consultant will contact you within the next 24 hours to present a customized proposal.'}
                 </p>
-                {state.sandbox_isolated && (
-                    <p className="text-xs text-luxury-gold/90 mt-3 italic">
+                {state.sandbox_isolated ? (
+                    <p data-monitoring-local-notice="true" className="text-xs text-luxury-gold/90 mt-3 italic">
                         {lang === 'fr'
                             ? 'Mode local isolé : dossier enregistré dans la boîte interne et relié au CRM sans envoi d\'e-mail externe.'
                             : lang === 'en'
                             ? 'Isolated local mode: saved in internal sandbox inbox and linked to CRM without sending external emails.'
                             : 'Modo local aislado: solicitud guardada en buzón interno y vinculada a M04 sin enviar correos externos.'}
                     </p>
-                )}
-                <p className="text-sm text-gray-400 mt-4 italic">
-                    {lang === 'es' 
-                        ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
-                        : lang === 'fr'
-                        ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
-                        : 'Please also check your junk or spam folder.'}
-                </p>
+                ) : state.email_sent !== false ? (
+                    <p data-monitoring-spam-notice="true" className="text-sm text-gray-400 mt-4 italic">
+                        {lang === 'es' 
+                            ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'
+                            : lang === 'fr'
+                            ? 'Veuillez également vérifier votre dossier de courrier indésirable (Spam).'
+                            : 'Please also check your junk or spam folder.'}
+                    </p>
+                ) : null}
                 <button
                     type="button"
                     data-monitoring-new-btn="true"

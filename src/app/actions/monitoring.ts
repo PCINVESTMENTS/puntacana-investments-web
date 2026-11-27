@@ -78,6 +78,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         console.warn(antispam.logMessage);
         return {
             success: true,
+            email_sent: true,
             message: 'Message sent successfully!'
         };
     }
@@ -214,6 +215,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         return {
             success: true,
             sandbox_isolated: true,
+            email_sent: false,
             deduplicated: Boolean(savedMon?.deduplicated),
             reference_code: refCode,
             crm_inquiry_id: crmInquiryId,
@@ -244,6 +246,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
     if (policy.mode === 'local_dry_run') {
         return {
             success: true,
+            email_sent: false,
             message: 'Message sent successfully!'
         };
     }
@@ -432,6 +435,7 @@ Fecha Entrega: ${date || 'N/A'}`;
 
         return {
             success: true,
+            email_sent: true,
             message: 'Message sent successfully!'
         };
 
