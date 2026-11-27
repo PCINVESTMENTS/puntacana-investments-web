@@ -9,8 +9,8 @@ import {
     fetchLocalSandboxPhase8,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingBackend,
-    isCloudStagingRealAllowlistMode,
+    isCrmV2RealEmailDeliveryMode,
+    isCrmV2RemoteBackend,
     isLocalFileSandbox,
     isLocalSandboxEnabled,
     linkSandboxFlyAndBuyCrmInquiry,
@@ -295,8 +295,8 @@ export async function submitFlyAndBuyForm(prevState: any, formData: FormData) {
     }
 
     // CLOUD STAGING (Stage 1 simulated OR Stage 2 real-Resend allowlist -> Railway Staging PostgreSQL; 0 HubSpot)
-    if (isCloudStagingBackend()) {
-        const isStage2Real = isCloudStagingRealAllowlistMode();
+    if (isCrmV2RemoteBackend()) {
+        const isStage2Real = isCrmV2RealEmailDeliveryMode();
         let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
         if (isStage2Real) {
             stage2Policy = resolveExecutionPolicy(email);

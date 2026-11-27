@@ -3,6 +3,7 @@ import {
   getPhase4BackendBaseUrl,
   getServerStagingApiKey,
   isCloudStagingBackend,
+  isCrmV2ProductionMode,
   isLocalFileSandbox,
 } from '@/lib/localSandbox';
 
@@ -19,8 +20,9 @@ export async function POST(request: Request) {
       isCloudStagingBackend() &&
       Boolean(localBackendBase) &&
       !localBackendBase.includes('puntacana-fortress-production.up.railway.app');
+    const isProdAllowed = isCrmV2ProductionMode() && Boolean(localBackendBase);
 
-    if ((!isLocalAllowed && !isStagingAllowed) || !localApiKey) {
+    if ((!isLocalAllowed && !isStagingAllowed && !isProdAllowed) || !localApiKey) {
       return NextResponse.json(
         { ok: false, error: 'Handoff deshabilitado fuera del entorno aislado/staging.' },
         { status: 503 }

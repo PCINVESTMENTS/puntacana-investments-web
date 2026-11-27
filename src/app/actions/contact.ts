@@ -8,8 +8,9 @@ import {
     dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingBackend,
-    isCloudStagingRealAllowlistMode,
+    isCrmV2ProductionMode,
+    isCrmV2RealEmailDeliveryMode,
+    isCrmV2RemoteBackend,
     isLocalFileSandbox,
     recordCloudStagingOutboxEvent,
     recordLocalServerOutboundEvent,
@@ -149,10 +150,11 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         ? subjectInput.replace(/^(Inquiry about|Consulta sobre|Demande concernant):\s*/i, '').trim()
         : 'General';
 
-    // ISOLATED LOCAL SANDBOX OR CLOUD STAGING (Stage 1 simulated OR Stage 2 real-Resend allowlist):
-    if (isLocalFileSandbox() || isCloudStagingBackend()) {
-        const isCloudStaging = isCloudStagingBackend();
-        const isStage2Real = isCloudStagingRealAllowlistMode();
+    // ISOLATED LOCAL SANDBOX OR CLOUD STAGING OR PRODUCTION CRM V2:
+    if (isLocalFileSandbox() || isCrmV2RemoteBackend()) {
+        const isCloudStaging = isCrmV2RemoteBackend();
+        const isProdCrmV2 = isCrmV2ProductionMode();
+        const isStage2Real = isCrmV2RealEmailDeliveryMode();
         let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
         if (isStage2Real) {
             stage2Policy = resolveExecutionPolicy(email);
@@ -164,7 +166,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
                 };
             }
         }
-        // 1. Send idempotently to isolated CRM V2 M04 LeadInquiry endpoint
+        // 1. Send idempotently to CRM V2 M04 LeadInquiry endpoint
         let crmIngest: {
             created?: boolean;
             deduplicated?: boolean;
@@ -173,7 +175,9 @@ export async function submitContactForm(prevState: any, formData: FormData) {
         } | null = null;
         const localBackendBase = getPhase4BackendBaseUrl();
         const localApiKey = getServerStagingApiKey();
-        const allowedHost = isCloudStaging
+        const allowedHost = isProdCrmV2
+            ? Boolean(localBackendBase)
+            : isCloudStaging
             ? Boolean(localBackendBase && !localBackendBase.includes('puntacana-fortress-production.up.railway.app'))
             : Boolean(localBackendBase && (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')));
         if (allowedHost && localApiKey) {

@@ -3,7 +3,7 @@
 import { headers } from 'next/headers'
 import { Resend } from 'resend'
 import { createHubspotContact } from '@/lib/hubspot'
-import { isCloudStagingBackend } from '@/lib/localSandbox'
+import { isCrmV2RemoteBackend } from '@/lib/localSandbox'
 import {
     buildKycEmails,
     generateReferenceCode,
@@ -91,7 +91,7 @@ export async function precheckKycSubmission(params: {
     // same-origin /api/kyc so Railway Staging encrypts PDFs at rest (AES-256-GCM) and persists
     // the dossier + idempotency key while HubSpot stays disabled and Resend obeys policy.
     const skipExternalBackend =
-        !isCloudStagingBackend() &&
+        !isCrmV2RemoteBackend() &&
         (policy.railwayMode === 'simulated' || policy.mode === 'local_dry_run')
     if (skipExternalBackend) {
         const endpoint = entityType === 'Persona Física' ? '/api/public/kyc/fisica/' : '/api/public/kyc/juridica/'

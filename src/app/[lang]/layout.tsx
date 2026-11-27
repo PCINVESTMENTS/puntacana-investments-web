@@ -120,14 +120,15 @@ export default async function RootLayout({
         )
         .filter(Boolean)
     : null;
-  const disableExternalTracking =
+  const disableAllTracking =
     process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_TRACKING === "true" ||
-    process.env.HUBSPOT_CRM_ENABLED === "false" ||
     Boolean(process.env.LOCAL_PROPERTIES_SANDBOX_FILE);
-  const gaId = disableExternalTracking ? undefined : process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
-  const gtmId = disableExternalTracking ? undefined : (process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV");
-  const metaPixelId = disableExternalTracking ? undefined : process.env.NEXT_PUBLIC_META_PIXEL_ID;
-  const hubspotId = disableExternalTracking ? undefined : process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
+  const disableHubspotTracking =
+    disableAllTracking || process.env.HUBSPOT_CRM_ENABLED === "false";
+  const gaId = disableAllTracking ? undefined : process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+  const gtmId = disableAllTracking ? undefined : (process.env.NEXT_PUBLIC_GTM_ID || "GTM-5TMHHFXV");
+  const metaPixelId = disableAllTracking ? undefined : process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const hubspotId = disableHubspotTracking ? undefined : process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID;
 
   return (
     <html lang={lang}>
@@ -170,7 +171,7 @@ export default async function RootLayout({
                   includeCabezaDeToro={cleanPreview.includeCabezaDeToro}
                 />
               )}
-              {!cleanPreview.enabled && <AIAssistant lang={lang} />}
+              {!cleanPreview.enabled && process.env.NEXT_PUBLIC_DISABLE_CHATBOT !== "true" && <AIAssistant lang={lang} />}
             </CompareProvider>
           </FavoritesProvider>
         </SiteConfigProvider>

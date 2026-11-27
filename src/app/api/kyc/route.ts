@@ -7,8 +7,8 @@ import {
     dispatchCloudStagingStage2Emails,
     getPhase4BackendBaseUrl,
     getServerStagingApiKey,
-    isCloudStagingBackend,
-    isCloudStagingRealAllowlistMode,
+    isCrmV2RealEmailDeliveryMode,
+    isCrmV2RemoteBackend,
     isLocalFileSandbox,
     recordCloudStagingOutboxEvent,
 } from '@/lib/localSandbox';
@@ -428,8 +428,8 @@ export async function POST(request: Request) {
             }, { status: 201 });
         }
         
-        if (isCloudStagingBackend()) {
-            const isStage2Real = isCloudStagingRealAllowlistMode();
+        if (isCrmV2RemoteBackend()) {
+            const isStage2Real = isCrmV2RealEmailDeliveryMode();
             let stage2Policy: ReturnType<typeof resolveExecutionPolicy> | null = null;
             if (isStage2Real) {
                 stage2Policy = resolveExecutionPolicy(clientEmail);
