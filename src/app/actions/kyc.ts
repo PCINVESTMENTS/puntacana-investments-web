@@ -3,6 +3,7 @@
 import { headers } from 'next/headers'
 import { Resend } from 'resend'
 import { createHubspotContact } from '@/lib/hubspot'
+import { isCloudStagingSimulatedMode } from '@/lib/localSandbox'
 import {
     buildKycEmails,
     generateReferenceCode,
@@ -86,7 +87,12 @@ export async function precheckKycSubmission(params: {
     }
 
     const referenceCode = generateReferenceCode('KYC')
-    const skipExternalBackend = policy.railwayMode === 'simulated' || policy.mode === 'local_dry_run'
+    // In Cloud Staging Stage 1 simulated mode, do NOT skip the backend — route through
+    // same-origin /api/kyc so Railway Staging encrypts PDFs at rest (AES-256-GCM) and persists
+    // the dossier + idempotency key while keeping HubSpot & Resend strictly simulated.
+    const skipExternalBackend =
+        !isCloudStagingSimulatedMode() &&
+        (policy.railwayMode === 'simulated' || policy.mode === 'local_dry_run')
     if (skipExternalBackend) {
         const endpoint = entityType === 'Persona Física' ? '/api/public/kyc/fisica/' : '/api/public/kyc/juridica/'
         console.log(`[PREVIEW-SIMULATED] Railway ${endpoint} skipped [${referenceCode}]`)

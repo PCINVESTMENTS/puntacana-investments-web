@@ -8,6 +8,7 @@ import {
     getServerStagingApiKey,
     isCloudStagingSimulatedMode,
     isLocalFileSandbox,
+    recordCloudStagingOutboxEvent,
 } from '@/lib/localSandbox';
 import {
     buildKycEmails,
@@ -444,6 +445,33 @@ export async function POST(request: Request) {
                 );
             }
             const isDedup = Boolean(stageJson.deduplicated);
+            const kycRef = String(stageJson.submission?.id || stageJson.id || '');
+            if (!isDedup && kycRef) {
+                await recordCloudStagingOutboxEvent({
+                    flow: 'kyc_due_diligence',
+                    provider: 'hubspot',
+                    target_url: 'https://api.hubapi.com/crm/v3/objects/contacts',
+                    method: 'POST',
+                    blocked: true,
+                    simulated: false,
+                    status_code: 0,
+                    reference_code: kycRef,
+                    reason: 'HUBSPOT_DISABLED_STAGING_STAGE1',
+                });
+                await recordCloudStagingOutboxEvent({
+                    flow: 'kyc_due_diligence',
+                    provider: 'resend',
+                    target_url: 'https://api.resend.com/emails',
+                    method: 'POST',
+                    blocked: true,
+                    simulated: true,
+                    status_code: 0,
+                    reference_code: kycRef,
+                    recipient: clientEmail,
+                    subject: `[STAGING SIMULATED] Confirmación KYC ${entityType} [${kycRef}]`,
+                    reason: 'RESEND_SIMULATED_STAGING_STAGE1',
+                });
+            }
             return NextResponse.json(
                 {
                     success: true,
