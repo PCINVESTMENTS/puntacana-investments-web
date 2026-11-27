@@ -74,7 +74,7 @@ export async function POST(request: Request) {
             let crmInquiryCode = saved.crm_inquiry_code || '';
             let crmClientId: number | null = null;
             const localBackendBase = getPhase4BackendBaseUrl();
-            const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+            const localApiKey = String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || '').trim();
             if (
                 localBackendBase &&
                 (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&

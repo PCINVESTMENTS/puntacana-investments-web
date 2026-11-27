@@ -370,7 +370,7 @@ export async function sendKYCEmailNotification(params: {
                 },
                 clientEmail,
             })
-            return { success: true, referenceCode }
+            return { success: true, referenceCode, emailSent: false }
         }
 
         if (policy.hubspotMode === 'simulated') {
@@ -396,6 +396,7 @@ export async function sendKYCEmailNotification(params: {
         }
 
         // 2. Client Confirmation (ES / EN / FR, verified domain sender)
+        let clientEmailAccepted = false
         if (policy.clientRecipient) {
             try {
                 const clientRes = await resend.emails.send({
@@ -407,13 +408,15 @@ export async function sendKYCEmailNotification(params: {
                 })
                 if (clientRes.error) {
                     console.error('Resend Error (KYC Client Confirmation):', clientRes.error)
+                } else if (clientRes.data?.id) {
+                    clientEmailAccepted = true
                 }
             } catch (e) {
                 console.error('Resend Client notification failed:', e)
             }
         }
 
-        return { success: true, referenceCode }
+        return { success: true, referenceCode, emailSent: clientEmailAccepted }
     } catch (e) {
         console.error('Error in sendKYCEmailNotification:', e)
         return { success: false, error: 'Failed to send KYC notification email.' }

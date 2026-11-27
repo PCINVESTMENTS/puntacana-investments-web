@@ -81,7 +81,7 @@ export async function POST(request: Request) {
                 inquiry?: { id?: number; inquiry_code?: string };
             } | null = null;
             const localBackendBase = getPhase4BackendBaseUrl();
-            const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+            const localApiKey = String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || '').trim();
             if (
                 localBackendBase &&
                 (localBackendBase.startsWith('http://127.0.0.1:') || localBackendBase.startsWith('http://localhost:')) &&
@@ -283,6 +283,7 @@ export async function POST(request: Request) {
             }
         }
 
+        let clientEmailAccepted = false;
         if (policy.mode !== 'local_dry_run') {
             try {
                 const clientRes = await getResend().emails.send({
@@ -292,7 +293,11 @@ export async function POST(request: Request) {
                     html: built.clientEmail.html,
                     text: built.clientEmail.text,
                 });
-                if (clientRes.error) console.error('Resend Error (Off-Market Client):', clientRes.error);
+                if (clientRes.error) {
+                    console.error('Resend Error (Off-Market Client):', clientRes.error);
+                } else if (clientRes.data?.id) {
+                    clientEmailAccepted = true;
+                }
             } catch (err) {
                 console.error('Off-Market Client Autoresponder Exception:', err);
             }
@@ -314,6 +319,7 @@ export async function POST(request: Request) {
         return NextResponse.json(
             {
                 success: true,
+                email_sent: clientEmailAccepted,
                 reference_code: referenceCode,
                 message: 'Off-Market application sent successfully!',
             },

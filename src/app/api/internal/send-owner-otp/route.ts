@@ -9,7 +9,6 @@ const OTP_TTL_MINUTES = 15;
 function hasValidSharedKey(req: Request): boolean {
   const expected = String(
     process.env.DASHBOARD_AUTH_API_KEY ||
-      process.env.NEXT_PUBLIC_API_KEY ||
       process.env.API_SHARED_SECRET ||
       ""
   ).trim();

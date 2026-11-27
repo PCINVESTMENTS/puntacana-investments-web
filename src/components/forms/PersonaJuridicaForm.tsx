@@ -206,7 +206,7 @@ export function PersonaJuridicaForm() {
                     toast({ title: c.toastSuccessTitle, description: j.toastSuccessDesc });
                     setDraft(null);
                     form.reset(defaultValues);
-                    setSuccessMeta({ dossierId: precheckRefCode, sandboxIsolated: false, emailSent: true, emailAttempted: true });
+                    setSuccessMeta({ dossierId: precheckRefCode, sandboxIsolated: false, emailSent: Boolean((mailRes as any)?.emailSent), emailAttempted: true });
                     return;
                 }
             }
@@ -367,7 +367,7 @@ export function PersonaJuridicaForm() {
                             phone: data.legalRepPhone || "",
                             country: data.constitutionCountry || "",
                         });
-                        emailSent = Boolean((mailRes as any)?.success);
+                        emailSent = Boolean((mailRes as any)?.emailSent);
                     } catch (emailError) {
                         console.error("Failed to send KYC confirmation email", emailError);
                         emailSent = false;

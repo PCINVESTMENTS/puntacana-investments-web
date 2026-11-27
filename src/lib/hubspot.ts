@@ -14,6 +14,7 @@ export async function createHubspotContact(data: {
 }) {
     if (
         process.env.HUBSPOT_CRM_ENABLED === 'false' ||
+        process.env.FORM_EMAILS_SIMULATED_MODE === 'true' ||
         process.env.FORM_EMAILS_LOCAL_DRY_RUN === 'true' ||
         isLocalFileSandbox()
     ) {

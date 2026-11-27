@@ -78,7 +78,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         console.warn(antispam.logMessage);
         return {
             success: true,
-            email_sent: true,
+            email_sent: false,
             message: 'Message sent successfully!'
         };
     }
@@ -110,7 +110,7 @@ export async function submitMonitoringForm(prevState: any, formData: FormData) {
         let crmClientId: number | null = null;
 
         const localBackendBase = getPhase4BackendBaseUrl();
-        const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+        const localApiKey = String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || '').trim();
         if (
             savedMon &&
             localBackendBase &&
@@ -314,7 +314,8 @@ Fecha Entrega: ${date || 'N/A'}`;
             }
         }
 
-        // Send Auto-Responder to the CLIENT
+        // Send Auto-Responder to the CLIENT — email_sent is true ONLY when Resend accepts the email
+        let clientEmailAccepted = false;
         try {
             const firstName = name.split(' ')[0] || (lang === 'en' ? 'Client' : lang === 'fr' ? 'Client' : 'Cliente');
             
@@ -379,12 +380,17 @@ Fecha Entrega: ${date || 'N/A'}`;
             </html>
             `;
 
-            await getResend().emails.send({
+            const clientSendRes = await getResend().emails.send({
                 from: PCI_CLIENT_FROM,
                 to: [policy.clientRecipient],
                 subject: subject,
                 html: htmlTemplate
             });
+            if (!clientSendRes?.error && clientSendRes?.data?.id) {
+                clientEmailAccepted = true;
+            } else if (clientSendRes?.error) {
+                console.error("Resend rejected Monitoring client autoresponder:", clientSendRes.error);
+            }
 
         } catch (autoResponderError: any) {
             console.error("Client Autoresponder Exception:", autoResponderError);
@@ -435,7 +441,7 @@ Fecha Entrega: ${date || 'N/A'}`;
 
         return {
             success: true,
-            email_sent: true,
+            email_sent: clientEmailAccepted,
             message: 'Message sent successfully!'
         };
 

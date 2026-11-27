@@ -74,6 +74,21 @@ export function isLocalDryRunEnabled(): boolean {
   );
 }
 
+/**
+ * Explicit Stage 1 Cloud Staging simulated-email guard (works EVEN on Vercel Preview/Staging
+ * when FORM_EMAILS_SIMULATED_MODE=true, guaranteeing 0 calls to Resend and 0 calls to HubSpot).
+ */
+export function isSimulatedEmailModeEnabled(): boolean {
+  if (isLocalDryRunEnabled()) return true;
+  if (
+    process.env.VERCEL_ENV !== "production" &&
+    String(process.env.FORM_EMAILS_SIMULATED_MODE || "").trim().toLowerCase() === "true"
+  ) {
+    return true;
+  }
+  return false;
+}
+
 export function isPreviewEnvironment(): boolean {
   if (
     process.env.VERCEL_ENV === "preview" ||
@@ -126,7 +141,32 @@ export type ExecutionPolicyResult =
 export function resolveExecutionPolicy(submittedClientEmail: string): ExecutionPolicyResult {
   const cleanClientEmail = String(submittedClientEmail || "").trim();
 
-  // 1. Preview fail-closed guard (takes precedence even if local dry-run is unset)
+  // 0. Stage 1 Staging / Local Simulated Mode (0 Resend calls, 0 HubSpot calls, even on Vercel Staging)
+  if (isSimulatedEmailModeEnabled()) {
+    const previewApiUrl = String(process.env.FORM_EMAILS_PREVIEW_API_URL || "")
+      .trim()
+      .replace(/\/+$/, "");
+    if (previewApiUrl && previewApiUrl.toLowerCase().includes(PCI_PROD_RAILWAY_HOST)) {
+      return {
+        allowed: false,
+        mode: "preview",
+        code: "PREVIEW_PRODUCTION_RAILWAY_BLOCKED",
+        error:
+          "Envío detenido en Staging simulado: FORM_EMAILS_PREVIEW_API_URL no puede apuntar al backend de producción en Railway.",
+      };
+    }
+    return {
+      allowed: true,
+      mode: "local_dry_run",
+      teamRecipients: [PCI_TEAM_TO],
+      clientRecipient: cleanClientEmail,
+      railwayMode: previewApiUrl ? "preview_isolated" : "simulated",
+      railwayApiUrl: previewApiUrl || null,
+      hubspotMode: "simulated",
+    };
+  }
+
+  // 1. Preview fail-closed guard (Stage 2 real-email testing with strict allowlist)
   if (isPreviewEnvironment()) {
     const previewTeamRecipients = parseEmailList(process.env.FORM_EMAILS_PREVIEW_TEAM_TO);
     if (previewTeamRecipients.length === 0) {

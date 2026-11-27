@@ -154,7 +154,7 @@ export default function MonitoringForm({ t, lang = 'es' }: MonitoringFormProps) 
                             ? 'Isolated local mode: saved in internal sandbox inbox and linked to CRM without sending external emails.'
                             : 'Modo local aislado: solicitud guardada en buzón interno y vinculada a M04 sin enviar correos externos.'}
                     </p>
-                ) : state.email_sent !== false ? (
+                ) : state.email_sent === true ? (
                     <p data-monitoring-spam-notice="true" className="text-sm text-gray-400 mt-4 italic">
                         {lang === 'es' 
                             ? 'Por favor, revise también su bandeja de correo no deseado (Spam).'

@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   try {
     const payload = await request.json();
     const localBackendBase = getPhase4BackendBaseUrl();
-    const localApiKey = String(process.env.NEXT_PUBLIC_API_KEY || process.env.API_SHARED_SECRET || '').trim();
+    const localApiKey = String(process.env.API_SHARED_SECRET || process.env.DASHBOARD_AUTH_API_KEY || '').trim();
 
     if (
       !isLocalFileSandbox() ||

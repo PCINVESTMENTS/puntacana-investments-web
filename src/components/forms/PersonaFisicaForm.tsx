@@ -225,7 +225,7 @@ export function PersonaFisicaForm() {
                     toast({ title: c.toastSuccessTitle, description: f.toastSuccessDesc });
                     setDraft(null);
                     form.reset(defaultValues);
-                    setSuccessMeta({ dossierId: precheckRefCode, sandboxIsolated: false, emailSent: true, emailAttempted: true });
+                    setSuccessMeta({ dossierId: precheckRefCode, sandboxIsolated: false, emailSent: Boolean((mailRes as any)?.emailSent), emailAttempted: true });
                     return;
                 }
             }
@@ -410,7 +410,7 @@ export function PersonaFisicaForm() {
                             phone: data.mobilePhone1 || data.homePhone || "",
                             country: data.residenceCountry || "",
                         });
-                        emailSent = Boolean((mailRes as any)?.success);
+                        emailSent = Boolean((mailRes as any)?.emailSent);
                     } catch (emailError) {
                         console.error("Failed to send KYC confirmation email", emailError);
                         emailSent = false;

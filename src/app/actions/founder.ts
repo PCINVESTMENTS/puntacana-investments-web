@@ -186,7 +186,8 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             }
         }
 
-        // Enviar Correo de Confirmación al Cliente con su Número
+        // Enviar Correo de Confirmación al Cliente con su Número (email_sent=true solo si Resend acepta)
+        let clientEmailAccepted = false;
         try {
             const firstName = name.split(' ')[0] || 'Inversor';
             const htmlTemplate = `
@@ -220,12 +221,15 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
             </html>
             `;
 
-            await getResend().emails.send({
+            const clientFounderRes = await getResend().emails.send({
                 from: PCI_CLIENT_FROM,
                 to: [policy.clientRecipient],
                 subject: `Solicitud VIP Recibida - Punta Cana Investments`,
                 html: htmlTemplate
             });
+            if (!clientFounderRes?.error && clientFounderRes?.data?.id) {
+                clientEmailAccepted = true;
+            }
 
         } catch (emailError) {
             console.error("Client Founder Autoresponder Exception:", emailError);
@@ -272,6 +276,7 @@ export async function submitFounderForm(prevState: Record<string, any>, formData
 
         return {
             success: true,
+            email_sent: clientEmailAccepted,
             message: 'Application sent successfully!'
         };
 
